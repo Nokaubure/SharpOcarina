@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Byte" ValueType="System.String">
+  <Restriction Key="00">No effect/restrictions</Restriction>
+  <Restriction Key="01">Prevents the Sun's Song time effect</Restriction>
+  <Restriction Key="02">Disables jumping through the action button</Restriction>
+  <Restriction Key="05">??? (Used only in boss rooms)</Restriction>
+  <Idleanim Key="00">Link glance back at the player</Idleanim>
+  <Idleanim Key="01">Link's cold sneeze</Idleanim>
+  <Idleanim Key="02">Link wipes his head</Idleanim>
+  <Idleanim Key="03">Triggers the Heat timer</Idleanim>
+  <Idleanim Key="04">Link stretches and yawns</Idleanim>
+  <Idleanim Key="06">Unknown</Idleanim>
+  <Idleanim Key="07">Link bends over and gasps for breath</Idleanim>
+  <Idleanim Key="09">Link brandishes sword even if not equipped</Idleanim>
+  <Idleanim Key="0A">Link re-adjusts his tunic</Idleanim>
+  <Idleanim Key="FF">Link hops on Epona (even as a child)</Idleanim>
+  <Camera Key="00">Normal scene with free c-up</Camera>
+  <Camera Key="10">Shop scenes. fixed camera, no c-up</Camera>
+  <Camera Key="20">Pre-rendered background that rotates, c-up gives bird view</Camera>
+  <Camera Key="30">Pre-rendered background, fixed, no c-up</Camera>
+  <Camera Key="40">Pre-rendered background that rotates, no c-up</Camera>
+  <Camera Key="50">Shooting galler</Camera>
+</Table>
