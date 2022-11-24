@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Byte" ValueType="System.String">
+  <SFX Key="00">Field Nighttime (Default)</SFX>
+  <SFX Key="01">Swamp Nighttime</SFX>
+  <SFX Key="02">Northern Mountains Nighttime</SFX>
+  <SFX Key="03">Sea Nighttime</SFX>
+  <SFX Key="04">Canyon Nighttime</SFX>
+  <SFX Key="0A">Graveyard Nighttime</SFX>
+  <SFX Key="0B">Moon Field Nighttime</SFX>
+  <SFX Key="12">House Nighttime</SFX>
+  <SFX Key="13">Music Sequence Continues Playing</SFX>
+</Table>

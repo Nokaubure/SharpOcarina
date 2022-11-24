@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.UInt32" ValueType="System.String">
+<Actor id="0000" ROMaddr="00000000" vRAMaddr="00000000" vRAMvars="8012AF90">Link</Actor>
+
+<Actor id="0002" ROMaddr="00C2E420" vRAMaddr="8085F650" vRAMvars="80864550">Stalfos</Actor>
+
+<Actor id="0004" ROMaddr="00DF1330" vRAMaddr="80A3A750" vRAMvars="80A3C570">Shops</Actor>
+
+
+<Actor id="0007" ROMaddr="00E83E40" vRAMaddr="80ACDDD0" vRAMvars="80ACF190">Disintegrating Blue Flame</Actor>
+<Actor id="0008" ROMaddr="00E53BB0" vRAMaddr="80A9DB40" vRAMvars="80A9E820">Flame</Actor>
+<Actor id="0009" ROMaddr="00DB2DC0" vRAMaddr="809FC1D0" vRAMvars="809FCE80">Wooden Door</Actor>
+<Actor id="000A" ROMaddr="00D823F0" vRAMaddr="809C8DC0" vRAMvars="809CA7E0">Treasure Chest</Actor>
+<Actor id="000B" ROMaddr="00C41590" vRAMaddr="80872830" vRAMvars="8087544C">Great Fairy</Actor>
+<Actor id="000C" ROMaddr="00C553A0" vRAMaddr="80886660" vRAMvars="80886CB0">Proximity Activated Firewall</Actor>
+<Actor id="000D" ROMaddr="00E93D30" vRAMaddr="80ADDD50" vRAMvars="80AE1A54">Poe</Actor>
+<Actor id="000E" ROMaddr="00E766D0" vRAMaddr="80AC0660" vRAMvars="80AC2800">Octorok</Actor>
+<Actor id="000F" ROMaddr="00C8E110" vRAMaddr="808BF410" vRAMvars="808C0910">Webbing</Actor>
+<Actor id="0010" ROMaddr="00D7BD00" vRAMaddr="809C26D0" vRAMvars="809C3410">Bomb</Actor>
+<Actor id="0011" ROMaddr="00EE5350" vRAMaddr="80B2F520" vRAMvars="80B30CF0">Wallmaster</Actor>
+<Actor id="0012" ROMaddr="00DAEE40" vRAMaddr="809F8250" vRAMvars="809FA7C0">Dodongo</Actor>
+<Actor id="0013" ROMaddr="00DC9C60" vRAMaddr="80A13070" vRAMvars="80A14F10">Keese</Actor>
+<Actor id="0014" ROMaddr="00E11ED0" vRAMaddr="80A5B2F0" vRAMvars="80A65E8C">Epona</Actor>
+<Actor id="0015" ROMaddr="00000000" vRAMaddr="00000000" vRAMvars="801154C0">Collectable Item</Actor>
+<Actor id="0016" ROMaddr="00D6CF50" vRAMaddr="809B3920" vRAMvars="809B4D30">Arrow</Actor>
+
+<Actor id="0018" ROMaddr="00DB8820" vRAMaddr="80A01C30" vRAMvars="80A06000">Fairy</Actor>
+<Actor id="0019" ROMaddr="00E6B7F0" vRAMaddr="80AB5780" vRAMvars="80AB85E4">Cucco</Actor>
+
+<Actor id="001B" ROMaddr="00ECE910" vRAMaddr="80B18A80" vRAMvars="80B1B5B0">Tektite</Actor>
+<Actor id="001C" ROMaddr="00E9ACB0" vRAMaddr="80AE4CD0" vRAMvars="80AE6580">Leever</Actor>
+<Actor id="001D" ROMaddr="00E85510" vRAMaddr="80ACF4A0" vRAMvars="80AD2720">Peahat</Actor>
+<Actor id="001E" ROMaddr="00D86690" vRAMaddr="809CD070" vRAMvars="809CE324">Butterfly</Actor>
+
+<Actor id="0020" ROMaddr="00E329F0" vRAMaddr="80A7BE20" vRAMvars="80A7DEBC">Bug</Actor>
+<Actor id="0021" ROMaddr="00DCBE70" vRAMaddr="80A15280" vRAMvars="80A17050">Fish</Actor>
+
+<Actor id="0023" ROMaddr="00E0F7F0" vRAMaddr="80A58C10" vRAMvars="80A59A20">Room Changing Black Plane</Actor>
+<Actor id="0024" ROMaddr="00EAEC50" vRAMaddr="80AF8C70" vRAMvars="80AF8D80">(Last Unknown)</Actor>
+<Actor id="0025" ROMaddr="00EF9D60" vRAMaddr="80B44050" vRAMvars="80B4A1B8">Lizalfos</Actor>
+<Actor id="0026" ROMaddr="00E07930" vRAMaddr="80A50D50" vRAMvars="80A511F0">Wooden Post with Red Cloth</Actor>
+<Actor id="0027" ROMaddr="00C8FE90" vRAMaddr="808C1190" vRAMvars="808C6FE0">King Dodongo</Actor>
+<Actor id="0028" ROMaddr="00CDF070" vRAMaddr="80915A10" vRAMvars="8091AE40">Queen Gohma</Actor>
+<Actor id="0029" ROMaddr="00F00840" vRAMaddr="80B4AB40" vRAMvars="80B4E5D0">Princess Zelda Child</Actor>
+<Actor id="002A" ROMaddr="00EE0050" vRAMaddr="80B2A200" vRAMvars="80B2CEC4">Ganon Chasing Impa and Zelda (Cutscene)</Actor>
+<Actor id="002B" ROMaddr="00DFFAA0" vRAMaddr="80A48EC0" vRAMvars="80A4B780">Gohma Larva</Actor>
+<Actor id="002C" ROMaddr="00C777E0" vRAMaddr="808A8AE0" vRAMvars="808A8D80">Alpha Cube Copy</Actor>
+<Actor id="002D" ROMaddr="00D85220" vRAMaddr="809CBC00" vRAMvars="809CCE10">Shabom</Actor>
+<Actor id="002E" ROMaddr="00D4F8E0" vRAMaddr="809962A0" vRAMvars="809980D0">Lifting Wooden Door</Actor>
+<Actor id="002F" ROMaddr="00DACFB0" vRAMaddr="809F63C0" vRAMvars="809F7E90">Baby Dodongo</Actor>
+<Actor id="0030" ROMaddr="00D75660" vRAMaddr="809BC030" vRAMvars="809BCAF0">King Dodongo's Fire</Actor>
+
+<Actor id="0032" ROMaddr="00D81AB0" vRAMaddr="809C8480" vRAMvars="809C8C30">Boomerang</Actor>
+<Actor id="0033" ROMaddr="00ED3810" vRAMaddr="80B1D980" vRAMvars="80B1F9D0">Dark Link</Actor>
+<Actor id="0034" ROMaddr="00D78ED0" vRAMaddr="809BF8A0" vRAMvars="809C1620">Biri</Actor>
+<Actor id="0035" ROMaddr="00ED6C30" vRAMaddr="80B20DE0" vRAMvars="80B22A70">Taliparisan</Actor>
+
+<Actor id="0037" ROMaddr="00EBA7A0" vRAMaddr="80B04890" vRAMvars="80B06FD0">Skulltula</Actor>
+<Actor id="0038" ROMaddr="00D87D00" vRAMaddr="809CE6E0" vRAMvars="809D1430">Torch Slug</Actor>
+<Actor id="0039" ROMaddr="00000000" vRAMaddr="00000000" vRAMvars="80115420">Gameplay_keep Objects</Actor>
+<Actor id="003A" ROMaddr="00DB6B90" vRAMaddr="809FFFA0" vRAMvars="80A01950">Stinger</Actor>
+<Actor id="003B" ROMaddr="00E9C910" vRAMaddr="80AE6930" vRAMvars="80AE71D0">Ambient Sound Effects</Actor>
+<Actor id="003C" ROMaddr="00E21E30" vRAMaddr="80A6B250" vRAMvars="80A6D350">Normal Horse</Actor>
+<Actor id="003D" ROMaddr="00E78D10" vRAMaddr="80AC2CA0" vRAMvars="80AC88A0">Shopkeeper</Actor>
+<Actor id="003E" ROMaddr="00C8B200" vRAMaddr="808BC500" vRAMvars="808BD990">Deku Tree's Jaw</Actor>
+<Actor id="003F" ROMaddr="00C407D0" vRAMaddr="80871A00" vRAMvars="80872520">Dodongo Skull's Jaw</Actor>
+<Actor id="0040" ROMaddr="00C54B60" vRAMaddr="80885E20" vRAMvars="80886480">Lower Part of Megaton Statue</Actor>
+<Actor id="0041" ROMaddr="00C57E70" vRAMaddr="80889130" vRAMvars="80889800">Huge Stone Spike Platform</Actor>
+<Actor id="0042" ROMaddr="00E1F240" vRAMaddr="80A68660" vRAMvars="80A69190">Ganondorf's Horse</Actor>
+<Actor id="0043" ROMaddr="00C59DC0" vRAMaddr="8088B080" vRAMvars="8088BF6C">Fire Temple Stone Block</Actor>
+<Actor id="0044" ROMaddr="00C5AF40" vRAMaddr="8088C200" vRAMvars="8088CC60">Spinning Flame Thrower Statue</Actor>
+<Actor id="0045" ROMaddr="00C5BC00" vRAMaddr="8088CEC0" vRAMvars="8088E160">Stationary Flame Thrower Statue</Actor>
+<Actor id="0046" ROMaddr="00C5D110" vRAMaddr="8088E3D0" vRAMvars="8088F180">Sink Stone Platform</Actor>
+<Actor id="0047" ROMaddr="00C5E100" vRAMaddr="8088F3C0" vRAMvars="8088F760">Fire Temple Stone Block</Actor>
+<Actor id="0048" ROMaddr="00EF1F20" vRAMaddr="80B3C1E0" vRAMvars="80B41F30">Sheik</Actor>
+<Actor id="0049" ROMaddr="00C53EE0" vRAMaddr="808851A0" vRAMvars="80885BC4">Flame Circle</Actor>
+<Actor id="004A" ROMaddr="00C78480" vRAMaddr="808A9780" vRAMvars="808AA790">Drawbridge</Actor>
+<Actor id="004B" ROMaddr="00E5C0C0" vRAMaddr="80AA6050" vRAMvars="80AA9BE0">Ground Pounding Moblin</Actor>
+<Actor id="004C" ROMaddr="00D80590" vRAMaddr="809C6F60" vRAMvars="809C8240">Bomb Flower</Actor>
+<Actor id="004D" ROMaddr="00F04690" vRAMaddr="80B4E990" vRAMvars="80B528E0">Adult Zelda (Cutscene)</Actor>
+<Actor id="004E" ROMaddr="00C55B80" vRAMaddr="80886E40" vRAMvars="80887240">Elevator Platform</Actor>
+<Actor id="004F" ROMaddr="00E74710" vRAMaddr="80ABE6A0" vRAMvars="80ABE700">Lock-on Blue Spot? (Unknown)</Actor>
+<Actor id="0050" ROMaddr="00C8D200" vRAMaddr="808BE500" vRAMvars="808BEC00">Back and Forth Moving Platform</Actor>
+<Actor id="0051" ROMaddr="00C8DA40" vRAMaddr="808BED40" vRAMvars="808BF2E0">Rotating Spike Cylinder</Actor>
+<Actor id="0052" ROMaddr="00CD9CA0" vRAMaddr="80910640" vRAMvars="80914CB0">Phantom Ganon</Actor>
+
+<Actor id="0054" ROMaddr="00D67550" vRAMaddr="809ADF20" vRAMvars="809AFF60">Armos</Actor>
+<Actor id="0055" ROMaddr="00D9C3C0" vRAMaddr="809E57D0" vRAMvars="809E8EAC">Deku Baba</Actor>
+<Actor id="0056" ROMaddr="00E54EB0" vRAMaddr="80A9EE40" vRAMvars="80A9EF60">Deku Nuts (from Link)</Actor>
+<Actor id="0057" ROMaddr="00E55050" vRAMaddr="80A9EFE0" vRAMvars="80AA0400">Spin Attack</Actor>
+<Actor id="0058" ROMaddr="00C3F880" vRAMaddr="80870AB0" vRAMvars="80871060">Rising Stone Platform</Actor>
+<Actor id="0059" ROMaddr="00C3E9B0" vRAMaddr="8086FBE0" vRAMvars="80870740">Bombable Wall</Actor>
+<Actor id="005A" ROMaddr="00E3E3D0" vRAMaddr="80A87800" vRAMvars="80A88140">Lord Jabu Jabu</Actor>
+<Actor id="005B" ROMaddr="00E244B0" vRAMaddr="80A6D8D0" vRAMvars="80A6E1B0">Zelda's Horse</Actor>
+<Actor id="005C" ROMaddr="00C3FEC0" vRAMaddr="808710F0" vRAMvars="808718A0">Stone Stairs</Actor>
+<Actor id="005D" ROMaddr="00D51DC0" vRAMaddr="80998780" vRAMvars="8099C580">Blue Warp</Actor>
+<Actor id="005E" ROMaddr="00F4DED0" vRAMaddr="80B9F2B0" vRAMvars="80B9FDF0">Torch</Actor>
+<Actor id="005F" ROMaddr="00F33D70" vRAMaddr="80B85150" vRAMvars="80B85510">Heart Container</Actor>
+<Actor id="0060" ROMaddr="00DA0150" vRAMaddr="809E9560" vRAMvars="809EAB30">Deku Scrub</Actor>
+<Actor id="0061" ROMaddr="00C6AEE0" vRAMaddr="8089C1B0" vRAMvars="8089C2D0">Large Rotating Stone Ring</Actor>
+<Actor id="0062" ROMaddr="00C6A9B0" vRAMaddr="8089BC70" vRAMvars="8089C070">Statue Eyes</Actor>
+<Actor id="0063" ROMaddr="00EDC500" vRAMaddr="80B266B0" vRAMvars="80B28880">Bari</Actor>
+<Actor id="0064" ROMaddr="00C6C960" vRAMaddr="8089DC30" vRAMvars="8089EB20">Dragon Head Statue</Actor>
+<Actor id="0065" ROMaddr="00C6E5D0" vRAMaddr="8089F8B0" vRAMvars="808A0530">Water Temple Water</Actor>
+<Actor id="0066" ROMaddr="00C33CD0" vRAMaddr="80864F00" vRAMvars="80865AE0">Hookshot</Actor>
+<Actor id="0067" ROMaddr="00F186C0" vRAMaddr="80B629C0" vRAMvars="80B65170">Phantom Ganon's Horse</Actor>
+<Actor id="0068" ROMaddr="00C724E0" vRAMaddr="808A37D0" vRAMvars="808A43E4">Twisted Hallway</Actor>
+<Actor id="0069" ROMaddr="00D71910" vRAMaddr="809B82E0" vRAMvars="809BBAE0">Bubble</Actor>
+<Actor id="006A" ROMaddr="00C88C00" vRAMaddr="808B9F00" vRAMvars="808BAC50">Temple of Time Windows</Actor>
+<Actor id="006B" ROMaddr="00EF96D0" vRAMaddr="80B439C0" vRAMvars="80B43F10">Flying Floor Tile</Actor>
+<Actor id="006C" ROMaddr="00C89B40" vRAMaddr="808BAE40" vRAMvars="808BC3C0">Master Sword</Actor>
+<Actor id="006D" ROMaddr="00DC5E50" vRAMaddr="80A0F260" vRAMvars="80A11770">Phantom Ganon's Lightning Attack</Actor>
+<Actor id="006E" ROMaddr="00C6F4A0" vRAMaddr="808A0780" vRAMvars="808A0AE0">Warp Pad</Actor>
+<Actor id="006F" ROMaddr="00C586A0" vRAMaddr="80889960" vRAMvars="80889E4C">Metal Gate</Actor>
+<Actor id="0070" ROMaddr="00D51C60" vRAMaddr="80998620" vRAMvars="80998720">Door of Time</Actor>
+<Actor id="0071" ROMaddr="00C56D80" vRAMaddr="80888040" vRAMvars="80888E0C">Hammer Steps in Fire Temple</Actor>
+<Actor id="0072" ROMaddr="00D7B1E0" vRAMaddr="809C1BB0" vRAMvars="809C1FD0">Alpha Bird</Actor>
+
+
+
+
+<Actor id="0077" ROMaddr="00EF0CC0" vRAMaddr="80B3AF70" vRAMvars="80B3BEE0">Greenery</Actor>
+
+
+
+
+<Actor id="007C" ROMaddr="00E54A40" vRAMaddr="80A9E9D0" vRAMvars="80A9EDE0">Alpha Large Noisy Stone</Actor>
+<Actor id="007D" ROMaddr="00E980A0" vRAMaddr="80AE20C0" vRAMvars="80AE23B0">Alpha Stone Cube</Actor>
+
+
+<Actor id="0080" ROMaddr="00EDA4B0" vRAMaddr="80B24660" vRAMvars="80B25810">Sliding Spike Trap</Actor>
+<Actor id="0081" ROMaddr="00D6CE00" vRAMaddr="809B37D0" vRAMvars="809B38D0">Beta Arrow Trap</Actor>
+<Actor id="0082" ROMaddr="00EDED00" vRAMaddr="80B28EB0" vRAMvars="80B28F50">Alpha Orange Pot</Actor>
+
+<Actor id="0084" ROMaddr="00EC9930" vRAMaddr="80B13AA0" vRAMvars="80B16E30">Talon</Actor>
+<Actor id="0085" ROMaddr="00ED1790" vRAMaddr="80B1B900" vRAMvars="80B1D4B0">Dampe Grave Digging Game</Actor>
+<Actor id="0086" ROMaddr="00C6F8E0" vRAMaddr="808A0BC0" vRAMvars="808A14C0">Lowering Circular Platform</Actor>
+<Actor id="0087" ROMaddr="00C70520" vRAMaddr="808A1800" vRAMvars="808A2214">Forest Temple Elevator</Actor>
+<Actor id="0088" ROMaddr="00C73AD0" vRAMaddr="808A4DC0" vRAMvars="808A53B0">Rotating Room</Actor>
+<Actor id="0089" ROMaddr="00C74280" vRAMaddr="808A5570" vRAMvars="808A5E64">Forest Temple Ceiling</Actor>
+<Actor id="008A" ROMaddr="00EE3290" vRAMaddr="80B2D460" vRAMvars="80B2EA00">Beamos</Actor>
+<Actor id="008B" ROMaddr="00D2A5E0" vRAMaddr="80970F50" vRAMvars="809767F0">Spiritual Stones/Goddesses/Triforce</Actor>
+<Actor id="008C" ROMaddr="00D42510" vRAMaddr="80988E80" vRAMvars="8098C2D0">Temple of Time Objects</Actor>
+<Actor id="008D" ROMaddr="00C56030" vRAMaddr="808872F0" vRAMvars="80887EB0">Large Firewall</Actor>
+<Actor id="008E" ROMaddr="00DCE100" vRAMaddr="80A17510" vRAMvars="80A1A450">Floormaster</Actor>
+<Actor id="008F" ROMaddr="00E07EB0" vRAMaddr="80A512D0" vRAMvars="80A527A4">Castle Courtyard Guards</Actor>
+<Actor id="0090" ROMaddr="00E983E0" vRAMaddr="80AE2400" vRAMvars="80AE48A0">Redead/Gibdo</Actor>
+<Actor id="0091" ROMaddr="00E8EF70" vRAMaddr="80AD8F90" vRAMvars="80ADD710">Poe Sisters</Actor>
+<Actor id="0092" ROMaddr="00C524D0" vRAMaddr="80883790" vRAMvars="80884E50">Golden Gauntlets Rock</Actor>
+<Actor id="0093" ROMaddr="00C74F20" vRAMaddr="808A6210" vRAMvars="808A7CB0">Poe Puzzle Block</Actor>
+<Actor id="0094" ROMaddr="00F476C0" vRAMaddr="80B98AA0" vRAMvars="80B99A30">Fish, Bugs, or Butterflies</Actor>
+<Actor id="0095" ROMaddr="00EC1CC0" vRAMaddr="80B0BDB0" vRAMvars="80B0F020">Skullwalltula/Golden Skulltula</Actor>
+<Actor id="0096" ROMaddr="00C99AC0" vRAMaddr="808CADC0" vRAMvars="808D1640">Flying Volvagia</Actor>
+<Actor id="0097" ROMaddr="00F516B0" vRAMaddr="80BA2AA0" vRAMvars="80BA5920">Fairy Sprites</Actor>
+<Actor id="0098" ROMaddr="00DB4820" vRAMaddr="809FDC30" vRAMvars="809FF210">Darunia</Actor>
+<Actor id="0099" ROMaddr="00DC22B0" vRAMaddr="80A0B6C0" vRAMvars="80A0DE00">Fire Dancer</Actor>
+<Actor id="009A" ROMaddr="00E1FFB0" vRAMaddr="80A693D0" vRAMvars="80A6AEC0">Child Epona</Actor>
+<Actor id="009B" ROMaddr="00D4D530" vRAMaddr="80993EF0" vRAMvars="809944A0">Hole in Ground Exit</Actor>
+<Actor id="009C" ROMaddr="00C7B360" vRAMaddr="808AC660" vRAMvars="808AD880">Graveyard Objects</Actor>
+<Actor id="009D" ROMaddr="00C4A400" vRAMaddr="8087B6B0" vRAMvars="8087BCD0">Gravestone</Actor>
+<Actor id="009E" ROMaddr="00F39D20" vRAMaddr="80B8B100" vRAMvars="80B8B860">Farore's Wind</Actor>
+<Actor id="009F" ROMaddr="00F37990" vRAMaddr="80B88D70" vRAMvars="80B898E0">Din's Fire</Actor>
+
+<Actor id="00A1" ROMaddr="00EA0BF0" vRAMaddr="80AEAC10" vRAMvars="80AF1A10">Young Ruto</Actor>
+<Actor id="00A2" ROMaddr="00CA1370" vRAMaddr="808D2670" vRAMvars="808D5FB0">Hole Volvagia</Actor>
+<Actor id="00A3" ROMaddr="00DC50A0" vRAMaddr="80A0E4B0" vRAMvars="80A0F010">Fireball</Actor>
+<Actor id="00A4" ROMaddr="00DA1930" vRAMaddr="809EAD40" vRAMvars="809EC5A0">Deadhand</Actor>
+<Actor id="00A5" ROMaddr="00DA3470" vRAMaddr="809EC880" vRAMvars="809ED630">Deadhand's Arms</Actor>
+<Actor id="00A6" ROMaddr="00E9D290" vRAMaddr="80AE72B0" vRAMvars="80AE81DC">Rauru</Actor>
+<Actor id="00A7" ROMaddr="00DBD310" vRAMaddr="80A06720" vRAMvars="80A07470">Enemy Spawner</Actor>
+<Actor id="00A8" ROMaddr="00D23160" vRAMaddr="80969AD0" vRAMvars="8096CFB0">Sage Darunia (Cutscene)</Actor>
+<Actor id="00A9" ROMaddr="00D3E270" vRAMaddr="80984BE0" vRAMvars="809887F0">Impa</Actor>
+<Actor id="00AA" ROMaddr="00D4CD00" vRAMaddr="809936C0" vRAMvars="80993D90">Treasure Chest Light</Actor>
+<Actor id="00AB" ROMaddr="00DD5180" vRAMaddr="80A1E5A0" vRAMvars="80A1FB40">Core Fire Dancer Creature</Actor>
+<Actor id="00AC" ROMaddr="00C8CA60" vRAMaddr="808BDD60" vRAMvars="808BE3F0">Volvagia Platform</Actor>
+<Actor id="00AD" ROMaddr="00EDEDF0" vRAMaddr="80B28FA0" vRAMvars="80B29FE0">Volvagia Rocks</Actor>
+<Actor id="00AE" ROMaddr="00C4C780" vRAMaddr="8087DA40" vRAMvars="8087DD30">Fake/Invisible Objects</Actor>
+<Actor id="00AF" ROMaddr="00C4CB70" vRAMaddr="8087DE30" vRAMvars="8087E3D0">Invisible Objects/Metal Gate</Actor>
+<Actor id="00B0" ROMaddr="00C4DE40" vRAMaddr="8087F100" vRAMvars="8087FAA0">Shadow Temple Ship</Actor>
+<Actor id="00B1" ROMaddr="00C4D220" vRAMaddr="8087E4E0" vRAMvars="8087EE40">Spinning Scythe Statues</Actor>
+
+<Actor id="00B3" ROMaddr="00E09A80" vRAMaddr="80A52EA0" vRAMvars="80A54EF0">Gate Guards</Actor>
+<Actor id="00B4" ROMaddr="00DBE580" vRAMaddr="80A07990" vRAMvars="80A08B50">Falling Rock Spawner</Actor>
+<Actor id="00B5" ROMaddr="00DC8810" vRAMaddr="80A11C20" vRAMvars="80A12C80">Flying Rubble</Actor>
+<Actor id="00B6" ROMaddr="00D84130" vRAMaddr="809CAB10" vRAMvars="809CBA60">Flobbery Muscle Block</Actor>
+<Actor id="00B7" ROMaddr="00F3BC70" vRAMaddr="80B8D050" vRAMvars="80B8E650">Sun Block Switch</Actor>
+<Actor id="00B8" ROMaddr="00C807E0" vRAMaddr="808B1AE0" vRAMvars="808B1F70">Gerudo Valley Objects</Actor>
+<Actor id="00B9" ROMaddr="00C87610" vRAMaddr="808B8910" vRAMvars="808B90D0">Statue from Darunia's Room</Actor>
+<Actor id="00BA" ROMaddr="00D11350" vRAMaddr="8094F2C0" vRAMvars="8095BF40">Barinade</Actor>
+<Actor id="00BB" ROMaddr="00C4FF90" vRAMaddr="80881250" vRAMvars="80881B40">Open Topped Skull Statue</Actor>
+<Actor id="00BC" ROMaddr="00C4E9E0" vRAMaddr="8087FCA0" vRAMvars="80880F34">Guillotine Blade</Actor>
+<Actor id="00BD" ROMaddr="00C4BD00" vRAMaddr="8087CFC0" vRAMvars="8087D920">Coffin Lid</Actor>
+<Actor id="00BE" ROMaddr="00C51300" vRAMaddr="808825C0" vRAMvars="80883628">Bird Statue/Bombables</Actor>
+<Actor id="00BF" ROMaddr="00C86100" vRAMaddr="808B7400" vRAMvars="808B7600">Crater Smoke Cone</Actor>
+<Actor id="00C0" ROMaddr="00EC5540" vRAMaddr="80B0F6B0" vRAMvars="80B10220">Shooting Gallery Game</Actor>
+<Actor id="00C1" ROMaddr="00EC6700" vRAMaddr="80B10870" vRAMvars="80B115C0">Shooting Gallery Man</Actor>
+<Actor id="00C2" ROMaddr="00ECDDC0" vRAMaddr="80B17F30" vRAMvars="80B181E0">Shop Shelves</Actor>
+<Actor id="00C3" ROMaddr="00E66E00" vRAMaddr="80AB0D90" vRAMvars="80AB4F68">Nabooru</Actor>
+<Actor id="00C4" ROMaddr="00CE5160" vRAMaddr="8091BB00" vRAMvars="80925CB0">Morpha</Actor>
+<Actor id="00C5" ROMaddr="00EAD7D0" vRAMaddr="80AF77F0" vRAMvars="80AF89B0">Shell Blade</Actor>
+<Actor id="00C6" ROMaddr="00D76290" vRAMaddr="809BCC60" vRAMvars="809BF3B4">Big Octorok</Actor>
+<Actor id="00C7" ROMaddr="00E4B3C0" vRAMaddr="80A95350" vRAMvars="80A969D0">Withered Deku Baba</Actor>
+<Actor id="00C8" ROMaddr="00C3AA70" vRAMaddr="8086BCA0" vRAMvars="8086CD50">Jabu-Jabu Objects</Actor>
+<Actor id="00C9" ROMaddr="00D47AA0" vRAMaddr="8098E460" vRAMvars="80990DBC">Sage Saria (Cutscene)</Actor>
+<Actor id="00CA" ROMaddr="00D35F00" vRAMaddr="8097C870" vRAMvars="8097D470">Gorons (Cutscene)</Actor>
+<Actor id="00CB" ROMaddr="00E2FB80" vRAMaddr="80A78FB0" vRAMvars="80A7B820">Ingo</Actor>
+<Actor id="00CC" ROMaddr="00ED8B40" vRAMaddr="80B22CF0" vRAMvars="80B24340">Koume and Kotake</Actor>
+<Actor id="00CD" ROMaddr="00C83930" vRAMaddr="808B4C30" vRAMvars="808B601C">Giant Boulder Blocking Dodongo's Cavern</Actor>
+
+<Actor id="00CF" ROMaddr="00C58D60" vRAMaddr="8088A020" vRAMvars="8088ADF0">Cracked Stone Platform</Actor>
+<Actor id="00D0" ROMaddr="00C3D5A0" vRAMaddr="8086E7D0" vRAMvars="8086EFE4">2D Bombable Wall</Actor>
+<Actor id="00D1" ROMaddr="00C7F660" vRAMaddr="808B0960" vRAMvars="808B1690">Ice Platform</Actor>
+<Actor id="00D2" ROMaddr="00EA8530" vRAMaddr="80AF2550" vRAMvars="80AF5118">Adult Ruto</Actor>
+<Actor id="00D3" ROMaddr="00F41040" vRAMaddr="80B92420" vRAMvars="80B929E0">Deku Tree Sprout</Actor>
+<Actor id="00D4" ROMaddr="00C6E400" vRAMaddr="8089F6E0" vRAMvars="8089F840">Water Noise</Actor>
+<Actor id="00D5" ROMaddr="00C7D480" vRAMaddr="808AE780" vRAMvars="808AF910">Lake Hylia Objects</Actor>
+<Actor id="00D6" ROMaddr="00C5E550" vRAMaddr="8088F810" vRAMvars="808904A4">Moveable Ice Block</Actor>
+<Actor id="00D7" ROMaddr="00C50A40" vRAMaddr="80881D00" vRAMvars="80882490">Metal Gate (Perhaps more?)</Actor>
+
+<Actor id="00D9" ROMaddr="00E57A10" vRAMaddr="80AA19A0" vRAMvars="80AA2800">Adult Malon</Actor>
+<Actor id="00DA" ROMaddr="00D7EE60" vRAMaddr="809C5830" vRAMvars="809C6D10">Bombchu</Actor>
+<Actor id="00DB" ROMaddr="00E1E130" vRAMaddr="80A67550" vRAMvars="80A68420">Horseback Games</Actor>
+<Actor id="00DC" ROMaddr="00CFD7E0" vRAMaddr="80938CD0" vRAMvars="8094A7B0">Twinrova</Actor>
+<Actor id="00DD" ROMaddr="00E9E420" vRAMaddr="80AE8440" vRAMvars="80AEA620">Like-Like</Actor>
+<Actor id="00DE" ROMaddr="00D6F980" vRAMaddr="809B6350" vRAMvars="809B8060">Tentacle from Inside Lord Jabu-Jabu</Actor>
+<Actor id="00DF" ROMaddr="00D8B100" vRAMaddr="809D1AE0" vRAMvars="809D2470">Blocking Tentacle from Jabu-Jabu</Actor>
+<Actor id="00E0" ROMaddr="00D6A750" vRAMaddr="809B1120" vRAMvars="809B22B0">Anubis Body</Actor>
+<Actor id="00E1" ROMaddr="00D6BBD0" vRAMaddr="809B25A0" vRAMvars="809B31C0">Anubis Fire Attack</Actor>
+<Actor id="00E2" ROMaddr="00C71280" vRAMaddr="808A2560" vRAMvars="808A2D80">Ladder (Part of Forest Temple Warped Room)</Actor>
+<Actor id="00E3" ROMaddr="00C71D80" vRAMaddr="808A3060" vRAMvars="808A35A0">Golden Gate</Actor>
+<Actor id="00E4" ROMaddr="00C73350" vRAMaddr="808A4640" vRAMvars="808A4C14">Forest Temple Well Water</Actor>
+<Actor id="00E5" ROMaddr="00C85140" vRAMaddr="808B6440" vRAMvars="808B69F0">Death Mountain Cloud Ring</Actor>
+<Actor id="00E6" ROMaddr="00C3BDE0" vRAMaddr="8086D010" vRAMvars="8086E080">Switch from Inside Lord Jabu-Jabu</Actor>
+<Actor id="00E7" ROMaddr="00E56700" vRAMaddr="80AA0690" vRAMvars="80AA1620">Young Malon</Actor>
+<Actor id="00E8" ROMaddr="00CA5570" vRAMaddr="808D6870" vRAMvars="808E4BE0">Boss Ganondorf</Actor>
+<Actor id="00E9" ROMaddr="00CF1120" vRAMaddr="8092C5D0" vRAMvars="80937474">Bongo Bongo</Actor>
+
+
+<Actor id="00EC" ROMaddr="00E72C20" vRAMaddr="80ABCBB0" vRAMvars="80ABE310">Spike Enemy</Actor>
+<Actor id="00ED" ROMaddr="00DD1590" vRAMaddr="80A1A9A0" vRAMvars="80A1D034">Frog Song Spot and Frogs</Actor>
+<Actor id="00EE" ROMaddr="00F35540" vRAMaddr="80B86920" vRAMvars="80B871CC">Deku Shield</Actor>
+<Actor id="00EF" ROMaddr="00C5F480" vRAMaddr="80890740" vRAMvars="808916D0">Large Red Ice</Actor>
+<Actor id="00F0" ROMaddr="00E29BD0" vRAMaddr="80A72FF0" vRAMvars="80A73FF0">Blue Flame</Actor>
+<Actor id="00F1" ROMaddr="00F34D50" vRAMaddr="80B86130" vRAMvars="80B867F0">Ocarina of Time</Actor>
+
+
+<Actor id="00F4" ROMaddr="00F35FF0" vRAMaddr="80B873D0" vRAMvars="80B880C0">Nayru's Love</Actor>
+<Actor id="00F5" ROMaddr="00D1FFE0" vRAMaddr="80966950" vRAMvars="809692B0">Sages, Balls of Light (Cutscene)</Actor>
+<Actor id="00F6" ROMaddr="00D6CA30" vRAMaddr="809B3400" vRAMvars="809B3720">Anubis</Actor>
+<Actor id="00F7" ROMaddr="00C4AB40" vRAMaddr="8087BDF0" vRAMvars="8087CCDC">Shadow Temple Truth Spinner</Actor>
+<Actor id="00F8" ROMaddr="00C83550" vRAMaddr="808B4850" vRAMvars="808B4B30">Hyrule Castle Gate</Actor>
+<Actor id="00F9" ROMaddr="00C666B0" vRAMaddr="80897970" vRAMvars="80897F50">Giant Rolling Boulder</Actor>
+<Actor id="00FA" ROMaddr="00C6A180" vRAMaddr="8089B440" vRAMvars="8089B9D0">Moving Brick Wall</Actor>
+
+<Actor id="00FC" ROMaddr="00C64630" vRAMaddr="808958F0" vRAMvars="808972E8">Rotating Cobra Mirror</Actor>
+<Actor id="00FD" ROMaddr="00C68480" vRAMaddr="80899740" vRAMvars="80899A80">Climbable Mesh Wall</Actor>
+<Actor id="00FE" ROMaddr="00F1F6A0" vRAMaddr="80B699A0" vRAMvars="80B7A630">Fishing Game, Fish, and Fisherman</Actor>
+<Actor id="00FF" ROMaddr="00F49DA0" vRAMaddr="80B9B180" vRAMvars="80B9C9A0">Push Block</Actor>
+<Actor id="0100" ROMaddr="00C46EC0" vRAMaddr="80878160" vRAMvars="80878590">Death Mountain Trail Gate</Actor>
+<Actor id="0101" ROMaddr="00D56F00" vRAMaddr="8099D8D0" vRAMvars="8099EB40">Dust Motes Gathering Together</Actor>
+<Actor id="0102" ROMaddr="00C796C0" vRAMaddr="808AA9C0" vRAMvars="808AAC00">Windmill Sails</Actor>
+<Actor id="0103" ROMaddr="00C799E0" vRAMaddr="808AACE0" vRAMvars="808AB848">Kakariko Village Well Crossbeams</Actor>
+<Actor id="0104" ROMaddr="00C7A7E0" vRAMaddr="808ABAE0" vRAMvars="808ABD90">Kakariko Well Water</Actor>
+<Actor id="0105" ROMaddr="00C76DB0" vRAMaddr="808A80B0" vRAMvars="808A89AC">Golden Torch Stand (Poe Sisters)</Actor>
+<Actor id="0106" ROMaddr="00C44680" vRAMaddr="80875920" vRAMvars="80876A40">Floor of Ganondorf's Room</Actor>
+<Actor id="0107" ROMaddr="00C82660" vRAMaddr="808B3960" vRAMvars="808B4594">Milk Crate</Actor>
+<Actor id="0108" ROMaddr="00C8C8E0" vRAMaddr="808BDBE0" vRAMvars="808BDD00">Lon Lon Ranch Horse Jumping Fence</Actor>
+
+<Actor id="010A" ROMaddr="00C34AE0" vRAMaddr="80865D10" vRAMvars="80867B00">Fire Arrow</Actor>
+<Actor id="010B" ROMaddr="00C36AA0" vRAMaddr="80867CD0" vRAMvars="80869AE0">Ice Arrow</Actor>
+<Actor id="010C" ROMaddr="00C38A80" vRAMaddr="80869CB0" vRAMvars="8086BAD0">Light Arrow</Actor>
+
+
+<Actor id="010F" ROMaddr="00F34210" vRAMaddr="80B855F0" vRAMvars="80B85D00">GI Collectables (Shields, Bottles, etc)</Actor>
+<Actor id="0110" ROMaddr="00F438C0" vRAMaddr="80B94CA0" vRAMvars="80B95830">Small Wooden Crate</Actor>
+<Actor id="0111" ROMaddr="00F4F970" vRAMaddr="80BA0D60" vRAMvars="80BA1B60">Breakable Pot</Actor>
+<Actor id="0112" ROMaddr="00EEDE90" vRAMaddr="80B38060" vRAMvars="80B38D6C">Invisible Collectable</Actor>
+<Actor id="0113" ROMaddr="00E2AEF0" vRAMaddr="80A74310" vRAMvars="80A78628">Iron Knuckle</Actor>
+<Actor id="0114" ROMaddr="00D3C990" vRAMaddr="80983300" vRAMvars="80984784">Iron Knuckle Armor Pieces</Actor>
+<Actor id="0115" ROMaddr="00EB41D0" vRAMaddr="80AFE2B0" vRAMvars="80B01658">Skullkid</Actor>
+<Actor id="0116" ROMaddr="00EB7DC0" vRAMaddr="80B01EB0" vRAMvars="80B02160">Skullkid's Needle</Actor>
+<Actor id="0117" ROMaddr="00DD8AA0" vRAMaddr="80A21EC0" vRAMvars="80A2371C">Silver Rupee/Large Rotating Pot</Actor>
+<Actor id="0118" ROMaddr="00D30A20" vRAMaddr="80977390" vRAMvars="80977C84">Vortex (Koume/Kotake kidnap Nabooru)</Actor>
+<Actor id="0119" ROMaddr="00D4A870" vRAMaddr="80991230" vRAMvars="80991660">Bongo Bongo Shadow</Actor>
+<Actor id="011A" ROMaddr="00DA5F40" vRAMaddr="809EF350" vRAMvars="809F03C0">Business Scrub</Actor>
+<Actor id="011B" ROMaddr="00D66150" vRAMaddr="809ACB20" vRAMvars="809AD250">Navi Information Spot</Actor>
+<Actor id="011C" ROMaddr="00E10810" vRAMaddr="80A59C30" vRAMvars="80A5AF60">Eye Switch and Flame that Follows Link</Actor>
+<Actor id="011D" ROMaddr="00EDB740" vRAMaddr="80B258F0" vRAMvars="80B2650C">Flying Magic Pot</Actor>
+<Actor id="011E" ROMaddr="00F42E80" vRAMaddr="80B94260" vRAMvars="80B94B10">Ice That Covers Switches</Actor>
+<Actor id="011F" ROMaddr="00C7C7E0" vRAMaddr="808ADAE0" vRAMvars="808AE390">Zora's River Waterfall</Actor>
+<Actor id="0120" ROMaddr="00C7E930" vRAMaddr="808AFC30" vRAMvars="808B01E0">Zora's Domain Waterfall</Actor>
+<Actor id="0121" ROMaddr="00DD69A0" vRAMaddr="80A1FDC0" vRAMvars="80A21B70">Freezard</Actor>
+<Actor id="0122" ROMaddr="00E8D720" vRAMaddr="80AD7740" vRAMvars="80AD8CD8">Dampe's Ghost</Actor>
+<Actor id="0123" ROMaddr="00C77B50" vRAMaddr="808A8E50" vRAMvars="808A94E0">Rotating Windmill Mechanism</Actor>
+<Actor id="0124" ROMaddr="00DA4460" vRAMaddr="809ED870" vRAMvars="809EF090">Zora Diving Game</Actor>
+<Actor id="0125" ROMaddr="00E51010" vRAMaddr="80A9AFA0" vRAMvars="80A9C1E0">Grass Clump, doesn't regrow</Actor>
+<Actor id="0126" ROMaddr="00F3D6A0" vRAMaddr="80B8EA80" vRAMvars="80B90E34">Bean Planting Spot</Actor>
+<Actor id="0127" ROMaddr="00F40210" vRAMaddr="80B915F0" vRAMvars="80B91A80">Brown Boulder</Actor>
+
+
+<Actor id="012A" ROMaddr="00F4BE30" vRAMaddr="80B9D210" vRAMvars="80B9EC00">Dungeon Switches</Actor>
+<Actor id="012B" ROMaddr="00F41720" vRAMaddr="80B92B00" vRAMvars="80B92E30">Huge Stone Switch/Stone Elevator</Actor>
+<Actor id="012C" ROMaddr="00F44CF0" vRAMaddr="80B960D0" vRAMvars="80B969A0">Square Collapsing Platform</Actor>
+<Actor id="012D" ROMaddr="00F42780" vRAMaddr="80B93B60" vRAMvars="80B940A0">Stone Hookshot Targer</Actor>
+<Actor id="012E" ROMaddr="00E74D90" vRAMaddr="80ABED20" vRAMvars="80AC02E0">Play Ocarina Here Spot</Actor>
+<Actor id="012F" ROMaddr="00EF8AD0" vRAMaddr="80B42DC0" vRAMvars="80B43540">Horseback Archery Target</Actor>
+<Actor id="0130" ROMaddr="00E02880" vRAMaddr="80A4BCA0" vRAMvars="80A4DE60">Rolling Boulder</Actor>
+<Actor id="0131" ROMaddr="00DC1000" vRAMaddr="80A0A410" vRAMvars="80A0B338">Sparkling Rupee</Actor>
+<Actor id="0132" ROMaddr="00ED5FC0" vRAMaddr="80B20170" vRAMvars="80B20BE0">Head Carpenter</Actor>
+<Actor id="0133" ROMaddr="00D99720" vRAMaddr="809E2B30" vRAMvars="809E4040">Carpenter</Actor>
+
+<Actor id="0135" ROMaddr="00E72150" vRAMaddr="80ABC0E0" vRAMvars="80ABCA60">Alpha Blue Balls</Actor>
+<Actor id="0136" ROMaddr="00D7B690" vRAMaddr="809C2060" vRAMvars="809C2560">Dark Link's Illusion Room</Actor>
+<Actor id="0137" ROMaddr="00F34C00" vRAMaddr="80B85FE0" vRAMvars="80B860E0">Zelda's Magic to Open Gates</Actor>
+<Actor id="0138" ROMaddr="00DE7550" vRAMaddr="80A30970" vRAMvars="80A32750">White Clothed Gerudo</Actor>
+<Actor id="0139" ROMaddr="00F40080" vRAMaddr="80B91460" vRAMvars="80B915A0">Block Save Point</Actor>
+<Actor id="013A" ROMaddr="00EAEE00" vRAMaddr="80AF8E20" vRAMvars="80AFA0B0">Alpha Link Shadow Activator</Actor>
+<Actor id="013B" ROMaddr="00D8CBD0" vRAMaddr="809D35B0" vRAMvars="809D5C10">Alpha Arwing</Actor>
+<Actor id="013C" ROMaddr="00E6FCB0" vRAMaddr="80AB9C40" vRAMvars="80ABB380">Cucco Lady</Actor>
+<Actor id="013D" ROMaddr="00DF42C0" vRAMaddr="80A3D6E0" vRAMvars="80A3E330">Medigoron</Actor>
+<Actor id="013E" ROMaddr="00E65D90" vRAMaddr="80AAFD20" vRAMvars="80AB0300">Bean Seller</Actor>
+<Actor id="013F" ROMaddr="00E24F80" vRAMaddr="80A6E3A0" vRAMvars="80A6EDB0">Carpenter's Son</Actor>
+<Actor id="0140" ROMaddr="00C61480" vRAMaddr="80892740" vRAMvars="80892A90">Ingo's Gates</Actor>
+<Actor id="0141" ROMaddr="00E48010" vRAMaddr="80A91FA0" vRAMvars="80A94470">Square Signpost</Actor>
+<Actor id="0142" ROMaddr="00E0C220" vRAMaddr="80A55640" vRAMvars="80A55F44">Hyrule Castle Guard</Actor>
+<Actor id="0143" ROMaddr="00EC7780" vRAMaddr="80B118F0" vRAMvars="80B13640">Hopping Cucco, Not Solid</Actor>
+<Actor id="0144" ROMaddr="00D6E730" vRAMaddr="809B5100" vRAMvars="809B6150">Attacking Cucco</Actor>
+<Actor id="0145" ROMaddr="00C7AB80" vRAMaddr="808ABE80" vRAMvars="808AC050">Stone Blocking Well Entrance</Actor>
+<Actor id="0146" ROMaddr="00EAB540" vRAMaddr="80AF5560" vRAMvars="80AF7240">Saria</Actor>
+<Actor id="0147" ROMaddr="00EEEE40" vRAMaddr="80B390F0" vRAMvars="80B39950">Checkable Spot</Actor>
+<Actor id="0148" ROMaddr="00C47420" vRAMaddr="808786C0" vRAMvars="80878B30">Rainbow Bridge</Actor>
+<Actor id="0149" ROMaddr="00DB3C20" vRAMaddr="809FD030" vRAMvars="809FDB20">Potion Shop Lady</Actor>
+<Actor id="014A" ROMaddr="00E62970" vRAMaddr="80AAC900" vRAMvars="80AAD600">Lake Hylia Doctor</Actor>
+<Actor id="014B" ROMaddr="00D7CC60" vRAMaddr="809C3630" vRAMvars="809C49F0">Bombchu Bowling Girl</Actor>
+<Actor id="014C" ROMaddr="00D7E470" vRAMaddr="809C4E40" vRAMvars="809C56F4">Bombchu Bowling Pit</Actor>
+<Actor id="014D" ROMaddr="00E7FF90" vRAMaddr="80AC9F20" vRAMvars="80ACD5D0">Kaepora Gaebora</Actor>
+<Actor id="014E" ROMaddr="00E35030" vRAMaddr="80A7E460" vRAMvars="80A7F9F8">Rock</Actor>
+<Actor id="014F" ROMaddr="00F42480" vRAMaddr="80B93860" vRAMvars="80B93A50">Grave Flower</Actor>
+<Actor id="0150" ROMaddr="00F457C0" vRAMaddr="80B96BA0" vRAMvars="80B97F00">Light Activated Sun Switch/Sun Block</Actor>
+<Actor id="0151" ROMaddr="00F48B60" vRAMaddr="80B99F40" vRAMvars="80B9A7E0">Circle of Bushes</Actor>
+<Actor id="0152" ROMaddr="00DF5150" vRAMaddr="80A3E570" vRAMvars="80A41AE0">Goron (Cutscene?)</Actor>
+<Actor id="0153" ROMaddr="00DD4400" vRAMaddr="80A1D810" vRAMvars="80A1E400">Windmill Man</Actor>
+
+<Actor id="0155" ROMaddr="00D8BCB0" vRAMaddr="809D2690" vRAMvars="809D3080">Treasure Chests from Treasure Box Game</Actor>
+<Actor id="0156" ROMaddr="00C68E70" vRAMaddr="8089A130" vRAMvars="8089AFC0">Large Stone Face</Actor>
+<Actor id="0157" ROMaddr="00C688E0" vRAMaddr="80899BA0" vRAMvars="8089A024">Hanging Platform</Actor>
+<Actor id="0158" ROMaddr="00C62420" vRAMaddr="808936E0" vRAMvars="80893ED4">Large Circular Mirror</Actor>
+<Actor id="0159" ROMaddr="00C631E0" vRAMaddr="808944A0" vRAMvars="80894F20">Light Blocking Rock</Actor>
+<Actor id="015A" ROMaddr="00C62000" vRAMaddr="808932C0" vRAMvars="808935D0">Circular, Lifting Metal Shutter</Actor>
+<Actor id="015B" ROMaddr="00C63EE0" vRAMaddr="808951A0" vRAMvars="80895700">Bombable Rock</Actor>
+<Actor id="015C" ROMaddr="00C86410" vRAMaddr="808B7710" vRAMvars="808B8550">Giant Three Sided Goron Statue</Actor>
+
+<Actor id="015E" ROMaddr="00DDEBE0" vRAMaddr="80A28000" vRAMvars="80A283C0">Ganondorf's Organ</Actor>
+<Actor id="015F" ROMaddr="00EB1AA0" vRAMaddr="80AFBB80" vRAMvars="80AFC7F0">Water Spout</Actor>
+<Actor id="0160" ROMaddr="00EC16B0" vRAMaddr="80B0B7A0" vRAMvars="80B0BCA0">Whirlpool Effect</Actor>
+
+<Actor id="0162" ROMaddr="00E637E0" vRAMaddr="80AAD770" vRAMvars="80AAEAC0">Running Man</Actor>
+<Actor id="0163" ROMaddr="00E4CE20" vRAMaddr="80A96DB0" vRAMvars="80A9A0E0">Kokiri</Actor>
+<Actor id="0164" ROMaddr="00E525C0" vRAMaddr="80A9C550" vRAMvars="80A9D8A0">King Zora</Actor>
+<Actor id="0165" ROMaddr="00EE6E50" vRAMaddr="80B31020" vRAMvars="80B31E20">Weather Effects</Actor>
+<Actor id="0166" ROMaddr="00C88610" vRAMaddr="808B9910" vRAMvars="808B9E1C">Bongo Bongo Floor</Actor>
+<Actor id="0167" ROMaddr="00D699A0" vRAMaddr="809B0370" vRAMvars="809B0F20">Kakariko Village Rooftop Man</Actor>
+<Actor id="0168" ROMaddr="00DBFA90" vRAMaddr="80A08EA0" vRAMvars="80A09DE0">Lost Woods Slingshot Game</Actor>
+<Actor id="0169" ROMaddr="00C675E0" vRAMaddr="808988A0" vRAMvars="80899484">Brick Pillar</Actor>
+<Actor id="016A" ROMaddr="00E3F9E0" vRAMaddr="80A88E10" vRAMvars="80A89690">Bombchu Salesman</Actor>
+<Actor id="016B" ROMaddr="00E40370" vRAMaddr="80A897A0" vRAMvars="80A8AA70">Flying Carpet</Actor>
+<Actor id="016C" ROMaddr="00D984A0" vRAMaddr="809E18B0" vRAMvars="809E28A0">Graveyard Boy</Actor>
+<Actor id="016D" ROMaddr="00E602C0" vRAMaddr="80AAA250" vRAMvars="80AAC2F0">Mido</Actor>
+<Actor id="016E" ROMaddr="00E26190" vRAMaddr="80A6F5B0" vRAMvars="80A71EA0">Hylians</Actor>
+<Actor id="016F" ROMaddr="00DDA940" vRAMaddr="80A23D60" vRAMvars="80A24D00">Ganondorf's Mantle</Actor>
+<Actor id="0170" ROMaddr="00E747D0" vRAMaddr="80ABE760" vRAMvars="80ABEBD0">Rain and Lightning</Actor>
+<Actor id="0171" ROMaddr="00E59B70" vRAMaddr="80AA3B00" vRAMvars="80AA5EA0">Title Screen Actor</Actor>
+<Actor id="0172" ROMaddr="00D4DC20" vRAMaddr="809945E0" vRAMvars="80994B50">Metal Grate Door</Actor>
+<Actor id="0173" ROMaddr="00D66D30" vRAMaddr="809AD700" vRAMvars="809ADC10">Targetable Navi Spot</Actor>
+<Actor id="0174" ROMaddr="00D36D00" vRAMaddr="8097D670" vRAMvars="80982758">Ganon's Tower Collapsing</Actor>
+<Actor id="0175" ROMaddr="00E89B70" vRAMaddr="80AD3B00" vRAMvars="80AD7060">Hyrule Field Poes/Big Poes</Actor>
+<Actor id="0176" ROMaddr="00D562E0" vRAMaddr="8099CCB0" vRAMvars="8099D750">Lava Sprites</Actor>
+<Actor id="0177" ROMaddr="00C8F920" vRAMaddr="808C0C20" vRAMvars="808C1020">Metal Bars</Actor>
+<Actor id="0178" ROMaddr="00E0CCB0" vRAMaddr="80A560D0" vRAMvars="80A56ED0">Hyrule Guard</Actor>
+<Actor id="0179" ROMaddr="00F090B0" vRAMaddr="80B533B0" vRAMvars="80B5A574">Adult Zelda</Actor>
+<Actor id="017A" ROMaddr="00CC80C0" vRAMaddr="808FCF40" vRAMvars="80906D40">Ganon</Actor>
+<Actor id="017B" ROMaddr="00E451E0" vRAMaddr="80A8F170" vRAMvars="80A8FE0C">Scarecrow</Actor>
+<Actor id="017C" ROMaddr="00ECD3F0" vRAMaddr="80B17560" vRAMvars="80B17DB0">Treasure Chest Shop Man</Actor>
+<Actor id="017D" ROMaddr="00F47130" vRAMaddr="80B98510" vRAMvars="80B988D0">Push Block (Has Savepoint)</Actor>
+<Actor id="017E" ROMaddr="00F54C80" vRAMaddr="80BA6070" vRAMvars="80BA6840">Sun's Song effect</Actor>
+<Actor id="017F" ROMaddr="00F1B420" vRAMaddr="80B65720" vRAMvars="80B65E80">The End Message</Actor>
+
+<Actor id="0181" ROMaddr="00ED3720" vRAMaddr="80B1D890" vRAMvars="80B1D920">Treasure Chest (Variable chosen by Hole)</Actor>
+<Actor id="0182" ROMaddr="00D26B40" vRAMaddr="8096D4B0" vRAMvars="80970610">Ranch NPC's (Ending Cutscene)</Actor>
+<Actor id="0183" ROMaddr="00F5C8D0" vRAMaddr="80BADCC0" vRAMvars="80BAE2D0">Fire Arrow Shot/Sun's Song Fairy</Actor>
+<Actor id="0184" ROMaddr="00DB62E0" vRAMaddr="809FF6F0" vRAMvars="809FFC20">Great Fairy's Pink and Yellow Beams</Actor>
+<Actor id="0185" ROMaddr="00EEFC20" vRAMaddr="80B39ED0" vRAMvars="80B3A8C0">Checkable Spot</Actor>
+<Actor id="0186" ROMaddr="00DE97B0" vRAMaddr="80A32BD0" vRAMvars="80A342F0">Patrolling Gerudo</Actor>
+<Actor id="0187" ROMaddr="00F4BBF0" vRAMaddr="80B9CFD0" vRAMvars="80B9D1B0">Room Timer</Actor>
+<Actor id="0188" ROMaddr="00EB8180" vRAMaddr="80B02270" vRAMvars="80B04450">Cursed Skulltula People</Actor>
+<Actor id="0189" ROMaddr="00EBD450" vRAMaddr="80B07540" vRAMvars="80B08410">Uncursed Skulltula People</Actor>
+<Actor id="018A" ROMaddr="00F579A0" vRAMaddr="80BA8D90" vRAMvars="80BA92C0">Zelda's Lullaby Effect</Actor>
+<Actor id="018B" ROMaddr="00F55CF0" vRAMaddr="80BA70E0" vRAMvars="80BA7870">Song of Storms Effect</Actor>
+<Actor id="018C" ROMaddr="00EE80C0" vRAMaddr="80B32290" vRAMvars="80B33A70">Stingray</Actor>
+<Actor id="018D" ROMaddr="00C7D170" vRAMaddr="808AE470" vRAMvars="808AE700">Sacred Forest Meadow Water and Gate</Actor>
+<Actor id="018E" ROMaddr="00C618A0" vRAMaddr="80892B60" vRAMvars="808930E4">Stone Platform</Actor>
+<Actor id="018F" ROMaddr="00C66E00" vRAMaddr="808980C0" vRAMvars="80898720">Pillar after being hit by Iron Knuckle\</Actor>
+<Actor id="0190" ROMaddr="00C81C90" vRAMaddr="808B2F90" vRAMvars="808B3310">Gerudo Fortress wooden gate</Actor>
+<Actor id="0191" ROMaddr="00C82120" vRAMaddr="808B3420" vRAMvars="808B3820">Gerudo Training Area Gate</Actor>
+<Actor id="0192" ROMaddr="00E0DDE0" vRAMaddr="80A57200" vRAMvars="80A589E0">Green Deku Scrubs</Actor>
+<Actor id="0193" ROMaddr="00E71AC0" vRAMaddr="80ABBA50" vRAMvars="80ABBFA0">Deku Scrub's/Octorok's Deku Nut/ Rock Attack</Actor>
+<Actor id="0194" ROMaddr="00C782E0" vRAMaddr="808A95E0" vRAMvars="808A9720">Broken Drawbridge</Actor>
+<Actor id="0195" ROMaddr="00EB0640" vRAMaddr="80AFA720" vRAMvars="80AFB4C0">Grounded Business Scrub</Actor>
+<Actor id="0196" ROMaddr="00E3E250" vRAMaddr="80A87680" vRAMvars="80A87798">Dampe Game Collectables</Actor>
+<Actor id="0197" ROMaddr="00DEBEF0" vRAMaddr="80A35310" vRAMvars="80A39FC0">Gerudo Fighter</Actor>
+<Actor id="0198" ROMaddr="00F587C0" vRAMaddr="80BA9BB0" vRAMvars="80BAA010">Epona's Song Effect</Actor>
+<Actor id="0199" ROMaddr="00F5A000" vRAMaddr="80BAB3F0" vRAMvars="80BAB850">Saria's Song Effect</Actor>
+<Actor id="019A" ROMaddr="00E6EFF0" vRAMaddr="80AB8F80" vRAMvars="80AB9980">Child Chasing Cucco in Hyrule Market</Actor>
+<Actor id="019B" ROMaddr="00DB1BC0" vRAMaddr="809FAFD0" vRAMvars="809FBEF0">Dog</Actor>
+<Actor id="019C" ROMaddr="00EB15B0" vRAMaddr="80AFB690" vRAMvars="80AFBAE8">Golden Skulltula Token</Actor>
+<Actor id="019D" ROMaddr="00C7AE40" vRAMaddr="808AC140" vRAMvars="808AC4E0">Semi-Built Shooting Gallery</Actor>
+<Actor id="019E" ROMaddr="00F40780" vRAMaddr="80B91B60" vRAMvars="80B922C0">Beehive</Actor>
+<Actor id="019F" ROMaddr="00C80E80" vRAMaddr="808B2180" vRAMvars="808B26E0">Nayru Fountain Bombable Wall</Actor>
+<Actor id="01A0" ROMaddr="00F445F0" vRAMaddr="80B959D0" vRAMvars="80B95FB0">Crate</Actor>
+<Actor id="01A1" ROMaddr="00DA74D0" vRAMaddr="809F08E0" vRAMvars="809F15A0">Deku Stage Cutscene</Actor>
+<Actor id="01A2" ROMaddr="00DA86D0" vRAMaddr="809F1AE0" vRAMvars="809F2F80">Deku Stage Judge</Actor>
+<Actor id="01A3" ROMaddr="00DA9EB0" vRAMaddr="809F32C0" vRAMvars="809F5DB0">Deku Panel</Actor>
+<Actor id="01A4" ROMaddr="00E06E00" vRAMaddr="80A50220" vRAMvars="80A50B50">Man in Purple Pants and White Top</Actor>
+<Actor id="01A5" ROMaddr="00C3D320" vRAMaddr="8086E550" vRAMvars="8086E730">Bombchu Bowling Alley Game</Actor>
+<Actor id="01A6" ROMaddr="00E25B80" vRAMaddr="80A6EFA0" vRAMvars="80A6F480">Carpenter's Son (Child)</Actor>
+<Actor id="01A7" ROMaddr="00D46610" vRAMaddr="8098CFD0" vRAMvars="8098E090">Ganon's Tower Magic Barrier</Actor>
+<Actor id="01A8" ROMaddr="00C7EFD0" vRAMaddr="808B02D0" vRAMvars="808B0810">Zora's Fountain Bombable Wall</Actor>
+<Actor id="01A9" ROMaddr="00C858C0" vRAMaddr="808B6BC0" vRAMvars="808B7280">Death Mountain Crater Bombable Wall</Actor>
+
+<Actor id="01AB" ROMaddr="00F495F0" vRAMaddr="80B9A9D0" vRAMvars="80B9B0A0">Tower of Rupees</Actor>
+<Actor id="01AC" ROMaddr="00ECE1F0" vRAMaddr="80B18360" vRAMvars="80B18948">Honey and Darling</Actor>
+<Actor id="01AD" ROMaddr="00E66490" vRAMaddr="80AB0420" vRAMvars="80AB0C08">Haggling Townspeople</Actor>
+<Actor id="01AE" ROMaddr="00DF9910" vRAMaddr="80A42D30" vRAMvars="80A4814C">Most Normal Gorons and Biggoron</Actor>
+<Actor id="01AF" ROMaddr="00EE9AE0" vRAMaddr="80B33CB0" vRAMvars="80B37AA8">Wolfos</Actor>
+<Actor id="01B0" ROMaddr="00EB28C0" vRAMaddr="80AFC9A0" vRAMvars="80AFE098">Stalchildren</Actor>
+<Actor id="01B1" ROMaddr="00D31FC0" vRAMaddr="80978930" vRAMvars="8097BF70">Ganon Battle Rubble</Actor>
+<Actor id="01B2" ROMaddr="00D314D0" vRAMaddr="80977E40" vRAMvars="809785B8">Crumbling Stone</Actor>
+<Actor id="01B3" ROMaddr="00C48220" vRAMaddr="808794C0" vRAMvars="808799C0">Sinkable Lava Platform</Actor>
+<Actor id="01B4" ROMaddr="00C47990" vRAMaddr="80878C30" vRAMvars="808793C0">Invisible/Transparent Platforms</Actor>
+<Actor id="01B5" ROMaddr="00C49B10" vRAMaddr="8087ADC0" vRAMvars="8087B510">Web Blocked Light Window</Actor>
+<Actor id="01B6" ROMaddr="00C499A0" vRAMaddr="8087AC50" vRAMvars="8087AD40">2D Stone Wall</Actor>
+<Actor id="01B7" ROMaddr="00C48800" vRAMaddr="80879AA0" vRAMvars="8087A720">Large Square Ice Block</Actor>
+<Actor id="01B8" ROMaddr="00DE5D60" vRAMaddr="80A2F180" vRAMvars="80A30640">Poe Collector</Actor>
+<Actor id="01B9" ROMaddr="00E04F00" vRAMaddr="80A4E320" vRAMvars="80A4FD80">Gossip Stone</Actor>
+<Actor id="01BA" ROMaddr="00C6B1B0" vRAMaddr="8089C480" vRAMvars="8089D6A0">Bombable Stone Wall</Actor>
+<Actor id="01BB" ROMaddr="00C6DB70" vRAMaddr="8089EE50" vRAMvars="8089F520">Metal Gate</Actor>
+<Actor id="01BC" ROMaddr="00D9AF10" vRAMaddr="809E4320" vRAMvars="809E5490">Carpenters in Kakariko</Actor>
+<Actor id="01BD" ROMaddr="00C3DF30" vRAMaddr="8086F160" vRAMvars="8086FA20">Bombchu Bowling Alley Wall</Actor>
+<Actor id="01BE" ROMaddr="00EE4C20" vRAMaddr="80B2EDF0" vRAMvars="80B2F320">Bombchu Bowling Alley Wall 2</Actor>
+<Actor id="01BF" ROMaddr="00E88D20" vRAMaddr="80AD2CB0" vRAMvars="80AD3980">Haunted Wasteland Guiding Poe</Actor>
+<Actor id="01C0" ROMaddr="00D96E30" vRAMaddr="809E0240" vRAMvars="809E164C">Guay</Actor>
+<Actor id="01C1" ROMaddr="00D4E290" vRAMaddr="80994C50" vRAMvars="80995F90">Fake Stomping Door</Actor>
+<Actor id="01C2" ROMaddr="00C814F0" vRAMaddr="808B27F0" vRAMvars="808B2DF0">Refilling Oasis</Actor>
+<Actor id="01C3" ROMaddr="00C87480" vRAMaddr="808B8780" vRAMvars="808B88B0">Lid to the Giant Goron Pot</Actor>
+<Actor id="01C4" ROMaddr="00C880D0" vRAMaddr="808B93D0" vRAMvars="808B9850">Goron Room Door</Actor>
+<Actor id="01C5" ROMaddr="00E58B10" vRAMaddr="80AA2AA0" vRAMvars="80AA37F0">Adult Malon (Ranch)</Actor>
+<Actor id="01C6" ROMaddr="00D959F0" vRAMaddr="809DEE00" vRAMvars="809E00C0">Cow</Actor>
+<Actor id="01C7" ROMaddr="00C60C60" vRAMaddr="80891F20" vRAMvars="8089264C">Ice Stalagmite/Stalagtite</Actor>
+<Actor id="01C8" ROMaddr="00C60800" vRAMaddr="80891AC0" vRAMvars="80891E90">2D Ice Bars</Actor>
+<Actor id="01C9" ROMaddr="00E46080" vRAMaddr="80A90010" vRAMvars="80A909CC">Scarecrow Song Spot</Actor>
+<Actor id="01CA" ROMaddr="00E46D90" vRAMaddr="80A90D20" vRAMvars="80A91D3C">Bonooru the Scarecrow</Actor>
+<Actor id="01CB" ROMaddr="00F5B820" vRAMaddr="80BACC10" vRAMvars="80BAD050">Song of Time Effect</Actor>
+<Actor id="01CC" ROMaddr="00DB6980" vRAMaddr="809FFD90" vRAMvars="809FFEE8">Zelda's Path in Ganon Castle Escape?</Actor>
+<Actor id="01CD" ROMaddr="00C6B060" vRAMaddr="8089C330" vRAMvars="8089C410">Circular Piece of Stone Wall</Actor>
+<Actor id="01CE" ROMaddr="00F15F20" vRAMaddr="80B60220" vRAMvars="80B624C4">Zora</Actor>
+<Actor id="01CF" ROMaddr="00F46E90" vRAMaddr="80B98270" vRAMvars="80B98410">Skulltula Sprouting from Bean Spot</Actor>
+<Actor id="01D0" ROMaddr="00DEB200" vRAMaddr="80A34620" vRAMvars="80A35170">Gerudo giving you Membership Card</Actor>
+<Actor id="01D1" ROMaddr="00F4EBB0" vRAMaddr="80B9FFA0" vRAMvars="80BA0AD0">Time Block</Actor>
+<Actor id="01D2" ROMaddr="00F41BB0" vRAMaddr="80B92F90" vRAMvars="80B93730">Bronze Boulder</Actor>
+<Actor id="01D3" ROMaddr="00F114B0" vRAMaddr="80B5B7B0" vRAMvars="80B5E760">Princess Zelda (Child - Cutscene)</Actor>
+<Actor id="01D4" ROMaddr="00E64EC0" vRAMaddr="80AAEE50" vRAMvars="80AAFAA0">Running Man (Adult)</Actor>
+<Actor id="01D5" ROMaddr="00C62EE0" vRAMaddr="808941A0" vRAMvars="808943E0">Young Link Silver Block</Actor>
+<Actor id="01D6" ROMaddr="00F50A00" vRAMaddr="80BA1DF0" vRAMvars="80BA2820">Time Block Spawning Spot</Actor>
+</Table>

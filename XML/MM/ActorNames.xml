@@ -1,0 +1,587 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt16" ValueType="System.String">
+  <Actor Key="0000" Object="0000" Name="Player" Category="1"></Actor>
+  <Actor Key="0001" Object="0001" Name="En_Test" Category="1"></Actor>
+  <Actor Key="0002" Object="0001" Name="En_GirlA" Category="1"></Actor>
+  <Actor Key="0003" Object="0001" Name="En_Part" Category="1"></Actor>
+  <Actor Key="0004" Object="0001" Name="Flame" Category="1"></Actor>
+  <Actor Key="0005" Object="0001" Name="Wooden Door" Category="1"></Actor>
+  <Actor Key="0006" Object="000C" Name="Treasure Chest" Category="1"></Actor>
+  <Actor Key="0007" Object="0128" Name="Gekko and Snapper Miniboss" Category="1"></Actor>
+  <Actor Key="0008" Object="0005" Name="Octorok" Category="1"></Actor>
+  <Actor Key="0009" Object="0001" Name="Powder Keg" Category="1"></Actor>
+  <Actor Key="000A" Object="0009" Name="Wallmaster" Category="1"></Actor>
+  <Actor Key="000B" Object="000A" Name="Dodongo" Category="1">
+      <Variable Var="0000">Regular</Variable>
+      <Variable Var="0001">Large</Variable>
+  </Actor>
+  <Actor Key="000C" Object="000B" Name="Keese" Category="1"></Actor>
+  <Actor Key="000D" Object="0001" Name="Child Epona (Cutscenes)" Category="1"></Actor>
+  <Actor Key="000E" Object="0000" Name="Collectable Items" Category="1"></Actor>
+  <Actor Key="000F" Object="0001" Name="Arrow" Category="1"></Actor>
+  <Actor Key="0010" Object="0001" Name="Healing Fairy and Tatl (Gameplay)" Category="1"></Actor>
+  <Actor Key="0011" Object="000F" Name="Cucco" Category="1"></Actor>
+  <Actor Key="0012" Object="0012" Name="Tektite" Category="1"></Actor>
+  <Actor Key="0014" Object="0014" Name="Peahat" Category="1"></Actor>
+  <Actor Key="0015" Object="0002" Name="Butterfly" Category="1"></Actor>
+  <Actor Key="0016" Object="0001" Name="Bug" Category="1"></Actor>
+  <Actor Key="0017" Object="0001" Name="Fish" Category="1"></Actor>
+  <Actor Key="0018" Object="0001" Name="Black Room Transition Plane" Category="1"></Actor>
+  <Actor Key="0019" Object="0017" Name="Dinolfos" Category="1"></Actor>
+  <Actor Key="001A" Object="005F" Name="Red Flag on Post" Category="1"></Actor>
+  <Actor Key="001B" Object="0019" Name="Child Zelda" Category="1"></Actor>
+  <Actor Key="001C" Object="0001" Name="En_Viewer" Category="1"></Actor>
+  <Actor Key="001D" Object="000E" Name="Shabom" Category="1"></Actor>
+  <Actor Key="001E" Object="0001" Name="Dungeon Door" Category="1"></Actor>
+  <Actor Key="0020" Object="0001" Name="Zora Fins" Category="1"></Actor>
+  <Actor Key="0021" Object="0001" Name="Elegy Statues" Category="1"></Actor>
+  <Actor Key="0022" Object="00BC" Name="Frog" Category="1"></Actor>
+  <Actor Key="0024" Object="0020" Name="Skulltula" Properties="003F" PropertiesNames="Switch Flag" Category="1">
+    <Variable Var="0000">Default</Variable>
+    <Variable Var="0040">Invisible</Variable>
+  </Actor>
+  <Actor Key="0026" Object="0000" Name="Directional Sign and Square Sign [Early]" Category="1"></Actor>
+  <Actor Key="0027" Object="0001" Name="Stone Tower Temple Inverter" Category="1"></Actor>
+  <Actor Key="0028" Object="0001" Name="Sound Effects I" Category="1"></Actor>
+  <Actor Key="002A" Object="0001" Name="Middle-Aged Man" Category="1"></Actor>
+  <Actor Key="002D" Object="001D" Name="Death Armos" Category="1"></Actor>
+  <Actor Key="002F" Object="002A" Name="Bomb Flower" Category="1"></Actor>
+  <Actor Key="0032" Object="0030" Name="Armos" Category="1"></Actor>
+  <Actor Key="0033" Object="0031" Name="Deku Baba" Category="1"></Actor>
+  <Actor Key="0034" Object="0001" Name="Deku Nut Effect" Category="1"></Actor>
+  <Actor Key="0035" Object="0001" Name="Spin Attack and Sword Beam Effects" Category="1"></Actor>
+  <Actor Key="0036" Object="0001" Name="Bg_Breakwall" Category="1"></Actor>
+  <Actor Key="0038" Object="003E" Name="Blue Warp" Category="1"></Actor>
+  <Actor Key="0039" Object="0080" Name="Torch Stand" Category="1"></Actor>
+  <Actor Key="003A" Object="0096" Name="Heart Container (Boss Lairs)" Category="1"></Actor>
+  <Actor Key="003B" Object="0040" Name="Mad Scrub" Category="1"></Actor>
+  <Actor Key="003C" Object="0051" Name="Red Bubble" Category="1"></Actor>
+  <Actor Key="003D" Object="0001" Name="Hookshot" Category="1"></Actor>
+  <Actor Key="003E" Object="0051" Name="Blue Bubble" Category="1"></Actor>
+  <Actor Key="003F" Object="017E" Name="Fountain Water" Category="1"></Actor>
+  <Actor Key="0041" Object="0061" Name="Greenery" Category="1"></Actor>
+  <Actor Key="0043" Object="0052" Name="Gomess" Category="1"></Actor>
+  <Actor Key="0044" Object="0052" Name="Gomess' Bats" Category="1"></Actor>
+  <Actor Key="0047" Object="006A" Name="Beamos" Category="1"></Actor>
+  <Actor Key="0048" Object="0001" Name="Demo_Effect" Category="1"></Actor>
+  <Actor Key="0049" Object="0001" Name="Environment Effects" Category="1"></Actor>
+  <Actor Key="004A" Object="0009" Name="Floormaster" Category="1"></Actor>
+  <Actor Key="004C" Object="0075" Name="Redead" Category="1"></Actor>
+  <Actor Key="004D" Object="005C" Name="Stone Tower Temple Elevator [Early]" Category="1"></Actor>
+  <Actor Key="004E" Object="0000" Name="Golden Gauntlets Rock (JP 1.0 Only)" Category="1"></Actor>
+  <Actor Key="004F" Object="0001" Name="Fish, Bugs, Butterflies" Category="1"></Actor>
+  <Actor Key="0050" Object="0020" Name="Skullwalltula" Category="1"></Actor>
+  <Actor Key="0051" Object="0001" Name="Environment Effects 2?" Category="1"></Actor>
+  <Actor Key="0054" Object="007D" Name="Child Epona (Gameplay)" Category="1"></Actor>
+  <Actor Key="0055" Object="0002" Name="Grotto Hole" Category="1"></Actor>
+  <Actor Key="005B" Object="0001" Name="En_Encount1" Category="1"></Actor>
+  <Actor Key="005C" Object="000C" Name="Treasure Chest Glow" Category="1"></Actor>
+  <Actor Key="005F" Object="0280" Name="Majora Balloon" Category="1"></Actor>
+  <Actor Key="0060" Object="0070" Name="Rock and Beam of Light [OoT]" Category="1"></Actor>
+  <Actor Key="0061" Object="0088" Name="Clock Tower Helix Path" Category="1"></Actor>
+  <Actor Key="0062" Object="0087" Name="Mirror Shield Light Ray I [?]" Category="1"></Actor>
+  <Actor Key="0064" Object="008E" Name="Shellblade" Category="1"></Actor>
+  <Actor Key="0065" Object="0128" Name="Mad Jelly" Category="1"></Actor>
+  <Actor Key="0066" Object="0031" Name="Deku Baba" Category="1"></Actor>
+  <Actor Key="0067" Object="0099" Name="Gorman Bros." Category="1"></Actor>
+  <Actor Key="0069" Object="00A2" Name="Adult Ruto [OoT]" Category="1"></Actor>
+  <Actor Key="006A" Object="0001" Name="Bombchu" Category="1"></Actor>
+  <Actor Key="006B" Object="0191" Name="En_Horse_Game_Check" Category="1"></Actor>
+  <Actor Key="006C" Object="00AB" Name="Like Like" Category="1"></Actor>
+  <Actor Key="0073" Object="0001" Name="En_Fr" Category="1"></Actor>
+  <Actor Key="0079" Object="0000" Name="Fishing Pond Owner (JP 1.0 Only)" Category="1"></Actor>
+  <Actor Key="007A" Object="0003" Name="Pushable Block" Category="1"></Actor>
+  <Actor Key="007B" Object="0001" Name="Spin Attack Charge Particles" Category="1"></Actor>
+  <Actor Key="007C" Object="0001" Name="Horse Jumping Fence" Category="1"></Actor>
+  <Actor Key="007D" Object="0001" Name="Fire Arrow" Category="1"></Actor>
+  <Actor Key="007E" Object="0001" Name="Ice Arrow" Category="1"></Actor>
+  <Actor Key="007F" Object="0001" Name="Light Arrow" Category="1"></Actor>
+  <Actor Key="0080" Object="0001" Name="Item_Etcetera" Category="1"></Actor>
+  <Actor Key="0081" Object="0001" Name="Small Wooden Crate" Category="1"></Actor>
+  <Actor Key="0082" Object="0001" Name="Pot" Category="1"></Actor>
+  <Actor Key="0084" Object="00D8" Name="Iron Knuckle" Category="1"></Actor>
+  <Actor Key="0089" Object="0153" Name="Demo_Shd" Category="1"></Actor>
+  <Actor Key="008A" Object="0134" Name="Deku Scrub Guard (Royal Chamber)" Category="1"></Actor>
+  <Actor Key="008B" Object="0001" Name="Elf_Msg" Category="1"></Actor>
+  <Actor Key="008C" Object="0003" Name="En_Honotrap" Category="1"></Actor>
+  <Actor Key="008D" Object="0003" Name="Flying Pot" Category="1"></Actor>
+  <Actor Key="008E" Object="0001" Name="Ice Sparkle Effect" Category="1"></Actor>
+  <Actor Key="008F" Object="00E4" Name="Freezard" Category="1"></Actor>
+  <Actor Key="0090" Object="0001" Name="Cut-able Grass" Category="1"></Actor>
+  <Actor Key="0091" Object="00EE" Name="Magic Bean Plant" Category="1"></Actor>
+  <Actor Key="0092" Object="012A" Name="Bombable Rock" Category="1"></Actor>
+  <Actor Key="0093" Object="0003" Name="Dungeon Switches" Category="1"></Actor>
+  <Actor Key="0095" Object="00ED" Name="Dampé's House Elevator" Category="1"></Actor>
+  <Actor Key="0096" Object="00EC" Name="Stone Hookshot Pillar" Category="1"></Actor>
+  <Actor Key="0097" Object="0001" Name="Ocarina Song Spot" Category="1"></Actor>
+  <Actor Key="0099" Object="00EF" Name="Snowball and Rolling Boulder [?]" Category="1"></Actor>
+  <Actor Key="009C" Object="00F1" Name="Carpenter (Clock Town)" Category="1"></Actor>
+  <Actor Key="009D" Object="00F2" Name="Cucco Chick" Category="1"></Actor>
+  <Actor Key="009E" Object="0001" Name="Item_Inbox" Category="1"></Actor>
+  <Actor Key="009F" Object="00E6" Name="Pirate Lieutenant" Category="1"></Actor>
+  <Actor Key="00A0" Object="0001" Name="Obj_Blockstop" Category="1"></Actor>
+  <Actor Key="00A1" Object="0001" Name="Dynamic Shadow (Glitchy)" Category="1"></Actor>
+  <Actor Key="00A2" Object="0001" Name="En_Clear_Tag" Category="1"></Actor>
+  <Actor Key="00A4" Object="0248" Name="Gorman" Category="1"></Actor>
+  <Actor Key="00A5" Object="00F4" Name="Magic Bean Seller" Category="1"></Actor>
+  <Actor Key="00A6" Object="00F5" Name="Grog" Category="1"></Actor>
+  <Actor Key="00A7" Object="017F" Name="Boat Cruise Canoe" Category="1"></Actor>
+  <Actor Key="00A8" Object="00FC" Name="Square Signpost" Category="1"></Actor>
+  <Actor Key="00AA" Object="000F" Name="Attacking Cucco" Category="1"></Actor>
+  <Actor Key="00AE" Object="00FE" Name="Marine Scientist" Category="1"></Actor>
+  <Actor Key="00AF" Object="00FD" Name="Owl" Category="1"></Actor>
+  <Actor Key="00B0" Object="0001" Name="Rock" Category="1"></Actor>
+  <Actor Key="00B1" Object="01BA" Name="Orange Graveyard Flower" Category="1"></Actor>
+  <Actor Key="00B2" Object="00F7" Name="Sun Switch" Category="1"></Actor>
+  <Actor Key="00B3" Object="0001" Name="Grass and Rock Cluster" Category="1"></Actor>
+  <Actor Key="00B5" Object="0140" Name="Honey and Darling" Category="1"></Actor>
+  <Actor Key="00B8" Object="0106" Name="Water Spout" Category="1"></Actor>
+  <Actor Key="00B9" Object="0001" Name="Rock Sirloin" Category="1"></Actor>
+  <Actor Key="00BC" Object="0001" Name="En_Weather_Tag" Category="1"></Actor>
+  <Actor Key="00BD" Object="00C2" Name="Part-Timer" Category="1"></Actor>
+  <Actor Key="00BF" Object="0271" Name="Moon Child" Category="1"></Actor>
+  <Actor Key="00C4" Object="0001" Name="Song of Storms Effect I [?]" Category="1"></Actor>
+  <Actor Key="00C5" Object="0115" Name="Title Logo" Category="1"></Actor>
+  <Actor Key="00C6" Object="0001" Name="Elf_Msg2" Category="1"></Actor>
+  <Actor Key="00C7" Object="005C" Name="Stone Tower Temple Platform [Early]" Category="1"></Actor>
+  <Actor Key="00CA" Object="011D" Name="Scarecrow" Category="1"></Actor>
+  <Actor Key="00CB" Object="0001" Name="Obj_Makeoshihiki" Category="1"></Actor>
+  <Actor Key="00CC" Object="0001" Name="Sun's Song Effect" Category="1"></Actor>
+  <Actor Key="00CE" Object="0001" Name="Treasure Chest (Grotto)" Category="1"></Actor>
+  <Actor Key="00D0" Object="0001" Name="Shot_Sun" Category="1"></Actor>
+  <Actor Key="00D3" Object="0001" Name="Obj_Roomtimer" Category="1"></Actor>
+  <Actor Key="00D4" Object="0127" Name="Cursed Skulltula Man" Category="1"></Actor>
+  <Actor Key="00D6" Object="0001" Name="Song of Time Effect" Category="1"></Actor>
+  <Actor Key="00D7" Object="0001" Name="Song of Storms Effect II [?]" Category="1"></Actor>
+  <Actor Key="00D8" Object="0001" Name="Cutscene Trigger" Category="1"></Actor>
+  <Actor Key="00D9" Object="0128" Name="Jelly Droplets" Category="1"></Actor>
+  <Actor Key="00DA" Object="0001" Name="Deku Nut Projectile" Category="1"></Actor>
+  <Actor Key="00DF" Object="0001" Name="Epona's Song Effect" Category="1"></Actor>
+  <Actor Key="00E0" Object="0001" Name="Saria's Song Effect" Category="1"></Actor>
+  <Actor Key="00E2" Object="0132" Name="Dog" Category="1"></Actor>
+  <Actor Key="00E3" Object="0020" Name="Gold Skulltula Token" Category="1"></Actor>
+  <Actor Key="00E4" Object="01B9" Name="Beehive" Category="1"></Actor>
+  <Actor Key="00E5" Object="0133" Name="Wooden Crate" Category="1"></Actor>
+  <Actor Key="00E7" Object="0001" Name="En_Hs2" Category="1"></Actor>
+  <Actor Key="00E8" Object="0001" Name="Rupee Cluster" Category="1"></Actor>
+  <Actor Key="00E9" Object="0140" Name="Honey and Darling (Cutscenes)" Category="1"></Actor>
+  <Actor Key="00EC" Object="0141" Name="Wolfos" Category="1"></Actor>
+  <Actor Key="00ED" Object="0142" Name="Stalchild" Category="1"></Actor>
+  <Actor Key="00EF" Object="0143" Name="Gossip Stone" Category="1"></Actor>
+  <Actor Key="00F0" Object="0001" Name="Sound Effects II" Category="1"></Actor>
+  <Actor Key="00F1" Object="0006" Name="Guay" Category="1"></Actor>
+  <Actor Key="00F3" Object="0146" Name="Cow" Category="1"></Actor>
+  <Actor Key="00F6" Object="0001" Name="Scarecrow's Song Effect" Category="1"></Actor>
+  <Actor Key="00F8" Object="00D0" Name="Zora [Early]" Category="1"></Actor>
+  <Actor Key="00F9" Object="0001" Name="Obj_Makekinsuta" Category="1"></Actor>
+  <Actor Key="00FA" Object="0130" Name="Aveil" Category="1"></Actor>
+  <Actor Key="00FC" Object="0002" Name="Bronze Boulder" Category="1"></Actor>
+  <Actor Key="00FD" Object="0192" Name="En_Zl4" Category="1"></Actor>
+  <Actor Key="00FE" Object="0001" Name="Postman's Letter to Himself" Category="1"></Actor>
+  <Actor Key="0100" Object="0001" Name="Spiral Staircase" Category="1"></Actor>
+  <Actor Key="0102" Object="0001" Name="Majora Pushblock" Category="1"></Actor>
+  <Actor Key="0103" Object="0064" Name="Blade Trap" Category="1"></Actor>
+  <Actor Key="0105" Object="0030" Name="Armos Statue" Category="1"></Actor>
+  <Actor Key="0106" Object="014F" Name="Green Bumper" Category="1"></Actor>
+  <Actor Key="0109" Object="014E" Name="Dragonfly" Category="1"></Actor>
+  <Actor Key="010B" Object="0002" Name="Obj_Grass" Category="1"></Actor>
+  <Actor Key="010C" Object="0002" Name="Obj_Grass_Carry" Category="1"></Actor>
+  <Actor Key="010D" Object="0002" Name="Grass Cluster" Category="1"></Actor>
+  <Actor Key="0110" Object="0153" Name="Proximity-Activated Firewall" Category="1"></Actor>
+  <Actor Key="0111" Object="0001" Name="En_Bu" Category="1"></Actor>
+  <Actor Key="0112" Object="023B" Name="Circle of Light [?]" Category="1"></Actor>
+  <Actor Key="0113" Object="0155" Name="Garo Master I [?]" Category="1"></Actor>
+  <Actor Key="0114" Object="00ED" Name="Falling Block Row" Category="1"></Actor>
+  <Actor Key="0115" Object="0156" Name="Igos du Ikana and Henchmen [?]" Category="1"></Actor>
+  <Actor Key="0116" Object="0001" Name="Warp to Trial Entrance" Category="1"></Actor>
+  <Actor Key="0117" Object="00D7" Name="Mamamu Yan" Category="1"></Actor>
+  <Actor Key="0118" Object="0001" Name="En_Boj_01" Category="1"></Actor>
+  <Actor Key="0119" Object="0001" Name="En_Boj_02" Category="1"></Actor>
+  <Actor Key="011A" Object="0001" Name="En_Boj_03" Category="1"></Actor>
+  <Actor Key="011B" Object="0001" Name="En_Encount4" Category="1"></Actor>
+  <Actor Key="011C" Object="0110" Name="Bomber I [?]" Category="1"></Actor>
+  <Actor Key="011D" Object="01AC" Name="Shooting Gallery Proprietors [?]" Category="1"></Actor>
+  <Actor Key="011F" Object="0157" Name="Icicle" Category="1"></Actor>
+  <Actor Key="0120" Object="0006" Name="Guay (Shooting Gallery)" Category="1"></Actor>
+  <Actor Key="0121" Object="0001" Name="En_Boj_04" Category="1"></Actor>
+  <Actor Key="0122" Object="0001" Name="Thin Woman in Blue Dress [OoT]" Category="1"></Actor>
+  <Actor Key="0123" Object="0001" Name="Bomb Shop Proprietor's Mother [Early]" Category="1"></Actor>
+  <Actor Key="0124" Object="00DE" Name="Shikashi" Category="1"></Actor>
+  <Actor Key="0125" Object="0158" Name="Spiderweb" Category="1"></Actor>
+  <Actor Key="0128" Object="0001" Name="En_Mt_tag" Category="1"></Actor>
+  <Actor Key="0129" Object="015A" Name="Odolwa" Category="1"></Actor>
+  <Actor Key="012A" Object="015B" Name="Twinmold" Category="1"></Actor>
+  <Actor Key="012B" Object="015C" Name="Gyorg" Category="1"></Actor>
+  <Actor Key="012C" Object="015D" Name="Wart" Category="1"></Actor>
+  <Actor Key="012D" Object="015E" Name="Bio Deku Baba" Category="1"></Actor>
+  <Actor Key="012E" Object="0156" Name="Igos du Ikana [?]" Category="1"></Actor>
+  <Actor Key="012F" Object="0160" Name="Majora" Category="1"></Actor>
+  <Actor Key="0130" Object="0008" Name="Great Fairy" Category="1"></Actor>
+  <Actor Key="0132" Object="0001" Name="En_Boj_05" Category="1"></Actor>
+  <Actor Key="0135" Object="0001" Name="En_Sob1" Category="1"></Actor>
+  <Actor Key="0138" Object="00A1" Name="Goron" Category="1"></Actor>
+  <Actor Key="013A" Object="0161" Name="Carnivorous Lilypad" Category="1"></Actor>
+  <Actor Key="013B" Object="0162" Name="Stone Tower Smoke Plume [Early]" Category="1"></Actor>
+  <Actor Key="013C" Object="0163" Name="Elevator (Deku Palace and Woodfall Temple) [?]" Category="1"></Actor>
+  <Actor Key="013D" Object="0164" Name="Wooden Flower" Category="1"></Actor>
+  <Actor Key="013E" Object="0165" Name="Potted Plant" Category="1"></Actor>
+  <Actor Key="013F" Object="0166" Name="Spiked Log (Horizontal)" Category="1"></Actor>
+  <Actor Key="0140" Object="01CC" Name="Boss Remains (Cutscenes)" Category="1"></Actor>
+  <Actor Key="0141" Object="0141" Name="Wolfos (Shooting Gallery)" Category="1"></Actor>
+  <Actor Key="0142" Object="0003" Name="Ice Pushblock" Category="1"></Actor>
+  <Actor Key="0143" Object="0167" Name="Frozen Enemy Ice Block" Category="1"></Actor>
+  <Actor Key="0144" Object="01A6" Name="Snapper (Mini-Boss)" Category="1"></Actor>
+  <Actor Key="0145" Object="0040" Name="Mad Scrub (Shooting Gallery)" Category="1"></Actor>
+  <Actor Key="0146" Object="0001" Name="Elf_Msg3" Category="1"></Actor>
+  <Actor Key="0147" Object="00BC" Name="Frog II [?]" Category="1"></Actor>
+  <Actor Key="0148" Object="0169" Name="Tree Trunk" Category="1"></Actor>
+  <Actor Key="0149" Object="0192" Name="Dm_Sa" Category="1"></Actor>
+  <Actor Key="014A" Object="016A" Name="Chuchu" Category="1"></Actor>
+  <Actor Key="014B" Object="016B" Name="Desbreko" Category="1"></Actor>
+  <Actor Key="014C" Object="016D" Name="Clock Tower Spotlight" Category="1"></Actor>
+  <Actor Key="014D" Object="016D" Name="Clock Town 2D Chimney Backdrop" Category="1"></Actor>
+  <Actor Key="014E" Object="016C" Name="Stock Pot Inn Bell" Category="1"></Actor>
+  <Actor Key="014F" Object="0005" Name="Octorok (Shooting Gallery)" Category="1"></Actor>
+  <Actor Key="0151" Object="016D" Name="Clock Town Bank Shutter" Category="1"></Actor>
+  <Actor Key="0152" Object="014B" Name="Child Zelda (Cutscenes)" Category="1"></Actor>
+  <Actor Key="0153" Object="0001" Name="Group of Stray Fairies" Category="1"></Actor>
+  <Actor Key="0154" Object="019F" Name="Deku Door/Spotlights" Category="1"></Actor>
+  <Actor Key="0155" Object="0171" Name="Nejiron" Category="1"></Actor>
+  <Actor Key="0156" Object="0166" Name="Spiked Log (Vertical)" Category="1"></Actor>
+  <Actor Key="0157" Object="016D" Name="Romani Ranch Chimney Smoke" Category="1"></Actor>
+  <Actor Key="0158" Object="0001" Name="En_Test2" Category="1"></Actor>
+  <Actor Key="0159" Object="001C" Name="Kafei" Category="1"></Actor>
+  <Actor Key="015A" Object="0001" Name="Three-Day Timer" Category="1"></Actor>
+  <Actor Key="015B" Object="0172" Name="Bad Bat" Category="1"></Actor>
+  <Actor Key="015C" Object="0001" Name="Mikau's Grave and Song Pedestals [Early]" Category="1"></Actor>
+  <Actor Key="015D" Object="0178" Name="Wizzrobe" Category="1"></Actor>
+  <Actor Key="015E" Object="0178" Name="Wizzrobe Warp Platform" Category="1"></Actor>
+  <Actor Key="015F" Object="0178" Name="Wizzrobe Fire Attack" Category="1"></Actor>
+  <Actor Key="0160" Object="0001" Name="Camera Refocuser" Category="1"></Actor>
+  <Actor Key="0161" Object="026C" Name="Elegy Statue Light Beam [?]" Category="1"></Actor>
+  <Actor Key="0162" Object="0001" Name="Circle of Flames" Category="1"></Actor>
+  <Actor Key="0163" Object="0179" Name="Ladder" Category="1"></Actor>
+  <Actor Key="0164" Object="017A" Name="Black and White Boes" Category="1"></Actor>
+  <Actor Key="0165" Object="0001" Name="Great Fairy's Mask and Great Fairy's Sword" Category="1"></Actor>
+  <Actor Key="0167" Object="0189" Name="En_Dnb" Category="1"></Actor>
+  <Actor Key="0168" Object="0224" Name="Boat Cruise Target Spot" Category="1"></Actor>
+  <Actor Key="0169" Object="0001" Name="Mad Scrubs (Cutscenes)" Category="1"></Actor>
+  <Actor Key="016A" Object="018B" Name="Deku King" Category="1"></Actor>
+  <Actor Key="016C" Object="017E" Name="Spiked Iron Fence" Category="1"></Actor>
+  <Actor Key="016D" Object="012A" Name="Powder Keg Boulder" Category="1"></Actor>
+  <Actor Key="016E" Object="000B" Name="En_Firefly2" Category="1"></Actor>
+  <Actor Key="016F" Object="0181" Name="Real Bombchu" Category="1"></Actor>
+  <Actor Key="0170" Object="0182" Name="Dripping Water" Category="1"></Actor>
+  <Actor Key="0171" Object="0002" Name="Keaton Grass Cluster" Category="1"></Actor>
+  <Actor Key="0172" Object="0153" Name="Proximity-Activated Firewall" Category="1"></Actor>
+  <Actor Key="0174" Object="0184" Name="Great Bay Temple Gears" Category="1"></Actor>
+  <Actor Key="0175" Object="0008" Name="Great Fairy Healing Beam" Category="1"></Actor>
+  <Actor Key="0176" Object="0185" Name="Tingle (Gameplay)" Category="1"></Actor>
+  <Actor Key="0177" Object="00E3" Name="Bank Teller, Sakon, Twin Jugglers" Category="1"></Actor>
+  <Actor Key="0178" Object="0186" Name="Pirates' Fortress Telescope" Category="1"></Actor>
+  <Actor Key="0179" Object="0187" Name="Drifting Ice Platform" Category="1"></Actor>
+  <Actor Key="017A" Object="0135" Name="Deku Scrub Guard (Palace Gardens)" Category="1"></Actor>
+  <Actor Key="017B" Object="0001" Name="En_Mushi2" Category="1"></Actor>
+  <Actor Key="017C" Object="0001" Name="The Moon" Category="1"></Actor>
+  <Actor Key="017D" Object="0107" Name="Postman (Counting Game)" Category="1"></Actor>
+  <Actor Key="017E" Object="018A" Name="Deku Shrine Door" Category="1"></Actor>
+  <Actor Key="017F" Object="01F3" Name="Deku Butler" Category="1"></Actor>
+  <Actor Key="0180" Object="016B" Name="Skullfish" Category="1"></Actor>
+  <Actor Key="0181" Object="016B" Name="Skullfish - Defeated" Category="1"></Actor>
+  <Actor Key="0182" Object="0155" Name="Garo Master II [?]" Category="1"></Actor>
+  <Actor Key="0183" Object="0001" Name="Deku Flower" Category="1"></Actor>
+  <Actor Key="0184" Object="018D" Name="Eyegore" Category="1"></Actor>
+  <Actor Key="0185" Object="00BB" Name="Spiked Metal Mine" Category="1"></Actor>
+  <Actor Key="0186" Object="0001" Name="Poisoned/Purified Water Elements" Category="1"></Actor>
+  <Actor Key="0187" Object="018E" Name="Koume (Gameplay) [?]" Category="1"></Actor>
+  <Actor Key="0188" Object="018F" Name="Kotake (No Broom) [?]" Category="1"></Actor>
+  <Actor Key="018B" Object="0001" Name="Spring Water" Category="1"></Actor>
+  <Actor Key="018C" Object="0001" Name="Song of Time Cutscene Effects" Category="1"></Actor>
+  <Actor Key="018D" Object="0198" Name="Beaver Bros." Category="1"></Actor>
+  <Actor Key="018E" Object="018D" Name="Eyegore Rubble" Category="1"></Actor>
+  <Actor Key="018F" Object="0190" Name="Snowhead Temple Central Pillar" Category="1"></Actor>
+  <Actor Key="0190" Object="0169" Name="Opening Cutscene Objects" Category="1"></Actor>
+  <Actor Key="0191" Object="0192" Name="Skull Kid" Category="1"></Actor>
+  <Actor Key="0192" Object="01C8" Name="Tatl and Tael (Cutscenes) II [?]" Category="1"></Actor>
+  <Actor Key="0193" Object="01A2" Name="Woodfall Temple Rises Cutscene Objects" Category="1"></Actor>
+  <Actor Key="0194" Object="01BE" Name="Clock Tower Roof Cutscene - OoT and Majora's Mask" Category="1"></Actor>
+  <Actor Key="0195" Object="01A3" Name="Happy Mask Salesman (Cutscenes)" Category="1"></Actor>
+  <Actor Key="0196" Object="0001" Name="Tatl and Tael (Cutscenes) I [?]" Category="1"></Actor>
+  <Actor Key="0197" Object="0213" Name="Masks (Cutscenes)" Category="1"></Actor>
+  <Actor Key="0198" Object="01E6" Name="Mountain Village Cutscene Objects [?]" Category="1"></Actor>
+  <Actor Key="0199" Object="0212" Name="Milk Bar Stage (Cutscenes)" Category="1"></Actor>
+  <Actor Key="019A" Object="0229" Name="Turtle (Cutscenes) [?]" Category="1"></Actor>
+  <Actor Key="019B" Object="01EB" Name="Giant Bee (Cutscenes)" Category="1"></Actor>
+  <Actor Key="019C" Object="018C" Name="Clock Tower and Light Beam" Category="1"></Actor>
+  <Actor Key="019E" Object="0195" Name="Monkey" Category="1"></Actor>
+  <Actor Key="019F" Object="018D" Name="Eyegore Block" Category="1"></Actor>
+  <Actor Key="01A0" Object="0135" Name="Deku Scrub Guard (Palace Entrance) [?]" Category="1"></Actor>
+  <Actor Key="01A1" Object="0190" Name="Snowhead Temple Bombable Wall" Category="1"></Actor>
+  <Actor Key="01A2" Object="0197" Name="Clock Tower Doors" Category="1"></Actor>
+  <Actor Key="01A3" Object="0190" Name="Snowhead Temple Punchable Pillar Inserts" Category="1"></Actor>
+  <Actor Key="01A4" Object="00B7" Name="Romani I [?]" Category="1"></Actor>
+  <Actor Key="01A5" Object="0199" Name="Beaver Race Ring" Category="1"></Actor>
+  <Actor Key="01A6" Object="019B" Name="Poe Balloon" Category="1"></Actor>
+  <Actor Key="01A7" Object="0001" Name="En_Door_Etc" Category="1"></Actor>
+  <Actor Key="01A8" Object="019E" Name="Big Octo" Category="1"></Actor>
+  <Actor Key="01A9" Object="01E7" Name="Ice Arrow Platform" Category="1"></Actor>
+  <Actor Key="01AA" Object="0163" Name="Triforce Elevator" Category="1"></Actor>
+  <Actor Key="01AB" Object="0001" Name="En_Time_Tag" Category="1"></Actor>
+  <Actor Key="01AC" Object="019F" Name="Deku Emblem Door" Category="1"></Actor>
+  <Actor Key="01AD" Object="019F" Name="Skull Kid Spotlights" Category="1"></Actor>
+  <Actor Key="01AE" Object="01A0" Name="Honey and Darling's Shop Rotating Platform" Category="1"></Actor>
+  <Actor Key="01AF" Object="0001" Name="Poured Water" Category="1"></Actor>
+  <Actor Key="01B0" Object="0001" Name="Stray Fairy" Category="1"></Actor>
+  <Actor Key="01B1" Object="000E" Name="Stray Fairy Bubble" Category="1"></Actor>
+  <Actor Key="01B3" Object="01A1" Name="Honey and Darling's Shop Target" Category="1"></Actor>
+  <Actor Key="01B4" Object="01A1" Name="Honey and Darling's Shop Basket" Category="1"></Actor>
+  <Actor Key="01B5" Object="01A3" Name="Happy Mask Salesman (Gameplay)" Category="1"></Actor>
+  <Actor Key="01B6" Object="0088" Name="Clock Tower Gear" Category="1"></Actor>
+  <Actor Key="01B7" Object="018F" Name="Kotake (Broom) [?]" Category="1"></Actor>
+  <Actor Key="01B8" Object="01A4" Name="Clock Tower Roof Door" Category="1"></Actor>
+  <Actor Key="01B9" Object="01A5" Name="Lilypad" Category="1"></Actor>
+  <Actor Key="01BA" Object="01A6" Name="Snapper" Category="1"></Actor>
+  <Actor Key="01BB" Object="01B4" Name="Treasure Chest Game Proximity-Activated Wall" Category="1"></Actor>
+  <Actor Key="01BC" Object="01A0" Name="Honey and Darling's Shop Moat" Category="1"></Actor>
+  <Actor Key="01BD" Object="01E5" Name="Business Scrub (Flying) [?]" Category="1"></Actor>
+  <Actor Key="01BE" Object="01A7" Name="Woodfall Prison Ivy" Category="1"></Actor>
+  <Actor Key="01C0" Object="01A8" Name="Lens of Truth Platform" Category="1"></Actor>
+  <Actor Key="01C1" Object="0129" Name="Treasure Chest Game Employee" Category="1"></Actor>
+  <Actor Key="01C2" Object="01A9" Name="Fisherman (Great Bay)" Category="1"></Actor>
+  <Actor Key="01C3" Object="01AA" Name="Potion Shop Proprietor (Updated) [OoT]" Category="1"></Actor>
+  <Actor Key="01C4" Object="01AB" Name="Curiosity Shop Proprietor" Category="1"></Actor>
+  <Actor Key="01C5" Object="01AC" Name="Swamp Tourist Center Guide" Category="1"></Actor>
+  <Actor Key="01C7" Object="01B6" Name="Soldier (Gate Guard)" Category="1"></Actor>
+  <Actor Key="01C8" Object="01AD" Name="Ice Block" Category="1"></Actor>
+  <Actor Key="01C9" Object="01E5" Name="Deku Scrub Playground Employee" Category="1"></Actor>
+  <Actor Key="01CA" Object="01AF" Name="Dampé" Category="1"></Actor>
+  <Actor Key="01CC" Object="01B0" Name="West Clock Town Steps" Category="1"></Actor>
+  <Actor Key="01CD" Object="0163" Name="Deku Scrub Playground Elevator" Category="1"></Actor>
+  <Actor Key="01CE" Object="0001" Name="Song of Soaring Cutscene Activator" Category="1"></Actor>
+  <Actor Key="01CF" Object="01B3" Name="Dissolvable Light Block" Category="1"></Actor>
+  <Actor Key="01D0" Object="0087" Name="Mirror Shield Reflectable Spotlight [?]" Category="1"></Actor>
+  <Actor Key="01D1" Object="01B5" Name="Dexihand" Category="1"></Actor>
+  <Actor Key="01D2" Object="0001" Name="Deku Scrub Playground Rupee" Category="1"></Actor>
+  <Actor Key="01D3" Object="0001" Name="Dampé's House Objects" Category="1"></Actor>
+  <Actor Key="01D4" Object="01B7" Name="Snow-Covered Tree" Category="1"></Actor>
+  <Actor Key="01D5" Object="0107" Name="Postman (Delivering Letters)" Category="1"></Actor>
+  <Actor Key="01D6" Object="0001" Name="2D Music Staff" Category="1"></Actor>
+  <Actor Key="01D7" Object="0001" Name="Elf_Msg4" Category="1"></Actor>
+  <Actor Key="01D8" Object="0001" Name="Elf_Msg5" Category="1"></Actor>
+  <Actor Key="01D9" Object="0001" Name="Piece of Heart" Category="1"></Actor>
+  <Actor Key="01DA" Object="0075" Name="Gibdo (Ikana Well)" Category="1"></Actor>
+  <Actor Key="01DB" Object="01B8" Name="Giant" Category="1"></Actor>
+  <Actor Key="01DC" Object="00EF" Name="Large Snowball" Category="1"></Actor>
+  <Actor Key="01DD" Object="01BB" Name="Goht" Category="1"></Actor>
+  <Actor Key="01DE" Object="0144" Name="Ghost Hut Proprietor" Category="1"></Actor>
+  <Actor Key="01DF" Object="0001" Name="Monkey Instrument Prompt" Category="1"></Actor>
+  <Actor Key="01E0" Object="01BF" Name="Goron Shrine Gate" Category="1"></Actor>
+  <Actor Key="01E1" Object="0001" Name="En_Tag_Obj" Category="1"></Actor>
+  <Actor Key="01E2" Object="01C1" Name="Dampé's House Facade" Category="1"></Actor>
+  <Actor Key="01E3" Object="01C2" Name="Gravestone" Category="1"></Actor>
+  <Actor Key="01E4" Object="01C7" Name="Goron Link Switch" Category="1"></Actor>
+  <Actor Key="01E6" Object="01C4" Name="Big and Small Eeno" Category="1"></Actor>
+  <Actor Key="01E7" Object="0001" Name="TG_Sw" Category="1"></Actor>
+  <Actor Key="01E8" Object="01C5" Name="Poe Sisters" Category="1"></Actor>
+  <Actor Key="01E9" Object="01C6" Name="Hiploop" Category="1"></Actor>
+  <Actor Key="01EA" Object="01BB" Name="Goht Debris" Category="1"></Actor>
+  <Actor Key="01EB" Object="0001" Name="Fireworks" Category="1"></Actor>
+  <Actor Key="01EC" Object="0001" Name="Obj_Dowsing" Category="1"></Actor>
+  <Actor Key="01ED" Object="0001" Name="Wind Funnel" Category="1"></Actor>
+  <Actor Key="01EE" Object="0132" Name="Dog (Doggie Racetrack)" Category="1"></Actor>
+  <Actor Key="01EF" Object="010F" Name="Swordsman" Category="1"></Actor>
+  <Actor Key="01F0" Object="01C9" Name="Captain Keeta Race Gatepost" Category="1"></Actor>
+  <Actor Key="01F1" Object="01D7" Name="Marine Research Lab Fish" Category="1"></Actor>
+  <Actor Key="01F2" Object="01CB" Name="Postbox" Category="1"></Actor>
+  <Actor Key="01F3" Object="01C3" Name="Poe" Category="1"></Actor>
+  <Actor Key="01F4" Object="01CD" Name="Tent-Shaped Spider Web" Category="1"></Actor>
+  <Actor Key="01F5" Object="01CE" Name="Zora Egg" Category="1"></Actor>
+  <Actor Key="01F6" Object="01CF" Name="Zubora" Category="1"></Actor>
+  <Actor Key="01F7" Object="01D0" Name="Darmani's Ghost I [?]" Category="1"></Actor>
+  <Actor Key="01F8" Object="01D1" Name="Swordsman's School Practice Log" Category="1"></Actor>
+  <Actor Key="01F9" Object="00EF" Name="Small Snowball" Category="1"></Actor>
+  <Actor Key="01FA" Object="01D0" Name="Darmani's Ghost II [?]" Category="1"></Actor>
+  <Actor Key="01FB" Object="01D2" Name="Darmani's Gravestone" Category="1"></Actor>
+  <Actor Key="01FC" Object="01D4" Name="Deku Princess" Category="1"></Actor>
+  <Actor Key="01FD" Object="01D5" Name="Biggoron" Category="1"></Actor>
+  <Actor Key="01FE" Object="01D3" Name="Hot Spring Water" Category="1"></Actor>
+  <Actor Key="01FF" Object="01D6" Name="Gabora" Category="1"></Actor>
+  <Actor Key="0200" Object="0001" Name="En_Invadepoh" Category="1"></Actor>
+  <Actor Key="0201" Object="01DF" Name="Goron Elder's Son" Category="1"></Actor>
+  <Actor Key="0202" Object="00E2" Name="Anju (Gameplay)" Category="1"></Actor>
+  <Actor Key="0204" Object="01EB" Name="Giant Bee (Gameplay)" Category="1"></Actor>
+  <Actor Key="0205" Object="01EC" Name="Seahorse" Category="1"></Actor>
+  <Actor Key="0206" Object="01ED" Name="Deep Python" Category="1"></Actor>
+  <Actor Key="0207" Object="01EE" Name="Swordsman's School Gong" Category="1"></Actor>
+  <Actor Key="0208" Object="01F1" Name="Big Poe" Category="1"></Actor>
+  <Actor Key="0209" Object="01EE" Name="Swordsman's School Wooden Board" Category="1"></Actor>
+  <Actor Key="020A" Object="01F2" Name="Cow Figurine" Category="1"></Actor>
+  <Actor Key="020B" Object="0001" Name="En_Sth" Category="1"></Actor>
+  <Actor Key="020C" Object="01F4" Name="Bg_Sinkai_Kabe" Category="1"></Actor>
+  <Actor Key="020D" Object="01E0" Name="Beneath the Grave Curtain" Category="1"></Actor>
+  <Actor Key="020E" Object="01F5" Name="Oceanside Spider House Bombable Wall" Category="1"></Actor>
+  <Actor Key="020F" Object="01F5" Name="Oceanside Spider House Fireplace Grate" Category="1"></Actor>
+  <Actor Key="0210" Object="01F5" Name="Oceanside Spider House Skull Kid Painting" Category="1"></Actor>
+  <Actor Key="0211" Object="01F5" Name="Oceanside Spider House Drawers and Bookshelf" Category="1"></Actor>
+  <Actor Key="0212" Object="0142" Name="Circle of Stalchildren" Category="1"></Actor>
+  <Actor Key="0213" Object="01F8" Name="Goron Elder" Category="1"></Actor>
+  <Actor Key="0214" Object="018E" Name="Koume (Boat Cruise) [?]" Category="1"></Actor>
+  <Actor Key="0215" Object="01FC" Name="Cremia's Cart" Category="1"></Actor>
+  <Actor Key="0216" Object="0201" Name="Leever" Category="1"></Actor>
+  <Actor Key="0217" Object="0202" Name="Milk Bar Chair" Category="1"></Actor>
+  <Actor Key="0218" Object="0003" Name="Bg_Ikana_Block" Category="1"></Actor>
+  <Actor Key="0219" Object="0203" Name="Stone Tower Temple Mirror" Category="1"></Actor>
+  <Actor Key="021A" Object="0203" Name="Stone Tower Temple Rotating Room" Category="1"></Actor>
+  <Actor Key="021B" Object="0184" Name="Great Bay Temple See-Saw" Category="1"></Actor>
+  <Actor Key="021C" Object="0184" Name="Great Bay Temple Water Spout" Category="1"></Actor>
+  <Actor Key="021D" Object="0204" Name="Pirate [?]" Category="1"></Actor>
+  <Actor Key="021E" Object="012E" Name="Patrolling Pirate Guard" Category="1"></Actor>
+  <Actor Key="021F" Object="00B7" Name="Romani II [?]" Category="1"></Actor>
+  <Actor Key="0220" Object="00A7" Name="Cremia" Category="1"></Actor>
+  <Actor Key="0221" Object="0205" Name="South Clock Town Objects" Category="1"></Actor>
+  <Actor Key="0222" Object="0184" Name="Great Bay Temple Elevator" Category="1"></Actor>
+  <Actor Key="0223" Object="0170" Name="Owl Statue" Category="1"></Actor>
+  <Actor Key="0224" Object="0206" Name="Mikau" Category="1"></Actor>
+  <Actor Key="0225" Object="0207" Name="Deku Moon Trial Rotating Platform" Category="1"></Actor>
+  <Actor Key="0226" Object="01F8" Name="Goron Elder's Drum" Category="1"></Actor>
+  <Actor Key="0227" Object="020C" Name="Twinmold's Lair Objects [?]" Category="1"></Actor>
+  <Actor Key="0228" Object="00D0" Name="Zora (Land)" Category="1"></Actor>
+  <Actor Key="0229" Object="020D" Name="Fork-Branched Tree" Category="1"></Actor>
+  <Actor Key="022A" Object="020E" Name="Pirates' Fortress Mesh Elevator" Category="1"></Actor>
+  <Actor Key="022B" Object="020E" Name="Pirates' Fortress Interior Door" Category="1"></Actor>
+  <Actor Key="022C" Object="020E" Name="Pirates' Fortress Boat" Category="1"></Actor>
+  <Actor Key="022D" Object="0250" Name="Barrel" Category="1"></Actor>
+  <Actor Key="022E" Object="023D" Name="Geyser" Category="1"></Actor>
+  <Actor Key="022F" Object="018E" Name="Boat Cruise Target" Category="1"></Actor>
+  <Actor Key="0230" Object="0087" Name="Mirror Shield Light Ray II [?]" Category="1"></Actor>
+  <Actor Key="0231" Object="0211" Name="Japas" Category="1"></Actor>
+  <Actor Key="0232" Object="0001" Name="Elf_Msg6" Category="1"></Actor>
+  <Actor Key="0233" Object="0001" Name="Obj_Nozoki" Category="1"></Actor>
+  <Actor Key="0234" Object="023A" Name="Toto" Category="1"></Actor>
+  <Actor Key="0235" Object="0075" Name="Gibdo (Ikana Canyon)" Category="1"></Actor>
+  <Actor Key="0236" Object="00DF" Name="Bomb Shop Proprietor's Mother" Category="1"></Actor>
+  <Actor Key="0237" Object="00E3" Name="Sakon" Category="1"></Actor>
+  <Actor Key="0238" Object="0216" Name="Tijo" Category="1"></Actor>
+  <Actor Key="0239" Object="0263" Name="Lottery Shop Kiosk" Category="1"></Actor>
+  <Actor Key="023A" Object="00A1" Name="Don Gero" Category="1"></Actor>
+  <Actor Key="023B" Object="0001" Name="Mushroom Scent Cloud" Category="1"></Actor>
+  <Actor Key="023C" Object="0218" Name="Palm Tree" Category="1"></Actor>
+  <Actor Key="023D" Object="0001" Name="Swarm of Moths" Category="1"></Actor>
+  <Actor Key="023E" Object="015D" Name="Wart's Bubbles" Category="1"></Actor>
+  <Actor Key="023F" Object="015C" Name="Gyorg's Fish" Category="1"></Actor>
+  <Actor Key="0240" Object="021E" Name="Goron Village Chandelier" Category="1"></Actor>
+  <Actor Key="0241" Object="0220" Name="Evan" Category="1"></Actor>
+  <Actor Key="0242" Object="00A1" Name="Goron (Goron Shrine and Bomb Shop) [?]" Category="1"></Actor>
+  <Actor Key="0243" Object="0004" Name="Anju's Grandmother (Gameplay)" Category="1"></Actor>
+  <Actor Key="0244" Object="00E3" Name="Jugglers" Category="1"></Actor>
+  <Actor Key="0245" Object="005C" Name="Stone Tower Temple Shifting Block" Category="1"></Actor>
+  <Actor Key="0246" Object="0222" Name="Elegy Statue Switch" Category="1"></Actor>
+  <Actor Key="0247" Object="005D" Name="Composer Brothers" Category="1"></Actor>
+  <Actor Key="0248" Object="00FF" Name="Guru-Guru" Category="1"></Actor>
+  <Actor Key="0249" Object="0001" Name="Sonata of Awakening Effect" Category="1"></Actor>
+  <Actor Key="024A" Object="01B6" Name="Shiro" Category="1"></Actor>
+  <Actor Key="024B" Object="0001" Name="Song of Soaring Effect" Category="1"></Actor>
+  <Actor Key="024C" Object="01E5" Name="Business Scrub (Telescope)" Category="1"></Actor>
+  <Actor Key="024D" Object="0006" Name="Guay (Observatory Telescope)" Category="1"></Actor>
+  <Actor Key="024E" Object="0001" Name="Song of Healing Effect" Category="1"></Actor>
+  <Actor Key="024F" Object="0229" Name="Turtle's Tsunami" Category="1"></Actor>
+  <Actor Key="0250" Object="022A" Name="Pamela's Father (Normal)" Category="1"></Actor>
+  <Actor Key="0251" Object="022A" Name="Pamela's Father (Cursed)" Category="1"></Actor>
+  <Actor Key="0252" Object="022B" Name="Lulu" Category="1"></Actor>
+  <Actor Key="0253" Object="0007" Name="Anju's Mother (Gameplay)" Category="1"></Actor>
+  <Actor Key="0254" Object="022C" Name="Music Box House Cupboard Doors" Category="1"></Actor>
+  <Actor Key="0255" Object="0203" Name="Stone Tower Temple Bombable Floor Tile and Wall" Category="1"></Actor>
+  <Actor Key="0256" Object="0203" Name="Stone Tower Temple Light Ray [?]" Category="1"></Actor>
+  <Actor Key="0257" Object="0203" Name="Stone Tower Temple Lattice Door" Category="1"></Actor>
+  <Actor Key="0258" Object="01E0" Name="Beneath the Grave Bombable Wall" Category="1"></Actor>
+  <Actor Key="0259" Object="01E0" Name="Flat's Tomb" Category="1"></Actor>
+  <Actor Key="025A" Object="0001" Name="Large Rotating Green Rupee" Category="1"></Actor>
+  <Actor Key="025B" Object="0237" Name="Sharp's Cave" Category="1"></Actor>
+  <Actor Key="025C" Object="0237" Name="Ikana Canyon Objects" Category="1"></Actor>
+  <Actor Key="025D" Object="0238" Name="Pamela" Category="1"></Actor>
+  <Actor Key="025E" Object="0239" Name="Hookshot Stump" Category="1"></Actor>
+  <Actor Key="025F" Object="012B" Name="Mad Scrub (Sleeping)" Category="1"></Actor>
+  <Actor Key="0260" Object="00D0" Name="Zora (Water)" Category="1"></Actor>
+  <Actor Key="0261" Object="0001" Name="En_Talk" Category="1"></Actor>
+  <Actor Key="0262" Object="000D" Name="Madame Aroma (Gameplay)" Category="1"></Actor>
+  <Actor Key="0263" Object="0013" Name="Mr. Barten" Category="1"></Actor>
+  <Actor Key="0264" Object="00E3" Name="Bomb Shop Bag" Category="1"></Actor>
+  <Actor Key="0265" Object="0001" Name="En_Hit_Tag" Category="1"></Actor>
+  <Actor Key="0266" Object="0006" Name="Guay (Circling Clock Town)" Category="1"></Actor>
+  <Actor Key="0267" Object="023F" Name="Flock of Seagulls" Category="1"></Actor>
+  <Actor Key="0268" Object="015B" Name="En_Tanron5" Category="1"></Actor>
+  <Actor Key="0269" Object="0240" Name="Swarm of Giant Bees" Category="1"></Actor>
+  <Actor Key="026A" Object="00F1" Name="Carpenter (Milk Road)" Category="1"></Actor>
+  <Actor Key="026B" Object="00F0" Name="Mutoh (Gameplay)" Category="1"></Actor>
+  <Actor Key="026C" Object="0247" Name="Captain Viscen" Category="1"></Actor>
+  <Actor Key="026D" Object="01B6" Name="Soldier (Mayor's House)" Category="1"></Actor>
+  <Actor Key="026E" Object="01B6" Name="Soldier (Cutscenes) I [?]" Category="1"></Actor>
+  <Actor Key="026F" Object="0241" Name="Mayor Dotour (Gameplay)" Category="1"></Actor>
+  <Actor Key="0270" Object="0243" Name="Laundry Pool Bell [?]" Category="1"></Actor>
+  <Actor Key="0271" Object="0244" Name="Cremia and Romani's Dinner" Category="1"></Actor>
+  <Actor Key="0272" Object="0246" Name="Moon Fall Effects" Category="1"></Actor>
+  <Actor Key="0273" Object="0203" Name="Ancient Castle of Ikana Punchable Pillar Segments" Category="1"></Actor>
+  <Actor Key="0274" Object="01E5" Name="Traveling Business Scrub" Category="1"></Actor>
+  <Actor Key="0275" Object="01BE" Name="Skull Kid Moon-Summoning Effects [?]" Category="1"></Actor>
+  <Actor Key="0276" Object="01D5" Name="Link the Goron" Category="1"></Actor>
+  <Actor Key="0277" Object="00A1" Name="Goron (Goron Racetrack)" Category="1"></Actor>
+  <Actor Key="0278" Object="0249" Name="Igos du Ikana and Henchmen's Heads" Category="1"></Actor>
+  <Actor Key="0279" Object="0001" Name="En_Sth2" Category="1"></Actor>
+  <Actor Key="027A" Object="024A" Name="Kamaro" Category="1"></Actor>
+  <Actor Key="027B" Object="024B" Name="Rosa Sister" Category="1"></Actor>
+  <Actor Key="027C" Object="0001" Name="En_Scopecoin" Category="1"></Actor>
+  <Actor Key="027D" Object="024F" Name="Hand in Toilet" Category="1"></Actor>
+  <Actor Key="027E" Object="0110" Name="Jim I [?]" Category="1"></Actor>
+  <Actor Key="027F" Object="0110" Name="Jim II [?]" Category="1"></Actor>
+  <Actor Key="0280" Object="0110" Name="Bomber II [?]" Category="1"></Actor>
+  <Actor Key="0281" Object="0110" Name="Bomber (Hideout Guard)" Category="1"></Actor>
+  <Actor Key="0282" Object="0280" Name="Majora Balloon (North Clock Town)" Category="1"></Actor>
+  <Actor Key="0283" Object="01B1" Name="Moon's Tear" Category="1"></Actor>
+  <Actor Key="0284" Object="0001" Name="Obj_Mu_Pict" Category="1"></Actor>
+  <Actor Key="0285" Object="0236" Name="Ancient Castle of Ikana Objects [?]" Category="1"></Actor>
+  <Actor Key="0286" Object="0255" Name="Blue Spotlight Effect" Category="1"></Actor>
+  <Actor Key="0287" Object="0256" Name="Gorman Track Buildings" Category="1"></Actor>
+  <Actor Key="0288" Object="0257" Name="Cow Barn Roof (Exterior)" Category="1"></Actor>
+  <Actor Key="0289" Object="025B" Name="Deku Butler's Son" Category="1"></Actor>
+  <Actor Key="028A" Object="0260" Name="Metal Portcullis" Category="1"></Actor>
+  <Actor Key="028B" Object="0261" Name="Chateau Romani Delivery Bottle" Category="1"></Actor>
+  <Actor Key="028C" Object="0264" Name="Keaton" Category="1"></Actor>
+  <Actor Key="028D" Object="0267" Name="Astral Observatory Bombable Wall" Category="1"></Actor>
+  <Actor Key="028E" Object="0236" Name="Hot Checkered Ceiling [?]" Category="1"></Actor>
+  <Actor Key="028F" Object="0268" Name="Captain Keeta" Category="1"></Actor>
+  <Actor Key="0290" Object="0129" Name="Mayor's Receptionist" Category="1"></Actor>
+  <Actor Key="0291" Object="0022" Name="Takkuri" Category="1"></Actor>
+  <Actor Key="0292" Object="01A9" Name="Fisherman (Fisherman's Jumping Game)" Category="1"></Actor>
+  <Actor Key="0293" Object="0080" Name="Torch Stand (Fisherman's Jumping Game)" Category="1"></Actor>
+  <Actor Key="0294" Object="026E" Name="Stockpot Inn Window" Category="1"></Actor>
+  <Actor Key="0295" Object="026F" Name="Ikana Canyon Curse Lifted Effects" Category="1"></Actor>
+  <Actor Key="0296" Object="0270" Name="Moon (Cutscenes)" Category="1"></Actor>
+  <Actor Key="0297" Object="027F" Name="Rainbow Hookshot Pillar" Category="1"></Actor>
+  <Actor Key="0298" Object="0234" Name="Link Moon Trial Bombable and Climbable Walls" Category="1"></Actor>
+  <Actor Key="0299" Object="0015" Name="Anju (Wedding Dress)" Category="1"></Actor>
+  <Actor Key="029A" Object="0001" Name="Invader Poe (Cutscenes)" Category="1"></Actor>
+  <Actor Key="029B" Object="0273" Name="Deku Shrine and Snowhead Temple Elevator [?]" Category="1"></Actor>
+  <Actor Key="029C" Object="0269" Name="Falling Moon" Category="1"></Actor>
+  <Actor Key="029D" Object="000D" Name="Madame Aroma (Cutscenes)" Category="1"></Actor>
+  <Actor Key="029E" Object="00E2" Name="Anju Cutscene Animations" Category="1"></Actor>
+  <Actor Key="029F" Object="0007" Name="Anju's Mother (Cutscenes)" Category="1"></Actor>
+  <Actor Key="02A0" Object="0004" Name="Anju's Grandmother (Cutscenes)" Category="1"></Actor>
+  <Actor Key="02A1" Object="0018" Name="Wedding Dress Mannequin" Category="1"></Actor>
+  <Actor Key="02A2" Object="0241" Name="Mayor Dotour (Cutscenes)" Category="1"></Actor>
+  <Actor Key="02A3" Object="0185" Name="Tingle (Cutscenes)" Category="1"></Actor>
+  <Actor Key="02A4" Object="0185" Name="Tingle Confetti" Category="1"></Actor>
+  <Actor Key="02A5" Object="0142" Name="Stalchild (Oceanside Spider House)" Category="1"></Actor>
+  <Actor Key="02A6" Object="0001" Name="Dm_Tag" Category="1"></Actor>
+  <Actor Key="02A7" Object="027A" Name="Brown Bird" Category="1"></Actor>
+  <Actor Key="02A8" Object="0247" Name="Viscen (Cutscenes)" Category="1"></Actor>
+  <Actor Key="02A9" Object="00F0" Name="Mutoh (Cutscenes)" Category="1"></Actor>
+  <Actor Key="02AA" Object="01B6" Name="Soldier (Cutscenes) II [?]" Category="1"></Actor>
+  <Actor Key="02AB" Object="00F1" Name="Carpenter (Cutscenes)" Category="1"></Actor>
+  <Actor Key="02AC" Object="0001" Name="En_Ending_Hero6" Category="1"></Actor>
+  <Actor Key="02AD" Object="00E2" Name="Dm_Gm" Category="1"></Actor>
+  <Actor Key="02AE" Object="0001" Name="Obj_Swprize" Category="1"></Actor>
+  <Actor Key="02AF" Object="0001" Name="Invisible - Rupee" Category="1"></Actor>
+  <Actor Key="02B0" Object="0281" Name="Epilogue Cutscene Objects" Category="1"></Actor>
+  <Actor Key="02B1" Object="0001" Name="Bomb Shop Proprietor" Category="1"></Actor>
+
+</Table>

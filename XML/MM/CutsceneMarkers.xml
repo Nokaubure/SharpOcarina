@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Short" ValueType="System.String">
+  <Marker Key="005A" Tab="0">Camera Position</Marker>
+  <Marker Key="0096" Tab="6" Actor="Misc" Type="Special">Misc actions</Marker>
+  <Marker Key="00C8" Tab="6" Actor="Link" Type="Actor">Link actions</Marker>
+  <Marker Key="000A" Tab="3">Textbox</Marker>
+  <Marker Key="0098" Tab="4">Transition effect</Marker>
+  <Marker Key="00C9" Tab="6" Actor="Tatl" Type="Actor">Tatl actions</Marker>
+  <Marker Key="015E" Tab="5">ASM execution</Marker>
+</Table>

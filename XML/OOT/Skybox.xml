@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Byte" ValueType="System.String">
+  <Skybox Key="00">No skybox (no files appear to be loaded for one?)</Skybox>
+  <Skybox Key="01">Standard sky, affected by cloudy state</Skybox>
+  <Skybox Key="02">Hylian Bazaar</Skybox>
+  <Skybox Key="03">Brownish, cloudy, no skybox rotation (or is environment color sometimes?)</Skybox>
+  <Skybox Key="04">Market Ruins (Crashes sometimes?)</Skybox>
+  <Skybox Key="05">Black night, cloudy, skybox rotates quickly, offset so it doesn't depend on having a ground plane (or is environment color sometimes?)</Skybox>
+  <Skybox Key="06">Glitched/Unused</Skybox>
+  <Skybox Key="07">Link's House</Skybox>
+  <Skybox Key="08">Glitched/Unused</Skybox>
+  <Skybox Key="09">Market (Main square, Day)</Skybox>
+  <Skybox Key="0A">Market (Main square, Night)</Skybox>
+  <Skybox Key="0B">Happy Mask Shop; two sides of the skybox contain corrupt textures</Skybox>
+  <Skybox Key="0C">Know-It-All Brothers' House (crashes sometimes?)</Skybox>
+  <Skybox Key="0D">Glitched/Unused</Skybox>
+  <Skybox Key="0E">Kokiri Twins' House; all sides except back are visible, which is typical</Skybox>
+  <Skybox Key="0F">Stable (Crashes sometimes? no pun intended)</Skybox>
+  <Skybox Key="10">Stew Lady's House (Crashes sometimes?)</Skybox>
+  <Skybox Key="11">Kokiri Shop</Skybox>
+  <Skybox Key="12">Glitched/Unused</Skybox>
+  <Skybox Key="13">Goron Shop</Skybox>
+  <Skybox Key="14">Zora Shop</Skybox>
+  <Skybox Key="15">Glitched/Unused</Skybox>
+  <Skybox Key="16">Kakariko Potions Shop</Skybox>
+  <Skybox Key="17">Hylian Potions Shop</Skybox>
+  <Skybox Key="18">Bomb Shop</Skybox>
+  <Skybox Key="19">Glitched/Unused</Skybox>
+  <Skybox Key="1A">Dog Lady's House</Skybox>
+  <Skybox Key="1B">Impa's House</Skybox>
+  <Skybox Key="1C">Gerudo Tent</Skybox>
+  <Skybox Key="1D">Environment color</Skybox>
+  <Skybox Key="1E">Glitched/Unused</Skybox>
+  <Skybox Key="1F">Glitched/Unused</Skybox>
+  <Skybox Key="20">Mido's House</Skybox>
+  <Skybox Key="21">Saria's House</Skybox>
+  <Skybox Key="22">Dog Guy's House</Skybox>
+  <Skybox Key="23">Glitched/Unused</Skybox>
+</Table>

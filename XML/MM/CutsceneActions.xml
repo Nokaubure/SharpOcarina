@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt16" ValueType="System.String">
+
+  <Link Key="0001">Walk cycle</Link>
+  <Link Key="0002">Brisk walk</Link>
+  <Link Key="0003">Shocked </Link>
+  <Link Key="0005">Unknown (standing?)</Link>
+  <Link Key="0006">Turn around and look up in shock</Link>
+  <Link Key="0007">Look at hands, as if an item was in them</Link>
+  <Link Key="0008">Raise hands as if lifting an item </Link>
+  <Link Key="0009">Put down hands</Link>
+  <Link Key="000A">Get off ground and brush off</Link>
+  <Link Key="000D">Floating down from crystal</Link>
+  <Link Key="000E">Look at self</Link>
+  <Link Key="000F">Get wrecked </Link>
+  <Link Key="0010">pick self up</Link>
+  <Link Key="0011">pull ocarina (puts ocarina model in hand) </Link>
+  <Link Key="0012">hold item at side?</Link>
+  <Link Key="0013">turn and lift item (chests) </Link>
+  <Link Key="0015">different blinking pattern? </Link>
+  <Link Key="0016">squint? (possibly Zora Sapphire cutscene) </Link>
+  <Link Key="0017">fall off the log (Zora Sapphire cutscene) </Link>
+  <Link Key="0018">Surface water, idle swimming</Link>
+  <Link Key="0019">Receive Zora Sapphire in water</Link>
+  <Link Key="001A">Draw sword defensively (Ganondorf encounter, kokiri sword model in hand)</Link>
+  <Link Key="001B">Knocked to the ground?</Link>
+  <Link Key="001C">Sleeping on bed </Link>
+  <Link Key="001D">Sleeping Roll over</Link>
+  <Link Key="001E">Wake up </Link>
+  <Link Key="001F">Nod, get off the bed</Link>
+  <Link Key="0020">Struck by Ganondorf's attack (Zelda Escape) </Link>
+  <Link Key="0021">Get up, look to left</Link>
+  <Link Key="0027">Look up to the sky</Link>
+  <Link Key="0028">Slowly back up a few steps</Link>
+  <Link Key="0029">Put hands on surface (Zelda's Crystal?) </Link>
+  <Link Key="002A">Pull out sword/shield </Link>
+  <Link Key="002B">Run up to Zelda's Crystal and put hands on</Link>
+  <Link Key="002C">Pound on Zelda's Crystal</Link>
+  <Link Key="002D">Look up, watching Zelda's Crystal rise</Link>
+  <Link Key="002E">Turn around </Link>
+  <Link Key="002F">Lower hand (after 0030) </Link>
+  <Link Key="0030">Shield Eyes (Zelda->Sheik)</Link>
+  <Link Key="0031">Look around </Link>
+  <Link Key="0032">Stepping onto Rainbow Bridge</Link>
+  <Link Key="0033">Looks left, then snaps to the right</Link>
+  <Link Key="0034">Get down on one knee, Bongo Shadow Cutscene? (sword/shield need to be put into hands) </Link>
+  <Link Key="0035">Lying flat on the ground</Link>
+  <Link Key="0036">Pick self up after 0035, shake head </Link>
+  <Link Key="0037">Shield out, sword drawn back in spin attack stance (stiff knees), (sword/shield need to be put into hands)</Link>
+  <Link Key="0038">Idle standing, precedes 0039</Link>
+  <Link Key="0039">Give up Ocarina of Time (need ocarina in hand)</Link>
+  <Link Key="003A">Take hand away from Ocarina of Time </Link>
+  <Link Key="003C">Lifted up by blue warp</Link>
+  <Link Key="003D">Look around at surroundings </Link>
+  <Link Key="003E">Learn Ocarina Song</Link>
+  <Link Key="003F">Return to neutral stance after 003E </Link>
+  <Link Key="0044">Look right, happy (Look to Zelda after Tower Collapse </Link>
+  <Link Key="0045">Look up, happy (look to Navi after Tower Collapse </Link>
+  <Link Key="0046">Stand alert, not happy (loud noise after Tower Collapse </Link>
+  <Link Key="0047">Spin attack stance, animated rocking (need Sword/Shield in hand)</Link>
+  <Link Key="0048">Play with sword (reverts to animation 0047 after for some reason) </Link>
+  <Link Key="004A">Flashing red, launched forward to the ground, get up</Link>
+  <Link Key="004B">Look to the sky, surprised look </Link>
+  <Link Key="004C">Notice tremor, ground shaking </Link>
+  <Link Key="004D">Pull Master Sword, Ganon Fight? </Link>
+
+  <Navi Key="0001">???</Navi>
+  <Navi Key="0002">Does a quick spin</Navi>
+  <Navi Key="0003">Bounces up and down in a rhythmic pattern</Navi>
+  <Navi Key="0004">Nothing?</Navi>
+  <Navi Key="0005">Leaves particles behind?</Navi>
+
+  <Zelda Key="0001">Invisible</Zelda>
+  <Zelda Key="0002">Idle</Zelda>
+  <Zelda Key="0003">Slow Walking</Zelda>
+  <Zelda Key="0004">Sad with a hand on the chest</Zelda>
+  <Zelda Key="0005">Happy, hands crossed</Zelda>
+  <Zelda Key="0006">Crash</Zelda>
+  <Zelda Key="0007">Crash</Zelda>
+  <Zelda Key="0008">Lowers hands (end of 0005)</Zelda>
+  <Zelda Key="0009">Looks at her left side, surprised, plays surprised sound</Zelda>
+  <Zelda Key="000A">Looks down, surprised</Zelda>
+  <Zelda Key="000B">Continuation of 000A, starts shaking, plays surprised sound</Zelda>
+  <Zelda Key="000C">Loses consciousness, plays pain sound</Zelda>
+  <Zelda Key="000D">Continuation of 000C, plays warp sound</Zelda>
+  <Zelda Key="000E">Continuation of 000D, starts disappearing</Zelda>
+  <Zelda Key="000F">Plays ganondorf laught sound</Zelda>
+
+  <FadeMusic Key="0004">Music Fade Out</FadeMusic>
+
+  <Misc Key="0001">Starts raining</Misc>
+  <Misc Key="0010">Starts Earthquake</Misc>
+  <Misc Key="0011">Stops Earthquake</Misc>
+  <Misc Key="000B">Deku Tree Dies</Misc>
+  <Misc Key="000C">Cutscene ends instantly</Misc>
+  <Misc Key="000F">Makes the scene title card appear (unafected by frame duration)</Misc>
+  <Misc Key="0013">Increases windmill sails and mechanism speed (actors 0102 and 0123)</Misc>
+  <Misc Key="0014">Drains the well water (actor 0104) in kakariko and stores a global flag somewhere (child link only)</Misc>
+  <Misc Key="0015">Lake Hylia water raises</Misc>
+  <Misc Key="0016">Black and white screen effect</Misc>
+  <Misc Key="0017">Sepia screen effect</Misc>
+  <Misc Key="0018">Unloads room mesh</Misc>
+  <Misc Key="001C">Cutscene never ends</Misc>
+  <Misc Key="001E">Fades in logo</Misc>
+  <Misc Key="001F">Fades out logo</Misc>
+  <Misc Key="0023">Link freezes permanently</Misc>
+  
+  <Placeholder Key="0000">???</Placeholder>
+
+
+  <Environment Key="0001">Environment 1</Environment>
+  <Environment Key="0002">Environment 2</Environment>
+  <Environment Key="0003">Environment 3</Environment>
+  <Environment Key="0004">Environment 4</Environment>
+  <Environment Key="0005">Environment 5</Environment>
+  <Environment Key="0006">Environment 6</Environment>
+  <Environment Key="0007">Environment 7</Environment>
+  <Environment Key="0008">Environment 8</Environment>
+  <Environment Key="0009">Environment 9</Environment>
+  <Environment Key="000A">Environment 10</Environment>
+  <Environment Key="000B">Environment 11</Environment>
+  <Environment Key="000C">Environment 12</Environment>
+  <Environment Key="000D">Environment 13</Environment>
+  <Environment Key="000E">Environment 14</Environment>
+  <Environment Key="000F">Environment 15</Environment>
+
+  <Rauru Key="0001">Invisible</Rauru>
+  <Rauru Key="0003">Raise hands (giving Light Medallion)</Rauru>
+  <Rauru Key="0004">Appears (var 0002)</Rauru>
+  <Rauru Key="0005">Becomes a ball of light (var 0002)</Rauru>
+
+  <Zelda_Child Key="0001">???</Zelda_Child>
+
+  <Nabooru Key="0001">Invisible</Nabooru>
+  <Nabooru Key="0003">Raise hands (giving Forest Medallion)</Nabooru>
+  <Nabooru Key="0004">Does the sage pose</Nabooru>
+  <Nabooru Key="0005">Becomes a ball of light</Nabooru>
+  <Nabooru Key="0009">Dissappears</Nabooru>
+  <Nabooru Key="000A">Idle</Nabooru>
+  <Nabooru Key="000B">Falls to the ground</Nabooru>
+  <Nabooru Key="000C">Idle on the ground (continuation of 000B)</Nabooru>
+  <Nabooru Key="000D">Looks right then left (continuation of 000C)</Nabooru>
+  <Nabooru Key="000E">Runs forward, screams, and gets paralized</Nabooru>
+
+  <KoumeKotake Key="0003">Idle?</KoumeKotake>
+  <KoumeKotake Key="0004">Appears if she's invisible, disappears otherwise, plays sound and creates smoke</KoumeKotake>
+  <KoumeKotake Key="0005">Idle?</KoumeKotake>
+  <KoumeKotake Key="0006">Summons a light ball and launches it towards link</KoumeKotake>
+  
+  <Darunia Key="0001">Invisible</Darunia>
+  <Darunia Key="0003">Raise hands (giving medallion)</Darunia>
+  <Darunia Key="0004">Appears and does the sage pose (var 0002)</Darunia>
+  <Darunia Key="0005">Becomes a ball of light (var 0002)</Darunia>
+
+  <Ruto_Adult Key="0001">Invisible</Ruto_Adult>
+  <Ruto_Adult Key="0002">Rise out of the ground</Ruto_Adult>
+  <Ruto_Adult Key="0003">Raise hands (giving medallion)</Ruto_Adult>
+  <Ruto_Adult Key="0004">Appears and does the sage pose (var 0002)</Ruto_Adult>
+  <Ruto_Adult Key="0005">Becomes a ball of light (var 0002)</Ruto_Adult>
+
+  <LightBallEffect Key="0002">Appears</LightBallEffect>
+  <LightBallEffect Key="0003">Vanishes ???</LightBallEffect>
+
+  <Saria Key="0001">Invisible</Saria>
+  <Saria Key="0003">Raise hands (giving medallion)</Saria>
+  <Saria Key="0004">Appears and does the sage pose (var 0002)</Saria>
+  <Saria Key="0005">Becomes a ball of light (var 0002)</Saria>
+
+  <Impa Key="0001">Invisible</Impa>
+  <Impa Key="0003">Raise hands (giving medallion)</Impa>
+  <Impa Key="0004">Appears and does the sage pose (var 0002)</Impa>
+  <Impa Key="0005">Becomes a ball of light (var 0002)</Impa>
+
+</Table>

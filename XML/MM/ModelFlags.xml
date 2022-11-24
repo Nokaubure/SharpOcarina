@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt16" ValueType="System.String">
+
+  <!-- Hardcoded flags (don't use those flag names in this XML!) -->
+  <!-- Flag Key="#Door" usage: the faces having this tag will have collision on both sides, and SO will place a sliding door with "autoplace transition actors"-->
+  <!-- Flag Key="#BlackPlane" usage: the faces having this tag will have no collision, and SO will place a blackplane with "autoplace transition actors"-->
+  <!-- Flag Key="#Room" usage: #Room<number>, where <number> is the room number, this flag is only used if you press "Add multiple rooms"-->
+  <!-- Flag Key="#NoMesh" usage: Mesh will not be written -->
+
+  <!-- special collision flags -->
+  <!-- Flag Key="#DoubleSided" usage: Collision on both sides, no need to use if #Door tag is set -->
+  <!-- Flag Key="#NoCollision" usage: Doesn't write collision, no need to use if #BlackPlane tag is set -->
+
+  <!-- ID tags -->
+  <Flag Key="#Polytype" Value="0"></Flag>
+  <!-- usage: #Polytype0, where 0 is polytype ID in SO, OVERRIDES ALL THE TAGS BELOW-->
+  <Flag Key="#Exit" Value="0"></Flag>
+  <!-- usage: #Exit0, where 0 is exit ID in SO-->
+  <Flag Key="#Camera" Value="0"></Flag>
+  <!-- usage: #Camera0, where 0 is camera ID in SO-->
+  <Flag Key="#Environment" Value="0"></Flag>
+  <!-- usage: #Environment0, where 0 is Environment ID in SO-->
+  <Flag Key="#Direction" Value="00"></Flag>
+  <!-- usage: #Direction00, where 0 is direction amount in HEX (0-3F)-->
+  <Flag Key="#Speed" Value="0"></Flag>
+  <!-- usage: #Speed0, where 0 is speed amount (0-7)-->
+  <!--Flag Key="#WaterStream" usage: add this tag in conjunction with direction and speed to make link move while in waterboxes -->
+
+  <!-- Detection flags -->
+  <!-- Flag Key="#IgnoreCamera" usage: Camera goes through this collision -->
+  <!-- Flag Key="#IgnoreActors" usage: Actors goes through this collision -->
+  <!-- Flag Key="#IgnoreProjectiles" usage: Projectiles goes through this collision -->
+
+  <!-- Sound flags -->
+  <Flag Key="#Dirt" Value="0000000000000000"></Flag>
+  <Flag Key="#Sand" Value="0000000000000001"></Flag>
+  <Flag Key="#Stone" Value="0000000000000002"></Flag>
+  <Flag Key="#WetStone" Value="0000000000000003"></Flag>
+  <Flag Key="#ShallowWater1" Value="0000000000000004"></Flag>
+  <Flag Key="#ShallowWater2" Value="0000000000000005"></Flag>
+  <Flag Key="#TallGrass" Value="0000000000000006"></Flag>
+  <Flag Key="#Snow" Value="0000000000000008"></Flag>
+  <Flag Key="#Wood" Value="000000000000000A"></Flag>
+  <!-- Used on walls, but also changes ground -->
+  <Flag Key="#PlankWood" Value="0000000000000009"></Flag>
+  <!-- Used on ground -->
+  <Flag Key="#Grass" Value="000000000000000B"></Flag>
+  <Flag Key="#Ceramic" Value="000000000000000C"></Flag>
+  <Flag Key="#Carpet" Value="000000000000000D"></Flag>
+
+  <!-- Climb flags -->
+  <Flag Key="#TopLadder" Value="0060000000000000"></Flag>
+  <Flag Key="#Ladder" Value="0040000000000000"></Flag>
+  <Flag Key="#Climbable" Value="0080000000000000"></Flag>
+  <Flag Key="#Crawl" Value="00A0000000000000"></Flag>
+  <Flag Key="#NoLedgeClimb" Value="0020000000000000"></Flag>
+
+  <!-- Special flags -->
+  <Flag Key="#Quicksand" Value="0000800000000000"></Flag>
+  <Flag Key="#KillingQuicksand" Value="0001800000000000"></Flag>
+  <Flag Key="#Lava" Value="0000400000000007"></Flag>
+  <!-- merged with the sound -->
+  <Flag Key="#GroundDamage" Value="0000400000000000"></Flag>
+  <Flag Key="#KillingLava" Value="0001200000000000"></Flag>
+  <Flag Key="#NoFallDamage" Value="0000C00000000000"></Flag>
+  <Flag Key="#JabuJabu" Value="0001000000000000"></Flag>
+  <Flag Key="#Ice" Value="0000A00000000000"></Flag>
+  <Flag Key="#NoJumpKillingQuicksand" Value="0000E00000000000"></Flag>
+
+  <!-- Other -->
+  <Flag Key="#Steep" Value="0000000000000010"></Flag>
+  <Flag Key="#Hookshot" Value="0000000000020000"></Flag>
+  <Flag Key="#Void" Value="3000000000000000"></Flag>
+  <Flag Key="#SmallVoid" Value="1400000000000000"></Flag>
+  <Flag Key="#Dive" Value="2C00000000000000"></Flag>
+  <Flag Key="#AutograbClimb" Value="1800000000000000"></Flag>
+  <Flag Key="#NoLedgeJump" Value="2400000000000000"></Flag>
+  <Flag Key="#ForceClimb" Value="1800000000000000"></Flag>
+  <Flag Key="#WallDamage" Value="0000000008000000"></Flag>
+  <Flag Key="#BlockEpona" Value="8000000000000000"></Flag>
+  <Flag Key="#Lower1Unit" Value="4000000000000000"></Flag>
+  <Flag Key="#SideFlip" Value="0800000000000000"></Flag>
+  <Flag Key="#FrontFlip" Value="0400000000000000"></Flag>
+
+  <!-- trash -->
+  <Flag Key="#MidairAnims" Value="2000000000000000"></Flag>
+  <Flag Key="#ISG" Value="1C00000000000000"></Flag>
+
+
+
+
+
+
+</Table>

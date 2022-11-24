@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt16" ValueType="System.String">
+  <!-- key = scene renderization id-->
+  <Function Key="00" Bank="FF" Name="Nothing"></Function>
+  <Function Key="01" Bank="09" Name="(Bank 9) Very Fast, slightly diagonal movement, if multitexture, moves both textures in oposite Z directions (transparent, light)">
+    <Bank Key="09" Type="Animation" Transparent="1" Light="1"/>
+  </Function>
+  <Function Key="03" Bank="08" Name="(Bank 8) Fast, slightly diagonal movement, if multitexture, moves both textures in oposite Z directions  (transparent, light)">
+    <Bank Key="08" Type="Animation" Transparent="1" Light="1"/>
+  </Function>
+  <Function Key="09" Bank="09" Name="(Bank 9) Perfect diagonal movement, if multitexture, moves both textures in oposite Z directions  (transparent, light)">
+    <Bank Key="09" Type="Animation" Transparent="1" Light="1"/>
+  </Function>
+  <Function Key="0D" Bank="09" Name="(Bank 9) Fast, slightly diagonal movement, if multitexture, moves both textures in oposite Z directions (transparent, light)">
+    <Bank Key="09" Type="Animation" Transparent="1" Light="1"/>
+  </Function>
+  <Function Key="16" Bank="09" Name="(Bank 9) Perfect diagonal movement, if multitexture, moves both textures in oposite Z directions (transparent, light)">
+    <Bank Key="09" Type="Animation" Transparent="1" Light="1"/>
+  </Function>
+  <Function Key="32" Bank="08" Name="(Bank 8) Perfect diagonal movement, if multitexture, moves both textures in oposite Z directions (transparent, light)">
+    <Bank Key="08" Type="Animation" Transparent="1" Light="1"/>
+  </Function>
+  <Function Key="20" Bank="08" Name="(Bank 8) Perfect diagonal movement, if multitexture, moves both textures in oposite Z directions (solid, vcolor) (Bank 9) TODO ">
+    <Bank Key="08" Type="Animation" Transparent="1"/>
+    <Bank Key="09" Type="Animation" Transparent="1"/> <!-- research -->
+    <Bank Key="0A" Type="Animation" Transparent="1"/> <!-- research -->
+  </Function>
+  <Function Key="13" Bank="09" Slot="0" Name="(Bank 9) Perfect diagonal movement, if multitexture, moves both textures in oposite Z directions (transparent, vcolor) (Bank 8) Day/Night texture">
+    <Bank Key="08" Type="Texture"/>
+    <Bank Key="09" Type="Animation" Transparent="1"/>
+  </Function>
+  <Function Key="2E" Bank="09" Name="(Bank 9) Lineal movement Z- axis, if multitexture, moves both textures (transparent, vcolor)">
+    <Bank Key="09" Type="Animation" Transparent="1"/>
+  </Function>
+  <Function Key="1C" Bank="08" Name="(Bank 8) Lineal movement Z+ axis, if multitexture, second texture moves in X+ axis (transparent, vcolor)">
+    <Bank Key="08" Type="Animation" Transparent="1"/>
+  </Function>
+  <Function Key="0F" Bank="08" Name="(Bank 8) Lineal movement Z+ axis, if multitexture, moves both textures (solid, light)" >
+    <Bank Key="08" Type="Animation" Light="1"/>
+  </Function>
+  <Function Key="0C" Bank="08" Name="(Bank 8) Lineal movement Z+ axis, if multitexture, moves both textures (solid, light)">
+    <Bank Key="08" Type="Animation" Light="1"/>
+  </Function>
+  <Function Key="07" Bank="08" Name="(Bank 8) Lineal movement X+ axis, if multitexture, first texture moves (solid, light)">
+    <Bank Key="08" Type="Animation" Light="1"/>
+  </Function>
+  <Function Key="2B" Bank="08" Name="(Bank 8) Lineal movement Z+ axis, second texture moves (solid, multitexture, vcolor)">
+    <Bank Key="08" Type="Animation"/>
+  </Function>
+  <Function Key="1D" Bank="08" Name="(Bank 8) Lineal movement X+ axis, if multitexture, first texture moves (solid, vcolor)" >
+    <Bank Key="08" Type="Animation"/>
+  </Function>
+  <Function Key="31" Bank="09" Name="(Bank 9) Lineal movement Z+ axis, if multitexture, first texture moves (solid, vcolor)">
+    <Bank Key="09" Type="Animation"/>
+  </Function>
+  <Function Key="1F" Bank="08" Name="(Bank 9) Diagonal both textures (transparent, vcolor) (has 6 anims, check SceneAnimations.xml for all)">
+    <Bank Key="08" Type="Animation" Transparent="1" Desc="Lineal Y- 1st ??x64 texture (transparent, vcolor)"/>
+    <Bank Key="09" Type="Animation" Transparent="1" Desc="Diagonal both textures (transparent, vcolor)"/>
+    <Bank Key="0A" Type="Animation" Desc="Y+ 2nd texture (solid, vcolor)"/>
+    <Bank Key="0B" Type="Animation" Transparent="1" Desc="Y- 1st texture (transparent, vcolor)"/> 
+    <Bank Key="0C" Type="Animation" Transparent="1" Desc="Y+ both textures (transparent, vcolor)"/>
+    <Bank Key="0D" Type="Animation" Desc="Y- 2nd texture (solid, vcolor)"/> 
+  </Function>
+  <Function Key="14" Bank="09" Slot="1" Name="(Bank 8) Day/Night texture, (Bank 9) Animated texture of 8 frames">
+    <Bank Key="08" Type="Texture"/>
+    <Bank Key="09" Type="Texture"/>
+    <Bank Key="0A" Type="Animation"/> <!-- research -->
+    <Bank Key="0B" Type="Unknown"/> <!-- research -->
+    <Bank Key="0C" Type="Unknown"/> <!-- research -->
+  </Function>
+  <Function Key="15" Bank="08" Name="Jabu-Jabu's belly screen pulse + diagonal movement, if multitexture, moves the first one (solid, vcolor)">
+    <Bank Key="08" Type="Animation"/>
+  </Function>
+  <Function Key="33" Bank="FF" Name="Ganon castle collapse screen shake"></Function>
+
+  <Function Key="21" Name="Research">
+      <Bank Key="08" Type="Animation" /> <!-- research -->
+      <Bank Key="09" Type="Animation"/> <!-- research -->
+  </Function>
+
+  <Function Key="1A" Name="Research">
+      <Bank Key="08" Type="Animation" Transparent="1"/> <!-- research -->
+      <Bank Key="09" Type="Animation" Transparent="1"/> <!-- research -->
+      <Bank Key="0A" Type="Animation" Transparent="1"/> <!-- research -->
+  </Function>
+
+
+  <Function Key="08" Slot="2" Name="(Bank 8) Day/Night texture">
+        <Bank Key="08" Type="Texture"/>
+  </Function>
+
+    <Function Key="12"  Name="glow test">
+        
+  </Function>
+
+
+  <Function Key="0A" Bank="09" Name="CRASH! Vertical movement (solid, light)" Light="1"></Function>
+  <Function Key="1E" Bank="0D" Name="CRASH! Glowing texture (solid?, vcolor)"></Function>
+
+  <!--Function Key="24" Bank="09" Name="CRASH! Movement (solid?, light)" Light="1"></Function-->
+  <Function Key="05" Bank="08" Name="Nothing, first texture vanishes (solid, multitexture, light)" Light="1">
+    
+  </Function>
+  <Function Key="17" Bank="08" Name="Nothing, first texture vanishes (solid, multitexture, vcolor)" >
+    
+  </Function>
+  <Function Key="08" Bank="0A" Name="CRASH! (transparent, multitexture)" Multitexture="1" Light="1">
+    
+  </Function>
+  <Function Key="29" Bank="0B" Name="CRASH (transparent, multitexture)">
+    
+  </Function>
+  <Function Key="24" Bank="08" Name="CRASH! Movement (solid?, light)" >
+
+  </Function>
+
+</Table>

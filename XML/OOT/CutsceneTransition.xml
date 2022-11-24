@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt16" ValueType="System.String">
+
+<Transition Key="00">???</Transition>
+<Transition Key="01">Fades to white</Transition>
+<Transition Key="02">Fades to blue</Transition>
+<Transition Key="03">Fades from red</Transition>
+<Transition Key="04">Fades from green</Transition>
+<Transition Key="05">Fades from white</Transition>
+<Transition Key="06">Fades from blue</Transition>
+<Transition Key="07">Fades to red</Transition>
+<Transition Key="08">Fades to green</Transition>
+<Transition Key="09">???</Transition>
+<Transition Key="0A">Fades from black</Transition>
+<Transition Key="0B">Fades to black</Transition>
+<Transition Key="0C">???</Transition>
+<Transition Key="0D">Fades to black</Transition>
+<Transition Key="0E">???</Transition>
+<Transition Key="0F">???</Transition>
+<Transition Key="10">???</Transition>
+<Transition Key="11">???</Transition>
+
+</Table>

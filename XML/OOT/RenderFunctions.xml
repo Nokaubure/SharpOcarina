@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Short" ValueType="System.String">
+  <Flag Key="00" MaxValue="1F">Room Clear Flag</Flag>
+  <Flag Key="01" MaxValue="1F">Chest Flag</Flag>
+  <Flag Key="02" MaxValue="1F">Room has been visited</Flag>
+  <Flag Key="03">Current Room Clear Flag</Flag>
+  <Flag Key="04" MaxValue="3F">Collectible Flag</Flag>
+  <Flag Key="05" MaxValue="3F">Switch Flag</Flag>
+  <Flag Key="06" MaxValue="FF">Global Flag (chk_inf)</Flag>
+  <Flag Key="07" MaxValue="FF">inf_table</Flag>
+  <Flag Key="08">Is Night Time</Flag>
+  <Flag Key="09" MaxValue="20000" Bitwise="1">Save Context</Flag>
+  <Flag Key="0A" MaxValue="500000" Bitwise="1">Global Context</Flag>
+  <Flag Key="0B" MinValue="0" MaxValue="4194304">Ram</Flag>
+  <Flag Key="FF">Always active</Flag>
+  <Preset Type="0009" Value="0004" Bitwise="0000000F">Is Child Link</Preset>
+  <Preset Type="0009" Value="0004" Bitwise="0000000F" Reverse="1">Is Adult Link</Preset>
+  <Preset Type="000A" Value="1C24" Bitwise="00000001">Using lens of truth</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00040000">Kokiri Emerald Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00080000">Goron Ruby Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00100000">Zora Sapphire Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00000020">Light Medallion Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00000001">Forest Medallion Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00000002">Fire Medallion Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00000004">Water Medallion Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00000010">Shadow Medallion Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00000008">Spirit Medallion Obtained</Preset>
+  <Preset Type="0009" Value="00A4" Bitwise="00001000">Zelda's Lullaby Obtained</Preset>
+</Table>

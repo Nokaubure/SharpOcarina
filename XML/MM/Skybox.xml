@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Byte" ValueType="System.String">
+  <Skybox Key="00">No skybox</Skybox>
+  <Skybox Key="06">Green Sky, doesn't change based of time of day</Skybox>
+  <Skybox Key="08">Environment color</Skybox>
+  <Skybox Key="0A">Standard sky</Skybox>
+</Table>

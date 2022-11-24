@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Byte" ValueType="System.String">
+  <SFX Key="00">Standard night [day and night cycle]</SFX>
+  <SFX Key="01">Standard night [Kakariko]</SFX>
+  <SFX Key="02">Distant storm [Graveyard]</SFX>
+  <SFX Key="03">Howling wind and cawing [Ganon's Castle]</SFX>
+  <SFX Key="04">Wind + night birds [Kokiri]</SFX>
+  <SFX Key="05">Wind + crickets</SFX>
+  <SFX Key="06">Wind</SFX>
+  <SFX Key="07">Howling wind</SFX>
+  <SFX Key="08">Wind + crickets</SFX>
+  <SFX Key="09">Wind + crickets</SFX>
+  <SFX Key="0A">Tubed howling wind [Wasteland]</SFX>
+  <SFX Key="0B">Tubed howling wind [Colossus]</SFX>
+  <SFX Key="0C">Wind</SFX>
+  <SFX Key="0D">Wind + crickets</SFX>
+  <SFX Key="0E">Wind + crickets</SFX>
+  <SFX Key="0F">Wind + birds</SFX>
+  <SFX Key="10">Wind + crickets</SFX>
+  <SFX Key="11">?</SFX>
+  <SFX Key="12">Wind + crickets</SFX>
+  <SFX Key="13">Day music always playing</SFX>
+  <SFX Key="14">Silence</SFX>
+  <SFX Key="16">Silence</SFX>
+  <SFX Key="17">High tubed wind + rain</SFX>
+  <SFX Key="18">Silence</SFX>
+  <SFX Key="19">Silence</SFX>
+  <SFX Key="1A">High tubed wind + rain</SFX>
+  <SFX Key="1B">Silence</SFX>
+  <SFX Key="1C">Rain</SFX>
+  <SFX Key="1D">High tubed wind + rain</SFX>
+  <SFX Key="1E">Silence</SFX>
+  <SFX Key="1F">High tubed wind + rain</SFX>
+</Table>
