@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOcarina", "SharpOcarina.csproj", "{A435E0C9-C1EE-4F98-A93F-12F964887FFB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D2D67D2-1699-4E98-8B3A-E7F8B81A61ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Debug|x64.ActiveCfg = Debug|x64
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Debug|x64.Build.0 = Debug|x64
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Debug|x86.ActiveCfg = Debug|x86
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Debug|x86.Build.0 = Debug|x86
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Release|x64.ActiveCfg = Release|x64
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Release|x64.Build.0 = Release|x64
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Release|x86.ActiveCfg = Release|x86
+		{A435E0C9-C1EE-4F98-A93F-12F964887FFB}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
