@@ -2863,4 +2863,15 @@ ZROT +0x0007 = Color
   </Actor>
   <Actor Key="01D6" Object="0190" Name="Time Block Spawning Spot" Category="7">
   </Actor>
+  <Actor
+    Key="01E0"
+    Object="0001"
+    Name="Play Cutscene"
+    Properties="FF00,00FF,C000,3000,0C00,03FF,FF00,00F0,000F"
+    PropertiesNames="Set Flag,Get Flag,Set Flag Type,Get Flag Type,Behaviour,Distance (x10),Flip Get,Distance Type,Header Index"
+    PropertiesTarget="XRot,XRot,Var,Var,Var,Var,YRot,YRot,YRot"
+    Category="11"
+    Dropdown="FF,FF,0;1;2;3,0;1;2;3,0;1,,0;1,0;1,"
+    DropdownNames="NULL,NULL,Switch;Chest;Collectible;Global,Switch;Chest;Collectible;Global,Queue;Force,,False;True,XZ;XZY,">
+  </Actor>
 </Table>
