@@ -189,5 +189,16 @@ namespace SharpOcarina
             }
             return false;
         }
+    
+        public static void SelectAdd<T>(System.Windows.Forms.NumericUpDown cur, List<T> list)
+        {
+            cur.Maximum = list.Count - 1;
+            cur.Value = cur.Maximum;
+        }
+        public static void SelectClamp<T>(System.Windows.Forms.NumericUpDown cur, List<T> list)
+        {
+            cur.Minimum = 0;
+            cur.Maximum = list.Count - 1;
+        }
     }
 }

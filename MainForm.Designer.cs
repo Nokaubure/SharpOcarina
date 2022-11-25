@@ -2567,6 +2567,7 @@ namespace SharpOcarina
             // 
             // CameraSelect
             // 
+            this.CameraSelect.Hexadecimal = true;
             this.CameraSelect.Location = new System.Drawing.Point(9, 22);
             this.CameraSelect.Name = "CameraSelect";
             this.CameraSelect.Size = new System.Drawing.Size(65, 20);
@@ -3397,7 +3398,7 @@ namespace SharpOcarina
             this.DeletewaterboxButton.TabIndex = 9;
             this.DeletewaterboxButton.Text = "Delete Waterbox";
             this.DeletewaterboxButton.UseVisualStyleBackColor = true;
-            this.DeletewaterboxButton.Click += new System.EventHandler(this.button9_Click);
+            this.DeletewaterboxButton.Click += new System.EventHandler(this.DeleteWaterboxButton_Click);
             // 
             // AddwaterboxButton
             // 
@@ -3408,15 +3409,16 @@ namespace SharpOcarina
             this.AddwaterboxButton.Text = "Add Waterbox";
             this.EnvironmentControlTooltip.SetToolTip(this.AddwaterboxButton, "Hold SHIFT to add in front of camera");
             this.AddwaterboxButton.UseVisualStyleBackColor = true;
-            this.AddwaterboxButton.Click += new System.EventHandler(this.button10_Click);
+            this.AddwaterboxButton.Click += new System.EventHandler(this.AddWaterboxButton_Click);
             // 
             // WaterboxSelect
             // 
+            this.WaterboxSelect.Hexadecimal = true;
             this.WaterboxSelect.Location = new System.Drawing.Point(9, 22);
             this.WaterboxSelect.Name = "WaterboxSelect";
             this.WaterboxSelect.Size = new System.Drawing.Size(65, 20);
             this.WaterboxSelect.TabIndex = 7;
-            this.WaterboxSelect.ValueChanged += new System.EventHandler(this.numericUpDown10_ValueChanged);
+            this.WaterboxSelect.ValueChanged += new System.EventHandler(this.WaterboxSelect_ValueChanged);
             // 
             // niceLine2
             // 
@@ -5493,7 +5495,7 @@ namespace SharpOcarina
             this.button11.TabIndex = 18;
             this.button11.Text = "Delete Environment";
             this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button11.Click += new System.EventHandler(this.DeleteEnvironmentButton_Click);
             // 
             // button12
             // 
@@ -5503,15 +5505,16 @@ namespace SharpOcarina
             this.button12.TabIndex = 17;
             this.button12.Text = "Add Environment";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.button12.Click += new System.EventHandler(this.AddEnvironmentButton_Click);
             // 
             // EnvironmentSelect
             // 
+            this.EnvironmentSelect.Hexadecimal = true;
             this.EnvironmentSelect.Location = new System.Drawing.Point(9, 22);
             this.EnvironmentSelect.Name = "EnvironmentSelect";
             this.EnvironmentSelect.Size = new System.Drawing.Size(65, 20);
             this.EnvironmentSelect.TabIndex = 16;
-            this.EnvironmentSelect.ValueChanged += new System.EventHandler(this.numericUpDown11_ValueChanged);
+            this.EnvironmentSelect.ValueChanged += new System.EventHandler(this.EnvironmentSelect_ValueChanged);
             // 
             // niceLine3
             // 
@@ -7712,7 +7715,7 @@ namespace SharpOcarina
             this.PathwayDeleteButton.TabIndex = 9;
             this.PathwayDeleteButton.Text = "Delete Pathway";
             this.PathwayDeleteButton.UseVisualStyleBackColor = true;
-            this.PathwayDeleteButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PathwayDeleteButton_MouseClick);
+            this.PathwayDeleteButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DeletePathwayButton_Click);
             // 
             // PathwayAddButton
             // 
@@ -7722,7 +7725,7 @@ namespace SharpOcarina
             this.PathwayAddButton.TabIndex = 8;
             this.PathwayAddButton.Text = "Add Pathway";
             this.PathwayAddButton.UseVisualStyleBackColor = true;
-            this.PathwayAddButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PathwayAddButton_MouseClick);
+            this.PathwayAddButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddPathwayButton_Click);
             // 
             // PathwayLabel1
             // 
@@ -7764,11 +7767,12 @@ namespace SharpOcarina
             // 
             // PathwayNumber
             // 
+            this.PathwayNumber.Hexadecimal = true;
             this.PathwayNumber.Location = new System.Drawing.Point(9, 22);
             this.PathwayNumber.Name = "PathwayNumber";
             this.PathwayNumber.Size = new System.Drawing.Size(65, 20);
             this.PathwayNumber.TabIndex = 7;
-            this.PathwayNumber.ValueChanged += new System.EventHandler(this.PathwayNumber_ValueChanged);
+            this.PathwayNumber.ValueChanged += new System.EventHandler(this.PathwayList_ValueChanged);
             // 
             // PathwayLabel3
             // 
