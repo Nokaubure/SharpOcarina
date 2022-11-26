@@ -10,6 +10,7 @@ namespace SharpOcarina
     {
         int displayDigits = 1;
         int incrementMouseWheel = 3;
+        int shiftMultiplier = 1;
 
         bool doValueRollover = true;
 
@@ -58,15 +59,31 @@ namespace SharpOcarina
             }
         }
 
+        [Category("Behavior")]
+        [Description("Multiplier for value increment when shift is held.")]
+        public int ShiftMultiplier
+        {
+            set
+            {
+                this.shiftMultiplier = value;
+            }
+            get
+            {
+                return this.shiftMultiplier;
+            }
+        }
+
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            int multiplier = (System.Windows.Forms.Control.ModifierKeys == Keys.Shift) ? this.shiftMultiplier : 1;
+
             if (e.Delta > 0)
             {
-                this.Value = Math.Min(this.Value + incrementMouseWheel, this.Maximum);
+                this.Value = Math.Min(this.Value + this.incrementMouseWheel * multiplier, this.Maximum);
             }
             else if (e.Delta < 0)
             {
-                this.Value = Math.Max(this.Value - incrementMouseWheel, this.Minimum);
+                this.Value = Math.Max(this.Value - this.incrementMouseWheel * multiplier, this.Minimum);
             }
 
             base.OnValueChanged(new EventArgs());

@@ -86,11 +86,6 @@ namespace SharpOcarina
 
         public bool notresize = false;
 
-        public DateTime csPlayStartTime;
-        public DateTime csPlayDeltaTime;
-
-        public int csPlayCamKeyframe = 0;
-
         public int globalframe = 0;
 
         public DateTime globalframestart;
@@ -111,8 +106,6 @@ namespace SharpOcarina
         public static Dictionary<ushort, ActorInfo> ActorCache = new Dictionary<ushort, ActorInfo>();
 
         public static List<UcodeSimulator.TextureCacheStruct> AdditionalTexturesGLID = new List<UcodeSimulator.TextureCacheStruct>();
-
-        public float ViewportFov = 60.0f;
 
         public static bool exportingZobj = false;
 
@@ -308,14 +301,10 @@ namespace SharpOcarina
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            Matrix4 PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(ViewportFov), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
+            Matrix4 PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)ViewportFOV.Value), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
             GL.MultMatrix(ref PerspMatrix);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-
-
-
-           
         }
 
         private void glControl1_Load(object sender, EventArgs e)
@@ -4397,7 +4386,7 @@ namespace SharpOcarina
                 if (CutsceneTabs.SelectedIndex != 0)
                 {
                     previewcamerapoints = false;
-                    csPlayFlag = false;
+                    StopCutscenePreview();
                 }
 
                 if (CutsceneAbsolutePositionListBox.Items.Count > 0)
@@ -4457,8 +4446,7 @@ namespace SharpOcarina
                     CutscenePositionDown.Enabled = false;
                     CutsceneAddAbsolutePosition.Enabled = (CurrentScene.Cutscene.Count > 0);
                     previewcamerapoints = false;
-                    csPlayFlag = false;
-                    
+                    StopCutscenePreview();
                 }
 
                 CutscenePositionViewMode.BackColor = (previewcamerapoints) ? Color.LawnGreen : Color.LightGray;
@@ -4769,25 +4757,77 @@ namespace SharpOcarina
             CutsceneTableEntry.Value = CurrentScene.CutsceneTableRow;
         }
 
+        #region Camera Preview
+        private void CameraPreview_UpdateTransforms()
+        {
+            if (!previewcamerapoints) return;
+            Camera.Pos = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position);
+            Vector3d position2 = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2);
+            Camera.Rot.Y = Math.Atan2(Camera.Pos.X - position2.X, position2.Z - Camera.Pos.Z) * 180f / Math.PI;
+            float hipotenuse = Distance3D((Vector3)Camera.Pos, (Vector3)position2);
+            float opposite = (float)(position2.Y - Camera.Pos.Y);
+            Camera.Rot.X = Math.Asin(opposite / hipotenuse) * 180f / Math.PI;
+        }
 
-        private float csPlayMod;
-        private int csPlayFrame;
+        private void CameraPreview_UpdateParams()
+        {
+            if (!previewcamerapoints) return;
+            ViewportFOV.Value = CutsceneAbsolutePositionAngleView.Value;
+            Camera.Rot.Z = (float)CutsceneAbsolutePositionCameraRoll.Value * 256.0f * (180.0f / 32767.0f);
+            SetViewport(glControl1.Width, glControl1.Height);
+        }
+
+        #endregion
+
+        #region Cutscene Play
+
+        public DateTime cutsceneplaystarttime;
+
+        public DateTime cutsceneplaydeltatime;
+        public int cutsceneplaycamerakeyframe = 0;
+        private float cutsceneplaymod;
+        private int cutsceneplayframe;
+
+        private void InitCutscenePreview() 
+        {
+            CutsceneAbsolutePositionListBox.Enabled = false;
+            CutsceneAbsolutePositionListBox.SelectedIndex = 0;
+            cutsceneplaystarttime = DateTime.Now;
+            cutsceneplaydeltatime = DateTime.Now;
+            cutsceneplayframe = 0;
+            cutsceneplaycamerakeyframe = 0;
+            cutsceneplaymod = 0;
+
+            playcamerapointscache = new List<ZCutscenePosition>(CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points);
+
+            if (!settings.NoDummyPoints)
+            {
+                int lastid = playcamerapointscache.Count - 1;
+                playcamerapointscache.Add(new ZCutscenePosition(0, 20, 45, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
+                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 20, 45, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
+            }
+        }
+
+        private void StopCutscenePreview()
+        {
+            csPlayFlag = false;
+            cutsceneplaycamerakeyframe = 0;
+            cutsceneplaymod = 0;
+        }
 
         private void UpdateCutscenePreview()
         {
             DateTime time = DateTime.Now;
-            float delta = (float)(20.0 / (1.0 / time.Subtract(csPlayDeltaTime).TotalSeconds));
-            double cur = time.Subtract(csPlayStartTime).TotalSeconds;
+            float delta = (float)(20.0 / (1.0 / time.Subtract(cutsceneplaydeltatime).TotalSeconds));
+            double cur = time.Subtract(cutsceneplaystarttime).TotalSeconds;
 
-            csPlayDeltaTime = time;
+            cutsceneplaydeltatime = time;
 
             Console.WriteLine(delta);
 
             if (cur >= (1.0 / 20.0) * CurrentScene.Cutscene[MarkerSelect.SelectedIndex].EndFrame)
             {
-                csPlayFlag = false;
-                csPlayCamKeyframe = 0;
-                csPlayMod = 0;
+                StopCutscenePreview();
                 UpdateCutsceneEdit();
 
                 return;
@@ -4804,21 +4844,22 @@ namespace SharpOcarina
             #endif
 
 
-            if (csPlayCamKeyframe + 4 < playcamerapointscache.Count)
+            if (cutsceneplaycamerakeyframe + 4 < playcamerapointscache.Count)
             {
+                const float i16toDeg = (180.0f / 32768.0f);
                 Vector3d[] eye = new Vector3d[4];
                 Vector3d[] at = new Vector3d[4];
-                eye[0] = (Vector3d)playcamerapointscache[csPlayCamKeyframe].Position;
-                eye[1] = (Vector3d)playcamerapointscache[csPlayCamKeyframe + 1].Position;
-                eye[2] = (Vector3d)playcamerapointscache[csPlayCamKeyframe + 2].Position;
-                eye[3] = (Vector3d)playcamerapointscache[csPlayCamKeyframe + 3].Position;
+                float[] roll = new float[4];
+                float[] fov = new float[4];
 
-                at[0] = (Vector3d)playcamerapointscache[csPlayCamKeyframe].Position2;
-                at[1] = (Vector3d)playcamerapointscache[csPlayCamKeyframe + 1].Position2;
-                at[2] = (Vector3d)playcamerapointscache[csPlayCamKeyframe + 2].Position2;
-                at[3] = (Vector3d)playcamerapointscache[csPlayCamKeyframe + 3].Position2;
+                for (int i = 0; i < 4; i++){
+                    eye[i] = (Vector3d)playcamerapointscache[cutsceneplaycamerakeyframe + i].Position;
+                    at[i] = (Vector3d)playcamerapointscache[cutsceneplaycamerakeyframe + i].Position2;
+                    roll[i] = ((float)playcamerapointscache[cutsceneplaycamerakeyframe + i].Cameraroll) * 256.0f * i16toDeg;
+                    fov[i] = playcamerapointscache[cutsceneplaycamerakeyframe + i].Angle;
+                }
 
-                float u = csPlayMod;
+                float u = cutsceneplaymod;
                 float[] coeff = {
                     (1.0f - u) * (1.0f - u) * (1.0f - u) / 6.0f,
                     u * u * u / 2.0f - u * u + 2.0f / 3.0f,
@@ -4826,7 +4867,12 @@ namespace SharpOcarina
                     u * u * u / 6.0f
                 };
 
-                Vector3d DoSpline(Vector3d[] point)
+                float SplineValue(float[] value)
+                {
+                    return coeff[0] * value[0] + coeff[1] * value[1] + coeff[2] * value[2] + coeff[3] * value[3];
+                }
+
+                Vector3d SplineVector(Vector3d[] point)
                 {
                     Vector3d vec;
 
@@ -4837,8 +4883,9 @@ namespace SharpOcarina
                     return vec;
                 }
 
-                Vector3d resultpos = DoSpline(eye);
-                Vector3d resultpos2 = DoSpline(at);
+                Vector3d resultpos = SplineVector(eye);
+                Vector3d resultpos2 = SplineVector(at);
+                ViewportFOV.Value = (decimal)SplineValue(fov);
 
                 Camera.Pos = ConvertToCameraPosition(resultpos);
                 Vector3d position2 = ConvertToCameraPosition(resultpos2);
@@ -4846,27 +4893,27 @@ namespace SharpOcarina
                 float hipotenuse = Distance3D((Vector3)Camera.Pos, (Vector3)position2);
                 float opposite = (float)(position2.Y - Camera.Pos.Y);
                 Camera.Rot.X = Math.Asin(opposite / hipotenuse) * 180f / Math.PI;
-                ViewportFov = playcamerapointscache[csPlayCamKeyframe].Angle;
-                ViewportFOV.Value = (decimal)playcamerapointscache[csPlayCamKeyframe].Angle;
+                Camera.Rot.Z = -SplineValue(roll);
 
-                float speed1 = 1.0f / playcamerapointscache[csPlayCamKeyframe + 1].Frames;
-                float speed2 = 1.0f / playcamerapointscache[csPlayCamKeyframe + 2].Frames;
-                float advance = (csPlayMod * (speed2 - speed1)) + speed1;
+                float speed1 = 1.0f / playcamerapointscache[cutsceneplaycamerakeyframe + 1].Frames;
+                float speed2 = 1.0f / playcamerapointscache[cutsceneplaycamerakeyframe + 2].Frames;
+                float advance = (cutsceneplaymod * (speed2 - speed1)) + speed1;
 
                 if (advance < 0.0f) advance = 0.0f;
 
-                csPlayMod += advance * delta;
+                cutsceneplaymod += advance * delta;
 
-                if (csPlayMod >= 1.0f)
+                if (cutsceneplaymod >= 1.0f)
                 {
-                    csPlayCamKeyframe++;
-                    // CutsceneAbsolutePositionListBox.SelectedIndex++;
+                    cutsceneplaycamerakeyframe++;
+                    CutsceneAbsolutePositionListBox.SelectedIndex++;
 
-                    csPlayMod -= 1.0f;
+                    cutsceneplaymod -= 1.0f;
                 }
             }
         }
 
+        #endregion
 
         private void UpdateAdditionalLightEdit()
         {
@@ -4950,7 +4997,6 @@ namespace SharpOcarina
                 AdditionalLightLabel1.Enabled = false;
             }
         }
-
 
         private void UpdateRenderFunctionEdit()
         {
@@ -5330,7 +5376,7 @@ namespace SharpOcarina
 
 
         }
-
+        
         private string GetFlagInfo(ZTextureAnim anim)
         {
             string output = " (";
@@ -5352,8 +5398,7 @@ namespace SharpOcarina
 
             return output;
         }
-
-
+        
         private void UpdateGroupSelect(bool resetdisplay = false)
         {
             if (GroupList.SelectedItem != null)
@@ -7342,44 +7387,21 @@ namespace SharpOcarina
             }
         }
 
-        private void numericUpDownEx2_ValueChanged(object sender, EventArgs e)
+        private void WaterboxTransform_ChangeValue(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxXPos.Value) > 20)
-                 WaterboxXPos.Value += (WaterboxXPos.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XPos) * 19;
-            
             UpdateWaterboxData();
         }
 
-        private void numericUpDownEx4_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxYPos.Value) > 20)
-                WaterboxYPos.Value += (WaterboxYPos.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].YPos) * 19;
-            
-            UpdateWaterboxData();
-        }
-
-        private void numericUpDownEx6_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxZPos.Value) > 20)
-                WaterboxZPos.Value += (WaterboxZPos.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZPos) * 19;
-            
-            UpdateWaterboxData();
-        }
-
-        private void numericUpDownEx5_ValueChanged(object sender, EventArgs e)
+        private void WaterboxSizeX_ChangeValue(object sender, EventArgs e)
         {
             int negative = (WaterboxXSize.Value < (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XSize) ? 1 : -1;
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxXSize.Value) > 20)
-                WaterboxXSize.Value += (WaterboxXSize.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XSize) * 9;
             WaterboxXPos.Value += ((Control.ModifierKeys == Keys.Shift) ? 10 : 1) * (negative);
             UpdateWaterboxData();
         }
 
-        private void numericUpDownEx1_ValueChanged(object sender, EventArgs e)
+        private void WaterboxSizeY_ChangeValue(object sender, EventArgs e)
         {
             int negative = (WaterboxYSize.Value < (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZSize) ? 1 : -1;
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxYSize.Value) > 20)
-                WaterboxYSize.Value += (WaterboxYSize.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZSize) * 9;
             WaterboxZPos.Value += ((Control.ModifierKeys == Keys.Shift) ? 10 : 1) *(negative); ;
             UpdateWaterboxData();
         }
@@ -8144,7 +8166,6 @@ namespace SharpOcarina
             }
         }
 
-
         private void SongOnChange(object sender, EventArgs e)
         {
             CurrentScene.Music = Convert.ToByte((SongComboBox.SelectedItem as SongItem).Value);
@@ -8499,33 +8520,10 @@ namespace SharpOcarina
             UpdateForm();
         }
 
-        private void PathwayXPos_ValueChanged(object sender, EventArgs e)
+        private void PathwayTransform_ValueChanged(object sender, EventArgs e)
         {
-
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(PathwayXPos.Value) > 20)
-                PathwayXPos.Value += (PathwayXPos.Value - (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].X) * 19;
-
-            CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
-          
-            UpdateForm();
-        }
-
-        private void PathwayYPos_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(PathwayYPos.Value) > 20)
-                PathwayYPos.Value += (PathwayYPos.Value - (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Y) * 19;
-
-            CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
-            
-            UpdateForm();
-        }
-
-        private void PathwayZPos_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(PathwayZPos.Value) > 20)
-                PathwayZPos.Value += (PathwayZPos.Value - (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Z) * 19;
-
-            CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
+            CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = 
+                new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
             UpdateForm();
         }
 
@@ -8889,32 +8887,11 @@ namespace SharpOcarina
             }
         }
 
-        private void AdditionalLightXPos_ValueChanged(object sender, EventArgs e)
+        private void AdditionalLightTransform_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(AdditionalLightXPos.Value) > 20)
-                AdditionalLightXPos.Value += (AdditionalLightXPos.Value - CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].XPos) * 19;
-
             CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int) AdditionalLightSelect.Value - 1].XPos = (short)AdditionalLightXPos.Value;
-
-            UpdateForm();
-        }
-
-        private void AdditionalLightYPos_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(AdditionalLightYPos.Value) > 20)
-                AdditionalLightYPos.Value += (AdditionalLightYPos.Value - CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].YPos) * 19;
-
-            CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].YPos = (short)AdditionalLightYPos.Value;
-
-            UpdateForm();
-        }
-
-        private void AdditionalLightZPos_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(AdditionalLightZPos.Value) > 20)
-                AdditionalLightZPos.Value += (AdditionalLightZPos.Value - CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].ZPos) * 19;
-
-            CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].ZPos = (short)AdditionalLightZPos.Value;
+            CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int) AdditionalLightSelect.Value - 1].YPos = (short)AdditionalLightYPos.Value;
+            CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int) AdditionalLightSelect.Value - 1].ZPos = (short)AdditionalLightZPos.Value;
 
             UpdateForm();
         }
@@ -9160,7 +9137,7 @@ namespace SharpOcarina
                 truepos2.Y = Clamp(truepos2.Y, -32767, 32767);
                 truepos2.Z = Clamp(truepos2.Z, -32767, 32767);
 
-                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Insert(CutsceneAbsolutePositionListBox.SelectedIndex + 1 ,new ZCutscenePosition(0, 1, 45, (Vector3)truepos, (Vector3)truepos2));
+                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Insert(CutsceneAbsolutePositionListBox.SelectedIndex + 1 ,new ZCutscenePosition(0, 1, (float)ViewportFOV.Value, (Vector3)truepos, (Vector3)truepos2));
                 UpdateCutsceneEdit();
             }
 
@@ -9190,7 +9167,7 @@ namespace SharpOcarina
                 pos2 = pos;
                 pos2.Y += 20;
 
-                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Add(new ZCutscenePosition(0, 1, 45, pos, pos2));
+                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Add(new ZCutscenePosition(0, 1, (float)ViewportFOV.Value, pos, pos2));
                 UpdateCutsceneEdit();
             }
             else
@@ -9199,7 +9176,7 @@ namespace SharpOcarina
                 from2 = from;
                 from2.Y += 20;
                 
-                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Insert(CutsceneAbsolutePositionListBox.SelectedIndex + 1, new ZCutscenePosition(0, 1, 45, from,from2));
+                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Insert(CutsceneAbsolutePositionListBox.SelectedIndex + 1, new ZCutscenePosition(0, 1, (float)ViewportFOV.Value, from,from2));
                 UpdateCutsceneEdit();
             }
             if (CutsceneAbsolutePositionListBox.Items.Count > 1) CutsceneAbsolutePositionListBox.SelectedIndex++;
@@ -9240,80 +9217,25 @@ namespace SharpOcarina
 
         }
 
-        private void CutsceneAbsolutePositionX_ValueChanged(object sender, EventArgs e)
+        private void CutsceneAbsolutePosition_ChangeValue(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneAbsolutePositionX.Value) > 20)
-                CutsceneAbsolutePositionX.Value += (CutsceneAbsolutePositionX.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position.X) * 19;
-
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position = new Vector3((float)CutsceneAbsolutePositionX.Value, (float)CutsceneAbsolutePositionY.Value, (float)CutsceneAbsolutePositionZ.Value);
-
-            UpdateCutsceneEdit();
-        }
-
-        private void CutsceneAbsolutePositionY_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneAbsolutePositionY.Value) > 20)
-                CutsceneAbsolutePositionY.Value += (CutsceneAbsolutePositionY.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position.Y) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position = new Vector3((float)CutsceneAbsolutePositionX.Value, (float)CutsceneAbsolutePositionY.Value, (float)CutsceneAbsolutePositionZ.Value);
-
-            UpdateCutsceneEdit();
-        }
-
-        private void CutsceneAbsolutePositionZ_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneAbsolutePositionZ.Value) > 20)
-                CutsceneAbsolutePositionZ.Value += (CutsceneAbsolutePositionZ.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position.Z) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position = new Vector3((float)CutsceneAbsolutePositionX.Value, (float)CutsceneAbsolutePositionY.Value, (float)CutsceneAbsolutePositionZ.Value);
-
+            CameraPreview_UpdateTransforms();
             UpdateCutsceneEdit();
         }
 
         private void CutsceneAbsolutePositionListBox_Click(object sender, EventArgs e)
         {
             UpdateCutsceneEdit();
-
-            if (previewcamerapoints)
-            {
-                Camera.Pos = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position);
-                Vector3d position2 = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2);
-                Camera.Rot.Y = Math.Atan2(Camera.Pos.X - position2.X, position2.Z - Camera.Pos.Z) * 180f / Math.PI;
-                float hipotenuse = Distance3D((Vector3)Camera.Pos, (Vector3)position2);
-                float opposite = (float)(position2.Y - Camera.Pos.Y);
-                Camera.Rot.X = Math.Asin(opposite / hipotenuse) * 180f / Math.PI;
-                ViewportFov = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Angle;
-                ViewportFOV.Value = (decimal) CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Angle;
-            }
+            CameraPreview_UpdateTransforms();
+            CameraPreview_UpdateParams();
         }
 
-        private void CutscenePositionXFocus_ValueChanged(object sender, EventArgs e)
+        private void CutsceneFoxusPosition_ChangeValue(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutscenePositionXFocus.Value) > 20)
-                CutscenePositionXFocus.Value += (CutscenePositionXFocus.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2.X) * 19;
-
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2 = new Vector3((float)CutscenePositionXFocus.Value, (float)CutscenePositionYFocus.Value, (float)CutscenePositionZFocus.Value);
 
-            UpdateCutsceneEdit();
-        }
-
-        private void CutscenePositionYFocus_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutscenePositionYFocus.Value) > 20)
-                CutscenePositionYFocus.Value += (CutscenePositionYFocus.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2.Y) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2 = new Vector3((float)CutscenePositionXFocus.Value, (float)CutscenePositionYFocus.Value, (float)CutscenePositionZFocus.Value);
-
-            UpdateCutsceneEdit();
-        }
-
-        private void CutscenePositionZFocus_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutscenePositionZFocus.Value) > 20)
-                CutscenePositionZFocus.Value += (CutscenePositionZFocus.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2.Z) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2 = new Vector3((float)CutscenePositionXFocus.Value, (float)CutscenePositionYFocus.Value, (float)CutscenePositionZFocus.Value);
-
+            CameraPreview_UpdateTransforms();
             UpdateCutsceneEdit();
         }
 
@@ -9667,17 +9589,19 @@ namespace SharpOcarina
             
         }
 
-        private void CutsceneAbsolutePositionCameraRoll_Leave(object sender, EventArgs e)
+        private void CutsceneAbsolutePositionCameraRoll_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Cameraroll = (sbyte)CutsceneAbsolutePositionCameraRoll.Value;
 
+            CameraPreview_UpdateParams();
             UpdateCutsceneEdit();
         }
 
-        private void CutsceneAbsolutePositionAngleView_Leave(object sender, EventArgs e)
+        private void CutsceneAbsolutePositionAngleView_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Angle = (float)CutsceneAbsolutePositionAngleView.Value;
-
+            
+            CameraPreview_UpdateParams();
             UpdateCutsceneEdit();
         }
 
@@ -9938,66 +9862,19 @@ namespace SharpOcarina
             UpdateCutsceneEdit();
         }
 
-        private void CutsceneActorXStart_ValueChanged(object sender, EventArgs e)
+        private void CutsceneActorStart_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorXStart.Value) > 20)
-                CutsceneActorXStart.Value += (CutsceneActorXStart.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position.X) * 19;
-
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position = new Vector3((float)CutsceneActorXStart.Value, (float)CutsceneActorYStart.Value, (float)CutsceneActorZStart.Value);
 
             UpdateCutsceneEdit();
         }
 
-        private void CutsceneActorYStart_ValueChanged(object sender, EventArgs e)
+        private void CutsceneActorEnd_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorYStart.Value) > 20)
-                CutsceneActorYStart.Value += (CutsceneActorYStart.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position.Y) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position = new Vector3((float)CutsceneActorXStart.Value, (float)CutsceneActorYStart.Value, (float)CutsceneActorZStart.Value);
-
-            UpdateCutsceneEdit();
-        }
-
-        private void CutsceneActorZStart_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorZStart.Value) > 20)
-                CutsceneActorZStart.Value += (CutsceneActorZStart.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position.Z) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position = new Vector3((float)CutsceneActorXStart.Value, (float)CutsceneActorYStart.Value, (float)CutsceneActorZStart.Value);
-
-            UpdateCutsceneEdit();
-        }
-
-        private void CutsceneActorXEnd_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorXEnd.Value) > 20)
-                CutsceneActorXEnd.Value += (CutsceneActorXEnd.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position2.X) * 19;
-
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position2 = new Vector3((float)CutsceneActorXEnd.Value, (float)CutsceneActorYEnd.Value, (float)CutsceneActorZEnd.Value);
 
             UpdateCutsceneEdit();
         }
-
-        private void CutsceneActorYEnd_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorYEnd.Value) > 20)
-                CutsceneActorYEnd.Value += (CutsceneActorYEnd.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position2.Y) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position2 = new Vector3((float)CutsceneActorXEnd.Value, (float)CutsceneActorYEnd.Value, (float)CutsceneActorZEnd.Value);
-
-            UpdateCutsceneEdit();
-        }
-
-        private void CutsceneActorZEnd_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorZEnd.Value) > 20)
-                CutsceneActorZEnd.Value += (CutsceneActorZEnd.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position2.Z) * 19;
-
-            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position2 = new Vector3((float)CutsceneActorXEnd.Value, (float)CutsceneActorYEnd.Value, (float)CutsceneActorZEnd.Value);
-
-            UpdateCutsceneEdit();
-        }
-
 
         private void CutsceneActorFrameDuration_Leave(object sender, EventArgs e)
         {
@@ -10576,61 +10453,19 @@ namespace SharpOcarina
             }
         }
 
-        private void CameraXPos_ValueChanged(object sender, EventArgs e)
+        private void CameraPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraXPos.Value) > 20)
-                CameraXPos.Value += (CameraXPos.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].XPos) * 19;
-
             CurrentScene.Cameras[(int)CameraSelect.Value].XPos = (short)CameraXPos.Value;
-
-            UpdateCameraEdit();
-        }
-
-        private void CameraYPos_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraYPos.Value) > 20)
-                CameraYPos.Value += (CameraYPos.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].YPos) * 19;
-
+            CurrentScene.Cameras[(int)CameraSelect.Value].ZPos = (short)CameraZPos.Value;
             CurrentScene.Cameras[(int)CameraSelect.Value].YPos = (short)CameraYPos.Value;
 
             UpdateCameraEdit();
         }
 
-        private void CameraZPos_ValueChanged(object sender, EventArgs e)
+        private void CameraRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraZPos.Value) > 20)
-                CameraZPos.Value += (CameraZPos.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].ZPos) * 19;
-
-            CurrentScene.Cameras[(int)CameraSelect.Value].ZPos = (short)CameraZPos.Value;
-
-            UpdateCameraEdit();
-        }
-
-        private void CameraXRot_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraXRot.Value) > 1820)
-                CameraXRot.Value += (CameraXRot.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].XRot) * 9;
-
             CurrentScene.Cameras[(int)CameraSelect.Value].XRot = (short)CameraXRot.Value;
-
-            UpdateCameraEdit();
-        }
-
-        private void CameraYRot_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraYRot.Value) > 1820)
-                CameraYRot.Value += (CameraYRot.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].YRot) * 9;
-
             CurrentScene.Cameras[(int)CameraSelect.Value].YRot = (short)CameraYRot.Value;
-
-            UpdateCameraEdit();
-        }
-
-        private void CameraZRot_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraZRot.Value) > 1820)
-                CameraZRot.Value += (CameraZRot.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].ZRot) * 9;
-
             CurrentScene.Cameras[(int)CameraSelect.Value].ZRot = (short)CameraZRot.Value;
 
             UpdateCameraEdit();
@@ -12839,35 +12674,16 @@ namespace SharpOcarina
             previewcamerapoints = !previewcamerapoints;
 
             if (previewcamerapoints)
-            {
-                csPlayFlag = false;
-                Camera.Pos = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position);
-                Vector3d position2 = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2);
-                Camera.Rot.Y = Math.Atan2(Camera.Pos.X - position2.X, position2.Z - Camera.Pos.Z) * 180f / Math.PI;
-                float hipotenuse = Distance3D((Vector3)Camera.Pos, (Vector3)position2);
-                float opposite = (float)(position2.Y - Camera.Pos.Y);
-                Camera.Rot.X = Math.Asin(opposite / hipotenuse) * 180f / Math.PI;
-                ViewportFov = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Angle;
-                ViewportFOV.Value = (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Angle;
-            }
+                StopCutscenePreview();
 
+            CameraPreview_UpdateTransforms();
+            CameraPreview_UpdateParams();
             UpdateCutsceneEdit();
-
         }
 
         private void CutsceneAbsolutePositionListBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (previewcamerapoints)
-            {
-                Camera.Pos = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position);
-                Vector3d position2 = ConvertToCameraPosition((Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2);
-                Camera.Rot.Y = Math.Atan2(Camera.Pos.X - position2.X, position2.Z - Camera.Pos.Z) * 180f / Math.PI;
-                float hipotenuse = Distance3D((Vector3)Camera.Pos, (Vector3)position2);
-                float opposite = (float)(position2.Y - Camera.Pos.Y);
-                Camera.Rot.X = Math.Asin(opposite / hipotenuse) * 180f / Math.PI;
-                ViewportFov = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Angle;
-                ViewportFOV.Value = (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Angle;
-            }
+            CameraPreview_UpdateTransforms();
         }
 
         private void CutsceneGroupBox_Enter(object sender, EventArgs e)
@@ -14309,7 +14125,6 @@ namespace SharpOcarina
 
         private void numericUpDownEx1_ValueChanged_2(object sender, EventArgs e)
         {
-            ViewportFov = (float) ViewportFOV.Value;
             SetViewport(glControl1.Width, glControl1.Height);
         }
 
@@ -14520,26 +14335,11 @@ namespace SharpOcarina
                 if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Count < 4)
                 {
                     MessageBox.Show("You need atleast 4 camera points to play the command!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    csPlayFlag = false;
+                    StopCutscenePreview();
                 }
                 else
                 {
-                    CutsceneAbsolutePositionListBox.Enabled = false;
-                    CutsceneAbsolutePositionListBox.SelectedIndex = 0;
-                    csPlayStartTime = DateTime.Now;
-                    csPlayDeltaTime = DateTime.Now;
-                    csPlayFrame = 0;
-                    csPlayCamKeyframe = 0;
-                    csPlayMod = 0;
-
-                    playcamerapointscache = new List<ZCutscenePosition>(CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points);
-
-                    if (!settings.NoDummyPoints)
-                    {
-                        int lastid = playcamerapointscache.Count - 1;
-                        playcamerapointscache.Add(new ZCutscenePosition(0, 20, 45, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
-                        playcamerapointscache.Insert(0, new ZCutscenePosition(0, 20, 45, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
-                    }
+                    InitCutscenePreview();
                 }
             }
             
@@ -15216,21 +15016,14 @@ namespace SharpOcarina
             if (CurrentScene.prerenderimages.Count > 0)
             {
                 ViewportFOV.Value = 45;
-                ViewportFov = 45;
                 previewscenecamera = true;
             }
-
 
             SimulateN64Gfx = true;
 
             SimulateN64CheckBox.Checked = true;
 
             CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
-
-
-
-            
-
         }
 
         private void CameraCopyViewport_Click(object sender, EventArgs e)
@@ -16583,6 +16376,11 @@ namespace SharpOcarina
                 RoomList.SelectedIndex = (int) RoomSelector.Value;
                 SelectRoom(RoomList.SelectedIndex);
             }
+        }
+
+        private void actorEditControl1_Load(object sender, EventArgs e)
+        {
+
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)
