@@ -82,7 +82,7 @@ namespace SharpOcarina
 
         public bool previewscenecamera = false;
 
-        public bool csPlayFlag = false;
+        public bool previewcutscene = false;
 
         public bool notresize = false;
 
@@ -279,9 +279,9 @@ namespace SharpOcarina
 
             globalframe = (int)((DateTime.Now.Subtract(globalframestart).TotalSeconds) * 20); //FPS
 
-            if (csPlayFlag)
+            if (previewcutscene)
             {
-                UpdateCutscenePreview();
+                CutscenePreview_Update();
             }
             else
             {
@@ -1700,7 +1700,7 @@ namespace SharpOcarina
                 {
                     for (int i = 0; i < CurrentScene.Cutscene.Count; i++)
                     {
-                        if ((settings.DrawSelectedCutsceneCommands && MarkerSelect.SelectedIndex != i) || csPlayFlag) continue;
+                        if ((settings.DrawSelectedCutsceneCommands && MarkerSelect.SelectedIndex != i) || previewcutscene) continue;
 
                         if (((!settings.MajorasMask) && CurrentScene.Cutscene[i].Marker == 0x01 || CurrentScene.Cutscene[i].Marker == 0x05) || (settings.MajorasMask && CurrentScene.Cutscene[i].Marker == 0x5A)) // if its camera position list
                         {
@@ -1971,7 +1971,7 @@ namespace SharpOcarina
                 }
             }
            
-            if (csPlayFlag)
+            if (previewcutscene)
             {
                 GL.MatrixMode(MatrixMode.Projection);
                 GL.LoadIdentity();
@@ -2728,7 +2728,7 @@ namespace SharpOcarina
                             {
                                 if (settings.DrawSelectedCutsceneCommands && MarkerSelect.SelectedIndex != i) continue;
 
-                                if (csPlayFlag) continue;
+                                if (previewcutscene) continue;
 
                                 if ((!settings.MajorasMask && CurrentScene.Cutscene[i].Marker == 0x01) || (settings.MajorasMask && CurrentScene.Cutscene[i].Marker == 0x5A)) // if its camera position list
                                 {
@@ -4385,8 +4385,8 @@ namespace SharpOcarina
 
                 if (CutsceneTabs.SelectedIndex != 0)
                 {
-                    previewcamerapoints = false;
-                    StopCutscenePreview();
+                    CameraPreview_Clear();
+                    CutscenePreview_Clear();
                 }
 
                 if (CutsceneAbsolutePositionListBox.Items.Count > 0)
@@ -4413,12 +4413,12 @@ namespace SharpOcarina
                     CutsceneAbsolutePositionAngleView.Enabled = true;
                     CutsceneAbsolutePositionCameraRoll.Enabled = true;
                     CutscenePositionFrameDuration.Enabled = true;
-                    CutsceneDeleteAbsolutePosition.Enabled = !csPlayFlag;
-                    CutsceneAddAbsolutePosition.Enabled = !csPlayFlag;
+                    CutsceneDeleteAbsolutePosition.Enabled = !previewcutscene;
+                    CutsceneAddAbsolutePosition.Enabled = !previewcutscene;
                     CutscenePositionCopyCamera.Enabled = true;
                     CutscenePositionViewMode.Enabled = true;
                     CutscenePositionPlayMode.Enabled = true;
-                    CutsceneAbsolutePositionListBox.Enabled = !csPlayFlag;
+                    CutsceneAbsolutePositionListBox.Enabled = !previewcutscene;
 
                     CutscenePositionDown.Enabled = (CutsceneAbsolutePositionListBox.SelectedIndex < CutsceneAbsolutePositionListBox.Items.Count - 1 && CutsceneAbsolutePositionListBox.SelectedIndex != -1);
                     CutscenePositionUp.Enabled = (CutsceneAbsolutePositionListBox.SelectedIndex > 0);
@@ -4445,12 +4445,28 @@ namespace SharpOcarina
                     CutscenePositionUp.Enabled = false;
                     CutscenePositionDown.Enabled = false;
                     CutsceneAddAbsolutePosition.Enabled = (CurrentScene.Cutscene.Count > 0);
-                    previewcamerapoints = false;
-                    StopCutscenePreview();
+
+                    CameraPreview_Clear();
+                    CutscenePreview_Clear();
+                }
+
+                if (previewcutscene)
+                {
+                    CutscenePositionViewMode.Enabled = false;
+                    CutscenePositionCopyCamera.Enabled = false;
+                    CutsceneAbsolutePositionX.Enabled = false;
+                    CutsceneAbsolutePositionY.Enabled = false;
+                    CutsceneAbsolutePositionZ.Enabled = false;
+                    CutscenePositionXFocus.Enabled = false;
+                    CutscenePositionYFocus.Enabled = false;
+                    CutscenePositionZFocus.Enabled = false;
+                    CutsceneAbsolutePositionAngleView.Enabled = false;
+                    CutsceneAbsolutePositionCameraRoll.Enabled = false;
+                    CutscenePositionFrameDuration.Enabled = false;
                 }
 
                 CutscenePositionViewMode.BackColor = (previewcamerapoints) ? Color.LawnGreen : Color.LightGray;
-                CutscenePositionPlayMode.BackColor = (csPlayFlag) ? Color.LawnGreen : Color.LightGray;
+                CutscenePositionPlayMode.BackColor = (previewcutscene) ? Color.LawnGreen : Color.LightGray;
 
                 #endregion
 
@@ -4758,6 +4774,39 @@ namespace SharpOcarina
         }
 
         #region Camera Preview
+
+        private decimal previewstoredfov = 60;
+
+        private void CameraPreview_Set()
+        {
+            if (!previewcamerapoints)
+            {
+                previewcamerapoints = true;
+                previewstoredfov = ViewportFOV.Value;
+
+                Console.WriteLine("Stored FOV " + previewstoredfov);
+            }
+        }
+
+        private void CameraPreview_Clear()
+        {
+            if (previewcamerapoints)
+            {
+                previewcamerapoints = false;
+                Camera.Rot.Z = 0.0f;
+                ViewportFOV.Value = previewstoredfov;
+                SetViewport(glControl1.Width, glControl1.Height);
+            }
+        }
+
+        private void CameraPreview_Toggle()
+        {
+            if (previewcamerapoints)
+                CameraPreview_Clear();
+            else
+                CameraPreview_Set();
+        }
+
         private void CameraPreview_UpdateTransforms()
         {
             if (!previewcamerapoints) return;
@@ -4782,14 +4831,16 @@ namespace SharpOcarina
         #region Cutscene Play
 
         public DateTime cutsceneplaystarttime;
-
         public DateTime cutsceneplaydeltatime;
         public int cutsceneplaycamerakeyframe = 0;
         private float cutsceneplaymod;
         private int cutsceneplayframe;
+        private decimal cutscenestoredfov = 60;
 
-        private void InitCutscenePreview() 
+        private void CutscenePreview_Set() 
         {
+            cutscenestoredfov = ViewportFOV.Value;
+
             CutsceneAbsolutePositionListBox.Enabled = false;
             CutsceneAbsolutePositionListBox.SelectedIndex = 0;
             cutsceneplaystarttime = DateTime.Now;
@@ -4808,14 +4859,17 @@ namespace SharpOcarina
             }
         }
 
-        private void StopCutscenePreview()
+        private void CutscenePreview_Clear()
         {
-            csPlayFlag = false;
+            previewcutscene = false;
             cutsceneplaycamerakeyframe = 0;
             cutsceneplaymod = 0;
+            Camera.Rot.Z = 0.0f;
+            ViewportFOV.Value = cutscenestoredfov;
+            SetViewport(glControl1.Width, glControl1.Height);
         }
 
-        private void UpdateCutscenePreview()
+        private void CutscenePreview_Update()
         {
             DateTime time = DateTime.Now;
             float delta = (float)(20.0 / (1.0 / time.Subtract(cutsceneplaydeltatime).TotalSeconds));
@@ -4823,11 +4877,9 @@ namespace SharpOcarina
 
             cutsceneplaydeltatime = time;
 
-            Console.WriteLine(delta);
-
             if (cur >= (1.0 / 20.0) * CurrentScene.Cutscene[MarkerSelect.SelectedIndex].EndFrame)
             {
-                StopCutscenePreview();
+                CutscenePreview_Clear();
                 UpdateCutsceneEdit();
 
                 return;
@@ -12669,12 +12721,10 @@ namespace SharpOcarina
 
         private void CutscenePositionViewMode_Click(object sender, EventArgs e)
         {
-
-
-            previewcamerapoints = !previewcamerapoints;
+            CameraPreview_Toggle();
 
             if (previewcamerapoints)
-                StopCutscenePreview();
+                CutscenePreview_Clear();
 
             CameraPreview_UpdateTransforms();
             CameraPreview_UpdateParams();
@@ -14326,22 +14376,21 @@ namespace SharpOcarina
 
         private void CutscenePositionPlayMode_Click(object sender, EventArgs e)
         {
-            csPlayFlag = !csPlayFlag;
+            previewcutscene = !previewcutscene;
 
-            if (csPlayFlag)
+            if (previewcutscene)
             {
-                previewcamerapoints = false;
-
                 if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Count < 4)
                 {
                     MessageBox.Show("You need atleast 4 camera points to play the command!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    StopCutscenePreview();
+                    CutscenePreview_Clear();
                 }
                 else
                 {
-                    InitCutscenePreview();
+                    CutscenePreview_Set();
                 }
-            }
+            } else
+                CutscenePreview_Clear();
             
             UpdateCutsceneEdit();
         }

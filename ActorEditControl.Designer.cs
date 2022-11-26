@@ -218,6 +218,7 @@
             0,
             -2147483648});
             this.ActorListBoxValue.Name = "ActorListBoxValue";
+            this.ActorListBoxValue.ShiftMultiplier = 10;
             this.ActorListBoxValue.Size = new System.Drawing.Size(85, 20);
             this.ActorListBoxValue.TabIndex = 30;
             this.ActorListBoxValue.Value = new decimal(new int[] {
@@ -507,6 +508,7 @@
             0,
             -2147483648});
             this.ActorZPos.Name = "ActorZPos";
+            this.ActorZPos.ShiftMultiplier = 20;
             this.ActorZPos.Size = new System.Drawing.Size(100, 20);
             this.ActorZPos.TabIndex = 10;
             this.ToolTipHelper.SetToolTip(this.ActorZPos, "Hold middleclick on the actor in the viewport to move it with the mouse");
@@ -515,7 +517,7 @@
             0,
             0,
             0});
-            this.ActorZPos.ValueChanged += new System.EventHandler(this.numericUpDown6_ValueChanged);
+            this.ActorZPos.ValueChanged += new System.EventHandler(this.ActorPos_ValueChanged);
             // 
             // label13
             // 
@@ -573,6 +575,7 @@
             0,
             -2147483648});
             this.ActorXRot.Name = "ActorXRot";
+            this.ActorXRot.ShiftMultiplier = 9;
             this.ActorXRot.Size = new System.Drawing.Size(100, 20);
             this.ActorXRot.TabIndex = 12;
             this.ActorXRot.Value = new decimal(new int[] {
@@ -580,7 +583,7 @@
             0,
             0,
             0});
-            this.ActorXRot.ValueChanged += new System.EventHandler(this.numericUpDown9_ValueChanged);
+            this.ActorXRot.ValueChanged += new System.EventHandler(this.ActorRot_ValueChanged);
             this.ActorXRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XRot_KeyDown);
             // 
             // ActorYPos
@@ -602,6 +605,7 @@
             0,
             -2147483648});
             this.ActorYPos.Name = "ActorYPos";
+            this.ActorYPos.ShiftMultiplier = 20;
             this.ActorYPos.Size = new System.Drawing.Size(100, 20);
             this.ActorYPos.TabIndex = 8;
             this.ToolTipHelper.SetToolTip(this.ActorYPos, "Hold middleclick on the actor in the viewport to move it with the mouse");
@@ -610,7 +614,7 @@
             0,
             0,
             0});
-            this.ActorYPos.ValueChanged += new System.EventHandler(this.numericUpDown5_ValueChanged);
+            this.ActorYPos.ValueChanged += new System.EventHandler(this.ActorPos_ValueChanged);
             // 
             // label14
             // 
@@ -676,6 +680,7 @@
             0,
             -2147483648});
             this.ActorZRot.Name = "ActorZRot";
+            this.ActorZRot.ShiftMultiplier = 9;
             this.ActorZRot.Size = new System.Drawing.Size(100, 20);
             this.ActorZRot.TabIndex = 16;
             this.ActorZRot.Value = new decimal(new int[] {
@@ -683,7 +688,7 @@
             0,
             0,
             0});
-            this.ActorZRot.ValueChanged += new System.EventHandler(this.numericUpDown7_ValueChanged);
+            this.ActorZRot.ValueChanged += new System.EventHandler(this.ActorRot_ValueChanged);
             this.ActorZRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ZRot_KeyDown);
             // 
             // ActorYRot
@@ -710,6 +715,7 @@
             0,
             -2147483648});
             this.ActorYRot.Name = "ActorYRot";
+            this.ActorYRot.ShiftMultiplier = 9;
             this.ActorYRot.Size = new System.Drawing.Size(100, 20);
             this.ActorYRot.TabIndex = 14;
             this.ToolTipHelper.SetToolTip(this.ActorYRot, "You can use the mousewheel in the viewport to rotate the actor");
@@ -718,7 +724,7 @@
             0,
             0,
             0});
-            this.ActorYRot.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
+            this.ActorYRot.ValueChanged += new System.EventHandler(this.ActorRot_ValueChanged);
             this.ActorYRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.YRot_KeyDown);
             // 
             // ActorXPos
@@ -740,6 +746,7 @@
             0,
             -2147483648});
             this.ActorXPos.Name = "ActorXPos";
+            this.ActorXPos.ShiftMultiplier = 20;
             this.ActorXPos.Size = new System.Drawing.Size(100, 20);
             this.ActorXPos.TabIndex = 6;
             this.ToolTipHelper.SetToolTip(this.ActorXPos, "Hold middleclick on the actor in the viewport to move it with the mouse");
@@ -748,7 +755,7 @@
             0,
             0,
             0});
-            this.ActorXPos.ValueChanged += new System.EventHandler(this.numericUpDown4_ValueChanged);
+            this.ActorXPos.ValueChanged += new System.EventHandler(this.ActorPos_ValueChanged);
             // 
             // label15
             // 

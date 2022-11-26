@@ -76,16 +76,9 @@ namespace SharpOcarina
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             int multiplier = (System.Windows.Forms.Control.ModifierKeys == Keys.Shift) ? this.shiftMultiplier : 1;
+            int sign = Helpers.Clamp(e.Delta, -1, 1);
 
-            if (e.Delta > 0)
-            {
-                this.Value = Math.Min(this.Value + this.incrementMouseWheel * multiplier, this.Maximum);
-            }
-            else if (e.Delta < 0)
-            {
-                this.Value = Math.Max(this.Value - this.incrementMouseWheel * multiplier, this.Minimum);
-            }
-
+            this.Value = Helpers.Clamp(this.Value + (this.incrementMouseWheel * multiplier) * sign, this.Minimum, this.Maximum);
             base.OnValueChanged(new EventArgs());
         }
 
