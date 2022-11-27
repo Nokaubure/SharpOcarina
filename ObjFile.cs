@@ -1256,8 +1256,7 @@ namespace SharpOcarina
                     }
                     catch (FileNotFoundException)
                     {
-                        // TODO: YES
-                        // if (!MainForm.settings.DisableTextureWarnings) MessageBox.Show("Texture image " + LoadPath + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (!MainForm.settings.DisableTextureWarnings) MessageBox.Show("Texture image " + LoadPath + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         continue;
                     }
                     catch (Exception)
