@@ -269,6 +269,9 @@ namespace SharpOcarina
 
         #region Main Functions, Rendering
 
+        bool fovOverrideFlag;
+        float fovOverride;
+
         public void ProgramMainLoop()
         {
             Camera.KeyUpdate(KeysDown);
@@ -295,13 +298,16 @@ namespace SharpOcarina
 
         public void SetViewport(int VPWidth, int VPHeight)
         {
-           
+           Matrix4 PerspMatrix;
             GL.Viewport(0, 0, VPWidth, VPHeight);
             GL.Viewport(0, 0, VPWidth, VPHeight);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            Matrix4 PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)ViewportFOV.Value), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
+            if (!fovOverrideFlag)
+                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)ViewportFOV.Value), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
+            else
+                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fovOverride), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
             GL.MultMatrix(ref PerspMatrix);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
@@ -552,9 +558,7 @@ namespace SharpOcarina
 
             updater.StartMonitoring();
             // updater.StopMonitoring();
-
-
-
+            
            renderer = new TextRendering.TextRenderer(glControl1.Width, glControl1.Height);
 
         }
@@ -1426,11 +1430,7 @@ namespace SharpOcarina
             if (IsReady == false)
                 return;
 
-
-
-
             //SwapBuffers();
-
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -1543,7 +1543,6 @@ namespace SharpOcarina
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
 
                 GL.BindTexture(TextureTarget.Texture2D, textureID);
-
 
                 GL.Begin(BeginMode.Quads);
                 GL.TexCoord2(0, 0);
@@ -4841,6 +4840,8 @@ namespace SharpOcarina
         {
             cutscenestoredfov = ViewportFOV.Value;
 
+            fovOverrideFlag = true;
+
             CutsceneAbsolutePositionListBox.Enabled = false;
             CutsceneAbsolutePositionListBox.SelectedIndex = 0;
             cutsceneplaystarttime = DateTime.Now;
@@ -4861,6 +4862,7 @@ namespace SharpOcarina
 
         private void CutscenePreview_Clear()
         {
+            fovOverrideFlag = false;
             previewcutscene = false;
             cutsceneplaycamerakeyframe = 0;
             cutsceneplaymod = 0;
@@ -4895,7 +4897,6 @@ namespace SharpOcarina
             }
             #endif
 
-
             if (cutsceneplaycamerakeyframe + 4 < playcamerapointscache.Count)
             {
                 const float i16toDeg = (180.0f / 32768.0f);
@@ -4921,7 +4922,10 @@ namespace SharpOcarina
 
                 float SplineValue(float[] value)
                 {
-                    return coeff[0] * value[0] + coeff[1] * value[1] + coeff[2] * value[2] + coeff[3] * value[3];
+                    return coeff[0] * value[0] + 
+                        coeff[1] * value[1] + 
+                        coeff[2] * value[2] + 
+                        coeff[3] * value[3];
                 }
 
                 Vector3d SplineVector(Vector3d[] point)
@@ -4937,7 +4941,7 @@ namespace SharpOcarina
 
                 Vector3d resultpos = SplineVector(eye);
                 Vector3d resultpos2 = SplineVector(at);
-                ViewportFOV.Value = (decimal)SplineValue(fov);
+                fovOverride = SplineValue(fov);
 
                 Camera.Pos = ConvertToCameraPosition(resultpos);
                 Vector3d position2 = ConvertToCameraPosition(resultpos2);
@@ -4962,6 +4966,8 @@ namespace SharpOcarina
 
                     cutsceneplaymod -= 1.0f;
                 }
+
+                SetViewport(glControl1.Width, glControl1.Height);
             }
         }
 
@@ -16430,6 +16436,107 @@ namespace SharpOcarina
         private void actorEditControl1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private double DegToRad(double val)
+        {
+            return (val / 180.0) * Math.PI;
+        }
+
+        private Vector3d RotToNormal(double X, double Y)
+        {
+            double[,] mtx = new double[4, 4];
+            double x = DegToRad(X);
+            double y = DegToRad(-Y);
+            double sin = 0.0;
+            double cos = 1.0;
+
+            if (y != 0.0) {
+                sin = Math.Sin(y);
+                cos = Math.Cos(y);
+            }
+
+            mtx[0, 0] = cos;
+            mtx[0, 1] = 0.0;
+            mtx[0, 2] = -sin;
+            mtx[0, 3] = 0.0;
+
+            mtx[1, 0] = 0.0;
+            mtx[1, 1] = 1.0;
+            mtx[1, 2] = 0.0;
+            mtx[1, 3] = 0.0;
+
+            mtx[2, 0] = sin;
+            mtx[2, 1] = 0.0;
+            mtx[2, 2] = cos;
+            mtx[2, 3] = 0.0;
+
+            mtx[3, 0] = 0.0;
+            mtx[3, 1] = 0.0;
+            mtx[3, 2] = 0.0;
+            mtx[3, 3] = 1.0;
+
+            sin = Math.Sin(x);
+            cos = Math.Cos(x);
+
+            double tcy;
+            double tcz;
+
+            for (int i = 0; i < 4; i++)
+            {
+                tcy = mtx[1, i];
+                tcz = mtx[2, i];
+                mtx[1, i] = tcy * cos - tcz * sin;
+                mtx[2, i] = tcy * sin + tcz * cos;
+            }
+
+            Vector3d vec = new Vector3d(
+                mtx[3, 0] + mtx[2, 0], 
+                mtx[3, 1] + mtx[2, 1], 
+                mtx[3, 2] + mtx[2, 2]
+            );
+
+            vec = Vector3d.Normalize(vec);
+
+            return vec;
+        }
+
+        private decimal ViewNormalCopy_NormalToU8(double angle)
+        {
+            int ang;
+
+            int positive_modulo(int i, int n) {
+                return (i % n + n) % n;
+            }
+
+            if (angle > 0) 
+                ang = (int)(angle * 0x7F);
+            else 
+                ang = (int)(angle * 0x80);
+
+            ang = positive_modulo(ang, 255);
+
+            return ang;
+        }
+
+        private void ViewNormalCopyEnvA_Click(object sender, EventArgs e)
+        {
+            Vector3d n = RotToNormal(Camera.Rot.X, Camera.Rot.Y);
+
+            EnvironmentDirectionAX.Value = ViewNormalCopy_NormalToU8(n.X);
+            EnvironmentDirectionAY.Value = ViewNormalCopy_NormalToU8(n.Y);
+            EnvironmentDirectionAZ.Value = ViewNormalCopy_NormalToU8(n.Z);
+            UpdateEnvironmentData();
+        }
+
+        private void ViewNormalCopyEnvB_Click(object sender, EventArgs e)
+        {
+            Vector3d n = RotToNormal(Camera.Rot.X, Camera.Rot.Y);
+
+            EnvironmentDirectionBX.Value = ViewNormalCopy_NormalToU8(n.X);
+            EnvironmentDirectionBY.Value = ViewNormalCopy_NormalToU8(n.Y);
+            EnvironmentDirectionBZ.Value = ViewNormalCopy_NormalToU8(n.Z);
+            UpdateEnvironmentData();
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)
