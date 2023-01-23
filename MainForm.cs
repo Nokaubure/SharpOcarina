@@ -556,8 +556,9 @@ namespace SharpOcarina
 
 
             Updater updater = new Updater();
-
+#if !DEBUG
             updater.StartMonitoring();
+#endif
             // updater.StopMonitoring();
             
            renderer = new TextRendering.TextRenderer(glControl1.Width, glControl1.Height);
@@ -3926,6 +3927,10 @@ namespace SharpOcarina
                             if (CurrentScene.SpecialObject == 0x0002) size += 0xD330;
                             else size += 0x17AF0;
                             int maxsize = 0xFA000;
+
+                            if (rom64.isSet())
+                                maxsize = 2000000;
+
                             foreach (ZScene.ZUShort obj in CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects)
                             {
                                 if (ObjectCache.ContainsKey(obj.Value))
@@ -8254,7 +8259,7 @@ namespace SharpOcarina
                 if (ObjectCache.ContainsKey(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value))
                 {
                     ObjectDescription.Text += "Internal name: " + ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value].name + Environment.NewLine;
-                    ObjectDescription.Text += "Size: " + ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value].size + Environment.NewLine;
+                    ObjectDescription.Text += String.Format("Size: {0:X}", ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value].size) + Environment.NewLine;
                     ObjectDescription.Text += "Actors that use this object: ";
                     ObjectDescription.Text += ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value].usedby;
                 }
@@ -8262,7 +8267,7 @@ namespace SharpOcarina
                 {
                     String[] data = XMLreader.getObjectSize((CurrentScene.Rooms[RoomList.SelectedIndex]).ZObjects[listBox3.SelectedIndex].ValueHex);
                     ObjectDescription.Text += "Internal name: " + data[1] + Environment.NewLine;
-                    ObjectDescription.Text += "Size: " + data[0] + Environment.NewLine;
+                    ObjectDescription.Text += String.Format("Size: {0:X}", data[0]) + Environment.NewLine;
                     ObjectDescription.Text += "Actors that use this object: ";
                     ObjectDescription.Text += XMLreader.getActorNamesByObject(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].ValueHex);
                 }
@@ -14180,7 +14185,30 @@ namespace SharpOcarina
 
             if (rom64.isSet())
             {
-                //TODO
+                List<String> objects = rom64.getList("src\\object");
+
+                foreach(var str in objects) 
+                {
+                    var basename = Path.GetFileNameWithoutExtension(str + ".exe");
+
+                    if (!basename.StartsWith("0x"))
+                        continue;
+
+                    var indexname = basename.Substring(2, basename.IndexOf("-") - 2);
+
+                    if (!ushort.TryParse(indexname, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ushort index))
+                        continue;
+                    
+                    basename = basename.Substring(basename.IndexOf("-") + 1);
+                    
+                    var rompath = str.Replace("src\\", "rom\\");
+                    long size = new FileInfo(rompath + "\\object.zobj").Length;
+
+                    if (ObjectCache.ContainsKey(index))
+                        ObjectCache.Remove(index);
+
+                    ObjectCache.Add(index, new ObjectInfo((int)size, basename, ""));
+                }
             }
 
             fs.Close();
