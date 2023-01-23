@@ -31,6 +31,7 @@ using TexLib;
 using TgaDecoderTest;
 using Microsoft.VisualBasic;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
+using Nett;
 
 namespace SharpOcarina
 {
@@ -97,7 +98,7 @@ namespace SharpOcarina
 
         public static string GlobalROM = "";
 
-        public static string Globalz64rom = "";
+        public static rom64 rom64;
 
         public Dictionary<ushort,string> ExitCache = new Dictionary<ushort, string>();
 
@@ -4841,6 +4842,7 @@ namespace SharpOcarina
             cutscenestoredfov = ViewportFOV.Value;
 
             fovOverrideFlag = true;
+            fovOverride = (float)ViewportFOV.Value;
 
             CutsceneAbsolutePositionListBox.Enabled = false;
             CutsceneAbsolutePositionListBox.SelectedIndex = 0;
@@ -5833,6 +5835,13 @@ namespace SharpOcarina
         {
 
             string ROM = "";
+
+            if (rom64.isSet()) {
+                AddMissingObjects();
+                CurrentScene.ConvertSave(rom64.getPath() + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, 3);
+                return;
+            }
+
             if (GlobalROM != "")
             {
                 ROM = GlobalROM;
@@ -5862,10 +5871,7 @@ namespace SharpOcarina
             if (ROM != "")
             {
                 InjectToRom(ROM);
-
             }
-
-        
         }
 
         private void InjectToRom(string rom)
@@ -5942,7 +5948,7 @@ namespace SharpOcarina
                 }
 
                 CurrentScene.ConvertInject(rom, settings.ConsecutiveRoomInject, settings.ForceRGBATextures,Game);
-                if (GlobalROM == "" && Globalz64rom == "") RefreshRecentRoms(rom);
+                if (GlobalROM == "" && !rom64.isSet()) RefreshRecentRoms(rom);
 
                 LastInject = rom;
                 LaunchRomToolStripMenuItem.Enabled = true;
@@ -12160,7 +12166,7 @@ namespace SharpOcarina
             {
                 ROM = GlobalROM;
             }
-            else if (Globalz64rom != "")
+            else if (rom64.isSet())
             {
 
                 Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x0000" , @"\project\src\system\state\0x04-Opening\Opening.c" );
@@ -13841,6 +13847,8 @@ namespace SharpOcarina
 
                 FileInfo info = new FileInfo(openFileDialog1.FileName);
 
+                injectToROMToolStripMenuItem.Text = "&Inject to ROM";
+
                 if (info.Extension != ".cfg")
                 {
                     if (info.Length < 33554432 + 50000)
@@ -13849,7 +13857,7 @@ namespace SharpOcarina
                         return;
                     }
 
-                    Globalz64rom = "";
+                    rom64.set("");
                     GlobalROM = openFileDialog1.FileName;
                     RomModeLabel.Text = "Global ROM Mode: ON";
                     RomModeLabel.ForeColor = Color.Green;
@@ -13877,7 +13885,8 @@ namespace SharpOcarina
                 }
                 else
                 {
-                    Globalz64rom = openFileDialog1.FileName;
+                    injectToROMToolStripMenuItem.Text = "&Send to z64rom";
+                    rom64.set(openFileDialog1.FileName);
                     GlobalROM = "";
                     RomModeLabel.Text = "Global z64rom Mode: ON";
                     RomModeLabel.ForeColor = Color.Green;
@@ -13917,7 +13926,7 @@ namespace SharpOcarina
                     count++;
                 }
             }
-            else if (Globalz64rom != "")
+            else if (rom64.isSet())
             {
                 ExitCache.Clear(); //nothing to do for now
             }
@@ -14047,13 +14056,53 @@ namespace SharpOcarina
 
             }
 
-            if (Globalz64rom != "")
+            if (rom64.isSet())
             {
-                //TODO
+                List<String> actors = rom64.getList("src\\actor");
+
+                foreach(var str in actors) 
+                {
+                    var basename = Path.GetFileNameWithoutExtension(str + ".exe");
+
+                    if (!basename.StartsWith("0x"))
+                        continue;
+
+                    var indexname = basename.Substring(2, basename.IndexOf("-") - 2);
+
+                    if (!ushort.TryParse(indexname, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ushort index))
+                        continue;
+                    
+                    basename = basename.Substring(basename.IndexOf("-") + 1);
+
+                    List<ActorProperty> prop = null;
+
+                    if (ActorCache.ContainsKey(index)) {
+                        prop = XMLreader.getActorProperties(index.ToString("X4"));
+                        ActorCache.Remove(index);
+                    } else
+                        prop = new List<ActorProperty>();
+                    
+                    uint objectid = 0;
+                    var rompath = str.Replace("src\\", "rom\\");
+
+                    if (File.Exists(rompath + "\\overlay.zovl")) {
+                        FileStream zovl = File.Open(rompath + "\\overlay.zovl", FileMode.Open, FileAccess.Read);
+                        TomlTable config = Toml.ReadFile(rompath + "\\config.cfg");
+
+                        uint vramaddr = config["vram_addr"].Get<uint>();
+                        uint initvar = config["init_vars"].Get<uint>();
+                        int offset = (int)(initvar - vramaddr);
+                        byte[] data = new byte[2];
+
+                        zovl.Seek(offset + 8, SeekOrigin.Begin);
+                        zovl.Read(data, 0, 2);
+                        objectid = (uint)(data[0] << 8 | data[1]);
+                        zovl.Close();
+                    }
+
+                    ActorCache.Add(index, new ActorInfo(basename, prop, objectid.ToString("X4")));
+                }
             }
-         
-
-
         }
 
         public void RefreshObjectCache()
@@ -14129,7 +14178,7 @@ namespace SharpOcarina
 
             }
 
-            if (Globalz64rom != "")
+            if (rom64.isSet())
             {
                 //TODO
             }
@@ -15197,9 +15246,9 @@ namespace SharpOcarina
             {
                 ROM = GlobalROM;
             }
-            else if (Globalz64rom != "")
+            else if (rom64.isSet())
             {
-                ROM = Globalz64rom;
+                ROM = rom64.getRomCfg();
             }
             else
             {
@@ -15412,9 +15461,9 @@ namespace SharpOcarina
             {
                 ROM = GlobalROM;
             }
-            else if (Globalz64rom != "")
+            else if (rom64.isSet())
             {
-                ROM = Globalz64rom;
+                ROM = rom64.getRomCfg();
             }
             else
             {
@@ -15946,9 +15995,9 @@ namespace SharpOcarina
             {
                 ROM = GlobalROM;
             }
-            else if (Globalz64rom != "")
+            else if (rom64.isSet())
             {
-                ROM = Globalz64rom;
+                ROM = rom64.getRomCfg();
             }
             else
             {

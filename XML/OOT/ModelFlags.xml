@@ -120,4 +120,53 @@
   <!-- #IA8"-->
   <!-- #IA16"-->
 
+  <!-- Following flags are mainly for io_export_so2. -->
+  <!-- These are the same flags that can be found -->
+  <!-- above so you do not need to use these. -->
+
+  <Flag Key="#FLOORPROPERTY_VOID_SMALL" Value="1400000000000000"></Flag>
+  <Flag Key="#FLOORPROPERTY_HANG_LEDGE" Value="1800000000000000"></Flag>
+  <Flag Key="#FLOORPROPERTY_STOP_AIR_MOMENTUM" Value="2000000000000000"></Flag>
+  <Flag Key="#FLOORPROPERTY_NO_LEDGE_JUMP" Value="2400000000000000"></Flag>
+  <Flag Key="#FLOORPROPERTY_DIVE" Value="2C00000000000000"></Flag>
+  <Flag Key="#FLOORPROPERTY_VOID" Value="3000000000000000"></Flag>
+
+  <Flag Key="#WALLPROPERTY_NO_LEDGE_GRAB" Value="0020000000000000"></Flag>
+  <Flag Key="#WALLPROPERTY_LADDER" Value="0040000000000000"></Flag>
+  <Flag Key="#WALLPROPERTY_LADDER_TOP" Value="0060000000000000"></Flag>
+  <Flag Key="#WALLPROPERTY_VINE" Value="0080000000000000"></Flag>
+  <Flag Key="#WALLPROPERTY_CRAWL_A" Value="00A0000000000000"></Flag>
+  <Flag Key="#WALLPROPERTY_CRAWL_B" Value="00C0000000000000"></Flag>
+  <Flag Key="#WALLPROPERTY_PUSH" Value="00E0000000000000"></Flag>
+
+  <Flag Key="#FLOORSPECIAL_SPECIAL_UNK_1" Value="0000200000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_HURT_SPIKES" Value="0000400000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_HURT_LAVA" Value="0000600000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_SAND" Value="0000800000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_SLIPPERY" Value="0000A00000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_NO_FALL_DAMAGE" Value="0000C00000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_QUICKSAND" Value="0000E00000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_JABU_WALL" Value="0001000000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_VOID_ON_CONTACT" Value="0001200000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_UNK_A" Value="0001400000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_LINK_LOOK_UP" Value="0001600000000000"></Flag>
+  <Flag Key="#FLOORSPECIAL_QUICKSAND_EPONA" Value="0001800000000000"></Flag>
+
+  <Flag Key="#SFX_0" Value="0000000000000000"></Flag>
+  <Flag Key="#SFX_1" Value="0000000000000001"></Flag>
+  <Flag Key="#SFX_2" Value="0000000000000002"></Flag>
+  <Flag Key="#SFX_3" Value="0000000000000003"></Flag>
+  <Flag Key="#SFX_4" Value="0000000000000004"></Flag>
+  <Flag Key="#SFX_5" Value="0000000000000005"></Flag>
+  <Flag Key="#SFX_6" Value="0000000000000006"></Flag>
+  <Flag Key="#SFX_7" Value="0000000000000007"></Flag>
+  <Flag Key="#SFX_8" Value="0000000000000008"></Flag>
+  <Flag Key="#SFX_9" Value="0000000000000009"></Flag>
+  <Flag Key="#SFX_A" Value="000000000000000A"></Flag>
+  <Flag Key="#SFX_B" Value="000000000000000B"></Flag>
+  <Flag Key="#SFX_C" Value="000000000000000C"></Flag>
+  <Flag Key="#SFX_D" Value="000000000000000D"></Flag>
+  <Flag Key="#SFX_F" Value="000000000000000E"></Flag>
+  <Flag Key="#SFX_E" Value="000000000000000F"></Flag>
+
 </Table>

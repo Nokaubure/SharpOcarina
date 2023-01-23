@@ -1219,12 +1219,14 @@ namespace SharpOcarina
             for (int i = 0; i < _Rooms.Count; i++)
             {
                 string SaveRoomTo = "";
+                string extension = zzrp == 3 ? ".zroom" : ".zmap";
+
                 if (zzrp > 0)
-                    SaveRoomTo = Filepath + "room_" + i + ".zmap";
+                    SaveRoomTo = Filepath + "room_" + i + extension;
                 else if (MainForm.settings.Zmapoffsetnames)
-                    SaveRoomTo = Filepath + (_Rooms[i].InjectOffset+_Rooms[i].FullDataLength).ToString("X8") + ".zmap";
+                    SaveRoomTo = Filepath + (_Rooms[i].InjectOffset+_Rooms[i].FullDataLength).ToString("X8") + extension;
                 else
-                    SaveRoomTo = Filepath + Helpers.MakeValidFileName(Name) + "_room_" + i + ".zmap";
+                    SaveRoomTo = Filepath + Helpers.MakeValidFileName(Name) + "_room_" + i + extension;
 #if DEBUG
                 Console.WriteLine("SAVING DATA TO " + SaveRoomTo);
 #endif 
@@ -1289,38 +1291,31 @@ namespace SharpOcarina
                     sw.Write("unk-a 0\r\nunk-b 0\r\nshader " + (MainForm.settings.command1AOoT ? 0x4 : SceneSettings) + "\r\nsave " + SceneNumber + "\r\nrestrict " + restriction);
                 else
                 {
-                    //Z64ROM cfg
-                    string restrictiontext = "[";
-                    restrictiontext += ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x03)) != 0 ? "BOTTLES," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x0C)) != 0 ? "A_BUTTON," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x30)) != 0 ? "B_BUTTON," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x00FF0000) >> 16) & 0xC0)) != 0 ? "HEALTH," : "";
+                    string restrictiontext = "";
+                    var dict = new Dictionary<string, uint>(){
+                        { "\tbottles     = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x03)) },
+                        { "\ta_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x0C)) },
+                        { "\tb_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x30)) },
+                        { "\tunused      = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0xC0)) },
+                        { "\twarp_song   = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x03))  },
+                        { "\tocarina     = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x0C))  },
+                        { "\thookshot    = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x30))  },
+                        { "\ttrade_item  = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0xC0))  },
+                        { "\tother       = ",  ((((RestrictionFlags & 0x000000FF)) & 0x03))       },
+                        { "\tdin_nayru   = ",  ((((RestrictionFlags & 0x000000FF)) & 0x0C))       },
+                        { "\tfarores     = ",  ((((RestrictionFlags & 0x000000FF)) & 0x30))       },
+                        { "\tsun_song    = ",  ((((RestrictionFlags & 0x000000FF)) & 0xC0))       },
+                    };
 
-                    restrictiontext += ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x03)) != 0 ? "WARP_SONG," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x0C)) != 0 ? "OCARINA," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x30)) != 0 ? "HOOKSHOT," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x0000FF00) >> 8) & 0xC0)) != 0 ? "TRADE_ITEM," : "";
-
-                    restrictiontext += ((((RestrictionFlags & 0x000000FF)) & 0x03)) != 0 ? "ALL," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x000000FF)) & 0x0C)) != 0 ? "DIN_NAYRU," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x000000FF)) & 0x30)) != 0 ? "FARORES_WIND," : "";
-                    restrictiontext += ((((RestrictionFlags & 0x000000FF)) & 0xC0)) != 0 ? "SUN_SONG," : "";
-
-                    if (restrictiontext == "[") restrictiontext = "";
-                    else restrictiontext += "]";
-                    restrictiontext = restrictiontext.Replace(",]", "]");
-
-                    string roomstext = "[";
-
-                    for (int i = 0; i < _Rooms.Count; i++)
-                    {
-                        roomstext += "\"room_" + i + ".zmap\",";
+                    foreach(var i in dict) {
+                        restrictiontext += i.Key;
+                        if (i.Value != 0) restrictiontext += "false\r\n";
+                        else restrictiontext += "true\r\n";
                     }
 
-                    roomstext += "]";
-                    roomstext = roomstext.Replace(",]", "]");
-
-                    sw.Write("# " + Name + "\r\nscene_func_id = " + (MainForm.settings.command1AOoT ? 0x4 : SceneSettings) + "\r\nrestriction_flags = " + restrictiontext + "\r\nrooms = " + roomstext);
+                    sw.Write("# " + Name + "\r\n" + 
+                        "draw_func_index = " + (MainForm.settings.command1AOoT ? 0x4 : SceneSettings) + "\r\n" + 
+                        "[enables]\r\n" + restrictiontext);
                 }
                 sw.Close();
                 //File.WriteAllText(Filepath + "conf.txt", "unk-a: 0\r\n   unk-b: 0\r\n  shader: " + SceneSettings + "\r\n    save: 1\r\nrestrict: 0");
