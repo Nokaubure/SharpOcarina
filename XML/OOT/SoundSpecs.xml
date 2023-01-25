@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Byte" ValueType="System.String">
+  <Spec Key="00">Outdoor Small (0x0)</Spec>
+  <Spec Key="01">Outdoor Medium (0x1)</Spec>
+  <Spec Key="02">Outdoor Large (0x2)</Spec>
+  <Spec Key="03">Hall Medium (0x3)</Spec>
+  <Spec Key="04">Hall Large (0x4)</Spec>
+  <Spec Key="05">Room Small (0x5)</Spec>
+  <Spec Key="06">Room Medium (0x6)</Spec>
+  <Spec Key="07">Canyon (0x7)</Spec>
+  <Spec Key="08">Outdoor Medium (0x8)</Spec>
+  <Spec Key="09">Canyon (0x9)</Spec>
+</Table>

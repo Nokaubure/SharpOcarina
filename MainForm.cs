@@ -573,6 +573,9 @@ namespace SharpOcarina
             SongComboBox.Items.Clear();
             SongComboBox.Items.AddRange(XMLreader.getXMLItems(gameprefix + "SongNames", "Song"));
 
+            SoundSpec.Items.Clear();
+            SoundSpec.Items.AddRange(XMLreader.getXMLItems(gameprefix + "SoundSpecs", "Spec"));
+
             NightSFXComboBox.Items.Clear();
             NightSFXComboBox.Items.AddRange(XMLreader.getXMLItems(gameprefix + "NightSFX", "SFX"));
 
@@ -729,7 +732,6 @@ namespace SharpOcarina
 
         }
 
-
         private void DrawSkybox()
         {
             if (!SimulateN64Gfx) return;
@@ -780,7 +782,6 @@ namespace SharpOcarina
 
 
         }
-
 
         private void DrawActorModel(ZActor Actor, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder)
         {
@@ -1296,7 +1297,6 @@ namespace SharpOcarina
             GL.PopMatrix();
             GL.PopAttrib();
         }
-
 
         private void DrawPointLight(ZAdditionalLight Light, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder)
         {
@@ -3685,8 +3685,7 @@ namespace SharpOcarina
 
                     #endregion
 
-                    SoundReverb.Text = CurrentScene.Reverb.ToString("X2");
-                    //SkyboxControl.Text = CurrentScene.TimeCtrl.ToString("X2");
+                    SoundSpec.SelectedIndex = CurrentScene.Reverb;
                     CloudyCheckBox.Checked = CurrentScene.Cloudy;
                    
                     ContinualInject.Checked = CurrentScene.ContinualInject;
@@ -8538,15 +8537,6 @@ namespace SharpOcarina
             CurrentScene.NightSFX = Convert.ToByte((NightSFXComboBox.SelectedItem as SongItem).Value);
         }
 
-        private void ReverbKeydown(object sender, KeyEventArgs e)
-        {
-            if (CurrentScene != null)
-            {
-                if (SoundReverb.IntValue > 0x0E) SoundReverb.Text = 0x0E.ToString("X2");
-                CurrentScene.Reverb = (byte) SoundReverb.IntValue;
-            }
-        }
-
         private void EchoKeydown(object sender, KeyEventArgs e)
         {
             if (CurrentScene != null && CurrentScene.Rooms.Count > 0)
@@ -8856,15 +8846,7 @@ namespace SharpOcarina
                 CurrentScene.Rooms[RoomList.SelectedIndex].TimeSpeed = (byte)TimeSpeed.IntValue;
             }
         }
-        /*
-        private void SkyboxControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && CurrentScene.Rooms.Count > 0)
-            {
-                CurrentScene.TimeCtrl = (byte)SkyboxControl.IntValue;
-            }
-        }
-        */
+        
         private void WindWest_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && CurrentScene.Rooms.Count > 0)
@@ -9424,17 +9406,6 @@ namespace SharpOcarina
                 UpdateForm();
             }
         }
-
-        private void SoundReverb_Leave(object sender, EventArgs e)
-        {
-            if (CurrentScene != null)
-            {
-                if (SoundReverb.IntValue > 0x0E) SoundReverb.Text = 0x0E.ToString("X2");
-                CurrentScene.Reverb = (byte)SoundReverb.IntValue;
-            }
-        }
-
-
 
         private void TimeSpeed_Leave(object sender, EventArgs e)
         {
@@ -16614,6 +16585,11 @@ namespace SharpOcarina
             EnvironmentDirectionBY.Value = ViewNormalCopy_NormalToU8(n.Y);
             EnvironmentDirectionBZ.Value = ViewNormalCopy_NormalToU8(n.Z);
             UpdateEnvironmentData();
+        }
+
+        private void SoundSpec_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Reverb = (byte)SoundSpec.SelectedIndex;
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

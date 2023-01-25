@@ -1687,6 +1687,9 @@
     <Content Include="XML\MM\SongNames.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="XML\MM\SoundSpecs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML\MM\Worldmap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1760,6 +1763,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="XML\OOT\SongNames.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML\OOT\SoundSpecs.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

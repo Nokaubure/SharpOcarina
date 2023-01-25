@@ -298,11 +298,11 @@ namespace SharpOcarina
             this.label44 = new System.Windows.Forms.Label();
             this.CameraMovementComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.SoundSpec = new System.Windows.Forms.ComboBox();
             this.label39 = new System.Windows.Forms.Label();
             this.CloudyCheckBox = new System.Windows.Forms.CheckBox();
             this.SkyboxComboBox = new System.Windows.Forms.ComboBox();
             this.label37 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
             this.NightSFXComboBox = new System.Windows.Forms.ComboBox();
             this.label35 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -310,6 +310,7 @@ namespace SharpOcarina
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.UnusedCommandCheckBox = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label29 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.ViewNormalCopyEnvB = new System.Windows.Forms.Button();
@@ -662,7 +663,6 @@ namespace SharpOcarina
             this.SceneHeaderCopyList = new SharpOcarina.NumericUpDownEx();
             this.niceLine9 = new SharpOcarina.NiceLine();
             this.SkyboxControl = new SharpOcarina.NumericTextBox();
-            this.SoundReverb = new SharpOcarina.NumericTextBox();
             this.EnvironmentDirectionBZ = new SharpOcarina.NumericUpDownEx();
             this.EnvironmentDirectionBY = new SharpOcarina.NumericUpDownEx();
             this.EnvironmentDirectionAZ = new SharpOcarina.NumericUpDownEx();
@@ -715,7 +715,6 @@ namespace SharpOcarina
             this.PathwayXPos = new SharpOcarina.NumericUpDownEx();
             this.PathwayYPos = new SharpOcarina.NumericUpDownEx();
             this.actorEditControl1 = new SharpOcarina.ActorEditControl();
-            this.CutsceneTableEntry = new SharpOcarina.NumericUpDownEx();
             this.MarkerEndFrame = new SharpOcarina.NumericTextBox();
             this.CutsceneAbsolutePositionAngleView = new SharpOcarina.NumericUpDownEx();
             this.CutscenePositionFrameDuration = new SharpOcarina.NumericUpDownEx();
@@ -743,6 +742,7 @@ namespace SharpOcarina
             this.CutsceneActorXStart = new SharpOcarina.NumericUpDownEx();
             this.CutsceneActorYStart = new SharpOcarina.NumericUpDownEx();
             this.MarkerStartFrame = new SharpOcarina.NumericTextBox();
+            this.CutsceneTableEntry = new SharpOcarina.NumericUpDownEx();
             this.CutsceneFlag = new SharpOcarina.NumericUpDownEx();
             this.CutsceneSpawn = new SharpOcarina.NumericUpDownEx();
             this.CutsceneEntrance = new SharpOcarina.NumericUpDownEx();
@@ -926,7 +926,6 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.PathwayZPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayYPos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTableEntry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionAngleView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutscenePositionFrameDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionCameraRoll)).BeginInit();
@@ -949,6 +948,7 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorZStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorXStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorYStart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTableEntry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneFlag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSpawn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneEntrance)).BeginInit();
@@ -3802,13 +3802,12 @@ namespace SharpOcarina
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.SoundSpec);
             this.groupBox7.Controls.Add(this.label39);
             this.groupBox7.Controls.Add(this.CloudyCheckBox);
             this.groupBox7.Controls.Add(this.SkyboxComboBox);
             this.groupBox7.Controls.Add(this.SkyboxControl);
             this.groupBox7.Controls.Add(this.label37);
-            this.groupBox7.Controls.Add(this.SoundReverb);
-            this.groupBox7.Controls.Add(this.label36);
             this.groupBox7.Controls.Add(this.NightSFXComboBox);
             this.groupBox7.Controls.Add(this.label35);
             this.groupBox7.Controls.Add(this.label3);
@@ -3820,6 +3819,17 @@ namespace SharpOcarina
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Skybox && Sound";
             this.groupBox7.Enter += new System.EventHandler(this.groupBox7_Enter);
+            // 
+            // SoundSpec
+            // 
+            this.SoundSpec.BackColor = System.Drawing.SystemColors.Window;
+            this.SoundSpec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SoundSpec.FormattingEnabled = true;
+            this.SoundSpec.Location = new System.Drawing.Point(254, 42);
+            this.SoundSpec.Name = "SoundSpec";
+            this.SoundSpec.Size = new System.Drawing.Size(133, 21);
+            this.SoundSpec.TabIndex = 40;
+            this.SoundSpec.SelectedIndexChanged += new System.EventHandler(this.SoundSpec_SelectedIndexChanged);
             // 
             // label39
             // 
@@ -3833,7 +3843,7 @@ namespace SharpOcarina
             // CloudyCheckBox
             // 
             this.CloudyCheckBox.AutoSize = true;
-            this.CloudyCheckBox.Location = new System.Drawing.Point(287, 16);
+            this.CloudyCheckBox.Location = new System.Drawing.Point(254, 19);
             this.CloudyCheckBox.Name = "CloudyCheckBox";
             this.CloudyCheckBox.Size = new System.Drawing.Size(58, 17);
             this.CloudyCheckBox.TabIndex = 39;
@@ -3847,7 +3857,7 @@ namespace SharpOcarina
             this.SkyboxComboBox.FormattingEnabled = true;
             this.SkyboxComboBox.Location = new System.Drawing.Point(92, 15);
             this.SkyboxComboBox.Name = "SkyboxComboBox";
-            this.SkyboxComboBox.Size = new System.Drawing.Size(182, 21);
+            this.SkyboxComboBox.Size = new System.Drawing.Size(152, 21);
             this.SkyboxComboBox.TabIndex = 33;
             this.SkyboxComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
             this.SkyboxComboBox.SelectedValueChanged += new System.EventHandler(this.SkyboxComboBox_SelectedValueChanged);
@@ -3857,21 +3867,12 @@ namespace SharpOcarina
             this.label37.AutoSize = true;
             this.label37.BackColor = System.Drawing.Color.Transparent;
             this.label37.Enabled = false;
-            this.label37.Location = new System.Drawing.Point(284, 73);
+            this.label37.Location = new System.Drawing.Point(252, 72);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(56, 13);
             this.label37.TabIndex = 36;
             this.label37.Text = "Unknown:";
             this.label37.Visible = false;
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(284, 45);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(45, 13);
-            this.label36.TabIndex = 36;
-            this.label36.Text = "Reverb:";
             // 
             // NightSFXComboBox
             // 
@@ -3879,7 +3880,7 @@ namespace SharpOcarina
             this.NightSFXComboBox.FormattingEnabled = true;
             this.NightSFXComboBox.Location = new System.Drawing.Point(92, 69);
             this.NightSFXComboBox.Name = "NightSFXComboBox";
-            this.NightSFXComboBox.Size = new System.Drawing.Size(182, 21);
+            this.NightSFXComboBox.Size = new System.Drawing.Size(152, 21);
             this.NightSFXComboBox.TabIndex = 35;
             this.NightSFXComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
             this.NightSFXComboBox.SelectedValueChanged += new System.EventHandler(this.NightSFXChanged);
@@ -3908,7 +3909,7 @@ namespace SharpOcarina
             this.SongComboBox.FormattingEnabled = true;
             this.SongComboBox.Location = new System.Drawing.Point(92, 42);
             this.SongComboBox.Name = "SongComboBox";
-            this.SongComboBox.Size = new System.Drawing.Size(182, 21);
+            this.SongComboBox.Size = new System.Drawing.Size(152, 21);
             this.SongComboBox.TabIndex = 33;
             this.SongComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
             this.SongComboBox.SelectedValueChanged += new System.EventHandler(this.SongOnChange);
@@ -3943,6 +3944,7 @@ namespace SharpOcarina
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label29);
             this.panel3.Controls.Add(this.label27);
             this.panel3.Controls.Add(this.label21);
             this.panel3.Controls.Add(this.ViewNormalCopyEnvB);
@@ -3971,6 +3973,15 @@ namespace SharpOcarina
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(384, 136);
             this.panel3.TabIndex = 21;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(6, 60);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(44, 13);
+            this.label29.TabIndex = 35;
+            this.label29.Text = "Color B:";
             // 
             // label27
             // 
@@ -8600,34 +8611,6 @@ namespace SharpOcarina
             this.niceLine9.TabIndex = 20;
             this.niceLine9.TabStop = false;
             // 
-            // SkyboxControl
-            // 
-            this.SkyboxControl.AllowHex = true;
-            this.SkyboxControl.Digits = 2;
-            this.SkyboxControl.Enabled = false;
-            this.SkyboxControl.Location = new System.Drawing.Point(341, 70);
-            this.SkyboxControl.MaxLength = 255;
-            this.SkyboxControl.Name = "SkyboxControl";
-            this.SkyboxControl.Size = new System.Drawing.Size(46, 20);
-            this.SkyboxControl.TabIndex = 21;
-            this.SkyboxControl.Text = "00";
-            this.EnvironmentControlTooltip.SetToolTip(this.SkyboxControl, " Environment Settings Control. \r\n0 = Controlled by Day Time\r\n1+ = Controlled by ?" +
-        "");
-            this.SkyboxControl.Visible = false;
-            // 
-            // SoundReverb
-            // 
-            this.SoundReverb.AllowHex = true;
-            this.SoundReverb.Digits = 2;
-            this.SoundReverb.Location = new System.Drawing.Point(342, 43);
-            this.SoundReverb.MaxLength = 2;
-            this.SoundReverb.Name = "SoundReverb";
-            this.SoundReverb.Size = new System.Drawing.Size(45, 20);
-            this.SoundReverb.TabIndex = 21;
-            this.SoundReverb.Text = "0";
-            this.SoundReverb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ReverbKeydown);
-            this.SoundReverb.Leave += new System.EventHandler(this.SoundReverb_Leave);
-            // 
             // EnvironmentDirectionBZ
             // 
             this.EnvironmentDirectionBZ.AlwaysFireValueChanged = false;
@@ -9791,36 +9774,6 @@ namespace SharpOcarina
             this.actorEditControl1.TabIndex = 3;
             this.actorEditControl1.Load += new System.EventHandler(this.actorEditControl1_Load);
             // 
-            // CutsceneTableEntry
-            // 
-            this.CutsceneTableEntry.AlwaysFireValueChanged = false;
-            this.CutsceneTableEntry.DisplayDigits = 1;
-            this.CutsceneTableEntry.DoValueRollover = false;
-            this.CutsceneTableEntry.IncrementMouseWheel = 1;
-            this.CutsceneTableEntry.Location = new System.Drawing.Point(80, 582);
-            this.CutsceneTableEntry.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CutsceneTableEntry.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneTableEntry.Name = "CutsceneTableEntry";
-            this.CutsceneTableEntry.ShiftMultiplier = 1;
-            this.CutsceneTableEntry.Size = new System.Drawing.Size(60, 20);
-            this.CutsceneTableEntry.TabIndex = 72;
-            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneTableEntry, "If -1, cutscene table is not updated, otherwise edits the respective row number i" +
-        "n the table");
-            this.CutsceneTableEntry.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneTableEntry.ValueChanged += new System.EventHandler(this.CutsceneTableEntry_ValueChanged);
-            // 
             // MarkerEndFrame
             // 
             this.MarkerEndFrame.AllowHex = false;
@@ -10540,6 +10493,36 @@ namespace SharpOcarina
             this.MarkerStartFrame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MarkerStartFrame_KeyDown);
             this.MarkerStartFrame.Leave += new System.EventHandler(this.MarkerStartFrame_Leave);
             // 
+            // CutsceneTableEntry
+            // 
+            this.CutsceneTableEntry.AlwaysFireValueChanged = false;
+            this.CutsceneTableEntry.DisplayDigits = 1;
+            this.CutsceneTableEntry.DoValueRollover = false;
+            this.CutsceneTableEntry.IncrementMouseWheel = 1;
+            this.CutsceneTableEntry.Location = new System.Drawing.Point(80, 582);
+            this.CutsceneTableEntry.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneTableEntry.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneTableEntry.Name = "CutsceneTableEntry";
+            this.CutsceneTableEntry.ShiftMultiplier = 1;
+            this.CutsceneTableEntry.Size = new System.Drawing.Size(60, 20);
+            this.CutsceneTableEntry.TabIndex = 72;
+            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneTableEntry, "If -1, cutscene table is not updated, otherwise edits the respective row number i" +
+        "n the table");
+            this.CutsceneTableEntry.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneTableEntry.ValueChanged += new System.EventHandler(this.CutsceneTableEntry_ValueChanged);
+            // 
             // CutsceneFlag
             // 
             this.CutsceneFlag.AlwaysFireValueChanged = false;
@@ -11252,7 +11235,6 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.PathwayZPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayXPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayYPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTableEntry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionAngleView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutscenePositionFrameDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionCameraRoll)).EndInit();
@@ -11275,6 +11257,7 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorZStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorXStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorYStart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTableEntry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneFlag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSpawn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneEntrance)).EndInit();
@@ -11443,8 +11426,6 @@ namespace SharpOcarina
         private NiceLine niceLine3;
         private GroupBox groupBox7;
         private CheckBox SkyboxCheckBox;
-        private NumericTextBox SoundReverb;
-        private Label label36;
         private ComboBox NightSFXComboBox;
         private Label label35;
         private GroupBox groupBox8;
@@ -12026,6 +12007,8 @@ namespace SharpOcarina
         private Button ViewNormalCopyEnvB;
         private Label label27;
         private Label label21;
+        private Label label29;
+        private ComboBox SoundSpec;
     }
     }
 
