@@ -447,7 +447,7 @@ namespace SharpOcarina
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            Matrix4 PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(ViewportFov), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
+            Matrix4 PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(ViewportFov), (float)VPWidth / (float)VPHeight, 0.1f, 10000.0f);
             GL.MultMatrix(ref PerspMatrix);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
