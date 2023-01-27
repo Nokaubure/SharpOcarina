@@ -306,9 +306,9 @@ namespace SharpOcarina
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             if (!fovOverrideFlag)
-                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)ViewportFOV.Value), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
+                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)ViewportFOV.Value), (float)VPWidth / (float)VPHeight, 0.1f, 10000.0f);
             else
-                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fovOverride), (float)VPWidth / (float)VPHeight, 0.001f, 10000.0f);
+                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fovOverride), (float)VPWidth / (float)VPHeight, 0.1f, 10000.0f);
             GL.MultMatrix(ref PerspMatrix);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
@@ -1879,7 +1879,7 @@ namespace SharpOcarina
                         /*
                         Vector3d camerapos = GetTrueCameraPosition();
                         var sortedactors = from element in Room.ZActors
-                                          orderby Distance3D(new Vector3(element.XPos,element.YPos,element.ZPos),  (Vector3)camerapos) descending 
+                                          orderby Distance3D(new Vector3(element.XPos,element.YPos,element.ZPos),  (Vector3)camerapos) descending
                                            select element;*/
 
                         for (int i = 0; i < Room.ZActors.Count; i++)
@@ -1987,7 +1987,7 @@ namespace SharpOcarina
                 
 
                 GL.Begin(BeginMode.Quads);   //We want to draw a quad, i.e. shape with four sides
-                GL.Color3(0, 0, 0); //Set the colour to red 
+                GL.Color3(0, 0, 0); //Set the colour to red
                 GL.Vertex2(0, 0);            //Draw the four corners of the rectangle
                 GL.Vertex2(0, 32);
                 GL.Vertex2(320, 32);
@@ -1995,7 +1995,7 @@ namespace SharpOcarina
                 GL.End();
 
                 GL.Begin(BeginMode.Quads);   //We want to draw a quad, i.e. shape with four sides
-                GL.Color3(0, 0, 0); //Set the colour to red 
+                GL.Color3(0, 0, 0); //Set the colour to red
                 GL.Vertex2(0, 240 - 32);            //Draw the four corners of the rectangle
                 GL.Vertex2(0, 240);
                 GL.Vertex2(320, 240);
@@ -2204,7 +2204,7 @@ namespace SharpOcarina
                                 {
                                     lerpamount = 1f;
 
-                                } 
+                                }
 
                                 //Vector3 result = new Vector3();
 
@@ -3218,7 +3218,7 @@ namespace SharpOcarina
                 {
                     objpos = (Vector3d)((Vector3)target);
                 }
-                else if (actorpick == 5) 
+                else if (actorpick == 5)
                 {
                     objpos = new Vector3d(((ZWaterbox)target).XPos,
                     ((ZWaterbox)target).YPos,
@@ -3296,7 +3296,7 @@ namespace SharpOcarina
                 {
                     CurrentScene.Pathways[(int) PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = (Vector3) objpos;
                 }
-                else if (actorpick == 5 && !settings.Disablewaterboxmovement) 
+                else if (actorpick == 5 && !settings.Disablewaterboxmovement)
                 {
                     ((ZWaterbox)target).XPos = (float)objpos.X;
                     ((ZWaterbox)target).YPos = (float)objpos.Y;
@@ -4102,7 +4102,7 @@ namespace SharpOcarina
                     RoomList.Enabled = true;
                 }
 
-                if (CurrentScene.PregeneratedMesh) 
+                if (CurrentScene.PregeneratedMesh)
                 {
                     foreach (Control Ctrl in tabRooms.Controls)
                         if (Ctrl != AdditionalTextureList && Ctrl != AdditionalTexturesGroupBox && Ctrl != AddAdditionalTexture && Ctrl != DeleteAdditionalTexture) Ctrl.Enabled = false;
@@ -4166,11 +4166,11 @@ namespace SharpOcarina
 
             Object target = null;
             if (datatype == _Actor_)
-                target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.ConvertAll(actor => (actor.Clone())); 
+                target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.ConvertAll(actor => (actor.Clone()));
             else if (datatype == _Transition_)
-                target = CurrentScene.Transitions.ConvertAll(actor => (actor.Clone())); 
+                target = CurrentScene.Transitions.ConvertAll(actor => (actor.Clone()));
             else if (datatype == _Spawn_)
-                target = CurrentScene.SpawnPoints.ConvertAll(actor => (actor.Clone())); 
+                target = CurrentScene.SpawnPoints.ConvertAll(actor => (actor.Clone()));
             else if (datatype == _Pathway_)
                 target = CurrentScene.Pathways;
             else if (datatype == _Waterbox_)
@@ -4328,7 +4328,7 @@ namespace SharpOcarina
         private void UpdateCutsceneEdit()
         {
             if (CurrentScene.Cutscene.Count != 0)
-            {  
+            {
 
                 MarkerDown.Enabled = (MarkerSelect.SelectedIndex < CurrentScene.Cutscene.Count - 1 && MarkerSelect.SelectedIndex != -1);
                 MarkerUp.Enabled = (MarkerSelect.SelectedIndex > 0);
@@ -4497,8 +4497,8 @@ namespace SharpOcarina
 
                     CutsceneTextboxType.SelectedIndex = FindSongComboItemValue(CutsceneTextboxType.Items, selectedtextbox.Type);
                     CutsceneTextboxMessageId.Text = ""+selectedtextbox.Message.ToString("X4");
-                    CutsceneTextboxTopMessageID.Text = "" + selectedtextbox.TopMessage.ToString("X4"); 
-                    CutsceneTextboxBottomMessageID.Text = "" + selectedtextbox.BottomMessage.ToString("X4"); 
+                    CutsceneTextboxTopMessageID.Text = "" + selectedtextbox.TopMessage.ToString("X4");
+                    CutsceneTextboxBottomMessageID.Text = "" + selectedtextbox.BottomMessage.ToString("X4");
                     CutsceneTextboxFrames.Value = selectedtextbox.Frames;
 
                     CutsceneTextboxType.Enabled = true;
@@ -4607,7 +4607,7 @@ namespace SharpOcarina
                         selectedpos.Animation = Convert.ToUInt16(((SongItem)CutsceneActorAnimation.SelectedItem).Value);
 
                     if ((MarkerType.SelectedItem as MarkerItem).Type == "Actor")
-                    { 
+                    {
                         CutsceneActorXStart.Enabled = true;
                         CutsceneActorYStart.Enabled = true;
                         CutsceneActorZStart.Enabled = true;
@@ -4694,7 +4694,7 @@ namespace SharpOcarina
                 uint[] autoendframe;
 
                 if (!settings.MajorasMask)
-                { 
+                {
                     autoendframe = new uint[]{ 0x01, 0x05, 0x13, 0x0A, 0x3E };
                 }
                 else
@@ -4842,7 +4842,7 @@ namespace SharpOcarina
         private int cutsceneplayframe;
         private decimal cutscenestoredfov = 60;
 
-        private void CutscenePreview_Set() 
+        private void CutscenePreview_Set()
         {
             cutscenestoredfov = ViewportFOV.Value;
 
@@ -4929,9 +4929,9 @@ namespace SharpOcarina
 
                 float SplineValue(float[] value)
                 {
-                    return coeff[0] * value[0] + 
-                        coeff[1] * value[1] + 
-                        coeff[2] * value[2] + 
+                    return coeff[0] * value[0] +
+                        coeff[1] * value[1] +
+                        coeff[2] * value[2] +
                         coeff[3] * value[3];
                 }
 
@@ -5961,7 +5961,7 @@ namespace SharpOcarina
                 if (settings.UpdateCRC && !settings.GenerateCustomDMATable)
                 {
                     RecalculateCRC(File.Open(rom, FileMode.Open, FileAccess.ReadWrite));
-                    // Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"rn64crc/rn64crc.exe"), "-u " + saveFileDialog1.FileName); 
+                    // Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"rn64crc/rn64crc.exe"), "-u " + saveFileDialog1.FileName);
 
                 }
                 if (settings.GenerateCustomDMATable)
@@ -6447,7 +6447,7 @@ namespace SharpOcarina
                 }
                 else
                 {
-                   CurrentScene.Rooms[i].TrueGroups = new List<ObjFile.Group>(); 
+                   CurrentScene.Rooms[i].TrueGroups = new List<ObjFile.Group>();
                 }
 
                 foreach(ZEnvironment env in CurrentScene.Environments)
@@ -6998,7 +6998,7 @@ namespace SharpOcarina
         {
             if (GroupList.SelectedItem != null)
             {
-                ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial = MultiTextureComboBox.SelectedIndex - 1; 
+                ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial = MultiTextureComboBox.SelectedIndex - 1;
 
                 int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
                 CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.MultiTexMaterial[Index] = ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial;
@@ -7080,7 +7080,7 @@ namespace SharpOcarina
                 Color.FromArgb(0x00, 0x28, 0x50), Color.FromArgb(0x49, 0x49, 0x49), Color.FromArgb(0x14, 0x32, 0x4B), Color.FromArgb(0xB7, 0xB7, 0xB7), Color.FromArgb(0x32, 0x64, 0x96),
                 Color.FromArgb(0x00, 0x0A, 0x14), 0x03D2, 0x3200, 0x3F));
 
-            /* ... rainy environment 
+            /* ... rainy environment
             CurrentScene.Environments.Add(new ZEnvironment(
                 Color.FromArgb(0x32, 0x19, 0x25), Color.FromArgb(0x49, 0x49, 0x49), Color.FromArgb(0xA0, 0x86, 0x76), Color.FromArgb(0xB7, 0xB7, 0xB7), Color.FromArgb(0x1E, 0x0A, 0x0A),
                 Color.FromArgb(0x28, 0x0F, 0x0F), 0x03DA, 0x3200, 1));
@@ -7517,7 +7517,7 @@ namespace SharpOcarina
                 Lower1UnitChecbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Lower1Unit;
                 BlockEponaCheckBox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EponaBlock;
            
-                //0000000008000000 
+                //0000000008000000
 
                 if ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags & 0x30) == 0x30)
                     VoidCheckBox.Checked = true;
@@ -8585,7 +8585,7 @@ namespace SharpOcarina
 
         private void PathwayTransform_ValueChanged(object sender, EventArgs e)
         {
-            CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = 
+            CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] =
                 new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
             UpdateForm();
         }
@@ -9325,7 +9325,7 @@ namespace SharpOcarina
         private void CutsceneTextboxFrames_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Textboxes[CutsceneTextboxList.SelectedIndex].Frames = (ushort)CutsceneTextboxFrames.Value;
-            UpdateCutsceneEdit(); 
+            UpdateCutsceneEdit();
         }
 
         private void CutsceneTextboxMessageId_Leave(object sender, EventArgs e)
@@ -9776,7 +9776,7 @@ namespace SharpOcarina
                         {
                             MessageBox.Show("Bad usage of #Room tag. The tag needs to be at the end of the group name or before another tag.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                            CurrentScene.Rooms.Clear(); CurrentScene.NewRoomMode = false; 
+                            CurrentScene.Rooms.Clear(); CurrentScene.NewRoomMode = false;
                             ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
                             if (NormalHeader.SceneHeaders.Count > 0) ResetAlternateRooms();
                             GroupList.DataSource = null;
@@ -10686,7 +10686,7 @@ namespace SharpOcarina
         
 
             if (id > 0)
-            { 
+            {
             SetSceneHeader(0);
             NormalHeader = CurrentScene;
             CurrentScene = NormalHeader.SceneHeaders[id - 1].Scene;
@@ -10864,7 +10864,7 @@ namespace SharpOcarina
                 List<int> restored = new List<int>();
 
                 for (int i = 0; i < room.TrueGroups.Count; i++)
-                { 
+                {
                     for(int y = 0; y < CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.Count; y++)
                     {
                         if (room.TrueGroups[i].Name == CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups[y].Name && !restored.Contains(i))
@@ -12269,7 +12269,7 @@ namespace SharpOcarina
                             Patches.Add(new Patch((int)(rom.EntranteTableEnd - 0x4), 8, 0x27004102, "Entrance table"));
                             Patches.Add(new Patch((int)(rom.CutsceneTableEnd - 0x8), 8, (uint)(0x000002A0 | EntranceId << 16), "Cutscene table")); //CHECK
                             Patches.Add(new Patch((int)(rom.CutsceneTableEnd - 0x4), 8, 0x02000188, "Cutscene table"));
-                            Patches.Add(new Patch((int)(rom.EntranceTitle), 4, EntranceId, "Starting entrance")); 
+                            Patches.Add(new Patch((int)(rom.EntranceTitle), 4, EntranceId, "Starting entrance"));
                             Patches.Add(new Patch((int)(rom.HeaderTitle), 4, 0x0000, "Starting header"));
                             Patches.Add(new Patch((int)(rom.SceneTable)+(0x14*0x27), 8, rom.FirstScene, "Scene table data"));
                             Patches.Add(new Patch((int)(rom.SceneTable) + (0x14 * 0x27) +0x4, 8, rom.FirstScene + 0x1290));
@@ -12965,7 +12965,7 @@ namespace SharpOcarina
             if (MessageBox.Show("This will reset all group settings of all rooms, continue?", "Confirmation",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                     MessageBoxDefaultButton.Button1) == DialogResult.Yes)
-            { 
+            {
                 foreach (ZScene.ZRoom room in CurrentScene.Rooms)
                 {
                     cleargroupsettings(room);
@@ -13836,7 +13836,7 @@ namespace SharpOcarina
             }
         }
 
-        public void OpenGlobalFile(string filename) 
+        public void OpenGlobalFile(string filename)
         {
             FileInfo info = new FileInfo(filename);
 
@@ -14054,7 +14054,7 @@ namespace SharpOcarina
             {
                 List<String> actors = rom64.getList("src\\actor");
 
-                foreach(var str in actors) 
+                foreach(var str in actors)
                 {
                     var basename = Path.GetFileNameWithoutExtension(str + ".exe");
 
@@ -14176,7 +14176,7 @@ namespace SharpOcarina
             {
                 List<String> objects = rom64.getList("src\\object");
 
-                foreach(var str in objects) 
+                foreach(var str in objects)
                 {
                     var basename = Path.GetFileNameWithoutExtension(str + ".exe");
 
@@ -14773,7 +14773,7 @@ namespace SharpOcarina
 
             string basestr = "";
             string currentroom = "";
-            if (sceneid == -1 ) 
+            if (sceneid == -1 )
             {
                 if (openFileDialog1.FileName.Contains("_scene"))
                     basestr = (openFileDialog1.FileName).Substring(0, (openFileDialog1.FileName).IndexOf("_scene")) + "_";
@@ -15370,7 +15370,7 @@ namespace SharpOcarina
 
         private void TimeHour_ValueChanged(object sender, EventArgs e)
         {
-            if (!DisableStartTime.Checked && CurrentScene.Rooms.Count > 0) 
+            if (!DisableStartTime.Checked && CurrentScene.Rooms.Count > 0)
             {
                 CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = ((int)TimeHour.Value << 8) | (CurrentScene.Rooms[RoomList.SelectedIndex].StartTime & 0x00FF);
             }
@@ -16558,8 +16558,8 @@ namespace SharpOcarina
             }
 
             Vector3d vec = new Vector3d(
-                mtx[3, 0] + mtx[2, 0], 
-                mtx[3, 1] + mtx[2, 1], 
+                mtx[3, 0] + mtx[2, 0],
+                mtx[3, 1] + mtx[2, 1],
                 mtx[3, 2] + mtx[2, 2]
             );
 
@@ -16576,9 +16576,9 @@ namespace SharpOcarina
                 return (i % n + n) % n;
             }
 
-            if (angle > 0) 
+            if (angle > 0)
                 ang = (int)(angle * 0x7F);
-            else 
+            else
                 ang = (int)(angle * 0x7F);
 
             ang = positive_modulo(ang, 255);
