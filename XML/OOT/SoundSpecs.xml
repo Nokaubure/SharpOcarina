@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Table KeyType="System.Byte" ValueType="System.String">
-  <Spec Key="00">Outdoor Small (0x0)</Spec>
-  <Spec Key="01">Outdoor Medium (0x1)</Spec>
-  <Spec Key="02">Outdoor Large (0x2)</Spec>
-  <Spec Key="03">Hall Medium (0x3)</Spec>
-  <Spec Key="04">Hall Large (0x4)</Spec>
-  <Spec Key="05">Room Small (0x5)</Spec>
-  <Spec Key="06">Room Medium (0x6)</Spec>
-  <Spec Key="07">Canyon (0x7)</Spec>
-  <Spec Key="08">Outdoor Medium (0x8)</Spec>
-  <Spec Key="09">Canyon (0x9)</Spec>
+  <Spec Key="00">Outdoor Small</Spec>
+  <Spec Key="01">Outdoor Medium</Spec>
+  <Spec Key="02">Outdoor Large</Spec>
+  <Spec Key="03">Hall Medium</Spec>
+  <Spec Key="04">Hall Large</Spec>
+  <Spec Key="05">Room Small</Spec>
+  <Spec Key="06">Room Medium</Spec>
+  <Spec Key="07">Canyon</Spec>
+  <Spec Key="08">Outdoor Medium</Spec>
+  <Spec Key="09">Canyon</Spec>
+  <Spec Key="0A">Title Screen</Spec>
+  <Spec Key="0B">Unk0B</Spec>
+  <Spec Key="0C">Unk0C</Spec>
+  <Spec Key="10">Vaporwave</Spec>
 </Table>

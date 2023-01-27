@@ -544,7 +544,8 @@ namespace SharpOcarina
 
             ReloadXMLs();
 
-            RefreshRecentScenes();
+            RefreshRecetMenuItems(ref openSceneToolStripMenuItem, "SceneFile");
+            RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile");
 
             RefreshRecentRoms();
 
@@ -6358,7 +6359,7 @@ namespace SharpOcarina
         {
             LastScene = FileName;
 
-            string temppath = "", fullpath, temppath2 = "";
+            string temppath = "", fullpath;
 
             NowLoading = true;
 
@@ -6608,7 +6609,7 @@ namespace SharpOcarina
 
             SceneLoaded = true;
 
-            RefreshRecentScenes(FileName);
+            RefreshRecetMenuItems(ref openSceneToolStripMenuItem, "SceneFile", FileName);
 
             if (CurrentScene.PregeneratedMesh)
             {
@@ -7884,6 +7885,9 @@ namespace SharpOcarina
 
         private void listBox4_DoubleClick(object sender, EventArgs e)
         {
+            if (settings.EnableNewExitFormat)
+                return;
+
             CreateEditBox(sender, true);
 
             ListEditBox.KeyPress += new KeyPressEventHandler(this.EditOverExitEd);
@@ -12873,7 +12877,7 @@ namespace SharpOcarina
             }
         }
 
-        public void RefreshRecentScenes(string newpath = "")
+        public void RefreshRecetMenuItems(ref ToolStripMenuItem menu, string table, string newpath = "")
         {
             XmlDocument doc = new XmlDocument();
             File.Delete(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/RecentFilestmp.xml"));
@@ -12882,55 +12886,63 @@ namespace SharpOcarina
             var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/RecentFilestmp.xml");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite);
             doc.Load(fs);
-            XmlNodeList nodes = doc.SelectNodes("Table/SceneFile");
+            XmlNodeList nodes = doc.SelectNodes("Table/" + table);
 
 
             if (newpath != "")
             {
-                XmlNode deletenode = doc.SelectSingleNode("//SceneFile[text()='" + newpath + "']");
+                XmlNode deletenode = doc.SelectSingleNode("//" + table + "[text()='" + newpath + "']");
                 if (deletenode != null)
                 {
                     deletenode.ParentNode.RemoveChild(deletenode);
                 }
 
-                XmlNode newnode = doc.CreateElement("SceneFile");
+                XmlNode newnode = doc.CreateElement(table);
                 newnode.InnerText = newpath;
                 XmlNode Table = doc.SelectSingleNode("//Table");
                 Table.AppendChild(newnode);
                 doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/RecentFiles.xml"));
-
             }
+
             if (nodes.Count > settings.MaxLastFile)
             {
                 while(nodes.Count > settings.MaxLastFile)
                 {
                     nodes[0].ParentNode.RemoveChild(nodes[0]);
-                    nodes = doc.SelectNodes("Table/SceneFile");
+                    nodes = doc.SelectNodes("Table/" + table);
                 }
             }
 
             if (nodes != null)
             {
-                openSceneToolStripMenuItem.DropDownItems.Clear();
+                menu.DropDownItems.Clear();
                 for (int i = nodes.Count - 1; i >= 0; i--)
                 {
                     XmlNode node = nodes[i];
 
                     ToolStripMenuItem MenuItem = new System.Windows.Forms.ToolStripMenuItem() { Name = node.InnerText, Text = node.InnerText };
-                    MenuItem.Click += new System.EventHandler(this.OpenRecentScene);
+                    
+                    if (table == "SceneFile")
+                        MenuItem.Click += new System.EventHandler(this.OpenRecentScene);
+                    else if (table == "GlobalFile")
+                        MenuItem.Click += new System.EventHandler(this.OpenRecentGlobal);
 
-                    openSceneToolStripMenuItem.DropDownItems.Add(MenuItem);
+                    menu.DropDownItems.Add(MenuItem);
                 };
             }
 
             fs.Close();
             File.Delete(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/RecentFilestmp.xml"));
-           // openSceneToolStripMenuItem.Enabled = openSceneToolStripMenuItem.DropDownItems.Count > 0;
         }
 
         public void OpenRecentScene(object sender, System.EventArgs e)
         {
             OpenScene(((ToolStripMenuItem)sender).Text);
+        }
+
+        public void OpenRecentGlobal(object sender, System.EventArgs e)
+        {
+            OpenGlobalFile(((ToolStripMenuItem)sender).Text);
         }
 
         private void CutsceneTableEntry_ValueChanged(object sender, EventArgs e)
@@ -13820,59 +13832,65 @@ namespace SharpOcarina
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                OpenGlobalFile(openFileDialog1.FileName);
+            }
+        }
 
-                FileInfo info = new FileInfo(openFileDialog1.FileName);
+        public void OpenGlobalFile(string filename) 
+        {
+            FileInfo info = new FileInfo(filename);
 
-                injectToROMToolStripMenuItem.Text = "&Inject to ROM";
+            injectToROMToolStripMenuItem.Text = "&Inject to ROM";
 
-                if (info.Extension != ".cfg")
+            if (info.Extension != ".cfg")
+            {
+                if (info.Length < 33554432 + 50000)
                 {
-                    if (info.Length < 33554432 + 50000)
-                    {
-                        MessageBox.Show("This ROM is not uncompressed! go to Tools > Decompress ROM", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    MessageBox.Show("This ROM is not uncompressed! go to Tools > Decompress ROM", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                    rom64.set("");
-                    GlobalROM = openFileDialog1.FileName;
-                    RomModeLabel.Text = "Global ROM Mode: ON";
-                    RomModeLabel.ForeColor = Color.Green;
-                    injectToROMToolStripMenuItem.DropDownItems.Clear();
-                    RefreshExitCache();
-                    RefreshActorCache();
-                    RefreshObjectCache();
-                    GlobalRomRefresh.Visible = true;
-                    LaunchRomToolStripMenuItem.Visible = true;
+                rom64.set("");
+                GlobalROM = filename;
+                RomModeLabel.Text = "Global ROM Mode: ON";
+                RomModeLabel.ForeColor = Color.Green;
+                injectToROMToolStripMenuItem.DropDownItems.Clear();
+                RefreshExitCache();
+                RefreshActorCache();
+                RefreshObjectCache();
+                RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile", GlobalROM);
+                GlobalRomRefresh.Visible = true;
+                LaunchRomToolStripMenuItem.Visible = true;
 
 
-                    ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
-                    if (rom.Game == "MM")
-                    {
-                        settings.MajorasMask = true;
-                        majorasMaskModeexperimentalToolStripMenuItem.Checked = true;
-                    }
-                    else
-                    {
-                        settings.MajorasMask = false;
-                        majorasMaskModeexperimentalToolStripMenuItem.Checked = false;
-                    }
-
-                    UpdateForm();
+                ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
+                if (rom.Game == "MM")
+                {
+                    settings.MajorasMask = true;
+                    majorasMaskModeexperimentalToolStripMenuItem.Checked = true;
                 }
                 else
                 {
-                    injectToROMToolStripMenuItem.Text = "&Send to z64rom";
-                    rom64.set(openFileDialog1.FileName);
-                    GlobalROM = "";
-                    RomModeLabel.Text = "Global z64rom Mode: ON";
-                    RomModeLabel.ForeColor = Color.Green;
-                    injectToROMToolStripMenuItem.DropDownItems.Clear();
-                    RefreshExitCache();
-                    RefreshActorCache();
-                    RefreshObjectCache();
-                    GlobalRomRefresh.Visible = true;
-                    LaunchRomToolStripMenuItem.Visible = true;
+                    settings.MajorasMask = false;
+                    majorasMaskModeexperimentalToolStripMenuItem.Checked = false;
                 }
+
+                UpdateForm();
+            }
+            else
+            {
+                injectToROMToolStripMenuItem.Text = "Send to &z64rom";
+                rom64.set(filename);
+                GlobalROM = "";
+                RomModeLabel.Text = "Global z64rom Mode: ON";
+                RomModeLabel.ForeColor = Color.Green;
+                injectToROMToolStripMenuItem.DropDownItems.Clear();
+                RefreshExitCache();
+                RefreshActorCache();
+                RefreshObjectCache();
+                RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile", filename);
+                GlobalRomRefresh.Visible = true;
+                LaunchRomToolStripMenuItem.Visible = true;
             }
         }
 
@@ -16342,6 +16360,7 @@ namespace SharpOcarina
         private void EnableNexExitFormatMenuItem_Click(object sender, EventArgs e)
         {
             settings.EnableNewExitFormat = EnableNexExitFormatMenuItem.Checked;
+
             ExitList.SelectedIndex = -1;
             UpdateExits();
         }
@@ -16560,7 +16579,7 @@ namespace SharpOcarina
             if (angle > 0) 
                 ang = (int)(angle * 0x7F);
             else 
-                ang = (int)(angle * 0x80);
+                ang = (int)(angle * 0x7F);
 
             ang = positive_modulo(ang, 255);
 
