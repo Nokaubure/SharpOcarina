@@ -352,3 +352,4 @@ obj/*
 bin/*
 Settings.xml
 Makefile
+.vs/SharpOcarina/v15/.suo
