@@ -96,9 +96,9 @@ namespace SharpOcarina
                     truepos.Y -= (float)Math.Sin(RotXRad) * Camera.CameraCoeff * 2.0f * 1115f;
                 }
 
-                truepos.X = MainForm.Clamp(truepos.X, -32767, 32767);
-                truepos.Y = MainForm.Clamp(truepos.Y, -32767, 32767);
-                truepos.Z = MainForm.Clamp(truepos.Z, -32767, 32767);
+                truepos.X = Helpers.Clamp(truepos.X, -32767, 32767);
+                truepos.Y = Helpers.Clamp(truepos.Y, -32767, 32767);
+                truepos.Z = Helpers.Clamp(truepos.Z, -32767, 32767);
 
                 Actors.Add(new ZActor(number, (short)truepos.X, (short)truepos.Y, (short)truepos.Z, 0.0f, 0.0f, 0.0f, 0));
 
@@ -427,48 +427,13 @@ namespace SharpOcarina
             UpdateForm();
         }
 
-        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
+        private void ActorPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorXPos.Value) > 20)
-                ActorXPos.Value += (ActorXPos.Value - (decimal)Actors[ActorComboBox.SelectedIndex].XPos)*19;
-
             UpdateActorData();
         }
 
-        private void numericUpDown5_ValueChanged(object sender, EventArgs e)
+        private void ActorRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorYPos.Value) > 20)
-                ActorYPos.Value += (ActorYPos.Value - (decimal)Actors[ActorComboBox.SelectedIndex].YPos) * 19;
-
-            UpdateActorData();
-        }
-
-        private void numericUpDown6_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorZPos.Value) > 20)
-                ActorZPos.Value += (ActorZPos.Value - (decimal)Actors[ActorComboBox.SelectedIndex].ZPos) * 19;
-
-            UpdateActorData();
-        }
-
-        private void numericUpDown9_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorXRot.Value) > 1820)
-                ActorXRot.Value += (ActorXRot.Value - (decimal)Actors[ActorComboBox.SelectedIndex].XRot) * 9;
-            UpdateActorData();
-        }
-
-        private void numericUpDown8_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorYRot.Value) > 1820)
-                ActorYRot.Value += (ActorYRot.Value - (decimal)Actors[ActorComboBox.SelectedIndex].YRot) * 9;
-            UpdateActorData();
-        }
-
-        private void numericUpDown7_ValueChanged(object sender, EventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorZRot.Value) > 1820)
-                ActorZRot.Value += (ActorZRot.Value - (decimal)Actors[ActorComboBox.SelectedIndex].ZRot) * 9;
             UpdateActorData();
         }
 
@@ -512,7 +477,7 @@ namespace SharpOcarina
         {
             if (e.KeyCode == Keys.Enter && MainForm.settings.Degrees)
             {
-                ActorXRot.Value = Clamp(ActorXRot.Value * (decimal) 182.044444444, ActorXRot.Minimum, ActorXRot.Maximum);
+                ActorXRot.Value = Helpers.Clamp(ActorXRot.Value * (decimal) 182.044444444, ActorXRot.Minimum, ActorXRot.Maximum);
                 UpdateActorData();
             }
         }
@@ -521,7 +486,7 @@ namespace SharpOcarina
         {
             if (e.KeyCode == Keys.Enter && MainForm.settings.Degrees)
             {
-                ActorYRot.Value = Clamp(ActorYRot.Value * (decimal)182.044444444, ActorYRot.Minimum, ActorYRot.Maximum);
+                ActorYRot.Value = Helpers.Clamp(ActorYRot.Value * (decimal)182.044444444, ActorYRot.Minimum, ActorYRot.Maximum);
                 UpdateActorData();
             }
         }
@@ -530,15 +495,10 @@ namespace SharpOcarina
         {
             if (e.KeyCode == Keys.Enter && MainForm.settings.Degrees)
             {
-                ActorZRot.Value = Clamp(ActorZRot.Value * (decimal)182.044444444, ActorZRot.Minimum, ActorZRot.Maximum);
+                ActorZRot.Value = Helpers.Clamp(ActorZRot.Value * (decimal)182.044444444, ActorZRot.Minimum, ActorZRot.Maximum);
                 UpdateActorData();
             }
             
-        }
-
-        private decimal Clamp(decimal value, decimal min, decimal max)
-        {
-            return (value < min) ? min : (value > max) ? max : value;
         }
 
         private void Duplicate_Click(object sender, EventArgs e)
@@ -582,9 +542,9 @@ namespace SharpOcarina
                     truepos.Y -= (float)Math.Sin(RotXRad) * Camera.CameraCoeff * 2.0f * 1115f;
                 }
 
-                truepos.X = MainForm.Clamp(truepos.X, -32767, 32767);
-                truepos.Y = MainForm.Clamp(truepos.Y, -32767, 32767);
-                truepos.Z = MainForm.Clamp(truepos.Z, -32767, 32767);
+                truepos.X = Helpers.Clamp(truepos.X, -32767, 32767);
+                truepos.Y = Helpers.Clamp(truepos.Y, -32767, 32767);
+                truepos.Z = Helpers.Clamp(truepos.Z, -32767, 32767);
 
                 if (IsTransitionActor)
                     Actors.Add(new ZActor(from.FrontSwitchTo, from.FrontCamera, from.BackSwitchTo, from.BackCamera, from.Number, (short)truepos.X, (short)truepos.Y, (short)truepos.Z, from.YRot, from.Variable));

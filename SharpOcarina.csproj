@@ -86,6 +86,9 @@
     </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Nett, Version=0.15.0.0, Culture=neutral, PublicKeyToken=605dcfe7a1d3365b, processorArchitecture=MSIL">
+      <HintPath>packages\Nett.0.15.0\lib\net40\Nett.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>.\OpenTK.dll</HintPath>
     </Reference>
@@ -206,6 +209,7 @@
       <DependentUpon>ActorEditControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Camera.cs" />
+    <Compile Include="z64rom.cs" />
     <Compile Include="ZCamera.cs" />
     <Compile Include="CutsceneTableEditor.cs">
       <SubType>Form</SubType>

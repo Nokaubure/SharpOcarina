@@ -157,9 +157,9 @@ namespace SharpOcarina
 
         public static void Position()
         {
+            GL.Rotate(Rot.Z, 0.0f, 0.0f, 1.0f);
             GL.Rotate(Rot.X, 1.0f, 0.0f, 0.0f);
             GL.Rotate(Rot.Y, 0.0f, 1.0f, 0.0f);
-            GL.Rotate(Rot.Z, 0.0f, 0.0f, 1.0f);
             GL.Translate(Pos);
         }
 

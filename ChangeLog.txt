@@ -20,7 +20,15 @@
 
 - Changed direction params of environment lights so they're displayed as X Y Z values
 
+- Added camera direction to light direction copy buttons
+
 - Added value 0000 - None in special objects
+
+- Cutscene parameter changes affect camera while in the camera view mode (position changes, fov, roll)
+
+- Cutscene Add Position now inserts the added position after the selected position
+
+- [TODO] Cutscene Camera options have been moved to the Cutscene Tab
 
 - You can now switch with a numeric selector at the top of the window
 
@@ -43,6 +51,10 @@
 - Fixed an issue where alternate headers could not have their own texture anims despite the inherit checkbox being unchecked
 
 - Fixed an issue where an alternate header that clones the main header could lead to a crash
+
+- Fixed cutscene camera preview to be more accurate
+
+- Fixed camera preview to restore previous FOV
 
 
 --------------
