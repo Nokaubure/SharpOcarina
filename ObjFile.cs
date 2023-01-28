@@ -437,7 +437,7 @@ namespace SharpOcarina
                     case "v":
                         /* Vertex */
 
-                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.Contains("#NoCollision"))
+                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
                         {
                             nocollisionvertexfix.Add(_Verts.Count);
                        
@@ -466,7 +466,7 @@ namespace SharpOcarina
                     case "vc":
                         /* Vertex Color */
 
-                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.Contains("#NoCollision"))
+                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
                             continue;
 
                         R = G = B = A = 0;
@@ -481,7 +481,7 @@ namespace SharpOcarina
                     case "vt":
                         /* Texture coordinates */
 
-                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.Contains("#NoCollision"))
+                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
                             continue;
 
                         U = V = W = 0;
@@ -500,7 +500,7 @@ namespace SharpOcarina
                     case "vn":
                         /* Normals */
 
-                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.Contains("#NoCollision"))
+                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
                         {
                             nocollisionnormalfix.Add(_Norms.Count);
 
@@ -525,7 +525,7 @@ namespace SharpOcarina
                     case "fc":
                         // link colors to triangles
 
-                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.Contains("#NoCollision"))
+                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
                             continue;
 
                         X = Y = Z = 0;
@@ -544,7 +544,7 @@ namespace SharpOcarina
                     case "f":
                         /* Face/triangle */
 
-                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.Contains("#NoCollision"))
+                        if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
                             continue;
 
                         int[] VIndex = new int[16];
@@ -1037,7 +1037,7 @@ namespace SharpOcarina
 
         private void AddGroup(Group GroupToAdd)
         {
-            if (IgnoreMaterials && GroupToAdd.Name.Contains("#NoCollision"))
+            if (IgnoreMaterials && GroupToAdd.Name.ToLower().Contains("#nocollision"))
             {
                 Console.WriteLine("Skipping #NoCollision!");
                 return;
