@@ -56,6 +56,8 @@
 
 - Fixed camera preview to restore previous FOV
 
+- Fixed the inequality where collision and texture tags were case sensitive while mesh tags werent
+
 
 --------------
 ---1.34 

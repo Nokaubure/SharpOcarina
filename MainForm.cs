@@ -2431,16 +2431,16 @@ namespace SharpOcarina
                         OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
                     bitmap.UnlockBits(data);
 
-                    if (mat.DisplayName.Contains("#ClampX"))
+                    if (mat.DisplayName.ToLower().Contains("#clampx"))
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
-            else if (mat.DisplayName.Contains("#MirrorX"))
+            else if (mat.DisplayName.Contains("#mirrorx"))
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.MirroredRepeatArb);
             else
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.Repeat);
 
-             if (mat.DisplayName.Contains("#ClampY"))
+             if (mat.DisplayName.Contains("#clampy"))
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
-            else if (mat.DisplayName.Contains("#MirrorY"))
+            else if (mat.DisplayName.Contains("#mirrory"))
                  GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.MirroredRepeatArb);
             else
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.Repeat);
@@ -8465,7 +8465,7 @@ namespace SharpOcarina
                 {
                     foreach (ObjFile.Triangle Tri in Group.Triangles)
                     {
-                        if (Group.Name.Contains("#NoCollision")) continue;
+                        if (Group.Name.ToLower().Contains("#nocollision")) continue;
 
                         Vector3 collision = ObjFile.RayCollision(
                             CurrentScene.ColModel.Vertices[Tri.VertIndex[0]],
@@ -10267,8 +10267,8 @@ namespace SharpOcarina
             StoreUndo(_Transition_);
             foreach (ObjFile.Group group in CurrentScene.ColModel.Groups)
             {
-                string name = group.Name.Replace("TAG_", "#");
-                if (name.Contains("#Door") || name.Contains("#BlackPlane"))
+                string name = group.Name.ToLower().Replace("TAG_", "#");
+                if (name.Contains("#door") || name.Contains("#blackplane"))
                 {
                     //Console.WriteLine(group.Name);
                     foreach (ObjFile.Triangle tri in group.Triangles)
@@ -10350,8 +10350,8 @@ namespace SharpOcarina
                                 }
                             }
 
-                            if (name.Contains("#Door")) CurrentScene.Transitions.Add(new ZActor(roomid[0], 0xFF, roomid[1], 0xFF, 0x002E, (short)newpos.X, (short)newpos.Y, (short)newpos.Z, (short)((Math.Atan2(normal.X, normal.Z) * 180 / Math.PI) * 182.04444444444444444444444444444f), 0));
-                            else if (name.Contains("#BlackPlane")) CurrentScene.Transitions.Add(new ZActor(roomid[0], 0xFF, roomid[1], 0xFF, 0x0023, (short)newpos.X, (short)newpos.Y, (short)newpos.Z, (short)((Math.Atan2(normal.X, normal.Z) * 180 / Math.PI) * 182.04444444444444444444444444444f), 0));
+                            if (name.Contains("#door")) CurrentScene.Transitions.Add(new ZActor(roomid[0], 0xFF, roomid[1], 0xFF, 0x002E, (short)newpos.X, (short)newpos.Y, (short)newpos.Z, (short)((Math.Atan2(normal.X, normal.Z) * 180 / Math.PI) * 182.04444444444444444444444444444f), 0));
+                            else if (name.Contains("#blackplane")) CurrentScene.Transitions.Add(new ZActor(roomid[0], 0xFF, roomid[1], 0xFF, 0x0023, (short)newpos.X, (short)newpos.Y, (short)newpos.Z, (short)((Math.Atan2(normal.X, normal.Z) * 180 / Math.PI) * 182.04444444444444444444444444444f), 0));
 
                             doorcount++;
 
@@ -11168,7 +11168,7 @@ namespace SharpOcarina
                     
                     for (int j = 0; j < Room.TrueGroups.Count; j++)
                     {
-                        if (Room.TrueGroups[j].Name.Contains("#NoMesh")) continue;
+                        if (Room.TrueGroups[j].Name.ToLower().Contains("#nomesh")) continue;
                         NDisplayList DList = new NDisplayList(CurrentScene.Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, UnusedCommandCheckBox.Checked, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].AnimationBank,   bank);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (uint)Data.Count, CurrentScene.SceneSettings, CurrentScene.AdditionalTextures);
                         InjectMessages.Add("Group " + Room.TrueGroups[j].Name + " Offset " + (Data.Count + DList.Vertoffset).ToString("X8"));
@@ -14668,8 +14668,8 @@ namespace SharpOcarina
                             foreach (ObjFile.Group Group in CurrentScene.ColModel.Groups)
                             {
                                 ulong polytype = 0;
-                                ushort polyflags = (ushort)((Group.Name.Contains("#IgnoreCamera") ? 0x2000 : 0) + (Group.Name.Contains("#IgnoreActors") ? 0x4000 : 0) + (Group.Name.Contains("#IgnoreProjectiles") ? 0x8000 : 0));
-                                ushort polyflagsB = (ushort)(((Group.Name.Contains("#Speed") || Group.Name.Contains("#Direction")) && !Group.Name.Contains("#WaterStream") ? 0x2000 : 0));
+                                ushort polyflags = (ushort)((Group.Name.ToLower().Contains("#ignorecamera") ? 0x2000 : 0) + (Group.Name.ToLower().Contains("#ignoreactors") ? 0x4000 : 0) + (Group.Name.ToLower().Contains("#ignoreprojectiles") ? 0x8000 : 0));
+                                ushort polyflagsB = (ushort)(((Group.Name.ToLower().Contains("#speed") || Group.Name.ToLower().Contains("#direction")) && !Group.Name.ToLower().Contains("#waterstream") ? 0x2000 : 0));
 
                                 if (!UInt64.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Raw") + 4, 16), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytype))
                                 {

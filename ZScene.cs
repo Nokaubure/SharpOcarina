@@ -677,7 +677,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.LodDistance[i] = animatednum;
                 group.LodDistance = animatednum;
             }
-            if (group.Name.ToLower().Contains("#FC"))
+            if (group.Name.ToLower().Contains("#fc"))
             {
                 ulong command = 0;
                 if (!UInt64.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#FC") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
@@ -690,7 +690,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.Custom[i] = true;
                 group.Custom = true;
             }
-            if (group.Name.ToLower().Contains("#D9"))
+            if (group.Name.ToLower().Contains("#d9"))
             {
                 ulong command = 0;
                 if (!UInt64.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#D9") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
@@ -703,7 +703,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.Custom[i] = true;
                 group.Custom = true;
             }
-            if (group.Name.ToLower().Contains("#E2"))
+            if (group.Name.ToLower().Contains("#e2"))
             {
                 ulong command = 0;
                 if (!UInt64.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#E2") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
@@ -2061,7 +2061,7 @@ namespace SharpOcarina
                         {
                             foreach (ObjFile.Group Group in Room.TrueGroups)
                             {
-                                if (Group.Name.Contains("#NoCollision")) continue;
+                                if (Group.Name.ToLower().Contains("#nocollision")) continue;
 
                                 foreach (ObjFile.Triangle Tri in Group.Triangles)
                                 {
@@ -2678,7 +2678,7 @@ namespace SharpOcarina
                     for (int j = 0; j < Room.TrueGroups.Count; j++)
                     {
 
-                        if (Room.TrueGroups[j].Name.Contains("#NoMesh") || Room.TrueGroups[j].Name.Contains("TAG_NoMesh")) continue;
+                        if (Room.TrueGroups[j].Name.ToLower().Contains("#nomesh") || Room.TrueGroups[j].Name.Contains("TAG_NoMesh")) continue;
 
                         if (Room.TrueGroups[j].Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && (MainForm.CurrentScene.SegmentFunctions[Room.TrueGroups[j].AnimationBank - 8].Functions.Count == 0) && !MainForm.n64preview)
                         {
@@ -3595,14 +3595,14 @@ namespace SharpOcarina
             {
                 Group.Name = Group.Name.Replace("TAG_", "#");
                 polytype = 0;
-                polyflags = (ushort) ((Group.Name.Contains("#IgnoreCamera") ? 0x2000 : 0) + (Group.Name.Contains("#IgnoreActors") ? 0x4000 : 0) + (Group.Name.Contains("#IgnoreProjectiles") ? 0x8000 : 0));
-                polyflagsB = (ushort)(((Group.Name.Contains("#Speed") || Group.Name.Contains("#Direction")) && !Group.Name.Contains("#WaterStream") ? 0x2000 : 0));
-                if (Group.Name.Contains("#Polytype"))
+                polyflags = (ushort) ((Group.Name.ToLower().Contains("#ignorecamera") ? 0x2000 : 0) + (Group.Name.ToLower().Contains("#ignoreactors") ? 0x4000 : 0) + (Group.Name.ToLower().Contains("#ignoreprojectiles") ? 0x8000 : 0));
+                polyflagsB = (ushort)(((Group.Name.ToLower().Contains("#speed") || Group.Name.ToLower().Contains("#direction")) && !Group.Name.ToLower().Contains("#waterstream") ? 0x2000 : 0));
+                if (Group.Name.ToLower().Contains("#polytype"))
                 {
                     int polytypenumber = 0;
                     try
                     {
-                        if (!Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Polytype") + 9, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytypenumber))
+                        if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#polytype") + 9, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytypenumber))
                         {
                             MessageBox.Show("Bad usage of #Polytype tag, expected #PolytypeXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             continue;
@@ -3620,10 +3620,10 @@ namespace SharpOcarina
                 }
                 else if (Group.Name.ToLower().Replace("#room", "").Contains("#"))
                 {
-                    if (Group.Name.Contains("#Raw"))
+                    if (Group.Name.ToLower().Contains("#raw"))
                     {
                         polytype = 0;
-                        if (!UInt64.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Raw") + 4, 16), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytype))
+                        if (!UInt64.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#raw") + 4, 16), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytype))
                         {
                             MessageBox.Show("Bad usage of Raw tag. It should be #RawXXXXXXXXXXXXXXXX (XXXXXXXXXXXXXXX = polytype raw data in Hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             continue;
@@ -3633,15 +3633,15 @@ namespace SharpOcarina
                     else
                     foreach (KeyValuePair<string, ulong> kp in MainForm.flaglist)
                     {
-                        if (Group.Name.Contains(kp.Key))
+                        if (Group.Name.ToLower().Contains(kp.Key.ToLower()))
                         {
                             if (kp.Key == "#Exit")
                             {
                                 int exitnum = 0;
 
-                                if (Group.Name.Substring(Group.Name.IndexOf("#Exit")).Length < 7 || !Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Exit") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
+                                if (Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#exit")).Length < 7 || !Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#exit") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
                                 {
-                                    if (!Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Exit") + 5, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
+                                    if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#exit") + 5, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
                                     {
                                         MessageBox.Show("Bad usage of Exit tag. It should be #ExitXX (XX = exit ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         continue;
@@ -3658,7 +3658,7 @@ namespace SharpOcarina
                             else if (kp.Key == "#Camera")
                             {
                                 int cameranum = 0;
-                                if (!Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Camera") + 7, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out cameranum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#camera") + 7, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out cameranum))
                                 {
                                     MessageBox.Show("Bad usage of Camera tag. It should be #CameraX (X = camera ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
@@ -3670,7 +3670,7 @@ namespace SharpOcarina
                             else if (kp.Key == "#Environment")
                             {
                                 int envnum = 0;
-                                if (!Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Environment") + 12, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#environment") + 12, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
                                 {
                                     MessageBox.Show("Bad usage of Environment tag. It should be #EnvironmentX (X = environment ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
@@ -3681,7 +3681,7 @@ namespace SharpOcarina
                             else if (kp.Key == "#IndoorEnv")
                             {
                                 int envnum = 0;
-                                if (!Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#IndoorEnv") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#indoorenv") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
                                 {
                                     MessageBox.Show("Bad usage of Environment tag. It should be #IndoorEnvXX (XX = environment ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
@@ -3692,7 +3692,7 @@ namespace SharpOcarina
                             else if (kp.Key == "#Direction")
                             {
                                 int dirnum = 0;
-                                if (!Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Direction") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out dirnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#direction") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out dirnum))
                                 {
                                     MessageBox.Show("Bad usage of Direction tag. It should be #DirectionXX (XX = direction in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
@@ -3703,7 +3703,7 @@ namespace SharpOcarina
                             else if (kp.Key == "#Speed")
                             {
                                 int spdnum = 0;
-                                if (!Int32.TryParse(Group.Name.Substring(Group.Name.IndexOf("#Speed") + 6, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out spdnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#speed") + 6, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out spdnum))
                                 {
                                     MessageBox.Show("Bad usage of Speed tag. It should be #SpeedX (X = 1 slow, 2 mid, 3 fast, 4 preserves previous speed) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
@@ -3802,7 +3802,7 @@ namespace SharpOcarina
 
 
 
-                    if (!Group.Name.Contains("#BlackPlane") && !Group.Name.Contains("#NoCollision") && !Group.Name.Contains("#Door") && !error)
+                    if (!Group.Name.ToLower().Contains("#blackplane") && !Group.Name.ToLower().Contains("#nocollision") && !Group.Name.ToLower().Contains("#door") && !error)
                     {
 
 
