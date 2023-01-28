@@ -4,6 +4,12 @@
 ---1.35
 --------------
 
+- Tracks recent Global ROMs and romtool projects
+
+- Rooms are renameable
+
+- Changed Reverb to Sound Space and added XML's for these
+
 - [TODO] Added the necessary support for the current version z64rom to work
 	- Supports the new exit system that completely skips the use of exit table
 	- [TODO] Global z64rom mode which lets you directly save into the project without having to constantly select the .cfg
