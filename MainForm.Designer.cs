@@ -4692,6 +4692,7 @@ namespace SharpOcarina
             this.RoomList.Size = new System.Drawing.Size(397, 117);
             this.RoomList.TabIndex = 2;
             this.RoomList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.RoomList.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
             // 
             // tabSceneEnv
             // 

@@ -1591,7 +1591,7 @@ namespace SharpOcarina
                 else
                     GL.ClearColor(Color.Black);
 
-                if (CurrentScene.Environments.Count != 0 && (int)EnvironmentSelect.Value > 0)
+                if (CurrentScene.Environments.Count != 0 && (int)EnvironmentSelect.Value >= 0)
                 {
                     GL.Light(LightName.Light0, LightParameter.Diffuse, Color.FromArgb(
                         CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.A,
@@ -5624,9 +5624,10 @@ namespace SharpOcarina
         }
 
         private NumericTextBox ListEditBox;
+        private TextBox ListStringEditBox;
         private int itemSelected;
 
-        private void CreateEditBox(object sender, bool exit)
+        private void CreateEditBox(object sender, string type)
         {
             ListBox LB = (ListBox)sender;
 
@@ -5636,31 +5637,68 @@ namespace SharpOcarina
             Rectangle r = LB.GetItemRectangle(itemSelected);
             string itemText = "";
 
-            if (exit)
-            {
-                if (!settings.EnableNewExitFormat)
-                    itemText = CurrentScene.ExitList[itemSelected].ValueHex;
-                else
-                    itemText = CurrentScene.ExitListV2[itemSelected].Raw.ToString("X8");
+            switch (type) {
+                case "exit":
+                    if (!settings.EnableNewExitFormat)
+                        itemText = CurrentScene.ExitList[itemSelected].ValueHex;
+                    else
+                        itemText = CurrentScene.ExitListV2[itemSelected].Raw.ToString("X8");
+                    break;
+                
+                case "object":
+                    itemText = ((ZScene.ZUShort)LB.Items[itemSelected]).ValueHex;
+                    break;
+                
+                case "room":
+                    itemText = CurrentScene.Rooms[RoomList.SelectedIndex].ModelShortFilename;
+                    break;
             }
-            else
-                itemText = ((ZScene.ZUShort)LB.Items[itemSelected]).ValueHex;
 
-            ListEditBox = new NumericTextBox();
-            ListEditBox.AllowHex = true;
-            ListEditBox.MaxLength = 4;
-            ListEditBox.CharacterCasing = CharacterCasing.Upper;
+            switch (type) {
+                case "exit":
+                case "object":
+                    ListEditBox = new NumericTextBox();
+                    ListEditBox.AllowHex = true;
+                    ListEditBox.MaxLength = 4;
+                    ListEditBox.CharacterCasing = CharacterCasing.Upper;
+                    
+                    ListEditBox.BackColor = Color.Beige;
+                    ListEditBox.Font = listBox3.Font;
+                    ListEditBox.BorderStyle = BorderStyle.FixedSingle;
 
-            ListEditBox.BackColor = Color.Beige;
-            ListEditBox.Font = listBox3.Font;
-            ListEditBox.BorderStyle = BorderStyle.FixedSingle;
+                    ListEditBox.Location = new Point(r.X, r.Y);
+                    ListEditBox.Size = new Size(r.Width, r.Height);
+                    ListEditBox.Show();
+                    ListEditBox.Text = itemText;
+                    ListEditBox.Focus();
+                    ListEditBox.SelectAll();
+                    break;
 
-            ListEditBox.Location = new Point(r.X, r.Y);
-            ListEditBox.Size = new Size(r.Width, r.Height);
-            ListEditBox.Show();
-            ListEditBox.Text = itemText;
-            ListEditBox.Focus();
-            ListEditBox.SelectAll();
+                case "room":
+                    ListStringEditBox = new TextBox();
+                    
+                    ListStringEditBox.MaxLength = 64;
+                    ListStringEditBox.BackColor = Color.Beige;
+                    ListStringEditBox.Font = listBox3.Font;
+                    ListStringEditBox.BorderStyle = BorderStyle.FixedSingle;
+
+                    ListStringEditBox.Location = new Point(r.X, r.Y);
+                    ListStringEditBox.Size = new Size(r.Width, r.Height);
+                    ListStringEditBox.Show();
+                    ListStringEditBox.Text = itemText;
+                    ListStringEditBox.Focus();
+                    ListStringEditBox.SelectAll();
+                    break;
+            }
+        }
+
+        private void CloseEditBox()
+        {
+            if (ListEditBox != null)
+                ListEditBox.Hide();
+            if (ListStringEditBox != null)
+                ListStringEditBox.Hide();
+            UpdateForm();
         }
 
         private void checkBox5_Click(object sender, EventArgs e)
@@ -6890,6 +6928,29 @@ namespace SharpOcarina
             SelectRoom(RoomList.SelectedIndex);
         }
 
+        private void listBox1_ApplyEdit(object sender, EventArgs e)
+        {
+            CurrentScene.Rooms[RoomList.SelectedIndex].ModelShortFilename = ListStringEditBox.Text;
+            ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
+            CloseEditBox();
+        }
+
+        private void listBox1_ExitEdit(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                this.listBox1_ApplyEdit(sender, e);
+        }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            CreateEditBox(sender, "room");
+            
+            ListStringEditBox.KeyPress += new KeyPressEventHandler(this.listBox1_ExitEdit);
+            ListStringEditBox.LostFocus += new EventHandler(this.listBox1_ApplyEdit);
+            RoomList.Controls.AddRange(new System.Windows.Forms.Control[] { this.ListStringEditBox });
+            this.ListStringEditBox.Focus();
+        }
+
         private void listBox2_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Y > GroupList.ItemHeight * GroupList.Items.Count)
@@ -7018,7 +7079,7 @@ namespace SharpOcarina
 
         private void listBox3_DoubleClick(object sender, EventArgs e)
         {
-            CreateEditBox(sender, false);
+            CreateEditBox(sender, "object");
 
             ListEditBox.KeyPress += new KeyPressEventHandler(this.EditOverObjEd);
             ListEditBox.LostFocus += new EventHandler(this.FocusOverObjEd);
@@ -7111,6 +7172,11 @@ namespace SharpOcarina
         {
             ZEnvironment DelEnv = CurrentScene.Environments[(int)EnvironmentSelect.Value];
             CurrentScene.Environments.Remove(DelEnv);
+
+            EnvironmentSelect.Value = Helpers.Clamp(
+                EnvironmentSelect.Value,
+                0, CurrentScene.Environments.Count - 1);
+
             UpdateForm();
         }
 
@@ -7888,7 +7954,7 @@ namespace SharpOcarina
             if (settings.EnableNewExitFormat)
                 return;
 
-            CreateEditBox(sender, true);
+            CreateEditBox(sender, "exit");
 
             ListEditBox.KeyPress += new KeyPressEventHandler(this.EditOverExitEd);
             ListEditBox.LostFocus += new EventHandler(this.FocusOverExitEd);
@@ -11257,113 +11323,114 @@ namespace SharpOcarina
             openSceneToolStripMenuItem.Owner.Hide();
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ObjFile.Material mat = new ObjFile.Material();
+                AdditionalTexture_Add(openFileDialog1.FileName);
+            }
 
-                try
+        }
+
+        private void AdditionalTexture_Add(string filename) 
+        {
+            ObjFile.Material mat = new ObjFile.Material();
+
+            try
+            {
+                if (ObjFile.ValidImageTypes.IndexOf(Path.GetExtension(filename).ToLowerInvariant()) == -1) throw new Exception();
+
+                if (Path.GetExtension(filename).ToLowerInvariant() == ".tga")
                 {
-                    if (ObjFile.ValidImageTypes.IndexOf(Path.GetExtension(openFileDialog1.FileName).ToLowerInvariant()) == -1) throw new Exception();
-
-                    if (Path.GetExtension(openFileDialog1.FileName).ToLowerInvariant() == ".tga")
+                    if (!File.Exists(Path.GetDirectoryName(filename) + "\\" + Path.GetFileNameWithoutExtension(filename) + ".png"))
                     {
-                        if (!File.Exists(Path.GetDirectoryName(openFileDialog1.FileName) + "\\" + Path.GetFileNameWithoutExtension(openFileDialog1.FileName) + ".png"))
-                        {
-                            String pdetail = @"/c ndec\tga2png.exe -i " + "\"" + openFileDialog1.FileName + "\"" + " -o " + "\"" + Path.GetDirectoryName(openFileDialog1.FileName) + "\\\"";
-                            // Console.WriteLine(Path.GetDirectoryName(LoadPath) + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
-                            ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
-                            pcmd.Arguments = pdetail;
+                        String pdetail = @"/c ndec\tga2png.exe -i " + "\"" + filename + "\"" + " -o " + "\"" + Path.GetDirectoryName(filename) + "\\\"";
+                        // Console.WriteLine(Path.GetDirectoryName(LoadPath) + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
+                        ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
+                        pcmd.Arguments = pdetail;
 
-                            Process cmd = Process.Start(pcmd);
-                            cmd.WaitForExit();
+                        Process cmd = Process.Start(pcmd);
+                        cmd.WaitForExit();
 
 
-                        }
-                        //   Console.WriteLine(Path.GetDirectoryName(LoadPath) + "\\" + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
-                        mat.TexImage = ObjFile.BitmapFromFile(Path.GetDirectoryName(openFileDialog1.FileName) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(openFileDialog1.FileName) + ".png");
-                        mat.map_Kd = Path.GetDirectoryName(openFileDialog1.FileName) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(openFileDialog1.FileName) + ".png";
                     }
-                    else if (Path.GetExtension(openFileDialog1.FileName).ToLowerInvariant() == ".gif")
+                    //   Console.WriteLine(Path.GetDirectoryName(LoadPath) + "\\" + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
+                    mat.TexImage = ObjFile.BitmapFromFile(Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".png");
+                    mat.map_Kd = Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".png";
+                }
+                else if (Path.GetExtension(filename).ToLowerInvariant() == ".gif")
+                {
+                    Image IMG = Image.FromFile(filename);
+
+    
+                    int Length = IMG.GetFrameCount(FrameDimension.Time);
+
+                    if (Length == 0)
                     {
-                        Image IMG = Image.FromFile(openFileDialog1.FileName);
-
-       
-                        int Length = IMG.GetFrameCount(FrameDimension.Time);
-
-                        if (Length == 0)
-                        {
-                            MessageBox.Show("Gif corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-
-                        Image[] frames = new Image[Length];
-
-                        for (int i = 0; i < Length; i++)
-                        {
-                            mat = new ObjFile.Material();
-
-                            IMG.SelectActiveFrame(FrameDimension.Time, i);
-
-                            string framefilename = "Import\\" + Path.GetFileNameWithoutExtension(openFileDialog1.FileName) + "#Frame" + i + ".png";
-
-                            if (File.Exists(framefilename))
-                                File.Delete(framefilename);
-
-                            frames[i] = ((Image)IMG.Clone());
-
-                            frames[i].Save(framefilename);
-
-                            mat.TexImage = new Bitmap(Bitmap.FromFile(framefilename));
-                            mat.map_Kd = framefilename;
-                            mat.GLID = TexUtil.CreateTextureFromBitmap(mat.TexImage);
-                            mat.Width = mat.TexImage.Width;
-                            mat.Height = mat.TexImage.Height;
-                            mat.Name = Path.GetFileName(mat.map_Kd);
-
-                            if (CurrentScene.AdditionalTextures.Find(x => x.map_Kd == framefilename) != null)
-                            {
-                                CurrentScene.AdditionalTextures[CurrentScene.AdditionalTextures.FindIndex(x => x.map_Kd == framefilename)] = mat;
-                            }
-                            else
-                                CurrentScene.AdditionalTextures.Add(mat);
-
-
-
-                        }
-                        UpdateAdditionalTextures();
-                        AdditionalTextureList.Value = AdditionalTextureList.Maximum;
-                        UpdateGroupSelect();
-
+                        MessageBox.Show("Gif corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    else
+                    Image[] frames = new Image[Length];
+
+                    for (int i = 0; i < Length; i++)
                     {
-                            mat.TexImage = new Bitmap(Bitmap.FromFile(openFileDialog1.FileName));
-                            mat.map_Kd = openFileDialog1.FileName;
+                        mat = new ObjFile.Material();
+
+                        IMG.SelectActiveFrame(FrameDimension.Time, i);
+
+                        string framefilename = "Import\\" + Path.GetFileNameWithoutExtension(filename) + "#Frame" + i + ".png";
+
+                        if (File.Exists(framefilename))
+                            File.Delete(framefilename);
+
+                        frames[i] = ((Image)IMG.Clone());
+
+                        frames[i].Save(framefilename);
+
+                        mat.TexImage = new Bitmap(Bitmap.FromFile(framefilename));
+                        mat.map_Kd = framefilename;
+                        mat.GLID = TexUtil.CreateTextureFromBitmap(mat.TexImage);
+                        mat.Width = mat.TexImage.Width;
+                        mat.Height = mat.TexImage.Height;
+                        mat.Name = Path.GetFileName(mat.map_Kd);
+
+                        if (CurrentScene.AdditionalTextures.Find(x => x.map_Kd == framefilename) != null)
+                        {
+                            CurrentScene.AdditionalTextures[CurrentScene.AdditionalTextures.FindIndex(x => x.map_Kd == framefilename)] = mat;
+                        }
+                        else
+                            CurrentScene.AdditionalTextures.Add(mat);
+
                     }
-                    mat.GLID = TexUtil.CreateTextureFromBitmap(mat.TexImage);
-                    mat.Width = mat.TexImage.Width;
-                    mat.Height = mat.TexImage.Height;
-                    mat.Name = Path.GetFileName(mat.map_Kd);
-                   // mat.map_Kd = openFileDialog1.FileName;
-                 //   mat.ForceRGBA = true;
-                }
-                catch (FileNotFoundException)
-                {
-                    MessageBox.Show("Texture image " + openFileDialog1.FileName + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Texture image " + openFileDialog1.FileName + " has incorrect format and cannot be loaded!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    UpdateAdditionalTextures();
+                    AdditionalTextureList.Value = AdditionalTextureList.Maximum;
+                    UpdateGroupSelect();
+
                     return;
                 }
 
-                CurrentScene.AdditionalTextures.Add(mat);
-                UpdateAdditionalTextures();
-                AdditionalTextureList.Value = AdditionalTextureList.Maximum;
-                UpdateGroupSelect();
+                else
+                {
+                        mat.TexImage = new Bitmap(Bitmap.FromFile(filename));
+                        mat.map_Kd = filename;
+                }
+                mat.GLID = TexUtil.CreateTextureFromBitmap(mat.TexImage);
+                mat.Width = mat.TexImage.Width;
+                mat.Height = mat.TexImage.Height;
+                mat.Name = Path.GetFileName(mat.map_Kd);
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Texture image " + filename + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Texture image " + filename + " has incorrect format and cannot be loaded!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
+            CurrentScene.AdditionalTextures.Add(mat);
+            UpdateAdditionalTextures();
+            AdditionalTextureList.Value = AdditionalTextureList.Maximum;
+            UpdateGroupSelect();
         }
 
         private void DeleteAdditionalTexture_Click(object sender, EventArgs e)

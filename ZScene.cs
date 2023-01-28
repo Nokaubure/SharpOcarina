@@ -1191,7 +1191,6 @@ namespace SharpOcarina
 
             }
 
-
             ConvertScene(ConsecutiveRoomInject, ForceRGBATextures,this, game);
 
 #if DEBUG
@@ -1280,7 +1279,7 @@ namespace SharpOcarina
                     }
                 }*/
 
-                string filenameconf = (zzrp != 3) ? "conf.txt" : "config.cfg";
+                string filenameconf = (zzrp != 3) ? "conf.txt" : "config.toml";
 
                 if (File.Exists(Filepath + filenameconf)) File.Delete(Filepath + filenameconf);
 
