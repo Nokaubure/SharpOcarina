@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using OpenTK.Input;
+using System.IO;
+using System.Globalization;
 
 namespace SharpOcarina
 {
@@ -43,6 +45,24 @@ namespace SharpOcarina
 
             if (initialvalue == 0xFFFF) firsttime = 3;
 
+            if (rom64.isSet()){
+                List<String> actors = rom64.getList("src\\actor\\");
+
+                foreach(String str in actors) {
+                    var basename = Path.GetFileNameWithoutExtension(str + ".exe");
+
+                    if (!basename.StartsWith("0x"))
+                        continue;
+
+                    var indexname = basename.Substring(2, basename.IndexOf("-") - 2);
+
+                    if (!ushort.TryParse(indexname, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ushort index))
+                        continue;
+                    
+                    basename = basename.Substring(basename.IndexOf("-") + 1);
+                }
+            }
+
             foreach (XmlNode node in nodes)
             {
                 XmlAttributeCollection nodeAtt = node.Attributes;
@@ -63,10 +83,7 @@ namespace SharpOcarina
 
 
                 Database.Add(new DatabaseActor((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16),values, nodeAtt["Name"].Value, xmlactor.notes + warning,xmlactor.category));
-
-
             }
-
         }
 
         public void UpdateWindow()

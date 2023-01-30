@@ -55,6 +55,7 @@ namespace SharpOcarina
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.AdvancedTextureAnimationsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnableNexExitFormatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoReload = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.majorasMaskModeexperimentalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.IgnoreMajorasMaskDaySystem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1136,6 +1137,7 @@ namespace SharpOcarina
             this.toolStripSeparator7,
             this.AdvancedTextureAnimationsMenuItem,
             this.EnableNexExitFormatMenuItem,
+            this.AutoReload,
             this.toolStripSeparator3,
             this.majorasMaskModeexperimentalToolStripMenuItem,
             this.IgnoreMajorasMaskDaySystem,
@@ -1204,6 +1206,13 @@ namespace SharpOcarina
             this.EnableNexExitFormatMenuItem.Size = new System.Drawing.Size(311, 22);
             this.EnableNexExitFormatMenuItem.Text = "Enable new exit format (z64rom)";
             this.EnableNexExitFormatMenuItem.Click += new System.EventHandler(this.EnableNexExitFormatMenuItem_Click);
+            // 
+            // AutoReload
+            // 
+            this.AutoReload.CheckOnClick = true;
+            this.AutoReload.Name = "AutoReload";
+            this.AutoReload.Size = new System.Drawing.Size(311, 22);
+            this.AutoReload.Text = "Auto Reload";
             // 
             // toolStripSeparator3
             // 
@@ -11016,6 +11025,7 @@ namespace SharpOcarina
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Tag = "a";
             this.Text = "---";
+            this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -11313,6 +11323,7 @@ namespace SharpOcarina
         private System.Windows.Forms.Label label6;
         private SharpOcarina.NumericTextBox RoomInjectionOffset;
         private System.Windows.Forms.ToolStripMenuItem showRoomModelsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AutoReload;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.ListBox listBox3;

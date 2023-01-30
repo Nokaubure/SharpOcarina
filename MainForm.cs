@@ -3166,6 +3166,9 @@ namespace SharpOcarina
                     Camera.MouseMove(Mouse.Move);
                 else
                     Camera.MouseCenter(Mouse.Move);
+                
+                if (e.Button != MouseButtons.Left)
+                    Mouse.LDown = false;
             }
             if (Mouse.MDown && CurrentScene != null && CurrentScene.Rooms.Count > 0 && actorpick != -1)
             {
@@ -14148,10 +14151,10 @@ namespace SharpOcarina
 
                     if (File.Exists(rompath + "\\overlay.zovl")) {
                         FileStream zovl = File.Open(rompath + "\\overlay.zovl", FileMode.Open, FileAccess.Read);
-                        TomlTable config = Toml.ReadFile(rompath + "\\config.cfg");
+                        TomlTable toml = Toml.ReadFile(rompath + "\\config.cfg");
 
-                        uint vramaddr = config["vram_addr"].Get<uint>();
-                        uint initvar = config["init_vars"].Get<uint>();
+                        uint vramaddr = toml["vram_addr"].Get<uint>();
+                        uint initvar = toml["init_vars"].Get<uint>();
                         int offset = (int)(initvar - vramaddr);
                         byte[] data = new byte[2];
 
@@ -14159,6 +14162,33 @@ namespace SharpOcarina
                         zovl.Read(data, 0, 2);
                         objectid = (uint)(data[0] << 8 | data[1]);
                         zovl.Close();
+                    }
+
+                    if (File.Exists(str + "\\actor.toml")) {
+                        TomlTable toml = Toml.ReadFile(str + "\\actor.toml");
+                        TomlTableArray tblArr = toml["Render"].Get<TomlTableArray>();
+
+                        for (int i = 0; tblArr != null && i < tblArr.Count; i++) {
+                            TomlTable tbl = tblArr[i].Get<TomlTable>();
+
+                            ushort key = 0;
+                            float scale = 0;
+                            bool animated = false;
+                            ushort animation = 0;
+                            ushort yoff = 0;
+                            string var = "";
+                            ushort bank = 0x06;
+                            string file = "";
+
+                            Console.WriteLine("Register Actor Preview: " + basename);
+
+                            // CurrentScene.RegisterActorPreview(
+                            //     key, 0, new string[0], new string[0],
+                            //     scale, 0, animated, 0,
+                            //     var, animation, yoff, bank, new string[0],
+                            //     file
+                            // );
+                        }
                     }
 
                     ActorCache.Add(index, new ActorInfo(basename, prop, objectid.ToString("X4")));
@@ -16676,6 +16706,23 @@ namespace SharpOcarina
         private void SoundSpec_SelectedIndexChanged(object sender, EventArgs e)
         {
             CurrentScene.Reverb = (byte)SoundSpec.SelectedIndex;
+        }
+
+        private static DateTime lastTime;
+        private void MainForm_Activated(object sender, EventArgs e)
+        {
+            if (!AutoReload.Checked || !ReloadRoomButton.Enabled) return;
+
+            foreach (ZScene.ZRoom Room in CurrentScene.Rooms) {
+                DateTime now = File.GetLastWriteTime(Room.ModelFilename);
+
+                if (now > lastTime) {
+                    lastTime = now;
+                    Console.WriteLine("Auto Reload Rooms");
+                    ReloadRoomButton_Click(sender, e);
+                    break;
+                }
+            }
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

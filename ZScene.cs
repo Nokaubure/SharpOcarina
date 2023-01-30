@@ -1338,6 +1338,189 @@ namespace SharpOcarina
 
         #region ... Preview
 
+        public void RegisterActorPreview(
+            UInt16 key,
+            UInt32 offset,
+            string[] offsetsstr,
+            string[] textureoffsetsstr,
+            float scale,
+            UInt32 dlistcount,
+            bool animated,
+            int hirearchy,
+            string var,
+            UInt16 animation,
+            UInt16 Yoff,
+            uint bank,
+            string[] colors,
+            string file) {
+            
+            UInt32[] offsets = new uint[offsetsstr.Length];
+            UInt32[] textureoffsets = new uint[15];
+            offset = offset | (bank << 24);
+
+
+            for(int i = 0; i < offsetsstr.Length; i++)
+                offsets[i] = Convert.ToUInt16(offsetsstr[i], 16 ) | (bank << 24);
+
+            for (int i = 8; i < textureoffsetsstr.Length+8; i++)
+                textureoffsets[i] = Convert.ToUInt32(textureoffsetsstr[i-8], 16) | (bank << 24);
+            
+            ZObjRender objrender = new ZObjRender(key,var,scale);
+
+            objrender.Yoff = Yoff;
+
+            List<byte> ClearBlock = new List<byte>(File.ReadAllBytes(file));
+
+            UcodeSimulator.currentfilename = file;
+            UcodeSimulator.TextureCache.Clear();
+            Array.Copy(textureoffsets, UcodeSimulator.textureoffsets, textureoffsets.Length);
+            SayakaGL.GameHandler.LoadToRAM(ClearBlock.ToArray(), (int) bank);
+
+            if (animated)
+            {
+                byte[] zobj = ClearBlock.ToArray();
+                uint limb_count = 0;
+                int hirearchyfound = 0;
+                int animationfound = 0;
+
+                for (int i = 0; i < zobj.Length; i += 0x4)
+                {
+                    if (zobj[i] == bank && zobj[i + 5] == 0x00 && zobj[i + 6] == 0x00 && zobj[i + 7] == 0x00)
+                    {
+                        int check = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i + 1], zobj[i + 2], zobj[i + 3]), 16);
+                        int check_prev = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i - 3], zobj[i - 2], zobj[i - 1]), 16);
+                        if (check - check_prev != 0x0C && check - check_prev != 0x10)
+                            continue;
+                        if (++hirearchyfound != hirearchy)
+                            continue;
+                            
+                        List<byte> zobjlist = new List<byte>(zobj);
+                        limb_count = zobjlist[i+4];
+                        offset = (uint) Helpers.Read24S(zobjlist, i + 1);
+                        int animrotvaloffset = 0x00;
+                        int animrotindexoffset = 0x00;
+
+                        for (int ii = 0; ii < zobj.Length; ii += 4)
+                        {
+                            if (!(ii + 4 > zobj.GetUpperBound(0)))
+                            {
+                                if (zobj[ii + 2] == 0x00 && zobj[ii + 3] == 0x00 && zobj[ii + 4] == bank && zobj[ii + 8] == bank && zobj[ii + 14] == 0x00 && zobj[ii + 15] == 0x00)
+                                {
+                                    animationfound++;
+
+                                    if (animationfound == animation || animationfound == 1)
+                                    {
+                                        animrotvaloffset = Helpers.Read24S(zobjlist, ii + 5);
+                                        animrotindexoffset = Helpers.Read24S(zobjlist, ii + 9);
+
+                                        if (animationfound == animation)
+                                                break;
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                        int counter = 0;
+                        short[] prevlimb = new short[] { 0, 0, 0 };
+                        while (counter != limb_count)
+                        {
+                            Limb limb = new Limb();
+                            limb.DList = new List<UcodeSimulator.DisplayListStruct>();
+                            int limboffset = Helpers.Read24S(new List<byte>(zobj), (int)(offset + 1));
+                            limb.x = Helpers.Read16S(zobjlist, limboffset);
+                            limb.y = Helpers.Read16S(zobjlist, limboffset + 2);
+                            limb.z = Helpers.Read16S(zobjlist, limboffset + 4);
+                            limb.firstchild = (sbyte)zobjlist[limboffset + 6];
+                            limb.nextchild = (sbyte)zobjlist[limboffset + 7];
+                            limb.rotation = new Vector3(0,0,0);
+                            limb.rotation.X = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 6 + 6 * counter))), 0, zobjlist.Count - 2));
+                            limb.rotation.Y = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 8 + 6 * counter))),0,zobjlist.Count-2));
+                            limb.rotation.Z = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 10 + 6 * counter))), 0, zobjlist.Count - 2));
+
+                            if ((uint)Helpers.Read24S(zobjlist, limboffset + 9) != 0x000000) //if limb has dlist
+                            {
+                                int target = counter;
+                                while (true)
+                                {
+                                    target = objrender.Limbs.FindIndex(x => ((Limb)x).firstchild == target);
+                                    if (target == -1) break;
+                                    prevlimb[0] += objrender.Limbs[target].x;
+                                    prevlimb[1] += objrender.Limbs[target].y;
+                                    prevlimb[2] += objrender.Limbs[target].z;
+                                    break;
+                                }
+
+                                UcodeSimulator.limbtransformations.Add(new short[] { (short) (limb.x + prevlimb[0]), (short)(limb.y + prevlimb[1]), (short)(limb.z + prevlimb[2]) });
+                                prevlimb = new short[] { 0, 0, 0 };
+
+                                SayakaGL.UcodeSimulator.ReadDL((int) bank, Helpers.Read32(zobjlist, limboffset + 8), ref limb.DList);
+                                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in limb.DList)
+                                    SayakaGL.UcodeSimulator.ParseDL(DL);
+
+                                SayakaGL.UcodeSimulator.ParseAllDLs(ref limb.DList);
+                            }
+                            else
+                            {
+                            //    prevlimb[0] += limb.x;
+                            //     prevlimb[1] += limb.y;
+                            //    prevlimb[2] += limb.z;
+                            }
+
+                            objrender.Limbs.Add(limb);
+
+                            offset += 4;
+
+                            counter++;
+
+                        }
+
+                        MainForm.zobj_cache.Add(objrender);
+
+                        UcodeSimulator.limbtransformations.Clear();
+                        UcodeSimulator.limbID = -1;
+                    }
+                }
+            }
+
+
+            if (!animated)
+            {
+                if (offsets.Length == 0)
+                    while (dlistcount > 0)
+                    {
+
+                        // Console.WriteLine("offset: " + offset.ToString("X"));
+                        offset = SayakaGL.UcodeSimulator.ReadDL((int) bank, offset, ref objrender.DLists);
+
+                        foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in objrender.DLists)
+                        {
+                            SayakaGL.UcodeSimulator.ParseDL(DL);
+            
+                        }
+                        dlistcount -= 1;
+                    
+                    }
+                else
+                    for (int i = 0; i < offsets.Length; i++)
+                    {
+
+                        // Console.WriteLine("offset: " + offset.ToString("X"));
+                        SayakaGL.UcodeSimulator.ReadDL((int)bank, offsets[i], ref objrender.DLists);
+
+                        foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in objrender.DLists)
+                        {
+                            SayakaGL.UcodeSimulator.ParseDL(DL);
+
+                        }
+
+                    }
+                SayakaGL.UcodeSimulator.ParseAllDLs(ref objrender.DLists);
+
+                MainForm.zobj_cache.Add(objrender);
+            }
+        }
+
         public void ConvertPreview(bool ConsecutiveRoomInject, bool ForceRGBATextures)
         {
 
@@ -1508,243 +1691,47 @@ namespace SharpOcarina
 
                 XmlNodeList nodes = XMLreader.getXMLNodes(gameprefix + "ActorRendering", "Actor");
 
-                float scale = 1.0f;
-                UInt32 offset = 0x00;
-                string[] offsetsstr = new string[0];
-                string[] textureoffsetsstr = new string[0];
-                UInt32[] offsets = new uint[0];
-                UInt16 key = 0x00;
-                UInt32 dlistcount = 1;
-                int hirearchy = 1;
-                bool animated = false;
-                string var = "....";
-                uint bank = 0x06;
-                UInt16 animation = 1;
-                UInt16 Yoff = 0;
-                UInt32[] textureoffsets = new uint[15];
-
+                // UInt16 key = 0x00;
+                // UInt32 offset = 0x00;
+                // string[] offsetsstr = new string[0];
+                // string[] textureoffsetsstr = new string[0];
+                // float scale = 1.0f;
+                // UInt32 dlistcount = 1;
+                // bool animated = false;
+                // int hirearchy = 1;
+                // string var = "....";
+                // UInt16 animation = 1;
+                // UInt16 Yoff = 0;
+                // uint bank = 0x06;
 
                 foreach (XmlNode node in nodes)
                 {
                     XmlAttributeCollection nodeAtt = node.Attributes;
 
-                    key = (ushort) ((nodeAtt["Key"] != null) ? Convert.ToUInt16(nodeAtt["Key"].Value,16) : 0x00);
-                    offset = (nodeAtt["Offset"] != null) ? Convert.ToUInt32(nodeAtt["Offset"].Value, 16) : 0x00;
-                    offsetsstr = (nodeAtt["Offsets"] != null) ? (nodeAtt["Offsets"].Value.Split(',')) : new string[0];
-                    textureoffsetsstr = (nodeAtt["TextureOffsets"] != null) ? (nodeAtt["TextureOffsets"].Value.Split(',')) : new string[0];
-                    scale = (nodeAtt["Scale"] != null) ? XmlConvert.ToSingle(nodeAtt["Scale"].Value) : 1.0f;
-                    dlistcount = (nodeAtt["DListCount"] != null) ? Convert.ToUInt32(nodeAtt["DListCount"].Value) : 1;
-                    animated = (nodeAtt["Animated"] != null);
-                    hirearchy = (nodeAtt["Hirearchy"] != null) ? Convert.ToInt32(nodeAtt["Hirearchy"].Value) : 1;
-                    var = (nodeAtt["Var"] != null) ? Convert.ToString(nodeAtt["Var"].Value) : "....";
-                    animation = (ushort) ((nodeAtt["Animation"] != null) ? Convert.ToUInt16(nodeAtt["Animation"].Value) : 0);
-                    Yoff = (ushort)((nodeAtt["Yoff"] != null) ? Convert.ToUInt16(nodeAtt["Yoff"].Value) : 0);
+                    UInt16 key = (ushort) ((nodeAtt["Key"] != null) ? Convert.ToUInt16(nodeAtt["Key"].Value,16) : 0x00);
+                    UInt32 offset = (nodeAtt["Offset"] != null) ? Convert.ToUInt32(nodeAtt["Offset"].Value, 16) : 0x00;
+                    string[] offsetsstr = (nodeAtt["Offsets"] != null) ? (nodeAtt["Offsets"].Value.Split(',')) : new string[0];
+                    string[] textureoffsetsstr = (nodeAtt["TextureOffsets"] != null) ? (nodeAtt["TextureOffsets"].Value.Split(',')) : new string[0];
+                    float scale = (nodeAtt["Scale"] != null) ? XmlConvert.ToSingle(nodeAtt["Scale"].Value) : 1.0f;
+                    UInt32 dlistcount = (nodeAtt["DListCount"] != null) ? Convert.ToUInt32(nodeAtt["DListCount"].Value) : 1;
+                    bool animated = (nodeAtt["Animated"] != null);
+                    int hirearchy = (nodeAtt["Hirearchy"] != null) ? Convert.ToInt32(nodeAtt["Hirearchy"].Value) : 1;
+                    string var = (nodeAtt["Var"] != null) ? Convert.ToString(nodeAtt["Var"].Value) : "....";
+                    UInt16 animation = (ushort) ((nodeAtt["Animation"] != null) ? Convert.ToUInt16(nodeAtt["Animation"].Value) : 0);
+                    UInt16 Yoff = (ushort)((nodeAtt["Yoff"] != null) ? Convert.ToUInt16(nodeAtt["Yoff"].Value) : 0);
+                    string[] colors = (nodeAtt["Colors"] != null) ? (nodeAtt["Colors"].Value.Split(',')) : new string[0]; 
+                    uint bank;
+                    string file = "F3DEX2/" + node.InnerText + ".zobj";
 
                     if (node.InnerText == "gameplay_keep") bank = 0x04;
                     else if (node.InnerText == "gameplay_field_keep" || node.InnerText == "gameplay_dangeon_keep") bank = 0x05;
                     else bank = 0x06;
-
-                   // Console.WriteLine(key.ToString("X2"));
-
-
-                    offset = offset | (bank << 24);
-
-                    offsets = new uint[offsetsstr.Length];
-
-                    for(int i = 0; i < offsetsstr.Length; i++)
-                    {
-                        offsets[i] = Convert.ToUInt16(offsetsstr[i], 16 ) | (bank << 24);
-                    }
-
-                    textureoffsets = new uint[15];
-
-                    for (int i = 8; i < textureoffsetsstr.Length+8; i++)
-                    {
-                        textureoffsets[i] = Convert.ToUInt32(textureoffsetsstr[i-8], 16) | (bank << 24);
-                    }
-
-                    ZObjRender objrender = new ZObjRender(key,var,scale);
-
-                    objrender.Yoff = Yoff;
-
-
-                   // Console.WriteLine(scale);
-
-                    List<byte> ClearBlock = new List<byte>(File.ReadAllBytes("F3DEX2/" + node.InnerText + ".zobj"));
-
-                    UcodeSimulator.currentfilename = node.InnerText + ".zobj";
-
-                    UcodeSimulator.TextureCache.Clear();
-
-                    Array.Copy(textureoffsets, UcodeSimulator.textureoffsets, textureoffsets.Length);
-
-                    SayakaGL.GameHandler.LoadToRAM(ClearBlock.ToArray(), (int) bank);
-
-                    uint EndAddress = 0;
-
-                    if (animated)
-                    {
-
-                        byte[] zobj = ClearBlock.ToArray();
-                        uint limb_count = 0;
-                        int hirearchyfound = 0;
-                        int animationfound = 0;
-
-                        for (int i = 0; i < zobj.Length; i += 0x4)
-                        {
-                            if (zobj[i] == bank && zobj[i + 5] == 0x00 && zobj[i + 6] == 0x00 && zobj[i + 7] == 0x00)
-                            {
-                               int check = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i + 1], zobj[i + 2], zobj[i + 3]), 16);
-                               int check_prev = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i - 3], zobj[i - 2], zobj[i - 1]), 16);
-                               // if (key == 0xDD) Console.WriteLine("Likelike: " + (check - check_prev).ToString("X"));
-                                if (check - check_prev == 0x0C || check - check_prev == 0x10)
-                                {
-                                    hirearchyfound++;
-                                   
-                                    if (hirearchyfound == hirearchy)
-                                    {
-                                        List<byte> zobjlist = new List<byte>(zobj);
-                                        limb_count = zobjlist[i+4];
-                                        offset = (uint) Helpers.Read24S(zobjlist, i + 1);
-                                        int animrotvaloffset = 0x00;
-                                        int animrotindexoffset = 0x00;
-
-
-                                        for (int ii = 0; ii < zobj.Length; ii += 4)
-                                        {
-                                            if (!(ii + 4 > zobj.GetUpperBound(0)))
-                                            {
-                                                if (zobj[ii + 2] == 0x00 && zobj[ii + 3] == 0x00 && zobj[ii + 4] == bank && zobj[ii + 8] == bank && zobj[ii + 14] == 0x00 && zobj[ii + 15] == 0x00)
-                                                {
-
-                                                    animationfound++;
-
-                                                    if (animationfound == animation || animationfound == 1)
-                                                    {
-
-                                                        //  Console.WriteLine(string.Format("{0:D4} Frames, 06{1:X6}", frames, ii));
-                                                        animrotvaloffset = Helpers.Read24S(zobjlist, ii + 5);
-                                                        animrotindexoffset = Helpers.Read24S(zobjlist, ii + 9);
-
-                                                        if (animationfound == animation)
-                                                             break;
-
-                                                    }
-                                                    
-                                                }
-                                            }
-                                        }
-                                      //  Console.WriteLine("Actor: " + key.ToString("X"));
-                                      //  Console.WriteLine("Hierarchy Header: 0x{0}", (i).ToString("X6"));
-                                       // Console.WriteLine("{0:D2} limbs!", limb_count);
-                                        int counter = 0;
-                                        short[] prevlimb = new short[] { 0, 0, 0 };
-                                        while (counter != limb_count)
-                                        {
-                                            
-                                            Limb limb = new Limb();
-                                            limb.DList = new List<UcodeSimulator.DisplayListStruct>();
-                                            int limboffset = Helpers.Read24S(new List<byte>(zobj), (int)(offset + 1));
-                                            limb.x = Helpers.Read16S(zobjlist, limboffset);
-                                            limb.y = Helpers.Read16S(zobjlist, limboffset + 2);
-                                            limb.z = Helpers.Read16S(zobjlist, limboffset + 4);
-                                            limb.firstchild = (sbyte)zobjlist[limboffset + 6];
-                                            limb.nextchild = (sbyte)zobjlist[limboffset + 7];
-                                            limb.rotation = new Vector3(0,0,0);
-                                            limb.rotation.X = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 6 + 6 * counter))), 0, zobjlist.Count - 2));
-                                            limb.rotation.Y = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 8 + 6 * counter))),0,zobjlist.Count-2));
-                                            limb.rotation.Z = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 10 + 6 * counter))), 0, zobjlist.Count - 2));
-
-                                            // Console.WriteLine(Helpers.Read24S(zobjlist, (int)(animrotindexoffset + 6 + 6 * counter)).ToString("X6"));
-
-                                           // if (node.InnerText == "object_wallmaster") Console.WriteLine("x " + limb.x + " y " + limb.y + " z " + limb.z + " " + Helpers.Read24S(zobjlist, limboffset + 9).ToString("X8"));
-
-                                            if ((uint)Helpers.Read24S(zobjlist, limboffset + 9) != 0x000000) //if limb has dlist
-                                            {
-                                                int target = counter;
-                                                while (true)
-                                                {
-                                                    target = objrender.Limbs.FindIndex(x => ((Limb)x).firstchild == target);
-                                                    if (target == -1) break;
-                                                    prevlimb[0] += objrender.Limbs[target].x;
-                                                    prevlimb[1] += objrender.Limbs[target].y;
-                                                    prevlimb[2] += objrender.Limbs[target].z;
-                                                    break;
-                                                }
-
-                                                UcodeSimulator.limbtransformations.Add(new short[] { (short) (limb.x + prevlimb[0]), (short)(limb.y + prevlimb[1]), (short)(limb.z + prevlimb[2]) });
-                                                prevlimb = new short[] { 0, 0, 0 };
-
-                                                SayakaGL.UcodeSimulator.ReadDL((int) bank, Helpers.Read32(zobjlist, limboffset + 8), ref limb.DList);
-                                                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in limb.DList)
-                                                    SayakaGL.UcodeSimulator.ParseDL(DL);
-
-                                                SayakaGL.UcodeSimulator.ParseAllDLs(ref limb.DList);
-                                            }
-                                            else
-                                            {
-                                            //    prevlimb[0] += limb.x;
-                                           //     prevlimb[1] += limb.y;
-                                            //    prevlimb[2] += limb.z;
-                                            }
-
-                                            objrender.Limbs.Add(limb);
-
-                                            offset += 4;
-
-                                            counter++;
-
-                                        }
-
-                                        MainForm.zobj_cache.Add(objrender);
-
-                                        UcodeSimulator.limbtransformations.Clear();
-                                        UcodeSimulator.limbID = -1;
-
-                                    }
-
-                                }
-
-                            }
-                        }
-                    }
-
-
-                    if (!animated)
-                    {
-                        if (offsets.Length == 0)
-                            while (dlistcount > 0)
-                            {
-
-                                // Console.WriteLine("offset: " + offset.ToString("X"));
-                                offset = SayakaGL.UcodeSimulator.ReadDL((int) bank, offset, ref objrender.DLists);
-
-                                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in objrender.DLists)
-                                {
-                                    SayakaGL.UcodeSimulator.ParseDL(DL);
-                 
-                                }
-                                dlistcount -= 1;
-                            
-                            }
-                        else
-                            for (int i = 0; i < offsets.Length; i++)
-                            {
-
-                                // Console.WriteLine("offset: " + offset.ToString("X"));
-                                SayakaGL.UcodeSimulator.ReadDL((int)bank, offsets[i], ref objrender.DLists);
-
-                                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in objrender.DLists)
-                                {
-                                    SayakaGL.UcodeSimulator.ParseDL(DL);
-
-                                }
-
-                            }
-                        SayakaGL.UcodeSimulator.ParseAllDLs(ref objrender.DLists);
-
-                        MainForm.zobj_cache.Add(objrender);
-                    }
+                    
+                    RegisterActorPreview(key, offset, 
+                        offsetsstr, textureoffsetsstr,
+                        scale, dlistcount, animated,
+                        hirearchy, var, animation,
+                        Yoff, bank, colors, file);
                 }
                 
             }
