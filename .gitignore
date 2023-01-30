@@ -353,3 +353,5 @@ bin/*
 Settings.xml
 Makefile
 .vs/SharpOcarina/v15/.suo
+setemp.xml
+temp.xml
