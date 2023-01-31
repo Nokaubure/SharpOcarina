@@ -86,9 +86,6 @@
     </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Nett, Version=0.15.0.0, Culture=neutral, PublicKeyToken=605dcfe7a1d3365b, processorArchitecture=MSIL">
-      <HintPath>packages\Nett.0.15.0\lib\net40\Nett.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK">
       <HintPath>.\OpenTK.dll</HintPath>
     </Reference>
@@ -112,6 +109,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tommy, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Tommy.3.1.2\lib\net35\Tommy.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OpenRomScene.cs">
@@ -1687,6 +1687,9 @@
     <Content Include="XML\MM\SongNames.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="XML\MM\SoundSpecs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML\MM\Worldmap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1762,6 +1765,9 @@
     <Content Include="XML\OOT\SongNames.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="XML\OOT\SoundSpecs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -1790,7 +1796,13 @@
     <Folder Include="AutoUpdater\RedCell.Net\Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Microsoft.NETFramework.ReferenceAssemblies.net45.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net45.targets" Condition="Exists('packages\Microsoft.NETFramework.ReferenceAssemblies.net45.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net45.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.NETFramework.ReferenceAssemblies.net45.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net45.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NETFramework.ReferenceAssemblies.net45.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net45.targets'))" />
+  </Target>
     <PropertyGroup>
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>

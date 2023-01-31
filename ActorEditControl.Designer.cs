@@ -105,7 +105,7 @@
             this.groupBox3.Controls.Add(this.niceLine1);
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(398, 289);
+            this.groupBox3.Size = new System.Drawing.Size(398, 312);
             this.groupBox3.TabIndex = 28;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "!!!!";
@@ -174,14 +174,14 @@
             this.panel2.Location = new System.Drawing.Point(3, 62);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(392, 224);
+            this.panel2.Size = new System.Drawing.Size(392, 247);
             this.panel2.TabIndex = 21;
             // 
             // PresetDropdown
             // 
             this.PresetDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PresetDropdown.FormattingEnabled = true;
-            this.PresetDropdown.Location = new System.Drawing.Point(179, 180);
+            this.PresetDropdown.Location = new System.Drawing.Point(178, 180);
             this.PresetDropdown.Name = "PresetDropdown";
             this.PresetDropdown.Size = new System.Drawing.Size(207, 21);
             this.PresetDropdown.TabIndex = 25;
@@ -234,7 +234,7 @@
             this.ActorVariableListBox.FormattingEnabled = true;
             this.ActorVariableListBox.Location = new System.Drawing.Point(6, 132);
             this.ActorVariableListBox.Name = "ActorVariableListBox";
-            this.ActorVariableListBox.Size = new System.Drawing.Size(164, 82);
+            this.ActorVariableListBox.Size = new System.Drawing.Size(164, 108);
             this.ActorVariableListBox.TabIndex = 29;
             this.ActorVariableListBox.Click += new System.EventHandler(this.ActorVariableListBox_Click);
             // 
@@ -804,7 +804,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox3);
             this.Name = "ActorEditControl";
-            this.Size = new System.Drawing.Size(404, 295);
+            this.Size = new System.Drawing.Size(404, 318);
             this.groupBox3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
