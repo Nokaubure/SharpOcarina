@@ -4,15 +4,20 @@
 ---1.35
 --------------
 
+- Flag Log does not display empty flags, improved readability
+
+- YOff affects actor skeleton renders
+
 - Tracks recent Global ROMs and romtool projects
 
 - Rooms are renameable
 
 - Changed Reverb to Sound Space and added XML's for these
 
-- [TODO] Added the necessary support for the current version z64rom to work
+- Added the necessary support for the current version z64rom to work
 	- Supports the new exit system that completely skips the use of exit table
-	- [TODO] Global z64rom mode which lets you directly save into the project without having to constantly select the .cfg
+	- Global z64rom mode which lets you directly save into the project without having to constantly select the .toml
+	- Get actor properties and preview render info through 'actor.toml'
 
 - Reworked restriction flags, now you edit them per scene instead of having to modify a table
 

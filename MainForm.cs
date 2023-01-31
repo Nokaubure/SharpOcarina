@@ -98,8 +98,6 @@ namespace SharpOcarina
 
         public static string GlobalROM = "";
 
-        public static rom64 rom64;
-
         public Dictionary<ushort,string> ExitCache = new Dictionary<ushort, string>();
 
         public static Dictionary<ushort, ObjectInfo> ObjectCache = new Dictionary<ushort, ObjectInfo>();
@@ -937,12 +935,13 @@ namespace SharpOcarina
                 }
                 else
                 {
-
-                   // GL.PushMatrix();
+                    GL.PushMatrix();
+                    GL.Translate(0, (float)zobj_cache[render].Yoff, 0);
                     GL.PushAttrib(AttribMask.AllAttribBits);
                     GL.Enable(EnableCap.Light0);
                     DrawBone(zobj_cache[render].Limbs,0,Actor, zobj_cache[render].scale,transparency);
                     GL.PopAttrib();
+                    GL.PopMatrix();
                 }
             }
 
@@ -2683,7 +2682,7 @@ namespace SharpOcarina
                                     {
                                         //Console.WriteLine(i + " i " + ii + " ii");
                                         selected = true;
-                                        PathwayNumber.Value = i + 1;
+                                        PathwayNumber.Value = i;
                                         PathwayListBox.SelectedIndex = ii;
                                         UpdateForm();
                                         break;
@@ -13292,18 +13291,59 @@ namespace SharpOcarina
             }
         }
 
+        private class FlagEntryInfo {
+            public string room;
+            public int ID;
+            public string name;
+            public int entryNum;
+
+            public FlagEntryInfo(int _ID, string _room, string _name, int _entryNum) {
+                ID = _ID;
+                room = _room;
+                name = _name;
+                entryNum = _entryNum;
+            }
+        }
+
+        private class FlagLogInfo {
+            bool has_printed = false;
+            string message;
+            int i;
+
+            public FlagLogInfo(int _i) {
+                i = _i;
+            }
+
+            public void processEntry(FlagEntryInfo match) {
+                if (!has_printed) {
+                    message += @"\par \b" + " " + i.ToString("X2") + ": " + @"\b0";
+                    has_printed = true;
+                }
+
+                if (match.room != "")
+                    message += @"\par " + "    " + match.entryNum.ToString("d") + ". " + match.name + " (" + match.room + ")";
+                else
+                    message += @"\par " + "    " + match.entryNum.ToString("d") + ". " + match.name + " (Transition)";
+            }
+
+            public string getMsg() {
+                return message;
+            }
+        }
+
         public static string GenerateFlagLog()
         {
-            List<PropertyMatch> switchflags = new List<PropertyMatch>();
-            List<PropertyMatch> chestflags = new List<PropertyMatch>();
-            List<PropertyMatch> collectibleflags = new List<PropertyMatch>();
-            List<PropertyMatch> pathways = new List<PropertyMatch>();
+            List<FlagEntryInfo> switchflags = new List<FlagEntryInfo>();
+            List<FlagEntryInfo> chestflags = new List<FlagEntryInfo>();
+            List<FlagEntryInfo> collectibleflags = new List<FlagEntryInfo>();
+            List<FlagEntryInfo> pathways = new List<FlagEntryInfo>();
 
 
-            int currentroom = 0;
+            int entryIndex = 0;
+            int roomIndex = 0;
             foreach (ZScene.ZRoom room in CurrentScene.Rooms)
             {
-
+                entryIndex = 0;
                 foreach (ZActor actor in room.ZActors)
                 {
                     List<ActorProperty> properties = XMLreader.getActorProperties(actor.Number.ToString("X4"));
@@ -13331,23 +13371,25 @@ namespace SharpOcarina
                                 flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                             }
                             string name = XMLreader.getActorName(actor.Number.ToString("X4"));
+                            string roomName = roomIndex.ToString("d") + ". " + room.ModelShortFilename;
 
                             if (property.Name.ToLower().Contains("switch flag"))
-                                switchflags.Add(new PropertyMatch(flag, currentroom, name));
+                                switchflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
                             else if (property.Name.ToLower().Contains("chest flag"))
-                                chestflags.Add(new PropertyMatch(flag, currentroom, name));
+                                chestflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
                             else if (property.Name.ToLower().Contains("collectible flag"))
-                                collectibleflags.Add(new PropertyMatch(flag, currentroom, name));
+                                collectibleflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
                             else if (property.Name.ToLower().Contains("path id"))
-                                pathways.Add(new PropertyMatch(flag, currentroom, name));
-
+                                pathways.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
 
                         }
                     }
+                    entryIndex++;
                 }
-                currentroom++;
+                roomIndex++;
             }
 
+            entryIndex = 0;
             foreach (ZActor actor in CurrentScene.Transitions)
             {
                 List<ActorProperty> properties = XMLreader.getActorProperties(actor.Number.ToString("X4"));
@@ -13375,75 +13417,64 @@ namespace SharpOcarina
                             flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                         }
                         string name = XMLreader.getActorName(actor.Number.ToString("X4"));
-                        switchflags.Add(new PropertyMatch(flag, -1, name));
+                        switchflags.Add(new FlagEntryInfo(flag, "", name, entryIndex));
 
                     }
                 }
+                entryIndex++;
             }
 
             switchflags = switchflags.OrderBy(x => x.room).ToList();
             collectibleflags = collectibleflags.OrderBy(x => x.room).ToList();
             chestflags = chestflags.OrderBy(x => x.room).ToList();
             pathways = pathways.OrderBy(x => x.room).ToList();
-
+            
             string message = @"{\rtf1\ansi\deff0{\colortbl;\red0\green0\blue0;\red0\green0\blue255;} \cf2\b " + "Switch Flags" + @"\line" + @"\b0\cf1  ";
 
             for (int i = 0; i <= 0x3F; i++)
             {
-                message += @"\par " + i.ToString("X2") + ": ";
+                FlagLogInfo flag = new FlagLogInfo(i);
 
-                foreach (PropertyMatch match in switchflags.FindAll(x => x.ID == i))
-                {
-                    if (match.room > -1)
-                        message += @"\par " + match.name + "(Room " + match.room + ")";
-                    else
-                        message += @"\par " + match.name + "(Transition)";
-                }
+                foreach (FlagEntryInfo match in switchflags.FindAll(x => x.ID == i))
+                    flag.processEntry(match);
+
+                message += flag.getMsg();
             }
 
             message += @"\par\par  \cf2\b Collectible Flags" + @"\line" + @"\b0\cf1  ";
 
             for (int i = 0; i <= 0x3F; i++)
             {
-                message += @"\par " + i.ToString("X2") + ": ";
+                FlagLogInfo flag = new FlagLogInfo(i);
 
-                foreach (PropertyMatch match in collectibleflags.FindAll(x => x.ID == i))
-                {
-                    if (match.room > -1)
-                        message += @"\par " + match.name + "(Room " + match.room + ")";
-                    else
-                        message += @"\par " + match.name + "(Transition)";
-                }
+                foreach (FlagEntryInfo match in collectibleflags.FindAll(x => x.ID == i))
+                    flag.processEntry(match);
+
+                message += flag.getMsg();
             }
 
             message += @"\par\par  \cf2\b Chest Flags" + @"\line" + @"\b0\cf1  ";
 
             for (int i = 0; i <= 0x1F; i++)
             {
-                message += @"\par " + i.ToString("X2") + ": ";
+                FlagLogInfo flag = new FlagLogInfo(i);
 
-                foreach (PropertyMatch match in chestflags.FindAll(x => x.ID == i))
-                {
-                    if (match.room > -1)
-                        message += @"\par " + match.name + "(Room " + match.room + ")";
-                    else
-                        message += @"\par " + match.name + "(Transition)";
-                }
+                foreach (FlagEntryInfo match in chestflags.FindAll(x => x.ID == i))
+                    flag.processEntry(match);
+
+                message += flag.getMsg();
             }
 
             message += @"\par\par  \cf2\b Pathways" + @"\line" + @"\b0\cf1  ";
 
             for (int i = 0; i <= CurrentScene.Pathways.Count - 1; i++)
             {
-                message += @"\par " + i.ToString("X2") + ": ";
+                FlagLogInfo flag = new FlagLogInfo(i);
 
-                foreach (PropertyMatch match in pathways.FindAll(x => x.ID == i))
-                {
-                    if (match.room > -1)
-                        message += @"\par " + match.name + "(Room " + match.room + ")";
-                    else
-                        message += @"\par " + match.name + "(Transition)";
-                }
+                foreach (FlagEntryInfo match in pathways.FindAll(x => x.ID == i))
+                    flag.processEntry(match);
+
+                message += flag.getMsg();
             }
 
             // MessageBox.Show(message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -13999,8 +14030,6 @@ namespace SharpOcarina
         public void RefreshActorCache()
         {
             ActorCache.Clear();
-
-
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
@@ -14066,8 +14095,6 @@ namespace SharpOcarina
 
             if (GlobalROM != "")
             {
-
-
                 List<byte> ActorTable = new List<byte>(File.ReadAllBytes(GlobalROM));
 
                 ROM rom = MainForm.CheckVersion(ActorTable);
@@ -14126,71 +14153,68 @@ namespace SharpOcarina
 
                 foreach(var str in actors)
                 {
-                    var basename = Path.GetFileNameWithoutExtension(str + ".exe");
+                    string basename = "";
+                    ushort index = 0;
 
-                    if (!basename.StartsWith("0x"))
-                        continue;
-
-                    var indexname = basename.Substring(2, basename.IndexOf("-") - 2);
-
-                    if (!ushort.TryParse(indexname, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ushort index))
+                    if (!rom64.getNameAndIndex(str, ref basename, ref index))
                         continue;
                     
-                    basename = basename.Substring(basename.IndexOf("-") + 1);
-
+                    TomlTable toml = rom64.parseToml(str + "\\actor.toml");
                     List<ActorProperty> prop = null;
 
-                    if (ActorCache.ContainsKey(index)) {
-                        prop = XMLreader.getActorProperties(index.ToString("X4"));
-                        ActorCache.Remove(index);
-                    } else
+                    if (toml != null)
+                        if (toml.HasKey("Name"))
+                            basename = toml["Name"].AsString;
+
+                    if (toml != null && toml.HasKey("Property")) {
                         prop = new List<ActorProperty>();
-                    
-                    uint objectid = 0;
-                    var rompath = str.Replace("src\\", "rom\\");
+                        TomlArray proparr = toml["Property"].AsArray;
 
-                    if (File.Exists(rompath + "\\overlay.zovl")) {
-                        FileStream zovl = File.Open(rompath + "\\overlay.zovl", FileMode.Open, FileAccess.Read);
-                        TomlTable toml = TOML.Parse(File.OpenText(rompath + "\\config.toml"));
+                        foreach(TomlTable tbl in proparr) {
+                            ActorProperty p = new ActorProperty(
+                                (ushort)tbl["Mask"].AsInteger.Value,
+                                tbl["Name"].AsString,
+                                tbl["Target"].AsString
+                            );
 
-                        uint vramaddr = (uint)toml["vram_addr"].AsInteger;
-                        uint initvar = (uint)toml["init_vars"].AsInteger;
-                        int offset = (int)(initvar - vramaddr);
-                        byte[] data = new byte[2];
+                            Console.WriteLine("Name: " + p.Name);
+                            Console.WriteLine("Mask: " + tbl["Mask"].AsInteger.Value.ToString("X4"));
+                            Console.WriteLine("Max:  " + p.Max.ToString("X4"));
+                            
+                            if (tbl.HasKey("Dropdown")) {
+                                TomlArray droparr = tbl["Dropdown"].AsArray;
+                                int max_str_length = p.Max.ToString("X").Length;
 
-                        zovl.Seek(offset + 8, SeekOrigin.Begin);
-                        zovl.Read(data, 0, 2);
-                        objectid = (uint)(data[0] << 8 | data[1]);
-                        zovl.Close();
-                    }
+                                SongItem dropdown = new SongItem();
+                                dropdown.Value = (ushort)0;
+                                dropdown.Text = "Unknown";
+                                p.DropdItems.Add(dropdown);
 
-                    if (File.Exists(str + "\\actor.toml")) {
-                        TomlTable toml = TOML.Parse(File.OpenText(str + "\\actor.toml"));
+                                foreach(TomlArray arr in droparr) {
+                                    dropdown = new SongItem();
 
-                        if (toml.HasKey("Render")){
-                            TomlArray arr = toml["Render"].AsArray;
-                            foreach (TomlNode node in arr.RawArray) {
-                                ushort key = index;
-                                float scale = node["Scale"].AsFloat;
-                                bool animated = node.HasKey("Animated") ? node["Animated"].AsBoolean : false;
-                                ushort animation = 0;
-                                ushort yoff = 0;
-                                string var = node.HasKey("Regex") ? node["Regex"].AsString : "....";
-                                ushort bank = 0x06;
-                                string file = rom64.getItem("rom\\object", (int)objectid);
+                                    dropdown.Value = (ushort)arr[0].AsInteger.Value;
+                                    dropdown.Text = ((ushort)dropdown.Value).ToString("X" + max_str_length) + " - " + arr[1].AsString;
 
-                                if (file != "") {
-                                    Console.WriteLine("Register Actor Preview: " + file);
-
-                                    CurrentScene.RegisterActorPreview(
-                                        key, 0, new string[0], new string[0],
-                                        scale, 1, animated, 
-                                        1, var, animation, 
-                                        yoff, bank, new string[0], file);
+                                    p.DropdItems.Add(dropdown);
                                 }
                             }
+
+                            prop.Add(p);
                         }
                     }
+                    
+                    if (ActorCache.ContainsKey(index)) {
+                        if (prop == null)
+                            prop = XMLreader.getActorProperties(index.ToString("X4"));
+                        ActorCache.Remove(index);
+                    }
+
+                    if (prop == null)
+                        prop = new List<ActorProperty>();
+                    
+                    string rompath = str.Replace("src\\", "rom\\");
+                    uint objectid = rom64.getActorObjID(rompath);
 
                     ActorCache.Add(index, new ActorInfo(basename, prop, objectid.ToString("X4")));
                 }
@@ -14326,6 +14350,10 @@ namespace SharpOcarina
 
         private void DatabaseButton_Click(object sender, EventArgs e)
         {
+            if (rom64.isSet()) {
+                MainForm.zobj_cache.Clear();
+                CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
+            }
             RefreshExitCache();
             RefreshExitLabels();
             RefreshActorCache();

@@ -16,6 +16,7 @@ using System.Xml;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOcarina.SayakaGL;
+using Tommy;
 
 namespace SharpOcarina
 {
@@ -1530,7 +1531,6 @@ namespace SharpOcarina
 
             string game = (!MainForm.settings.MajorasMask) ? "OOT" : "MM";
 
-
             if (OriginalSceneData == null || OriginalSceneData.Count == 0)
             {
                 MainForm.n64preview = true;
@@ -1539,13 +1539,10 @@ namespace SharpOcarina
                 else ConvertScene(ConsecutiveRoomInject, ForceRGBATextures, this, game);
             }
 
-
             // Alright, convert the scene
             GL.PushAttrib(AttribMask.AllAttribBits);
 
-
             // Load the converted scene data into dummy memory
-
             if (OriginalSceneData != null && OriginalSceneData.Count != 0)
             {
                 SayakaGL.GameHandler.LoadToRAM(MainForm.NormalHeader.OriginalSceneData.ToArray(), 0x02); 
@@ -1554,9 +1551,6 @@ namespace SharpOcarina
             {
                 SayakaGL.GameHandler.LoadToRAM(MainForm.NormalHeader.SceneData.ToArray(), 0x02);
             }
-
-
-          
 
             // Go through the rooms...
             for (int i = 0; i < _Rooms.Count; i++)
@@ -1690,25 +1684,87 @@ namespace SharpOcarina
                 string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
                 XmlNodeList nodes = XMLreader.getXMLNodes(gameprefix + "ActorRendering", "Actor");
+                List<uint> z64romActors = new List<uint>();
 
-                // UInt16 key = 0x00;
-                // UInt32 offset = 0x00;
-                // string[] offsetsstr = new string[0];
-                // string[] textureoffsetsstr = new string[0];
-                // float scale = 1.0f;
-                // UInt32 dlistcount = 1;
-                // bool animated = false;
-                // int hirearchy = 1;
-                // string var = "....";
-                // UInt16 animation = 1;
-                // UInt16 Yoff = 0;
-                // uint bank = 0x06;
+                if (rom64.isSet())
+                {
+                    List<String> actors = rom64.getList("src\\actor");
+
+                    foreach(var str in actors)
+                    {
+                        string basename = "";
+                        ushort index = 0;
+
+                        if (!rom64.getNameAndIndex(str, ref basename, ref index))
+                            continue;
+                        
+                        var rompath = str.Replace("src\\", "rom\\");
+                        uint objectid = rom64.getActorObjID(rompath);
+
+                        if (File.Exists(str + "\\actor.toml")) {
+                            TomlTable toml = rom64.parseToml(str + "\\actor.toml");
+
+                            if (toml.HasKey("Render")){
+                                TomlArray arr = toml["Render"].AsArray;
+                                foreach (TomlNode node in arr.RawArray) {
+                                    UInt16 key = index;
+                                    float scale = node["Scale"].AsFloat;
+                                    bool animated = node.HasKey("Animation") ? true : false;
+                                    UInt16 animation = (ushort)( node.HasKey("Animation") ? node["Animation"].AsInteger.Value : 0 );
+                                    UInt16 yoff = (ushort)( node.HasKey("YOffset") ? node["YOffset"].AsInteger.Value : 0 );
+                                    string var = node.HasKey("Regex") ? node["Regex"].AsString : "....";
+                                    ushort bank = (ushort)( node.HasKey("Segment") ? node["Segment"].AsInteger.Value : 6 );
+                                    string file = rom64.getItem("rom\\object", (int)objectid);
+                                    string dl = node.HasKey("DisplayList") ? node["DisplayList"].AsString.ToString() : "";
+                                    uint offset = 0;
+
+                                    if (dl != "") {
+                                        string object_ld = rom64.openFile("include\\z_object_user.ld");
+
+                                        Match match = Regex.Match(object_ld, dl + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
+                                        if (match.Value != "")
+                                            offset = Convert.ToUInt32(match.Groups[1].Value.ToString(), 16);
+                                    }
+
+                                    if (file != "" && (offset != 0 || animated)) {
+                                        Console.WriteLine("Register Actor Preview: " + file);
+                                        Console.WriteLine("key:    " + index.ToString("X04"));
+                                        Console.WriteLine("scale:  " + scale);
+                                        Console.WriteLine("yoff:   " + yoff);
+                                        Console.WriteLine("var:    " + var);
+                                        Console.WriteLine("offset: " + offset.ToString("X08"));
+                                        Console.WriteLine("bank:   " + bank.ToString("X02"));
+
+                                        z64romActors.Add((uint)index);
+
+                                        RegisterActorPreview(
+                                            key, offset, new string[0], new string[0],
+                                            scale, 1, animated, 
+                                            1, var, animation, 
+                                            yoff, bank, new string[0], file);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
                 foreach (XmlNode node in nodes)
                 {
                     XmlAttributeCollection nodeAtt = node.Attributes;
 
                     UInt16 key = (ushort) ((nodeAtt["Key"] != null) ? Convert.ToUInt16(nodeAtt["Key"].Value,16) : 0x00);
+                    bool skip = false;
+
+                    foreach (uint index in z64romActors) {
+                        if (key == index) {
+                            skip = true;
+                            break;
+                        }
+                    }
+
+                    if (skip) continue;
+
                     UInt32 offset = (nodeAtt["Offset"] != null) ? Convert.ToUInt32(nodeAtt["Offset"].Value, 16) : 0x00;
                     string[] offsetsstr = (nodeAtt["Offsets"] != null) ? (nodeAtt["Offsets"].Value.Split(',')) : new string[0];
                     string[] textureoffsetsstr = (nodeAtt["TextureOffsets"] != null) ? (nodeAtt["TextureOffsets"].Value.Split(',')) : new string[0];

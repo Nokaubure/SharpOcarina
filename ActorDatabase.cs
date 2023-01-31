@@ -10,6 +10,7 @@ using System.Xml;
 using OpenTK.Input;
 using System.IO;
 using System.Globalization;
+using Tommy;
 
 namespace SharpOcarina
 {
@@ -45,21 +46,75 @@ namespace SharpOcarina
 
             if (initialvalue == 0xFFFF) firsttime = 3;
 
+            List<ushort> index_list = new List<ushort>();
+
             if (rom64.isSet()){
                 List<String> actors = rom64.getList("src\\actor\\");
 
                 foreach(String str in actors) {
-                    var basename = Path.GetFileNameWithoutExtension(str + ".exe");
+                    string basename = "";
+                    ushort index = 0;
 
-                    if (!basename.StartsWith("0x"))
+                    if (!rom64.getNameAndIndex(str, ref basename, ref index))
                         continue;
 
-                    var indexname = basename.Substring(2, basename.IndexOf("-") - 2);
+                    var variables = new Dictionary<ushort, string>();
+                    index_list.Add(index);
 
-                    if (!ushort.TryParse(indexname, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ushort index))
-                        continue;
-                    
-                    basename = basename.Substring(basename.IndexOf("-") + 1);
+                    TomlTable toml = rom64.parseToml(str + "\\actor.toml");
+                    TomlArray var_arr = null;
+                    byte cat = 0;
+
+                    if (toml != null) {
+                        var_arr = toml["Variables"].AsArray;
+                        if (toml.HasKey("Name"))
+                            basename = toml["Name"].AsString;
+                        if (toml.HasKey("Category")) {
+                            string catname = toml["Category"].AsString;
+
+                            switch (catname) {
+                                case "SWITCH":     cat = 0; break;
+                                case "BG":         cat = 1; break;
+                                case "PLAYER":     cat = 2; break;
+                                case "EXPLOSIVE":  cat = 3; break;
+                                case "NPC":        cat = 4; break;
+                                case "ENEMY":      cat = 5; break;
+                                case "PROP":       cat = 6; break;
+                                case "ITEMACTION": cat = 7; break;
+                                case "MISC":       cat = 8; break;
+                                case "BOSS":       cat = 9; break;
+                                case "DOOR":       cat = 10; break;
+                                case "CHEST":      cat = 11; break;
+                            }
+                        }
+                    }
+
+                    if (var_arr != null) {
+                        foreach (TomlArray arr in var_arr) {
+                            ushort var_index = (ushort)arr[0].AsInteger.Value;
+                            string name = arr[1].AsString;
+
+                            variables.Add(var_index, name);
+                        }
+                    } else {
+                        foreach (XmlNode node in nodes) {
+                            XmlAttributeCollection nodeAtt = node.Attributes;
+
+                            if ((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16) != index)
+                                continue;
+                            
+                            cat = Convert.ToByte(nodeAtt["Category"].Value);
+
+                            XMLactor xmlactor = XMLreader.getFullActor(nodeAtt["Key"].Value);
+                            Dictionary<ushort,string> vars = xmlactor.variables;
+
+                            foreach(KeyValuePair<ushort,string> s in vars)
+                                variables.Add(s.Key, s.Value);
+                            break;
+                        }
+                    }
+
+                    Database.Add(new DatabaseActor(index ,variables, basename, "", cat));
                 }
             }
 
@@ -69,8 +124,17 @@ namespace SharpOcarina
                 var values = new Dictionary<ushort, string>(); 
 
                 XMLactor xmlactor = XMLreader.getFullActor(nodeAtt["Key"].Value);
-                Dictionary<ushort,string> vars = xmlactor.variables;
 
+                bool skip = false;
+                foreach (ushort id in index_list){
+                    if (Convert.ToUInt16(nodeAtt["Key"].Value, 16) == id){
+                        skip = true;
+                        break;
+                    }
+                }
+                if (skip) continue;
+
+                Dictionary<ushort,string> vars = xmlactor.variables;
 
                 foreach(KeyValuePair<ushort,string> s in vars)
                 {

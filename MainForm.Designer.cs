@@ -7544,9 +7544,9 @@ namespace SharpOcarina
             // 
             this.actorEditControl3.ActorNumber = -1;
             this.actorEditControl3.Enabled = false;
-            this.actorEditControl3.Location = new System.Drawing.Point(0, 298);
+            this.actorEditControl3.Location = new System.Drawing.Point(3, 328);
             this.actorEditControl3.Name = "actorEditControl3";
-            this.actorEditControl3.Size = new System.Drawing.Size(402, 293);
+            this.actorEditControl3.Size = new System.Drawing.Size(402, 319);
             this.actorEditControl3.TabIndex = 1;
             // 
             // actorEditControl2
@@ -7555,7 +7555,7 @@ namespace SharpOcarina
             this.actorEditControl2.Enabled = false;
             this.actorEditControl2.Location = new System.Drawing.Point(3, 3);
             this.actorEditControl2.Name = "actorEditControl2";
-            this.actorEditControl2.Size = new System.Drawing.Size(402, 289);
+            this.actorEditControl2.Size = new System.Drawing.Size(402, 319);
             this.actorEditControl2.TabIndex = 0;
             // 
             // tabPathways
@@ -8010,7 +8010,7 @@ namespace SharpOcarina
             this.actorEditControl1.Enabled = false;
             this.actorEditControl1.Location = new System.Drawing.Point(3, 163);
             this.actorEditControl1.Name = "actorEditControl1";
-            this.actorEditControl1.Size = new System.Drawing.Size(405, 291);
+            this.actorEditControl1.Size = new System.Drawing.Size(405, 319);
             this.actorEditControl1.TabIndex = 3;
             this.actorEditControl1.Load += new System.EventHandler(this.actorEditControl1_Load);
             // 

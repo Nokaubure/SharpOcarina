@@ -779,6 +779,7 @@ namespace SharpOcarina
         public int Position;
         public string Target;
         public List<SongItem> DropdItems;
+        public CheckBox Check;
 
 
         public override string ToString()
