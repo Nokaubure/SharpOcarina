@@ -45,5 +45,17 @@ public class rom64 {
 
         return fileList;
     }
+
+    public static String getItem(string path, int index) {
+        List<String> list = getList(path);
+        string index_str = "0x" + index.ToString("X4") + "-";
+
+        foreach (var f in list) {
+            if (f.Contains(index_str))
+                return f + "\\object.zobj";
+        }
+
+        return "";
+    }
 }
 }

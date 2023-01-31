@@ -31,7 +31,7 @@ using TexLib;
 using TgaDecoderTest;
 using Microsoft.VisualBasic;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
-using Nett;
+using Tommy;
 
 namespace SharpOcarina
 {
@@ -6729,7 +6729,7 @@ namespace SharpOcarina
 
                 if (saveFileDialog1.FileName.Contains(".zzrp"))
                     CurrentScene.ConvertSave(Path.GetDirectoryName(saveFileDialog1.FileName) + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, saveFileDialog1.FileName.Contains(".zzrpl") ? 2 : 1);
-                else if (saveFileDialog1.FileName.Contains("z64project.cfg"))
+                else if (saveFileDialog1.FileName.Contains("z64project.toml"))
                     CurrentScene.ConvertSave(Path.GetDirectoryName(saveFileDialog1.FileName) + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, 3);
                 else
                     CurrentScene.ConvertSave(Path.GetDirectoryName(saveFileDialog1.FileName) + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, 0);
@@ -13584,18 +13584,18 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.cfg)|*.z64;*.rom;*.cfg|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     ROM = saveFileDialog1.FileName;
 
-                    if (ROM.Contains("z64project.cfg"))
+                    if (ROM.Contains("z64project.toml"))
                         z64rom = true;
-                    else if (ROM.Contains(".cfg"))
+                    else if (ROM.Contains(".toml"))
                     {
-                        MessageBox.Show("invalid config file, you need to import z64project.cfg", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -13707,18 +13707,18 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.cfg)|*.z64;*.rom;*.cfg|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     ROM = saveFileDialog1.FileName;
 
-                    if (ROM.Contains("z64project.cfg"))
+                    if (ROM.Contains("z64project.toml"))
                         z64rom = true;
-                    else if (ROM.Contains(".cfg"))
+                    else if (ROM.Contains(".toml"))
                     {
-                        MessageBox.Show("invalid config file, you need to import z64project.cfg", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -13896,7 +13896,7 @@ namespace SharpOcarina
         {
             openFileDialog1.CheckFileExists = true;
             openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "N64 Rom / z64rom project (*.z64;*.cfg)|*.z64;*.cfg|All Files (*.*)|*.*";
+            openFileDialog1.Filter = "N64 Rom / z64rom project (*.z64;*.toml)|*.z64;*.toml|All Files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
             injectToROMToolStripMenuItem.Owner.Hide();
 
@@ -13912,7 +13912,7 @@ namespace SharpOcarina
 
             injectToROMToolStripMenuItem.Text = "&Inject to ROM";
 
-            if (info.Extension != ".cfg")
+            if (info.Extension != ".toml")
             {
                 if (info.Length < 33554432 + 50000)
                 {
@@ -14151,10 +14151,10 @@ namespace SharpOcarina
 
                     if (File.Exists(rompath + "\\overlay.zovl")) {
                         FileStream zovl = File.Open(rompath + "\\overlay.zovl", FileMode.Open, FileAccess.Read);
-                        TomlTable toml = Toml.ReadFile(rompath + "\\config.cfg");
+                        TomlTable toml = TOML.Parse(File.OpenText(rompath + "\\config.toml"));
 
-                        uint vramaddr = toml["vram_addr"].Get<uint>();
-                        uint initvar = toml["init_vars"].Get<uint>();
+                        uint vramaddr = (uint)toml["vram_addr"].AsInteger;
+                        uint initvar = (uint)toml["init_vars"].AsInteger;
                         int offset = (int)(initvar - vramaddr);
                         byte[] data = new byte[2];
 
@@ -14165,29 +14165,30 @@ namespace SharpOcarina
                     }
 
                     if (File.Exists(str + "\\actor.toml")) {
-                        TomlTable toml = Toml.ReadFile(str + "\\actor.toml");
-                        TomlTableArray tblArr = toml["Render"].Get<TomlTableArray>();
+                        TomlTable toml = TOML.Parse(File.OpenText(str + "\\actor.toml"));
 
-                        for (int i = 0; tblArr != null && i < tblArr.Count; i++) {
-                            TomlTable tbl = tblArr[i].Get<TomlTable>();
+                        if (toml.HasKey("Render")){
+                            TomlArray arr = toml["Render"].AsArray;
+                            foreach (TomlNode node in arr.RawArray) {
+                                ushort key = index;
+                                float scale = node["Scale"].AsFloat;
+                                bool animated = node.HasKey("Animated") ? node["Animated"].AsBoolean : false;
+                                ushort animation = 0;
+                                ushort yoff = 0;
+                                string var = node.HasKey("Regex") ? node["Regex"].AsString : "....";
+                                ushort bank = 0x06;
+                                string file = rom64.getItem("rom\\object", (int)objectid);
 
-                            ushort key = 0;
-                            float scale = 0;
-                            bool animated = false;
-                            ushort animation = 0;
-                            ushort yoff = 0;
-                            string var = "";
-                            ushort bank = 0x06;
-                            string file = "";
+                                if (file != "") {
+                                    Console.WriteLine("Register Actor Preview: " + file);
 
-                            Console.WriteLine("Register Actor Preview: " + basename);
-
-                            // CurrentScene.RegisterActorPreview(
-                            //     key, 0, new string[0], new string[0],
-                            //     scale, 0, animated, 0,
-                            //     var, animation, yoff, bank, new string[0],
-                            //     file
-                            // );
+                                    CurrentScene.RegisterActorPreview(
+                                        key, 0, new string[0], new string[0],
+                                        scale, 1, animated, 
+                                        1, var, animation, 
+                                        yoff, bank, new string[0], file);
+                                }
+                            }
                         }
                     }
 
@@ -15367,18 +15368,18 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.cfg)|*.z64;*.rom;*.cfg|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     ROM = saveFileDialog1.FileName;
 
-                    if (ROM.Contains("z64project.cfg"))
+                    if (ROM.Contains("z64project.toml"))
                         z64rom = true;
-                    else if (ROM.Contains(".cfg"))
+                    else if (ROM.Contains(".toml"))
                     {
-                        MessageBox.Show("invalid config file, you need to import z64project.cfg", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -15582,18 +15583,18 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.cfg)|*.z64;*.rom;*.cfg|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     ROM = saveFileDialog1.FileName;
 
-                    if (ROM.Contains("z64project.cfg"))
+                    if (ROM.Contains("z64project.toml"))
                         z64rom = true;
-                    else if (ROM.Contains(".cfg"))
+                    else if (ROM.Contains(".toml"))
                     {
-                        MessageBox.Show("invalid config file, you need to import z64project.cfg", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -16116,18 +16117,18 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.cfg)|*.z64;*.rom;*.cfg|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     ROM = saveFileDialog1.FileName;
 
-                    if (ROM.Contains("z64project.cfg"))
+                    if (ROM.Contains("z64project.toml"))
                         z64rom = true;
-                    else if (ROM.Contains(".cfg"))
+                    else if (ROM.Contains(".toml"))
                     {
-                        MessageBox.Show("invalid config file, you need to import z64project.cfg", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }

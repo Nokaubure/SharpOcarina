@@ -1727,13 +1727,12 @@ namespace SharpOcarina
                     else if (node.InnerText == "gameplay_field_keep" || node.InnerText == "gameplay_dangeon_keep") bank = 0x05;
                     else bank = 0x06;
                     
-                    RegisterActorPreview(key, offset, 
-                        offsetsstr, textureoffsetsstr,
+                    RegisterActorPreview(
+                        key, offset, offsetsstr, textureoffsetsstr,
                         scale, dlistcount, animated,
                         hirearchy, var, animation,
                         Yoff, bank, colors, file);
                 }
-                
             }
 
             UcodeSimulator.currentfilename = "";
