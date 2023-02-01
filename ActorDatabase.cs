@@ -72,19 +72,19 @@ namespace SharpOcarina
                         if (toml.HasKey("Category")) {
                             string catname = toml["Category"].AsString;
 
-                            switch (catname) {
-                                case "SWITCH":     cat = 0; break;
-                                case "BG":         cat = 1; break;
-                                case "PLAYER":     cat = 2; break;
-                                case "EXPLOSIVE":  cat = 3; break;
-                                case "NPC":        cat = 4; break;
-                                case "ENEMY":      cat = 5; break;
-                                case "PROP":       cat = 6; break;
-                                case "ITEMACTION": cat = 7; break;
-                                case "MISC":       cat = 8; break;
-                                case "BOSS":       cat = 9; break;
-                                case "DOOR":       cat = 10; break;
-                                case "CHEST":      cat = 11; break;
+                            switch (catname.ToLower()) {
+                                case "switch":     cat = 0; break;
+                                case "bg":         cat = 1; break;
+                                case "player":     cat = 2; break;
+                                case "explosive":  cat = 3; break;
+                                case "npc":        cat = 4; break;
+                                case "enemy":      cat = 5; break;
+                                case "prop":       cat = 6; break;
+                                case "itemaction": cat = 7; break;
+                                case "misc":       cat = 8; break;
+                                case "boss":       cat = 9; break;
+                                case "door":       cat = 10; break;
+                                case "chest":      cat = 11; break;
                             }
                         }
                     }

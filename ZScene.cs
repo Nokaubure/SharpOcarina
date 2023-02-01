@@ -1708,7 +1708,7 @@ namespace SharpOcarina
                                 TomlArray arr = toml["Render"].AsArray;
                                 foreach (TomlNode node in arr.RawArray) {
                                     UInt16 key = index;
-                                    float scale = node["Scale"].AsFloat;
+                                    float scale = node.HasKey("Scale") ? node["Scale"].AsFloat : 0.01f;
                                     bool animated = node.HasKey("Animation") ? true : false;
                                     UInt16 animation = (ushort)( node.HasKey("Animation") ? node["Animation"].AsInteger.Value : 0 );
                                     UInt16 yoff = (ushort)( node.HasKey("YOffset") ? node["YOffset"].AsInteger.Value : 0 );
@@ -1717,6 +1717,8 @@ namespace SharpOcarina
                                     string file = rom64.getItem("rom\\object", (int)objectid);
                                     string dl = node.HasKey("DisplayList") ? node["DisplayList"].AsString.ToString() : "";
                                     uint offset = 0;
+
+                                    z64romActors.Add((uint)index);
 
                                     if (dl != "") {
                                         string object_ld = rom64.openFile("include\\z_object_user.ld");
@@ -1735,7 +1737,6 @@ namespace SharpOcarina
                                         Console.WriteLine("offset: " + offset.ToString("X08"));
                                         Console.WriteLine("bank:   " + bank.ToString("X02"));
 
-                                        z64romActors.Add((uint)index);
 
                                         RegisterActorPreview(
                                             key, offset, new string[0], new string[0],

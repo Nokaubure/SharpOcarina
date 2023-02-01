@@ -14150,6 +14150,7 @@ namespace SharpOcarina
             if (rom64.isSet())
             {
                 List<String> actors = rom64.getList("src\\actor");
+                List<String> warning = new List<String>();
 
                 foreach(var str in actors)
                 {
@@ -14171,6 +14172,31 @@ namespace SharpOcarina
                         TomlArray proparr = toml["Property"].AsArray;
 
                         foreach(TomlTable tbl in proparr) {
+                            if (!tbl.HasKey("Mask") || !tbl.HasKey("Name") || !tbl.HasKey("Target")) {
+
+                                /*
+                                 * If only some of the requirement parameters are set,
+                                 * consider this an error from the user and warn
+                                 * accordingly.
+                                 */
+                                if (tbl.HasKey("Mask") || tbl.HasKey("Name") || tbl.HasKey("Target")) {
+                                    string msg = str + "\\actor.toml\n";
+
+                                    msg = msg.Remove(0, rom64.getPath().Length + 1);
+
+                                    if (!tbl.HasKey("Mask"))
+                                        msg += "Mask = ??\n";
+                                    if (!tbl.HasKey("Name"))
+                                        msg += "Name = ??\n";
+                                    if (!tbl.HasKey("Target"))
+                                        msg += "Target = ??\n";
+                                    
+                                    warning.Add(msg);
+                                }
+
+                                continue;
+                            }
+
                             ActorProperty p = new ActorProperty(
                                 (ushort)tbl["Mask"].AsInteger.Value,
                                 tbl["Name"].AsString,
@@ -14217,6 +14243,12 @@ namespace SharpOcarina
                     uint objectid = rom64.getActorObjID(rompath);
 
                     ActorCache.Add(index, new ActorInfo(basename, prop, objectid.ToString("X4")));
+                }
+
+                if (warning.Count > 0) {
+                    string msg = String.Join("\n", warning);
+
+                    MessageBox.Show("Warning! Following toml files do not have some of the required variables defined!\n\n" + msg, "actor.toml warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
