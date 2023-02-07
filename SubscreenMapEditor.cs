@@ -682,7 +682,7 @@ namespace SharpOcarina
 
             BWS.Seek((int)rom.SubscreenMapFloorAmount-2, SeekOrigin.Begin);
             ushort roomstack = 0;
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 10; i++)
             {
 
                 Helpers.Append16(ref Output, roomstack);
