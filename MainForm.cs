@@ -1582,8 +1582,8 @@ namespace SharpOcarina
                 /* Rendering base settings... */
                 if (CurrentScene.Environments.Count > 0 && ((!settings.MajorasMask && CurrentScene.SkyboxType == 0x1D) || (settings.MajorasMask && CurrentScene.SkyboxType == 0x08)))
                 {
-                    EnvironmentSelect.Value = EnvironmentSelect.Value < 1 ? 1 : EnvironmentSelect.Value;
-                    GL.ClearColor(CurrentScene.Environments[(int)EnvironmentSelect.Value-1].FogColorC);
+                    EnvironmentSelect.Value = EnvironmentSelect.Value < 0 ? 0 : EnvironmentSelect.Value;
+                    GL.ClearColor(CurrentScene.Environments[(int)EnvironmentSelect.Value].FogColorC);
                 }
                 else if (CurrentScene.OutdoorLight)
                     GL.ClearColor(Color.FromArgb(255, 51, 128, 179));
@@ -6063,7 +6063,26 @@ namespace SharpOcarina
             if (prev > 0) SetSceneHeader(0);
             if (!autosave) AddMissingObjects();
             if (!autosave) LastScene = FileName;
+
+            string GetRelativePath(string relativeTo, string path)
+            {
+                var uri = new Uri(relativeTo);
+                var rel = Uri.UnescapeDataString(uri.MakeRelativeUri(new Uri(path)).ToString()).Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+                if (rel.Contains(Path.DirectorySeparatorChar.ToString()) == false)
+                {
+                    rel = $"{ rel }";
+                }
+                return rel;
+            }
+
+            foreach (var room in CurrentScene.Rooms)
+                if (Path.IsPathRooted(room.ModelFilename))
+                    room.ModelFilename = GetRelativePath(Path.GetDirectoryName(FileName) + "\\", room.ModelFilename);
+            if (Path.IsPathRooted(CurrentScene.CollisionFilename))
+                CurrentScene.CollisionFilename = GetRelativePath(Path.GetDirectoryName(FileName) + "\\", CurrentScene.CollisionFilename);
+
             IO.Export<ZScene>(CurrentScene, FileName);
+
             if (prev > 0) SetSceneHeader(prev);
         }
 

@@ -28,7 +28,7 @@
   <Camera Key="19">Fixed camera, no rotation, instant transition</Camera>
   <Camera Key="1A">Fixed camera, disables the rest of the cameras once triggered, focuses on link</Camera>
   <Camera Key="1B">Fixed camera, position updates towards east/west of the camera when link moves</Camera>
-  <Camera Key="1C">Fixed camera, same as 1A but with black bars</Camera>
+  <Camera Key="1C">Fixed camera, door transition, black bars, transitions when player moves</Camera>
   <Camera Key="1D">CRASH</Camera>
   <Camera Key="1E">???, keeps zooming to link until it glitches</Camera>
   <Camera Key="1F">Fixed camera, no rotation, instant transition, resets with camera type 00</Camera>
