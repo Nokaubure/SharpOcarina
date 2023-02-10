@@ -58,7 +58,6 @@ namespace SharpOcarina
 
         public void Init()
         {
-
             if (MainForm.GlobalROM != "")
             {
                 OpenROM(MainForm.GlobalROM);
@@ -71,10 +70,7 @@ namespace SharpOcarina
             //openFileDialog1.FilterIndex = 1;
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
                 OpenROM(openFileDialog1.FileName);
-
-
             }
             else
             {
@@ -1157,7 +1153,7 @@ namespace SharpOcarina
                     BWS.Close();
                     MessageBox.Show("All dungeon mapa has been removed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    ROM = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
+                    ROM = new List<byte>(File.ReadAllBytes(ROMfile));
 
                     LoadFloors();
                     RefreshMapTexture();
