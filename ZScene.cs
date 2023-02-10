@@ -3788,66 +3788,54 @@ namespace SharpOcarina
 
                 foreach (ObjFile.Triangle Tri in Group.Triangles)
                 {
-                    /*
-                    bool error = (ColModel.Vertices[Tri.VertIndex[0]].X == ColModel.Vertices[Tri.VertIndex[1]].X && ColModel.Vertices[Tri.VertIndex[0]].Y == ColModel.Vertices[Tri.VertIndex[1]].Y && ColModel.Vertices[Tri.VertIndex[0]].Z == ColModel.Vertices[Tri.VertIndex[1]].Z)
-                        || (ColModel.Vertices[Tri.VertIndex[1]].X == ColModel.Vertices[Tri.VertIndex[2]].X && ColModel.Vertices[Tri.VertIndex[1]].Y == ColModel.Vertices[Tri.VertIndex[2]].Y && ColModel.Vertices[Tri.VertIndex[1]].Z == ColModel.Vertices[Tri.VertIndex[2]].Z)
-                        || (ColModel.Vertices[Tri.VertIndex[0]].X == ColModel.Vertices[Tri.VertIndex[2]].X && ColModel.Vertices[Tri.VertIndex[0]].Y == ColModel.Vertices[Tri.VertIndex[2]].Y && ColModel.Vertices[Tri.VertIndex[0]].Z == ColModel.Vertices[Tri.VertIndex[2]].Z);
-                        */
-                    bool error = false;
-
-                    int  dn;
-                    int[] p1 = new int[3], p2 = new int[3], p3 = new int[3], dx = new int[2], dy = new int[2], dz = new int[2], ni = new int[3];
-                    float nd;
-                    float[] nf = new float[3], uv = new float[3];
+                    int[] ni = new int[3];
+                    Vector3[] vtx = new Vector3[3];
 
                     for (int i = 0; i < 3; i++)
-                    {
-                        p1[i] = (int)ColModel.Vertices[Tri.VertIndex[i]].X;
-                        p2[i] = (int)ColModel.Vertices[Tri.VertIndex[i]].Y;
-                        p3[i] = (int)ColModel.Vertices[Tri.VertIndex[i]].Z;
-                    }
+                        vtx[i] = new Vector3(
+                            (int)ColModel.Vertices[Tri.VertIndex[i]].X, 
+                            (int)ColModel.Vertices[Tri.VertIndex[i]].Y, 
+                            (int)ColModel.Vertices[Tri.VertIndex[i]].Z);
+                   
 
-                    dx[0] = p1[0] - p2[0]; dx[1] = p2[0] - p3[0];
-                    dy[0] = p1[1] - p2[1]; dy[1] = p2[1] - p3[1];
-                    dz[0] = p1[2] - p2[2]; dz[1] = p2[2] - p3[2];
+                    Vector3 u = vtx[1] - vtx[0];
+                    Vector3 v = vtx[2] - vtx[0];
+                    Vector3 triWind;
+                    triWind.X = (u.Y * v.Z) - (u.Z * v.Y);
+                    triWind.Y = (u.Z * v.X) - (u.X * v.Z);
+                    triWind.Z = (u.X * v.Y) - (u.Y * v.X);
 
-                    nf[0] = (float)(dy[0] * dz[1]) - (dz[0] * dy[1]);
-                    nf[1] = (float)(dz[0] * dx[1]) - (dx[0] * dz[1]);
-                    nf[2] = (float)(dx[0] * dy[1]) - (dy[0] * dx[1]);
+                    Vector3 triNorm = Vector3.Normalize(triWind);
+                    ni[0] = (int)Math.Round(triNorm.X * 0x7FFF);
+                    ni[1] = (int)Math.Round(triNorm.Y * 0x7FFF);
+                    ni[2] = (int)Math.Round(triNorm.Z * 0x7FFF);
 
-                    /* calculate length of normal vector */
-                    nd = (float)Math.Sqrt((nf[0] * nf[0]) + (nf[1] * nf[1]) + (nf[2] * nf[2]));
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (nd != 0)
-                            uv[i] = nf[i] / nd; /* uv being the unit normal vector */
-                        nf[i] = uv[i] * 0x7FFF;   /* nf being the way OoT uses it */
-                    }
-
-                    /* distance from origin... */
-                    dn = (int)Math.Round(((uv[0] * p1[0]) + (uv[1] * p1[1]) + (uv[2] * p1[2])) * -1);
-
-                    if (dn < 0)
-                        dn += 0x10000;
+                    // distance from origin
+                    int dn = (int)Math.Round(((triNorm.X * vtx[0].X) + (triNorm.Y * vtx[1].X) + (triNorm.Z * vtx[2].X)) * -1);
+                    if (dn < 0) dn += 0x10000;
 
                     for (int i = 0; i < 3; i++)
-                    {
-                        ni[i] = (int)Math.Round(nf[i]);
                         if (ni[i] < 0)
                             ni[i] += 0x10000;
 
+                    bool skip = false;
+
+                    if (ni[0] == 0 && ni[1] == 0 && ni[2] == 0) {
+                        skip = true;
+                        Console.WriteLine("Skip Collision Triangle:");
+                        for (int i = 0; i < 3; i++)
+                        {
+                            Console.WriteLine( "Tri Vtx[" + i.ToString() + "] Pos: " + ColModel.Vertices[Tri.VertIndex[i]].X.ToString() + ", " +
+                                ColModel.Vertices[Tri.VertIndex[i]].Y.ToString() + ", " +
+                                ColModel.Vertices[Tri.VertIndex[i]].Z.ToString());
+                        }
+                        Console.WriteLine( "Tri Nrm: " + triNorm.X.ToString() + ", " +
+                            triNorm.Y.ToString() + ", " +
+                            triNorm.Z.ToString());
                     }
 
-                    if (ni[0] == 0 && ni[1] == 0 && ni[2] == 0) error = true;
-
-
-
-
-                    if (!Group.Name.ToLower().Contains("#blackplane") && !Group.Name.ToLower().Contains("#nocollision") && !Group.Name.ToLower().Contains("#door") && !error)
+                    if (!Group.Name.ToLower().Contains("#blackplane") && !Group.Name.ToLower().Contains("#nocollision") && !Group.Name.ToLower().Contains("#door") && !skip)
                     {
-
-
                         Helpers.Append16(ref Data, polytypeID);    /* Polygon type */
                         Helpers.Append16(ref Data, (ushort) ((ushort)Tri.VertIndex[0] | MainForm.CurrentScene.PolyTypes[polytypeID].PolyFlagA));  /* Index of vertex 1 */
                         Helpers.Append16(ref Data, (ushort) ((ushort)Tri.VertIndex[1] | MainForm.CurrentScene.PolyTypes[polytypeID].PolyFlagB));  /* Index of vertex 2 */
@@ -3858,10 +3846,8 @@ namespace SharpOcarina
                         Helpers.Append16(ref Data, (ushort)(dn & 0xFFFF));                    /* Distance from origin */
                     }
                     else TriangleTotal--;
-
-                    
-
                 }
+
                 TriangleTotal += Group.Triangles.Count;
             }
             Helpers.Overwrite32(ref Data, CmdPolygonArray, (uint)(TriangleTotal << 16));
