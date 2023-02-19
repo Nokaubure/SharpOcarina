@@ -1213,7 +1213,6 @@ namespace SharpOcarina
             this.AutoReload.Name = "AutoReload";
             this.AutoReload.Size = new System.Drawing.Size(311, 22);
             this.AutoReload.Text = "Auto Reload";
-            this.AutoReload.Click += new System.EventHandler(this.AutoReload_Click);
             // 
             // toolStripSeparator3
             // 

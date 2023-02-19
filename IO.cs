@@ -21,17 +21,9 @@ namespace SharpOcarina
             XWS.NewLineChars = Environment.NewLine;
             XWS.Indent = true;
 
-            XmlSerializer XS;
-
-            if (Object is ZScene)
-            {
-                XS = (XmlSerializer)new ConfigurationContainer().ConfigureType<ZScene>()
-                                                 .EnableReferences(p => p.cloneid).Create();
-            }
-            else
-                XS = new XmlSerializer(Object.GetType());
-
-
+            //XmlSerializer XS = new XmlSerializer(Object.GetType());
+            var XS = new ConfigurationContainer().ConfigureType<ZScene>()
+                                             .EnableReferences(p => p.cloneid).Create();
             StreamWriter SW = new StreamWriter(Filename);
             XmlWriter XW = XmlWriter.Create(SW, XWS);
 
@@ -46,32 +38,25 @@ namespace SharpOcarina
             SW.Close();
         }
 
-        public static T Import<T>(string Filename, Type type)
+        public static T Import<T>(string Filename)
         {
-            // This should properly check for the old format instead of relying on an exception, probably...
-            if (type == typeof(ZScene))
+            try
             {
-                try
-                {
-                    var XS = new ConfigurationContainer().ConfigureType<ZScene>()
-                                     .EnableReferences(p => p.cloneid).Create();
-                    XmlReader XR = XmlReader.Create(Filename);
-                    return (T)XS.Deserialize(XR);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Old XML detected, using old format to import it");
-                    XmlSerializer XS = new XmlSerializer(typeof(T));
-                    StreamReader SR = new StreamReader(Filename);
-                    return (T)XS.Deserialize(SR);
-                }
+                var XS = new ConfigurationContainer().ConfigureType<ZScene>()
+                                 .EnableReferences(p => p.cloneid).Create();
+                XmlReader XR = XmlReader.Create(Filename);
+                return (T)XS.Deserialize(XR);
             }
-            else
+            catch (Exception e)
             {
+                Console.WriteLine("Old XML detected, using old format to import it");
                 XmlSerializer XS = new XmlSerializer(typeof(T));
                 StreamReader SR = new StreamReader(Filename);
+
                 return (T)XS.Deserialize(SR);
             }
+
+
         }
         /*
         public static void BinExport<T>(T Object, string Filename)
