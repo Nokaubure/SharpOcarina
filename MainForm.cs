@@ -224,7 +224,7 @@ namespace SharpOcarina
 
            if (File.Exists("Settings.xml"))
             {
-                settings = IO.Import<Settings>("Settings.xml");
+                settings = IO.Import<Settings>("Settings.xml", typeof(Settings));
             }
 
             this.SetStyle(ControlStyles.DoubleBuffer, true);
@@ -3714,6 +3714,7 @@ namespace SharpOcarina
 
                     UpdateLabel.Visible = updateavailable;
 
+                    AutoReload.Checked = settings.AutoReload;
                     showCollisionModelToolStripMenuItem.Checked = settings.ShowCollisionModel;
                     showRoomModelsToolStripMenuItem.Checked = settings.ShowRoomModels;
                     applyEnvironmentLightingToolStripMenuItem.Checked = settings.ApplyEnvLighting;
@@ -6428,7 +6429,7 @@ namespace SharpOcarina
             GroupList.DataSource = null;
             listBox3.DataSource = null;
 
-            CurrentScene = IO.Import<ZScene>(FileName);
+            CurrentScene = IO.Import<ZScene>(FileName, typeof(ZScene));
             NormalHeader = CurrentScene;
             CurrentScene.BasePath = System.IO.Path.GetDirectoryName(FileName);
             fullpath = Path.GetDirectoryName(FileName) + Path.DirectorySeparatorChar;
@@ -16805,6 +16806,11 @@ namespace SharpOcarina
             }
         }
 
+        private void AutoReload_Click(object sender, EventArgs e)
+        {
+            settings.AutoReload = AutoReload.Checked;
+        }
+
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);
@@ -17195,6 +17201,7 @@ namespace SharpOcarina
         public bool OnlyRenderWaterboxesGeneral = true;
         public bool DisableTextureWarnings = false;
         public bool EnableNewExitFormat = false;
+        public bool AutoReload = false;
     }
 
     public class UndoRedo
