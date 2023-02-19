@@ -21,15 +21,13 @@ namespace SharpOcarina
             XWS.NewLineChars = Environment.NewLine;
             XWS.Indent = true;
 
-            XmlSerializer XS;
+            var XS = new ConfigurationContainer().ConfigureType<ZScene>().Create();
 
             if (Object is ZScene)
             {
-                XS = (XmlSerializer)new ConfigurationContainer().ConfigureType<ZScene>()
+                XS = new ConfigurationContainer().ConfigureType<ZScene>()
                                                  .EnableReferences(p => p.cloneid).Create();
             }
-            else
-                XS = new XmlSerializer(Object.GetType());
 
 
             StreamWriter SW = new StreamWriter(Filename);
@@ -68,9 +66,9 @@ namespace SharpOcarina
             }
             else
             {
-                XmlSerializer XS = new XmlSerializer(typeof(T));
-                StreamReader SR = new StreamReader(Filename);
-                return (T)XS.Deserialize(SR);
+                var XS = new ConfigurationContainer().ConfigureType<T>().Create();
+                XmlReader XR = XmlReader.Create(Filename);
+                return (T)XS.Deserialize(XR);
             }
         }
         /*
