@@ -3746,6 +3746,7 @@ namespace SharpOcarina
                     DisableRGBA32ToolStrip.Checked = settings.DisableRGBA32;
                     AutoFixErrorsStripMenuItem3.Checked = settings.AutoFixErrors;
                     AdvancedTextureAnimationsMenuItem.Checked = settings.command1AOoT;
+                    AutoReload.Checked = settings.AutoReload;
 
                     RenderWaterboxesMenuItem.Checked = settings.OnlyRenderWaterboxesGeneral;
                     ColorBlindMenuItem.Checked = settings.colorblindaxis;
@@ -16805,6 +16806,11 @@ namespace SharpOcarina
             }
         }
 
+        private void AutoReload_Click(object sender, EventArgs e)
+        {
+            settings.AutoReload = AutoReload.Checked;
+        }
+
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);
@@ -17195,6 +17201,7 @@ namespace SharpOcarina
         public bool OnlyRenderWaterboxesGeneral = true;
         public bool DisableTextureWarnings = false;
         public bool EnableNewExitFormat = false;
+        public bool AutoReload = false;
     }
 
     public class UndoRedo
