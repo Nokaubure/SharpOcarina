@@ -1,7 +1,7 @@
 ///CHANGELOG///
 
 --------------
----1.35
+---1.40
 --------------
 
 - Flag Log does not display empty flags, improved readability
@@ -39,13 +39,9 @@
 
 - Cutscene Add Position now inserts the added position after the selected position
 
-- [TODO] Cutscene Camera options have been moved to the Cutscene Tab
-
 - You can now switch with a numeric selector at the top of the window
 
 - You can now select rooms and groups by holding ctrl and right clicking on a room in the viewport
-
-- [TODO] Fixed an issue where the texture animation type "texture swap" was not correctly previewed inside SO
 
 - Fixed an issue where changing a texture animation to "texture swap" in n64 render mode would give an error message
 
@@ -55,7 +51,7 @@
 
 - Fixed an issue where the camera would move awkward if you pressed middle click while having no rooms
 
-- [Test] Fixed an issue where scenes would crash if no animated texture command was added
+- Fixed an issue where scenes would crash if no animated texture command was added
 
 - Fixed an issue where the UI would not be correctly refreshed after saving to binnary when an alternate header was selected
 
