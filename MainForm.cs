@@ -3315,15 +3315,6 @@ namespace SharpOcarina
                     ((ZWaterbox)target).XPos = (float)objpos.X;
                     ((ZWaterbox)target).YPos = (float)objpos.Y;
                     ((ZWaterbox)target).ZPos = (float)objpos.Z;
-
-                    if (KeysDown[(int)ActorControlKeys[0]])
-                    {
-                        ((ZWaterbox)target).XSize++;
-                    }
-                    else if (KeysDown[(int)ActorControlKeys[1]])
-                    {
-                        ((ZWaterbox)target).ZSize++;
-                    }
                 }
                 else if (actorpick == 6)
                 {
@@ -9224,7 +9215,7 @@ namespace SharpOcarina
             "Instances: " + Environment.NewLine +
             "- Shift (hold) while increasing/decreasing position or waterbox size: Increases it by 20 units" + Environment.NewLine +
             " - Z/X | W/X | ;Q while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
-            " - Z/X | W/X | ;Q while moving a waterbox: Increase/decrease waterbox size"
+            " - Mouse wheel after selecting a waterbox: Increase/decrease waterbox size"
             , "Controls", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
