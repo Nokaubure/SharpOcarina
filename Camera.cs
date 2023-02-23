@@ -30,6 +30,8 @@ namespace SharpOcarina
         public static Vector3d Pos, Rot;
         public static Vector2d MouseCoord;
 
+        public static Keys[] CameraControlKeys = new Keys[0];
+
         #endregion
 
         #region Camera Functions
@@ -38,6 +40,16 @@ namespace SharpOcarina
         {
             Pos = new Vector3d(0.0f, 0.0f, -5.0f);
             Rot = new Vector3d(0.0f, 0.0f, 0.0f);
+
+            switch (Program.KeyboardLayout)
+            {
+                case "AZERTY":
+                    CameraControlKeys = new Keys[] { Keys.Z, Keys.Q, Keys.S, Keys.D, Keys.A, Keys.E }; break;
+                case "DVORAK":
+                    CameraControlKeys = new Keys[] { Keys.Oemcomma, Keys.A, Keys.O, Keys.E, Keys.OemQuotes, Keys.OemPeriod }; break;
+                default:
+                    CameraControlKeys = new Keys[] { Keys.W, Keys.A, Keys.S, Keys.D, Keys.Q, Keys.E }; break;
+            }
         }
 
         public static void MouseCenter(Vector2d NewMouseCoord)
@@ -101,18 +113,6 @@ namespace SharpOcarina
             double Modifier = 1.0f;
             if (KeysDown[(char)Keys.Space]) Modifier = 10.0f;
             else if (KeysDown[(char)Keys.ShiftKey]) Modifier = 0.25f;
-
-            Keys[] CameraControlKeys = new Keys[0];
-            
-            switch (Program.KeyboardLayout)
-            {
-                case "AZERTY":
-                    CameraControlKeys = new Keys[] { Keys.Z, Keys.Q, Keys.S, Keys.D, Keys.A, Keys.E }; break;
-                case "DVORAK":
-                    CameraControlKeys = new Keys[] { Keys.Oemcomma, Keys.A, Keys.O, Keys.E, Keys.OemQuotes, Keys.OemPeriod }; break;
-                default:
-                    CameraControlKeys = new Keys[] { Keys.W, Keys.A, Keys.S, Keys.D, Keys.Q, Keys.E }; break;
-            }
 
             if (KeysDown[(char)CameraControlKeys[0]])
             {
