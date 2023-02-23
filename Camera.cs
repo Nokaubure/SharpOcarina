@@ -102,7 +102,19 @@ namespace SharpOcarina
             if (KeysDown[(char)Keys.Space]) Modifier = 10.0f;
             else if (KeysDown[(char)Keys.ShiftKey]) Modifier = 0.25f;
 
-            if (KeysDown[(char)Keys.W])
+            Keys[] CameraControlKeys = new Keys[0];
+            
+            switch (Program.KeyboardLayout)
+            {
+                case "AZERTY":
+                    CameraControlKeys = new Keys[] { Keys.Z, Keys.Q, Keys.S, Keys.D, Keys.A, Keys.E }; break;
+                case "DVORAK":
+                    CameraControlKeys = new Keys[] { Keys.Oemcomma, Keys.A, Keys.O, Keys.E, Keys.OemQuotes, Keys.OemPeriod }; break;
+                default:
+                    CameraControlKeys = new Keys[] { Keys.W, Keys.A, Keys.S, Keys.D, Keys.Q, Keys.E }; break;
+            }
+
+            if (KeysDown[(char)CameraControlKeys[0]])
             {
                 if (Rot.X >= 90.0f || Rot.X <= -90.0f)
                 {
@@ -116,7 +128,13 @@ namespace SharpOcarina
                 }
             }
 
-            if (KeysDown[(char)Keys.S])
+            if (KeysDown[(char)CameraControlKeys[1]])
+            {
+                Pos.X += (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
+                Pos.Z += (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
+            }
+
+            if (KeysDown[(char)CameraControlKeys[2]])
             {
                 if (Rot.X >= 90.0f || Rot.X <= -90.0f)
                 {
@@ -130,24 +148,18 @@ namespace SharpOcarina
                 }
             }
 
-            if (KeysDown[(char)Keys.A])
-            {
-                Pos.X += (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                Pos.Z += (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
-            }
-
-            if (KeysDown[(char)Keys.D])
+            if (KeysDown[(char)CameraControlKeys[3]])
             {
                 Pos.X -= (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
                 Pos.Z -= (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
             }
 
-            if (KeysDown[(char)Keys.Q])
+            if (KeysDown[(char)CameraControlKeys[4]])
             {
                 Pos.Y -= 1 * CameraCoeff * 2.0f * Modifier;
             }
 
-            if (KeysDown[(char)Keys.E])
+            if (KeysDown[(char)CameraControlKeys[5]])
             {
                 Pos.Y += 1 * CameraCoeff * 2.0f * Modifier;
             }

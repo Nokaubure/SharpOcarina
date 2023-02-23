@@ -9193,8 +9193,8 @@ namespace SharpOcarina
             MessageBox.Show(
             "Camera view: " + Environment.NewLine +
             "- Left click (hold): Rotate the camera " + Environment.NewLine +
-            "- WASD keys: Move the camera to the sides and front" + Environment.NewLine +
-            "- QE keys: Move the camera up and down" + Environment.NewLine +
+            "- WASD/ZQSD/,AOE keys: Move the camera to the sides and front" + Environment.NewLine +
+            "- QE/AE/'. keys: Move the camera up and down" + Environment.NewLine +
             "-    +Shift (hold): Move slower" + Environment.NewLine +
             "-    +Space (hold): Move faster" + Environment.NewLine +
             "- Right click: Select instances" + Environment.NewLine +
