@@ -861,6 +861,11 @@ namespace SharpOcarina
 
 
             MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            // Reload the floors, since they may have changed due to the texture ID re-sort
+            LoadFloors();
+            RefreshMapTexture();
         }
 
         private void MapFloorTextureID_ValueChanged(object sender, EventArgs e)
