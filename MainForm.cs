@@ -9202,11 +9202,13 @@ namespace SharpOcarina
 
         private void showControlsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
+           
+            int layout = Program.KeyboardLayout == "AZERTY" ? 1 : (Program.KeyboardLayout == "DVORAK" ? 2 : 0); 
+               MessageBox.Show(
             "Camera view: " + Environment.NewLine +
             "- Left click (hold): Rotate the camera " + Environment.NewLine +
-            "- WASD | ZQSD | ,AOE keys: Move the camera to the sides and front" + Environment.NewLine +
-            "- QE | AE | '. keys: Move the camera up and down" + Environment.NewLine +
+            "- " + (new[]{ "WASD", "ZQSD", ",AOE" })[layout] + " keys: Move the camera to the sides and front" + Environment.NewLine +
+            "- " + (new[]{ "QE", "AE", "'." })[layout] + " keys: Move the camera up and down" + Environment.NewLine +
             "-    +Shift (hold): Move slower" + Environment.NewLine +
             "-    +Space (hold): Move faster" + Environment.NewLine +
             "- Right click: Select instances" + Environment.NewLine +
@@ -9214,7 +9216,7 @@ namespace SharpOcarina
             "-    +Shift (hold): Move the instance in a depth axis" + Environment.NewLine + Environment.NewLine +
             "Instances: " + Environment.NewLine +
             "- Shift (hold) while increasing/decreasing position or waterbox size: Increases it by 20 units" + Environment.NewLine +
-            " - Z/X | W/X | ;Q while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
+            " - " + (new[] { "Z/X", "W/X", ";Q" })[layout] + " while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
             " - Mouse wheel after selecting a waterbox: Increase/decrease waterbox size"
             , "Controls", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

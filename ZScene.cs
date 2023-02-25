@@ -3184,8 +3184,11 @@ namespace SharpOcarina
                     NTexture Texture = new NTexture();
                     Texture.Convert(Mat);
 
-                    string filename = Mat.map_Kd.Split(Path.AltDirectorySeparatorChar).Last();
-                    filename = filename.Split(Path.DirectorySeparatorChar).Last();
+                    //string filename = Mat.map_Kd.Split(Path.AltDirectorySeparatorChar).Last();
+                   // filename = filename.Split(Path.DirectorySeparatorChar).Last(); //TODO
+
+                    string filename = Mat.map_Kd;
+
 
                     Texture.Name = filename;
 

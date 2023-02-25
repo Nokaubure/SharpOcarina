@@ -1,6 +1,15 @@
 ///CHANGELOG///
 
 --------------
+---1.41
+--------------
+
+- Added support for azerty and dvorak keyboards
+
+- Fixed an issue where if 2 textures had the same filename but different folder it would display incorrectly in SO
+
+
+--------------
 ---1.40
 --------------
 
