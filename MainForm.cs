@@ -130,6 +130,8 @@ namespace SharpOcarina
 
         public static bool n64preview = false;
 
+        public static Keys[] ActorControlKeys = new Keys[0];
+
 
         private int actorpick = -1;
         public byte extrapick = 0;
@@ -191,7 +193,17 @@ namespace SharpOcarina
             
             InitializeComponent();
 
-         //   ChangeTheme(new ColorScheme(true),tabControl1.Controls);
+            //   ChangeTheme(new ColorScheme(true),tabControl1.Controls);
+
+            switch (Program.KeyboardLayout)
+            {
+                case "AZERTY":
+                    ActorControlKeys = new Keys[] { Keys.W, Keys.X }; break;
+                case "DVORAK":
+                    ActorControlKeys = new Keys[] { Keys.OemSemicolon, Keys.Q }; break;
+                default:
+                    ActorControlKeys = new Keys[] { Keys.Z, Keys.X }; break;
+            }
 
             globalframestart = DateTime.Now;
 
@@ -3270,14 +3282,14 @@ namespace SharpOcarina
                 if (actorpick <= 4 || actorpick == _CutsceneActor_)
                 {
                     //down
-                    if (KeysDown[(int)Keys.Z])
+                    if (KeysDown[(int)ActorControlKeys[0]])
                     {
                         objpos.X += ((Math.Cos(CamYRotd) * pickObjDisplacement.X));
                         objpos.Z += ((Math.Sin(CamYRotd) * pickObjDisplacement.X));
                         objpos.Y = MoveToCollision(new Vector3((float)objpos.X, (float)objpos.Y + 50, (float)objpos.Z), new Vector3(0, -30000, 0)).Y;
                     }
                     //up
-                    else if (KeysDown[(int)Keys.X])
+                    else if (KeysDown[(int)ActorControlKeys[1]])
                     {
                         objpos.X += ((Math.Cos(CamYRotd) * pickObjDisplacement.X));
                         objpos.Z += ((Math.Sin(CamYRotd) * pickObjDisplacement.X));
@@ -3296,7 +3308,7 @@ namespace SharpOcarina
                 }
                 else if (actorpick == 4)
                 {
-                    CurrentScene.Pathways[(int) PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = (Vector3) objpos;
+                    CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = (Vector3)objpos;
                 }
                 else if (actorpick == 5 && !settings.Disablewaterboxmovement)
                 {
@@ -3313,7 +3325,7 @@ namespace SharpOcarina
                 else if (actorpick == 7)
                 {
                     if (extrapick == 0)
-                        ((ZCutscenePosition)target).Position = (Vector3) objpos;
+                        ((ZCutscenePosition)target).Position = (Vector3)objpos;
                     else
                         ((ZCutscenePosition)target).Position2 = (Vector3)objpos;
                 }
@@ -9193,8 +9205,8 @@ namespace SharpOcarina
             MessageBox.Show(
             "Camera view: " + Environment.NewLine +
             "- Left click (hold): Rotate the camera " + Environment.NewLine +
-            "- WASD keys: Move the camera to the sides and front" + Environment.NewLine +
-            "- QE keys: Move the camera up and down" + Environment.NewLine +
+            "- WASD | ZQSD | ,AOE keys: Move the camera to the sides and front" + Environment.NewLine +
+            "- QE | AE | '. keys: Move the camera up and down" + Environment.NewLine +
             "-    +Shift (hold): Move slower" + Environment.NewLine +
             "-    +Space (hold): Move faster" + Environment.NewLine +
             "- Right click: Select instances" + Environment.NewLine +
@@ -9202,8 +9214,8 @@ namespace SharpOcarina
             "-    +Shift (hold): Move the instance in a depth axis" + Environment.NewLine + Environment.NewLine +
             "Instances: " + Environment.NewLine +
             "- Shift (hold) while increasing/decreasing position or waterbox size: Increases it by 20 units" + Environment.NewLine +
-            " - Z/X while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
-            " - Z/X while moving a waterbox: Increase/decrease waterbox size"
+            " - Z/X | W/X | ;Q while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
+            " - Mouse wheel after selecting a waterbox: Increase/decrease waterbox size"
             , "Controls", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
