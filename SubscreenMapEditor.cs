@@ -51,7 +51,7 @@ namespace SharpOcarina
 
             InitializeComponent();
 
-            floorbuttons = new Button[]{ Floor1,Floor2,Floor3,Floor4,Floor5,Floor6,Floor7,Floor8 };
+            floorbuttons = new Button[] { Floor1, Floor2, Floor3, Floor4, Floor5, Floor6, Floor7, Floor8 };
 
             Init();
         }
@@ -173,7 +173,7 @@ namespace SharpOcarina
             }
 
             Offset = ((int)rom.SubscreenMapInfo + 0xA0 + ((int)MapID.Value * 0x2));
-            if (ROM[Offset + 1] <= floors.Count-1) floors[ROM[Offset + 1]].bosslocated = true;
+            if (ROM[Offset + 1] <= floors.Count - 1) floors[ROM[Offset + 1]].bosslocated = true;
 
             Offset = ((int)rom.SubscreenMapInfo2 + ((int)MapID.Value * 0x8));
 
@@ -193,7 +193,7 @@ namespace SharpOcarina
 
             for (int i = 0; i < 8; i++)
             {
-                floors[i].floorheight = (int) BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(ROM, Offset)),0); 
+                floors[i].floorheight = (int)BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(ROM, Offset)), 0);
                 Offset += 4;
             }
 
@@ -205,7 +205,7 @@ namespace SharpOcarina
             }
 
             //Offset = ((int)rom.SubscreenMapCompassIcons + ((int)MapID.Value * 0xF60));
-            Offset = ((int)rom.SubscreenMapCompassIcons + ((int)startfloortexture/2 * 0x1EC));
+            Offset = ((int)rom.SubscreenMapCompassIcons + ((int)startfloortexture / 2 * 0x1EC));
 
             compassicons.Clear();
 
@@ -229,7 +229,7 @@ namespace SharpOcarina
                         CompassIcon icon = new CompassIcon();
                         icon.bossicon = bossicon;
                         icon.ChestFlag = Helpers.Read16S(ROM, Offset + 0x14 + (0xA4 * y) + (0xC * w));
-                        icon.X = BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(ROM, Offset + 0x14 + (0xA4 * y) + (0xC * w)  + 4)), 0);
+                        icon.X = BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(ROM, Offset + 0x14 + (0xA4 * y) + (0xC * w) + 4)), 0);
                         icon.Y = BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(ROM, Offset + 0x14 + (0xA4 * y) + (0xC * w) + 8)), 0);
 
                         compassicons[i].Add(icon);
@@ -318,8 +318,8 @@ namespace SharpOcarina
 
             if (IconListBox.SelectedIndex > -1)
             {
-                IconX.Value = (decimal) compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].X;
-                IconY.Value = (decimal) compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].Y;
+                IconX.Value = (decimal)compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].X;
+                IconY.Value = (decimal)compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].Y;
                 IconBossCheckbox.Checked = compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].bossicon;
                 IconChestFlag.Value = (decimal)compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].ChestFlag;
 
@@ -414,14 +414,12 @@ namespace SharpOcarina
 
                 if (y >= texture.Height)
                 {
-                    if (!secondhalf) {y = 0; x = 48;  secondhalf = true; }
+                    if (!secondhalf) { y = 0; x = 48; secondhalf = true; }
                     else break;
                 }
             }
 
-          //  MapTextureBox.Image = texture;
 
- 
             Graphics g = MapTextureBox.CreateGraphics();
             g.Clear(Color.Cyan);
 
@@ -451,7 +449,7 @@ namespace SharpOcarina
                     if (IconListBox.SelectedIndex == i)
                     {
                         System.Drawing.Imaging.PixelFormat format = bossicon.PixelFormat;
-                        g.DrawImage(selecticon, compassicons[(int)MapFloorTextureID.Value / 2][i].X * 4 - 16 -1, -compassicons[(int)MapFloorTextureID.Value / 2][i].Y * 4 + 12 - 1, 32f, 32f);
+                        g.DrawImage(selecticon, compassicons[(int)MapFloorTextureID.Value / 2][i].X * 4 - 16 - 1, -compassicons[(int)MapFloorTextureID.Value / 2][i].Y * 4 + 12 - 1, 32f, 32f);
                     }
 
                     g = MapTextureBox.CreateGraphics();
@@ -487,7 +485,7 @@ namespace SharpOcarina
                 for (int i = 0; y < texture.Height; i++)
                 {
                     //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
-                    col = Color.FromArgb(texture.GetPixel(x, y).A, texture.GetPixel(x,y).R, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R);
+                    col = Color.FromArgb(texture.GetPixel(x, y).A, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R);
                     texture.SetPixel(x, y, col);
                     x++;
                     if (x >= texture.Width) { x = 0; y++; }
@@ -515,11 +513,11 @@ namespace SharpOcarina
                 TitleTextureBox.Image.Save(saveFileDialog1.FileName, ImageFormat.Png);
 
                 MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
             }
         }
 
-      
+
 
 
 
@@ -531,7 +529,7 @@ namespace SharpOcarina
 
         private void Close_Click(object sender, EventArgs e)
         {
-            
+
             this.Close();
         }
 
@@ -549,7 +547,7 @@ namespace SharpOcarina
 
                         savemap();
                         if (titlecardchanged) savetitlecard();
-                        
+
                         MapID.Value = temp;
                         noupdate = false;
                     }
@@ -563,16 +561,16 @@ namespace SharpOcarina
 
 
 
-        
+
         }
 
         public void savetitlecard()
         {
             BinaryWriter BWS = new BinaryWriter(File.OpenWrite(ROMfile));
-            
+
             ROM rom = MainForm.CheckVersion(ROM);
             BWS.Seek((int)rom.SubscreenMapTitleCards + ((int)MapID.Value * 0x600), SeekOrigin.Begin);
-            
+
             List<Byte> Output = new List<byte>();
 
             Bitmap texture = (Bitmap)TitleTextureBox.Image;
@@ -615,12 +613,12 @@ namespace SharpOcarina
         public void savemap()
         {
             maplist[(int)MapID.Value].maxfloors = 0;
-            for(int i = 0; i < floors.Count; i++)
+            for (int i = 0; i < floors.Count; i++)
             {
                 if (floors[i].floorlabel != 0) maplist[(int)MapID.Value].maxfloors++;
             }
             int romfloors = 0;
-            for(int i = 0; i < maplist.Length; i++)
+            for (int i = 0; i < maplist.Length; i++)
             {
                 romfloors += maplist[i].maxfloors;
             }
@@ -646,7 +644,7 @@ namespace SharpOcarina
 
             for (int i = 0; i < 8; i++)
             {
-                Helpers.Append16(ref Output, (ushort) floors[i].textureID);
+                Helpers.Append16(ref Output, (ushort)floors[i].textureID);
 
             }
             BWS.Write(Output.ToArray());
@@ -662,7 +660,7 @@ namespace SharpOcarina
 
             for (int i = 0; i < 8; i++)
             {
-                Output.Add((byte) floors[i].floorlabel);
+                Output.Add((byte)floors[i].floorlabel);
             }
 
             BWS.Write(Output.ToArray());
@@ -670,22 +668,23 @@ namespace SharpOcarina
 
             BWS.Seek(((int)rom.SubscreenMapInfo2 + 0x50 + ((int)MapID.Value * 0x2)), SeekOrigin.Begin);
 
-            Helpers.Append16(ref Output, (ushort) ((bossroom != 9) ? (51 - (14 * bossroom)) : -99)); 
+            Helpers.Append16(ref Output, (ushort)((bossroom != 9) ? (51 - (14 * bossroom)) : -99));
 
             BWS.Write(Output.ToArray());
             Output.Clear();
 
 
-            BWS.Seek((int)rom.SubscreenMapFloorAmount-2, SeekOrigin.Begin);
+            BWS.Seek((int)rom.SubscreenMapFloorAmount - 2, SeekOrigin.Begin);
             ushort roomstack = 0;
+
             for (int i = 0; i < 10; i++)
             {
-
                 Helpers.Append16(ref Output, roomstack);
 
                 roomstack += (ushort)(maplist[i].maxfloors * 2);
 
-              
+                if (i == 9)
+                    Helpers.Append16(ref Output, roomstack);
             }
 
             BWS.Write(Output.ToArray());
@@ -693,7 +692,7 @@ namespace SharpOcarina
 
 
             BWS.Seek(((int)rom.SubscreenMapFloorAmount + 0x14A + ((int)MapID.Value * 0x20)), SeekOrigin.Begin);
-            
+
             for (int i = 0; i < 8; i++)
             {
                 Output.AddRange(BitConverter.GetBytes((float)floors[i].floorheight).Reverse());
@@ -703,7 +702,7 @@ namespace SharpOcarina
             Output.Clear();
 
             BWS.Seek(((int)rom.SubscreenMapInfo + 0xB0 + ((int)MapID.Value * 0x40)), SeekOrigin.Begin);
-     
+
 
             for (int i = 0; i < 32; i++)
             {
@@ -721,13 +720,13 @@ namespace SharpOcarina
             }
 
             int c = 0;
-            foreach(List<CompassIcon> compassiconlist in compassicons)
+            foreach (List<CompassIcon> compassiconlist in compassicons)
             {
                 if (c >= maplist[(int)MapID.Value].maxfloors) break;
                 List<CompassIcon> usableicons = compassiconlist.FindAll(x => x.bossicon == false);
                 int padding = 0xA2;
 
-                
+
 
 
                 if (usableicons.Count > 0)
@@ -778,7 +777,7 @@ namespace SharpOcarina
 
 
 
-            for (int i = (int)MapID.Value+1; i < 10; i++)
+            for (int i = (int)MapID.Value + 1; i < 10; i++)
             {
                 Output.AddRange(maplist[i].icondata);
             }
@@ -794,9 +793,9 @@ namespace SharpOcarina
             if (offsets.Count == 3)
             {
                 BWS.Seek((int)offsets[0], SeekOrigin.Begin);
-                if (Helpers.Read32(ROM, (int) offsets[0]) == offsets[1])
+                if (Helpers.Read32(ROM, (int)offsets[0]) == offsets[1])
                 {
-                    Helpers.Append32(ref Output,offsets[2]);
+                    Helpers.Append32(ref Output, offsets[2]);
                     BWS.Write(Output.ToArray());
                     Output.Clear();
                 }
@@ -805,12 +804,12 @@ namespace SharpOcarina
 
 
             BWS.Seek(((int)rom.SubscreenMapFloorTextures), SeekOrigin.Begin);
-            
-            for (int i = 0; i < 8; i++)
+
+            for (int i = 0; i < 10; i++)
             {
                 List<byte> data = new List<byte>(maplist[i].imagedata);
                 data.RemoveRange(maplist[i].maxfloors * 0xFF0, maplist[i].imagedata.Count - (maplist[i].maxfloors * 0xFF0));
-            Output.AddRange(data);
+                Output.AddRange(data);
                 Console.WriteLine("data amount " + data.Count.ToString("X8"));
             }
 
@@ -856,7 +855,7 @@ namespace SharpOcarina
         private void Floor1_Click(object sender, EventArgs e)
         {
             int buttonid = Convert.ToInt32(((Button)sender).Name.Substring(5));
-            selectedfloor = buttonid -1;
+            selectedfloor = buttonid - 1;
             noupdate = true;
             UpdateForm();
             RefreshMapTexture();
@@ -1003,7 +1002,7 @@ namespace SharpOcarina
             mainform.Enabled = true;
 
             MainForm.subscreenmode = true;
-            
+
 
             OpenTK.Vector3d MinCoordinate = new Vector3d(32766, 32766, 32766);
             OpenTK.Vector3d MaxCoordinate = new Vector3d(-32766, -32766, -32766);
@@ -1023,9 +1022,9 @@ namespace SharpOcarina
 
             }
 
-            MaxCoordinate.Y = Math.Max((MaxCoordinate.X - MinCoordinate.X),(MaxCoordinate.Z - MinCoordinate.Z)) * 2; 
+            MaxCoordinate.Y = Math.Max((MaxCoordinate.X - MinCoordinate.X), (MaxCoordinate.Z - MinCoordinate.Z)) * 2;
 
-            Camera.Pos = MainForm.ConvertToCameraPosition(new Vector3d((MaxCoordinate.X + MinCoordinate.X)/2, MaxCoordinate.Y, (MaxCoordinate.Z + MinCoordinate.Z) / 2));
+            Camera.Pos = MainForm.ConvertToCameraPosition(new Vector3d((MaxCoordinate.X + MinCoordinate.X) / 2, MaxCoordinate.Y, (MaxCoordinate.Z + MinCoordinate.Z) / 2));
 
             Camera.Rot.Y = 0;
             Camera.Rot.X = 90;
@@ -1043,9 +1042,9 @@ namespace SharpOcarina
 
             //MapTextureBox.Image = texture;
             // MapTextureBox.Scale(new SizeF(0.25f,0.25f));
-            
 
-          
+
+
 
             for (int i = 0; i < MainForm.CurrentScene.Rooms.Count; i++)
             {
@@ -1068,12 +1067,12 @@ namespace SharpOcarina
                 colorMap[0].NewColor = Color.Transparent;
                 colorMap[1] = new ColorMap();
                 colorMap[1].OldColor = Color.Black;
-                colorMap[1].NewColor = Color.FromArgb(0x17 * (i+1), 0, 0, 0);
+                colorMap[1].NewColor = Color.FromArgb(0x17 * (i + 1), 0, 0, 0);
                 ImageAttributes attr = new ImageAttributes();
                 attr.SetRemapTable(colorMap);
 
                 Rectangle rect = new Rectangle(0, 0, MapTextureBox.Width, MapTextureBox.Height);
-                g.DrawImage(bitmap, rect, (bitmap.Width-MapTextureBox.Width)/2, (bitmap.Height - MapTextureBox.Height) / 2, MapTextureBox.Width, MapTextureBox.Height , GraphicsUnit.Pixel, attr);
+                g.DrawImage(bitmap, rect, (bitmap.Width - MapTextureBox.Width) / 2, (bitmap.Height - MapTextureBox.Height) / 2, MapTextureBox.Width, MapTextureBox.Height, GraphicsUnit.Pixel, attr);
 
                 g = MapTextureBox.CreateGraphics();
             }
@@ -1128,7 +1127,6 @@ namespace SharpOcarina
 
                     BWS.Write(Output.ToArray());
 
-                  
 
                     offset = (int)rom.SubscreenMapInfo2;
                     BWS.Seek(offset, SeekOrigin.Begin);
@@ -1151,7 +1149,14 @@ namespace SharpOcarina
 
 
                     BWS.Close();
-                    MessageBox.Show("All dungeon mapa has been removed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    foreach (Map map in maplist)
+                    {
+                        map.imagedata = new List<byte>(new byte[map.imagedata.Count]);
+                        map.maxfloors = 0;
+                    }
+
+                    MessageBox.Show("All dungeon maps has been removed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     ROM = new List<byte>(File.ReadAllBytes(ROMfile));
 
@@ -1205,10 +1210,10 @@ namespace SharpOcarina
 
                 for (int i = 0; i < size; i++)
                 {
-                    pixel = (byte) (((texture.GetPixel(x, y).A / 17) << 4) + texture.GetPixel(x+1, y).A / 17);
-                    maplist[(int)MapID.Value].imagedata[(((int)MapFloorTextureID.Value/2) * 0xFF0) + i] = pixel;
+                    pixel = (byte)(((texture.GetPixel(x, y).A / 17) << 4) + texture.GetPixel(x + 1, y).A / 17);
+                    maplist[(int)MapID.Value].imagedata[(((int)MapFloorTextureID.Value / 2) * 0xFF0) + i] = pixel;
 
-                    x+=2;
+                    x += 2;
                     if (x >= 48 && !secondhalf) { x = 0; y++; }
                     if (x >= texture.Width && secondhalf) { x = 48; y++; }
 
@@ -1264,7 +1269,7 @@ namespace SharpOcarina
 
             int icons = 0;
 
-            for(int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
                 compassicons[i].Clear();
             }
@@ -1272,20 +1277,20 @@ namespace SharpOcarina
 
             for (int i = 0; i < MainForm.CurrentScene.Rooms.Count; i++)
             {
-                foreach(ZActor actor in MainForm.CurrentScene.Rooms[i].ZActors)
+                foreach (ZActor actor in MainForm.CurrentScene.Rooms[i].ZActors)
                 {
                     if (actor.Number == 0x000A)
                     {
                         CompassIcon icon = new CompassIcon();
                         icon.X = stack;
-                        icon.ChestFlag = (short) (actor.Variable & 0x1F);
+                        icon.ChestFlag = (short)(actor.Variable & 0x1F);
                         stack += 4;
 
-                        for(int y = 0; y < floors.Count-1; y++)
+                        for (int y = 0; y < floors.Count - 1; y++)
                         {
-                            if (y == floors.Count - 1 ||  (actor.YPos >= floors[y].floorheight))
+                            if (y == floors.Count - 1 || (actor.YPos >= floors[y].floorheight))
                             {
-                                compassicons[floors[y].textureID/2].Add(icon);
+                                compassicons[floors[y].textureID / 2].Add(icon);
                                 icons++;
                                 break;
                             }
@@ -1344,11 +1349,11 @@ namespace SharpOcarina
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
 
-                    List<Byte> SaveData = maplist[(int) MapID.Value].icondata;
-                    File.WriteAllBytes(saveFileDialog1.FileName, SaveData.ToArray());
-                    MessageBox.Show("Done! File Size: " + SaveData.Count.ToString("X") + " bytes", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                List<Byte> SaveData = maplist[(int)MapID.Value].icondata;
+                File.WriteAllBytes(saveFileDialog1.FileName, SaveData.ToArray());
+                MessageBox.Show("Done! File Size: " + SaveData.Count.ToString("X") + " bytes", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                
+
             }
         }
     }

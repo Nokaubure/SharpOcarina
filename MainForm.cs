@@ -13516,11 +13516,11 @@ namespace SharpOcarina
 
         private void pauseScreenMapEditorOoTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (CurrentScene != null && !subscreenmapeditor_visible)
+            if (!subscreenmapeditor_visible)
             {
                 //Enabled = false;
 
-                SubscreenMapEditor mapeditor = new SubscreenMapEditor((ushort)CurrentScene.SceneNumber, this);
+                SubscreenMapEditor mapeditor = new SubscreenMapEditor(CurrentScene != null ? (ushort)0 : (ushort)CurrentScene.SceneNumber, this);
                 mapeditor.Show();
                 subscreenmapeditor_visible = true;
 
