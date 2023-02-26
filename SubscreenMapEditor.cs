@@ -628,6 +628,27 @@ namespace SharpOcarina
                 return;
             }
 
+
+            // =============================================================
+            // Sort texture IDs so they're consecutive for least space usage
+            List<MapFloor> sortedfloors = floors.FindAll(x => x.floorlabel > 0).OrderBy(x => x.textureID).ToList();
+            
+            byte[] imagedata = maplist[(int)MapID.Value].imagedata.ToArray();
+            byte[] newimagedata = new byte[maplist[(int)MapID.Value].imagedata.Count];
+            int textureId = 0;
+
+            foreach (MapFloor floor in sortedfloors)
+            {
+                Array.Copy(imagedata, 0xFF0 * (floor.textureID / 2), newimagedata, (textureId / 2) * 0xFF0, 0xFF0);
+                floor.textureID = textureId;
+                textureId += 2;
+            }
+
+            maplist[(int)MapID.Value].imagedata = newimagedata.ToList();
+
+            // =============================================================
+
+
             if (MainForm.IsFileLocked(ROMfile))
             {
                 MessageBox.Show("ROM is in use", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -840,6 +861,11 @@ namespace SharpOcarina
 
 
             MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            // Reload the floors, since they may have changed due to the texture ID re-sort
+            LoadFloors();
+            RefreshMapTexture();
         }
 
         private void MapFloorTextureID_ValueChanged(object sender, EventArgs e)

@@ -13534,7 +13534,7 @@ namespace SharpOcarina
             {
                 //Enabled = false;
 
-                SubscreenMapEditor mapeditor = new SubscreenMapEditor(CurrentScene != null ? (ushort)0 : (ushort)CurrentScene.SceneNumber, this);
+                SubscreenMapEditor mapeditor = new SubscreenMapEditor(CurrentScene != null ? (ushort)CurrentScene.SceneNumber : (ushort)0, this);
                 mapeditor.Show();
                 subscreenmapeditor_visible = true;
 
