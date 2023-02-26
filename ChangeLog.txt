@@ -14,6 +14,20 @@
 
 - Fixed an issue where changing map scale during simulate n64 graphics would not refresh the viewport
 
+- Fixed an issue in the submap editor, where clearing all the maps did not set the amount of floors for each map to 0, causing issues on reload
+
+- Fixed an issue where the final map's floors in the submap editor were not saved
+
+- Fixed an issue where the imagedata for only the first 8 submaps was saved
+ 
+- Editor properly clears all the map image data when "clear all maps" is used
+
+- The submap editor will now open even if a scene is not open
+
+- The submap editor will now automatically ensure that texture IDs given to floors are consecutive to minimize data usage
+
+- The "Auto Reload" setting can now be saved
+
 
 --------------
 ---1.40
