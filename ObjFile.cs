@@ -1183,7 +1183,11 @@ namespace SharpOcarina
 
                 if (MatToAdd.map_Ks != null && AdditionalTextures.Find(x => x == MatToAdd.map_Ks) == null)
                 {
-                    AdditionalTextures.Add(MatToAdd.map_Ks);
+                    string LoadPath = Path.IsPathRooted(MatToAdd.map_Ks) == true ? MatToAdd.map_Ks :  _BasePath + MatToAdd.map_Ks;
+                   
+                    AdditionalTextures.Add(Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileName(LoadPath));
+
+                    MatToAdd.map_Ks = Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileName(LoadPath);
                 }
 
                 MaterialIsOpen = false;

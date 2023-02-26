@@ -10,6 +10,10 @@
 
 - Fixed an issue where SO wasnt compatible with the multitexture settings of the new blender export plugin
 
+- Fixed an issue regarding cutscene preview and dummy points
+
+- Fixed an issue where changing map scale during simulate n64 graphics would not refresh the viewport
+
 
 --------------
 ---1.40

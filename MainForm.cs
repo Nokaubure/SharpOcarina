@@ -4878,8 +4878,11 @@ namespace SharpOcarina
             if (!settings.NoDummyPoints)
             {
                 int lastid = playcamerapointscache.Count - 1;
-                playcamerapointscache.Add(new ZCutscenePosition(0, 20, 45, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
-                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 20, 45, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
+                playcamerapointscache.Add(new ZCutscenePosition(0, 0, 45, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
+                playcamerapointscache.Add(new ZCutscenePosition(0, 0, 45, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
+
+                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 1, 45, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
+                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 1, 45, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
             }
         }
 
@@ -4986,7 +4989,7 @@ namespace SharpOcarina
                 if (cutsceneplaymod >= 1.0f)
                 {
                     cutsceneplaycamerakeyframe++;
-                    CutsceneAbsolutePositionListBox.SelectedIndex++;
+                    if (CutsceneAbsolutePositionListBox.SelectedIndex < CutsceneAbsolutePositionListBox.Items.Count-1) CutsceneAbsolutePositionListBox.SelectedIndex++;
 
                     cutsceneplaymod -= 1.0f;
                 }
@@ -6814,7 +6817,11 @@ namespace SharpOcarina
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             if (CurrentScene != null)
+            {
                 CurrentScene.Scale = (float)ScaleNumericbox.Value;
+                if (SimulateN64Gfx)
+                    CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
+            }
         }
 
         private void AddRoom_Click(object sender, EventArgs e)
