@@ -3325,13 +3325,16 @@ namespace SharpOcarina
                         //mandatory to have atleast 4 points
                         while (cutscene.Points.Count < 4)
                         {
-                            cutscene.Points.Add(new ZCutscenePosition(cutscene.Points[lastid].Cameraroll, 0, 45, cutscene.Points[lastid].Position, cutscene.Points[lastid].Position2));
+                            cutscene.Points.Add(new ZCutscenePosition(cutscene.Points[lastid].Cameraroll, 0, 60, cutscene.Points[lastid].Position, cutscene.Points[lastid].Position2));
                         }
                         //also we need 2 dummy points
-                        cutscene.Points.Add(new ZCutscenePosition(0, 0, 45, cutscene.Points[lastid].Position, cutscene.Points[lastid].Position2));
-                        cutscene.Points.Add(new ZCutscenePosition(0, 0, 45, cutscene.Points[lastid].Position, cutscene.Points[lastid].Position2));
-                        cutscene.Points.Insert(0, new ZCutscenePosition(0, 1, 45, cutscene.Points[0].Position, cutscene.Points[0].Position2));
-                        cutscene.Points.Insert(0, new ZCutscenePosition(0, 1, 45, cutscene.Points[0].Position, cutscene.Points[0].Position2));
+                        float firstfov = cutscene.Points[0].Angle;
+                        float lastfov = cutscene.Points[cutscene.Points.Count - 1].Angle;
+
+                        cutscene.Points.Add(new ZCutscenePosition(0, 0, lastfov, cutscene.Points[lastid].Position, cutscene.Points[lastid].Position2));
+                        cutscene.Points.Add(new ZCutscenePosition(0, 0, lastfov, cutscene.Points[lastid].Position, cutscene.Points[lastid].Position2));
+                        cutscene.Points.Insert(0, new ZCutscenePosition(0, 1, firstfov, cutscene.Points[0].Position, cutscene.Points[0].Position2));
+                        cutscene.Points.Insert(0, new ZCutscenePosition(0, 1, firstfov, cutscene.Points[0].Position, cutscene.Points[0].Position2));
                     }
 
                     foreach (ZCutscenePosition point in cutscene.Points)

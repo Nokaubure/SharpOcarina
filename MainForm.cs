@@ -4878,11 +4878,13 @@ namespace SharpOcarina
             if (!settings.NoDummyPoints)
             {
                 int lastid = playcamerapointscache.Count - 1;
-                playcamerapointscache.Add(new ZCutscenePosition(0, 0, 45, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
-                playcamerapointscache.Add(new ZCutscenePosition(0, 0, 45, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
+                float firstfov = playcamerapointscache[0].Angle;
+                float lastfov = playcamerapointscache[playcamerapointscache.Count-1].Angle;
+                playcamerapointscache.Add(new ZCutscenePosition(0, 0, lastfov, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
+                playcamerapointscache.Add(new ZCutscenePosition(0, 0, lastfov, playcamerapointscache[lastid].Position, playcamerapointscache[lastid].Position2));
 
-                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 1, 45, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
-                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 1, 45, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
+                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 1, firstfov, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
+                playcamerapointscache.Insert(0, new ZCutscenePosition(0, 1, firstfov, playcamerapointscache[0].Position, playcamerapointscache[0].Position2));
             }
         }
 
