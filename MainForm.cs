@@ -6849,6 +6849,8 @@ namespace SharpOcarina
                     MessageBox.Show("Room " + (CurrentScene.Rooms.Count - 1) + " has no groups, probably due to bad export settings. If using blender, try installing the SharpOcarina export plugin.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                AddRoomsAdditionalTextures();
             }
         }
 
@@ -8341,6 +8343,51 @@ namespace SharpOcarina
 
                 AdditionalTextureLabel.Text = "";
             }
+        }
+
+        private void AddRoomsAdditionalTextures()
+        {
+            foreach(ZScene.ZRoom room in CurrentScene.Rooms)
+            {
+                foreach (string s in room.ObjModel.AdditionalTextures)
+                {
+                    if(CurrentScene.AdditionalTextures.Find(x => x.map_Kd == s) == null) AdditionalTexture_Add(s);
+                }
+            }
+            foreach (ZScene.ZRoom room in CurrentScene.Rooms)
+            {
+                foreach (ObjFile.Group group in room.TrueGroups)
+                {
+                    int i = 0;
+                    bool found = false;
+                    foreach (ObjFile.Triangle tri in group.Triangles)
+                    {
+                        ObjFile.Material material = room.ObjModel.GetMaterial(tri.MaterialName);
+                        if (material.map_Ks != "")
+                        {
+                         
+                            int multitextindex = -1;
+                            int y = 0;
+                            foreach(ObjFile.Material mat in MultiTextureComboBox.Items)
+                            {
+                                if (mat.map_Kd == material.map_Ks) multitextindex = y-1;
+                                y++;
+                            }
+                            if (multitextindex == -1 || GroupList.FindString(group.Name) == -1) break;
+                            ((ObjFile.Group)GroupList.Items[GroupList.FindString(group.Name)]).MultiTexMaterial = multitextindex;
+                            int Index = i;
+                            room.GroupSettings.MultiTexMaterial[Index] = multitextindex;
+
+                            found = true;
+                            break;
+                        }
+
+                    }
+                    if (found) break;
+                    i++;
+                }
+            }
+            UpdateGroupSelect(false);
         }
 
         private void SongOnChange(object sender, EventArgs e)
@@ -9925,6 +9972,7 @@ namespace SharpOcarina
                 UpdateForm();
                 SelectRoom(0);
 
+                AddRoomsAdditionalTextures();
             }
         }
 
@@ -11156,7 +11204,11 @@ namespace SharpOcarina
 
             }
 
+            AddRoomsAdditionalTextures();
+
             if (rereload) ReloadRoomButton_Click(sender, e);
+
+            
 
             else
             {
@@ -11369,7 +11421,7 @@ namespace SharpOcarina
 
         }
 
-        private void AdditionalTexture_Add(string filename)
+        public void AdditionalTexture_Add(string filename)
         {
             ObjFile.Material mat = new ObjFile.Material();
 

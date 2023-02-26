@@ -8,6 +8,8 @@
 
 - Fixed an issue where if 2 textures had the same filename but different folder it would display incorrectly in SO
 
+- Fixed an issue where SO wasnt compatible with the multitexture settings of the new blender export plugin
+
 
 --------------
 ---1.40

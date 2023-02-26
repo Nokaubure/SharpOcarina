@@ -166,6 +166,7 @@ namespace SharpOcarina
             }
         }
 
+
         public class Material
         {
             public string Name;
@@ -297,6 +298,7 @@ namespace SharpOcarina
         private List<TextureCoord> _TexCoords = new List<TextureCoord>();
         private List<Normal> _Norms = new List<Normal>();
         private List<Material> _Mats = new List<Material>();
+        private List<String> _AdditionalTextures = new List<String>();
         private List<List<int>> _Islands = new List<List<int>>();
 
         public List<Group> Groups
@@ -328,6 +330,11 @@ namespace SharpOcarina
         public List<VertexColor> VertexColors
         {
             get { return _VertColors; }
+        }
+
+        public List<string> AdditionalTextures
+        {
+            get { return _AdditionalTextures; }
         }
 
         #endregion
@@ -1173,6 +1180,11 @@ namespace SharpOcarina
                 /* Only add the material if both, map_Ka and map_Kd, aren't empty */
                 //if (MatToAdd.map_Ka != null && MatToAdd.map_Kd != null)
                     Materials.Add(MatToAdd);
+
+                if (MatToAdd.map_Ks != null && AdditionalTextures.Find(x => x == MatToAdd.map_Ks) == null)
+                {
+                    AdditionalTextures.Add(MatToAdd.map_Ks);
+                }
 
                 MaterialIsOpen = false;
             }

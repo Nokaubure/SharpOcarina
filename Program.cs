@@ -91,8 +91,8 @@ namespace SharpOcarina
             foreach (var code in QWERTYCodes)
             {
                 var vk = MapVirtualKey(code, MAPVK_VSC_TO_VK);
-                //var val = KeyInterop.KeyFromVirtualKey((int)vk); //TODO
-                //layout += val;
+                var val = KeyInterop.KeyFromVirtualKey((int)vk);
+                layout += val;
             }
 
             if (layout.EndsWith("PYF"))

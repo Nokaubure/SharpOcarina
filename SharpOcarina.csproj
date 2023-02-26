@@ -112,6 +112,7 @@
     <Reference Include="Tommy, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Tommy.3.1.2\lib\net35\Tommy.dll</HintPath>
     </Reference>
+    <Reference Include="windowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OpenRomScene.cs">
