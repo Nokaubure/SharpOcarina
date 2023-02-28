@@ -8356,6 +8356,8 @@ namespace SharpOcarina
 
         private void AddRoomsAdditionalTextures()
         {
+           
+
             foreach(ZScene.ZRoom room in CurrentScene.Rooms)
             {
                 foreach (string s in room.ObjModel.AdditionalTextures)
