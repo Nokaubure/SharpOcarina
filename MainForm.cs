@@ -8365,16 +8365,20 @@ namespace SharpOcarina
                     if(CurrentScene.AdditionalTextures.Find(x => x.map_Kd == s) == null) AdditionalTexture_Add(s);
                 }
             }
+
+            
+
             foreach (ZScene.ZRoom room in CurrentScene.Rooms)
             {
+                int i = 0;
                 foreach (ObjFile.Group group in room.TrueGroups)
                 {
-                    int i = 0;
+                    
                     bool found = false;
                     foreach (ObjFile.Triangle tri in group.Triangles)
                     {
                         ObjFile.Material material = room.ObjModel.GetMaterial(tri.MaterialName);
-                        if (material.map_Ks != "")
+                        if (material.map_Ks != null)
                         {
                          
                             int multitextindex = -1;
