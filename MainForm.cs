@@ -4272,9 +4272,8 @@ namespace SharpOcarina
                 {
                     PathwayListBox.Items.Add("(X " + Math.Floor(point.X) + ",Y " + Math.Floor(point.Y) + ",Z " + Math.Floor(point.Z) + ")");
                 }
-                if (prevsel >= PathwayListBox.Items.Count && PathwayListBox.Items.Count > 0) PathwayListBox.SelectedIndex = prevsel - 1;
-                else if (prevsel >= PathwayListBox.Items.Count) PathwayListBox.SelectedIndex = -1;
-                else PathwayListBox.SelectedIndex = prevsel;
+                
+                PathwayListBox.SelectedIndex = Helpers.Clamp<int>(prevsel, 0, CurrentScene.Pathways[(int)PathwayNumber.Value].Points.Count - 1);
 
                 if (PathwayListBox.Items.Count > 0)
                 {
