@@ -973,24 +973,24 @@ namespace SharpOcarina
                 GL.Translate(Actor.XPos, Actor.YPos, Actor.ZPos);
                 if (settings.MajorasMask && settings.IgnoreMMDaySystem == false)
                 {
-                    GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
                     GL.Rotate(((ushort)Actor.YRot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
                     GL.Rotate(((ushort)Actor.XRot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
+                    GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
                 }
                 else
                 {
-                    GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                     GL.Rotate(Actor.YRot / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
                     GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
+                    GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                 }
                 GL.Scale(scale, scale, scale);
             }
 
             GL.Translate(Limbs[CurrentBone].x, Limbs[CurrentBone].y, Limbs[CurrentBone].z);
 
-            GL.Rotate(Limbs[CurrentBone].rotation.Z / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
             GL.Rotate(Limbs[CurrentBone].rotation.Y / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
             GL.Rotate(Limbs[CurrentBone].rotation.X / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
+            GL.Rotate(Limbs[CurrentBone].rotation.Z / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
 
             //Draw display list
             foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in Limbs[CurrentBone].DList)
