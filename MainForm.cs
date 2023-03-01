@@ -2515,24 +2515,35 @@ namespace SharpOcarina
             {
                 if (tabControl1.SelectedTab == tabControl1.TabPages["tabActors"] && CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0)
                 {
-                    /*
+                    //TODO
+                    //move camera a bit back from actor pos 
+
                     double RotYRad = (Camera.Rot.Y / 180.0f * Math.PI);
                     double RotXRad = (Camera.Rot.X / 180.0f * Math.PI);
 
-                    Vector3d truepos = GetTrueCameraPosition();
+                    Vector3d truepos = new Vector3d(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].XPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].YPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].ZPos);
 
                     if (Camera.Rot.X >= 90.0f || Camera.Rot.X <= -90.0f)
                     {
-                        truepos.Y += (float)Math.Sin(RotXRad) * Camera.CameraCoeff * 6000f;
+                        truepos.Y += (float)Math.Sin(RotXRad) * 100;
                     }
                     else
                     {
-                        truepos.X -= (float)Math.Sin(RotYRad) * Camera.CameraCoeff * 6000f;
-                        truepos.Z += (float)Math.Cos(RotYRad) * Camera.CameraCoeff * 6000f;
-                        truepos.Y += (float)Math.Sin(RotXRad) * Camera.CameraCoeff * 6000f;
+                        truepos.X -= (float)Math.Sin(RotYRad)* 100;
+                        truepos.Z += (float)Math.Cos(RotYRad)* 100;
+                        truepos.Y += (float)Math.Sin(RotXRad)* 100;
                     }
-                    */
 
+                    truepos.X = Clamp(truepos.X, -32767, 32767);
+                    truepos.Y = Clamp(truepos.Y, -32767, 32767);
+                    truepos.Z = Clamp(truepos.Z, -32767, 32767);
+
+
+                    Camera.Pos = ConvertToCameraPosition(truepos);
+                    //Camera.Rot.X = CurrentScene.Cameras[(int)CameraSelect.Value].XRot / 182.04444444444444444444444444444f;
+                    //Camera.Rot.Y = -CurrentScene.Cameras[(int)CameraSelect.Value].YRot / 182.04444444444444444444444444444f + 180;
+                    //Camera.Rot.Z = CurrentScene.Cameras[(int)CameraSelect.Value].ZRot / 182.04444444444444444444444444444f;
+                    
                 }
             }
             if (KeysDown[(int)Keys.Z] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0)
@@ -8395,9 +8406,9 @@ namespace SharpOcarina
                             found = true;
                             break;
                         }
-
+                        if (found) break;
                     }
-                    if (found) break;
+                   
                     i++;
                 }
             }
