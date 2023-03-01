@@ -6,6 +6,8 @@
 
 - Added support for azerty and dvorak keyboards
 
+- [In progress] Pressing F key will focus the camera to selected actor
+
 - Fixed an issue where if 2 textures had the same filename but different folder it would display incorrectly in SO
 
 - Fixed an issue where SO wasnt compatible with the multitexture settings of the new blender export plugin

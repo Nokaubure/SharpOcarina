@@ -2516,7 +2516,7 @@ namespace SharpOcarina
                 if (tabControl1.SelectedTab == tabControl1.TabPages["tabActors"] && CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0)
                 {
                     //TODO
-                    //move camera a bit back from actor pos 
+                    //doesnt quite work the way I want yet
 
                     double RotYRad = (Camera.Rot.Y / 180.0f * Math.PI);
                     double RotXRad = (Camera.Rot.X / 180.0f * Math.PI);
@@ -8399,10 +8399,14 @@ namespace SharpOcarina
                                 if (mat.map_Kd == material.map_Ks) multitextindex = y-1;
                                 y++;
                             }
-                            if (multitextindex == -1 || GroupList.FindString(group.Name) == -1) break;
-                            ((ObjFile.Group)GroupList.Items[GroupList.FindString(group.Name)]).MultiTexMaterial = multitextindex;
-                            int Index = i;
-                            room.GroupSettings.MultiTexMaterial[Index] = multitextindex;
+                            if (multitextindex == -1) break;
+                            room.GroupSettings.MultiTexMaterial[i] = multitextindex;
+                            room.ObjModel.Groups[i].MultiTexMaterial = multitextindex;
+                            group.MultiTexMaterial = multitextindex;
+                            //if (GroupList.FindString(group.Name) == -1) break;
+                           //((ObjFile.Group)GroupList.Items[GroupList.FindString(group.Name)]).MultiTexMaterial = multitextindex;
+                            
+                            
 
                             found = true;
                             break;
