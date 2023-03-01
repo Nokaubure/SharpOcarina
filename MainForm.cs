@@ -804,15 +804,15 @@ namespace SharpOcarina
 
             if (settings.MajorasMask && settings.IgnoreMMDaySystem == false)
             {
+                GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
                 GL.Rotate(((ushort)Actor.YRot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
                 GL.Rotate(((ushort)Actor.XRot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
-                GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
             }
             else
             {
+                GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                 GL.Rotate(Actor.YRot / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
                 GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
-                GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
             }
 
             GL.Scale(10.0f, 10.0f, 10.0f);
@@ -887,15 +887,15 @@ namespace SharpOcarina
 
                     if (settings.MajorasMask && settings.IgnoreMMDaySystem == false)
                     {
+                        GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
                         GL.Rotate(((ushort)Actor.YRot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
                         GL.Rotate(((ushort)Actor.XRot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
-                        GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
                     }
                     else
                     {
+                        GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                         GL.Rotate(Actor.YRot / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
                         GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
-                        GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                     }
                     GL.Scale(zobj_cache[render].scale, zobj_cache[render].scale, zobj_cache[render].scale);
 
@@ -1223,9 +1223,9 @@ namespace SharpOcarina
             // GL.PolygonOffset(0, 0);
 
             GL.Translate(StartPos.X, StartPos.Y, StartPos.Z);
-            GL.Rotate(Rotation.X / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
-            GL.Rotate(Rotation.Y / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
             GL.Rotate(Rotation.Z / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
+            GL.Rotate(Rotation.Y / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
+            GL.Rotate(Rotation.X / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
 
             GL.Scale(10.0f, 10.0f, 10.0f);
 
