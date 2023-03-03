@@ -2529,9 +2529,9 @@ namespace SharpOcarina
                     }
                     else
                     {
-                        truepos.X -= (float)Math.Sin(RotYRad)* 100;
-                        truepos.Z += (float)Math.Cos(RotYRad)* 100;
-                        truepos.Y += (float)Math.Sin(RotXRad)* 100;
+                        truepos.X -= (float)(Math.Sin(RotYRad)* 100) * (1- Math.Abs(Camera.Rot.X)/90.0f);
+                        truepos.Z += (float)(Math.Cos(RotYRad)* 100) * (1 - Math.Abs(Camera.Rot.X) / 90.0f);
+                        truepos.Y += (float)(Math.Sin(RotXRad)* 100);
                     }
 
                     truepos.X = Clamp(truepos.X, -32767, 32767);
