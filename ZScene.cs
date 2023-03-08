@@ -3763,6 +3763,17 @@ namespace SharpOcarina
 
                                 if (spdnum < 8) polytype = (ulong)(polytype | ((ulong)spdnum << 18));
                             }
+                            else if (kp.Key == "#Echo")
+                            {
+                                int echo = 0;
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#echo") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out echo))
+                                {
+                                    MessageBox.Show("Bad usage of Echo tag. It should be #EchoXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    continue;
+                                }
+
+                                if (echo < 64) polytype = (ulong)(polytype | ((ulong)echo << 11));
+                            }
                             else
                                 polytype = polytype | kp.Value;
                         }
