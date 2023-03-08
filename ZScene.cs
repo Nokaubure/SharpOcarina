@@ -267,6 +267,7 @@ namespace SharpOcarina
         public string CollisionFilename = string.Empty;
         [XmlIgnore]
         public ObjFile ColModel = null;
+        public List<ZUShort> ZObjects = new List<ZUShort>();
         public List<ZActor> Transitions = new List<ZActor>();
         public List<ZActor> SpawnPoints = new List<ZActor>();
         public List<ZEnvironment> Environments = new List<ZEnvironment>();
@@ -2262,11 +2263,16 @@ namespace SharpOcarina
                 WriteRoomHeader(Room, MainHeader);
 
                 /* Write objects */
-                if (Room.ZObjects.Count != 0)
+                if ((Room.ZObjects.Count + this.ZObjects.Count) != 0)
                 {
                     ObjectOffset = Room.RoomData.Count;
+
+                    foreach (ZUShort Obj in this.ZObjects)
+                        Helpers.Append16(ref Room.RoomData, Obj.Value);
+
                     foreach (ZUShort Obj in Room.ZObjects)
                         Helpers.Append16(ref Room.RoomData, Obj.Value);
+
                     AddPadding(ref Room.RoomData, 8);
                 }
 
@@ -4070,7 +4076,7 @@ namespace SharpOcarina
             }
 
             /* Objects */
-            if (Room.ZObjects.Count != 0)
+            if ((Room.ZObjects.Count + this.ZObjects.Count) != 0)
             {
                 CmdObjectOffset = Room.RoomData.Count;
                 Helpers.Append64(ref Room.RoomData, 0x0B00000000000000);
@@ -4130,9 +4136,9 @@ namespace SharpOcarina
                 Helpers.Overwrite32(ref Room.RoomData, CmdMeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset)); /* Mesh header */
 
             /* ...object list... */
-            if (Room.ZObjects.Count != 0 && CmdObjectOffset != -1)
+            if ((Room.ZObjects.Count + this.ZObjects.Count) != 0 && CmdObjectOffset != -1)
             {
-                Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset, (uint)(0x0B000000 | (Room.ZObjects.Count << 16))); /* Objects */
+                Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset, (uint)(0x0B000000 | ((Room.ZObjects.Count + this.ZObjects.Count) << 16))); /* Objects */
                 Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset + 4, (uint)(0x03000000 | ObjectOffset));
             }
 
