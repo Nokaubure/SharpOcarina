@@ -1176,6 +1176,8 @@ namespace SharpOcarina
                     BWS.Seek(offset, SeekOrigin.Begin);
                     Output = new byte[34 * 0x1EC];
 
+                    compassicons.Clear();
+
                     BWS.Write(Output.ToArray());
 
                     foreach (Map map in maplist)
