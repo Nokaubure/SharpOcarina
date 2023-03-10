@@ -110,8 +110,13 @@ namespace SharpOcarina
             {
                 maplist[i] = new Map();
                 Offset = ((int)rom.SubscreenMapFloorAmount + ((int)i * 0x2));
-                maplist[i].maxfloors = Helpers.Read16S(ROM, Offset) / 2 - maxfloorstack;
-                maxfloorstack = (i != 8) ? Helpers.Read16S(ROM, Offset) / 2 : 0;
+                maplist[i].maxfloors = Helpers.Read16S(ROM, Offset) / 2;
+                maplist[i].maxfloors -= maxfloorstack;
+
+                if (i == 8)
+                    maxfloorstack = 0;
+                else
+                    maxfloorstack = Helpers.Read16S(ROM, Offset) / 2;
             }
             Offset = (int)rom.SubscreenMapFloorTextures;
             int Offset2 = (int)rom.SubscreenMapCompassIcons;
@@ -705,7 +710,7 @@ namespace SharpOcarina
                 roomstack += (ushort)(maplist[i].maxfloors * 2);
 
                 if (i == 9)
-                    Helpers.Append16(ref Output, roomstack);
+                    Helpers.Append16(ref Output, (ushort)(maplist[i].maxfloors * 2));
             }
 
             BWS.Write(Output.ToArray());
@@ -1173,14 +1178,14 @@ namespace SharpOcarina
 
                     BWS.Write(Output.ToArray());
 
-
-                    BWS.Close();
-
                     foreach (Map map in maplist)
                     {
                         map.imagedata = new List<byte>(new byte[map.imagedata.Count]);
                         map.maxfloors = 0;
                     }
+
+                    BWS.Close();
+
 
                     MessageBox.Show("All dungeon maps has been removed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -1279,9 +1284,11 @@ namespace SharpOcarina
         }
 
         private void SaveToROM_Click(object sender, EventArgs e)
-        {
-            savemap();
+        {            
             if (titlecardchanged) savetitlecard();
+            
+            savemap();
+
         }
 
         private void TitleCardCopyFromScene_Click(object sender, EventArgs e)
