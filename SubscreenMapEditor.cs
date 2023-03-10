@@ -550,8 +550,8 @@ namespace SharpOcarina
                         int temp = (int)MapID.Value;
                         MapID.Value = previd;
 
-                        savemap();
                         if (titlecardchanged) savetitlecard();
+                        savemap();
 
                         MapID.Value = temp;
                         noupdate = false;
