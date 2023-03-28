@@ -4232,6 +4232,7 @@ namespace SharpOcarina
             // Console.WriteLine("storing undo datatype: " + datatype + " / amount of undos: " + undo.Count);
 
         }
+        
         private void Undo(bool Redo = false)
         {
             if ((!Redo && undo.Count > 0) || (Redo && redo.Count > 0))
@@ -5931,9 +5932,22 @@ namespace SharpOcarina
             string ROM = "";
 
             if (rom64.isSet())
-            {
+            {   
+                int prev = CurrentScene.cloneid;
+                if (prev > 0) SetSceneHeader(0);
+
                 AddMissingObjects();
+
+                if (CurrentScene.Cameras.Count == 0) {
+                    CurrentScene.Cameras.Add(new ZCamera(0, 0, 0, 0, 0, 0, 3, 45, 0xFFFF, 0xFFFF));
+                    UpdateForm();
+                }
+
                 CurrentScene.ConvertSave(rom64.getPath() + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, 3);
+
+                if (prev > 0) SetSceneHeader(prev);
+                UpdateForm();
+
                 return;
             }
 
@@ -6130,6 +6144,11 @@ namespace SharpOcarina
                     room.ModelFilename = GetRelativePath(Path.GetDirectoryName(FileName) + "\\", room.ModelFilename);
             if (Path.IsPathRooted(CurrentScene.CollisionFilename))
                 CurrentScene.CollisionFilename = GetRelativePath(Path.GetDirectoryName(FileName) + "\\", CurrentScene.CollisionFilename);
+
+            foreach (var tex in CurrentScene.AdditionalTextures) {
+                if (Path.IsPathRooted(tex.map_Kd))
+                    tex.map_Kd = GetRelativePath(Path.GetDirectoryName(FileName) + "\\", tex.map_Kd);
+            }
 
             IO.Export<ZScene>(CurrentScene, FileName);
 
@@ -6581,7 +6600,10 @@ namespace SharpOcarina
                     temppath = multitex.map_Kd;
                     if (!File.Exists(temppath))
                     {
-                        temppath = fullpath + Path.GetFileName(temppath);
+                        if (Path.IsPathRooted(temppath))
+                            temppath = fullpath + Path.GetFileName(temppath);
+                        else
+                            temppath = fullpath + temppath;
                         if (!File.Exists(temppath))
                         {
                             MessageBox.Show("Texture " + temppath + " doesn't exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -7632,9 +7654,12 @@ namespace SharpOcarina
                 int prevsel = ExitList.SelectedIndex;
                 if (prevsel == -1) prevsel = 0;
                 ExitList.Items.Clear();
+
+                int id = 0;
                 foreach (ZExit point in CurrentScene.ExitListV2)
                 {
-                    ExitList.Items.Add(point.Raw.ToString("X8"));
+                    ExitList.Items.Add(id.ToString("X2") + ": " + point.Raw.ToString("X8"));
+                    id++;
                 }
                 if (prevsel >= ExitList.Items.Count && ExitList.Items.Count > 0) ExitList.SelectedIndex = prevsel - 1;
                 else if (prevsel >= ExitList.Items.Count) ExitList.SelectedIndex = -1;
@@ -13875,7 +13900,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -13998,7 +14023,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -14187,7 +14212,7 @@ namespace SharpOcarina
         {
             openFileDialog1.CheckFileExists = true;
             openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "N64 Rom / z64rom project (*.z64;*.toml)|*.z64;*.toml|All Files (*.*)|*.*";
+            openFileDialog1.Filter = "N64 Rom / z64rom project (*.z64;z64project.toml)|*.z64;z64project.toml|All Files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
             injectToROMToolStripMenuItem.Owner.Hide();
 
@@ -15699,7 +15724,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -15914,7 +15939,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -16448,7 +16473,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -17053,9 +17078,18 @@ namespace SharpOcarina
 
                 if (now > lastTime)
                 {
+                    int room = RoomList.SelectedIndex;
                     lastTime = now;
                     Console.WriteLine("Auto Reload Rooms");
                     ReloadRoomButton_Click(sender, e);
+
+                    if (CurrentScene.Rooms.Count >= room) {
+                        RoomList.SelectedIndex = room;
+                        SelectRoom(room);
+                    }
+                    
+                    UpdateForm();
+
                     break;
                 }
             }
