@@ -13621,6 +13621,7 @@ namespace SharpOcarina
             List<FlagEntryInfo> switchflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> chestflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> collectibleflags = new List<FlagEntryInfo>();
+            List<FlagEntryInfo> skulltulaflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> pathways = new List<FlagEntryInfo>();
 
 
@@ -13631,11 +13632,11 @@ namespace SharpOcarina
                 entryIndex = 0;
                 foreach (ZActor actor in room.ZActors)
                 {
-                    List<ActorProperty> properties = XMLreader.getActorProperties(actor.Number.ToString("X4"));
+                    List<ActorProperty> properties = ActorCache[actor.Number].actorproperties;
 
                     foreach (ActorProperty property in properties)
                     {
-                        if (property.Name.ToLower().Contains("switch flag") || property.Name.ToLower().Contains("chest flag") || property.Name.ToLower().Contains("collectible flag") || property.Name.ToLower().Contains("path id"))
+                        if (property.Name.ToLower().Contains("switch flag") || property.Name.ToLower().Contains("skulltula flag") || property.Name.ToLower().Contains("chest flag") || property.Name.ToLower().Contains("collectible flag") || property.Name.ToLower().Contains("path id"))
                         {
                             int flag = 0;
 
@@ -13655,7 +13656,7 @@ namespace SharpOcarina
                             {
                                 flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                             }
-                            string name = XMLreader.getActorName(actor.Number.ToString("X4"));
+                            string name = ActorCache[actor.Number].name;
                             string roomName = roomIndex.ToString("d") + ". " + room.ModelShortFilename;
 
                             if (property.Name.ToLower().Contains("switch flag"))
@@ -13664,6 +13665,8 @@ namespace SharpOcarina
                                 chestflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
                             else if (property.Name.ToLower().Contains("collectible flag"))
                                 collectibleflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
+                            else if (property.Name.ToLower().Contains("skulltula flag"))
+                                skulltulaflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
                             else if (property.Name.ToLower().Contains("path id"))
                                 pathways.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
 
@@ -13677,7 +13680,7 @@ namespace SharpOcarina
             entryIndex = 0;
             foreach (ZActor actor in CurrentScene.Transitions)
             {
-                List<ActorProperty> properties = XMLreader.getActorProperties(actor.Number.ToString("X4"));
+                List<ActorProperty> properties = ActorCache[actor.Number].actorproperties;
 
                 foreach (ActorProperty property in properties)
                 {
@@ -13701,9 +13704,8 @@ namespace SharpOcarina
                         {
                             flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                         }
-                        string name = XMLreader.getActorName(actor.Number.ToString("X4"));
+                        string name = ActorCache[actor.Number].name;
                         switchflags.Add(new FlagEntryInfo(flag, "", name, entryIndex));
-
                     }
                 }
                 entryIndex++;
@@ -13711,6 +13713,7 @@ namespace SharpOcarina
 
             switchflags = switchflags.OrderBy(x => x.room).ToList();
             collectibleflags = collectibleflags.OrderBy(x => x.room).ToList();
+            skulltulaflags = skulltulaflags.OrderBy(x => x.room).ToList();
             chestflags = chestflags.OrderBy(x => x.room).ToList();
             pathways = pathways.OrderBy(x => x.room).ToList();
 
@@ -13745,6 +13748,18 @@ namespace SharpOcarina
                 FlagLogInfo flag = new FlagLogInfo(i);
 
                 foreach (FlagEntryInfo match in chestflags.FindAll(x => x.ID == i))
+                    flag.processEntry(match);
+
+                message += flag.getMsg();
+            }
+
+            message += @"\par\par  \cf2\b Skulltula Flags" + @"\line" + @"\b0\cf1  ";
+
+            for (int i = 0; i <= 0xFF; i++)
+            {
+                FlagLogInfo flag = new FlagLogInfo(i);
+
+                foreach (FlagEntryInfo match in skulltulaflags.FindAll(x => x.ID == i))
                     flag.processEntry(match);
 
                 message += flag.getMsg();
