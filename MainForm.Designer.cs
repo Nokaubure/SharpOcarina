@@ -568,7 +568,6 @@ namespace SharpOcarina
             this.SceneObjectDeleteButton = new System.Windows.Forms.Button();
             this.SceneObjectAddButton = new System.Windows.Forms.Button();
             this.RoomObjectSpace = new System.Windows.Forms.Label();
-            this.RoomObjectGroupBox = new System.Windows.Forms.GroupBox();
             this.actorEditControl1 = new SharpOcarina.ActorEditControl();
             this.tabCutscene = new System.Windows.Forms.TabPage();
             this.DebugTextBox = new System.Windows.Forms.RichTextBox();
@@ -7944,7 +7943,6 @@ namespace SharpOcarina
             // 
             this.tabActors.Controls.Add(this.ObjectTabMenu);
             this.tabActors.Controls.Add(this.RoomObjectSpace);
-            this.tabActors.Controls.Add(this.RoomObjectGroupBox);
             this.tabActors.Controls.Add(this.actorEditControl1);
             this.tabActors.Location = new System.Drawing.Point(4, 40);
             this.tabActors.Name = "tabActors";
@@ -8077,16 +8075,6 @@ namespace SharpOcarina
             this.RoomObjectSpace.Size = new System.Drawing.Size(69, 13);
             this.RoomObjectSpace.TabIndex = 27;
             this.RoomObjectSpace.Text = "ObjectSpace";
-            // 
-            // RoomObjectGroupBox
-            // 
-            this.RoomObjectGroupBox.Enabled = false;
-            this.RoomObjectGroupBox.Location = new System.Drawing.Point(238, 532);
-            this.RoomObjectGroupBox.Name = "RoomObjectGroupBox";
-            this.RoomObjectGroupBox.Size = new System.Drawing.Size(167, 53);
-            this.RoomObjectGroupBox.TabIndex = 26;
-            this.RoomObjectGroupBox.TabStop = false;
-            this.RoomObjectGroupBox.Text = "Objects";
             // 
             // actorEditControl1
             // 
@@ -12107,7 +12095,6 @@ namespace SharpOcarina
         private ListBox SceneObjectListBox;
         private Button SceneObjectDeleteButton;
         private Button SceneObjectAddButton;
-        private GroupBox RoomObjectGroupBox;
     }
     }
 

@@ -876,6 +876,14 @@ namespace SharpOcarina
 
             if (render != -1 && DrawBorder)
             {
+                if (zobj_cache[render].useColor) {
+                    ZScene.RGBA8 env = zobj_cache[render].envColor;
+                    ZScene.RGBA8 prim = zobj_cache[render].primColor;
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, (float)prim.r / 255.0f, (float)prim.g / 255.0f, (float)prim.b / 255.0f, (float)prim.a / 255.0f);
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 1, (float)env.r / 255.0f, (float)env.g / 255.0f, (float)env.b / 255.0f, (float)env.a / 255.0f);
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 2, 0, 0, 0, 0);
+                }
+
                 if (zobj_cache[render].Limbs.Count == 0)
                 {
                     GL.PushMatrix();
@@ -7030,7 +7038,9 @@ namespace SharpOcarina
                 ((ObjFile.Group)GroupList.SelectedItem).TintAlpha = (uint)(((byte)numericUpDown2.Value << 24) | pictureBox7.BackColor.ToArgb() & 0xFFFFFF);
 
                 int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
-                CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha[Index] = ((ObjFile.Group)GroupList.SelectedItem).TintAlpha;
+
+                if (CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha.Count() > Index)
+                    CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha[Index] = ((ObjFile.Group)GroupList.SelectedItem).TintAlpha;
 
                 UpdateGroupSelect(n64refresh);
             }
