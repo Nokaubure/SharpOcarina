@@ -221,10 +221,6 @@ namespace SharpOcarina
             dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem.Visible = true;
 #else
-
-#endif
-
-
             if ((int)System.DateTime.Now.Day == 1 && (int)System.DateTime.Now.Month == 4)
             {
                 Is1April = true;
@@ -232,7 +228,7 @@ namespace SharpOcarina
                 CDILink.Size = new Size(324, 238);
                 Program.ApplicationTitle = "OoT, but its a tool to make maps ";
             }
-
+#endif
 
             if (File.Exists("Settings.xml"))
             {

@@ -1211,10 +1211,10 @@ namespace SharpOcarina
             {
                 if (sceneheader.SameAsPrevious)
                 {
-                    Helpers.Overwrite32(ref SceneData, sceneheader._InjectOffset, sceneheader.CloneFromHeader == 0 ? 0x02000008 : SceneHeaders[sceneheader.CloneFromHeader-1]._InjectOffsetValue);
+                    Helpers.Overwrite32(ref SceneData, sceneheader._InjectOffset, sceneheader.CloneFromHeader == 0 ? 0x00000000 : SceneHeaders[sceneheader.CloneFromHeader-1]._InjectOffsetValue);
                     for (int i = 0; i < Rooms.Count; i++)
                     {
-                        Helpers.Overwrite32(ref _Rooms[i].RoomData, sceneheader._RoomInjectOffset[i], sceneheader.CloneFromHeader == 0 ? 0x03000008 : SceneHeaders[sceneheader.CloneFromHeader - 1]._RoomInjectOffsetValues[i]);
+                        Helpers.Overwrite32(ref _Rooms[i].RoomData, sceneheader._RoomInjectOffset[i], sceneheader.CloneFromHeader == 0 ? 0x00000000 : SceneHeaders[sceneheader.CloneFromHeader - 1]._RoomInjectOffsetValues[i]);
                     }
                 }
             }
