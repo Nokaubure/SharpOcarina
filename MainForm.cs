@@ -1843,7 +1843,9 @@ namespace SharpOcarina
                             {
                                 if (DL.IsTransparent)
                                 {
-                                    if (DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
+                                    if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
+                                        || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
+                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending()))
                                     {
                                         AdvancedCallList(DL);
                                     }
