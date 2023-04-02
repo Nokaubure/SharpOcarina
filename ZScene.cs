@@ -1888,11 +1888,13 @@ namespace SharpOcarina
                 Helpers.Append64(ref SceneData, (ulong)(0x1100000000000000 | ((ulong)SkyboxType << 24) | ((ulong)(Cloudy ? 1 : 0) << 16) | ((ulong)(OutdoorLight ? 0 : 1) << 8)));                         /* Skybox / lighting settings */
             else
                 Helpers.Append64(ref SceneData, (ulong)(0x1100000000000000 | ((ulong)((SkyboxType > 0) ? 1 : 0) << 24) | (ulong)SkyboxType << 16) |  ((ulong)(OutdoorLight ? 0 : 1) << 8));                         /* Skybox / lighting settings */
-            if (ExitList.Count > 0)
+            
+            if (!MainForm.settings.EnableNewExitFormat && ExitList.Count > 0 || MainForm.settings.EnableNewExitFormat && ExitListV2.Count > 0)
             {
                 CmdExitListOffset = SceneData.Count;
                 Helpers.Append64(ref SceneData, 0x1300000000000000);                        /* Exit list */
             }
+
             CmdEnvironmentsOffset = SceneData.Count;
             Helpers.Append64(ref SceneData, 0x0F00000000000000);                        /* Environments */
             
