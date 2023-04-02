@@ -2527,7 +2527,10 @@ namespace SharpOcarina
 
                                 foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
                                 {
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => x.Name == tex.Texture).TexOffset));
+                                    if (Textures.FindIndex(x => Path.GetFileName(x.Name) == tex.Texture) != -1)
+                                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == tex.Texture).TexOffset));
+                                    else
+                                        MessageBox.Show("Texture " + tex.Texture + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
 
                             }
@@ -2547,7 +2550,10 @@ namespace SharpOcarina
 
                                 foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
                                 {
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => x.Name == tex.Texture).TexOffset));
+                                    if (Textures.FindIndex(x => Path.GetFileName(x.Name) == tex.Texture) != -1)
+                                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == tex.Texture).TexOffset));
+                                    else
+                                        MessageBox.Show("Texture " + tex.Texture + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
 
                             }
