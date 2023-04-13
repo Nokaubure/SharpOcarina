@@ -556,12 +556,18 @@ namespace SharpOcarina
             this.PathwayXPos = new SharpOcarina.NumericUpDownEx();
             this.PathwayYPos = new SharpOcarina.NumericUpDownEx();
             this.tabActors = new System.Windows.Forms.TabPage();
-            this.ObjectSpace = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ObjectDescription = new System.Windows.Forms.Label();
-            this.listBox3 = new System.Windows.Forms.ListBox();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.ObjectTabMenu = new System.Windows.Forms.TabControl();
+            this.RoomObjectPage = new System.Windows.Forms.TabPage();
+            this.RoomObjectListBox = new System.Windows.Forms.ListBox();
+            this.RoomObjectDescription = new System.Windows.Forms.Label();
+            this.RoomObjectDeleteButton = new System.Windows.Forms.Button();
+            this.RoomObjectAddButton = new System.Windows.Forms.Button();
+            this.SceneObjectPage = new System.Windows.Forms.TabPage();
+            this.SceneObjectDescription = new System.Windows.Forms.Label();
+            this.SceneObjectListBox = new System.Windows.Forms.ListBox();
+            this.SceneObjectDeleteButton = new System.Windows.Forms.Button();
+            this.SceneObjectAddButton = new System.Windows.Forms.Button();
+            this.RoomObjectSpace = new System.Windows.Forms.Label();
             this.actorEditControl1 = new SharpOcarina.ActorEditControl();
             this.tabCutscene = new System.Windows.Forms.TabPage();
             this.DebugTextBox = new System.Windows.Forms.RichTextBox();
@@ -897,7 +903,9 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.PathwayXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayYPos)).BeginInit();
             this.tabActors.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.ObjectTabMenu.SuspendLayout();
+            this.RoomObjectPage.SuspendLayout();
+            this.SceneObjectPage.SuspendLayout();
             this.tabCutscene.SuspendLayout();
             this.CutsceneGroupBox.SuspendLayout();
             this.CutsceneTabs.SuspendLayout();
@@ -7933,8 +7941,8 @@ namespace SharpOcarina
             // 
             // tabActors
             // 
-            this.tabActors.Controls.Add(this.ObjectSpace);
-            this.tabActors.Controls.Add(this.groupBox2);
+            this.tabActors.Controls.Add(this.ObjectTabMenu);
+            this.tabActors.Controls.Add(this.RoomObjectSpace);
             this.tabActors.Controls.Add(this.actorEditControl1);
             this.tabActors.Location = new System.Drawing.Point(4, 40);
             this.tabActors.Name = "tabActors";
@@ -7944,66 +7952,129 @@ namespace SharpOcarina
             this.tabActors.Text = "Objects & Actors";
             this.tabActors.UseVisualStyleBackColor = true;
             // 
-            // ObjectSpace
+            // ObjectTabMenu
             // 
-            this.ObjectSpace.AutoSize = true;
-            this.ObjectSpace.Location = new System.Drawing.Point(9, 147);
-            this.ObjectSpace.Name = "ObjectSpace";
-            this.ObjectSpace.Size = new System.Drawing.Size(69, 13);
-            this.ObjectSpace.TabIndex = 27;
-            this.ObjectSpace.Text = "ObjectSpace";
+            this.ObjectTabMenu.Controls.Add(this.RoomObjectPage);
+            this.ObjectTabMenu.Controls.Add(this.SceneObjectPage);
+            this.ObjectTabMenu.Enabled = false;
+            this.ObjectTabMenu.Location = new System.Drawing.Point(3, 3);
+            this.ObjectTabMenu.Name = "ObjectTabMenu";
+            this.ObjectTabMenu.SelectedIndex = 0;
+            this.ObjectTabMenu.Size = new System.Drawing.Size(402, 141);
+            this.ObjectTabMenu.TabIndex = 28;
             // 
-            // groupBox2
+            // RoomObjectPage
             // 
-            this.groupBox2.Controls.Add(this.ObjectDescription);
-            this.groupBox2.Controls.Add(this.listBox3);
-            this.groupBox2.Controls.Add(this.button8);
-            this.groupBox2.Controls.Add(this.button7);
-            this.groupBox2.Enabled = false;
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(399, 133);
-            this.groupBox2.TabIndex = 26;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Objects";
+            this.RoomObjectPage.Controls.Add(this.RoomObjectListBox);
+            this.RoomObjectPage.Controls.Add(this.RoomObjectDescription);
+            this.RoomObjectPage.Controls.Add(this.RoomObjectDeleteButton);
+            this.RoomObjectPage.Controls.Add(this.RoomObjectAddButton);
+            this.RoomObjectPage.Location = new System.Drawing.Point(4, 22);
+            this.RoomObjectPage.Name = "RoomObjectPage";
+            this.RoomObjectPage.Padding = new System.Windows.Forms.Padding(3);
+            this.RoomObjectPage.Size = new System.Drawing.Size(394, 115);
+            this.RoomObjectPage.TabIndex = 0;
+            this.RoomObjectPage.Text = "Room Objects";
+            this.RoomObjectPage.UseVisualStyleBackColor = true;
             // 
-            // ObjectDescription
+            // RoomObjectListBox
             // 
-            this.ObjectDescription.Location = new System.Drawing.Point(124, 45);
-            this.ObjectDescription.Name = "ObjectDescription";
-            this.ObjectDescription.Size = new System.Drawing.Size(246, 82);
-            this.ObjectDescription.TabIndex = 3;
-            this.ObjectDescription.Text = "ObjectDescription";
+            this.RoomObjectListBox.FormattingEnabled = true;
+            this.RoomObjectListBox.Location = new System.Drawing.Point(3, 4);
+            this.RoomObjectListBox.Name = "RoomObjectListBox";
+            this.RoomObjectListBox.Size = new System.Drawing.Size(112, 108);
+            this.RoomObjectListBox.TabIndex = 0;
+            this.RoomObjectListBox.Click += new System.EventHandler(this.RoomObjectListBox_Click);
+            this.RoomObjectListBox.DoubleClick += new System.EventHandler(this.RoomObjectListBox_DoubleClick);
             // 
-            // listBox3
+            // RoomObjectDescription
             // 
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(6, 19);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(112, 108);
-            this.listBox3.TabIndex = 0;
-            this.listBox3.Click += new System.EventHandler(this.listBox3_Click);
-            this.listBox3.DoubleClick += new System.EventHandler(this.listBox3_DoubleClick);
+            this.RoomObjectDescription.Location = new System.Drawing.Point(121, 30);
+            this.RoomObjectDescription.Name = "RoomObjectDescription";
+            this.RoomObjectDescription.Size = new System.Drawing.Size(246, 82);
+            this.RoomObjectDescription.TabIndex = 3;
+            this.RoomObjectDescription.Text = "ObjectDescription";
             // 
-            // button8
+            // RoomObjectDeleteButton
             // 
-            this.button8.Location = new System.Drawing.Point(124, 19);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(120, 23);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Add Object";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.RoomObjectDeleteButton.Location = new System.Drawing.Point(247, 4);
+            this.RoomObjectDeleteButton.Name = "RoomObjectDeleteButton";
+            this.RoomObjectDeleteButton.Size = new System.Drawing.Size(120, 23);
+            this.RoomObjectDeleteButton.TabIndex = 2;
+            this.RoomObjectDeleteButton.Text = "Delete Object";
+            this.RoomObjectDeleteButton.UseVisualStyleBackColor = true;
+            this.RoomObjectDeleteButton.Click += new System.EventHandler(this.RoomObjectDeleteButton_Click);
             // 
-            // button7
+            // RoomObjectAddButton
             // 
-            this.button7.Location = new System.Drawing.Point(250, 19);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(120, 23);
-            this.button7.TabIndex = 2;
-            this.button7.Text = "Delete Object";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.RoomObjectAddButton.Location = new System.Drawing.Point(121, 4);
+            this.RoomObjectAddButton.Name = "RoomObjectAddButton";
+            this.RoomObjectAddButton.Size = new System.Drawing.Size(120, 23);
+            this.RoomObjectAddButton.TabIndex = 1;
+            this.RoomObjectAddButton.Text = "Add Object";
+            this.RoomObjectAddButton.UseVisualStyleBackColor = true;
+            this.RoomObjectAddButton.Click += new System.EventHandler(this.RoomObjectAddButton_Click);
+            // 
+            // SceneObjectPage
+            // 
+            this.SceneObjectPage.Controls.Add(this.SceneObjectDescription);
+            this.SceneObjectPage.Controls.Add(this.SceneObjectListBox);
+            this.SceneObjectPage.Controls.Add(this.SceneObjectDeleteButton);
+            this.SceneObjectPage.Controls.Add(this.SceneObjectAddButton);
+            this.SceneObjectPage.Location = new System.Drawing.Point(4, 22);
+            this.SceneObjectPage.Name = "SceneObjectPage";
+            this.SceneObjectPage.Padding = new System.Windows.Forms.Padding(3);
+            this.SceneObjectPage.Size = new System.Drawing.Size(394, 115);
+            this.SceneObjectPage.TabIndex = 1;
+            this.SceneObjectPage.Text = "Scene Objects";
+            this.SceneObjectPage.UseVisualStyleBackColor = true;
+            // 
+            // SceneObjectDescription
+            // 
+            this.SceneObjectDescription.Location = new System.Drawing.Point(121, 30);
+            this.SceneObjectDescription.Name = "SceneObjectDescription";
+            this.SceneObjectDescription.Size = new System.Drawing.Size(246, 82);
+            this.SceneObjectDescription.TabIndex = 32;
+            this.SceneObjectDescription.Text = "ObjectDescription";
+            // 
+            // SceneObjectListBox
+            // 
+            this.SceneObjectListBox.FormattingEnabled = true;
+            this.SceneObjectListBox.Location = new System.Drawing.Point(3, 4);
+            this.SceneObjectListBox.Name = "SceneObjectListBox";
+            this.SceneObjectListBox.Size = new System.Drawing.Size(112, 108);
+            this.SceneObjectListBox.TabIndex = 29;
+            this.SceneObjectListBox.Click += new System.EventHandler(this.SceneObjectListBox_Click);
+            this.SceneObjectListBox.DoubleClick += new System.EventHandler(this.SceneObjectListBox_DoubleClick);
+            // 
+            // SceneObjectDeleteButton
+            // 
+            this.SceneObjectDeleteButton.Location = new System.Drawing.Point(247, 4);
+            this.SceneObjectDeleteButton.Name = "SceneObjectDeleteButton";
+            this.SceneObjectDeleteButton.Size = new System.Drawing.Size(120, 23);
+            this.SceneObjectDeleteButton.TabIndex = 31;
+            this.SceneObjectDeleteButton.Text = "Delete Object";
+            this.SceneObjectDeleteButton.UseVisualStyleBackColor = true;
+            this.SceneObjectDeleteButton.Click += new System.EventHandler(this.SceneObjectDeleteButton_Click);
+            // 
+            // SceneObjectAddButton
+            // 
+            this.SceneObjectAddButton.Location = new System.Drawing.Point(121, 4);
+            this.SceneObjectAddButton.Name = "SceneObjectAddButton";
+            this.SceneObjectAddButton.Size = new System.Drawing.Size(120, 23);
+            this.SceneObjectAddButton.TabIndex = 30;
+            this.SceneObjectAddButton.Text = "Add Object";
+            this.SceneObjectAddButton.UseVisualStyleBackColor = true;
+            this.SceneObjectAddButton.Click += new System.EventHandler(this.SceneObjectAddButton_Click);
+            // 
+            // RoomObjectSpace
+            // 
+            this.RoomObjectSpace.AutoSize = true;
+            this.RoomObjectSpace.Location = new System.Drawing.Point(9, 147);
+            this.RoomObjectSpace.Name = "RoomObjectSpace";
+            this.RoomObjectSpace.Size = new System.Drawing.Size(69, 13);
+            this.RoomObjectSpace.TabIndex = 27;
+            this.RoomObjectSpace.Text = "ObjectSpace";
             // 
             // actorEditControl1
             // 
@@ -11196,7 +11267,9 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.PathwayYPos)).EndInit();
             this.tabActors.ResumeLayout(false);
             this.tabActors.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.ObjectTabMenu.ResumeLayout(false);
+            this.RoomObjectPage.ResumeLayout(false);
+            this.SceneObjectPage.ResumeLayout(false);
             this.tabCutscene.ResumeLayout(false);
             this.tabCutscene.PerformLayout();
             this.CutsceneGroupBox.ResumeLayout(false);
@@ -11325,10 +11398,6 @@ namespace SharpOcarina
         private SharpOcarina.NumericTextBox RoomInjectionOffset;
         private System.Windows.Forms.ToolStripMenuItem showRoomModelsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AutoReload;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.ListBox listBox3;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -11410,10 +11479,9 @@ namespace SharpOcarina
         private System.Windows.Forms.CheckBox SimulateN64CheckBox;
         private System.Windows.Forms.ComboBox SongComboBox;
         private System.Windows.Forms.ToolStripMenuItem DegreesMenuItem;
-        private System.Windows.Forms.Label ObjectDescription;
         private System.Windows.Forms.ToolStripMenuItem AutoaddGroupsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extraToolStripMenuItem;
-        private System.Windows.Forms.Label ObjectSpace;
+        private System.Windows.Forms.Label RoomObjectSpace;
         private TabPage tabPathways;
         private TabPage tabSceneEnv;
         private GroupBox groupBox5;
@@ -12016,6 +12084,17 @@ namespace SharpOcarina
         private ComboBox SoundSpec;
         private ListBox ExitList;
         private Label label36;
+        private TabControl ObjectTabMenu;
+        private TabPage RoomObjectPage;
+        private ListBox RoomObjectListBox;
+        private Label RoomObjectDescription;
+        private Button RoomObjectDeleteButton;
+        private Button RoomObjectAddButton;
+        private TabPage SceneObjectPage;
+        private Label SceneObjectDescription;
+        private ListBox SceneObjectListBox;
+        private Button SceneObjectDeleteButton;
+        private Button SceneObjectAddButton;
     }
     }
 

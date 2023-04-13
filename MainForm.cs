@@ -221,10 +221,6 @@ namespace SharpOcarina
             dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem.Visible = true;
 #else
-
-#endif
-
-
             if ((int)System.DateTime.Now.Day == 1 && (int)System.DateTime.Now.Month == 4)
             {
                 Is1April = true;
@@ -232,7 +228,7 @@ namespace SharpOcarina
                 CDILink.Size = new Size(324, 238);
                 Program.ApplicationTitle = "OoT, but its a tool to make maps ";
             }
-
+#endif
 
             if (File.Exists("Settings.xml"))
             {
@@ -876,6 +872,14 @@ namespace SharpOcarina
 
             if (render != -1 && DrawBorder)
             {
+                if (zobj_cache[render].useColor) {
+                    ZScene.RGBA8 env = zobj_cache[render].envColor;
+                    ZScene.RGBA8 prim = zobj_cache[render].primColor;
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, (float)prim.r / 255.0f, (float)prim.g / 255.0f, (float)prim.b / 255.0f, (float)prim.a / 255.0f);
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 1, (float)env.r / 255.0f, (float)env.g / 255.0f, (float)env.b / 255.0f, (float)env.a / 255.0f);
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 2, 0, 0, 0, 0);
+                }
+
                 if (zobj_cache[render].Limbs.Count == 0)
                 {
                     GL.PushMatrix();
@@ -3949,9 +3953,9 @@ namespace SharpOcarina
 
 
                         //object size
-                        if (CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count > 0)
+                        if (CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count + CurrentScene.ZObjects.Count > 0)
                         {
-                            ObjectSpace.Visible = true;
+                            RoomObjectSpace.Visible = true;
                             int size = 0 + 0x567B0 + 0x37800;
                             if (CurrentScene.SpecialObject == 0x0002) size += 0xD330;
                             else size += 0x17AF0;
@@ -3967,12 +3971,21 @@ namespace SharpOcarina
                                 else
                                     size += Convert.ToInt32(XMLreader.getObjectSize(obj.ValueHex)[0], 16);
                             }
-                            ObjectSpace.Text = "Object space: " + size.ToString("X") + " / " + maxsize.ToString("X");
-                            if (size > maxsize) ObjectSpace.ForeColor = Color.Red;
-                            else ObjectSpace.ForeColor = Color.Black;
+
+                            foreach (ZScene.ZUShort obj in CurrentScene.ZObjects)
+                            {
+                                if (ObjectCache.ContainsKey(obj.Value))
+                                    size += ObjectCache[obj.Value].size;
+                                else
+                                    size += Convert.ToInt32(XMLreader.getObjectSize(obj.ValueHex)[0], 16);
+                            }
+
+                            RoomObjectSpace.Text = "Object space: " + size.ToString("X") + " / " + maxsize.ToString("X");
+                            if (size > maxsize) RoomObjectSpace.ForeColor = Color.Red;
+                            else RoomObjectSpace.ForeColor = Color.Black;
 
                         }
-                        else ObjectSpace.Visible = false;
+                        else RoomObjectSpace.Visible = false;
                     }
                     else
                     {
@@ -3988,9 +4001,10 @@ namespace SharpOcarina
 
                     if (RoomList.SelectedItem != null)
                     {
-                        groupBox2.Enabled = true;
+                        ObjectTabMenu.Enabled = true;
                         actorEditControl1.Enabled = true;
-                        refreshobjdescription();
+                        RefreshRoomObjectDescription();
+                        RefreshSceneObjectDescription();
 
                         if (settings.ConsecutiveRoomInject == true && (RoomList.SelectedIndex > 0 || CurrentScene.ContinualInject))
                         {
@@ -4010,7 +4024,7 @@ namespace SharpOcarina
                     }
                     else
                     {
-                        groupBox2.Enabled = false;
+                        ObjectTabMenu.Enabled = false;
                         actorEditControl1.Enabled = false;
                     }
 
@@ -4049,12 +4063,18 @@ namespace SharpOcarina
                         }
                     }
 
-                    if (listBox3.Items.Count == 0 || listBox3.SelectedIndex == -1)
-                        button7.Enabled = false;
+                    if (RoomObjectListBox.Items.Count == 0 || RoomObjectListBox.SelectedIndex == -1)
+                        RoomObjectDeleteButton.Enabled = false;
                     else
-                        button7.Enabled = true;
+                        RoomObjectDeleteButton.Enabled = true;
 
-                    button8.Enabled = (listBox3.Items.Count < 0x0F);
+                    if (SceneObjectListBox.Items.Count == 0 || SceneObjectListBox.SelectedIndex == -1)
+                        SceneObjectDeleteButton.Enabled = false;
+                    else
+                        SceneObjectDeleteButton.Enabled = true;
+
+                    RoomObjectAddButton.Enabled = SceneObjectAddButton.Enabled = 
+                        (RoomObjectListBox.Items.Count + SceneObjectListBox.Items.Count) < 0x0F;
 
                     if (ExitList.Items.Count == 0 || ExitList.SelectedIndex == -1)
                         DeleteexitButton.Enabled = false;
@@ -4218,6 +4238,7 @@ namespace SharpOcarina
             // Console.WriteLine("storing undo datatype: " + datatype + " / amount of undos: " + undo.Count);
 
         }
+        
         private void Undo(bool Redo = false)
         {
             if ((!Redo && undo.Count > 0) || (Redo && redo.Count > 0))
@@ -5651,7 +5672,7 @@ namespace SharpOcarina
 
             GroupList.DisplayMember = "DisplayName";
             GroupList.EndUpdate();
-            listBox3.SelectedItem = null;
+            RoomObjectListBox.SelectedItem = null;
 
 
             if (NowLoading == false) UpdateForm();
@@ -5699,7 +5720,7 @@ namespace SharpOcarina
                     ListEditBox.CharacterCasing = CharacterCasing.Upper;
 
                     ListEditBox.BackColor = Color.Beige;
-                    ListEditBox.Font = listBox3.Font;
+                    ListEditBox.Font = RoomObjectListBox.Font;
                     ListEditBox.BorderStyle = BorderStyle.FixedSingle;
 
                     ListEditBox.Location = new Point(r.X, r.Y);
@@ -5715,7 +5736,7 @@ namespace SharpOcarina
 
                     ListStringEditBox.MaxLength = 64;
                     ListStringEditBox.BackColor = Color.Beige;
-                    ListStringEditBox.Font = listBox3.Font;
+                    ListStringEditBox.Font = RoomObjectListBox.Font;
                     ListStringEditBox.BorderStyle = BorderStyle.FixedSingle;
 
                     ListStringEditBox.Location = new Point(r.X, r.Y);
@@ -5785,7 +5806,8 @@ namespace SharpOcarina
             /* Clear form */
             RoomList.DataSource = null;
             GroupList.DataSource = null;
-            listBox3.DataSource = null;
+            RoomObjectListBox.DataSource = null;
+            SceneObjectListBox.DataSource = null;
 
             /* Generate new scene */
             CurrentScene = new ZScene();
@@ -5916,9 +5938,22 @@ namespace SharpOcarina
             string ROM = "";
 
             if (rom64.isSet())
-            {
+            {   
+                int prev = CurrentScene.cloneid;
+                if (prev > 0) SetSceneHeader(0);
+
                 AddMissingObjects();
+
+                if (CurrentScene.Cameras.Count == 0) {
+                    CurrentScene.Cameras.Add(new ZCamera(0, 0, 0, 0, 0, 0, 3, 45, 0xFFFF, 0xFFFF));
+                    UpdateForm();
+                }
+
                 CurrentScene.ConvertSave(rom64.getPath() + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, 3);
+
+                if (prev > 0) SetSceneHeader(prev);
+                UpdateForm();
+
                 return;
             }
 
@@ -6116,6 +6151,11 @@ namespace SharpOcarina
             if (Path.IsPathRooted(CurrentScene.CollisionFilename))
                 CurrentScene.CollisionFilename = GetRelativePath(Path.GetDirectoryName(FileName) + "\\", CurrentScene.CollisionFilename);
 
+            foreach (var tex in CurrentScene.AdditionalTextures) {
+                if (Path.IsPathRooted(tex.map_Kd))
+                    tex.map_Kd = GetRelativePath(Path.GetDirectoryName(FileName) + "\\", tex.map_Kd);
+            }
+
             IO.Export<ZScene>(CurrentScene, FileName);
 
             if (prev > 0) SetSceneHeader(prev);
@@ -6161,7 +6201,7 @@ namespace SharpOcarina
                             //Console.WriteLine("after " + actorgroups.ToString("X4"));
                             foreach (int actorobject in actorobjects)
                             {
-                                if (actorobject > 0x0003 && !room.ZObjects.Exists(x => x.Value == actorobject))
+                                if (actorobject > 0x0003 && !room.ZObjects.Exists(x => x.Value == actorobject) && !CurrentScene.ZObjects.Exists(x => x.Value == actorobject))
                                 {
                                     ZScene.ZUShort newgroup = new ZScene.ZUShort((ushort)actorobject);
                                     room.ZObjects.Add(newgroup);
@@ -6178,7 +6218,7 @@ namespace SharpOcarina
                         }
                         roomind++;
 
-                        if (room.ZObjects.Count > 0x0F)
+                        if ((room.ZObjects.Count + CurrentScene.ZObjects.Count) > 0x0F)
                         {
                             MessageBox.Show("Too many objects on Header " + scene.cloneid + " | Room " + roomind + "! max is 0x0F", "Auto-add objects", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
@@ -6187,6 +6227,12 @@ namespace SharpOcarina
                             invalidobj = true;
                             while (room.ZObjects.FindIndex(x => x.Value < 4) != -1)
                                 room.ZObjects.RemoveAt(room.ZObjects.FindIndex(x => x.Value < 4));
+                        }
+                        if (CurrentScene.ZObjects.Exists(x => x.Value < 4))
+                        {
+                            invalidobj = true;
+                            while (CurrentScene.ZObjects.FindIndex(x => x.Value < 4) != -1)
+                                CurrentScene.ZObjects.RemoveAt(CurrentScene.ZObjects.FindIndex(x => x.Value < 4));
                         }
                     }
                 }
@@ -6461,7 +6507,8 @@ namespace SharpOcarina
 
             RoomList.DataSource = null;
             GroupList.DataSource = null;
-            listBox3.DataSource = null;
+            RoomObjectListBox.DataSource = null;
+            SceneObjectListBox.DataSource = null;
 
             CurrentScene = IO.Import<ZScene>(FileName);
             NormalHeader = CurrentScene;
@@ -6559,7 +6606,10 @@ namespace SharpOcarina
                     temppath = multitex.map_Kd;
                     if (!File.Exists(temppath))
                     {
-                        temppath = fullpath + Path.GetFileName(temppath);
+                        if (Path.IsPathRooted(temppath))
+                            temppath = fullpath + Path.GetFileName(temppath);
+                        else
+                            temppath = fullpath + temppath;
                         if (!File.Exists(temppath))
                         {
                             MessageBox.Show("Texture " + temppath + " doesn't exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -6693,7 +6743,7 @@ namespace SharpOcarina
             if (RoomList.SelectedItem != null)
                 if (CurrentScene.Rooms.Count != -1)
                     SelectRoom(0);
-            SelectObject(-1);
+            SelectRoomObject(-1);
 
             SetPolyTypesInCollision();
 
@@ -6917,52 +6967,6 @@ namespace SharpOcarina
 
         #region Editor - Rooms, Objects & Actors
 
-        private void FocusOverObjEd(object sender, EventArgs e)
-        {
-            ApplyObjectEdit();
-        }
-
-        private void EditOverObjEd(object sender, System.Windows.Forms.KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                ApplyObjectEdit();
-        }
-
-        private void UpdateObjectEdit()
-        {
-            if (RoomList.SelectedIndex == -1) { listBox3.DataSource = null; return; }
-
-            listBox3.DataSource = CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects;
-            listBox3.DisplayMember = "ValueHex";
-            ((CurrencyManager)listBox3.BindingContext[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects]).Refresh();
-        }
-
-        private void ApplyObjectEdit()
-        {
-            ((ZScene.ZUShort)listBox3.SelectedItem).Value = ushort.Parse(ListEditBox.Text.PadLeft(4, '0'), System.Globalization.NumberStyles.HexNumber);
-            ListEditBox.Hide();
-            UpdateForm();
-            listBox3.Focus();
-        }
-
-        private void SelectObject()
-        {
-            SelectObject(listBox3.Items.Count - 1);
-        }
-
-        private void SelectObject(int Index)
-        {
-            if (Index >= 0)
-            {
-                listBox3.DataSource = CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects;
-                listBox3.SelectedIndex = Index;
-            }
-            else
-                listBox3.DataSource = null;
-
-            listBox3.DisplayMember = "ValueHex";
-        }
-
         private void DeleteRoom_Click(object sender, EventArgs e)
         {
             if (customcombiner != null) customcombiner.Close();
@@ -7032,7 +7036,9 @@ namespace SharpOcarina
                 ((ObjFile.Group)GroupList.SelectedItem).TintAlpha = (uint)(((byte)numericUpDown2.Value << 24) | pictureBox7.BackColor.ToArgb() & 0xFFFFFF);
 
                 int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
-                CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha[Index] = ((ObjFile.Group)GroupList.SelectedItem).TintAlpha;
+
+                if (CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha.Count() > Index)
+                    CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha[Index] = ((ObjFile.Group)GroupList.SelectedItem).TintAlpha;
 
                 UpdateGroupSelect(n64refresh);
             }
@@ -7139,32 +7145,220 @@ namespace SharpOcarina
             }
         }
 
-        private void listBox3_DoubleClick(object sender, EventArgs e)
+        private void AutoaddGroupsClick(object sender, EventArgs e)
         {
+            settings.AutoaddObjects = AutoaddGroupsMenuItem.Checked;
+        }
+
+//////////////////////////////////////////////////////////////////////////////////
+
+        private void UpdateObjectEdit()
+        {
+            if (RoomList.SelectedIndex == -1) { RoomObjectListBox.DataSource = null; return; }
+
+            RoomObjectListBox.DataSource = CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects;
+            RoomObjectListBox.DisplayMember = "ValueHex";
+            SceneObjectListBox.DataSource = CurrentScene.ZObjects;
+            SceneObjectListBox.DisplayMember = "ValueHex";
+            ((CurrencyManager)RoomObjectListBox.BindingContext[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects]).Refresh();
+            ((CurrencyManager)SceneObjectListBox.BindingContext[CurrentScene.ZObjects]).Refresh();
+        }
+
+        private void RoomObject_ApplyListEdit()
+        {
+            ((ZScene.ZUShort)RoomObjectListBox.SelectedItem).Value = ushort.Parse(ListEditBox.Text.PadLeft(4, '0'), System.Globalization.NumberStyles.HexNumber);
+            ListEditBox.Hide();
+            UpdateForm();
+            RoomObjectListBox.Focus();
+        }
+
+        private void SceneObject_ApplyListEdit()
+        {
+            ((ZScene.ZUShort)SceneObjectListBox.SelectedItem).Value = ushort.Parse(ListEditBox.Text.PadLeft(4, '0'), System.Globalization.NumberStyles.HexNumber);
+            ListEditBox.Hide();
+            UpdateForm();
+            SceneObjectListBox.Focus();
+        }
+
+        private void SelectRoomObject()
+        {
+            SelectRoomObject(RoomObjectListBox.Items.Count - 1);
+        }
+
+        private void SelectRoomObject(int Index)
+        {
+            if (Index >= 0)
+            {
+                RoomObjectListBox.DataSource = CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects;
+                RoomObjectListBox.SelectedIndex = Index;
+            }
+            else
+                RoomObjectListBox.DataSource = null;
+
+            RoomObjectListBox.DisplayMember = "ValueHex";
+        }
+
+        private void SelectSceneObject()
+        {
+            SelectSceneObject(SceneObjectListBox.Items.Count - 1);
+        }
+
+        private void SelectSceneObject(int Index)
+        {
+            if (Index >= 0)
+            {
+                SceneObjectListBox.DataSource = CurrentScene.ZObjects;
+                SceneObjectListBox.SelectedIndex = Index;
+            }
+            else
+                SceneObjectListBox.DataSource = null;
+
+            SceneObjectListBox.DisplayMember = "ValueHex";
+        }
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+        private void RefreshRoomObjectDescription()
+        {
+            RoomObjectDescription.Text = "";
+            if (RoomObjectListBox.SelectedIndex > -1 && RoomObjectListBox.SelectedIndex < CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count)
+            {
+                if (ObjectCache.ContainsKey(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value))
+                {
+                    RoomObjectDescription.Text += "Internal name: " + ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value].name + Environment.NewLine;
+                    RoomObjectDescription.Text += String.Format("Size: {0:X}", ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value].size) + Environment.NewLine;
+                    RoomObjectDescription.Text += "Actors that use this object: ";
+                    RoomObjectDescription.Text += ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value].usedby;
+                }
+                else
+                {
+                    String[] data = XMLreader.getObjectSize((CurrentScene.Rooms[RoomList.SelectedIndex]).ZObjects[RoomObjectListBox.SelectedIndex].ValueHex);
+                    RoomObjectDescription.Text += "Internal name: " + data[1] + Environment.NewLine;
+                    RoomObjectDescription.Text += String.Format("Size: {0:X}", data[0]) + Environment.NewLine;
+                    RoomObjectDescription.Text += "Actors that use this object: ";
+                    RoomObjectDescription.Text += XMLreader.getActorNamesByObject(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].ValueHex);
+                }
+            }
+        }
+
+        private void RefreshSceneObjectDescription()
+        {
+            SceneObjectDescription.Text = "";
+            if (SceneObjectListBox.SelectedIndex > -1 && SceneObjectListBox.SelectedIndex < CurrentScene.ZObjects.Count)
+            {
+                if (ObjectCache.ContainsKey(CurrentScene.ZObjects[SceneObjectListBox.SelectedIndex].Value))
+                {
+                    SceneObjectDescription.Text += "Internal name: " + ObjectCache[CurrentScene.ZObjects[SceneObjectListBox.SelectedIndex].Value].name + Environment.NewLine;
+                    SceneObjectDescription.Text += String.Format("Size: {0:X}", ObjectCache[CurrentScene.ZObjects[SceneObjectListBox.SelectedIndex].Value].size) + Environment.NewLine;
+                    SceneObjectDescription.Text += "Actors that use this object: ";
+                    SceneObjectDescription.Text += ObjectCache[CurrentScene.ZObjects[SceneObjectListBox.SelectedIndex].Value].usedby;
+                }
+                else
+                {
+                    String[] data = XMLreader.getObjectSize(CurrentScene.ZObjects[SceneObjectListBox.SelectedIndex].ValueHex);
+                    SceneObjectDescription.Text += "Internal name: " + data[1] + Environment.NewLine;
+                    SceneObjectDescription.Text += String.Format("Size: {0:X}", data[0]) + Environment.NewLine;
+                    SceneObjectDescription.Text += "Actors that use this object: ";
+                    SceneObjectDescription.Text += XMLreader.getActorNamesByObject(CurrentScene.ZObjects[SceneObjectListBox.SelectedIndex].ValueHex);
+                }
+            }
+        }
+
+//////////////////////////////////////////////////////////////////////////////////
+
+        private void RoomObjectListBox_Click(object sender, EventArgs e)
+        {
+            RefreshRoomObjectDescription();
+        }
+
+        private void RoomObjectListBox_DoubleClick(object sender, EventArgs e)
+        {
+            
+            void LostFocus(object _s, EventArgs _e)
+            {
+                RoomObject_ApplyListEdit();
+            }
+
+            void KeyPress(object _s, System.Windows.Forms.KeyPressEventArgs _e)
+            {
+                if (_e.KeyChar == 13)
+                    RoomObject_ApplyListEdit();
+            }
+
+
             CreateEditBox(sender, "object");
 
-            ListEditBox.KeyPress += new KeyPressEventHandler(this.EditOverObjEd);
-            ListEditBox.LostFocus += new EventHandler(this.FocusOverObjEd);
-            listBox3.Controls.AddRange(new System.Windows.Forms.Control[] { this.ListEditBox });
+            ListEditBox.KeyPress += new KeyPressEventHandler(KeyPress);
+            ListEditBox.LostFocus += new EventHandler(LostFocus);
+            RoomObjectListBox.Controls.AddRange(new System.Windows.Forms.Control[] { this.ListEditBox });
             this.ListEditBox.Focus();
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void RoomObjectAddButton_Click(object sender, EventArgs e)
         {
             CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Add(new ZScene.ZUShort(0x0000));
             UpdateForm();
-            SelectObject();
-            refreshobjdescription();
+            SelectRoomObject();
+            RefreshRoomObjectDescription();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void RoomObjectDeleteButton_Click(object sender, EventArgs e)
         {
-            if (listBox3.SelectedItem != null)
-                CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Remove(((ZScene.ZUShort)listBox3.SelectedItem));
+            if (RoomObjectListBox.SelectedItem != null)
+                CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Remove(((ZScene.ZUShort)RoomObjectListBox.SelectedItem));
 
-            SelectObject(-1);
+            SelectRoomObject(-1);
             UpdateForm();
         }
+
+//////////////////////////////////////////////////////////////////////////////////
+
+        private void SceneObjectListBox_Click(object sender, EventArgs e)
+        {
+            RefreshSceneObjectDescription();
+        }
+
+        private void SceneObjectListBox_DoubleClick(object sender, EventArgs e)
+        {
+            void LostFocus(object _s, EventArgs _e)
+            {
+                SceneObject_ApplyListEdit();
+            }
+
+            void KeyPress(object _s, System.Windows.Forms.KeyPressEventArgs _e)
+            {
+                if (_e.KeyChar == 13)
+                    SceneObject_ApplyListEdit();
+            }
+
+
+            CreateEditBox(sender, "object");
+
+            ListEditBox.KeyPress += new KeyPressEventHandler(KeyPress);
+            ListEditBox.LostFocus += new EventHandler(LostFocus);
+            SceneObjectListBox.Controls.AddRange(new System.Windows.Forms.Control[] { this.ListEditBox });
+            this.ListEditBox.Focus();
+        }
+
+        private void SceneObjectAddButton_Click(object sender, EventArgs e)
+        {
+            CurrentScene.ZObjects.Add(new ZScene.ZUShort(0x0000));
+            UpdateForm();
+            SelectSceneObject();
+            RefreshSceneObjectDescription();
+        }
+        
+        private void SceneObjectDeleteButton_Click(object sender, EventArgs e)
+        {
+            if (SceneObjectListBox.SelectedItem != null)
+                CurrentScene.ZObjects.Remove(((ZScene.ZUShort)SceneObjectListBox.SelectedItem));
+
+            SelectSceneObject(-1);
+            UpdateForm();
+        }
+
+//////////////////////////////////////////////////////////////////////////////////
 
         #endregion
 
@@ -7468,9 +7662,12 @@ namespace SharpOcarina
                 int prevsel = ExitList.SelectedIndex;
                 if (prevsel == -1) prevsel = 0;
                 ExitList.Items.Clear();
+
+                int id = 0;
                 foreach (ZExit point in CurrentScene.ExitListV2)
                 {
-                    ExitList.Items.Add(point.Raw.ToString("X8"));
+                    ExitList.Items.Add(id.ToString("X2") + ": " + point.Raw.ToString("X8"));
+                    id++;
                 }
                 if (prevsel >= ExitList.Items.Count && ExitList.Items.Count > 0) ExitList.SelectedIndex = prevsel - 1;
                 else if (prevsel >= ExitList.Items.Count) ExitList.SelectedIndex = -1;
@@ -8430,39 +8627,6 @@ namespace SharpOcarina
         private void DegreesMenuItemClick(object sender, EventArgs e)
         {
             settings.Degrees = DegreesMenuItem.Checked;
-        }
-
-        private void listBox3_Click(object sender, EventArgs e)
-        {
-            refreshobjdescription();
-        }
-
-        private void refreshobjdescription()
-        {
-            ObjectDescription.Text = "";
-            if (listBox3.SelectedIndex > -1 && listBox3.SelectedIndex < CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count)
-            {
-                if (ObjectCache.ContainsKey(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value))
-                {
-                    ObjectDescription.Text += "Internal name: " + ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value].name + Environment.NewLine;
-                    ObjectDescription.Text += String.Format("Size: {0:X}", ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value].size) + Environment.NewLine;
-                    ObjectDescription.Text += "Actors that use this object: ";
-                    ObjectDescription.Text += ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].Value].usedby;
-                }
-                else
-                {
-                    String[] data = XMLreader.getObjectSize((CurrentScene.Rooms[RoomList.SelectedIndex]).ZObjects[listBox3.SelectedIndex].ValueHex);
-                    ObjectDescription.Text += "Internal name: " + data[1] + Environment.NewLine;
-                    ObjectDescription.Text += String.Format("Size: {0:X}", data[0]) + Environment.NewLine;
-                    ObjectDescription.Text += "Actors that use this object: ";
-                    ObjectDescription.Text += XMLreader.getActorNamesByObject(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[listBox3.SelectedIndex].ValueHex);
-                }
-            }
-        }
-
-        private void AutoaddGroupsClick(object sender, EventArgs e)
-        {
-            settings.AutoaddObjects = AutoaddGroupsMenuItem.Checked;
         }
 
         private void EnemyTest(object sender, EventArgs e)
@@ -13465,6 +13629,7 @@ namespace SharpOcarina
             List<FlagEntryInfo> switchflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> chestflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> collectibleflags = new List<FlagEntryInfo>();
+            List<FlagEntryInfo> skulltulaflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> pathways = new List<FlagEntryInfo>();
 
 
@@ -13475,11 +13640,11 @@ namespace SharpOcarina
                 entryIndex = 0;
                 foreach (ZActor actor in room.ZActors)
                 {
-                    List<ActorProperty> properties = XMLreader.getActorProperties(actor.Number.ToString("X4"));
+                    List<ActorProperty> properties = ActorCache[actor.Number].actorproperties;
 
                     foreach (ActorProperty property in properties)
                     {
-                        if (property.Name.ToLower().Contains("switch flag") || property.Name.ToLower().Contains("chest flag") || property.Name.ToLower().Contains("collectible flag") || property.Name.ToLower().Contains("path id"))
+                        if (property.Name.ToLower().Contains("switch flag") || property.Name.ToLower().Contains("skulltula flag") || property.Name.ToLower().Contains("chest flag") || property.Name.ToLower().Contains("collectible flag") || property.Name.ToLower().Contains("path id"))
                         {
                             int flag = 0;
 
@@ -13499,7 +13664,7 @@ namespace SharpOcarina
                             {
                                 flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                             }
-                            string name = XMLreader.getActorName(actor.Number.ToString("X4"));
+                            string name = ActorCache[actor.Number].name;
                             string roomName = roomIndex.ToString("d") + ". " + room.ModelShortFilename;
 
                             if (property.Name.ToLower().Contains("switch flag"))
@@ -13508,6 +13673,8 @@ namespace SharpOcarina
                                 chestflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
                             else if (property.Name.ToLower().Contains("collectible flag"))
                                 collectibleflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
+                            else if (property.Name.ToLower().Contains("skulltula flag"))
+                                skulltulaflags.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
                             else if (property.Name.ToLower().Contains("path id"))
                                 pathways.Add(new FlagEntryInfo(flag, roomName, name, entryIndex));
 
@@ -13521,7 +13688,7 @@ namespace SharpOcarina
             entryIndex = 0;
             foreach (ZActor actor in CurrentScene.Transitions)
             {
-                List<ActorProperty> properties = XMLreader.getActorProperties(actor.Number.ToString("X4"));
+                List<ActorProperty> properties = ActorCache[actor.Number].actorproperties;
 
                 foreach (ActorProperty property in properties)
                 {
@@ -13545,9 +13712,8 @@ namespace SharpOcarina
                         {
                             flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                         }
-                        string name = XMLreader.getActorName(actor.Number.ToString("X4"));
+                        string name = ActorCache[actor.Number].name;
                         switchflags.Add(new FlagEntryInfo(flag, "", name, entryIndex));
-
                     }
                 }
                 entryIndex++;
@@ -13555,6 +13721,7 @@ namespace SharpOcarina
 
             switchflags = switchflags.OrderBy(x => x.room).ToList();
             collectibleflags = collectibleflags.OrderBy(x => x.room).ToList();
+            skulltulaflags = skulltulaflags.OrderBy(x => x.room).ToList();
             chestflags = chestflags.OrderBy(x => x.room).ToList();
             pathways = pathways.OrderBy(x => x.room).ToList();
 
@@ -13589,6 +13756,18 @@ namespace SharpOcarina
                 FlagLogInfo flag = new FlagLogInfo(i);
 
                 foreach (FlagEntryInfo match in chestflags.FindAll(x => x.ID == i))
+                    flag.processEntry(match);
+
+                message += flag.getMsg();
+            }
+
+            message += @"\par\par  \cf2\b Skulltula Flags" + @"\line" + @"\b0\cf1  ";
+
+            for (int i = 0; i <= 0xFF; i++)
+            {
+                FlagLogInfo flag = new FlagLogInfo(i);
+
+                foreach (FlagEntryInfo match in skulltulaflags.FindAll(x => x.ID == i))
                     flag.processEntry(match);
 
                 message += flag.getMsg();
@@ -13744,7 +13923,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -13867,7 +14046,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -14056,7 +14235,7 @@ namespace SharpOcarina
         {
             openFileDialog1.CheckFileExists = true;
             openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "N64 Rom / z64rom project (*.z64;*.toml)|*.z64;*.toml|All Files (*.*)|*.*";
+            openFileDialog1.Filter = "N64 Rom / z64rom project (*.z64;z64project.toml)|*.z64;z64project.toml|All Files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
             injectToROMToolStripMenuItem.Owner.Hide();
 
@@ -15568,7 +15747,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -15783,7 +15962,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -16317,7 +16496,7 @@ namespace SharpOcarina
             else
             {
                 saveFileDialog1.CheckFileExists = true;
-                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,*.toml)|*.z64;*.rom;*.toml|All Files (*.*)|*.*";
+                saveFileDialog1.Filter = "Rom / z64rom project (*.z64;*.rom,z64project.toml)|*.z64;*.rom;z64project.toml|All Files (*.*)|*.*";
                 saveFileDialog1.CreatePrompt = true;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -16922,9 +17101,18 @@ namespace SharpOcarina
 
                 if (now > lastTime)
                 {
+                    int room = RoomList.SelectedIndex;
                     lastTime = now;
                     Console.WriteLine("Auto Reload Rooms");
                     ReloadRoomButton_Click(sender, e);
+
+                    if (CurrentScene.Rooms.Count >= room) {
+                        RoomList.SelectedIndex = room;
+                        SelectRoom(room);
+                    }
+                    
+                    UpdateForm();
+
                     break;
                 }
             }
@@ -16935,6 +17123,7 @@ namespace SharpOcarina
             settings.AutoReload = AutoReload.Checked;
         }
 
+        
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);

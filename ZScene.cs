@@ -267,6 +267,7 @@ namespace SharpOcarina
         public string CollisionFilename = string.Empty;
         [XmlIgnore]
         public ObjFile ColModel = null;
+        public List<ZUShort> ZObjects = new List<ZUShort>();
         public List<ZActor> Transitions = new List<ZActor>();
         public List<ZActor> SpawnPoints = new List<ZActor>();
         public List<ZEnvironment> Environments = new List<ZEnvironment>();
@@ -1210,10 +1211,10 @@ namespace SharpOcarina
             {
                 if (sceneheader.SameAsPrevious)
                 {
-                    Helpers.Overwrite32(ref SceneData, sceneheader._InjectOffset, sceneheader.CloneFromHeader == 0 ? 0x02000008 : SceneHeaders[sceneheader.CloneFromHeader-1]._InjectOffsetValue);
+                    Helpers.Overwrite32(ref SceneData, sceneheader._InjectOffset, sceneheader.CloneFromHeader == 0 ? 0x00000000 : SceneHeaders[sceneheader.CloneFromHeader-1]._InjectOffsetValue);
                     for (int i = 0; i < Rooms.Count; i++)
                     {
-                        Helpers.Overwrite32(ref _Rooms[i].RoomData, sceneheader._RoomInjectOffset[i], sceneheader.CloneFromHeader == 0 ? 0x03000008 : SceneHeaders[sceneheader.CloneFromHeader - 1]._RoomInjectOffsetValues[i]);
+                        Helpers.Overwrite32(ref _Rooms[i].RoomData, sceneheader._RoomInjectOffset[i], sceneheader.CloneFromHeader == 0 ? 0x00000000 : SceneHeaders[sceneheader.CloneFromHeader - 1]._RoomInjectOffsetValues[i]);
                     }
                 }
             }
@@ -1371,6 +1372,23 @@ namespace SharpOcarina
             ZObjRender objrender = new ZObjRender(key,var,scale);
 
             objrender.Yoff = Yoff;
+
+            if (colors.Count() == 4 || colors.Count() == 8) {
+                for (int i = 0; i < 4; i++) {
+                    int b = colors[i].Contains("0x") ? 16 : 10;
+
+                    objrender.envColor.setIndex(i, Convert.ToInt32(colors[i], b));
+                }
+
+                objrender.useColor = true;
+            }
+            if (colors.Count() == 8) {
+                for (int i = 4; i < 8; i++) {
+                    int b = colors[i].Contains("0x") ? 16 : 10;
+
+                    objrender.primColor.setIndex(i - 4, Convert.ToInt32(colors[i], b));
+                }
+            }
 
             List<byte> ClearBlock = new List<byte>(File.ReadAllBytes(file));
 
@@ -1718,7 +1736,38 @@ namespace SharpOcarina
                                     ushort bank = (ushort)( node.HasKey("Segment") ? node["Segment"].AsInteger.Value : 6 );
                                     string file = rom64.getItem("rom\\object", (int)objectid);
                                     string dl = node.HasKey("DisplayList") ? node["DisplayList"].AsString.ToString() : "";
+                                    string[] env = null;
+                                    string[] prim = null;
                                     uint offset = 0;
+
+                                    if (node.HasKey("EnvColor")) {
+                                        TomlArray intarr = node["EnvColor"].AsArray;
+
+                                        int off = 0;
+                                        env = new string[4];
+                                        foreach(TomlInteger integer in intarr)
+                                            env[off++] = integer.ToString();
+                                    }
+
+                                    if (node.HasKey("PrimColor")) {
+                                        TomlArray intarr = node["PrimColor"].AsArray;
+
+                                        int off = 0;
+                                        prim = new string[4];
+                                        foreach(TomlInteger integer in intarr)
+                                            prim[off++] = integer.ToString();
+                                    }
+
+                                    string[] color = new string[0];
+
+                                    if (env != null && prim != null) {
+                                        color = new string[8];
+                                        env.CopyTo(color, 0);
+                                        prim.CopyTo(color, 4);
+                                    } else if (env != null) {
+                                        color = new string[4];
+                                        env.CopyTo(color, 0);
+                                    }
 
                                     z64romActors.Add((uint)index);
 
@@ -1744,7 +1793,7 @@ namespace SharpOcarina
                                             key, offset, new string[0], new string[0],
                                             scale, 1, animated, 
                                             1, var, animation, 
-                                            yoff, bank, new string[0], file);
+                                            yoff, bank, color, file);
                                     }
                                 }
                             }
@@ -2262,11 +2311,16 @@ namespace SharpOcarina
                 WriteRoomHeader(Room, MainHeader);
 
                 /* Write objects */
-                if (Room.ZObjects.Count != 0)
+                if ((Room.ZObjects.Count + this.ZObjects.Count) != 0)
                 {
                     ObjectOffset = Room.RoomData.Count;
+
+                    foreach (ZUShort Obj in this.ZObjects)
+                        Helpers.Append16(ref Room.RoomData, Obj.Value);
+
                     foreach (ZUShort Obj in Room.ZObjects)
                         Helpers.Append16(ref Room.RoomData, Obj.Value);
+
                     AddPadding(ref Room.RoomData, 8);
                 }
 
@@ -3769,6 +3823,17 @@ namespace SharpOcarina
 
                                 if (spdnum < 8) polytype = (ulong)(polytype | ((ulong)spdnum << 18));
                             }
+                            else if (kp.Key == "#Echo")
+                            {
+                                int echo = 0;
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#echo") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out echo))
+                                {
+                                    MessageBox.Show("Bad usage of Echo tag. It should be #EchoXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    continue;
+                                }
+
+                                if (echo < 64) polytype = (ulong)(polytype | ((ulong)echo << 11));
+                            }
                             else
                                 polytype = polytype | kp.Value;
                         }
@@ -4065,7 +4130,7 @@ namespace SharpOcarina
             }
 
             /* Objects */
-            if (Room.ZObjects.Count != 0)
+            if ((Room.ZObjects.Count + this.ZObjects.Count) != 0)
             {
                 CmdObjectOffset = Room.RoomData.Count;
                 Helpers.Append64(ref Room.RoomData, 0x0B00000000000000);
@@ -4125,9 +4190,9 @@ namespace SharpOcarina
                 Helpers.Overwrite32(ref Room.RoomData, CmdMeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset)); /* Mesh header */
 
             /* ...object list... */
-            if (Room.ZObjects.Count != 0 && CmdObjectOffset != -1)
+            if ((Room.ZObjects.Count + this.ZObjects.Count) != 0 && CmdObjectOffset != -1)
             {
-                Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset, (uint)(0x0B000000 | (Room.ZObjects.Count << 16))); /* Objects */
+                Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset, (uint)(0x0B000000 | ((Room.ZObjects.Count + this.ZObjects.Count) << 16))); /* Objects */
                 Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset + 4, (uint)(0x03000000 | ObjectOffset));
             }
 
@@ -4382,6 +4447,49 @@ namespace SharpOcarina
 
         }
 
+        public class RGBA8 {
+            public int r, g, b, a;
+
+            public int getIndex(int index) {
+                switch (index) {
+                    case 0: return r;
+                    case 1: return g;
+                    case 2: return b;
+                    case 3: return a;
+                    default: return -1;
+                }
+            }
+
+            public void setIndex(int index, int color) {
+                switch (index) {
+                    case 0: r = color; break;
+                    case 1: g = color; break;
+                    case 2: b = color; break;
+                    case 3: a = color; break;
+                    default: 
+                        break;
+                }
+            }
+
+            public RGBA8(int _r, int _g, int _b, int _a) {
+                r = _r;
+                g = _g;
+                b = _b;
+                a = _a;
+            }
+
+            public RGBA8(int _r, int _g, int _b) {
+                r = _r;
+                g = _g;
+                b = _b;
+                a = 0xFF;
+            }
+
+            public RGBA8(int mono) {
+                r = g = b = a = mono;
+            }
+        }
+
         public class ZObjRender
         {
             public UInt16 actor = 0x00;
@@ -4390,6 +4498,9 @@ namespace SharpOcarina
             public UInt16 Yoff = 0;
             public List<SayakaGL.UcodeSimulator.DisplayListStruct> DLists = new List<UcodeSimulator.DisplayListStruct>();
             public List<Limb> Limbs = new List<Limb>();
+            public RGBA8 envColor = new RGBA8(0);
+            public RGBA8 primColor = new RGBA8(0);
+            public bool useColor;
 
             public ZObjRender(UInt16 actor, string var, float scale)
             {

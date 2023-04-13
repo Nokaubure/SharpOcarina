@@ -16,6 +16,7 @@
   <Flag Key="#IndoorEnv" Value="0"></Flag><!-- usage: #IndoorEnv00, where 0 is Environment ID (hex) in SO-->
   <Flag Key="#Direction" Value="00"></Flag><!-- usage: #Direction00, where 00 is direction amount (hex) (0-3F)-->
   <Flag Key="#Speed" Value="0"></Flag><!-- usage: #Speed0, where 0 is speed amount (1 - slow, 2 - mid, 3 - fast, 4 - preserves previous speed)-->
+  <Flag Key="#Echo" Value="00"></Flag><!-- usage: #Echo00, where 00 is echo amount (0 uses room designated echo)-->
 
   <!--Flag Key="#WaterStream" usage: add this tag in conjunction with direction and speed to make link move while in waterboxes -->
   

@@ -1177,17 +1177,16 @@ namespace SharpOcarina
                 /* Else if map_Kd is empty, set it to map_Ka */
                 else if (MatToAdd.map_Kd == null && MatToAdd.map_Ka != null)
                     MatToAdd.map_Kd = MatToAdd.map_Ka;
+                
                 /* Only add the material if both, map_Ka and map_Kd, aren't empty */
                 //if (MatToAdd.map_Ka != null && MatToAdd.map_Kd != null)
-                    Materials.Add(MatToAdd);
+                Materials.Add(MatToAdd);
 
                 if (MatToAdd.map_Ks != null && AdditionalTextures.Find(x => x == MatToAdd.map_Ks) == null)
                 {
                     string LoadPath = Path.IsPathRooted(MatToAdd.map_Ks) == true ? MatToAdd.map_Ks :  _BasePath + MatToAdd.map_Ks;
-                   
-                    AdditionalTextures.Add(Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileName(LoadPath));
-
                     MatToAdd.map_Ks = Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileName(LoadPath);
+                    AdditionalTextures.Add(MatToAdd.map_Ks);
                 }
 
                 MaterialIsOpen = false;
