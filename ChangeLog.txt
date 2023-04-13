@@ -6,7 +6,11 @@
 
 - Added support for azerty and dvorak keyboards
 
-- [In progress] Pressing F key will focus the camera to selected actor
+- Added feature to add objects on all scenes at once via the scene object tab
+
+- Added #Echo collision tag
+
+- Rendered actors can now use prim color and env color (so actors like bronze boulder are now displayed in their correct colors)
 
 - Fixed an issue where if 2 textures had the same filename but different folder it would display incorrectly in SO
 

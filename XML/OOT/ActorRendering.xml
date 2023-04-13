@@ -175,7 +175,7 @@
   <Actor Key="005E" Var="[23]..." Offset="00000870" Scale="1" >object_syokudai</Actor>  <!-- wooden torch -->
   <Actor Key="0105" Var="...." Offset="000003A0" Scale="1" >object_syokudai</Actor>  <!-- poe sisters torch -->
   <Actor Key="01B9" Var="...." Offset="00000950" Scale="0.1" >object_gs</Actor>  <!-- gossip stone  -->
-  <Actor Key="01D2" Var="...." Offset="0000A3B8" Scale="0.4" >gameplay_field_keep</Actor>  <!-- megaton hammer rock  -->
+  <Actor Key="01D2" Var="...." Offset="0000A3B8"  Scale="0.4" Colors="255,255,255,255,255,170,130,255">gameplay_field_keep</Actor>  <!-- megaton hammer rock  -->
   <Actor Key="0059" Var="...." Offset="00000040" Scale="0.1" >object_bwall</Actor>  <!-- dodongo's bombable wall  -->
   <Actor Key="015F" Var="...." Offset="00000B70" Scale="0.1" >object_siofuki</Actor>  <!-- water spout  -->
   <Actor Key="00FC" Var="...." Offset="00010790" Scale="0.1" >object_jya_obj</Actor>  <!-- cobra mirror  -->
