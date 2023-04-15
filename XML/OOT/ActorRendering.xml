@@ -9,11 +9,11 @@
   <Actor Key="000D" Var="...[^2-3]" Scale="0.01" Animated="1">object_po_field</Actor>  <!-- poe (wrong hirearchy)-->
   <Actor Key="000D" Var="...2" Scale="0.01" Animated="1">object_po_composer</Actor>  <!-- poe brother -->
   <Actor Key="000D" Var="...3" Scale="0.01" Animated="1" Hirearchy="2">object_po_composer</Actor>  <!-- poe brother (not rendered?) -->
-  <Actor Key="001D" Var="(^0001)" Scale="0.036" Animated="1">object_peehat</Actor>  <!-- peahat -->
+  <Actor Key="001D" Var="^(?!0001)" Scale="0.036" Animated="1">object_peehat</Actor>  <!-- peahat -->
   <Actor Key="0013" Var="...." Scale="0.005" Animated="1">object_firefly</Actor>  <!-- keese -->
   <Actor Key="0012" Var="...." Scale="0.01875" Animated="1">object_dodongo</Actor>  <!-- dodongo -->
   <Actor Key="001B" Var="FFFE" Scale="0.01" TextureOffsets="00001300,00001700,00001900" Animated="1">object_tite</Actor>  <!-- blue tektite -->
-  <Actor Key="001B" Var="[^(FFFE)]" Scale="0.01" TextureOffsets="00001B00,00001F00,00002100" Animated="1">object_tite</Actor>  <!-- tektite -->
+  <Actor Key="001B" Var="^(?!FFFE)" Scale="0.01" TextureOffsets="00001B00,00001F00,00002100" Animated="1">object_tite</Actor>  <!-- tektite -->
   <Actor Key="00DD" Var="...." Offset="00000470" Scale="0.05" >object_rr</Actor>  <!-- like-like (uh) -->
   <Actor Key="001C" Var="...." Scale="0.03" Animated="1">object_reeba</Actor>  <!-- Leever -->
   <Actor Key="002B" Var="...." Scale="0.01" Animated="1">object_gol</Actor>  <!-- Gohma larva -->
@@ -26,13 +26,13 @@
   <Actor Key="003A" Var="...." Scale="0.005" Animated="1">object_ei</Actor>  <!-- Stinger -->
   <Actor Key="004B" Var="..00" Scale="0.02" Animated="1" Hirearchy="2">object_mb</Actor>  <!-- Ground pounding moblin -->
   <Actor Key="004B" Var="..FF" Scale="0.02" Animated="1">object_mb</Actor>  <!-- Spear moblin -->
-  <Actor Key="0054" Var="...0" Scale="0.01" Animated="1">object_am</Actor>  <!-- Armos -->
+  <Actor Key="0054" Var="...." Scale="0.01" Animated="1">object_am</Actor>  <!-- Armos -->
   <Actor Key="0055" Var="...0" Scale="0.005" Animated="1">object_dekubaba</Actor>  <!-- Deku baba -->
   <Actor Key="0055" Var="...1" Scale="0.0125" Animated="1">object_dekubaba</Actor>  <!-- Deku baba (big) -->
   <Actor Key="0060" Var="...." Scale="0.01" Animated="1">object_dekunuts</Actor>  <!-- Deku scrub -->
   <Actor Key="0063" Var="...." Scale="0.01" Animated="1">object_vali</Actor>  <!-- Bari -->
   <Actor Key="0095" Var="0000" Scale="0.02" Animated="1">object_st</Actor>  <!-- Skullwalltula -->
-  <Actor Key="0095" Var="[^(0000)]" Scale="0.02" Animated="1">custom_skulltula</Actor>  <!-- golden skulltula -->
+  <Actor Key="0095" Var="^(?!0000)" Scale="0.02" Animated="1">custom_skulltula</Actor>  <!-- golden skulltula -->
   <Actor Key="0113" Var="...." Scale="0.012" Animated="1" Hirearchy="4">object_ik</Actor><!-- iron knuckle -->
   
   <Actor Key="000E" Var="...." Scale="0.01" Animated="1" >object_okuta</Actor><!-- octorock -->
@@ -94,7 +94,7 @@
   <Actor Key="000A" Var="[5-8]..." Offsets="00003060,00003C60" Scale="0.005">custom_chest</Actor>  <!-- small chest -->
   <Actor Key="0039" Var="...9" Offset="0003C050" Scale="0.01">gameplay_keep</Actor>  <!-- unbreakable sign -->
   <Actor Key="0039" Var="...A" Offset="0003C5B0" Scale="0.01">gameplay_keep</Actor>  <!-- directional sign -->
-  <Actor Key="0049" Var="...." Offset="000184B0" Scale="0.09">gameplay_keep</Actor>  <!-- fire circle (appears white)-->
+  <Actor Key="0049" Var="...." Offset="000184B0" Scale="0.09" Colors="255,0,0,0,255,220,0,125">gameplay_keep</Actor>  <!-- fire circle (appears white)-->
   <Actor Key="0015" Var="...[0-2]" Offset="00042440" Yoff="10" Scale="0.015">gameplay_keep</Actor>  <!-- rupee (appears yellow) -->
   <Actor Key="0015" Var="...3" Offset="000000E0" Scale="0.5">object_gi_heart</Actor>  <!-- heart  -->
   <!--Actor Key="0015" Var="...[45]" Offset="0003f070" Scale="0.03">gameplay_keep</Actor-->  <!-- bomb? -->
@@ -110,10 +110,10 @@
   <Actor Key="012A" Var="...2" Offset="00006610" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- yellow eye switch -->
   <Actor Key="012A" Var="...[3-4]" Offset="00006D10" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- crystal switch -->
   <Actor Key="0127" Var="...." Offset="000009E0" Scale="0.1">object_bombiwa</Actor>  <!-- bombable boulder -->
-  <Actor Key="00FF" Var="...0" Offset="00004CD0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
-  <Actor Key="00FF" Var="...1" Offset="00004CD0" Scale="0.1666667">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
-  <Actor Key="00FF" Var="...2" Offset="00004CD0" Scale="0.2">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
-  <Actor Key="00FF" Var="...3" Offset="00004CD0" Scale="0.33333331">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="00FF" Var="...0" Offset="00004CD0" Scale="0.1" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="00FF" Var="...1" Offset="00004CD0" Scale="0.1666667" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="00FF" Var="...2" Offset="00004CD0" Scale="0.2" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="00FF" Var="...3" Offset="00004CD0" Scale="0.33333331" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
   <Actor Key="012D" Var="...[0-1]" Offset="00000210" Scale="0.1">object_d_hsblock</Actor>  <!-- hookshot tower -->
   <Actor Key="012D" Var="...2" Offset="00000470" Scale="0.1">object_d_hsblock</Actor>  <!-- hookshot target -->
   <Actor Key="01BB" Var="0..." Offset="00007130" Scale="0.1">object_mizu_objects</Actor>  <!-- water temple metal gate -->
@@ -153,7 +153,7 @@
   <Actor Key="000F" Var="[^1]..." Offset="000061B0" Scale="0.1">object_ydan_objects</Actor>  <!-- spiderweb covering hole -->
   <Actor Key="000F" Var="1..." Offset="00005F40" Scale="0.1">object_ydan_objects</Actor>  <!-- spiderweb-->
   <Actor Key="0080" Var="...." Offset="00001400" Scale="0.1">object_trap</Actor>  <!-- spike trap-->
-  <Actor Key="008D" Var="...." Offset="0000DB20" Scale="0.1" Textures="000173D0,00017BD0">object_hidan_objects</Actor>  <!-- large flame wall-->
+  <Actor Key="008D" Var="...." Offset="0000DB20" Scale="0.1" Textures="000173D0,00017BD0" Colors="255,0,0,0,255,220,0,125">object_hidan_objects</Actor>  <!-- large flame wall-->
   <Actor Key="0092" Var="...." Offset="000013C0" Scale="1">object_heavy_object</Actor>  <!-- golden gauntlets rock-->
   <Actor Key="0108" Var="...[^1]" Offset="00001220" Scale="0.1">object_umajump</Actor>  <!-- horse fence -->
   <Actor Key="0110" Var="...." Offset="00005290" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- small liftable crate -->
@@ -189,7 +189,7 @@
   <Actor Key="002E" Var="...." Offsets="000030D0" Scale="1">custom_slidingdoor</Actor>  <!-- sliding door-->
   <Actor Key="0023" Var=".(00|0C|10)." Offset="00000130" Scale="1">custom_blackplane</Actor>  <!-- blackplane  -->
   <Actor Key="0023" Var=".(04|08|14|18)." Offset="00000040" Scale="1">custom_blackplane</Actor>  <!-- blackplane  -->
-  <Actor Key="000C" Var="...." Offset="0000DA80" Scale="0.12" TextureOffsets="00015D20">object_hidan_objects</Actor>  <!-- proximity activated fire wall  -->
+  <Actor Key="000C" Var="...." Offset="0000DA80" Scale="0.12" TextureOffsets="00015D20" Colors="255,0,0,255,255,255,0,150">object_hidan_objects</Actor>  <!-- proximity activated fire wall  -->
   <Actor Key="0019" Var="...." Animated="1" Scale="0.01">object_niw</Actor>  <!-- cucco  -->
   <Actor Key="0021" Var="...." Animated="1"  Scale="0.01" Hirearchy="1">gameplay_keep</Actor>  <!-- fish  (renders an arrow) -->
   <Actor Key="0040" Var="...0" Offset="0000BBF0" Scale="0.1">object_hidan_objects</Actor>  <!-- megaton hammer statue lower  -->
@@ -320,13 +320,26 @@
   <Actor Key="0159" Var="...." Scale="0.1" Offset="0000E8D0">object_jya_obj</Actor> <!-- Light Blocking Rock (Spirit Temple) -->
   <Actor Key="015C" Var="...." Scale="0.1" Offset="000018B0">object_spot18_obj</Actor> <!-- Giant Three Sided Goron Statue -->
   <Actor Key="017B" Var="...." Scale="0.01" Animated="1">object_ka</Actor> <!-- Scarecrow -->
-  <Actor Key="017D" Var="...." Scale="0.2" Offset="00004CD0">gameplay_dangeon_keep</Actor> <!-- Push Block (Has Savepoint) -->
+  <Actor Key="017D" Var="...." Scale="0.2" Offset="00004CD0" TextureOffsets="00003350">gameplay_dangeon_keep</Actor> <!-- Push Block (Has Savepoint) -->
   <Actor Key="006C" Var="...." Scale="0.01" Offset="00001BD0">object_toki_objects</Actor> <!-- Mastersword -->
-
-
-
-  
-
-  <!-- Actor Key="0068" Var="...." Offset="000024E0" Scale="0.1">object_mori_hineri1a</Actor>Twisted room-->
+	<!-- Actor Key="005D" Var="...." Scale="0.01" Offset="000001A0" Colors="0,125,255,255,125,255,255,125">object_warp1</--> <!-- Blue warp -->
+  <Actor Key="0068" Var="...." Offset="00001980" Scale="0.1">object_mori_hineri1a</Actor> <!--Twisted room-->
+  <Actor Key="0008" Var="83F0" Offset="00000440" Scale="0.0075" Colors="255,0,0,125,255,200,0,125">gameplay_dangeon_keep</Actor> <!--candle flame -->
+  <Actor Key="0008" Var="...0" Offset="0004D4E0" Scale="0.0075" Colors="255,0,0,125,255,200,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...1" Offset="0004D4E0" Scale="0.0075" Colors="255,200,0,125,255,0,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...2" Offset="0004D4E0" Scale="0.0075" Colors="0,170,255,125,0,0,255,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...3" Offset="0004D4E0" Scale="0.0075" Colors="170,255,0,125,0,150,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...4" Offset="0004D4E0" Scale="0.0040" Colors="255,200,0,125,255,0,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...5" Offset="0004D4E0" Scale="0.0075" Colors="255,200,0,125,255,0,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...6" Offset="0004D4E0" Scale="0.0075" Colors="170,255,0,125,200,0,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...7" Offset="0004D4E0" Scale="0.0075" Colors="0,170,255,125,0,0,255,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...8" Offset="0004D4E0" Scale="0.0075" Colors="255,0,170,125,200,0,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...9" Offset="0004D4E0" Scale="0.0075" Colors="255,255,170,125,255,50,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...A" Offset="0004D4E0" Scale="0.0075" Colors="255,255,170,125,255,255,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...B" Offset="0004D4E0" Scale="0.0075" Colors="255,255,170,125,100,255,0,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...C" Offset="0004D4E0" Scale="0.0075" Colors="255,170,255,125,255,0,100,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...D" Offset="0004D4E0" Scale="0.0075" Colors="255,170,255,125,100,0,255,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...E" Offset="0004D4E0" Scale="0.0075" Colors="170,255,255,125,0,0,255,125">gameplay_keep</Actor> <!--flame -->
+  <Actor Key="0008" Var="...F" Offset="0004D4E0" Scale="0.0075" Colors="170,255,255,125,0,150,255,125">gameplay_keep</Actor> <!--flame -->
   <!-- actor 018D  840 floor 1190 gate-->
 </Table>

@@ -526,12 +526,18 @@ namespace SharpOcarina.SayakaGL
 
             foreach (DLCommandStruct command in ThisDL.Commands)
             {
-                if (ThisDL.IsTransparent == false && command.ID == 0xFA && (command.w1 & 0x000000FF) != 0xFF)
+                // the dlist is transparent if prim color transparency is below 255
+                if (ThisDL.IsTransparent == false && (command.ID == 0xFA) && (command.w1 & 0x000000FF) != 0xFF)
                 {
                     ThisDL.IsTransparent = true;
-                   
-                 //   break;
+
                 }
+                /*
+                if (ThisDL.IsTransparent == false && command.ID == 0xF5 && ((command.w0 & 0x0E0000 >> 21) == 0x03 || ((command.w0 & 0x0E0000 >> 21) == 0x0 && (command.w0 & 0x010000 >> 20) == 0x3)))
+                {
+                    ThisDL.IsTransparent = true;
+
+                }*/
 
                 if (ThisDL.Animation == 0 && command.ID == 0xDE && ((command.w1 & 0xFF000000) >> 24) >= 8 && ((command.w1 & 0xFF000000) >> 24) <= 0xE)
                 {
@@ -1674,7 +1680,7 @@ namespace SharpOcarina.SayakaGL
                 if (currentfilename.Contains(".zobj"))
                 {
                     NImageUtil.ConvertTexture((byte)NGraphics.Textures[ActiveTexture].Format,
-                    GameHandler.RAM[0x6].Data,
+                    GameHandler.RAM[currentfilename.Contains("gameplay_dangeon_keep") || currentfilename.Contains("gameplay_field_keep") ? 0x5 : currentfilename.Contains("gameplay_keep") ? 0x4 : 0x6].Data,
                     textureoffsets[TextureSegment] & 0x00FFFFFF,
                     ref TextureBuffer,
                     NGraphics.Textures[ActiveTexture].Width,
