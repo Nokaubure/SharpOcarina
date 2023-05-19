@@ -26,7 +26,7 @@
   <Actor Key="003A" Var="...." Scale="0.005" Animated="1">object_ei</Actor>  <!-- Stinger -->
   <Actor Key="004B" Var="..00" Scale="0.02" Animated="1" Hirearchy="2">object_mb</Actor>  <!-- Ground pounding moblin -->
   <Actor Key="004B" Var="..FF" Scale="0.02" Animated="1">object_mb</Actor>  <!-- Spear moblin -->
-  <Actor Key="0054" Var="...." Scale="0.01" Animated="1">object_am</Actor>  <!-- Armos -->
+	<!--Actor Key="0054" Var="...." Scale="0.01" Animated="1">object_am</Actor-->  <!-- Armos -->
   <Actor Key="0055" Var="...0" Scale="0.005" Animated="1">object_dekubaba</Actor>  <!-- Deku baba -->
   <Actor Key="0055" Var="...1" Scale="0.0125" Animated="1">object_dekubaba</Actor>  <!-- Deku baba (big) -->
   <Actor Key="0060" Var="...." Scale="0.01" Animated="1">object_dekunuts</Actor>  <!-- Deku scrub -->

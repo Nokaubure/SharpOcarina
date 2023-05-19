@@ -3913,10 +3913,25 @@ namespace SharpOcarina
 
                         DisableStartTime.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].StartTime == 0xFFFF;
 
+                        //fix time when importing old scenes
+                        if (!DisableStartTime.Checked)
+                        {
+                            byte hours = (byte)((CurrentScene.Rooms[RoomList.SelectedIndex].StartTime & 0xFF00) >> 8);
+                            byte minutes = (byte)((CurrentScene.Rooms[RoomList.SelectedIndex].StartTime & 0x00FF));
+                            while (hours > 23) hours -= 24;
+                            while (minutes > 59) minutes -= 59;
 
+                            TimeHour.Value = hours;
+                            TimeMinute.Value = minutes;
 
-                        TimeHour.Value = (DisableStartTime.Checked) ? 0 : ((CurrentScene.Rooms[RoomList.SelectedIndex].StartTime & 0xFF00) >> 8);
-                        TimeMinute.Value = (DisableStartTime.Checked) ? 0 : ((CurrentScene.Rooms[RoomList.SelectedIndex].StartTime & 0x00FF));
+                            CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = minutes | (hours << 8);
+                        }
+                        else
+                        {
+                            TimeHour.Value = 0;
+                            TimeMinute.Value = 0;
+
+                        }
 
                         SkyboxCheckBox.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].DisableSkybox;
                         SunmoonCheckBox.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].DisableSunMoon;
@@ -8587,7 +8602,7 @@ namespace SharpOcarina
                     foreach (ObjFile.Triangle tri in group.Triangles)
                     {
                         ObjFile.Material material = room.ObjModel.GetMaterial(tri.MaterialName);
-                        if (material.map_Ks != null)
+                        if (material != null && material.map_Ks != null)
                         {
                          
                             int multitextindex = -1;

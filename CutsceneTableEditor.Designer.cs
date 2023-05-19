@@ -49,6 +49,7 @@
             this.saveROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NumCutscenesLabel = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -182,7 +183,8 @@
             this.OpenRomToolStripMenuItem,
             this.saveROMToolStripMenuItem,
             this.openFileToolStripMenuItem,
-            this.saveFileToolStripMenuItem});
+            this.saveFileToolStripMenuItem,
+            this.saveBinaryToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -219,6 +221,13 @@
             this.saveFileToolStripMenuItem.Text = "Save ZTables File...";
             this.saveFileToolStripMenuItem.Visible = false;
             this.saveFileToolStripMenuItem.Click += new System.EventHandler(this.saveFileToolStripMenuItem_Click);
+            // 
+            // saveBinaryToolStripMenuItem
+            // 
+            this.saveBinaryToolStripMenuItem.Name = "saveBinaryToolStripMenuItem";
+            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.saveBinaryToolStripMenuItem.Text = "Save binary...";
+            this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
             // 
             // NumCutscenesLabel
             // 
@@ -290,5 +299,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Fadeout_Animation;
         private System.Windows.Forms.DataGridViewTextBoxColumn Debug_Name;
         private System.Windows.Forms.Button Save;
+        private System.Windows.Forms.ToolStripMenuItem saveBinaryToolStripMenuItem;
     }
 }

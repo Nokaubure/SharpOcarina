@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using Tommy;
 
 namespace SharpOcarina
 {
@@ -27,21 +29,65 @@ namespace SharpOcarina
             XmlNodeList nodes = XMLreader.getXMLNodes("OOT/SceneNames", "Scene");
             SceneNames = new Dictionary<byte, string>();
             EntranceScenes = new Dictionary<ushort, byte>();
-            foreach (XmlNode node in nodes)
+            SceneNames = new Dictionary<byte, string>();
+            if (!rom64.isSet())
             {
-                XmlAttributeCollection nodeAtt = node.Attributes;
-                if (nodeAtt["Key"] != null)
+                foreach (XmlNode node in nodes)
                 {
-                    SceneNames.Add(Convert.ToByte(nodeAtt["Key"].Value, 16), node.InnerText);
-                  //  Console.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
+                    XmlAttributeCollection nodeAtt = node.Attributes;
+                    if (nodeAtt["Key"] != null)
+                    {
+                        SceneNames.Add(Convert.ToByte(nodeAtt["Key"].Value, 16), node.InnerText);
+                        //  Console.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
+                    }
                 }
+            }
+            else
+            {
+                List<string> scenes = rom64.getList("rom\\scene");
+
+                foreach (string scene in scenes)
+                {
+                    string scene2 = Path.GetFileName(scene);
+                    if (!scene2.Contains("-")) continue;
+                    if (!scene2.Contains("x")) continue;
+                    string s = scene2.Substring(0, scene2.IndexOf("-"));
+                    string name = scene2.Substring(scene2.IndexOf("-") + 1);
+                    s = s.Replace("0x", "");
+                    //byte sceneid;
+                    if (!byte.TryParse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte sceneid)) continue;
+                    SceneNames.Add(sceneid, name);
+                }
+                scenes = rom64.getList("rom\\scene\\.vanilla");
+
+                foreach (string scene in scenes)
+                {
+
+                    string scene2 = Path.GetFileName(scene);
+                    if (!scene2.Contains("-")) continue;
+                    if (!scene2.Contains("x")) continue;
+                    string s = scene2.Substring(0, scene2.IndexOf("-"));
+                    string name = scene2.Substring(scene2.IndexOf("-") + 1);
+                    s = s.Replace("0x", "");
+                    //byte sceneid;
+                    if (!byte.TryParse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte sceneid)) continue;
+                    if (SceneNames.ContainsKey(sceneid)) continue;
+                    SceneNames.Add(sceneid, name);
+                }
+
             }
 
             if (MainForm.GlobalROM != "")
             {
                 OpenRomToolStripMenuItem.Visible = false;
                 OpenROM(MainForm.GlobalROM);
-            }
+            }/*
+            else if (rom64.isSet())
+            {
+                OpenRomToolStripMenuItem.Visible = false;
+                OpenZ64rom();
+
+            }*/
         }
 
         private void Close_MouseClick(object sender, MouseEventArgs e)
@@ -95,7 +141,7 @@ namespace SharpOcarina
 
             //building a way to link entrances to scene names
             int offset = (int)rom.EntranceTableStart;
-            while (offset < (int)rom.EntranteTableEnd - 1)
+            while (EntranceScenes.Count == 0 && offset < (int)rom.EntranteTableEnd - 1)
             {
                 EntranceScenes.Add((ushort)((offset - (int)rom.EntranceTableStart) / 4), EntranceTable[offset]);
                 offset += 4;
@@ -113,6 +159,28 @@ namespace SharpOcarina
                 offset += 8;
             }
             RefreshRowCount();
+        }
+
+        public void OpenZ64rom()
+        {
+            //not implemented
+
+            TomlTable toml = rom64.parseToml(rom64.getPath() + "\\src\\spawn_cutscene_table.toml");
+            TomlNode[] nodes = toml.Children.ToArray();
+            string[] keys = toml.Keys.ToArray();
+
+
+            saveFileToolStripMenuItem.Visible = false;
+            saveROMToolStripMenuItem.Visible = true;
+            CutsceneGrid.AllowUserToAddRows = false;
+            CutsceneGrid.AllowUserToDeleteRows = false;
+            string scenename = "";
+            byte scenenum = 0;
+            CutsceneGrid.Rows.Clear();
+
+            OldFileName = openFileDialog1.FileName;
+            CutsceneGrid.Enabled = true;
+
         }
 
         private void saveROMToolStripMenuItem_Click(object sender, EventArgs e)
@@ -154,16 +222,7 @@ namespace SharpOcarina
                 int TableOffset = (int)rom.CutsceneTableStart;
                 BWS.Seek(TableOffset, SeekOrigin.Begin);
 
-                List<Byte> Output = new List<byte>();
-                for (int i = 0; i < CutsceneGrid.RowCount - 1; i++)
-                {
-                    Output.AddRange(BitConverter.GetBytes(Convert.ToUInt16(CutsceneGrid.Rows[i].Cells[1].Value)).Reverse());
-                    Output.Add(Convert.ToByte(CutsceneGrid.Rows[i].Cells[2].Value));
-                    Output.Add(Convert.ToByte(CutsceneGrid.Rows[i].Cells[3].Value));
-                    Console.WriteLine(CutsceneGrid.Rows[i].Cells[4].Value + " p ");
-                    Console.WriteLine(Convert.ToUInt32(CutsceneGrid.Rows[i].Cells[4].Value).ToString("X"));
-                    Output.AddRange(BitConverter.GetBytes(Convert.ToUInt32(CutsceneGrid.Rows[i].Cells[4].Value)).Reverse());
-                }
+                List<Byte> Output = GenerateCutsceneData();
                 BWS.Write(Output.ToArray());
 
                 BWS.Close();
@@ -291,6 +350,44 @@ namespace SharpOcarina
         {
             MainForm.cutscenetable_visible = false;
 
+        }
+
+        private void saveBinaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.CheckFileExists = false;
+            saveFileDialog1.Filter = "Save file binary (*.bin)|*.bin|All Files (*.*)|*.*";
+            saveFileDialog1.CreatePrompt = true;
+
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (IsFileLocked(saveFileDialog1.FileName))
+                    MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                {
+                    List<Byte> CutsceneData = GenerateCutsceneData();
+                    File.WriteAllBytes(saveFileDialog1.FileName, CutsceneData.ToArray());
+                    MessageBox.Show("Done! File Size: " + CutsceneData.Count.ToString("X") + " bytes", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+        }
+
+        private List<byte> GenerateCutsceneData()
+        {
+
+            List<Byte> Output = new List<byte>();
+            for (int i = 0; i < CutsceneGrid.RowCount - 1; i++)
+            {
+                Output.AddRange(BitConverter.GetBytes(Convert.ToUInt16(CutsceneGrid.Rows[i].Cells[1].Value)).Reverse());
+                Output.Add(Convert.ToByte(CutsceneGrid.Rows[i].Cells[2].Value));
+                Output.Add(Convert.ToByte(CutsceneGrid.Rows[i].Cells[3].Value));
+                Console.WriteLine(CutsceneGrid.Rows[i].Cells[4].Value + " p ");
+                Console.WriteLine(Convert.ToUInt32(CutsceneGrid.Rows[i].Cells[4].Value).ToString("X"));
+                Output.AddRange(BitConverter.GetBytes(Convert.ToUInt32(CutsceneGrid.Rows[i].Cells[4].Value)).Reverse());
+            }
+
+            return Output;
         }
 
         private void refresh(int column, int row)

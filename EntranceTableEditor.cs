@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using Tommy;
 
 namespace SharpOcarina
 {
@@ -17,6 +19,7 @@ namespace SharpOcarina
         String OldFileName = "";
         Boolean isrom = false, isztable = false;
         Dictionary<byte,string> SceneNames;
+        static List<string> TransitionTypes = new List<string> { "Wipe", "Triforce", "FadeBlack", "FadeWhite", "FadeBlackFast", "FadeWhiteFast", "FadeBlackSlow", "FadeWhiteSlow", "WipeFast", "FillWhite2", "FillWhite", "Instant", "FillBrown", "FadeWhiteCsDelayed", "Sandstorm", "SandstormEnd", "FillBlack", "FadeWhiteInstant", "FadeGreen", "FadeBlue", "Circle", "Warp" };
         public MainForm mainform;
 
         public EntranceTableEditor()
@@ -27,20 +30,63 @@ namespace SharpOcarina
 
             XmlNodeList nodes = XMLreader.getXMLNodes(gameprefix + "SceneNames", "Scene");
             SceneNames = new Dictionary<byte, string>();
-            foreach (XmlNode node in nodes)
+            if (!rom64.isSet())
             {
-                XmlAttributeCollection nodeAtt = node.Attributes;
-                if (nodeAtt["Key"] != null)
+                foreach (XmlNode node in nodes)
                 {
-                    SceneNames.Add(Convert.ToByte(nodeAtt["Key"].Value, 16), node.InnerText);
-                  //  Console.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
+                    XmlAttributeCollection nodeAtt = node.Attributes;
+                    if (nodeAtt["Key"] != null)
+                    {
+                        SceneNames.Add(Convert.ToByte(nodeAtt["Key"].Value, 16), node.InnerText);
+                        //  Console.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
+                    }
                 }
+            }
+            else
+            {
+                List<string> scenes = rom64.getList("rom\\scene");
+
+                foreach (string scene in scenes)
+                {
+                    string scene2 = Path.GetFileName(scene);
+                    if (!scene2.Contains("-")) continue;
+                    if (!scene2.Contains("x")) continue;
+                    string s = scene2.Substring(0,scene2.IndexOf("-"));
+                    string name = scene2.Substring(scene2.IndexOf("-")+1);
+                    s = s.Replace("0x", "");
+                    //byte sceneid;
+                    if (!byte.TryParse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte sceneid)) continue;
+                    SceneNames.Add(sceneid, name);
+                }
+                scenes = rom64.getList("rom\\scene\\.vanilla");
+
+                foreach (string scene in scenes)
+                {
+                
+                    string scene2 = Path.GetFileName(scene);
+                    if (!scene2.Contains("-")) continue;
+                    if (!scene2.Contains("x")) continue;
+                    string s = scene2.Substring(0, scene2.IndexOf("-"));
+                    string name = scene2.Substring(scene2.IndexOf("-") + 1);
+                    s = s.Replace("0x", "");
+                    //byte sceneid;
+                    if (!byte.TryParse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out byte sceneid)) continue;
+                    if (SceneNames.ContainsKey(sceneid)) continue;
+                    SceneNames.Add(sceneid, name);
+                }
+
             }
 
             if (MainForm.GlobalROM != "")
             {
                 OpenRomToolStripMenuItem.Visible = false;
                 OpenROM(MainForm.GlobalROM);
+            }
+            else if (rom64.isSet())
+            {
+                OpenRomToolStripMenuItem.Visible = false;
+                OpenZ64rom();
+               
             }
         }
 
@@ -93,7 +139,7 @@ namespace SharpOcarina
             saveFileDialog1.Filter = "Ztables binary file (*.bin)|*.bin|All Files (*.*)|*.*";
             saveFileDialog1.CreatePrompt = true;
 
-            EntranceGrid.Sort(EntranceGrid.Columns[0], ListSortDirection.Ascending);
+            
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -101,16 +147,8 @@ namespace SharpOcarina
                     MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {
-                    List<Byte> Output = new List<byte>();
-                    for (int i = 0; i < EntranceGrid.RowCount; i++)
-                    {
-                        Output.Add(Convert.ToByte(EntranceGrid.Rows[i].Cells[1].Value));
-                        Output.Add(Convert.ToByte(EntranceGrid.Rows[i].Cells[2].Value));
-                        ushort variable = (ushort) (0x0000 | (Convert.ToByte(EntranceGrid.Rows[i].Cells[3].Value) << 15) | (Convert.ToByte(EntranceGrid.Rows[i].Cells[6].Value) << 14)
-                             | (Convert.ToUInt16(EntranceGrid.Rows[i].Cells[4].Value) << 7) | (Convert.ToUInt16(EntranceGrid.Rows[i].Cells[5].Value)));
-                        Output.AddRange(BitConverter.GetBytes(variable).Reverse());
-                    }
-                    File.WriteAllBytes(saveFileDialog1.FileName, Output.ToArray());
+                    List<Byte> EntranceData = GenerateEntranceData();
+                    File.WriteAllBytes(saveFileDialog1.FileName, EntranceData.ToArray());
                     MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
@@ -165,6 +203,46 @@ namespace SharpOcarina
             RefreshRowCount();
         }
 
+        public void OpenZ64rom()
+        {
+            TomlTable toml = rom64.parseToml(rom64.getPath() + "\\src\\entrance_table.toml");
+            TomlNode[] nodes = toml.Children.ToArray();
+            string[] keys = toml.Keys.ToArray();
+
+
+            saveFileToolStripMenuItem.Visible = false;
+            saveROMToolStripMenuItem.Visible = true;
+            EntranceGrid.AllowUserToAddRows = false;
+            EntranceGrid.AllowUserToDeleteRows = false;
+            bool continuebgm, titlecard;
+            byte fadein, fadeout;
+            byte scene, entrance;
+            string scenename = "";
+            EntranceGrid.Rows.Clear();
+
+            OldFileName = openFileDialog1.FileName;
+
+            EntranceGrid.Enabled = true;
+            int i = 0;
+            foreach(TomlNode node in nodes)
+            {
+                scene = (byte)node.Children.ToArray()[0].AsInteger.Value;
+                entrance = (byte)node.Children.ToArray()[1].AsInteger.Value;
+                continuebgm = node.Children.ToArray()[2].AsBoolean;
+                titlecard = node.Children.ToArray()[3].AsBoolean;
+                fadein = (byte) TransitionTypes.FindIndex(x => x == node.Children.ToArray()[4].AsString);
+                fadeout = (byte)TransitionTypes.FindIndex(x => x == node.Children.ToArray()[5].AsString);
+
+
+                if (!SceneNames.TryGetValue(scene, out scenename)) scenename = "Unknown";
+
+                EntranceGrid.Rows.Add(i, scene, entrance, continuebgm, fadein, fadeout, titlecard, scenename);
+                i++;
+            }
+            RefreshRowCount();
+
+        }
+
         private void saveROMToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MainForm.GlobalROM != "")
@@ -195,17 +273,8 @@ namespace SharpOcarina
                 int TableOffset = (int)rom.EntranceTableStart;
                 BWS.Seek(TableOffset, SeekOrigin.Begin);
 
-                EntranceGrid.Sort(EntranceGrid.Columns[0], ListSortDirection.Ascending);
+                List<Byte> Output = GenerateEntranceData();
 
-                List<Byte> Output = new List<byte>();
-                for (int i = 0; i < EntranceGrid.RowCount; i++)
-                {
-                    Output.Add(Convert.ToByte(EntranceGrid.Rows[i].Cells[1].Value));
-                    Output.Add(Convert.ToByte(EntranceGrid.Rows[i].Cells[2].Value));
-                    ushort variable = (ushort)(0x0000 | (Convert.ToByte(EntranceGrid.Rows[i].Cells[3].Value) << 15) | (Convert.ToByte(EntranceGrid.Rows[i].Cells[6].Value) << 14)
-                         | (Convert.ToUInt16(EntranceGrid.Rows[i].Cells[4].Value) << 7) | (Convert.ToUInt16(EntranceGrid.Rows[i].Cells[5].Value)));
-                    Output.AddRange(BitConverter.GetBytes(variable).Reverse());
-                }
                 BWS.Write(Output.ToArray());
 
                 BWS.Close();
@@ -233,7 +302,7 @@ namespace SharpOcarina
             {
                 EntranceGrid.Rows[i].Cells[0].Value = i;
             }
-           // EntranceGrid.Rows[EntranceGrid.RowCount - 1].Cells[0].Value = "";
+            // EntranceGrid.Rows[EntranceGrid.RowCount - 1].Cells[0].Value = "";
         }
 
             private bool IsFileLocked(string file)
@@ -315,7 +384,15 @@ namespace SharpOcarina
 
         private void Save_Click(object sender, EventArgs e)
         {
-            saveROMToolStripMenuItem_Click(new object(), new EventArgs());
+            if (!rom64.isSet())
+            {
+                saveROMToolStripMenuItem_Click(new object(), new EventArgs());
+            }
+            else
+            {
+                sendToZ64romProjectToolStripMenuItem_Click(new object(), new EventArgs());
+            }
+            
         }
 
         private void refresh(int column, int row) //TODO 0.92
@@ -348,12 +425,97 @@ namespace SharpOcarina
             }
         }
 
+        private void saveBinaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.CheckFileExists = false;
+            saveFileDialog1.Filter = "Save file binary (*.bin)|*.bin|All Files (*.*)|*.*";
+            saveFileDialog1.CreatePrompt = true;
+
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (IsFileLocked(saveFileDialog1.FileName))
+                    MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                {
+                    List<Byte> EntranceData = GenerateEntranceData();
+                    File.WriteAllBytes(saveFileDialog1.FileName, EntranceData.ToArray());
+                    MessageBox.Show("Done! File Size: " + EntranceData.Count.ToString("X") + " bytes", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+        }
+
+        private List<byte> GenerateEntranceData()
+        {
+            EntranceGrid.Sort(EntranceGrid.Columns[0], ListSortDirection.Ascending);
+
+            List<Byte> Output = new List<byte>();
+            for (int i = 0; i < EntranceGrid.RowCount; i++)
+            {
+                Output.Add(Convert.ToByte(EntranceGrid.Rows[i].Cells[1].Value));
+                Output.Add(Convert.ToByte(EntranceGrid.Rows[i].Cells[2].Value));
+                ushort variable = (ushort)(0x0000 | (Convert.ToByte(EntranceGrid.Rows[i].Cells[3].Value) << 15) | (Convert.ToByte(EntranceGrid.Rows[i].Cells[6].Value) << 14)
+                     | (Convert.ToUInt16(EntranceGrid.Rows[i].Cells[4].Value) << 7) | (Convert.ToUInt16(EntranceGrid.Rows[i].Cells[5].Value)));
+                Output.AddRange(BitConverter.GetBytes(variable).Reverse());
+            }
+
+            return Output;
+        }
+
+        private void sendToZ64romProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            EntranceGrid.Sort(EntranceGrid.Columns[0], ListSortDirection.Ascending);
+
+            string path = "";
+
+            if (rom64.isSet())
+                path = (rom64.getPath() + "\\src\\entrance_table.toml");
+            else
+            {
+                saveFileDialog1.CheckFileExists = true;
+                saveFileDialog1.Filter = "z64rom project (z64project.toml)|z64project.toml|All Files (*.*)|*.*";
+                saveFileDialog1.CreatePrompt = true;
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    path = saveFileDialog1.FileName;
+
+                    if (path.Contains("z64project.toml"))
+                        path = Path.GetDirectoryName(path) + "\\src\\entrance_table.toml";
+                    else
+                    {
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+            if (File.Exists(path)) File.Delete(path);
+
+            StreamWriter sw = File.CreateText(path);
+
+            sw.Write("# Transition Types:\r\n\t# Wipe\r\n\t# Triforce\r\n\t# FadeBlack\r\n\t# FadeWhite\r\n\t# FadeBlackFast\r\n\t# FadeWhiteFast\r\n\t# FadeBlackSlow\r\n\t# FadeWhiteSlow\r\n\t# WipeFast\r\n\t# FillWhite2\r\n\t# FillWhite\r\n\t# Instant\r\n\t# FillBrown\r\n\t# FadeWhiteCsDelayed\r\n\t# Sandstorm\r\n\t# SandstormEnd\r\n\t# FillBlack\r\n\t# FadeWhiteInstant\r\n\t# FadeGreen\r\n\t# FadeBlue\r\n\t# Circle\r\n\t# Warp\r\n\r\n# Array Items: [ scene_id, spawn_id, continue_bgm, title_card, fade_in, fade_out ]\r\n");
+
+            for (int i = 0; i < EntranceGrid.Rows.Count; i++)
+            {
+                sw.Write("0x" + i.ToString("X4") + "          = [ 0x" + Convert.ToByte(EntranceGrid.Rows[i].Cells[1].Value).ToString("X2") +
+                         ", 0x" + Convert.ToByte(EntranceGrid.Rows[i].Cells[2].Value).ToString("X2") + 
+                         ", " + (Convert.ToByte(EntranceGrid.Rows[i].Cells[3].Value) == 1 ? "true" : "false") +
+                         ", " + (Convert.ToByte(EntranceGrid.Rows[i].Cells[6].Value) == 1 ? "true" : "false") +
+                         ", \"" + TransitionTypes[Convert.ToByte(EntranceGrid.Rows[i].Cells[4].Value)] +
+                         "\", \"" + TransitionTypes[Convert.ToByte(EntranceGrid.Rows[i].Cells[5].Value)] + "\" ]\r\n");
+            }
+
+            sw.Close();
+
+        }
         private void EntranceTableEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
             MainForm.entrancetable_visible = false;
 
 
-            if (MainForm.GlobalROM != "")
+            if (MainForm.GlobalROM != "" || rom64.isSet())
             {
                 mainform.RefreshExitCache();
             }

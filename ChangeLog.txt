@@ -1,12 +1,28 @@
 ///CHANGELOG///
 
 --------------
+---1.42
+--------------
+- Entrance table editor now support z64rom, they will automatically open the .toml files in z64rom mode, and can also export tables to .toml format
+
+- Added "Save to binary" options in entrance table editor and cutscene table editor
+
+- Fixed an issue where opening rom 2 times without closing cutscene table editor would prompt an error
+
+- Fixed an issue with the starting room time when importing old scenes
+
+- [TODO] Fixed an issue where exits could not be deleted
+
+
+
+
+--------------
 ---1.41
 --------------
 
-- Added support for azerty and dvorak keyboards
-
 - Added feature to add objects on all scenes at once via the scene object tab
+
+- Added support for azerty and dvorak keyboards
 
 - Added #Echo collision tag
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Manifest version="1.40">
+<Manifest version="1.41">
   <CheckInterval>99999999</CheckInterval>
   <RemoteConfigUri>http://nexus.inpureprojects.info/noka/sharpocarina/update.xml</RemoteConfigUri>
   <SecurityToken>FEF0FEF0-A1A2-B3B4-C5C6-AA15DDDD15AB</SecurityToken>
   <BaseUri>http://nexus.inpureprojects.info/noka/sharpocarina/</BaseUri>
-  <Payload>Updates/1.40.zip</Payload>
+  <Payload>Updates/1.41.zip</Payload>
 </Manifest>

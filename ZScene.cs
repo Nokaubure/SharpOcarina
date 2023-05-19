@@ -372,6 +372,25 @@ namespace SharpOcarina
                 {
                     group.Name = group.Name.Replace("TAG_", "#");
 
+                    string s = group.Name.Substring(group.Name.ToLower().IndexOf("#room") + 5);
+                    if (s.Contains("#"))
+                        s = s.Substring(0, s.IndexOf("#"));
+
+
+                    int tmp;
+
+                    if (!Int32.TryParse(s, out tmp))
+                    {
+                        continue;
+                    }
+                    Console.WriteLine(tmp);
+                    if (tmp == _Rooms.Count - subs)
+                    {
+                        groupcount++;
+                        NewRoom.TrueGroups.Add(group);
+                    }
+
+                    /*
                     if (group.Name.ToLower().Contains("#room" + (_Rooms.Count - subs)))
                     {
                         if ((_Rooms.Count - subs) < 10)
@@ -385,7 +404,7 @@ namespace SharpOcarina
 
 
                         NewRoom.TrueGroups.Add(group);
-                    }
+                    }*/
                 }
 
             }
@@ -1780,6 +1799,7 @@ namespace SharpOcarina
                                     }
 
                                     if (file != "" && (offset != 0 || animated)) {
+#if DEBUG
                                         Console.WriteLine("Register Actor Preview: " + file);
                                         Console.WriteLine("key:    " + index.ToString("X04"));
                                         Console.WriteLine("scale:  " + scale);
@@ -1787,7 +1807,7 @@ namespace SharpOcarina
                                         Console.WriteLine("var:    " + var);
                                         Console.WriteLine("offset: " + offset.ToString("X08"));
                                         Console.WriteLine("bank:   " + bank.ToString("X02"));
-
+#endif
 
                                         RegisterActorPreview(
                                             key, offset, new string[0], new string[0],

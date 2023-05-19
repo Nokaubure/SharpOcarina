@@ -1,5 +1,5 @@
 ﻿------------------------------------------------------
-SharpOcarina v1.40 - Zelda OoT Scene Development System
+SharpOcarina v1.41 - Zelda OoT Scene Development System
              Revived in 2017-2023 by Nokaubure, started in 2011/2012 by xdaniel
 Find me on: https://discord.gg/74pHDEU
 ------------------------------------------------------
@@ -38,7 +38,7 @@ Credits & Thanks
 
  Thanks to Dragorn421 for the updated io_import script
 
- Thanks to Rankaisija and Skawo for making update 1.40 possible
+ Thanks to Rankaisija and Skawo for making update 1.40+ possible
 
  Also thanks to everyone who reported bugs, asked questions and provided ideas during the program's
  development.
