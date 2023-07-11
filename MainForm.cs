@@ -3783,6 +3783,23 @@ namespace SharpOcarina
                     DisableTextureWarningsMenuItem.Checked = settings.DisableTextureWarnings;
                     EnableNexExitFormatMenuItem.Checked = settings.EnableNewExitFormat;
 
+                    if (rom64.isSet())
+                    {
+                        buildAndLaunchZ64romToolStripMenuItem.Visible = true;
+                        buildAndLaunchZ64romToolStripMenuItem.Enabled = true;
+                        buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = true;
+                        buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Enabled = true;
+                        LaunchRomToolStripMenuItem.Visible = false;
+                    }
+                    else
+                    {
+                        buildAndLaunchZ64romToolStripMenuItem.Visible = false;
+                        buildAndLaunchZ64romToolStripMenuItem.Enabled = false;
+                        buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = false;
+                        buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Enabled = false;
+                        LaunchRomToolStripMenuItem.Visible = true;
+                    }
+
                     if (EasterEggPhase == 2 || Is1April)
                     {
                         this.Icon = Properties.Resources.Bombiwa;
@@ -3912,6 +3929,10 @@ namespace SharpOcarina
                         SoundEcho.Text = CurrentScene.Rooms[RoomList.SelectedIndex].Echo.ToString("X2");
 
                         DisableStartTime.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].StartTime == 0xFFFF;
+
+                        TimeHour.Enabled = !DisableStartTime.Checked;
+
+                        TimeMinute.Enabled = !DisableStartTime.Checked;
 
                         //fix time when importing old scenes
                         if (!DisableStartTime.Checked)
@@ -7716,7 +7737,6 @@ namespace SharpOcarina
                 ExitHeaderIndex.Value = 0;
                 ExitMusicOn.Checked = false;
                 ExitShowTitlecard.Checked = false;
-                DeleteexitButton.Enabled = false;
                 if (settings.EnableNewExitFormat) ExitList.Items.Clear();
 
                 foreach (Control Ctrl in ExitGroupBox.Controls)
@@ -11156,17 +11176,22 @@ namespace SharpOcarina
         {
             if (File.Exists(LastInject))
             {
-                try
-                {
-                    System.Diagnostics.Process.Start(LastInject);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Seems that there's no emulator associated with this extension. Assign one and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                LaunchRom(LastInject);
             }
             else
                 MessageBox.Show("There's no ROM to launch.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void LaunchRom(string rom)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(rom);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Seems that there's no emulator associated with this extension. Assign one and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ReloadRoomButton_Click(object sender, EventArgs e)
@@ -14682,6 +14707,8 @@ namespace SharpOcarina
                         ObjectCache.Remove(index);
 
                     ObjectCache.Add(index, new ObjectInfo((int)size, basename, ""));
+
+
                 }
             }
 
@@ -15890,7 +15917,7 @@ namespace SharpOcarina
                 }
                 else
                 {
-                    CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = 0;
+                    //CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = 0;
                     TimeHour.Enabled = true;
                     TimeMinute.Enabled = true;
                 }
@@ -17138,7 +17165,36 @@ namespace SharpOcarina
             settings.AutoReload = AutoReload.Checked;
         }
 
-        
+        private void buildAndLaunchZ64romToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rom64.isSet())
+            {
+                String pdetail = @"/c " + rom64.getPath() + "\\z64rom.exe --no-wait";
+                ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
+                pcmd.Arguments = pdetail;
+
+                Process cmd = Process.Start(pcmd);
+                cmd.WaitForExit();
+
+                LaunchRom(rom64.getPath() + "\\build-dev.z64");
+            }
+        }
+
+        private void buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rom64.isSet())
+            {
+                String pdetail = @"/c " + rom64.getPath() + "\\z64rom.exe --no-wait --instant " + CurrentScene.SceneNumber + " 0 " + " 0xF " + (settings.RenderChildLink ? "1" : "0");
+                ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
+                pcmd.Arguments = pdetail;
+
+                Process cmd = Process.Start(pcmd);
+                cmd.WaitForExit();
+
+                LaunchRom(rom64.getPath() + "\\build-dev.z64");
+            }
+        }
+
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);

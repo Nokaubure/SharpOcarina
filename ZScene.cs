@@ -1238,10 +1238,23 @@ namespace SharpOcarina
                 }
             }
 
+            if (zzrp == 3) //if z64rom, we delete all zroom files first
+            {
+                string[] files = Directory.GetFiles(Filepath);
+                for (int f = 0; f < files.Length; f++)
+                {
+                    if (Path.GetExtension(files[f]) == ".zroom")
+                        File.Delete(files[f]);
+                }
+
+            }
+
             for (int i = 0; i < _Rooms.Count; i++)
             {
                 string SaveRoomTo = "";
                 string extension = zzrp == 3 ? ".zroom" : ".zmap";
+
+                
 
                 if (zzrp > 0)
                     SaveRoomTo = Filepath + "room_" + i + extension;
@@ -3674,6 +3687,16 @@ namespace SharpOcarina
                 MaxCoordinate.X = MainForm.Clamp(MaxCoordinate.X * 3, -32767, 32767);
                 MaxCoordinate.Y = MainForm.Clamp(MaxCoordinate.Y * 3, -32767, 32767);
                 MaxCoordinate.Z = MainForm.Clamp(MaxCoordinate.Z * 3, -32767, 32767);
+            }
+// TODO remove on build
+            if (MainForm.settings.TriplicateCollisionBounds)
+            {
+                MinCoordinate.X = -15000;
+                MinCoordinate.Y = -1000;
+                MinCoordinate.Z = -15000;
+                MaxCoordinate.X = 15000;
+                MaxCoordinate.Y = 1000;
+                MaxCoordinate.Z = 15000;
             }
 
             /* Prepare variables */

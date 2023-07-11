@@ -3,6 +3,9 @@
 --------------
 ---1.42
 --------------
+
+- Added options to build and launch z64rom when in z64rom mode. There's an additional one to warp Link directly on the scene you're editing, skiping titlescreen.
+
 - Entrance table editor now support z64rom, they will automatically open the .toml files in z64rom mode, and can also export tables to .toml format
 
 - Added "Save to binary" options in entrance table editor and cutscene table editor
@@ -11,7 +14,15 @@
 
 - Fixed an issue with the starting room time when importing old scenes
 
-- [TODO] Fixed an issue where exits could not be deleted
+- Fixed an issue where the time of all rooms would be set to 0 if atleast 1 room had global time enabled
+
+- Fixed an issue where time could not be changed after opening a scene without rechecking global time checkbox
+
+- Fixed an issue where loading a z64rom project would not correctly detect custom actors and objects
+
+- Fixed an issue where saving a scene in a z64rom project, then deleting rooms and saving it again would make z64rom crash when building
+
+- Fixed an issue where exits could not be deleted
 
 
 
