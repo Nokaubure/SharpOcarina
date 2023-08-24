@@ -123,9 +123,6 @@
   <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>571, 17</value>
   </metadata>
-  <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>571, 17</value>
-  </metadata>
   <data name="ExitFadeOut.ToolTip" xml:space="preserve">
     <value>00 - Spiky (Glitched?)
 01 - Triforce
@@ -198,18 +195,6 @@ F: Earth/dirt</value>
   </metadata>
   <metadata name="PathwayXPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>771, 17</value>
-  </metadata>
-  <metadata name="PathwayZPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
-  </metadata>
-  <metadata name="PathwayYPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>920, 17</value>
-  </metadata>
-  <metadata name="PathwayXPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>771, 17</value>
-  </metadata>
-  <metadata name="RenderFunctionFlagPresetToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>166, 3</value>
   </metadata>
   <metadata name="RenderFunctionFlagPresetToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>166, 3</value>

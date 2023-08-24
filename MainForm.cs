@@ -12261,8 +12261,14 @@ namespace SharpOcarina
                 {
                     ObjFile.Triangle tri = new ObjFile.Triangle();
                     int polytypeid = Helpers.Read16(data, i);
-                    uint polytype = Helpers.Read32(data, polytypeoffset + (0x8 * polytypeid));
-                    uint polytype2 = Helpers.Read32(data, polytypeoffset + (0x8 * polytypeid) + 4);
+                    //  Console.WriteLine("polyid " + polytypeid);
+                    uint polytype = 0;
+                    uint polytype2 = 0;
+                    if (polytypeoffset + (0x8 * polytypeid) - 4 < data.Count) // out of bounds failsafe
+                    {
+                        polytype = Helpers.Read32(data, polytypeoffset + (0x8 * polytypeid));
+                        polytype2 = Helpers.Read32(data, polytypeoffset + (0x8 * polytypeid) + 4);
+                    }
 
                     int A = Helpers.Read16(data, i + 0x2) & 0x1FFF;
                     int B = Helpers.Read16(data, i + 0x4) & 0x1FFF;

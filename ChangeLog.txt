@@ -4,7 +4,7 @@
 ---1.42
 --------------
 
-- Added options to build and launch z64rom when in z64rom mode. There's an additional one to warp Link directly on the scene you're editing, skiping titlescreen.
+- Added options to build and launch z64rom when in z64rom mode. [Beta] There's an additional one to warp Link directly on the scene you're editing, skiping titlescreen.
 
 - Entrance table editor now support z64rom, they will automatically open the .toml files in z64rom mode, and can also export tables to .toml format
 
@@ -24,7 +24,7 @@
 
 - Fixed an issue where exits could not be deleted
 
-
+- Fixed an issue where importing collision from zscene would rarely crash the program
 
 
 --------------

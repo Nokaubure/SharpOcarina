@@ -45,6 +45,8 @@ namespace SharpOcarina
             this.OpenGlobalROM = new System.Windows.Forms.ToolStripMenuItem();
             this.injectToROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LaunchRomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buildAndLaunchZ64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.openZmapToolstrip = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenSceneFromRoomToolStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -767,8 +769,6 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.buildAndLaunchZ64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1040,27 +1040,27 @@ namespace SharpOcarina
             // newSceneToolStripMenuItem
             // 
             this.newSceneToolStripMenuItem.Name = "newSceneToolStripMenuItem";
-            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.newSceneToolStripMenuItem.Text = "&New Scene";
             this.newSceneToolStripMenuItem.Click += new System.EventHandler(this.newSceneToolStripMenuItem_Click);
             // 
             // openSceneToolStripMenuItem
             // 
             this.openSceneToolStripMenuItem.Name = "openSceneToolStripMenuItem";
-            this.openSceneToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.openSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.openSceneToolStripMenuItem.Text = "&Open Scene";
             this.openSceneToolStripMenuItem.Click += new System.EventHandler(this.openSceneToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(289, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(323, 6);
             // 
             // SaveScenetoolStripMenuItem3
             // 
             this.SaveScenetoolStripMenuItem3.Enabled = false;
             this.SaveScenetoolStripMenuItem3.Name = "SaveScenetoolStripMenuItem3";
-            this.SaveScenetoolStripMenuItem3.Size = new System.Drawing.Size(292, 22);
+            this.SaveScenetoolStripMenuItem3.Size = new System.Drawing.Size(326, 22);
             this.SaveScenetoolStripMenuItem3.Text = "&Save Scene";
             this.SaveScenetoolStripMenuItem3.Click += new System.EventHandler(this.SaveScenetoolStripMenuItem3_Click);
             // 
@@ -1068,7 +1068,7 @@ namespace SharpOcarina
             // 
             this.saveSceneToolStripMenuItem.Enabled = false;
             this.saveSceneToolStripMenuItem.Name = "saveSceneToolStripMenuItem";
-            this.saveSceneToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.saveSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.saveSceneToolStripMenuItem.Text = "Save Scene &As...";
             this.saveSceneToolStripMenuItem.Click += new System.EventHandler(this.saveSceneToolStripMenuItem_Click);
             // 
@@ -1076,19 +1076,19 @@ namespace SharpOcarina
             // 
             this.saveBinaryToolStripMenuItem.Enabled = false;
             this.saveBinaryToolStripMenuItem.Name = "saveBinaryToolStripMenuItem";
-            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.saveBinaryToolStripMenuItem.Text = "Save &Binary";
             this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(289, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(323, 6);
             // 
             // OpenGlobalROM
             // 
             this.OpenGlobalROM.Name = "OpenGlobalROM";
-            this.OpenGlobalROM.Size = new System.Drawing.Size(292, 22);
+            this.OpenGlobalROM.Size = new System.Drawing.Size(326, 22);
             this.OpenGlobalROM.Text = "Open &Global ROM / z64rom project";
             this.OpenGlobalROM.Click += new System.EventHandler(this.OpenGlobalROM_Click);
             // 
@@ -1096,7 +1096,7 @@ namespace SharpOcarina
             // 
             this.injectToROMToolStripMenuItem.Enabled = false;
             this.injectToROMToolStripMenuItem.Name = "injectToROMToolStripMenuItem";
-            this.injectToROMToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.injectToROMToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.injectToROMToolStripMenuItem.Text = "&Inject to ROM";
             this.injectToROMToolStripMenuItem.Click += new System.EventHandler(this.injectToROMToolStripMenuItem_Click);
             // 
@@ -1104,20 +1104,38 @@ namespace SharpOcarina
             // 
             this.LaunchRomToolStripMenuItem.Enabled = false;
             this.LaunchRomToolStripMenuItem.Name = "LaunchRomToolStripMenuItem";
-            this.LaunchRomToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.LaunchRomToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.LaunchRomToolStripMenuItem.Text = "Launch ROM";
             this.LaunchRomToolStripMenuItem.Click += new System.EventHandler(this.LaunchRomToolStripMenuItem_Click);
+            // 
+            // buildAndLaunchZ64romToolStripMenuItem
+            // 
+            this.buildAndLaunchZ64romToolStripMenuItem.Enabled = false;
+            this.buildAndLaunchZ64romToolStripMenuItem.Name = "buildAndLaunchZ64romToolStripMenuItem";
+            this.buildAndLaunchZ64romToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.buildAndLaunchZ64romToolStripMenuItem.Text = "Build and launch z64rom";
+            this.buildAndLaunchZ64romToolStripMenuItem.Visible = false;
+            this.buildAndLaunchZ64romToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romToolStripMenuItem_Click);
+            // 
+            // buildAndLaunchZ64romWarpToSceneToolStripMenuItem
+            // 
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Enabled = false;
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Name = "buildAndLaunchZ64romWarpToSceneToolStripMenuItem";
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Text = "[Beta] Build and launch z64rom + warp to scene";
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = false;
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(289, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(323, 6);
             this.toolStripSeparator6.Visible = false;
             // 
             // openZmapToolstrip
             // 
             this.openZmapToolstrip.Name = "openZmapToolstrip";
-            this.openZmapToolstrip.Size = new System.Drawing.Size(292, 22);
+            this.openZmapToolstrip.Size = new System.Drawing.Size(326, 22);
             this.openZmapToolstrip.Text = "Open .zscene (beta)";
             this.openZmapToolstrip.Visible = false;
             this.openZmapToolstrip.Click += new System.EventHandler(this.openZmapToolstrip_Click);
@@ -1125,7 +1143,7 @@ namespace SharpOcarina
             // OpenSceneFromRoomToolStrip
             // 
             this.OpenSceneFromRoomToolStrip.Name = "OpenSceneFromRoomToolStrip";
-            this.OpenSceneFromRoomToolStrip.Size = new System.Drawing.Size(292, 22);
+            this.OpenSceneFromRoomToolStrip.Size = new System.Drawing.Size(326, 22);
             this.OpenSceneFromRoomToolStrip.Text = "Open scene from ROM (beta)";
             this.OpenSceneFromRoomToolStrip.Visible = false;
             this.OpenSceneFromRoomToolStrip.Click += new System.EventHandler(this.OpenSceneFromRoomToolStrip_Click);
@@ -1133,12 +1151,12 @@ namespace SharpOcarina
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(289, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(323, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -11071,24 +11089,6 @@ namespace SharpOcarina
             0,
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
-            // 
-            // buildAndLaunchZ64romToolStripMenuItem
-            // 
-            this.buildAndLaunchZ64romToolStripMenuItem.Enabled = false;
-            this.buildAndLaunchZ64romToolStripMenuItem.Name = "buildAndLaunchZ64romToolStripMenuItem";
-            this.buildAndLaunchZ64romToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.buildAndLaunchZ64romToolStripMenuItem.Text = "Build and launch z64rom";
-            this.buildAndLaunchZ64romToolStripMenuItem.Visible = false;
-            this.buildAndLaunchZ64romToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romToolStripMenuItem_Click);
-            // 
-            // buildAndLaunchZ64romWarpToSceneToolStripMenuItem
-            // 
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Enabled = false;
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Name = "buildAndLaunchZ64romWarpToSceneToolStripMenuItem";
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Text = "Build and launch z64rom + warp to scene";
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = false;
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click);
             // 
             // MainForm
             // 
