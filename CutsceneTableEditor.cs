@@ -141,7 +141,8 @@ namespace SharpOcarina
 
             //building a way to link entrances to scene names
             int offset = (int)rom.EntranceTableStart;
-            while (EntranceScenes.Count == 0 && offset < (int)rom.EntranteTableEnd - 1)
+            if (EntranceScenes.Count == 0)
+            while (offset < (int)rom.EntranteTableEnd - 1)
             {
                 EntranceScenes.Add((ushort)((offset - (int)rom.EntranceTableStart) / 4), EntranceTable[offset]);
                 offset += 4;
