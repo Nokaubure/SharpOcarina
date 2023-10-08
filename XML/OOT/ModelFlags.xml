@@ -100,6 +100,7 @@
   <!-- #ReverseLight-->
   <!-- #LodGroupX usage: LodGroupX where X is the LOD group in Hex-->
   <!-- #LodDistanceXXX" usage: LodDistanceXXXX where XXXX is the LOD distance in Dec -->
+  <!-- #Tint usage: TintXXXXXX where XXXXXX is RRGGBB in hex -->
   <!-- #FC usage: custom G_SETCOMBINE, better use the UI due char limit -->
   <!-- #D9 usage: custom G_GEOMETRYMODE, better use the UI due char limit -->
   <!-- #E2 usage: custom G_SETOTHERMODE_L, better use the UI due char limit -->

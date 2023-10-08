@@ -700,6 +700,19 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.LodDistance[i] = animatednum;
                 group.LodDistance = animatednum;
             }
+            if (group.Name.ToLower().Contains("#tint"))
+            {
+                uint tintnum = 0;
+                if (!UInt32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#tint") + 5, 6), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out tintnum))
+                {
+                    MessageBox.Show("Bad usage of Tint tag. It should be #TintXXXXXX (XXXXXX = RRGGBB in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                tintnum = (uint)((NewRoom.GroupSettings.TintAlpha[i] & 0xFF000000) + tintnum);
+                //int alphanum = Convert.ToInt32(group.Name.ToLower().Substring(group.Name.IndexOf("#alpha") + 6, 2), 16);
+                NewRoom.GroupSettings.TintAlpha[i] = tintnum;
+                group.TintAlpha = tintnum;
+            }
             if (group.Name.ToLower().Contains("#fc"))
             {
                 ulong command = 0;

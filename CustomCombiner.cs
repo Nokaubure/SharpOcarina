@@ -48,6 +48,7 @@ namespace SharpOcarina
             Init();
 
             UpdateCombinerComboBox();
+            UpdateGeometryModeCheckboxes();
         }
         public void Init()
         {
@@ -240,6 +241,7 @@ namespace SharpOcarina
                 Sync();
         }
 
+
         private void PackCombiner()
         {
             CombinerCommand = 0;
@@ -266,6 +268,48 @@ namespace SharpOcarina
 
 
             CompiledCombiner.Text = CombinerCommand.ToString("X14");
+
+            if (PreviewCheckbox.Checked)
+                Sync();
+        }
+
+        private void UpdateGeometryModeCheckboxes()
+        {
+            G_SHADE.Checked = (((D9Command >> 0) & 0xF) != 0);
+            G_ZBUFFER.Checked = (((D9Command >> 2) & 0xF) != 0);
+            G_CULL_FRONT.Checked = (((D9Command >> 9) & 0xF) != 0);
+            G_CULL_BACK.Checked = (((D9Command >> 10) & 0xF) != 0);
+            G_FOG.Checked = (((D9Command >> 16) & 0xF) != 0);
+            G_LIGHTING.Checked = (((D9Command >> 17) & 0xF) != 0);
+            G_TEXTURE_GEN.Checked = (((D9Command >> 18) & 0xF) != 0);
+            G_TEXTURE_GEN_LINEAR.Checked = (((D9Command >> 19) & 0xF) != 0);
+            G_SHADING_SMOOTH.Checked = (((D9Command >> 21) & 0xF) != 0);
+            G_CLIPPING.Checked = (((D9Command >> 23) & 0xF) != 0);
+
+            CompiledD9.Text = D9Command.ToString("X14");
+
+            if (PreviewCheckbox.Checked)
+                Sync();
+        }
+
+        private void PackGeometryMode()
+        {
+            D9Command = 0;
+
+            D9Command = (ulong)(0 | (((ulong)(G_ZBUFFER.Checked ? 1 : 0) << (0)))
+                | (((ulong)(G_SHADE.Checked ? 1 : 0) << 2))
+                | (((ulong)(G_CULL_FRONT.Checked ? 1 : 0) << 9))
+                | (((ulong)(G_CULL_BACK.Checked ? 1 : 0) << 10))
+                | (((ulong)(G_FOG.Checked ? 1 : 0) << 16))
+                | (((ulong)(G_LIGHTING.Checked ? 1 : 0) << 17))
+                | (((ulong)(G_TEXTURE_GEN.Checked ? 1 : 0) << 18))
+                | (((ulong)(G_TEXTURE_GEN_LINEAR.Checked ? 1 : 0) << 19))
+                | (((ulong)(G_SHADING_SMOOTH.Checked ? 1 : 0) << 21))
+                | (((ulong)(G_CLIPPING.Checked ? 1 : 0) << 23))
+                | (((ulong)0xFFFFFF << 32))
+                );
+
+            CompiledD9.Text = D9Command.ToString("X14");
 
             if (PreviewCheckbox.Checked)
                 Sync();
@@ -325,6 +369,8 @@ namespace SharpOcarina
             CompiledE2.Text = E2Command.ToString("X14");
 
             UpdateCombinerComboBox();
+
+            UpdateGeometryModeCheckboxes();
 
         }
 
@@ -435,8 +481,7 @@ namespace SharpOcarina
 
                 D9Command = temp;
 
-                if (PreviewCheckbox.Checked)
-                    Sync();
+                UpdateGeometryModeCheckboxes();
 
             }
 
@@ -455,8 +500,7 @@ namespace SharpOcarina
 
             D9Command = temp;
 
-            if (PreviewCheckbox.Checked)
-                Sync();
+            UpdateGeometryModeCheckboxes();
 
 
 
@@ -466,6 +510,11 @@ namespace SharpOcarina
         {
             if (PreviewCheckbox.Checked)
                 Sync();
+        }
+
+        private void GeometryMode_CheckedChange(object sender, EventArgs e)
+        {
+            PackGeometryMode();
         }
     }
 }

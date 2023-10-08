@@ -61,6 +61,12 @@ namespace SharpOcarina
                     var variables = new Dictionary<ushort, string>();
                     index_list.Add(index);
 
+                    int exists = Database.FindIndex(x => x.Value == index);
+                    if(exists != -1)
+                    {
+                        Database.RemoveAt(exists); //removes vanilla actor from db
+                    }
+
                     TomlTable toml = rom64.parseToml(str + "\\actor.toml");
                     TomlArray var_arr = null;
                     byte cat = 0;
@@ -125,14 +131,10 @@ namespace SharpOcarina
 
                 XMLactor xmlactor = XMLreader.getFullActor(nodeAtt["Key"].Value);
 
-                bool skip = false;
-                foreach (ushort id in index_list){
-                    if (Convert.ToUInt16(nodeAtt["Key"].Value, 16) == id){
-                        skip = true;
-                        break;
-                    }
-                }
-                if (skip) continue;
+
+                if (index_list.Contains((Convert.ToUInt16(nodeAtt["Key"].Value, 16)))) continue;
+
+
 
                 Dictionary<ushort,string> vars = xmlactor.variables;
 
