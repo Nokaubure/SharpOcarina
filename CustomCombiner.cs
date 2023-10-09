@@ -27,6 +27,8 @@ namespace SharpOcarina
 
         public MainForm mainf;
 
+        public bool D9lock;
+
         public CustomCombiner(MainForm _mainf, ObjFile.Group _target, bool _outdoorLight, bool _affectedByPointLight)
         {
             target = _target;
@@ -275,8 +277,9 @@ namespace SharpOcarina
 
         private void UpdateGeometryModeCheckboxes()
         {
-            G_SHADE.Checked = (((D9Command >> 0) & 0xF) != 0);
-            G_ZBUFFER.Checked = (((D9Command >> 2) & 0xF) != 0);
+            D9lock = true;
+            G_ZBUFFER.Checked = (((D9Command >> 0) & 0xF) != 0);
+            G_SHADE.Checked = (((D9Command >> 2) & 0xF) != 0);
             G_CULL_FRONT.Checked = (((D9Command >> 9) & 0xF) != 0);
             G_CULL_BACK.Checked = (((D9Command >> 10) & 0xF) != 0);
             G_FOG.Checked = (((D9Command >> 16) & 0xF) != 0);
@@ -288,8 +291,11 @@ namespace SharpOcarina
 
             CompiledD9.Text = D9Command.ToString("X14");
 
+            Console.WriteLine((D9Command >> 2).ToString("X16"));
+
             if (PreviewCheckbox.Checked)
                 Sync();
+            D9lock = false;
         }
 
         private void PackGeometryMode()
@@ -514,7 +520,7 @@ namespace SharpOcarina
 
         private void GeometryMode_CheckedChange(object sender, EventArgs e)
         {
-            PackGeometryMode();
+            if (!D9lock) PackGeometryMode();
         }
     }
 }

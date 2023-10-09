@@ -8,7 +8,7 @@
 
 - Command D9 (Geometry Mode) can now be customized via UI when clicking Customize button in group settings
 
-- Fixed an issue where vanilla modified actors would appear twice in the actor database
+- Fixed an issue where vanilla modified actors in z64rom would appear twice in the actor database
 
 - Fixed an issue where scene names where not correctly displayed in cutscene editor
 
