@@ -1,2 +1,0 @@
-cd "Z:\OoTmodding\zelda\sharpocarina\compile\release"
-"Z:\MEGA\projects\sharpocarina-master\packages\Obfuscar.2.2.28\tools\Obfuscar.Console.exe" "Z:\MEGA\projects\sharpocarina-master\packages\Obfuscar.2.2.28\tools\obfuscar.xml"
