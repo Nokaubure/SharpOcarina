@@ -1805,8 +1805,8 @@
     <Error Condition="!Exists('packages\Microsoft.NETFramework.ReferenceAssemblies.net45.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net45.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NETFramework.ReferenceAssemblies.net45.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net45.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>cd "Z:\OoTmodding\zelda\sharpocarina\compile\release"
-"Z:\MEGA\projects\sharpocarina-master\packages\Obfuscar.2.2.28\tools\Obfuscar.Console.exe" "Z:\MEGA\projects\sharpocarina-master\packages\Obfuscar.2.2.28\tools\obfuscar.xml"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
