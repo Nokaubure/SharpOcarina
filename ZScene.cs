@@ -3700,7 +3700,7 @@ namespace SharpOcarina
                 MaxCoordinate.X = MainForm.Clamp(MaxCoordinate.X * 3, -32767, 32767);
                 MaxCoordinate.Y = MainForm.Clamp(MaxCoordinate.Y * 3, -32767, 32767);
                 MaxCoordinate.Z = MainForm.Clamp(MaxCoordinate.Z * 3, -32767, 32767);
-            }
+            }/*
 // TODO remove on build
             if (MainForm.settings.TriplicateCollisionBounds)
             {
@@ -3710,7 +3710,7 @@ namespace SharpOcarina
                 MaxCoordinate.X = 15000;
                 MaxCoordinate.Y = 1000;
                 MaxCoordinate.Z = 15000;
-            }
+            }*/
 
             /* Prepare variables */
             int CmdVertexArray = -1, CmdPolygonArray = -1, CmdPolygonTypes = -1, CmdWaterBoxes = -1;
