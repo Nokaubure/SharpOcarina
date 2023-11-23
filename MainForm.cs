@@ -1823,9 +1823,10 @@ namespace SharpOcarina
 
                                         GL.PushMatrix();
 
-                                        GL.Rotate(Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
+                                        GL.Translate(DL.midX, DL.midY, DL.midZ);
+                                        GL.Rotate(-Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
                                         if (DL.Billboard == 1)
-                                            GL.Rotate(Camera.Rot.X, 1.0f, 0.0f, 0.0f);
+                                            GL.Rotate(-Camera.Rot.X, 1.0f, 0.0f, 0.0f);
                                     }
 
                                     if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
