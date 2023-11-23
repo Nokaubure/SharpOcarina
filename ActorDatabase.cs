@@ -64,7 +64,9 @@ namespace SharpOcarina
                     int exists = Database.FindIndex(x => x.Value == index);
                     if(exists != -1)
                     {
+                      //  Console.WriteLine("Removed " + Database[exists].Value.ToString("X2"));
                         Database.RemoveAt(exists); //removes vanilla actor from db
+                        
                     }
 
                     TomlTable toml = rom64.parseToml(str + "\\actor.toml");

@@ -502,7 +502,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#alpha"))
             {
                 int alphanum = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#alpha") + 6, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out alphanum))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#alpha") + 6, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out alphanum))
                 {
                     MessageBox.Show("Bad usage of alpha tag. It should be #AlphaXX (XX = amount in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -514,7 +514,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#animated"))
             {
                 int animatednum = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#animated") + 9, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out animatednum))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#animated") + 9, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out animatednum))
                 {
                     MessageBox.Show("Bad usage of animated tag. It should be #AnimatedX (X = bank in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -530,7 +530,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#multialpha"))
             {
                 int alphanum = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#multialpha") + 11, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out alphanum))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#multialpha") + 11, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out alphanum))
                 {
                     MessageBox.Show("Bad usage of multialpha tag. It should be #MultiAlphaXX (XX = amount in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -544,7 +544,7 @@ namespace SharpOcarina
             {
                 int shift = 0;
 
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#shifts") + 7, 2), out shift))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#shifts") + 7, 2), out shift))
                 {
                     MessageBox.Show("Bad usage of shiftS tag. It should be #ShiftSXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -556,7 +556,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#shiftt"))
             {
                 int shift = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#shiftt") + 7, 2), out shift))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#shiftt") + 7, 2), out shift))
                 {
                     MessageBox.Show("Bad usage of shiftT tag. It should be #ShiftTXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -568,7 +568,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#multishifts"))
             {
                 int shift = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#multishifts") + 12, 2), out shift))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#multishifts") + 12, 2), out shift))
                 {
                     MessageBox.Show("Bad usage of multishiftS tag. It should be #MultiShiftSXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -580,7 +580,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#multishiftt"))
             {
                 int shift = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#multishiftt") + 12, 2), out shift))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#multishiftt") + 12, 2), out shift))
                 {
                     MessageBox.Show("Bad usage of multishiftT tag. It should be #MultiShiftTXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -677,7 +677,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#lodgroup"))
             {
                 int animatednum = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#lodgroup") + 9, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out animatednum))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#lodgroup") + 9, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out animatednum))
                 {
                     MessageBox.Show("Bad usage of lodgroup tag. It should be #LODGroupX (X = group in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -690,7 +690,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#loddistance"))
             {
                 int animatednum = 0;
-                if (!Int32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#loddistance") + 12, 4), out animatednum))
+                if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#loddistance") + 12, 4), out animatednum))
                 {
                     MessageBox.Show("Bad usage of loddistance tag. It should be #LODDistanceXXXX (XXXX = distance in dec,) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -703,7 +703,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#tint"))
             {
                 uint tintnum = 0;
-                if (!UInt32.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#tint") + 5, 6), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out tintnum))
+                if (!UInt32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#tint") + 5, 6), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out tintnum))
                 {
                     MessageBox.Show("Bad usage of Tint tag. It should be #TintXXXXXX (XXXXXX = RRGGBB in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -716,7 +716,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#fc"))
             {
                 ulong command = 0;
-                if (!UInt64.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#FC") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
+                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#FC") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
                     MessageBox.Show("Bad usage of FC tag. It should be #FCXXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -729,7 +729,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#d9"))
             {
                 ulong command = 0;
-                if (!UInt64.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#D9") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
+                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#D9") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
                     MessageBox.Show("Bad usage of D9 tag. It should be #D9XXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -742,7 +742,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#e2"))
             {
                 ulong command = 0;
-                if (!UInt64.TryParse(group.Name.Substring(group.Name.ToLower().IndexOf("#E2") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
+                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#E2") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
                     MessageBox.Show("Bad usage of E2 tag. It should be #E2XXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

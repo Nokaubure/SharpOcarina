@@ -4340,7 +4340,7 @@ namespace SharpOcarina
             this.Group2AxisBillboard.TabIndex = 31;
             this.Group2AxisBillboard.Text = "2-axis billboard*";
             this.EnvironmentControlTooltip.SetToolTip(this.Group2AxisBillboard, "Majoras Mask only. For debug Rom, apply the patch in Tools. Other OoT Roms are un" +
-        "supported.");
+        "supported.\r\nThe group has to face -Y axis for billboard effect to work!");
             this.Group2AxisBillboard.UseVisualStyleBackColor = true;
             this.Group2AxisBillboard.CheckedChanged += new System.EventHandler(this.Group2AxisBillboard_CheckedChanged);
             // 
@@ -4349,9 +4349,10 @@ namespace SharpOcarina
             this.GroupBillboard.AutoSize = true;
             this.GroupBillboard.Location = new System.Drawing.Point(306, 145);
             this.GroupBillboard.Name = "GroupBillboard";
-            this.GroupBillboard.Size = new System.Drawing.Size(66, 17);
+            this.GroupBillboard.Size = new System.Drawing.Size(70, 17);
             this.GroupBillboard.TabIndex = 30;
-            this.GroupBillboard.Text = "Billboard";
+            this.GroupBillboard.Text = "Billboard*";
+            this.EnvironmentControlTooltip.SetToolTip(this.GroupBillboard, "The group has to face -Y axis for billboard effect to work!");
             this.GroupBillboard.UseVisualStyleBackColor = true;
             this.GroupBillboard.CheckedChanged += new System.EventHandler(this.GroupBillboard_CheckedChanged);
             // 

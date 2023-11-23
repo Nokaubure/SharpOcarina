@@ -1,6 +1,20 @@
 ///CHANGELOG///
 
 --------------
+---1.44
+--------------
+
+- Billboards and 2D billboards are now rendered inside SO viewport
+
+- Updated MM actor xml, thanks doncamilo!
+
+- Fixed an issue where actor.toml properties in z64rom projects wasnt working
+
+- Fixed an issue where SO would sometimes fail to warn the user about incorrect numeric tag usage
+
+- Added extra tooltip on billboard and 2D billboard checkboxes explaining how to use them
+
+--------------
 ---1.43
 --------------
 

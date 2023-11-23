@@ -472,7 +472,7 @@ namespace SharpOcarina
 
             }
             ushort midX = 0, midY = 0, midZ = 0;
-            if ((Billboard || TwoAxisBillboard ) && !MainForm.n64preview)
+            if ((Billboard || TwoAxisBillboard ))
             {
                 midX = (ushort)(MinCoordinate.X + ((MaxCoordinate.X - MinCoordinate.X) / 2));
                 midY = (ushort) ((!TwoAxisBillboard) ? (MinCoordinate.Y + ((MaxCoordinate.Y - MinCoordinate.Y) / 2)) : MinCoordinate.Y);
@@ -601,14 +601,14 @@ namespace SharpOcarina
                 {
                     mtxoffset = DList.Count;
 
-                    if (MainForm.n64preview == false)
-                    {
+                    //if (MainForm.n64preview == false)
+                    //{
                         Helpers.Append64(ref DList, 0xDA38000000000000);
                         if (Billboard)
                             Helpers.Append64(ref DList, 0xDA38000101000000);
                         else
                             Helpers.Append64(ref DList, 0xDA38000101000040);
-                    }
+                  //  }
 
 
           
@@ -1346,7 +1346,7 @@ namespace SharpOcarina
             /* End of display list */
        //     if (!MainForm.CurrentScene.Prerendered || MainForm.CurrentScene.Prerendered && )
 
-            if ((Billboard || TwoAxisBillboard) && !MainForm.n64preview)
+            if ((Billboard || TwoAxisBillboard))
             {
                 Helpers.Append64(ref DList, 0xD838000200000040);
             }
@@ -1356,7 +1356,13 @@ namespace SharpOcarina
 
             }
 
-            Helpers.Append64(ref DList, NoParam(GBI.G_ENDDL));
+            if ((Billboard || TwoAxisBillboard) && MainForm.n64preview) //TODO check render only
+            {
+                Helpers.Append32(ref DList, midX);
+                Helpers.Append32(ref DList, (uint) (midZ | (midY << 16)));
+            }
+
+            Helpers.Append64(ref DList, NoParam(GBI.G_ENDDL)); 
 
             /* Finish conversion */
             List<byte> FinalData = new List<byte>();

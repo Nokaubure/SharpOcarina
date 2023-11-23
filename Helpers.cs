@@ -207,4 +207,22 @@ namespace SharpOcarina
             else return val;
         }
     }
+
+    public static class StringExtensionsClass
+    {
+        public static string Substring2(this string s, int startIndex, int length)
+        {
+
+            try
+            {
+                return s.Substring(startIndex, length);
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                return s.Substring(startIndex);
+            } 
+           
+        }
+    }
+
 }

@@ -1,5 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table KeyType="System.UInt16" ValueType="System.String">
+  <Actor Key="0014" Scale="0.036" Animated="1">object_peehat</Actor>  <!-- peahat -->
+  <Actor Key="000C" Var="...." Scale="0.005" Animated="1">object_firefly</Actor>  <!-- keese -->
+  <Actor Key="000B" Var="...." Scale="0.01875" Animated="1">object_dodongo</Actor>  <!-- dodongo -->
+  <Actor Key="0012" Var="...." Scale="0.01" TextureOffsets="00001300,00001700,00001900" Animated="1">object_tite</Actor>  <!-- blue tektite -->
+  <Actor Key="006C" Var="...." Offset="00000470" Scale="0.05" >object_rr</Actor>  <!-- like-like (uh) -->
+  <Actor Key="0216" Var="...." Scale="0.03" Animated="1">object_reeba</Actor>  <!-- Leever -->
+  <Actor Key="0024" Var="...." Scale="0.04" Animated="1">object_st</Actor>  <!-- Skulltula -->
+  <Actor Key="0033" Var="...." Scale="0.005" Animated="1">object_dekubaba</Actor>  <!-- Deku baba -->
+  <Actor Key="0066" Var="...." Scale="0.005" Animated="1">object_dekubaba</Actor>  <!-- Deku baba -->
+  <Actor Key="003B" Var="...." Scale="0.01" Animated="1">object_dekunuts</Actor>  <!-- Deku scrub -->
+  <Actor Key="0050" Var="...." Scale="0.02" Animated="1">object_st</Actor>  <!-- Skullwalltula -->
+  <Actor Key="0084" Var="...." Scale="0.012" Animated="1" Hirearchy="4">object_ik</Actor><!-- iron knuckle -->
+  <Actor Key="0008" Var="...." Scale="0.01" Animated="1" >object_okuta</Actor><!-- octorock -->
+  <Actor Key="000A" Var="...." Scale="0.01" Animated="1" >object_wallmaster</Actor><!-- wallmaster -->
+  <Actor Key="004A" Var="...." Scale="0.01" Animated="1" >object_wallmaster</Actor><!-- wallmaster -->
+  <Actor Key="004C" Var="...." Scale="0.01" Animation="10" Animated="1" Hirearchy="2">object_rd</Actor><!-- redead -->
 
+  <Actor Key="01DA" Var="...." Scale="0.01" Animated="1" >object_rd</Actor><!-- gibdo -->
+  <Actor Key="0235" Var="...." Scale="0.01" Animated="1" >object_rd</Actor><!-- gibdo -->
+  <Actor Key="0064" Var="...." Scale="0.006" Animated="1" >object_sb</Actor><!-- shell blade-->
+  <Actor Key="008F" Var="...." Scale="0.008" Offset="00001130" >object_fz</Actor><!-- freezard -->
+  <Actor Key="0141" Var="...." Scale="0.0075" TextureOffsets="00007B68" Animated="1" Hirearchy="2">object_wf</Actor><!-- wolfos -->
+  <Actor Key="00EC" Var="...." Scale="0.0075" TextureOffsets="00007B68" Animated="1" Hirearchy="2">object_wf</Actor><!-- wolfos -->
+  <Actor Key="025A" Var="...." Scale="0.01" Animated="1">object_skb</Actor><!-- stalchildren -->
+  <Actor Key="00ED" Var="...." Scale="0.01" Animated="1">object_skb</Actor><!-- stalchildren -->
+  <Actor Key="0047" Var="...." Scale="0.01" Animated="1">object_vm</Actor><!-- beamos -->
+  <Actor Key="00F1" Var="...." Scale="0.01" Animated="1">object_crow</Actor><!-- guay -->
+  <Actor Key="00F3" Var="...." Scale="0.01007735" Animated="1">object_cow</Actor><!-- cow -->
+  <Actor Key="002F" Var="FFFF" Offset="00000340" Scale="0.01" DListCount="2">object_bombf</Actor>  <!-- bomb flower-->
+  <Actor Key="0082" Var="...." Offset="000017C0" Scale="0.15">object_tsubo</Actor>   <!-- breakable pot -->
+  <Actor Key="0006" Var="...." Offsets="00003060,00003C60" Scale="0.01">custom_chest</Actor>  <!-- large chest -->
+  <Actor Key="0026" Var="...." Offset="0003C5B0" Scale="0.01">gameplay_keep</Actor>  <!-- directional sign -->
+
+  <Actor Key="0093" Var="...0" Offset="00005800" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- floor switch -->
+  <Actor Key="0093" Var="...1" Offset="00005AD0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- rusted floor switch -->
+  <Actor Key="0093" Var="...2" Offset="00006610" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- yellow eye switch -->
+  <Actor Key="0093" Var="...[3-4]" Offset="00006D10" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- crystal switch -->
+  <Actor Key="0096" Var="...[0-1]" Offset="00000210" Scale="0.1">object_d_hsblock</Actor>  <!-- hookshot tower -->
+  <Actor Key="0096" Var="...2" Offset="00000470" Scale="0.1">object_d_hsblock</Actor>  <!-- hookshot target -->
+
+  <Actor Key="007A" Var="...." Offset="00004CD0" Scale="0.1" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="0039" Var="0..." Offset="000003A0" Scale="1" >object_syokudai</Actor>  <!-- golden torch -->
+  <Actor Key="0039" Var="1..." Offset="00000B90" Scale="1" >object_syokudai</Actor>  <!-- timed torch -->
+  <Actor Key="0039" Var="2..." Offset="00000870" Scale="1" >object_syokudai</Actor>  <!-- wooden torch -->
 
 </Table>

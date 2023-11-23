@@ -66,5 +66,33 @@
   <Camera Key="3F">Default, a bit close</Camera>
   <Camera Key="40">Same as 04</Camera>
   <Camera Key="41">Rotates at some hardcoded position?</Camera>
+  <Camera Key="42">ONTHEPOLE</Camera>
+  <Camera Key="43">INBUSH</Camera>
+  <Camera Key="44">BOSS_LAST</Camera>
+  <Camera Key="45">BOSS_INI</Camera>
+  <Camera Key="46">BOSS_HAK</Camera>
+  <Camera Key="47">BOSS_KON</Camera>
+  <Camera Key="48">CONNECT0</Camera>
+  <Camera Key="49">MORAY</Camera>
+  <Camera Key="4A">NORMAL2</Camera>
+  <Camera Key="4B">BOMBBOWL</Camera>
+  <Camera Key="4C">CIRCLEa</Camera>
+  <Camera Key="4D">WHIRLPOOL</Camera>
+  <Camera Key="4E">KOKKOGAME</Camera>
+  <Camera Key="4F">GIANT</Camera>
+  <Camera Key="50">SCENE0</Camera>
+  <Camera Key="51">ROOM1</Camera>
+  <Camera Key="52">WATER2</Camera>
+  <Camera Key="53">SOKONASI</Camera>
+  <Camera Key="54">FORCEKEEP</Camera>
+  <Camera Key="55">PARALLEL1</Camera>
+  <Camera Key="56">START1</Camera>
+  <Camera Key="57">ROOM2</Camera>
+  <Camera Key="58">NORMAL4</Camera>
+  <Camera Key="59">SHELL</Camera>
+  <Camera Key="5A">DUNGEON4</Camera>
+
+
+
   <!-- 42+ doesn't do anything (in OOT atleast)-->
 </Table>

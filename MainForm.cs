@@ -1817,6 +1817,17 @@ namespace SharpOcarina
                             {
                                 if (!DL.IsTransparent)
                                 {
+
+                                    if (DL.Billboard != 0)
+                                    {
+
+                                        GL.PushMatrix();
+
+                                        GL.Rotate(Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
+                                        if (DL.Billboard == 1)
+                                            GL.Rotate(Camera.Rot.X, 1.0f, 0.0f, 0.0f);
+                                    }
+
                                     if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
                                         || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
                                         || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending()))
@@ -1824,7 +1835,15 @@ namespace SharpOcarina
                                         AdvancedCallList(DL);
                                     }
                                     else
+                                    {
                                         GL.CallList(DL.GLID);
+                                    }
+
+                                    if (DL.Billboard != 0)
+                                    {
+                            
+                                        GL.PopMatrix();
+                                    }
                                 }
 
                             }
@@ -1847,6 +1866,20 @@ namespace SharpOcarina
                             {
                                 if (DL.IsTransparent)
                                 {
+
+                                    if (DL.Billboard != 0)
+                                    {
+
+                                        GL.PushMatrix();
+
+                                        GL.Translate(DL.midX, DL.midY, DL.midZ);
+                                        GL.Rotate(-Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
+                                        if (DL.Billboard == 1)
+                                            GL.Rotate(-Camera.Rot.X, 1.0f, 0.0f, 0.0f);
+                                        // GL.Translate(-DL.midX, -DL.midY, -DL.midZ);
+                                        
+                                    }
+
                                     if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
                                         || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
                                         || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending()))
@@ -1854,7 +1887,15 @@ namespace SharpOcarina
                                         AdvancedCallList(DL);
                                     }
                                     else
+                                    {
                                         GL.CallList(DL.GLID);
+                                    }
+
+                                    if (DL.Billboard != 0)
+                                    {
+
+                                        GL.PopMatrix();
+                                    }
                                 }
 
                             }

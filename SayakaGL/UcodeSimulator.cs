@@ -261,6 +261,8 @@ namespace SharpOcarina.SayakaGL
             public int Animation;
             public int TextureAnimation;
             public int ColorAnimation;
+            public int Billboard;
+            public short midX, midY, midZ;
 
 
             public Color4 PickColor;
@@ -524,6 +526,10 @@ namespace SharpOcarina.SayakaGL
 
             ThisDL.ColorAnimation = 0;
 
+            ThisDL.Billboard = 0;
+
+            ThisDL.midX = ThisDL.midY = ThisDL.midZ = 0;
+
             foreach (DLCommandStruct command in ThisDL.Commands)
             {
                 // the dlist is transparent if prim color transparency is below 255
@@ -555,6 +561,20 @@ namespace SharpOcarina.SayakaGL
                 if (ThisDL.ColorAnimation == 0 && command.ID == 0x00 && (command.w1 & 0xFFFFFF00) == 0x12345600 )
                 {
                     ThisDL.ColorAnimation = (int)((command.w1 & 0x000000FF));
+                }
+                if (ThisDL.Billboard == 0 && command.ID == 0xDA && command.w1 == 0x01000000)
+                {
+                    ThisDL.Billboard = 1;
+                }
+                if (ThisDL.Billboard == 0 && command.ID == 0xDA && command.w1 == 0x01000040)
+                {
+                    ThisDL.Billboard = 2;
+                }
+                if (command.ID == 0 && ThisDL.Billboard != 0)
+                {
+                    ThisDL.midX = (short) (command.w0 & 0x0000FFFF);
+                    ThisDL.midY = (short)((command.w1 & 0xFFFF0000) >> 16);
+                    ThisDL.midZ = (short)((command.w1 & 0x0000FFFF));
                 }
             }
 

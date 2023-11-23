@@ -66,6 +66,7 @@
   <Flag Key="#JabuJabu" Value="0001000000000000"></Flag>
   <Flag Key="#Ice" Value="0000A00000000000"></Flag>
   <Flag Key="#NoJumpKillingQuicksand" Value="0000E00000000000"></Flag>
+  <Flag Key="#Goron" Value="0000A000000050CE"></Flag>
 
   <!-- Other -->
   <Flag Key="#Steep" Value="0000000000000010"></Flag>
