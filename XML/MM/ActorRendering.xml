@@ -11,18 +11,18 @@
   <Actor Key="0066" Var="...." Scale="0.005" Animated="1">object_dekubaba</Actor>  <!-- Deku baba -->
   <Actor Key="003B" Var="...." Scale="0.01" Animated="1">object_dekunuts</Actor>  <!-- Deku scrub -->
   <Actor Key="0050" Var="...." Scale="0.02" Animated="1">object_st</Actor>  <!-- Skullwalltula -->
-  <Actor Key="0084" Var="...." Scale="0.012" Animated="1" Hirearchy="4">object_ik</Actor><!-- iron knuckle -->
+  <Actor Key="0084" Var="...." Scale="0.012" Animated="1" Hierarchy="4">object_ik</Actor><!-- iron knuckle -->
   <Actor Key="0008" Var="...." Scale="0.01" Animated="1" >object_okuta</Actor><!-- octorock -->
   <Actor Key="000A" Var="...." Scale="0.01" Animated="1" >object_wallmaster</Actor><!-- wallmaster -->
   <Actor Key="004A" Var="...." Scale="0.01" Animated="1" >object_wallmaster</Actor><!-- wallmaster -->
-  <Actor Key="004C" Var="...." Scale="0.01" Animation="10" Animated="1" Hirearchy="2">object_rd</Actor><!-- redead -->
+  <Actor Key="004C" Var="...." Scale="0.01" Animation="10" Animated="1" Hierarchy="2">object_rd</Actor><!-- redead -->
 
   <Actor Key="01DA" Var="...." Scale="0.01" Animated="1" >object_rd</Actor><!-- gibdo -->
   <Actor Key="0235" Var="...." Scale="0.01" Animated="1" >object_rd</Actor><!-- gibdo -->
   <Actor Key="0064" Var="...." Scale="0.006" Animated="1" >object_sb</Actor><!-- shell blade-->
   <Actor Key="008F" Var="...." Scale="0.008" Offset="00001130" >object_fz</Actor><!-- freezard -->
-  <Actor Key="0141" Var="...." Scale="0.0075" TextureOffsets="00007B68" Animated="1" Hirearchy="2">object_wf</Actor><!-- wolfos -->
-  <Actor Key="00EC" Var="...." Scale="0.0075" TextureOffsets="00007B68" Animated="1" Hirearchy="2">object_wf</Actor><!-- wolfos -->
+  <Actor Key="0141" Var="...." Scale="0.0075" TextureOffsets="00007B68" Animated="1" Hierarchy="2">object_wf</Actor><!-- wolfos -->
+  <Actor Key="00EC" Var="...." Scale="0.0075" TextureOffsets="00007B68" Animated="1" Hierarchy="2">object_wf</Actor><!-- wolfos -->
   <Actor Key="025A" Var="...." Scale="0.01" Animated="1">object_skb</Actor><!-- stalchildren -->
   <Actor Key="00ED" Var="...." Scale="0.01" Animated="1">object_skb</Actor><!-- stalchildren -->
   <Actor Key="0047" Var="...." Scale="0.01" Animated="1">object_vm</Actor><!-- beamos -->

@@ -934,7 +934,15 @@ namespace SharpOcarina.SayakaGL
             UInt32 VOffset = (w1 & 0x00FFFFFF);
 
             double[] modifier = new double[] { 0, 0, 0 };
-            if (limbID != -1 && limbtransformations.Count > 0) modifier = new double[] { -limbtransformations[limbtransformations.Count - 1][0] , -limbtransformations[limbtransformations.Count - 1][1] , -limbtransformations[limbtransformations.Count - 1][2] };
+            if (limbID != -1 && limbtransformations.Count > 0) modifier = new double[]
+            {
+                -limbtransformations[limbtransformations.Count - 1][0] ,
+                -limbtransformations[limbtransformations.Count - 1][1] ,
+                -limbtransformations[limbtransformations.Count - 1][2]
+            };
+
+            
+
 
             for (int i = 0; i < N; i++)
             {
@@ -1305,9 +1313,7 @@ namespace SharpOcarina.SayakaGL
 
         private static void Ucode_F3DEX2_MTX(UInt32 w0, UInt32 w1)
         {
-            // Matrix faking, the principle dating back to the original OZMAV...
-            // Enough for Jabu-Jabu's Belly to render without having to emulate this correctly :)
-
+           
             if (limbtransformations.Count == 0) return;
             if (limbID != -1)
             {

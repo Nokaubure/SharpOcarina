@@ -1395,10 +1395,10 @@ namespace SharpOcarina
             float scale,
             UInt32 dlistcount,
             bool animated,
-            int hirearchy,
+            int hierarchy,
             string var,
             UInt16 animation,
-            UInt16 Yoff,
+            short Yoff,
             uint bank,
             string[] colors,
             string file) {
@@ -1446,7 +1446,7 @@ namespace SharpOcarina
             {
                 byte[] zobj = ClearBlock.ToArray();
                 uint limb_count = 0;
-                int hirearchyfound = 0;
+                int hierarchyfound = 0;
                 int animationfound = 0;
 
                 for (int i = 0; i < zobj.Length; i += 0x4)
@@ -1457,7 +1457,7 @@ namespace SharpOcarina
                         int check_prev = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i - 3], zobj[i - 2], zobj[i - 1]), 16);
                         if (check - check_prev != 0x0C && check - check_prev != 0x10)
                             continue;
-                        if (++hirearchyfound != hirearchy)
+                        if (++hierarchyfound != hierarchy)
                             continue;
                             
                         List<byte> zobjlist = new List<byte>(zobj);
@@ -1614,7 +1614,7 @@ namespace SharpOcarina
             }
             else
             {
-                SayakaGL.GameHandler.LoadToRAM(MainForm.NormalHeader.SceneData.ToArray(), 0x02);
+                if (MainForm.NormalHeader.SceneData != null) SayakaGL.GameHandler.LoadToRAM(MainForm.NormalHeader.SceneData.ToArray(), 0x02);
             }
 
             // Go through the rooms...
@@ -1763,7 +1763,7 @@ namespace SharpOcarina
                         if (!rom64.getNameAndIndex(str, ref basename, ref index))
                             continue;
                         
-                        var rompath = str.Replace("src\\", "rom\\");
+                        var rompath = str.Replace("\\src\\", "\\rom\\");
                         uint objectid = rom64.getActorObjID(rompath);
 
                         if (File.Exists(str + "\\actor.toml")) {
@@ -1776,7 +1776,7 @@ namespace SharpOcarina
                                     float scale = node.HasKey("Scale") ? node["Scale"].AsFloat : 0.01f;
                                     bool animated = node.HasKey("Animation") ? true : false;
                                     UInt16 animation = (ushort)( node.HasKey("Animation") ? node["Animation"].AsInteger.Value : 0 );
-                                    UInt16 yoff = (ushort)( node.HasKey("YOffset") ? node["YOffset"].AsInteger.Value : 0 );
+                                    short yoff = (short)( node.HasKey("YOffset") ? node["YOffset"].AsInteger.Value : 0 );
                                     string var = node.HasKey("Regex") ? node["Regex"].AsString : "....";
                                     ushort bank = (ushort)( node.HasKey("Segment") ? node["Segment"].AsInteger.Value : 6 );
                                     string file = rom64.getItem("rom\\object", (int)objectid);
@@ -1869,10 +1869,10 @@ namespace SharpOcarina
                     float scale = (nodeAtt["Scale"] != null) ? XmlConvert.ToSingle(nodeAtt["Scale"].Value) : 1.0f;
                     UInt32 dlistcount = (nodeAtt["DListCount"] != null) ? Convert.ToUInt32(nodeAtt["DListCount"].Value) : 1;
                     bool animated = (nodeAtt["Animated"] != null);
-                    int hirearchy = (nodeAtt["Hirearchy"] != null) ? Convert.ToInt32(nodeAtt["Hirearchy"].Value) : 1;
+                    int hierarchy = (nodeAtt["Hierarchy"] != null) ? Convert.ToInt32(nodeAtt["Hierarchy"].Value) : 1;
                     string var = (nodeAtt["Var"] != null) ? Convert.ToString(nodeAtt["Var"].Value) : "....";
                     UInt16 animation = (ushort) ((nodeAtt["Animation"] != null) ? Convert.ToUInt16(nodeAtt["Animation"].Value) : 0);
-                    UInt16 Yoff = (ushort)((nodeAtt["Yoff"] != null) ? Convert.ToUInt16(nodeAtt["Yoff"].Value) : 0);
+                    short Yoff = (short)((nodeAtt["Yoff"] != null) ? Convert.ToInt16(nodeAtt["Yoff"].Value) : 0);
                     string[] colors = (nodeAtt["Colors"] != null) ? (nodeAtt["Colors"].Value.Split(',')) : new string[0]; 
                     uint bank;
                     string file = "F3DEX2/" + node.InnerText + ".zobj";
@@ -1884,7 +1884,7 @@ namespace SharpOcarina
                     RegisterActorPreview(
                         key, offset, offsetsstr, textureoffsetsstr,
                         scale, dlistcount, animated,
-                        hirearchy, var, animation,
+                        hierarchy, var, animation,
                         Yoff, bank, colors, file);
                 }
             }
@@ -4551,7 +4551,7 @@ namespace SharpOcarina
             public UInt16 actor = 0x00;
             public string variableregex = "....";
             public float scale = 1.0f;
-            public UInt16 Yoff = 0;
+            public short Yoff = 0;
             public List<SayakaGL.UcodeSimulator.DisplayListStruct> DLists = new List<UcodeSimulator.DisplayListStruct>();
             public List<Limb> Limbs = new List<Limb>();
             public RGBA8 envColor = new RGBA8(0);

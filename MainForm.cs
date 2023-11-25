@@ -14642,7 +14642,7 @@ namespace SharpOcarina
                     if (prop == null)
                         prop = new List<ActorProperty>();
 
-                    string rompath = str.Replace("src\\", "rom\\");
+                    string rompath = str.Replace("\\src\\", "\\rom\\");
                     uint objectid = rom64.getActorObjID(rompath);
 
                     ActorCache.Add(index, new ActorInfo(basename, prop, objectid.ToString("X4")));
@@ -14748,7 +14748,7 @@ namespace SharpOcarina
 
                     basename = basename.Substring(basename.IndexOf("-") + 1);
 
-                    var rompath = str.Replace("src\\", "rom\\");
+                    var rompath = str.Replace("\\src\\", "\\rom\\");
                     long size = new FileInfo(rompath + "\\object.zobj").Length;
 
                     if (ObjectCache.ContainsKey(index))

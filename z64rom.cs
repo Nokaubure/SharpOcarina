@@ -53,10 +53,10 @@ public class rom64 {
         //lets also search in rom directory
         if (path.Contains("src\\"))
         {
-                fullpath = fullpath.Replace("src\\", "rom\\");
+                fullpath = fullpath.Replace("\\src\\", "\\rom\\");
                 foreach (string f in Directory.GetDirectories(fullpath))
                 {
-                    if (!fileList.Contains(f.Replace("rom\\","src\\")))
+                    if (!fileList.Contains(f.Replace("\\rom\\", "\\src\\")))
                         fileList.Add(f);
                 }
         }
