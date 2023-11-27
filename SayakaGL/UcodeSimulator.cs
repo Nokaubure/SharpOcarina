@@ -934,14 +934,19 @@ namespace SharpOcarina.SayakaGL
             UInt32 VOffset = (w1 & 0x00FFFFFF);
 
             double[] modifier = new double[] { 0, 0, 0 };
+            
+            
             if (limbID != -1 && limbtransformations.Count > 0) modifier = new double[]
             {
                 -limbtransformations[limbtransformations.Count - 1][0] ,
                 -limbtransformations[limbtransformations.Count - 1][1] ,
                 -limbtransformations[limbtransformations.Count - 1][2]
             };
-
             
+            if (UcodeSimulator.currentfilename != "" && !UcodeSimulator.currentfilename.Contains("skybox"))
+            {
+                Console.WriteLine();
+            }
 
 
             for (int i = 0; i < N; i++)
@@ -1322,7 +1327,7 @@ namespace SharpOcarina.SayakaGL
                 return;
             };
 
-
+            
 
             // Get address elements
             int Segment = (int)(w1 >> 24);
@@ -1331,16 +1336,19 @@ namespace SharpOcarina.SayakaGL
             if (Offset != 0) limbID = (int)(Offset / 0x40);
             else limbID = 0;
 
+            
+
            // Console.WriteLine("Rendering matrix vertex of limb " + limbtransformations.Count + "joining to " + limbID);
 
-            if (limbID > limbtransformations.Count - 1) {limbID = 0; 
+            if (limbID > limbtransformations.Count - 1) {
+                limbID = 0; 
                 //Console.WriteLine("wtf? joining to 0 instead"); 
             }
 
-            return;
+           
 
             // If matrix is supposed to be read from RDRAM, pop current matrix stack and return
-            if (Segment == 0x80)
+            if (Segment == 0x80 || Segment == 0xD)
             {
                 GL.PopMatrix();
                 return;
@@ -1371,10 +1379,10 @@ namespace SharpOcarina.SayakaGL
 
 
             // Push current matrix to stack, then multiply with the matrix just read
-          //  GL.PushMatrix();
-          //  GL.MultMatrix(new double[] { 1,2, 3, 4, 5, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1 });
+            GL.PushMatrix();
+           // GL.MultMatrix(new double[] { 1,2, 3, 4, 5, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1 });
            // GL.Translate(111,0,0);
-           // GL.MultMatrix(TempMatrix);
+           GL.MultMatrix(TempMatrix);
             
 
         }

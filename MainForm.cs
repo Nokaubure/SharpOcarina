@@ -2033,7 +2033,7 @@ namespace SharpOcarina
                 }
             }
 
-            if (previewcutscene)
+            if (previewcutscene && !settings.DisableCutsceneBlackBars)
             {
                 GL.MatrixMode(MatrixMode.Projection);
                 GL.LoadIdentity();
@@ -17243,6 +17243,11 @@ namespace SharpOcarina
             }
         }
 
+        private void DisableCutscenePreviewBlackBarsMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.DisableCutsceneBlackBars = DisableCutscenePreviewBlackBarsMenuItem.Checked;
+        }
+
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);
@@ -17634,6 +17639,7 @@ namespace SharpOcarina
         public bool DisableTextureWarnings = false;
         public bool EnableNewExitFormat = false;
         public bool AutoReload = false;
+        public bool DisableCutsceneBlackBars = false;
     }
 
     public class UndoRedo

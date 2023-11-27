@@ -769,6 +769,7 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.DisableCutscenePreviewBlackBarsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1185,6 +1186,7 @@ namespace SharpOcarina
             this.RenderSelectedCutsceneCommandsMenuItem,
             this.RenderWaterboxesMenuItem,
             this.DisableTextureWarningsMenuItem,
+            this.DisableCutscenePreviewBlackBarsMenuItem,
             this.toolStripSeparator1,
             this.consecutiveRoomInjectionToolStripMenuItem,
             this.AutoaddGroupsMenuItem,
@@ -11091,6 +11093,14 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // DisableCutscenePreviewBlackBarsMenuItem
+            // 
+            this.DisableCutscenePreviewBlackBarsMenuItem.CheckOnClick = true;
+            this.DisableCutscenePreviewBlackBarsMenuItem.Name = "DisableCutscenePreviewBlackBarsMenuItem";
+            this.DisableCutscenePreviewBlackBarsMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.DisableCutscenePreviewBlackBarsMenuItem.Text = "Disable cutscene preview black bars";
+            this.DisableCutscenePreviewBlackBarsMenuItem.Click += new System.EventHandler(this.DisableCutscenePreviewBlackBarsMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12120,6 +12130,7 @@ namespace SharpOcarina
         private Button SceneObjectAddButton;
         private ToolStripMenuItem buildAndLaunchZ64romToolStripMenuItem;
         private ToolStripMenuItem buildAndLaunchZ64romWarpToSceneToolStripMenuItem;
+        private ToolStripMenuItem DisableCutscenePreviewBlackBarsMenuItem;
     }
     }
 

@@ -4,6 +4,8 @@
 ---1.45
 --------------
 
+- Added setting to preview cutscenes without the black bars at the top and bottom of the screen
+
 - Fixed an issue where z64rom actor.toml could not be loaded with certain directory names
 
 - Fixed an issue where hirearchy was mispelled as hirearchy in SO code, which made this property not load from z64rom actor.toml files

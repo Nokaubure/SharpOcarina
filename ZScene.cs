@@ -1880,7 +1880,11 @@ namespace SharpOcarina
                     if (node.InnerText == "gameplay_keep") bank = 0x04;
                     else if (node.InnerText == "gameplay_field_keep" || node.InnerText == "gameplay_dangeon_keep") bank = 0x05;
                     else bank = 0x06;
-                    
+
+
+                    //if (key != 0x0090 || var != "..[^8F].") continue; //test 
+
+
                     RegisterActorPreview(
                         key, offset, offsetsstr, textureoffsetsstr,
                         scale, dlistcount, animated,
