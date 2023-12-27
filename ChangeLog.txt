@@ -9,7 +9,7 @@
 - Added ScaleMask, ScaleTarget, ScaleArray, ColorMask, ColorTarget, EnvColorArray, PrimColorArray, RotY in actor.toml Render settings
 
 - Updated Blender io_export_so2 plugin to 1.07
-	- if a material has the same name as a texture when initializing the SO material, it will assign it to textel0 automatically
+	- if a material has the same name as a texture (or contains it) when initializing the SO material, it will assign it to textel0 automatically
 	- the option to ignore material groups on export is back
 
 - Fixed an issue where z64rom actor.toml could not be loaded with certain directory names
@@ -33,6 +33,8 @@
 - Room tags will function even if they're followed by . or _, this avoids a common error with Blender appending .001 and _Collection in group names
 
 - Attempting to load build-dev.z64 will make SO suggest about opening z64project.toml
+
+- Removed debug prints to improve performance
 
 - Improved rendering of crystal switches and rupees, and some actors like the scythe trap rotate in real time
 

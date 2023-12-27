@@ -154,7 +154,7 @@ namespace SharpOcarina
 
             ~TextRenderer()
             {
-               // Console.WriteLine("[Warning] Resource leaked: {0}.", typeof(TextRenderer));
+               // DebugConsole.WriteLine("[Warning] Resource leaked: {0}.", typeof(TextRenderer));
             }
 
             #endregion

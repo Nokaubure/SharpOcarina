@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using SharpOcarina;
 
 namespace RedCell.Net
 {
@@ -96,7 +97,7 @@ namespace RedCell.Net
                     {
                         case HttpStatusCode.Found:
                             // This is a redirect to an error page, so ignore.
-                            Console.WriteLine("Found (302), ignoring ");
+                            DebugConsole.WriteLine("Found (302), ignoring ");
                             break;
 
                         case HttpStatusCode.OK:
@@ -112,7 +113,7 @@ namespace RedCell.Net
 
                         default:
                             // This is unexpected.
-                            Console.WriteLine(Response.StatusCode);
+                            DebugConsole.WriteLine((int) Response.StatusCode);
                             break;
                     }
                     Success = true;
@@ -120,7 +121,7 @@ namespace RedCell.Net
                 }
                 catch (WebException ex)
                 {
-                    Console.WriteLine(":Exception " + ex.Message);
+                    DebugConsole.WriteLine(":Exception " + ex.Message);
                     Response = ex.Response as HttpWebResponse;
                     if (ex.Status == WebExceptionStatus.Timeout)
                     {

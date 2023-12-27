@@ -123,7 +123,7 @@ namespace SharpOcarina
             int c = 0;
             foreach (Map map in maplist)
             {
-                //    Console.WriteLine("map [" + c + "] maxfloors " + map.maxfloors+ " start icon offset: " + Offset2.ToString("X8"));
+                //    DebugConsole.WriteLine("map [" + c + "] maxfloors " + map.maxfloors+ " start icon offset: " + Offset2.ToString("X8"));
                 List<byte> mapdata = new List<byte>();
                 for (int i = 0; i < 8; i++)
                 {
@@ -149,7 +149,7 @@ namespace SharpOcarina
                     Offset2 += 0x1EC;
                 }
                 map.icondata = icondata;
-                // Console.WriteLine("end icon offset: " + Offset2.ToString("X8") + "\n");
+                // DebugConsole.WriteLine("end icon offset: " + Offset2.ToString("X8") + "\n");
                 c++;
             }
 
@@ -360,7 +360,7 @@ namespace SharpOcarina
 
             for (int i = 0; i < size; i++)
             {
-                //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
                 gray = ((ROM[Offset + i] & 0xF0) >> 4) * 17;
                 alpha = (ROM[Offset + i] & 0x0F) * 17;
                 col = Color.FromArgb(alpha, gray, gray, gray);
@@ -371,7 +371,7 @@ namespace SharpOcarina
             }
 
             TitleTextureBox.Image = texture;
-            //  Console.WriteLine("tableoffset: " + (TableOffset + 16).ToString("X"));
+            //  DebugConsole.WriteLine("tableoffset: " + (TableOffset + 16).ToString("X"));
         }
 
         public void RefreshMapTexture(bool export = false)
@@ -489,7 +489,7 @@ namespace SharpOcarina
 
                 for (int i = 0; y < texture.Height; i++)
                 {
-                    //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                    //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
                     col = Color.FromArgb(texture.GetPixel(x, y).A, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R);
                     texture.SetPixel(x, y, col);
                     x++;
@@ -587,7 +587,7 @@ namespace SharpOcarina
 
             for (int i = 0; y < 16; i++)
             {
-                //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
 
                 if (y < texture.Height)
                 {
@@ -836,7 +836,7 @@ namespace SharpOcarina
                 List<byte> data = new List<byte>(maplist[i].imagedata);
                 data.RemoveRange(maplist[i].maxfloors * 0xFF0, maplist[i].imagedata.Count - (maplist[i].maxfloors * 0xFF0));
                 Output.AddRange(data);
-                Console.WriteLine("data amount " + data.Count.ToString("X8"));
+                DebugConsole.WriteLine("data amount " + data.Count.ToString("X8"));
             }
 
             BWS.Write(Output.ToArray());
@@ -1222,7 +1222,7 @@ namespace SharpOcarina
 
                 for (int i = 0; y < texture.Height; i++)
                 {
-                    //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                    //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
                     col = Color.FromArgb(texture.GetPixel(x, y).A, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R);
                     texture.SetPixel(x, y, col);
                     x++;

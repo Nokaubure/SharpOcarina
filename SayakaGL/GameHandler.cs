@@ -62,9 +62,9 @@ namespace SharpOcarina.SayakaGL
 
             DLOffsets = new List<UInt32>();
 
-            Console.WriteLine(MeshHeaderOffset.ToString("X8"));
+            DebugConsole.WriteLine(MeshHeaderOffset.ToString("X8"));
 
-            Console.WriteLine(MeshHeader.ToString("X8"));
+            DebugConsole.WriteLine(MeshHeader.ToString("X8"));
 
             UInt32 DL1, DL2;
 
@@ -134,7 +134,7 @@ namespace SharpOcarina.SayakaGL
 
         public static UInt32 Read32(byte[] Data, UInt32 Offset)
         {
-            if (Offset >= Data.Length) { Console.WriteLine("offset out of bounds!" + Offset.ToString("X") );
+            if (Offset >= Data.Length) { DebugConsole.WriteLine("offset out of bounds!" + Offset.ToString("X") );
                 return 0;
             }
             return (UInt32)((Buffer.GetByte(Data, (int)Offset) << 24) | (Buffer.GetByte(Data, (int)Offset + 1) << 16) | (Buffer.GetByte(Data, (int)Offset + 2) << 8) | Buffer.GetByte(Data, (int)Offset + 3));

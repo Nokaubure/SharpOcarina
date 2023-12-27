@@ -80,10 +80,10 @@ namespace SharpOcarina
                         Output.AddRange(BitConverter.GetBytes(Convert.ToUInt32(ObjectGrid.Rows[i].Cells[2].Value.ToString())).Reverse());
                         if (i==2)
                         {
-                            Console.WriteLine(Convert.ToInt32("" + ObjectGrid.Rows[i].Cells[1].Value));
-                            Console.WriteLine(Convert.ToUInt32("" + ObjectGrid.Rows[i].Cells[1].Value));
-                            Console.WriteLine(Convert.ToInt32(ObjectGrid.Rows[i].Cells[1].Value.ToString()));
-                            Console.WriteLine(ObjectGrid.Rows[i].Cells[1].Value.ToString(), 16);
+                            //DebugConsole.WriteLine(Convert.ToInt32("" + ObjectGrid.Rows[i].Cells[1].Value));
+                            //DebugConsole.WriteLine(Convert.ToUInt32("" + ObjectGrid.Rows[i].Cells[1].Value));
+                            //DebugConsole.WriteLine(Convert.ToInt32(ObjectGrid.Rows[i].Cells[1].Value.ToString()));
+                            //DebugConsole.WriteLine(ObjectGrid.Rows[i].Cells[1].Value.ToString(), 16);
                         }
                     }
                     File.WriteAllBytes(saveFileDialog1.FileName, Output.ToArray());

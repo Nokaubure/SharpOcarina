@@ -38,7 +38,7 @@ namespace SharpOcarina
                     if (nodeAtt["Key"] != null)
                     {
                         SceneNames.Add(Convert.ToByte(nodeAtt["Key"].Value, 16), node.InnerText);
-                        //  Console.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
+                        //  DebugConsole.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
                     }
                 }
             }
@@ -312,7 +312,7 @@ namespace SharpOcarina
         {
             if (new int[] { 1, 2, 3, 4}.Contains(e.ColumnIndex))
             {
-                //   Console.WriteLine("Desired type: "  + e.Value.GetType());
+                //   DebugConsole.WriteLine("Desired type: "  + e.Value.GetType());
                 if (e != null && e.Value != null && e.Value.GetType().Equals(typeof(System.String)))
                 {
                     string str = (e.Value as string);
@@ -383,8 +383,8 @@ namespace SharpOcarina
                 Output.AddRange(BitConverter.GetBytes(Convert.ToUInt16(CutsceneGrid.Rows[i].Cells[1].Value)).Reverse());
                 Output.Add(Convert.ToByte(CutsceneGrid.Rows[i].Cells[2].Value));
                 Output.Add(Convert.ToByte(CutsceneGrid.Rows[i].Cells[3].Value));
-                Console.WriteLine(CutsceneGrid.Rows[i].Cells[4].Value + " p ");
-                Console.WriteLine(Convert.ToUInt32(CutsceneGrid.Rows[i].Cells[4].Value).ToString("X"));
+                DebugConsole.WriteLine(CutsceneGrid.Rows[i].Cells[4].Value + " p ");
+                DebugConsole.WriteLine(Convert.ToUInt32(CutsceneGrid.Rows[i].Cells[4].Value).ToString("X"));
                 Output.AddRange(BitConverter.GetBytes(Convert.ToUInt32(CutsceneGrid.Rows[i].Cells[4].Value)).Reverse());
             }
 
@@ -420,7 +420,7 @@ namespace SharpOcarina
             catch (System.FormatException)
             {
                 //nothing
-                Console.WriteLine("Incorrect format? " + CutsceneGrid.Rows[row].Cells[1].Value);
+                DebugConsole.WriteLine("Incorrect format? " + CutsceneGrid.Rows[row].Cells[1].Value);
             }
         }
     }

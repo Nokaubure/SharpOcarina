@@ -166,7 +166,7 @@ namespace SharpOcarina
                                 }
                                 catch (System.FormatException e)
                                 {
-                                    Console.WriteLine("Error " + nodeAtt["Name"].Value);
+                                    DebugConsole.WriteLine("Error " + nodeAtt["Name"].Value);
                                 }
                             }
                         }
@@ -392,7 +392,7 @@ namespace SharpOcarina
                                 }
                                 catch (System.FormatException e)
                                 {
-                                    Console.WriteLine("Error " + nodeAtt["Name"].Value);
+                                    DebugConsole.WriteLine("Error " + nodeAtt["Name"].Value);
                                 }
                             }
                             else if (node2.Name == "Notes")

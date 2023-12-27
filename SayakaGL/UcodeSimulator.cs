@@ -701,11 +701,11 @@ namespace SharpOcarina.SayakaGL
                        
                         UcodeCommands[ThisDL.Commands[i].ID](ThisDL.Commands[i].w0, ThisDL.Commands[i].w1);
                     }
-                    //   else if (ThisDL.InFileNumber == 0x06) Console.WriteLine(ThisDL.Commands[i].w0.ToString("X") + " " + ThisDL.Commands[i].w1.ToString("X"));
-                  // Console.WriteLine(ThisDL.Commands[i].w0.ToString("X8") + " " + ThisDL.Commands[i].w1.ToString("X8"));
+                    //   else if (ThisDL.InFileNumber == 0x06) DebugConsole.WriteLine(ThisDL.Commands[i].w0.ToString("X") + " " + ThisDL.Commands[i].w1.ToString("X"));
+                  // DebugConsole.WriteLine(ThisDL.Commands[i].w0.ToString("X8") + " " + ThisDL.Commands[i].w1.ToString("X8"));
                 }
 
-               // if (ThisDL.InFileNumber == 0x06) Console.WriteLine("amount of commands: " + ThisDL.Commands.Count);
+               // if (ThisDL.InFileNumber == 0x06) DebugConsole.WriteLine("amount of commands: " + ThisDL.Commands.Count);
 
                 // Reset some changed states
                 GL.Enable(EnableCap.Texture2D);
@@ -748,8 +748,8 @@ namespace SharpOcarina.SayakaGL
 
                     // Execute the next command
                     UcodeCommands[ThisDL.Commands[i].ID](ThisDL.Commands[i].w0, ThisDL.Commands[i].w1);
-                   // Console.WriteLine(ThisDL.Commands[i].w0.ToString("X8") + " " + ThisDL.Commands[i].w1.ToString("X8"));
-                    // if (ThisDL.InFileNumber == 0x03) Console.WriteLine(ThisDL.Commands[i].w0.ToString("X8") + " " + ThisDL.Commands[i].w1.ToString("X8"));
+                   // DebugConsole.WriteLine(ThisDL.Commands[i].w0.ToString("X8") + " " + ThisDL.Commands[i].w1.ToString("X8"));
+                    // if (ThisDL.InFileNumber == 0x03) DebugConsole.WriteLine(ThisDL.Commands[i].w0.ToString("X8") + " " + ThisDL.Commands[i].w1.ToString("X8"));
                 }
             }
 
@@ -942,11 +942,7 @@ namespace SharpOcarina.SayakaGL
                 -limbtransformations[limbtransformations.Count - 1][1] ,
                 -limbtransformations[limbtransformations.Count - 1][2]
             };
-            
-            if (UcodeSimulator.currentfilename != "" && !UcodeSimulator.currentfilename.Contains("skybox"))
-            {
-                Console.WriteLine();
-            }
+
 
 
             for (int i = 0; i < N; i++)
@@ -1285,7 +1281,7 @@ namespace SharpOcarina.SayakaGL
                         break;
                 }
             }
-         //   if (MDSFT != 0) Console.WriteLine(MDSFT);
+         //   if (MDSFT != 0) DebugConsole.WriteLine(MDSFT);
 
                  
         }
@@ -1323,7 +1319,7 @@ namespace SharpOcarina.SayakaGL
             if (limbID != -1)
             {
                 limbID = -1;
-                //Console.WriteLine("Rendering the rest of the vertex");
+                //DebugConsole.WriteLine("Rendering the rest of the vertex");
                 return;
             };
 
@@ -1338,11 +1334,11 @@ namespace SharpOcarina.SayakaGL
 
             
 
-           // Console.WriteLine("Rendering matrix vertex of limb " + limbtransformations.Count + "joining to " + limbID);
+           // DebugConsole.WriteLine("Rendering matrix vertex of limb " + limbtransformations.Count + "joining to " + limbID);
 
             if (limbID > limbtransformations.Count - 1) {
                 limbID = 0; 
-                //Console.WriteLine("wtf? joining to 0 instead"); 
+                //DebugConsole.WriteLine("wtf? joining to 0 instead"); 
             }
 
            
@@ -1354,7 +1350,7 @@ namespace SharpOcarina.SayakaGL
                 return;
             }
 
-          //  Console.WriteLine("rendering matrix");
+          //  DebugConsole.WriteLine("rendering matrix");
 
             // If matrix address is invalid, return
         //    if (GameHandler.IsAddressValid(w1) == false) return;
@@ -1403,7 +1399,7 @@ namespace SharpOcarina.SayakaGL
             UInt32 TextureSegment = ((NGraphics.Textures[0].Address & 0xFF000000) >> 24);
             if (CurrentDL.TextureAnimation >= 8 && !currentfilename.Contains(".zobj"))
             {
-                Console.WriteLine($"Special texture " + TextureSegment);
+                DebugConsole.WriteLine($"Special texture " + TextureSegment);
 
                 NGraphics.Textures[0].GLID = GameHandler.InvalidTextureID;
                 NGraphics.Textures[1].GLID = GameHandler.InvalidTextureID;
@@ -1739,7 +1735,7 @@ namespace SharpOcarina.SayakaGL
             {
                 // Invalid address -> yellow texture
                 TextureBuffer.Fill(new byte[] { 0xFF, 0xFF, 0x00, 0xFF });
-                //Console.WriteLine("SCENE " + Program.MF.CurrentScene.ToString() + ", " + GameHandler.SceneInfos[Program.MF.CurrentScene].Name + " -> invalid texture address! " + NGraphics.Textures[ActiveTexture].Address.ToString("X8"));
+                //DebugConsole.WriteLine("SCENE " + Program.MF.CurrentScene.ToString() + ", " + GameHandler.SceneInfos[Program.MF.CurrentScene].Name + " -> invalid texture address! " + NGraphics.Textures[ActiveTexture].Address.ToString("X8"));
             }
 
             int GLID = TexUtil.CreateRGBATexture(

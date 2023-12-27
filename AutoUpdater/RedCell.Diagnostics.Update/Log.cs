@@ -1,4 +1,5 @@
 ﻿using System;
+using SharpOcarina;
 
 namespace RedCell.Diagnostics.Update
 {
@@ -62,7 +63,7 @@ namespace RedCell.Diagnostics.Update
             string message = string.Format(format, args);
             OnEvent(message);
             if (Console)
-                System.Console.WriteLine(message);
+                DebugConsole.WriteLine(message);
 
             if (Debug)
                 System.Diagnostics.Debug.WriteLine(message);

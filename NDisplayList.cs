@@ -271,7 +271,7 @@ namespace SharpOcarina
             //animated
            // if (!Animated) return;
           //  Helpers.Append64(ref DList, 0xDE00000009000000);
-          //  Console.WriteLine("Animated! " + DList.Count.ToString("X"));
+          //  DebugConsole.WriteLine("Animated! " + DList.Count.ToString("X"));
         }
 
         private void LoadTextureBlock_4b(ref List<byte> DList, uint TImg, int Fmt, uint Width, uint Height, uint Pal, uint CMS, uint CMT, uint MaskS, uint MaskT, uint ShiftS, uint ShiftT)
@@ -305,7 +305,7 @@ namespace SharpOcarina
         private void LoadTLUT16(ref List<byte> DList, int Pal, uint DRAM)
         {
 #if DEBUG
-          //  Console.WriteLine("LoadTLUT16 -> pal: " + Pal.ToString() + ", address: " + DRAM.ToString("X8"));
+          //  DebugConsole.WriteLine("LoadTLUT16 -> pal: " + Pal.ToString() + ", address: " + DRAM.ToString("X8"));
 #endif
             Helpers.Append64(ref DList, SetTextureImage(GBI.G_IM_FMT_RGBA, GBI.G_IM_SIZ_16b, 1, (DRAM & 0xFFFFFFFF)));
             Helpers.Append64(ref DList, TileSync());
@@ -318,7 +318,7 @@ namespace SharpOcarina
         private void LoadTLUT256(ref List<byte> DList, uint DRAM)
         {
 #if DEBUG
-         //   Console.WriteLine("LoadTLUT256 -> offset: " + DRAM.ToString("X8"));
+         //   DebugConsole.WriteLine("LoadTLUT256 -> offset: " + DRAM.ToString("X8"));
 #endif
             Helpers.Append64(ref DList, SetTextureImage(GBI.G_IM_FMT_RGBA, GBI.G_IM_SIZ_16b, 1, (DRAM & 0xFFFFFFFF)));
             Helpers.Append64(ref DList, TileSync());
@@ -453,7 +453,7 @@ namespace SharpOcarina
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    // if ((float)Obj.VertexColors[Tri.VertColor[i] - 1].A < 1) Console.WriteLine("Vertex with alpha!");
+                    // if ((float)Obj.VertexColors[Tri.VertColor[i] - 1].A < 1) DebugConsole.WriteLine("Vertex with alpha!");
                     /* Minimum... */
                     MinCoordinate.X = Math.Min(MinCoordinate.X, Obj.Vertices[Tri2.VertIndex[i]].X * Scale);
                     MinCoordinate.Y = Math.Min(MinCoordinate.Y, Obj.Vertices[Tri2.VertIndex[i]].Y * Scale);
@@ -494,9 +494,9 @@ namespace SharpOcarina
             {
 
 
-              // Console.WriteLine(Mat.map_Kd);
+              // DebugConsole.WriteLine(Mat.map_Kd);
 
-               //Console.WriteLine("textureless: " + textureless);
+               //DebugConsole.WriteLine("textureless: " + textureless);
 
                 /* Create new surface bundle */
                 SurfaceBundle Surf = new SurfaceBundle();
@@ -522,7 +522,7 @@ namespace SharpOcarina
 
                     if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask)
                     {
-                        //Console.WriteLine("animated: " + Mat.Name);
+                        //DebugConsole.WriteLine("animated: " + Mat.Name);
                         try {
                             if (MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasPointer())
                             {
@@ -630,7 +630,7 @@ namespace SharpOcarina
                     // Helpers.Append64(ref DList, SetTextureLOD(GBI.G_TL_TILE)); //G_SETOTHERMODE_H
                     if (Pixelated) Helpers.Append64(ref DList, SetTextureFilt(GBI.G_TF_POINT)); //G_SETOTHERMODE_H pixel effect
                     else Helpers.Append64(ref DList, SetTextureFilt(GBI.G_TF_BILERP));
-                    //  if (!Pixelated) Console.WriteLine(SetTextureFilt(GBI.G_TF_AVERAGE).ToString("X16"));
+                    //  if (!Pixelated) DebugConsole.WriteLine(SetTextureFilt(GBI.G_TF_AVERAGE).ToString("X16"));
                     // SetOtherMode(GBI.G_SETOTHERMODE_H, GBI.G_MDSFT_TEXTDETAIL, 2, GBI.G_TD_CLAMP);
                     if (ThisTexture.Format == GBI.G_IM_FMT_CI)
                     {
@@ -847,7 +847,7 @@ namespace SharpOcarina
                         for (int i = 0; i < 20; i++)
                             Helpers.Append64(ref DList, 0x0000000000000000);
 
-                        //  Console.WriteLine("Special animation: dodongo cavern");
+                        //  DebugConsole.WriteLine("Special animation: dodongo cavern");
                     }
                     */
                 }
@@ -898,7 +898,7 @@ namespace SharpOcarina
 
 
 
-                        //  Console.WriteLine("textureless");
+                        //  DebugConsole.WriteLine("textureless");
                     }
                     else
                     {
@@ -1006,7 +1006,7 @@ namespace SharpOcarina
                             // Helpers.Append64(ref DList, SetRenderMode(0x18, 0xC8112078));
                             //  Helpers.Append64(ref DList, SetRenderMode(0x18, 0xC81049D8));
 
-                            // Console.WriteLine("alpha vertex!");
+                            // DebugConsole.WriteLine("alpha vertex!");
 
                         }
                     }
@@ -1063,8 +1063,8 @@ namespace SharpOcarina
 
                 if (hasalphavertex)
                 {
-                    //   Console.WriteLine("dl c " + DList.Count);
-                    //    Console.WriteLine("" + Helpers.Read32(DList, hasalphavertexoffset+4).ToString("X8"));
+                    //   DebugConsole.WriteLine("dl c " + DList.Count);
+                    //    DebugConsole.WriteLine("" + Helpers.Read32(DList, hasalphavertexoffset+4).ToString("X8"));
                     Helpers.Overwrite32(ref DList, hasalphavertexoffset, Helpers.Read32(DList, DList.Count - 8));
                     Helpers.Overwrite32(ref DList, hasalphavertexoffset + 4, Helpers.Read32(DList, DList.Count - 8 + 4));
                     //Helpers.Overwrite32(ref DList, hasalphavertexoffset - 8, Helpers.Read32(DList, DList.Count - 16));
@@ -1074,14 +1074,14 @@ namespace SharpOcarina
 
                   //  DList.RemoveRange(DList.Count - 1 - 16, 16);
 
-                    //  Console.WriteLine("dl c " + DList.Count);
-                    // Console.WriteLine("" + Helpers.Read32(DList, hasalphavertexoffset+4).ToString("X8"));
+                    //  DebugConsole.WriteLine("dl c " + DList.Count);
+                    // DebugConsole.WriteLine("" + Helpers.Read32(DList, hasalphavertexoffset+4).ToString("X8"));
 
                 }
 
-                //     Console.WriteLine("translucent: " + string.Format("0x{0:X}", SetCombine(0x167E03, 0xFF0FFDFF)) );
+                //     DebugConsole.WriteLine("translucent: " + string.Format("0x{0:X}", SetCombine(0x167E03, 0xFF0FFDFF)) );
 
-                //  Console.WriteLine("solid: " + string.Format("0x{0:X}", SetCombine(0x127E03, 0xFFFFFDF8))) ;
+                //  DebugConsole.WriteLine("solid: " + string.Format("0x{0:X}", SetCombine(0x127E03, 0xFFFFFDF8))) ;
 
                 /* Generate SetCombine/RenderMode commands */
 
@@ -1154,14 +1154,14 @@ namespace SharpOcarina
                 {
                     int TriIndex = Surf.Triangles.IndexOf(Tri);
 
-                  //  Console.WriteLine("vertex color count: " + Obj.VertexColors.Count);
-                 //   Console.WriteLine("vertex color count: " + (Tri.VertColor[0] - 1));
+                  //  DebugConsole.WriteLine("vertex color count: " + Obj.VertexColors.Count);
+                 //   DebugConsole.WriteLine("vertex color count: " + (Tri.VertColor[0] - 1));
 
                     int[] TriPoints = new int[3];
                     for (int i = 0; i < 3; i++)
                     {
                         
-                       // if ((float)Obj.VertexColors[Tri.VertColor[i] - 1].A < 1) Console.WriteLine("Vertex with alpha!");
+                       // if ((float)Obj.VertexColors[Tri.VertColor[i] - 1].A < 1) DebugConsole.WriteLine("Vertex with alpha!");
 
                         NVertex NewVert = new NVertex(
                             new Vector3d(Obj.Vertices[Tri.VertIndex[i]].X, Obj.Vertices[Tri.VertIndex[i]].Y, Obj.Vertices[Tri.VertIndex[i]].Z),
@@ -1212,8 +1212,8 @@ namespace SharpOcarina
                                 VertData.Add((byte)System.Convert.ToByte(((int)(VertList[j].Normals.X * 127.0f)) & 0xFF));
                                 VertData.Add((byte)System.Convert.ToByte(((int)(VertList[j].Normals.Y * 127.0f)) & 0xFF));
                                 VertData.Add((byte)System.Convert.ToByte(((int)(VertList[j].Normals.Z * 127.0f)) & 0xFF));
-                               // Console.WriteLine("Normals: " + VertList[j].Normals.X + "    " +  VertList[j].Normals.Y + "    " + VertList[j].Normals.Z);
-                               // Console.WriteLine("Normals2: " + (byte)System.Convert.ToByte(((int)(VertList[j].Normals.X * 255.0f)) & 0xFF) + "    " + (byte)System.Convert.ToByte(((int)(VertList[j].Normals.Y * 255.0f)) & 0xFF) + "    " + (byte)System.Convert.ToByte(((int)(VertList[j].Normals.Z * 255.0f)) & 0xFF));
+                               // DebugConsole.WriteLine("Normals: " + VertList[j].Normals.X + "    " +  VertList[j].Normals.Y + "    " + VertList[j].Normals.Z);
+                               // DebugConsole.WriteLine("Normals2: " + (byte)System.Convert.ToByte(((int)(VertList[j].Normals.X * 255.0f)) & 0xFF) + "    " + (byte)System.Convert.ToByte(((int)(VertList[j].Normals.Y * 255.0f)) & 0xFF) + "    " + (byte)System.Convert.ToByte(((int)(VertList[j].Normals.Z * 255.0f)) & 0xFF));
                             }
                             else
                             {
@@ -1223,13 +1223,13 @@ namespace SharpOcarina
                                 VertData.Add((byte)(Color & 0xFF));
                             }
 
-                            //  Console.WriteLine("vcolor "+ VertList[j].Colors.ToString());
-                         //      Console.WriteLine(Color.ToString("X"));
+                            //  DebugConsole.WriteLine("vcolor "+ VertList[j].Colors.ToString());
+                         //      DebugConsole.WriteLine(Color.ToString("X"));
                             uint Color2 = (uint)VertList[j].Colors.ToArgb();
                             VertData.Add((byte)((Color2 >> 24) & 0xFF));
                           //  VertData.Add((byte)((Color2 >> 24) & 0xFF));
 
-                           // if ((byte)((Color2 >> 24) & 0xFF) < 0xFF) Console.WriteLine("Vertex alpha!: " + ((byte)((Color2 >> 24) & 0xFF)).ToString("X"));
+                           // if ((byte)((Color2 >> 24) & 0xFF) < 0xFF) DebugConsole.WriteLine("Vertex alpha!: " + ((byte)((Color2 >> 24) & 0xFF)).ToString("X"));
                         }
 
                         if ((AsmTris.Count & 4) != 0)
@@ -1248,8 +1248,8 @@ namespace SharpOcarina
                         /* Determine minimum/maximum coordinate changes... */
 
 
-                        //  Console.WriteLine(MinCoordinate);
-                        // Console.WriteLine(MaxCoordinate);
+                        //  DebugConsole.WriteLine(MinCoordinate);
+                        // DebugConsole.WriteLine(MaxCoordinate);
 
                         if (!firsttime && MainForm.settings.DListCulling && !Billboard && !TwoAxisBillboard && !(MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional()))
                         {

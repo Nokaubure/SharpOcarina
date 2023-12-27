@@ -104,7 +104,7 @@ namespace SharpOcarina
 
                 for (int i = 0; y < texture.Height; i++)
                 {
-                    //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                    //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
                     col = Color.FromArgb(texture.GetPixel(x, y).A, texture.GetPixel(x,y).R, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R);
                     texture.SetPixel(x, y, col);
                     x++;

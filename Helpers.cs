@@ -251,9 +251,15 @@ namespace SharpOcarina
         }
     }
 
-    class DebugConsole
+    public static class DebugConsole
     {
         public static void WriteLine(string text)
+        {
+#if DEBUG
+            Console.WriteLine(text);
+#endif
+        }
+        public static void WriteLine(int text)
         {
 #if DEBUG
             Console.WriteLine(text);

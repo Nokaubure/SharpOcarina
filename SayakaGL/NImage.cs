@@ -249,7 +249,7 @@ namespace NImage
 
         public static void ConvertTexture(uint Format, byte[] Source, uint SourceOffset, ref byte[] Target, uint Width, uint Height, uint LineSize, Color4[] Palette)
         {
-           // Console.WriteLine("Texture converted");
+           // DebugConsole.WriteLine("Texture converted");
             try
             {
                 // Default -> white texture

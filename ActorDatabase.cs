@@ -64,7 +64,7 @@ namespace SharpOcarina
                     int exists = Database.FindIndex(x => x.Value == index);
                     if(exists != -1)
                     {
-                      //  Console.WriteLine("Removed " + Database[exists].Value.ToString("X2"));
+                      //  DebugConsole.WriteLine("Removed " + Database[exists].Value.ToString("X2"));
                         Database.RemoveAt(exists); //removes vanilla actor from db
                         
                     }
@@ -169,7 +169,7 @@ namespace SharpOcarina
                 string specialfilter = "";
                 if (filter.Contains("#")) specialfilter = filter.Replace("#", "");
 
-              //  Console.WriteLine(actor.Category + " - " + Array.IndexOf(actor_categories, specialfilter));
+              //  DebugConsole.WriteLine(actor.Category + " - " + Array.IndexOf(actor_categories, specialfilter));
 
                 ActorView.Nodes.Add(new ActorNode(actor.Value, 0x0000, actor.Value.ToString("X4") + " - " + actor.Name, actor.Notes));
                 if (filter == "" || actor.Name.Contains(filter, StringComparison.OrdinalIgnoreCase) || (specialfilter != "" && actor.Category == Array.IndexOf(actor_categories, specialfilter)))

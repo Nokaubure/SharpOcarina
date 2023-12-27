@@ -38,7 +38,7 @@ namespace SharpOcarina
                     if (nodeAtt["Key"] != null)
                     {
                         SceneNames.Add(Convert.ToByte(nodeAtt["Key"].Value, 16), node.InnerText);
-                        //  Console.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
+                        //  DebugConsole.WriteLine(Convert.ToByte(nodeAtt["Key"].Value, 16) + " " + node.InnerText);
                     }
                 }
             }
@@ -358,7 +358,7 @@ namespace SharpOcarina
         {
             if (new int[] { 1, 2, 3, 4, 5 ,6 }.Contains(e.ColumnIndex))
             {
-               //   Console.WriteLine("Desired type: "  + e.Value.GetType());
+               //   DebugConsole.WriteLine("Desired type: "  + e.Value.GetType());
                 if (e != null && e.Value != null  && e.Value.GetType().Equals(typeof(System.String)))
                 {
                     string str = (e.Value as string);
@@ -402,8 +402,8 @@ namespace SharpOcarina
                 if (column == 1)
                 {
                     string scenename;
-                   //     Console.WriteLine(Convert.ToByte(EntranceGrid.Rows[row].Cells[1].Value)); 
-                        //Console.WriteLine(Convert.ToByte(EntranceGrid.Rows[row].Cells[1].Value));
+                   //     DebugConsole.WriteLine(Convert.ToByte(EntranceGrid.Rows[row].Cells[1].Value)); 
+                        //DebugConsole.WriteLine(Convert.ToByte(EntranceGrid.Rows[row].Cells[1].Value));
                      if (!SceneNames.TryGetValue(Convert.ToByte((EntranceGrid.Rows[row].Cells[1].Value)), out scenename)) scenename = "Unknown";
 
                       EntranceGrid.Rows[row].Cells[7].Value = scenename;
@@ -421,7 +421,7 @@ namespace SharpOcarina
             catch (System.FormatException)
             {
                 //nothing
-                Console.WriteLine("Incorrect format? " + EntranceGrid.Rows[row].Cells[1].Value);
+                DebugConsole.WriteLine("Incorrect format? " + EntranceGrid.Rows[row].Cells[1].Value);
             }
         }
 

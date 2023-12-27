@@ -133,7 +133,7 @@ namespace SharpOcarina
 
             for (int i = 0; i < size; i++)
             {
-                //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
                 gray = ((ROM[startoffset + i] & 0xF0) >> 4) * 17;
                 alpha = (ROM[startoffset + i] & 0x0F) * 17;
                 col = Color.FromArgb(alpha, gray, gray, gray);
@@ -144,7 +144,7 @@ namespace SharpOcarina
             }
 
             TextureBox.Image = texture;
-            //  Console.WriteLine("tableoffset: " + (TableOffset + 16).ToString("X"));
+            //  DebugConsole.WriteLine("tableoffset: " + (TableOffset + 16).ToString("X"));
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -179,7 +179,7 @@ namespace SharpOcarina
 
                 for (int i = 0; y < texture.Height; i++)
                 {
-                    //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                    //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
                     col = Color.FromArgb(texture.GetPixel(x, y).A, texture.GetPixel(x,y).R, texture.GetPixel(x, y).R, texture.GetPixel(x, y).R);
                     texture.SetPixel(x, y, col);
                     x++;
@@ -240,7 +240,7 @@ namespace SharpOcarina
 
                 for (int i = 0; y < 72; i++)
                 {
-                    //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                    //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
 
                     if (y < texture.Height)
                     {

@@ -49,7 +49,7 @@ namespace SharpOcarina
             }
             catch (Exception e)
             {
-                Console.WriteLine("Old XML detected, using old format to import it");
+                DebugConsole.WriteLine("Old XML detected, using old format to import it");
                 XmlSerializer XS = new XmlSerializer(typeof(T));
                 StreamReader SR = new StreamReader(Filename);
 

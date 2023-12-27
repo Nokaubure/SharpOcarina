@@ -210,12 +210,12 @@ namespace SharpOcarina
         {
             UcodeSimulator.UnpackedCombinerStruct Unpacked = UcodeSimulator.UnpackCombinerMux(((uint)((CombinerCommand >> 32) & 0xFFFFFFFF)), (uint)(CombinerCommand & (ulong)0xFFFFFFFF));
 
-            Console.WriteLine("" + ((uint)((CombinerCommand & (ulong)0xFFFFFF00000000 >> 32) & 0xFFFFFFFF)).ToString("X8"));
+            DebugConsole.WriteLine("" + ((uint)((CombinerCommand & (ulong)0xFFFFFF00000000 >> 32) & 0xFFFFFFFF)).ToString("X8"));
 
-            Console.WriteLine("" + ((uint)((CombinerCommand >> 32) & 0xFFFFFFFF)).ToString("X8"));
+            DebugConsole.WriteLine("" + ((uint)((CombinerCommand >> 32) & 0xFFFFFFFF)).ToString("X8"));
 
 
-            //Console.WriteLine("" + ((uint)(CombinerCommand & (ulong)0xFFFFFFFF)).ToString("X8"));
+            //DebugConsole.WriteLine("" + ((uint)(CombinerCommand & (ulong)0xFFFFFFFF)).ToString("X8"));
 
             C1A.SelectedIndex = Unpacked.cA[0];
             C1B.SelectedIndex = Unpacked.cB[0];
@@ -291,7 +291,7 @@ namespace SharpOcarina
 
             CompiledD9.Text = D9Command.ToString("X14");
 
-            Console.WriteLine((D9Command >> 2).ToString("X16"));
+            DebugConsole.WriteLine((D9Command >> 2).ToString("X16"));
 
             if (PreviewCheckbox.Checked)
                 Sync();

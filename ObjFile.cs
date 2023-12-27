@@ -746,7 +746,7 @@ namespace SharpOcarina
                                             }
                                             if (!found)
                                             {
-                                                Console.WriteLine("mat  " + nodeAtt["material"].Value.Replace("-material", "") + " NOT FOUND");
+                                                DebugConsole.WriteLine("mat  " + nodeAtt["material"].Value.Replace("-material", "") + " NOT FOUND");
                                                 materialids.Add("");
                                             }
 
@@ -921,8 +921,8 @@ namespace SharpOcarina
                     groupF.Name = groupF.Name.Replace("#door", "Fdoor").Replace("#Door", "Fdoor").Replace("TAG_door", "Fdoor");
                     groupB.Name = groupB.Name.Replace("#door", "Bdoor").Replace("#Door", "Bdoor").Replace("TAG_door", "Bdoor");
 
-                    Console.WriteLine(groupF.Name);
-                    Console.WriteLine(groupB.Name);
+                    DebugConsole.WriteLine(groupF.Name);
+                    DebugConsole.WriteLine(groupB.Name);
 
                     groupF.Triangles = new List<Triangle>();
                     groupB.Triangles = new List<Triangle>();
@@ -1057,7 +1057,7 @@ namespace SharpOcarina
         {
             if (IgnoreMaterials && GroupToAdd.Name.ToLower().Contains("#nocollision"))
             {
-                Console.WriteLine("Skipping #NoCollision!");
+                DebugConsole.WriteLine("Skipping #NoCollision!");
                 return;
             }
             CalculateVertexNormals(ref GroupToAdd);
@@ -1259,7 +1259,7 @@ namespace SharpOcarina
                             if (!File.Exists(Path.GetDirectoryName(LoadPath) + "\\" + Path.GetFileNameWithoutExtension(LoadPath) + ".png"))
                             {
                                 String pdetail = @"/c ndec\tga2png.exe -i " + "\"" + LoadPath + "\"" + " -o " + "\"" + Path.GetDirectoryName(LoadPath) + "\\\"";
-                               // Console.WriteLine(Path.GetDirectoryName(LoadPath) + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
+                               // DebugConsole.WriteLine(Path.GetDirectoryName(LoadPath) + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
                                 ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
                                 pcmd.Arguments = pdetail;
                                 
@@ -1268,7 +1268,7 @@ namespace SharpOcarina
 
 
                             }
-                         //   Console.WriteLine(Path.GetDirectoryName(LoadPath) + "\\" + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
+                         //   DebugConsole.WriteLine(Path.GetDirectoryName(LoadPath) + "\\" + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
                             _Mats[i].TexImage = BitmapFromFile(Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
                         }
                         else
@@ -1350,8 +1350,8 @@ namespace SharpOcarina
         private void FixUv()
         {
             
-            //Console.WriteLine("Islands count: " + _Islands.Count);
-            Console.WriteLine("Texcoord count " + _TexCoords.Count);
+            //DebugConsole.WriteLine("Islands count: " + _Islands.Count);
+            DebugConsole.WriteLine("Texcoord count " + _TexCoords.Count);
 
             List<TextureCoord> tx2 = new List<TextureCoord>();
             int tmp = 0;
@@ -1487,7 +1487,7 @@ namespace SharpOcarina
                 if (Normals.Count != 0 && Tri.NormalIndex[j] != -1)
                 {
                     if (Tri.NormalIndex[j] > Normals.Count-1)
-                        Console.WriteLine("Normal index out of bounds! " + Tri.NormalIndex[j]);
+                        DebugConsole.WriteLine("Normal index out of bounds! " + Tri.NormalIndex[j]);
                     else
                     GL.Normal3(Normals[Tri.NormalIndex[j]].X, Normals[Tri.NormalIndex[j]].Y, Normals[Tri.NormalIndex[j]].Z);
                 }
@@ -1496,7 +1496,7 @@ namespace SharpOcarina
                 if (Tri.VertIndex[j] != -1)
                 {
                     if (Tri.VertIndex[j] > Vertices.Count - 1)
-                        Console.WriteLine("Vertex index out of bounds! " + Tri.VertIndex[j]);
+                        DebugConsole.WriteLine("Vertex index out of bounds! " + Tri.VertIndex[j]);
                     else
                         GL.Vertex3(Vertices[Tri.VertIndex[j]].X, Vertices[Tri.VertIndex[j]].Y, Vertices[Tri.VertIndex[j]].Z);
                 }

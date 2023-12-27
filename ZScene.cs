@@ -382,7 +382,7 @@ namespace SharpOcarina
                     {
                         continue;
                     }
-                    Console.WriteLine(tmp);
+                    DebugConsole.WriteLine(tmp);
                     if (tmp == _Rooms.Count - subs)
                     {
                         groupcount++;
@@ -799,7 +799,7 @@ namespace SharpOcarina
                 for (int i = 0; i < _Rooms.Count; i++)
                 {
 #if DEBUG
-                    Console.WriteLine("INJECTING TO " + Filename + ", OFFSET " + RoomInjectOffset.ToString("X"));
+                    DebugConsole.WriteLine("INJECTING TO " + Filename + ", OFFSET " + RoomInjectOffset.ToString("X"));
 #endif
                 if (MainForm.settings.CheckEmptyOffset == true)
                 {
@@ -849,7 +849,7 @@ namespace SharpOcarina
 
                 for (int i = 0; y < 72; i++)
                 {
-                    //   Console.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
+                    //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
 
                     if (y < texture.Height)
                     {
@@ -946,7 +946,7 @@ namespace SharpOcarina
                 
             }
 
-            //  Console.WriteLine("tableoffset: " + (TableOffset + 16).ToString("X"));
+            //  DebugConsole.WriteLine("tableoffset: " + (TableOffset + 16).ToString("X"));
 
 
             if (rom.Game == "OOT")
@@ -1229,7 +1229,7 @@ namespace SharpOcarina
             ConvertScene(ConsecutiveRoomInject, ForceRGBATextures,this, game);
 
 #if DEBUG
-            Console.WriteLine("scene count" + SceneData.Count.ToString("X"));
+            DebugConsole.WriteLine("scene count" + SceneData.Count.ToString("X"));
 #endif
             foreach (ZSceneHeader sceneheader in SceneHeaders)
             {
@@ -1275,7 +1275,7 @@ namespace SharpOcarina
                 else
                     SaveRoomTo = Filepath + Helpers.MakeValidFileName(Name) + "_room_" + i + extension;
 #if DEBUG
-                Console.WriteLine("SAVING DATA TO " + SaveRoomTo);
+                DebugConsole.WriteLine("SAVING DATA TO " + SaveRoomTo);
 #endif 
                 if (MainForm.IsFileLocked(SaveRoomTo))
                 { 
@@ -1294,7 +1294,7 @@ namespace SharpOcarina
             else
                 SaveSceneTo = Filepath + Helpers.MakeValidFileName(Name) + "_scene.zscene";
 #if DEBUG
-            Console.WriteLine("SAVING DATA TO " + SaveSceneTo);
+            DebugConsole.WriteLine("SAVING DATA TO " + SaveSceneTo);
 #endif
 
             if (MainForm.IsFileLocked(SaveSceneTo))
@@ -1520,7 +1520,7 @@ namespace SharpOcarina
                             continue;
                         if (++hierarchyfound != hierarchy)
                         {
-                            if (hierarchy == 14) Console.WriteLine("hf " + hierarchyfound);
+                            if (hierarchy == 14) DebugConsole.WriteLine("hf " + hierarchyfound);
                             continue;
                         }
                             
@@ -1621,7 +1621,7 @@ namespace SharpOcarina
                     while (dlistcount > 0)
                     {
 
-                        // Console.WriteLine("offset: " + offset.ToString("X"));
+                        // DebugConsole.WriteLine("offset: " + offset.ToString("X"));
                         offset = SayakaGL.UcodeSimulator.ReadDL((int) bank, offset, ref objrender.DLists);
 
                         foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in objrender.DLists)
@@ -1636,7 +1636,7 @@ namespace SharpOcarina
                     for (int i = 0; i < offsets.Length; i++)
                     {
 
-                        // Console.WriteLine("offset: " + offset.ToString("X"));
+                        // DebugConsole.WriteLine("offset: " + offset.ToString("X"));
                         SayakaGL.UcodeSimulator.ReadDL((int)bank, offsets[i], ref objrender.DLists);
 
                         foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in objrender.DLists)
@@ -1984,13 +1984,13 @@ namespace SharpOcarina
 
                                     if (file != "" && (offset != 0 || animated)) {
 #if DEBUG
-                                        Console.WriteLine("Register Actor Preview: " + file);
-                                        Console.WriteLine("key:    " + index.ToString("X04"));
-                                        Console.WriteLine("scale:  " + scale);
-                                        Console.WriteLine("yoff:   " + yoff);
-                                        Console.WriteLine("var:    " + var);
-                                        Console.WriteLine("offset: " + offset.ToString("X08"));
-                                        Console.WriteLine("bank:   " + bank.ToString("X02"));
+                                        DebugConsole.WriteLine("Register Actor Preview: " + file);
+                                        DebugConsole.WriteLine("key:    " + index.ToString("X04"));
+                                        DebugConsole.WriteLine("scale:  " + scale);
+                                        DebugConsole.WriteLine("yoff:   " + yoff);
+                                        DebugConsole.WriteLine("var:    " + var);
+                                        DebugConsole.WriteLine("offset: " + offset.ToString("X08"));
+                                        DebugConsole.WriteLine("bank:   " + bank.ToString("X02"));
 #endif
 
                                         RegisterActorPreview(
@@ -2084,7 +2084,7 @@ namespace SharpOcarina
                 return;
             }
 #if DEBUG
-            Console.WriteLine("converting header with cloneid : " + cloneid);
+            DebugConsole.WriteLine("converting header with cloneid : " + cloneid);
 #endif
             textureoffsets.Clear();
             paletteoffsets.Clear();
@@ -2094,7 +2094,7 @@ namespace SharpOcarina
             if (cloneid == 0) SceneData = new List<byte>();
             else SceneData = MainHeader.SceneData;
 #if DEBUG
-            Console.WriteLine("scene count" + SceneData.Count.ToString("X"));
+            DebugConsole.WriteLine("scene count" + SceneData.Count.ToString("X"));
 #endif
 
             /* Write scene header */
@@ -2321,7 +2321,7 @@ namespace SharpOcarina
                 Helpers.Append16(ref SceneData, (ushort) (Env.FogDistance | (Env.FogUnknown << 10)));
                 Helpers.Append16(ref SceneData, Env.DrawDistance);
 
-               // Console.WriteLine((Env.FogDistance | (Env.FogUnknown << 10)).ToString("X4"));
+               // DebugConsole.WriteLine((Env.FogDistance | (Env.FogUnknown << 10)).ToString("X4"));
             }
             AddPadding(ref SceneData, 8);
 
@@ -2854,7 +2854,7 @@ namespace SharpOcarina
                                 foreach (ZTextureAnimColor color in TextureAnim.ColorList)
                                 {
                                     cnt++;
-                                    // Console.WriteLine(" a " + (color.C1C.ToArgb() << 8).ToString("X8"));
+                                    // DebugConsole.WriteLine(" a " + (color.C1C.ToArgb() << 8).ToString("X8"));
 
                                     Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
                                     Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
@@ -2924,7 +2924,7 @@ namespace SharpOcarina
                         else //PRERENDERED MULTI
                         {
                             Helpers.Append32(ref Room.RoomData, 0x01020000);  /* Mesh type 01, single background */
-                            //Console.WriteLine("Dlist to draw location: " + Room.RoomData.Count.ToString("X8"));
+                            //DebugConsole.WriteLine("Dlist to draw location: " + Room.RoomData.Count.ToString("X8"));
                             Helpers.Append32(ref Room.RoomData, (uint)(0x03000000 | (MeshHeaderOffset + 16 + (28*prerenderimages.Count)))); //dlist to draw
                             Helpers.Append32(ref Room.RoomData, (uint)(0 | (prerenderimages.Count << 24)));
                             Helpers.Append32(ref Room.RoomData, (uint) (0x03000000 | (Room.RoomData.Count + 4)));  /* Start of background array */
@@ -2934,7 +2934,7 @@ namespace SharpOcarina
                             for (int p = 0; p < prerenderimages.Count; p++)
                             {
                                 Helpers.Append32(ref Room.RoomData, (uint) (0x00820000 | (p << 8)));  /* 0x0082, background id */
-                               // Console.WriteLine("Background location: " + Room.RoomData.Count.ToString("X8"));
+                               // DebugConsole.WriteLine("Background location: " + Room.RoomData.Count.ToString("X8"));
                                 Helpers.Append32(ref Room.RoomData, 0x03000000); // background location
                                 Helpers.Append32(ref Room.RoomData, 0x00000000); //unknown
                                 Helpers.Append32(ref Room.RoomData, 0x00000000); //unknown
@@ -3045,7 +3045,7 @@ namespace SharpOcarina
                    
                     foreach(LODgroup group in Room.LODgroups)
                     {
-                     //   Console.WriteLine("lod group offset: " + Room.RoomData.Count.ToString("X8"));
+                     //   DebugConsole.WriteLine("lod group offset: " + Room.RoomData.Count.ToString("X8"));
                         group.lodgroupoffset = (uint) (Room.RoomData.Count + 16);
                         List<byte> lodgroupdata = new List<byte>();
                         ushort midX = (ushort)(group.dlists[0].dlist.MinCoordinate.X + ((group.dlists[0].dlist.MaxCoordinate.X - group.dlists[0].dlist.MinCoordinate.X) / 2));
@@ -3139,9 +3139,9 @@ namespace SharpOcarina
 
                         lastoffset += 8;
 
-                  //      Console.WriteLine("oldoffset " + Room.oldoffset.ToString("X8"));
-                   //     Console.WriteLine("lastoffset " + lastoffset.ToString("X8"));
-                   //     Console.WriteLine("newoffset " + Room.newoffset.ToString("X8"));
+                  //      DebugConsole.WriteLine("oldoffset " + Room.oldoffset.ToString("X8"));
+                   //     DebugConsole.WriteLine("lastoffset " + lastoffset.ToString("X8"));
+                   //     DebugConsole.WriteLine("newoffset " + Room.newoffset.ToString("X8"));
 
 
                         Room.RoomData.AddRange(_Rooms[i].OriginalRoomData.GetRange((int)Room.oldoffset, (int)(lastoffset-Room.oldoffset)));
@@ -3190,7 +3190,7 @@ namespace SharpOcarina
                                         Helpers.Overwrite32(ref Room.RoomData, oldcommandoffset, command.w0);
                                         Helpers.Overwrite32(ref Room.RoomData, oldcommandoffset + 4, (uint)(VOffset | (VSegment << 24)));
 
-                            //            Console.WriteLine("Overwritten command " + command.ID.ToString("X2") + " at " + (oldcommandoffset + 4).ToString("X8") + " DLstartaddress " + (DL.StartAddress + currentcommand * 8).ToString("X8") + " Voffset " + ((VOffset | (VSegment << 24)).ToString("X8")));
+                            //            DebugConsole.WriteLine("Overwritten command " + command.ID.ToString("X2") + " at " + (oldcommandoffset + 4).ToString("X8") + " DLstartaddress " + (DL.StartAddress + currentcommand * 8).ToString("X8") + " Voffset " + ((VOffset | (VSegment << 24)).ToString("X8")));
                                     }
                                     else
                                     {
@@ -3212,7 +3212,7 @@ namespace SharpOcarina
 
                                     if (VSegment == 0x02 || VSegment == 0x03) // non dynamic texture
                                     {
-                                       // Console.WriteLine(UcodeSimulator.NGraphics.Textures.Length);
+                                       // DebugConsole.WriteLine(UcodeSimulator.NGraphics.Textures.Length);
                                         //TODO do something with textures
 
                         
@@ -3257,7 +3257,7 @@ namespace SharpOcarina
 
                     for (int z = 0; z < DListOffset.Count; z++)
                     {
-                        //Console.WriteLine(" Pointers[z]: " + Pointers[z].ToString("X"));
+                        //DebugConsole.WriteLine(" Pointers[z]: " + Pointers[z].ToString("X"));
                         Helpers.Append64(ref Room.RoomData, 0xDE00000003000000 | (ulong)(DListOffset[z]));
                         if (z == DListOffset.Count-1) Helpers.Append64(ref Room.RoomData, 0xDF00000000000000);
                         
@@ -3267,7 +3267,7 @@ namespace SharpOcarina
 
                     if (prerenderimages.Count == 1)
                     {
-                          //  Console.WriteLine("Overwrite Dlist to draw: " + (PrerenderedFixOffset).ToString("X8"));
+                          //  DebugConsole.WriteLine("Overwrite Dlist to draw: " + (PrerenderedFixOffset).ToString("X8"));
                             Helpers.Overwrite32(ref Room.RoomData, PrerenderedFixOffset, (uint)(0x03000000 | fix2 + DListData.Count));
 
                             Helpers.Overwrite32(ref Room.RoomData, PrerenderedFixOffset-24, (uint)(0x03000000 | Room.RoomData.Count));
@@ -3276,13 +3276,13 @@ namespace SharpOcarina
                     }
                     else if (prerenderimages.Count > 1)
                     {
-                           // Console.WriteLine("Overwrite Dlist to draw: " + (PrerenderedFixOffset - 16 + (28*prerenderimages.Count)).ToString("X8"));
+                           // DebugConsole.WriteLine("Overwrite Dlist to draw: " + (PrerenderedFixOffset - 16 + (28*prerenderimages.Count)).ToString("X8"));
                             Helpers.Overwrite32(ref Room.RoomData, (PrerenderedFixOffset - 16 + (28 * prerenderimages.Count)), (uint)(0x03000000 | fix2 + DListData.Count));
 
 
                             for (int p = 0; p < prerenderimages.Count; p++)
                             {
-                              //  Console.WriteLine("Overwrite offset: " + (PrerenderedFixOffset - 20 + (28 * p) + 8).ToString("X8"));
+                              //  DebugConsole.WriteLine("Overwrite offset: " + (PrerenderedFixOffset - 20 + (28 * p) + 8).ToString("X8"));
                                 Helpers.Overwrite32(ref Room.RoomData, PrerenderedFixOffset - 20 + (28*p) + 8, (uint)(0x03000000 | Room.RoomData.Count));
                                 int jpgsize = Room.RoomData.Count;
                                 Room.RoomData.AddRange(File.ReadAllBytes(prerenderimages[p]));
@@ -3299,7 +3299,7 @@ namespace SharpOcarina
                     FixRoomHeader(Room);
                 }
 
-                // Console.WriteLine("offset" + Helpers.Read24S(Room.RoomData,PrerenderedFixOffset+1).ToString("X"));
+                // DebugConsole.WriteLine("offset" + Helpers.Read24S(Room.RoomData,PrerenderedFixOffset+1).ToString("X"));
 
                 /* Add some padding for good measure */
                 AddPadding(ref Room.RoomData, 0x10);
@@ -3331,8 +3331,8 @@ namespace SharpOcarina
             {
                 Room.FullDataLength = Room.RoomData.ToArray().Length;
 #if DEBUG
-                Console.WriteLine("inject offset: " + RoomInjectOffset.ToString("X"));
-                Console.WriteLine("full data length: " + Room.FullDataLength.ToString("X"));
+                DebugConsole.WriteLine("inject offset: " + RoomInjectOffset.ToString("X"));
+                DebugConsole.WriteLine("full data length: " + Room.FullDataLength.ToString("X"));
 #endif
                 Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + counter, (uint)RoomInjectOffset);
                 Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + 4 + counter, (uint)(RoomInjectOffset + Room.FullDataLength));
@@ -3425,7 +3425,7 @@ namespace SharpOcarina
                     }
                 }
 
-                // Console.WriteLine("mat: " + Mat.Name);
+                // DebugConsole.WriteLine("mat: " + Mat.Name);
 
                 if (!appears)
                 {
@@ -3483,7 +3483,7 @@ namespace SharpOcarina
                     {
                         Texture.TexOffset = (uint)textureoffsets[filename];
 #if DEBUG
-                        Console.WriteLine("Matching texture: " + filename + " " + String.Format("" + (uint)textureoffsets[filename], 'X'));
+                        DebugConsole.WriteLine("Matching texture: " + filename + " " + String.Format("" + (uint)textureoffsets[filename], 'X'));
 #endif
                     }
                     else
@@ -3493,7 +3493,7 @@ namespace SharpOcarina
 
                         textureoffsets.Add(filename, Data.Count);
 #if DEBUG
-                        Console.WriteLine("Writting texture offset: " + filename + " " + String.Format("" + Data.Count, 'X'));
+                        DebugConsole.WriteLine("Writting texture offset: " + filename + " " + String.Format("" + Data.Count, 'X'));
 #endif
                         /* Write converted data to room file */
                         Data.AddRange(Texture.Data);
@@ -3505,7 +3505,7 @@ namespace SharpOcarina
                     /* See if we've got a CI-format texture... */
                     int Format = ((Texture.Type & 0xE0) >> 5);
 #if DEBUG
-                    Console.WriteLine("Texture format N64: " + Format.ToString("X2"));
+                    DebugConsole.WriteLine("Texture format N64: " + Format.ToString("X2"));
 #endif
                     if (Format == GBI.G_IM_FMT_CI)
                     {
@@ -3516,7 +3516,7 @@ namespace SharpOcarina
                             if (Texture.Palette.OrderBy(a => a).SequenceEqual(palette.Key.OrderBy(a => a)))
                             {
                                 Texture.PalOffset = (uint)palette.Value;
-                                Console.WriteLine("Matching palette: " + String.Format("" + (uint)palette.Value, 'X'));
+                                DebugConsole.WriteLine("Matching palette: " + String.Format("" + (uint)palette.Value, 'X'));
                                 break;
                             }
                         }*/
@@ -3528,7 +3528,7 @@ namespace SharpOcarina
 
                             paletteoffsets.Add(Texture.Palette, Data.Count);
 #if DEBUG
-                            Console.WriteLine("Writting palette offset: " + String.Format("" + Data.Count, 'X'));
+                            DebugConsole.WriteLine("Writting palette offset: " + String.Format("" + Data.Count, 'X'));
 #endif
                             /* Write palette data to room file */
                             Data.AddRange(Texture.Palette);
@@ -4090,7 +4090,7 @@ namespace SharpOcarina
                 }
                 else polytypeID = (ushort)Group.PolyType;
 
-               // Console.WriteLine("Polytype assigned: " + polytypeID);
+               // DebugConsole.WriteLine("Polytype assigned: " + polytypeID);
 
                 if (MainForm.Is1April)
                 {
@@ -4136,14 +4136,14 @@ namespace SharpOcarina
 
                     if (ni[0] == 0 && ni[1] == 0 && ni[2] == 0) {
                         skip = true;
-                        Console.WriteLine("Skip Collision Triangle:");
+                        DebugConsole.WriteLine("Skip Collision Triangle:");
                         for (int i = 0; i < 3; i++)
                         {
-                            Console.WriteLine( "Tri Vtx[" + i.ToString() + "] Pos: " + ColModel.Vertices[Tri.VertIndex[i]].X.ToString() + ", " +
+                            DebugConsole.WriteLine( "Tri Vtx[" + i.ToString() + "] Pos: " + ColModel.Vertices[Tri.VertIndex[i]].X.ToString() + ", " +
                                 ColModel.Vertices[Tri.VertIndex[i]].Y.ToString() + ", " +
                                 ColModel.Vertices[Tri.VertIndex[i]].Z.ToString());
                         }
-                        Console.WriteLine( "Tri Nrm: " + triNorm.X.ToString() + ", " +
+                        DebugConsole.WriteLine( "Tri Nrm: " + triNorm.X.ToString() + ", " +
                             triNorm.Y.ToString() + ", " +
                             triNorm.Z.ToString());
                     }
@@ -4216,7 +4216,7 @@ namespace SharpOcarina
                 {
                     Helpers.Append32(ref Data, (uint)(0x00000000 | (camera.Type << 16) | ((camera.Type == 0x1E ? 6 : 3)))); //camera type, camera count
                     Helpers.Append32(ref Data, (uint)(0x00000000 | bank << 24 | (uint)Data.Count + 4 + ((Cameras.Count - 1 - incr2) * 8) + (18 * incr2)));
-                   // Console.WriteLine("" + (0x00000000 | bank << 24 | (uint)Data.Count + 4 + ((Cameras.Count - 1 - incr2) * 8) + (18 * incr2)).ToString("X8"));
+                   // DebugConsole.WriteLine("" + (0x00000000 | bank << 24 | (uint)Data.Count + 4 + ((Cameras.Count - 1 - incr2) * 8) + (18 * incr2)).ToString("X8"));
                     incr2++;
                     if (camera.Type == 0x1E) incr2++;
                 }
@@ -4261,7 +4261,7 @@ namespace SharpOcarina
                     Helpers.Append64(ref Data, 0x00);
             }
 
-           // Console.WriteLine("cam offset "   + CameraOffset);
+           // DebugConsole.WriteLine("cam offset "   + CameraOffset);
 
 
 
