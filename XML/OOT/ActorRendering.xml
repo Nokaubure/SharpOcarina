@@ -95,10 +95,12 @@
   <Actor Key="0039" Var="...9" Offset="0003C050" Scale="0.01">gameplay_keep</Actor>  <!-- unbreakable sign -->
   <Actor Key="0039" Var="...A" Offset="0003C5B0" Scale="0.01">gameplay_keep</Actor>  <!-- directional sign -->
   <Actor Key="0049" Var="...." Offset="000184B0" Scale="0.09" Colors="255,0,0,0,255,220,0,125">gameplay_keep</Actor>  <!-- fire circle (appears white)-->
-  <Actor Key="0015" Var="...[0-2]" Offset="00042440" Yoff="10" Scale="0.015">gameplay_keep</Actor>  <!-- rupee (appears yellow) -->
-  <Actor Key="0015" Var="...3" Offset="000000E0" Scale="0.5">object_gi_heart</Actor>  <!-- heart  -->
+  <Actor Key="0015" Var="..00" Offset="00042440" TextureOffsets="00042140" Yoff="11" RotY="960" Scale="0.015">gameplay_keep</Actor>  <!-- 1 rupee -->
+  <Actor Key="0015" Var="..01" Offset="00042440" TextureOffsets="00042160" Yoff="11" RotY="960" Scale="0.015">gameplay_keep</Actor>  <!-- 5 rupees -->
+  <Actor Key="0015" Var="..02" Offset="00042440" TextureOffsets="00042180" Yoff="11" RotY="960" Scale="0.015">gameplay_keep</Actor>  <!-- 20 rupees -->
+  <Actor Key="0015" Var="..03" Offset="000000E0" Yoff="10" RotY="960" Scale="0.5">object_gi_heart</Actor>  <!-- heart  -->
   <!--Actor Key="0015" Var="...[45]" Offset="0003f070" Scale="0.03">gameplay_keep</Actor-->  <!-- bomb? -->
-  <Actor Key="0015" Var="...6" Offset="0003B030" Scale="0.02">gameplay_keep</Actor>  <!-- heart piece -->
+  <Actor Key="0015" Var="..06" Offset="0003B030" Yoff="13" RotY="960" Scale="0.02">gameplay_keep</Actor>  <!-- heart piece -->
 
   <Actor Key="014E" Var="...0" Offset="0000A880" Yoff="4" Scale="0.1">gameplay_field_keep</Actor>  <!-- small rock -->
   <Actor Key="014E" Var="...1" Offset="0000A3C0" Yoff="32" Scale="0.4">gameplay_field_keep</Actor>  <!-- silver boulder -->
@@ -108,7 +110,7 @@
   <Actor Key="012A" Var="...0" Offset="00005800" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- floor switch -->
   <Actor Key="012A" Var="...1" Offset="00005AD0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- rusted floor switch -->
   <Actor Key="012A" Var="...2" Offset="00006610" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- yellow eye switch -->
-  <Actor Key="012A" Var="...[3-4]" Offset="00006D10" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- crystal switch -->
+  <Actor Key="012A" Var="...[3-4]" Offsets="00006D10,00007488" Colors="255,255,255,125" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- crystal switch -->
   <Actor Key="0127" Var="...." Offset="000009E0" Scale="0.1">object_bombiwa</Actor>  <!-- bombable boulder -->
   <Actor Key="00FF" Var="...0" Offset="00004CD0" Scale="0.1" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
   <Actor Key="00FF" Var="...1" Offset="00004CD0" Scale="0.1666667" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
@@ -140,7 +142,7 @@
   <Actor Key="01C7" Var="...." Offset="000023D0" Scale="0.1">object_ice_objects</Actor>  <!-- icicles -->
   <Actor Key="01C8" Var="...." Offset="00002740" Scale="0.1">object_ice_objects</Actor>  <!-- ice bars -->
   <Actor Key="00D6" Var="...." Offset="00000190" Scale="0.1">object_ice_objects</Actor>  <!-- movable ice block -->
-  <Actor Key="00B1" Var="01.." Offset="000021F0" Scale="0.1">object_ice_objects</Actor>  <!-- spinning ice trap -->
+  <Actor Key="00B1" Var="01.." Offset="000021F0" Scale="0.1" RotY="1024">object_ice_objects</Actor>  <!-- spinning ice trap -->
   <Actor Key="0125" Var="...0" Offset="0000B9D0" Scale="0.4">gameplay_field_keep</Actor>  <!-- cuttable grass -->
   <Actor Key="0125" Var="...[1-2]" Offset="00000140" Scale="0.4">object_kusa</Actor>  <!-- cuttable regenerating grass -->
   <Actor Key="012B" Var="...0" Offset="00000180" Scale="0.1">object_d_elevator</Actor>  <!-- stone elevator -->
@@ -153,7 +155,7 @@
   <Actor Key="000F" Var="[^1]..." Offset="000061B0" Scale="0.1">object_ydan_objects</Actor>  <!-- spiderweb covering hole -->
   <Actor Key="000F" Var="1..." Offset="00005F40" Scale="0.1">object_ydan_objects</Actor>  <!-- spiderweb-->
   <Actor Key="0080" Var="...." Offset="00001400" Scale="0.1">object_trap</Actor>  <!-- spike trap-->
-  <Actor Key="008D" Var="...." Offset="0000DB20" Scale="0.1" Textures="000173D0,00017BD0" Colors="255,0,0,0,255,220,0,125">object_hidan_objects</Actor>  <!-- large flame wall-->
+  <Actor Key="008D" Var="...." Offset="0000DB20" Scale="0.1" Textures="000173D0,000173D0,00017BD0" Colors="255,0,0,0,255,220,0,125">object_hidan_objects</Actor>  <!-- large flame wall-->
   <Actor Key="0092" Var="...." Offset="000013C0" Scale="1">object_heavy_object</Actor>  <!-- golden gauntlets rock-->
   <Actor Key="0108" Var="...[^1]" Offset="00001220" Scale="0.1">object_umajump</Actor>  <!-- horse fence -->
   <Actor Key="0110" Var="...." Offset="00005290" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- small liftable crate -->
@@ -201,7 +203,7 @@
   <Actor Key="0064" Var="7..." Offset="000011F0" Scale="0.1">object_mizu_objects</Actor>  <!-- water temple moving platform  -->
   <Actor Key="0058" Var="...." Offset="000037B8" Scale="0.1">object_ddan_objects</Actor>  <!-- dodongo rising stone platform -->
   <Actor Key="005C" Var="...." Offset="000048A8" Scale="0.1">object_ddan_objects</Actor>  <!-- dodongo stone stairs -->
-  <Actor Key="0061" Var="...." Offset="000038D0" Scale="0.1">object_menkuri_objects</Actor>  <!-- rotating stone ring -->
+  <Actor Key="0061" Var="...." Offset="000038D0" Scale="0.1" RotY="128">object_menkuri_objects</Actor>  <!-- rotating stone ring -->
   <Actor Key="0062" Var="...." Offset="00002D20" Scale="0.1">object_menkuri_objects</Actor>  <!-- Eye platform eye switches -->
   <Actor Key="006E" Var="...0" Offset="00000140" Scale="1">object_mjin_oka</Actor>  <!-- Warp Pad -->
   <Actor Key="006E" Var="...." Offset="00000330" Scale="1">object_mjin</Actor>  <!-- Warp Pad -->
@@ -214,7 +216,7 @@
   <Actor Key="009C" Var="...1" Scale="0.1" Offset="000127C0" >object_spot02_objects</Actor><!-- small square patch of ground-->
   <Actor Key="009C" Var="...2" Scale="0.1" Offset="000130B0" >object_spot02_objects</Actor><!-- Royal Tomb Grave-->
   <Actor Key="009C" Var="...4" Scale="0.1" Offset="000013F0" >object_spot02_objects</Actor><!-- Light Aura-->
-  <Actor Key="00B1" Var="00.." Scale="0.1" Offset="0000BF20" >object_haka_objects</Actor><!-- Spinning Scythe-->
+  <Actor Key="00B1" Var="00.." Scale="0.1" RotY="1024" Offset="0000BF20" >object_haka_objects</Actor><!-- Spinning Scythe-->
   <Actor Key="00BC" Var="...0" Scale="0.1" Offset="00007610" >object_haka_objects</Actor><!-- Guillotine-->
   <Actor Key="00BC" Var="...5" Scale="0.1" Offset="00007610" >object_haka_objects</Actor><!-- Guillotine-->
   <Actor Key="00BC" Var="...4" Scale="0.1" Offset="000072C0" >object_haka_objects</Actor><!-- Propeller-->
@@ -311,10 +313,10 @@
   <Actor Key="0102" Var="...." Scale="0.1" Offset="00000100">object_spot01_objects</Actor> <!-- Windmill Sails -->
   <Actor Key="0103" Var="...." Scale="0.1" Offset="00000420">object_spot01_objects</Actor> <!-- Kakariko Village Well Crossbeams -->
   <Actor Key="0104" Var="...." Scale="0.1" Offset="000007D0">object_spot01_objects</Actor> <!-- Kakariko Well Water -->
-  <Actor Key="0117" Var="1..." Scale="0.03" Offset="00042440">gameplay_keep</Actor> <!-- Silver Rupee/Large Rotating Pot -->
+  <Actor Key="0117" Var="1..." Scale="0.03" TextureOffsets="000421E0" Yoff="21" RotY="960" Offset="00042440">gameplay_keep</Actor> <!-- Silver Rupee/Large Rotating Pot -->
   <Actor Key="011D" Var="...." Scale="0.1" Offset="000017C0">object_tsubo</Actor> <!-- Flying Magic Pot -->
-  <Actor Key="0123" Var="00.." Scale="0.1" Offset="00001AB0">object_relay_objects</Actor> <!-- Rotating Windmill Mechanism -->
-  <Actor Key="0123" Var="01.." Scale="0.1" Offset="000001A0">object_relay_objects</Actor> <!-- Rotating Windmill Mechanism -->
+  <Actor Key="0123" Var="00.." Scale="0.1" Offset="00001AB0" RotY="128">object_relay_objects</Actor> <!-- Rotating Windmill Mechanism -->
+  <Actor Key="0123" Var="01.." Scale="0.1" Offset="000001A0" >object_relay_objects</Actor> <!-- Rotating Windmill Mechanism -->
   <Actor Key="0126" Var="...." Scale="0.1" Offsets="00000090,00000650">object_mamenoki</Actor> <!-- Bean Planting Spot -->
   <Actor Key="0156" Var="...." Scale="0.1" Offset="00005780">object_jya_obj</Actor> <!-- Large Stone Face (Spirit Temple) suspect B9F8-->
   <Actor Key="0159" Var="...." Scale="0.1" Offset="0000E8D0">object_jya_obj</Actor> <!-- Light Blocking Rock (Spirit Temple) -->

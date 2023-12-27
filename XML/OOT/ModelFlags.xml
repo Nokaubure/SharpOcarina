@@ -50,8 +50,8 @@
   <!-- Special flags -->
   <Flag Key="#Quicksand" Value="0000800000000000"></Flag>
   <Flag Key="#KillingQuicksand" Value="0001800000000000"></Flag>
-  <Flag Key="#Lava" Value="0000400000000007"></Flag><!-- merged with the sound -->
-  <Flag Key="#GroundDamage" Value="0000400000000000"></Flag>
+  <Flag Key="#Lava" Value="0000600000000007"></Flag><!-- merged with the sound -->
+  <Flag Key="#GroundDamage" Value="0000400008000000"></Flag>
   <Flag Key="#KillingLava" Value="0001200000000000"></Flag>
   <Flag Key="#NoFallDamage" Value="0000C00000000000"></Flag>
   <Flag Key="#JabuJabu" Value="0001000000000000"></Flag>

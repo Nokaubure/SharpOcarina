@@ -223,6 +223,42 @@ namespace SharpOcarina
             } 
            
         }
+        public static int IndexOrMax(this string s, char value)
+        {
+
+            try
+            {
+                return s.IndexOf(value);
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                return s.Length;
+            }
+
+        }
+        public static string SubstringTill(this string s, int startIndex, char value)
+        {
+
+            try
+            {
+                return s.Substring(startIndex, s.IndexOrMax(value));
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                return s;
+            }
+
+        }
+    }
+
+    class DebugConsole
+    {
+        public static void WriteLine(string text)
+        {
+#if DEBUG
+            Console.WriteLine(text);
+#endif
+        }
     }
 
 }

@@ -6,6 +6,12 @@
 
 - Added setting to preview cutscenes without the black bars at the top and bottom of the screen
 
+- Added ScaleMask, ScaleTarget, ScaleArray, ColorMask, ColorTarget, EnvColorArray, PrimColorArray, RotY in actor.toml Render settings
+
+- Updated Blender io_export_so2 plugin to 1.07
+	- if a material has the same name as a texture when initializing the SO material, it will assign it to textel0 automatically
+	- the option to ignore material groups on export is back
+
 - Fixed an issue where z64rom actor.toml could not be loaded with certain directory names
 
 - Fixed an issue where hirearchy was mispelled as hirearchy in SO code, which made this property not load from z64rom actor.toml files
@@ -13,6 +19,22 @@
 - Fixed an issue where Yoffset could not be negative in actor rendering
 
 - Fixed an issue where SO would crash when clicking various buttons with no collision loaded
+
+- Fixed an issue where reloading model after saving would prompt an error
+
+- Fixed an issue where the chest actor would not display all item IDs
+
+- Fixed an issue where TextureOffsets wasnt implemented in actor.toml Render
+
+- Fixed an issue where badly modeled #Door groups would crash SO on inject
+
+- Fixed an issue where XYZ rotations were applied wrongly on the models since a few updates
+
+- Room tags will function even if they're followed by . or _, this avoids a common error with Blender appending .001 and _Collection in group names
+
+- Attempting to load build-dev.z64 will make SO suggest about opening z64project.toml
+
+- Improved rendering of crystal switches and rupees, and some actors like the scythe trap rotate in real time
 
 --------------
 ---1.44

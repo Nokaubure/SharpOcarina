@@ -1,1 +1,7 @@
+Blender 2.7.9 with vertex alpha
+
 https://mega.nz/file/6FoHjT7I#FYo28fOblr3BzlHPOVGdWDO8zZuVbaaHOqz40dZx2A8
+
+Blender 3.6.5 LTS
+
+https://www.blender.org/download/lts/3-6/

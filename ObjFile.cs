@@ -944,6 +944,8 @@ namespace SharpOcarina
                                 ObjFile.Normal normal = ObjFile.GenerateNormal(Vertices[tri.VertIndex[0]], Vertices[tri.VertIndex[1]], Vertices[tri.VertIndex[2]]);
                                 double RotY = (Math.Atan2(normal.X, normal.Z));
 
+                                if (double.IsNaN(RotY)) continue;
+
                                 Vertex v = new Vertex(
 
                                     Vertices[tri.VertIndex[i]].X + (float)Math.Sin(RotY) * 10f,
@@ -968,6 +970,7 @@ namespace SharpOcarina
 
                                 if (double.IsNaN(RotY)) continue;
 
+
                                 Vertex v = new Vertex(
 
                                     Vertices[tri.VertIndex[i]].X - (float)Math.Sin(RotY) * 10f,
@@ -976,6 +979,14 @@ namespace SharpOcarina
 
                                     );
                                 triB.VertIndex[i] = _Verts.Count;
+
+                                /*
+                                if (double.IsNaN(RotY) || double.IsNaN(Vertices[tri.VertIndex[i]].X) || double.IsNaN(Vertices[tri.VertIndex[i]].Y) || double.IsNaN(Vertices[tri.VertIndex[i]].Z)) 
+                                {
+                                    MessageBox.Show("An error occured with the door collision of group " + group.Name + ". Aborting operation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                 */
 
                                 _Verts.Add(v);
 

@@ -869,6 +869,7 @@ namespace SharpOcarina
             if (!SimulateN64Gfx) return;
 
             int render = FindActorRender((ushort)((Actor.Number == 0 && settings.RenderChildLink) ? 0xFFFF : Actor.Number), Actor.Variable);
+            float animroty = (render != -1) ? zobj_cache[render].RotY * globalframe : 0.0f;
 
             if (render != -1 && DrawBorder)
             {
@@ -877,6 +878,42 @@ namespace SharpOcarina
                     ZScene.RGBA8 prim = zobj_cache[render].primColor;
                     GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, (float)prim.r / 255.0f, (float)prim.g / 255.0f, (float)prim.b / 255.0f, (float)prim.a / 255.0f);
                     GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 1, (float)env.r / 255.0f, (float)env.g / 255.0f, (float)env.b / 255.0f, (float)env.a / 255.0f);
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 2, 0, 0, 0, 0);
+                }
+                if (zobj_cache[render].EnvColorArray.Length > 0)
+                {
+                    int colid = 0;
+                    if (zobj_cache[render].ColorTarget == "Var")
+                        colid = (Actor.Variable & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+                    else if (zobj_cache[render].ColorTarget == "XRot")
+                        colid = ((ushort)Actor.XRot & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+                    else if (zobj_cache[render].ColorTarget == "YRot")
+                        colid = ((ushort)Actor.YRot & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+                    else if (zobj_cache[render].ColorTarget == "ZRot")
+                        colid = ((ushort)Actor.ZRot & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+
+                    if (colid >= zobj_cache[render].EnvColorArray.Length) colid = 0;
+
+                    ZScene.RGBA8 env = zobj_cache[render].EnvColorArray[colid];
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 1, (float)env.r / 255.0f, (float)env.g / 255.0f, (float)env.b / 255.0f, (float)env.a / 255.0f);
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 2, 0, 0, 0, 0);
+                }
+                if (zobj_cache[render].PrimColorArray.Length > 0)
+                {
+                    int colid = 0;
+                    if (zobj_cache[render].ColorTarget == "Var")
+                        colid = (Actor.Variable & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+                    else if (zobj_cache[render].ColorTarget == "XRot")
+                        colid = ((ushort)Actor.XRot & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+                    else if (zobj_cache[render].ColorTarget == "YRot")
+                        colid = ((ushort)Actor.YRot & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+                    else if (zobj_cache[render].ColorTarget == "ZRot")
+                        colid = ((ushort)Actor.ZRot & zobj_cache[render].ColorMask) >> zobj_cache[render].ColorPosition;
+
+                    if (colid >= zobj_cache[render].PrimColorArray.Length) colid = 0;
+
+                    ZScene.RGBA8 prim = zobj_cache[render].PrimColorArray[colid];
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, (float)prim.r / 255.0f, (float)prim.g / 255.0f, (float)prim.b / 255.0f, (float)prim.a / 255.0f);
                     GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 2, 0, 0, 0, 0);
                 }
 
@@ -897,11 +934,32 @@ namespace SharpOcarina
                     }
                     else
                     {
-                        GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
-                        GL.Rotate(Actor.YRot / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
+                        
+                        GL.Rotate((Actor.YRot+ animroty) / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
                         GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
+                        GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                     }
-                    GL.Scale(zobj_cache[render].scale, zobj_cache[render].scale, zobj_cache[render].scale);
+
+                    if (zobj_cache[render].ScaleArray.Length > 0)
+                    {
+                        int scaleid = 0;
+                        if (zobj_cache[render].ScaleTarget == "Var")
+                            scaleid = (Actor.Variable & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+                        else if (zobj_cache[render].ScaleTarget == "XRot")
+                            scaleid = ((ushort)Actor.XRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+                        else if (zobj_cache[render].ScaleTarget == "YRot")
+                            scaleid = ((ushort)Actor.YRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+                        else if (zobj_cache[render].ScaleTarget == "ZRot")
+                            scaleid = ((ushort)Actor.ZRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+
+                        if (scaleid >= zobj_cache[render].ScaleArray.Length) scaleid = 0;
+
+                        GL.Scale(zobj_cache[render].ScaleArray[scaleid], zobj_cache[render].ScaleArray[scaleid], zobj_cache[render].ScaleArray[scaleid]);
+                    }
+                    else
+                    {
+                        GL.Scale(zobj_cache[render].scale, zobj_cache[render].scale, zobj_cache[render].scale);
+                    }
 
 
 
@@ -6236,6 +6294,8 @@ namespace SharpOcarina
 
             IO.Export<ZScene>(CurrentScene, FileName);
 
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(FileName));
+
             if (prev > 0) SetSceneHeader(prev);
         }
 
@@ -6642,8 +6702,7 @@ namespace SharpOcarina
                                 {
 
                                     string s = group.Name.Substring(group.Name.ToLower().IndexOf("#room") + 5);
-                                    if (s.Contains("#"))
-                                        s = s.Substring(0, s.IndexOf("#"));
+                                    s = s.SubstringTill(0, '#').SubstringTill(0, '.').SubstringTill(0, '_');
 
                                     int tmp = 9999;
 
@@ -10194,9 +10253,7 @@ namespace SharpOcarina
                     {
 
                         string s = group.Name.ToLower().Substring(group.Name.ToLower().IndexOf("#room") + 5);
-
-                        if (s.Contains("#"))
-                            s = s.Substring(0, s.IndexOf("#"));
+                        s = s.SubstringTill(0, '#').SubstringTill(0, '.').SubstringTill(0, '_');
 
                         if (!Int32.TryParse(s, out tmp))
                         {
@@ -11360,11 +11417,7 @@ namespace SharpOcarina
                     {
 
                         string s = group.Name.Substring(group.Name.ToLower().IndexOf("#room") + 5);
-
-
-
-                        if (s.Contains("#"))
-                            s = s.Substring(0, s.IndexOf("#"));
+                        s = s.SubstringTill(0, '#').SubstringTill(0, '.').SubstringTill(0, '_');
 
 
                         // tmp = Convert.ToInt32(s);
@@ -11546,7 +11599,6 @@ namespace SharpOcarina
                     int bank = Convert.ToInt32(((ToolStripMenuItem)sender).Text.Substring(7, 2));
                     settings.DListCulling = false;
                     List<Byte> Data = new List<byte>();
-                    List<Byte> TextureData = new List<byte>();
                     List<NTexture> Textures = new List<NTexture>();
 
                     ZScene.ZRoom Room = CurrentScene.Rooms[RoomList.SelectedIndex];
@@ -14339,6 +14391,16 @@ namespace SharpOcarina
 
             injectToROMToolStripMenuItem.Text = "&Inject to ROM";
 
+            if (info.Name == "build-dev.z64" && File.Exists(info.DirectoryName + "\\z64project.toml"))
+            {
+                DialogResult dialogResult = MessageBox.Show("In order to load a z64rom project, you must open z64project.toml not the rom. Wanna load z64project.toml?", "z64rom project detected", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    filename = info.DirectoryName + "\\z64project.toml";
+                    info = new FileInfo(filename);
+                }
+            }
+
             if (info.Extension != ".toml")
             {
                 if (info.Length < 33554432 + 50000)
@@ -14434,6 +14496,9 @@ namespace SharpOcarina
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
 
+          //  string test = "";
+
+
             if (nodes != null)
                 foreach (XmlNode node in nodes)
                 {
@@ -14478,6 +14543,8 @@ namespace SharpOcarina
                     }
                     */
 
+                    
+
                     if (nodeAtt["Name"] != null) name = nodeAtt["Name"].Value;
                     if (nodeAtt["Object"] != null) objects = nodeAtt["Object"].Value;
                     id = Convert.ToUInt16(nodeAtt["Key"].Value, 16);
@@ -14486,8 +14553,13 @@ namespace SharpOcarina
 
                     ActorCache.Add(id, new ActorInfo(name, properties, objects));
 
+                    //test += "[0x" + id.ToString("X4") + "] = " + '"' + name + '"' + ",\n";
+
                 }
             fs.Close();
+
+           // File.WriteAllText("Z:\\test.txt", test);
+         
 
             if (GlobalROM != "")
             {

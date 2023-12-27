@@ -373,8 +373,7 @@ namespace SharpOcarina
                     group.Name = group.Name.Replace("TAG_", "#");
 
                     string s = group.Name.Substring(group.Name.ToLower().IndexOf("#room") + 5);
-                    if (s.Contains("#"))
-                        s = s.Substring(0, s.IndexOf("#"));
+                    s = s.SubstringTill(0, '#').SubstringTill(0, '.').SubstringTill(0, '_');
 
 
                     int tmp;
@@ -1401,6 +1400,14 @@ namespace SharpOcarina
             short Yoff,
             uint bank,
             string[] colors,
+            ushort scalemask,
+            string scaletarget,
+            float[] scalearray,
+            ushort colormask,
+            string colortarget,
+            string[][] envcolorarray,
+            string[][] primcolorarray,
+            short roty,
             string file) {
             
             UInt32[] offsets = new uint[offsetsstr.Length];
@@ -1417,6 +1424,29 @@ namespace SharpOcarina
             ZObjRender objrender = new ZObjRender(key,var,scale);
 
             objrender.Yoff = Yoff;
+            objrender.ScaleMask = scalemask;
+            objrender.ScaleTarget = scaletarget;
+            objrender.ScaleArray = scalearray;
+            objrender.RotY = roty;
+
+            objrender.ColorMask = colormask;
+            objrender.ColorTarget = colortarget;
+            objrender.EnvColorArray = new RGBA8[envcolorarray.Length];
+            objrender.PrimColorArray = new RGBA8[primcolorarray.Length];
+
+            ushort tmp = scalemask;
+            while ((tmp & 1) == 0 && tmp != 0)
+            {
+                tmp = (ushort)(tmp >> 1);
+                objrender.ScalePosition += 1;
+            }
+
+            tmp = colormask;
+            while ((tmp & 1) == 0 && tmp != 0)
+            {
+                tmp = (ushort)(tmp >> 1);
+                objrender.ColorPosition += 1;
+            }
 
             if (colors.Count() == 4 || colors.Count() == 8) {
                 for (int i = 0; i < 4; i++) {
@@ -1427,12 +1457,43 @@ namespace SharpOcarina
 
                 objrender.useColor = true;
             }
+
             if (colors.Count() == 8) {
                 for (int i = 4; i < 8; i++) {
                     int b = colors[i].Contains("0x") ? 16 : 10;
 
                     objrender.primColor.setIndex(i - 4, Convert.ToInt32(colors[i], b));
                 }
+            }
+
+            if (envcolorarray.Length > 0)
+            {
+                for (int y = 0; y < envcolorarray.Length; y++)
+                {
+                    objrender.EnvColorArray[y] = new RGBA8(0);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int b = envcolorarray[y][i].Contains("0x") ? 16 : 10;
+
+                        objrender.EnvColorArray[y].setIndex(i, Convert.ToInt32(envcolorarray[y][i], b));
+                    }
+                }
+
+            }
+
+            if (primcolorarray.Length > 0)
+            {
+                for (int y = 0; y < primcolorarray.Length; y++)
+                {
+                    objrender.PrimColorArray[y] = new RGBA8(0);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int b = primcolorarray[y][i].Contains("0x") ? 16 : 10;
+
+                        objrender.PrimColorArray[y].setIndex(i, Convert.ToInt32(primcolorarray[y][i], b));
+                    }
+                }
+
             }
 
             List<byte> ClearBlock = new List<byte>(File.ReadAllBytes(file));
@@ -1458,7 +1519,11 @@ namespace SharpOcarina
                         if (check - check_prev != 0x0C && check - check_prev != 0x10)
                             continue;
                         if (++hierarchyfound != hierarchy)
+                        {
+                            if (hierarchy == 14) Console.WriteLine("hf " + hierarchyfound);
                             continue;
+                        }
+                            
                             
                         List<byte> zobjlist = new List<byte>(zobj);
                         limb_count = zobjlist[i+4];
@@ -1781,9 +1846,20 @@ namespace SharpOcarina
                                     ushort bank = (ushort)( node.HasKey("Segment") ? node["Segment"].AsInteger.Value : 6 );
                                     string file = rom64.getItem("rom\\object", (int)objectid);
                                     string dl = node.HasKey("DisplayList") ? node["DisplayList"].AsString.ToString() : "";
+                                    short roty = (short)(node.HasKey("RotY") ? node["RotY"].AsInteger.Value : 0);
+                                    string[] textureoffsets = new string[0];
                                     string[] env = null;
                                     string[] prim = null;
                                     uint offset = 0;
+                                    ushort scalemask = 0;
+                                    string scaletarget = "";
+                                    float[] scalearray = new float[0];
+                                    ushort colormask = 0;
+                                    string colortarget = "";
+                                    string[][] envcolorarray = new string[0][];
+                                    string[][] primcolorarray = new string[0][];
+
+
 
                                     if (node.HasKey("EnvColor")) {
                                         TomlArray intarr = node["EnvColor"].AsArray;
@@ -1814,7 +1890,89 @@ namespace SharpOcarina
                                         env.CopyTo(color, 0);
                                     }
 
+                                    if (node.HasKey("TextureOffsets"))
+                                    {
+
+                                        TomlArray tmp = node["TextureOffsets"].AsArray;
+                                        textureoffsets = new string[tmp.ChildrenCount];
+                                        string object_ld = rom64.openFile("include\\z_object_user.ld");
+
+
+                                        for (int i = 0; i < tmp.ChildrenCount; i++)
+                                        {
+                                            Match match = Regex.Match(object_ld, tmp[i].AsString + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
+                                            if (match.Value != "")
+                                                textureoffsets[i] = match.Groups[1].Value.ToString();
+                                        }
+                                    }
+
+                                    if (node.HasKey("ScaleMask"))
+                                    {
+                                        scalemask = (ushort)node["ScaleMask"].AsInteger.Value;
+                                        scaletarget = node["ScaleTarget"].AsString.ToString();
+                                        TomlArray tmp = node["ScaleArray"].AsArray;
+                                        scalearray = new float[tmp.ChildrenCount];
+                                        for (int i = 0; i < tmp.ChildrenCount; i++)
+                                        {
+                                            scalearray[i] = tmp[i].AsFloat;
+                                        }
+                                    }
+
+                                    if (node.HasKey("ColorMask"))
+                                    {
+                                        colormask = (ushort)node["ColorMask"].AsInteger.Value;
+                                        colortarget = node["ColorTarget"].AsString.ToString();
+                                        TomlArray tmp;
+                                        if (node.HasKey("EnvColorArray"))
+                                        {
+                                            tmp = node["EnvColorArray"].AsArray;
+                                            envcolorarray = new string[tmp.ChildrenCount][];
+                                            for (int i = 0; i < tmp.ChildrenCount; i++)
+                                            {
+
+                                                TomlArray intarr = tmp[i].AsArray;
+
+                                                int off = 0;
+                                                env = new string[4];
+                                                foreach (TomlInteger integer in intarr)
+                                                    env[off++] = integer.ToString();
+
+                                                if (env != null)
+                                                {
+                                                    envcolorarray[i] = new string[4];
+                                                    env.CopyTo(envcolorarray[i], 0);
+                                                }
+
+                                            }
+                                        }
+                                        if (node.HasKey("PrimColorArray"))
+                                        {
+                                            tmp = node["PrimColorArray"].AsArray;
+                                            primcolorarray = new string[tmp.ChildrenCount][];
+                                            for (int i = 0; i < tmp.ChildrenCount; i++)
+                                            {
+
+                                                TomlArray intarr = tmp[i].AsArray;
+
+                                                int off = 0;
+                                                env = new string[4];
+                                                foreach (TomlInteger integer in intarr)
+                                                    env[off++] = integer.ToString();
+
+                                                if (env != null)
+                                                {
+                                                    primcolorarray[i] = new string[4];
+                                                    env.CopyTo(primcolorarray[i], 0);
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+
                                     z64romActors.Add((uint)index);
+
+
 
                                     if (dl != "") {
                                         string object_ld = rom64.openFile("include\\z_object_user.ld");
@@ -1836,10 +1994,10 @@ namespace SharpOcarina
 #endif
 
                                         RegisterActorPreview(
-                                            key, offset, new string[0], new string[0],
+                                            key, offset, new string[0], textureoffsets,
                                             scale, 1, animated, 
                                             1, var, animation, 
-                                            yoff, bank, color, file);
+                                            yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, roty, file);
                                     }
                                 }
                             }
@@ -1873,7 +2031,22 @@ namespace SharpOcarina
                     string var = (nodeAtt["Var"] != null) ? Convert.ToString(nodeAtt["Var"].Value) : "....";
                     UInt16 animation = (ushort) ((nodeAtt["Animation"] != null) ? Convert.ToUInt16(nodeAtt["Animation"].Value) : 0);
                     short Yoff = (short)((nodeAtt["Yoff"] != null) ? Convert.ToInt16(nodeAtt["Yoff"].Value) : 0);
-                    string[] colors = (nodeAtt["Colors"] != null) ? (nodeAtt["Colors"].Value.Split(',')) : new string[0]; 
+                    short roty = (short)((nodeAtt["RotY"] != null) ? Convert.ToInt16(nodeAtt["RotY"].Value) : 0);
+                    string[] colors = (nodeAtt["Colors"] != null) ? (nodeAtt["Colors"].Value.Split(',')) : new string[0];
+                    ushort scalemask = 0;
+                    string scaletarget = "";
+                    float[] scalearray = new float[0];
+                    if (nodeAtt["ScaleMask"] != null)
+                    {
+                        scalemask = Convert.ToUInt16(nodeAtt["ScaleMask"].Value);
+                        scaletarget = nodeAtt["ScaleTarget"].Value;
+                        string[] tmp = nodeAtt["ScaleArray"].Value.Split(',');
+                        scalearray = new float[tmp.Length];
+                        for(int i = 0; i < tmp.Length; i++)
+                        {
+                            scalearray[i] = Convert.ToSingle(tmp[i]);
+                        }
+                    }
                     uint bank;
                     string file = "F3DEX2/" + node.InnerText + ".zobj";
 
@@ -1889,7 +2062,7 @@ namespace SharpOcarina
                         key, offset, offsetsstr, textureoffsetsstr,
                         scale, dlistcount, animated,
                         hierarchy, var, animation,
-                        Yoff, bank, colors, file);
+                        Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], roty,  file);
                 }
             }
 
@@ -4561,6 +4734,16 @@ namespace SharpOcarina
             public RGBA8 envColor = new RGBA8(0);
             public RGBA8 primColor = new RGBA8(0);
             public bool useColor;
+            public ushort ScaleMask;
+            public string ScaleTarget;
+            public float[] ScaleArray = new float[0];
+            public ushort ScalePosition = 0;
+            public ushort ColorMask;
+            public string ColorTarget;
+            public ushort ColorPosition = 0;
+            public RGBA8[] EnvColorArray = new RGBA8[0];
+            public RGBA8[] PrimColorArray = new RGBA8[0];
+            public short RotY;
 
             public ZObjRender(UInt16 actor, string var, float scale)
             {
