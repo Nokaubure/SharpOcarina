@@ -150,6 +150,7 @@ namespace RedCell.Diagnostics.Update
             {
                 Log.Write("Remote version is newer. Updating.");
                 _updating = true;
+                MainForm.updating = true;
                 Update();
                 _updating = false;
             }

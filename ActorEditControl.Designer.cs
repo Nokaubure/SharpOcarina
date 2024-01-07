@@ -517,7 +517,7 @@
             0,
             0,
             0});
-            this.ActorZPos.ValueChanged += new System.EventHandler(this.ActorPos_ValueChanged);
+            this.ActorZPos.ValueChanged += new System.EventHandler(this.ActorPosZ_ValueChanged);
             // 
             // label13
             // 
@@ -583,7 +583,7 @@
             0,
             0,
             0});
-            this.ActorXRot.ValueChanged += new System.EventHandler(this.ActorRot_ValueChanged);
+            this.ActorXRot.ValueChanged += new System.EventHandler(this.ActorRotX_ValueChanged);
             this.ActorXRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XRot_KeyDown);
             // 
             // ActorYPos
@@ -614,7 +614,7 @@
             0,
             0,
             0});
-            this.ActorYPos.ValueChanged += new System.EventHandler(this.ActorPos_ValueChanged);
+            this.ActorYPos.ValueChanged += new System.EventHandler(this.ActorPosY_ValueChanged);
             // 
             // label14
             // 
@@ -688,7 +688,7 @@
             0,
             0,
             0});
-            this.ActorZRot.ValueChanged += new System.EventHandler(this.ActorRot_ValueChanged);
+            this.ActorZRot.ValueChanged += new System.EventHandler(this.ActorRotZ_ValueChanged);
             this.ActorZRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ZRot_KeyDown);
             // 
             // ActorYRot
@@ -724,7 +724,7 @@
             0,
             0,
             0});
-            this.ActorYRot.ValueChanged += new System.EventHandler(this.ActorRot_ValueChanged);
+            this.ActorYRot.ValueChanged += new System.EventHandler(this.ActorRotY_ValueChanged);
             this.ActorYRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.YRot_KeyDown);
             // 
             // ActorXPos
@@ -755,7 +755,7 @@
             0,
             0,
             0});
-            this.ActorXPos.ValueChanged += new System.EventHandler(this.ActorPos_ValueChanged);
+            this.ActorXPos.ValueChanged += new System.EventHandler(this.ActorPosX_ValueChanged);
             // 
             // label15
             // 

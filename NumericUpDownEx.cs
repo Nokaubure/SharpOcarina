@@ -17,6 +17,14 @@ namespace SharpOcarina
         EventHandler eventHandler = null;
         bool alwaysFireValueChanged = false;
 
+        private bool nofire = false;
+        private decimal prevval = 0;
+
+        public NumericUpDownEx()
+        {
+            prevval = this.Value;
+        }
+
         [Category("Appearance")]
         [Description("Amount of digits displayed.")]
         public int DisplayDigits
@@ -73,12 +81,13 @@ namespace SharpOcarina
             }
         }
 
+
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            int multiplier = (System.Windows.Forms.Control.ModifierKeys == Keys.Shift) ? this.shiftMultiplier : 1;
+          //  int multiplier = (System.Windows.Forms.Control.ModifierKeys == Keys.Shift) ? this.shiftMultiplier : 1;
             int sign = Helpers.Clamp(e.Delta, -1, 1);
 
-            this.Value = Helpers.Clamp(this.Value + (this.incrementMouseWheel * multiplier) * sign, this.Minimum, this.Maximum);
+            this.Value = Helpers.Clamp(this.Value + (this.incrementMouseWheel * 1) * sign, this.Minimum, this.Maximum);
             base.OnValueChanged(new EventArgs());
         }
 
@@ -133,6 +142,8 @@ namespace SharpOcarina
             }
             set
             {
+    
+
                 if (alwaysFireValueChanged == true)
                 {
                     base.Value = value;
@@ -143,6 +154,7 @@ namespace SharpOcarina
                     base.Value = value;
                     base.ValueChanged += eventHandler;
                 }
+                
             }
         }
 
@@ -182,9 +194,37 @@ namespace SharpOcarina
             }
         }
 
+
         protected override void OnValueChanged(EventArgs e)
         {
             // Make value roll over once (minimum + 1) or (maximum - 1) is hit
+            
+            
+            /*
+
+            // Non functional, tried to make the shift modifier globally but nope
+
+            if (nofire) return;
+
+            Console.WriteLine("Value " + this.Value + " prevval " + prevval);
+
+            decimal currentValue = this.Value;
+
+            bool isShiftKeyDown = (Control.ModifierKeys == Keys.Shift);
+            int incrementMultiplier = isShiftKeyDown ? (shiftMultiplier - 1) : 1;
+
+            decimal sign = Helpers.Clamp((currentValue - prevval), -1, 1);
+
+
+            nofire = true;
+
+            this.Value += (Increment * incrementMultiplier) * sign;
+
+            nofire = false;*/
+
+
+            //prevval = this.Value;
+
             if (doValueRollover)
             {
                 if (Value > base.Maximum - 1)
@@ -193,7 +233,13 @@ namespace SharpOcarina
                     Value = base.Maximum - 1;
             }
 
+           
+
             base.OnValueChanged(e);
+
+            prevval = this.Value;
+
+
         }
     }
 }

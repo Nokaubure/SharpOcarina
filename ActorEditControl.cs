@@ -427,13 +427,53 @@ namespace SharpOcarina
             UpdateForm();
         }
 
-        private void ActorPos_ValueChanged(object sender, EventArgs e)
+
+
+        private void ActorPosX_ValueChanged(object sender, EventArgs e)
         {
+            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorXPos.Value) > 20)
+                ActorXPos.Value += (ActorXPos.Value - (decimal)Actors[ActorComboBox.SelectedIndex].XPos) * 19;
+
             UpdateActorData();
         }
 
-        private void ActorRot_ValueChanged(object sender, EventArgs e)
+        private void ActorPosY_ValueChanged(object sender, EventArgs e)
         {
+            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorYPos.Value) > 20)
+                ActorYPos.Value += (ActorYPos.Value - (decimal)Actors[ActorComboBox.SelectedIndex].YPos) * 19;
+
+            UpdateActorData();
+        }
+
+        private void ActorPosZ_ValueChanged(object sender, EventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorZPos.Value) > 20)
+                ActorZPos.Value += (ActorZPos.Value - (decimal)Actors[ActorComboBox.SelectedIndex].ZPos) * 19;
+
+            UpdateActorData();
+        }
+
+
+
+
+        private void ActorRotX_ValueChanged(object sender, EventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorXRot.Value) > 1820)
+                ActorXRot.Value += (ActorXRot.Value - (decimal)Actors[ActorComboBox.SelectedIndex].XRot) * 9;
+            UpdateActorData();
+        }
+
+        private void ActorRotY_ValueChanged(object sender, EventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorYRot.Value) > 1820)
+                ActorYRot.Value += (ActorYRot.Value - (decimal)Actors[ActorComboBox.SelectedIndex].YRot) * 9;
+            UpdateActorData();
+        }
+
+        private void ActorRotZ_ValueChanged(object sender, EventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorZRot.Value) > 1820)
+                ActorZRot.Value += (ActorZRot.Value - (decimal)Actors[ActorComboBox.SelectedIndex].ZRot) * 9;
             UpdateActorData();
         }
 

@@ -1,6 +1,22 @@
 ///CHANGELOG///
 
 --------------
+---1.46
+--------------
+
+- Fixed an issue where saving a scene without activating N64 render during the session, or reloading z64rom after saving a scene would give a path error
+
+- Fixed an issue where the hotkey of holding shift to increase position/rotation by 20x more didnt worked
+
+- Fixed an issue where loading z64rom after pressing N64 render would not refresh the zobj models
+
+- Fixed an issue where adding a pathway would prompt an error till a point was added
+
+- Changed the controls popup to mention that F key focuses the camera on the active actor
+
+- When updating SO starting with 1.46, a Downloading... text will appear
+
+--------------
 ---1.45
 --------------
 
@@ -14,7 +30,7 @@
 
 - Fixed an issue where z64rom actor.toml could not be loaded with certain directory names
 
-- Fixed an issue where hirearchy was mispelled as hirearchy in SO code, which made this property not load from z64rom actor.toml files
+- Fixed an issue where hierarchy was mispelled as hirearchy in SO code, which made this property not load from z64rom actor.toml files
 
 - Fixed an issue where Yoffset could not be negative in actor rendering
 
@@ -36,7 +52,7 @@
 
 - Removed debug prints to improve performance
 
-- Improved rendering of crystal switches and rupees, and some actors like the scythe trap rotate in real time
+- Improved rendering of crystal switches, rupees and iron knuckles, and some actors like the scythe trap rotate in real time
 
 --------------
 ---1.44

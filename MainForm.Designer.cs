@@ -75,6 +75,7 @@ namespace SharpOcarina
             this.RenderSelectedCutsceneCommandsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderWaterboxesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableTextureWarningsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DisableCutscenePreviewBlackBarsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.consecutiveRoomInjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoaddGroupsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -769,7 +770,6 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.DisableCutscenePreviewBlackBarsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1378,6 +1378,14 @@ namespace SharpOcarina
             this.DisableTextureWarningsMenuItem.Size = new System.Drawing.Size(311, 22);
             this.DisableTextureWarningsMenuItem.Text = "Disable texture warnings";
             this.DisableTextureWarningsMenuItem.Click += new System.EventHandler(this.DisableTextureWarningsMenuItem_Click);
+            // 
+            // DisableCutscenePreviewBlackBarsMenuItem
+            // 
+            this.DisableCutscenePreviewBlackBarsMenuItem.CheckOnClick = true;
+            this.DisableCutscenePreviewBlackBarsMenuItem.Name = "DisableCutscenePreviewBlackBarsMenuItem";
+            this.DisableCutscenePreviewBlackBarsMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.DisableCutscenePreviewBlackBarsMenuItem.Text = "Disable cutscene preview black bars";
+            this.DisableCutscenePreviewBlackBarsMenuItem.Click += new System.EventHandler(this.DisableCutscenePreviewBlackBarsMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -2377,7 +2385,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CameraZRot.ValueChanged += new System.EventHandler(this.CameraRot_ValueChanged);
+            this.CameraZRot.ValueChanged += new System.EventHandler(this.CameraZRot_ValueChanged);
             // 
             // label71
             // 
@@ -2426,7 +2434,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CameraZPos.ValueChanged += new System.EventHandler(this.CameraPos_ValueChanged);
+            this.CameraZPos.ValueChanged += new System.EventHandler(this.CameraZPos_ValueChanged);
             // 
             // label73
             // 
@@ -2480,7 +2488,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CameraXRot.ValueChanged += new System.EventHandler(this.CameraRot_ValueChanged);
+            this.CameraXRot.ValueChanged += new System.EventHandler(this.CameraXRot_ValueChanged);
             // 
             // label75
             // 
@@ -2519,7 +2527,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CameraYPos.ValueChanged += new System.EventHandler(this.CameraPos_ValueChanged);
+            this.CameraYPos.ValueChanged += new System.EventHandler(this.CameraYPos_ValueChanged);
             // 
             // CameraYRot
             // 
@@ -2553,7 +2561,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CameraYRot.ValueChanged += new System.EventHandler(this.CameraRot_ValueChanged);
+            this.CameraYRot.ValueChanged += new System.EventHandler(this.CameraYRot_ValueChanged);
             // 
             // label76
             // 
@@ -2592,7 +2600,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CameraXPos.ValueChanged += new System.EventHandler(this.CameraPos_ValueChanged);
+            this.CameraXPos.ValueChanged += new System.EventHandler(this.CameraXPos_ValueChanged);
             // 
             // DeleteCameraButton
             // 
@@ -3280,7 +3288,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.WaterboxZPos.ValueChanged += new System.EventHandler(this.WaterboxTransform_ChangeValue);
+            this.WaterboxZPos.ValueChanged += new System.EventHandler(this.WaterboxTransformZ_ChangeValue);
             // 
             // label25
             // 
@@ -3373,7 +3381,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.WaterboxYPos.ValueChanged += new System.EventHandler(this.WaterboxTransform_ChangeValue);
+            this.WaterboxYPos.ValueChanged += new System.EventHandler(this.WaterboxTransformY_ChangeValue);
             // 
             // WaterboxYSize
             // 
@@ -3456,7 +3464,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.WaterboxXPos.ValueChanged += new System.EventHandler(this.WaterboxTransform_ChangeValue);
+            this.WaterboxXPos.ValueChanged += new System.EventHandler(this.WaterboxTransformX_ChangeValue);
             // 
             // DeletewaterboxButton
             // 
@@ -5777,7 +5785,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.AdditionalLightZPos.ValueChanged += new System.EventHandler(this.AdditionalLightTransform_ValueChanged);
+            this.AdditionalLightZPos.ValueChanged += new System.EventHandler(this.AdditionalLightZPos_ValueChanged);
             // 
             // AdditionalLightPointLabel3
             // 
@@ -5865,7 +5873,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.AdditionalLightYPos.ValueChanged += new System.EventHandler(this.AdditionalLightTransform_ValueChanged);
+            this.AdditionalLightYPos.ValueChanged += new System.EventHandler(this.AdditionalLightYPos_ValueChanged);
             // 
             // AdditionalLightEW
             // 
@@ -5933,7 +5941,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.AdditionalLightXPos.ValueChanged += new System.EventHandler(this.AdditionalLightTransform_ValueChanged);
+            this.AdditionalLightXPos.ValueChanged += new System.EventHandler(this.AdditionalLightXPos_ValueChanged);
             // 
             // AdditionalLightDelete
             // 
@@ -7867,7 +7875,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.PathwayZPos.ValueChanged += new System.EventHandler(this.PathwayTransform_ValueChanged);
+            this.PathwayZPos.ValueChanged += new System.EventHandler(this.PathwayTransformZ_ValueChanged);
             // 
             // PathwayNumber
             // 
@@ -7933,7 +7941,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.PathwayXPos.ValueChanged += new System.EventHandler(this.PathwayTransform_ValueChanged);
+            this.PathwayXPos.ValueChanged += new System.EventHandler(this.PathwayTransformX_ValueChanged);
             // 
             // PathwayYPos
             // 
@@ -7962,7 +7970,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.PathwayYPos.ValueChanged += new System.EventHandler(this.PathwayTransform_ValueChanged);
+            this.PathwayYPos.ValueChanged += new System.EventHandler(this.PathwayTransformY_ValueChanged);
             // 
             // tabActors
             // 
@@ -8463,7 +8471,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CutscenePositionZFocus.ValueChanged += new System.EventHandler(this.CutsceneFoxusPosition_ChangeValue);
+            this.CutscenePositionZFocus.ValueChanged += new System.EventHandler(this.CutscenePositionZFocus_ValueChanged);
             // 
             // CutscenePositionZFocusLabel
             // 
@@ -8512,7 +8520,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CutscenePositionXFocus.ValueChanged += new System.EventHandler(this.CutsceneFoxusPosition_ChangeValue);
+            this.CutscenePositionXFocus.ValueChanged += new System.EventHandler(this.CutscenePositionXFocus_ValueChanged);
             // 
             // CutscenePositionYFocus
             // 
@@ -8541,7 +8549,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CutscenePositionYFocus.ValueChanged += new System.EventHandler(this.CutsceneFoxusPosition_ChangeValue);
+            this.CutscenePositionYFocus.ValueChanged += new System.EventHandler(this.CutscenePositionYFocus_ValueChanged);
             // 
             // CutsceneDeleteAbsolutePosition
             // 
@@ -8612,7 +8620,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CutsceneAbsolutePositionZ.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePosition_ChangeValue);
+            this.CutsceneAbsolutePositionZ.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionZ_ValueChanged);
             // 
             // label57
             // 
@@ -8661,7 +8669,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CutsceneAbsolutePositionX.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePosition_ChangeValue);
+            this.CutsceneAbsolutePositionX.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionX_ChangeValue);
             // 
             // CutsceneAbsolutePositionY
             // 
@@ -8690,7 +8698,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.CutsceneAbsolutePositionY.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePosition_ChangeValue);
+            this.CutsceneAbsolutePositionY.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionY_ValueChanged);
             // 
             // label55
             // 
@@ -11092,14 +11100,6 @@ namespace SharpOcarina
             0,
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
-            // 
-            // DisableCutscenePreviewBlackBarsMenuItem
-            // 
-            this.DisableCutscenePreviewBlackBarsMenuItem.CheckOnClick = true;
-            this.DisableCutscenePreviewBlackBarsMenuItem.Name = "DisableCutscenePreviewBlackBarsMenuItem";
-            this.DisableCutscenePreviewBlackBarsMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.DisableCutscenePreviewBlackBarsMenuItem.Text = "Disable cutscene preview black bars";
-            this.DisableCutscenePreviewBlackBarsMenuItem.Click += new System.EventHandler(this.DisableCutscenePreviewBlackBarsMenuItem_Click);
             // 
             // MainForm
             // 

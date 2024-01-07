@@ -33,7 +33,7 @@
   <Actor Key="0063" Var="...." Scale="0.01" Animated="1">object_vali</Actor>  <!-- Bari -->
   <Actor Key="0095" Var="0000" Scale="0.02" Animated="1">object_st</Actor>  <!-- Skullwalltula -->
   <Actor Key="0095" Var="^(?!0000)" Scale="0.02" Animated="1">custom_skulltula</Actor>  <!-- golden skulltula -->
-  <Actor Key="0113" Var="...." Scale="0.012" Animated="1" Hierarchy="4">object_ik</Actor><!-- iron knuckle -->
+  <Actor Key="0113" Var="...." Scale="0.012" Animated="1" Animation="11" Hierarchy="9" Colors="245,225,155,30,30,0">object_ik</Actor><!-- iron knuckle -->
   
   <Actor Key="000E" Var="...." Scale="0.01" Animated="1" >object_okuta</Actor><!-- octorock -->
   <Actor Key="0011" Var="...." Scale="0.01" Animated="1" >object_wallmaster</Actor><!-- wallmaster -->

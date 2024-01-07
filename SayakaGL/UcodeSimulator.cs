@@ -1344,7 +1344,7 @@ namespace SharpOcarina.SayakaGL
            
 
             // If matrix is supposed to be read from RDRAM, pop current matrix stack and return
-            if (Segment == 0x80 || Segment == 0xD)
+            if (Segment == 0x80) // || Segment == 0xD
             {
                 GL.PopMatrix();
                 return;
@@ -1375,10 +1375,10 @@ namespace SharpOcarina.SayakaGL
 
 
             // Push current matrix to stack, then multiply with the matrix just read
-            GL.PushMatrix();
+          //  GL.PushMatrix();
            // GL.MultMatrix(new double[] { 1,2, 3, 4, 5, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1 });
            // GL.Translate(111,0,0);
-           GL.MultMatrix(TempMatrix);
+          // GL.MultMatrix(TempMatrix);
             
 
         }
