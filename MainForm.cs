@@ -8582,6 +8582,10 @@ namespace SharpOcarina
                 //TODO
 
 
+                ActorCutscenePuzzleSound.Checked = CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Sound != 0;
+                ActorCutsceneBlackBars.Checked = CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Letterbox != 0;
+
+
                 foreach (Control Ctrl in ActorCutsceneGroupBox.Controls)
                     Ctrl.Enabled = true;
 
