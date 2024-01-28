@@ -59,8 +59,8 @@ namespace SharpOcarina
             [XmlIgnore]
             public int FullDataLength;
 
-            public List<ZUShort> ZObjects = null;
-            public List<ZActor> ZActors = null;
+            public List<ZUShort> ZObjects = new List<ZUShort>();
+            public List<ZActor> ZActors = new List<ZActor>();
             [XmlIgnore]
             public List<ObjFile.Group> TrueGroups = null;
             [XmlIgnore]
@@ -281,6 +281,7 @@ namespace SharpOcarina
         public List<ZSceneHeader> SceneHeaders = new List<ZSceneHeader>();
         public List<ObjFile.Material> AdditionalTextures = new List<ObjFile.Material>();
         public List<ZTextureAnim> TextureAnims = new List<ZTextureAnim>();
+        public List<ZActorCutscene> ActorCutscenes = new List<ZActorCutscene>();
 
         [XmlIgnore]
         public Dictionary<string, int> textureoffsets = new Dictionary<string, int>();
@@ -1408,6 +1409,7 @@ namespace SharpOcarina
             string[][] envcolorarray,
             string[][] primcolorarray,
             short roty,
+            bool[] ignorerot,
             string file) {
             
             UInt32[] offsets = new uint[offsetsstr.Length];
@@ -1428,6 +1430,7 @@ namespace SharpOcarina
             objrender.ScaleTarget = scaletarget;
             objrender.ScaleArray = scalearray;
             objrender.RotY = roty;
+            objrender.IgnoreRot = ignorerot;
 
             objrender.ColorMask = colormask;
             objrender.ColorTarget = colortarget;
@@ -1850,6 +1853,7 @@ namespace SharpOcarina
                                     string[] textureoffsets = new string[0];
                                     string[] env = null;
                                     string[] prim = null;
+                                    bool[] ignorerot = {false,false,false};
                                     uint offset = 0;
                                     ushort scalemask = 0;
                                     string scaletarget = "";
@@ -1903,6 +1907,17 @@ namespace SharpOcarina
                                             Match match = Regex.Match(object_ld, tmp[i].AsString + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
                                             if (match.Value != "")
                                                 textureoffsets[i] = match.Groups[1].Value.ToString();
+                                        }
+                                    }
+
+                                    if (node.HasKey("IgnoreRotation"))
+                                    {
+
+                                        TomlArray tmp = node["IgnoreRotation"].AsArray;
+
+                                        for (int i = 0; i < tmp.ChildrenCount && i <= 2; i++)
+                                        {
+                                            ignorerot[i] = tmp[i].AsInteger.Value == 1;
                                         }
                                     }
 
@@ -1997,7 +2012,7 @@ namespace SharpOcarina
                                             key, offset, new string[0], textureoffsets,
                                             scale, 1, animated, 
                                             1, var, animation, 
-                                            yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, roty, file);
+                                            yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, roty, ignorerot, file);
                                     }
                                 }
                             }
@@ -2036,15 +2051,26 @@ namespace SharpOcarina
                     ushort scalemask = 0;
                     string scaletarget = "";
                     float[] scalearray = new float[0];
+                    bool[] ignorerot = {false,false,false};
+
                     if (nodeAtt["ScaleMask"] != null)
                     {
-                        scalemask = Convert.ToUInt16(nodeAtt["ScaleMask"].Value);
+                        scalemask = Convert.ToUInt16(nodeAtt["ScaleMask"].Value, 16);
                         scaletarget = nodeAtt["ScaleTarget"].Value;
                         string[] tmp = nodeAtt["ScaleArray"].Value.Split(',');
                         scalearray = new float[tmp.Length];
                         for(int i = 0; i < tmp.Length; i++)
                         {
-                            scalearray[i] = Convert.ToSingle(tmp[i]);
+                            scalearray[i] = XmlConvert.ToSingle(tmp[i]);
+                        }
+                    }
+                    if (nodeAtt["IgnoreRotation"] != null)
+                    {
+                        string[] tmp = nodeAtt["IgnoreRotation"].Value.Split(',');
+
+                        for (int i = 0; i < tmp.Length; i++)
+                        {
+                            ignorerot[i] = Convert.ToInt32(tmp[i]) == 1;
                         }
                     }
                     uint bank;
@@ -2062,7 +2088,7 @@ namespace SharpOcarina
                         key, offset, offsetsstr, textureoffsetsstr,
                         scale, dlistcount, animated,
                         hierarchy, var, animation,
-                        Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], roty,  file);
+                        Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], roty, ignorerot, file);
                 }
             }
 
@@ -2186,7 +2212,7 @@ namespace SharpOcarina
             if (Game == "MM")
             {
                 MMCmdCameraOffset = SceneData.Count;
-                Helpers.Append64(ref SceneData, 0x1B0E000000000000);                        /* MM Cameras */
+                Helpers.Append64(ref SceneData, 0x1B00000000000000 | ((ulong)ActorCutscenes.Count << 48));                        /* MM Cameras */
 
                 Helpers.Append64(ref SceneData, 0x0200000000000000 | ((ulong)Cameras.Count << 48));
 
@@ -2436,28 +2462,23 @@ namespace SharpOcarina
             if (Game == "MM")
             {
                 Helpers.Overwrite32(ref SceneData, MMCmdCameraOffset + 4, (uint)(0x02000000 | SceneData.Count));
+
+
+                foreach (ZActorCutscene ActorCutscene in ActorCutscenes)
+                {
+                    Helpers.Append16(ref SceneData, ActorCutscene.Unk);
+                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.Length);
+                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.CamID);
+                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.CsID);
+                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.ActorCsID);
+                    SceneData.Add(ActorCutscene.Sound);
+                    SceneData.Add((byte)(ActorCutscene.CamID == 0xFFF6 ? 0x01 : 0xFF));
+                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.HUDFade);
+                    SceneData.Add(ActorCutscene.ReturnCamType);
+                    SceneData.Add(ActorCutscene.Letterbox);
+                }
+
                 /*
-                Helpers.Append64(ref SceneData, 0x02BCFFFFFFFDFFFF);
-                Helpers.Append64(ref SceneData, 0x000100FF0000001B);
-                Helpers.Append64(ref SceneData, 0x0258FFFFFFFEFFFF);
-                Helpers.Append64(ref SceneData, 0x000200FF0000001B);
-                Helpers.Append64(ref SceneData, 0x02BCFFFFFFFCFFFF);
-                Helpers.Append64(ref SceneData, 0x000300FF0000011B);
-                Helpers.Append64(ref SceneData, 0x02BCFFFFFFFBFFFF);
-                Helpers.Append64(ref SceneData, 0x000400FF0000001B);
-                Helpers.Append64(ref SceneData, 0x01F4FFFFFFF9FFFF);
-                Helpers.Append64(ref SceneData, 0x000500FF00000020);
-                Helpers.Append64(ref SceneData, 0x0190FFFFFFF5FFFF);
-                Helpers.Append64(ref SceneData, 0x000600FF00000120);
-                Helpers.Append64(ref SceneData, 0x0064FFFFFFF8FFFF);
-                Helpers.Append64(ref SceneData, 0x000700FF00000020);
-                Helpers.Append64(ref SceneData, 0x00C8FFFFFFF7FFFF);
-                Helpers.Append64(ref SceneData, 0x000800FF00000020);
-                Helpers.Append64(ref SceneData, 0x0320FFFFFFFAFFFF);
-                Helpers.Append64(ref SceneData, 0x000900FF00000020);
-                Helpers.Append64(ref SceneData, 0x0384FFFFFFF0FFFF);
-                Helpers.Append64(ref SceneData, 0xFFFF00FF00000120);
-                */
                 Helpers.Append64(ref SceneData, 0x02BCFFFFFFFDFFFF);
                 Helpers.Append64(ref SceneData, 0x000100FF0000001B);
                 Helpers.Append64(ref SceneData, 0x0258FFFFFFFEFFFF);
@@ -2485,7 +2506,7 @@ namespace SharpOcarina
                 Helpers.Append64(ref SceneData, 0x0384003C0002FFFF);
                 Helpers.Append64(ref SceneData, 0xFFFF00FF00000020);
                 Helpers.Append64(ref SceneData, 0xFFFFFFFF0003FFFF);
-                Helpers.Append64(ref SceneData, 0xFFFF00FF00000020);
+                Helpers.Append64(ref SceneData, 0xFFFF00FF00000020);*/
                 AddPadding(ref SceneData, 8);
                 
 
@@ -2553,34 +2574,39 @@ namespace SharpOcarina
                     ActorOffset = Room.RoomData.Count;
                     foreach (ZActor Actor in Room.ZActors)
                     {
+
+                        bool[] IgnoreMMRot = ( Game == "OOT" ? new bool[]{ false,false,false} : XMLreader.getActorIgnoreMMRot(Actor.Number.ToString("X4")));
+
+                        Helpers.Append16(ref Room.RoomData, (ushort)(Actor.Number | ((!IgnoreMMRot[1] ? 0 : 1) << 15) | ((!IgnoreMMRot[0] ? 0 : 1) << 14) | ((!IgnoreMMRot[2] ? 0 : 1) << 13)));
+                        Helpers.Append16(ref Room.RoomData, (ushort)Actor.XPos);
+                        Helpers.Append16(ref Room.RoomData, (ushort)Actor.YPos);
+                        Helpers.Append16(ref Room.RoomData, (ushort)Actor.ZPos);
                         if (Game == "OOT" || MainForm.settings.IgnoreMMDaySystem == false)
                         {
-                            Helpers.Append16(ref Room.RoomData, Actor.Number);
-                            Helpers.Append16(ref Room.RoomData, (ushort)Actor.XPos);
-                            Helpers.Append16(ref Room.RoomData, (ushort)Actor.YPos);
-                            Helpers.Append16(ref Room.RoomData, (ushort)Actor.ZPos);
                             Helpers.Append16(ref Room.RoomData, (ushort)Actor.XRot);
                             Helpers.Append16(ref Room.RoomData, (ushort)Actor.YRot);
                             Helpers.Append16(ref Room.RoomData, (ushort)Actor.ZRot);
-                            Helpers.Append16(ref Room.RoomData, Actor.Variable);
                         }
                         else
                         {
-                            short Xrot = (short) Math.Round(Actor.XRot / 182.0444f);
+                            short Xrot = (short)Math.Round(Actor.XRot / 182.0444f);
                             if (Xrot < 0) Xrot += 360;
                             short Yrot = (short)Math.Round(Actor.YRot / 182.0444f);
                             if (Yrot < 0) Yrot += 360;
                             short Zrot = (short)Math.Round(Actor.ZRot / 182.0444f);
                             if (Zrot < 0) Zrot += 360;
-                            Helpers.Append16(ref Room.RoomData, Actor.Number);
-                            Helpers.Append16(ref Room.RoomData, (ushort)Actor.XPos);
-                            Helpers.Append16(ref Room.RoomData, (ushort)Actor.YPos);
-                            Helpers.Append16(ref Room.RoomData, (ushort)Actor.ZPos);
-                            Helpers.Append16(ref Room.RoomData, (ushort) (0x7 | (Xrot << 7))); // upper bits of time flags
-                            Helpers.Append16(ref Room.RoomData, (ushort)(0 | (Yrot << 7))); //0x1B command here in some future
-                            Helpers.Append16(ref Room.RoomData, (ushort)(0x7F | (Zrot << 7))); // lower bits of time flags
-                            Helpers.Append16(ref Room.RoomData, Actor.Variable);
+
+
+                            IgnoreMMRot[1] = XMLreader.getActorNoMMYRot(Actor.Number.ToString("X4")) == 1;
+
+
+                            Helpers.Append16(ref Room.RoomData, !IgnoreMMRot[0] ? ((ushort)(0x7 | (Xrot << 7))) : ((ushort)Actor.XRot)); // upper bits of time flags
+                            Helpers.Append16(ref Room.RoomData, !IgnoreMMRot[1] ? ((ushort)(0 | (Yrot << 7))) : ((ushort)Actor.YRot)); //0x1B command here in some future
+                            Helpers.Append16(ref Room.RoomData, !IgnoreMMRot[2] ? ((ushort)(0x7F | (Zrot << 7))) : ((ushort)Actor.ZRot)); // lower bits of time flags
+
                         }
+                        Helpers.Append16(ref Room.RoomData, Actor.Variable);
+                        
                     }
                     AddPadding(ref Room.RoomData, 8);
                 }
@@ -4204,7 +4230,7 @@ namespace SharpOcarina
 
             if (Game == "MM")
             {
-                Helpers.Overwrite32(ref Data, MMCmdCameraOffset + 8, (uint)(0x00000000 | bank << 24 | Data.Count));
+                Helpers.Overwrite32(ref Data, MMCmdCameraOffset + 12, (uint)(0x00000000 | bank << 24 | Data.Count)); 
             }
             
             int incr2 = 0;
@@ -4744,6 +4770,7 @@ namespace SharpOcarina
             public RGBA8[] EnvColorArray = new RGBA8[0];
             public RGBA8[] PrimColorArray = new RGBA8[0];
             public short RotY;
+            public bool[] IgnoreRot = {false,false,false};
 
             public ZObjRender(UInt16 actor, string var, float scale)
             {

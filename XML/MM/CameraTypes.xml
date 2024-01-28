@@ -31,8 +31,8 @@
   <Camera Key="1C">Zooms close to Link, suddenly increases FOV very fast, camera stuck at this ID until scene change</Camera>
   <Camera Key="1D">Default, disables Z, can't rotate</Camera>
   <Camera Key="1E">Overhead at 45º, close to link</Camera>
-  <Camera Key="1F">CRASH</Camera>
-  <Camera Key="20">CRASH</Camera>
+  <Camera Key="1F">Fixed camera, instant transition</Camera>
+  <Camera Key="20">Fixed camera, smooth transition</Camera>
   <Camera Key="21">Same as 04</Camera>
   <Camera Key="22">Same as 04</Camera>
   <Camera Key="23">CRASH</Camera>

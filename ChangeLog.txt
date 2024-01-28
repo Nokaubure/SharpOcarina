@@ -1,6 +1,50 @@
 ///CHANGELOG///
 
 --------------
+---1.48
+--------------
+
+- [MM] Added support for command 1B: Actor Cutscenes, you can find the UI by going in Pathways tab in Majora's Mask mode
+
+- Added property IgnoreRotation in actor rendering to ignore the rotation fields when rendering its model
+
+- [MM] Added the actor property IgnoreMMRot to ignore the rotation conversion, this also takes care of the bitflag values in Actor ID
+
+- [MM] Added the actor property NoMMYRot to display the Y rotation as degrees + camera ID regardless of ignore MM day/night system option
+
+- [MM] Added properties to chests, switches and torches
+
+- [MM] Switching to MM mode automatically enables "Force DMA on inject"
+
+- [MM] Default actor ID in MM mode is now rupee instead of butterfly
+
+- [MM] Added option to import Actor Cutscenes from .zscene
+
+- [MM] When importing cameras from .zscene in MM mode, it will pick them from the scene header instead of collision
+
+- Fixed an issue where adding or deleting rooms with reload would not add or delete rooms to the rest of the headers
+
+- Fixed an issue where error prompts would appear when loading scenes with no actors and objects
+
+- Fixed an issue where deleting objects in the UI would set the cursor position at 0
+
+- Fixed an issue where ScaleArray render property didnt worked in XML format (check actor 0x015F for example)
+
+- Fixed an issue where the actor render cache wasnt reseted when swaping between OoT and MM or opening an MM rom in global mode
+
+- Fixed an issue where properties of selected actor weren't refreshed when opening z64rom project or swaping between OoT and MM
+
+- [MM] Fixed an issue where set title card and set restriction flags buttons were visible in MM mode (they're only usable for OoT)
+
+- Fixed an issue where the global rom label wasnt properly anchored to window size
+
+- Fixed an issue where an error indicating that there's no collision file would show up if global rom / z64rom mode was used before opening a scene
+
+- Fixed an issue where unchecking global time and leaving the time at 00:00 would make it go back to global time enabled when swaping rooms
+ 
+- [MM] Fixed an issue where fixed cameras in MM weren't stored correctly in the scene file
+
+--------------
 ---1.46
 --------------
 

@@ -120,6 +120,7 @@ namespace SharpOcarina
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importPathwaysFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importActorCutscenesFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEmptySpaceInSceneHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddObjectToAllRoomsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -530,6 +531,27 @@ namespace SharpOcarina
             this.actorEditControl3 = new SharpOcarina.ActorEditControl();
             this.actorEditControl2 = new SharpOcarina.ActorEditControl();
             this.tabPathways = new System.Windows.Forms.TabPage();
+            this.ActorCutsceneGroupBox = new System.Windows.Forms.GroupBox();
+            this.label143 = new System.Windows.Forms.Label();
+            this.ActorCutsceneUnknown = new SharpOcarina.NumericUpDownEx();
+            this.ActorCutsceneCamIndex = new System.Windows.Forms.ComboBox();
+            this.label142 = new System.Windows.Forms.Label();
+            this.label141 = new System.Windows.Forms.Label();
+            this.ActorCutsceneRetCamera = new System.Windows.Forms.ComboBox();
+            this.ActorCutsceneHudFade = new System.Windows.Forms.ComboBox();
+            this.ActorCutsceneBlackBars = new System.Windows.Forms.CheckBox();
+            this.ActorCutscenePuzzleSound = new System.Windows.Forms.CheckBox();
+            this.label140 = new System.Windows.Forms.Label();
+            this.ActorCutsceneAdditionalActorCs = new SharpOcarina.NumericUpDownEx();
+            this.ActorCutsceneDeleteButton = new System.Windows.Forms.Button();
+            this.ActorCutsceneAddButton = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
+            this.ActorCutsceneCsIndex = new SharpOcarina.NumericUpDownEx();
+            this.ActorCutsceneNumber = new System.Windows.Forms.NumericUpDown();
+            this.label138 = new System.Windows.Forms.Label();
+            this.niceLine18 = new SharpOcarina.NiceLine();
+            this.label139 = new System.Windows.Forms.Label();
+            this.ActorCutsceneLength = new SharpOcarina.NumericUpDownEx();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.PathwayDown = new System.Windows.Forms.Button();
             this.PathwayUp = new System.Windows.Forms.Button();
@@ -897,6 +919,12 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.PolygonSelect)).BeginInit();
             this.tabTransitions.SuspendLayout();
             this.tabPathways.SuspendLayout();
+            this.ActorCutsceneGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneUnknown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneAdditionalActorCs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneCsIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneLength)).BeginInit();
             this.groupBox13.SuspendLayout();
             this.PathwayZPosStrip.SuspendLayout();
             this.PathwayYPosStrip.SuspendLayout();
@@ -1617,6 +1645,7 @@ namespace SharpOcarina
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem,
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem,
             this.importPathwaysFromzsceneToolStripMenuItem,
+            this.importActorCutscenesFromzsceneToolStripMenuItem,
             this.addEmptySpaceInSceneHeaderToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
@@ -1758,6 +1787,13 @@ namespace SharpOcarina
             this.importPathwaysFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
             this.importPathwaysFromzsceneToolStripMenuItem.Text = "Import Pathways from .zscene";
             this.importPathwaysFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importPathwaysFromzsceneToolStripMenuItem_Click);
+            // 
+            // importActorCutscenesFromzsceneToolStripMenuItem
+            // 
+            this.importActorCutscenesFromzsceneToolStripMenuItem.Name = "importActorCutscenesFromzsceneToolStripMenuItem";
+            this.importActorCutscenesFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.importActorCutscenesFromzsceneToolStripMenuItem.Text = "Import Actor Cutscenes from .zscene (MM)";
+            this.importActorCutscenesFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importActorCutscenesFromzsceneToolStripMenuItem_Click);
             // 
             // addEmptySpaceInSceneHeaderToolStripMenuItem
             // 
@@ -7602,6 +7638,7 @@ namespace SharpOcarina
             // 
             // tabPathways
             // 
+            this.tabPathways.Controls.Add(this.ActorCutsceneGroupBox);
             this.tabPathways.Controls.Add(this.groupBox13);
             this.tabPathways.Location = new System.Drawing.Point(4, 40);
             this.tabPathways.Name = "tabPathways";
@@ -7610,6 +7647,322 @@ namespace SharpOcarina
             this.tabPathways.TabIndex = 6;
             this.tabPathways.Text = "Pathways";
             this.tabPathways.UseVisualStyleBackColor = true;
+            // 
+            // ActorCutsceneGroupBox
+            // 
+            this.ActorCutsceneGroupBox.Controls.Add(this.label143);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneUnknown);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneCamIndex);
+            this.ActorCutsceneGroupBox.Controls.Add(this.label142);
+            this.ActorCutsceneGroupBox.Controls.Add(this.label141);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneRetCamera);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneHudFade);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneBlackBars);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutscenePuzzleSound);
+            this.ActorCutsceneGroupBox.Controls.Add(this.label140);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneAdditionalActorCs);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneDeleteButton);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneAddButton);
+            this.ActorCutsceneGroupBox.Controls.Add(this.label37);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneCsIndex);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneNumber);
+            this.ActorCutsceneGroupBox.Controls.Add(this.label138);
+            this.ActorCutsceneGroupBox.Controls.Add(this.niceLine18);
+            this.ActorCutsceneGroupBox.Controls.Add(this.label139);
+            this.ActorCutsceneGroupBox.Controls.Add(this.ActorCutsceneLength);
+            this.ActorCutsceneGroupBox.Location = new System.Drawing.Point(3, 281);
+            this.ActorCutsceneGroupBox.Name = "ActorCutsceneGroupBox";
+            this.ActorCutsceneGroupBox.Size = new System.Drawing.Size(396, 269);
+            this.ActorCutsceneGroupBox.TabIndex = 98;
+            this.ActorCutsceneGroupBox.TabStop = false;
+            this.ActorCutsceneGroupBox.Text = "Actor Cutscene";
+            this.ActorCutsceneGroupBox.Visible = false;
+            // 
+            // label143
+            // 
+            this.label143.AutoSize = true;
+            this.label143.Enabled = false;
+            this.label143.Location = new System.Drawing.Point(11, 143);
+            this.label143.Name = "label143";
+            this.label143.Size = new System.Drawing.Size(56, 13);
+            this.label143.TabIndex = 50;
+            this.label143.Text = "Unknown:";
+            // 
+            // ActorCutsceneUnknown
+            // 
+            this.ActorCutsceneUnknown.AlwaysFireValueChanged = false;
+            this.ActorCutsceneUnknown.DisplayDigits = 1;
+            this.ActorCutsceneUnknown.DoValueRollover = false;
+            this.ActorCutsceneUnknown.Enabled = false;
+            this.ActorCutsceneUnknown.Hexadecimal = true;
+            this.ActorCutsceneUnknown.IncrementMouseWheel = 1;
+            this.ActorCutsceneUnknown.Location = new System.Drawing.Point(100, 141);
+            this.ActorCutsceneUnknown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ActorCutsceneUnknown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneUnknown.Name = "ActorCutsceneUnknown";
+            this.ActorCutsceneUnknown.ShiftMultiplier = 20;
+            this.ActorCutsceneUnknown.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneUnknown.TabIndex = 51;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneUnknown, "Value 0 causes bugs");
+            this.ActorCutsceneUnknown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneUnknown.ValueChanged += new System.EventHandler(this.ActorCutsceneUnknown_ValueChanged);
+            // 
+            // ActorCutsceneCamIndex
+            // 
+            this.ActorCutsceneCamIndex.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ActorCutsceneCamIndex.FormattingEnabled = true;
+            this.ActorCutsceneCamIndex.Location = new System.Drawing.Point(244, 62);
+            this.ActorCutsceneCamIndex.Name = "ActorCutsceneCamIndex";
+            this.ActorCutsceneCamIndex.Size = new System.Drawing.Size(141, 21);
+            this.ActorCutsceneCamIndex.TabIndex = 49;
+            this.ActorCutsceneCamIndex.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.ActorCutsceneCamIndex.SelectionChangeCommitted += new System.EventHandler(this.ActorCutsceneCamIndex_SelectionChangeCommitted);
+            // 
+            // label142
+            // 
+            this.label142.AutoSize = true;
+            this.label142.Enabled = false;
+            this.label142.Location = new System.Drawing.Point(168, 117);
+            this.label142.Name = "label142";
+            this.label142.Size = new System.Drawing.Size(69, 13);
+            this.label142.TabIndex = 48;
+            this.label142.Text = "Ret. Camera:";
+            // 
+            // label141
+            // 
+            this.label141.AutoSize = true;
+            this.label141.Enabled = false;
+            this.label141.Location = new System.Drawing.Point(168, 91);
+            this.label141.Name = "label141";
+            this.label141.Size = new System.Drawing.Size(61, 13);
+            this.label141.TabIndex = 47;
+            this.label141.Text = "HUD Fade:";
+            // 
+            // ActorCutsceneRetCamera
+            // 
+            this.ActorCutsceneRetCamera.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ActorCutsceneRetCamera.FormattingEnabled = true;
+            this.ActorCutsceneRetCamera.Location = new System.Drawing.Point(244, 120);
+            this.ActorCutsceneRetCamera.Name = "ActorCutsceneRetCamera";
+            this.ActorCutsceneRetCamera.Size = new System.Drawing.Size(141, 21);
+            this.ActorCutsceneRetCamera.TabIndex = 46;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneRetCamera, "Behaviour of the camera after cutscene ends");
+            this.ActorCutsceneRetCamera.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.ActorCutsceneRetCamera.SelectionChangeCommitted += new System.EventHandler(this.ActorCutsceneRetCamera_SelectionChangeCommitted);
+            // 
+            // ActorCutsceneHudFade
+            // 
+            this.ActorCutsceneHudFade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ActorCutsceneHudFade.FormattingEnabled = true;
+            this.ActorCutsceneHudFade.Location = new System.Drawing.Point(244, 91);
+            this.ActorCutsceneHudFade.Name = "ActorCutsceneHudFade";
+            this.ActorCutsceneHudFade.Size = new System.Drawing.Size(141, 21);
+            this.ActorCutsceneHudFade.TabIndex = 45;
+            this.ActorCutsceneHudFade.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.ActorCutsceneHudFade.SelectionChangeCommitted += new System.EventHandler(this.ActorCutsceneHudFade_SelectionChangeCommitted);
+            // 
+            // ActorCutsceneBlackBars
+            // 
+            this.ActorCutsceneBlackBars.AutoSize = true;
+            this.ActorCutsceneBlackBars.Location = new System.Drawing.Point(9, 193);
+            this.ActorCutsceneBlackBars.Name = "ActorCutsceneBlackBars";
+            this.ActorCutsceneBlackBars.Size = new System.Drawing.Size(77, 17);
+            this.ActorCutsceneBlackBars.TabIndex = 24;
+            this.ActorCutsceneBlackBars.Text = "Black Bars";
+            this.ActorCutsceneBlackBars.UseVisualStyleBackColor = true;
+            this.ActorCutsceneBlackBars.CheckedChanged += new System.EventHandler(this.ActorCutsceneBlackBars_CheckedChanged);
+            // 
+            // ActorCutscenePuzzleSound
+            // 
+            this.ActorCutscenePuzzleSound.AutoSize = true;
+            this.ActorCutscenePuzzleSound.Location = new System.Drawing.Point(9, 170);
+            this.ActorCutscenePuzzleSound.Name = "ActorCutscenePuzzleSound";
+            this.ActorCutscenePuzzleSound.Size = new System.Drawing.Size(91, 17);
+            this.ActorCutscenePuzzleSound.TabIndex = 23;
+            this.ActorCutscenePuzzleSound.Text = "Puzzle Sound";
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutscenePuzzleSound, "Plays Puzzle Sound");
+            this.ActorCutscenePuzzleSound.UseVisualStyleBackColor = true;
+            this.ActorCutscenePuzzleSound.CheckedChanged += new System.EventHandler(this.ActorCutscenePuzzleSound_CheckedChanged);
+            // 
+            // label140
+            // 
+            this.label140.AutoSize = true;
+            this.label140.Enabled = false;
+            this.label140.Location = new System.Drawing.Point(11, 117);
+            this.label140.Name = "label140";
+            this.label140.Size = new System.Drawing.Size(75, 13);
+            this.label140.TabIndex = 21;
+            this.label140.Text = "Add. Actor Cs:";
+            // 
+            // ActorCutsceneAdditionalActorCs
+            // 
+            this.ActorCutsceneAdditionalActorCs.AlwaysFireValueChanged = false;
+            this.ActorCutsceneAdditionalActorCs.DisplayDigits = 1;
+            this.ActorCutsceneAdditionalActorCs.DoValueRollover = false;
+            this.ActorCutsceneAdditionalActorCs.Enabled = false;
+            this.ActorCutsceneAdditionalActorCs.IncrementMouseWheel = 1;
+            this.ActorCutsceneAdditionalActorCs.Location = new System.Drawing.Point(100, 115);
+            this.ActorCutsceneAdditionalActorCs.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.ActorCutsceneAdditionalActorCs.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.ActorCutsceneAdditionalActorCs.Name = "ActorCutsceneAdditionalActorCs";
+            this.ActorCutsceneAdditionalActorCs.ShiftMultiplier = 20;
+            this.ActorCutsceneAdditionalActorCs.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneAdditionalActorCs.TabIndex = 22;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneAdditionalActorCs, "Additional Actor Cutscene ID (needed for chests)");
+            this.ActorCutsceneAdditionalActorCs.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneAdditionalActorCs.ValueChanged += new System.EventHandler(this.ActorCutsceneAdditionalActorCs_ValueChanged);
+            // 
+            // ActorCutsceneDeleteButton
+            // 
+            this.ActorCutsceneDeleteButton.Location = new System.Drawing.Point(250, 19);
+            this.ActorCutsceneDeleteButton.Name = "ActorCutsceneDeleteButton";
+            this.ActorCutsceneDeleteButton.Size = new System.Drawing.Size(120, 23);
+            this.ActorCutsceneDeleteButton.TabIndex = 9;
+            this.ActorCutsceneDeleteButton.Text = "Delete Actor Cs";
+            this.ActorCutsceneDeleteButton.UseVisualStyleBackColor = true;
+            this.ActorCutsceneDeleteButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ActorCutsceneDeleteButton_MouseClick);
+            // 
+            // ActorCutsceneAddButton
+            // 
+            this.ActorCutsceneAddButton.Location = new System.Drawing.Point(124, 19);
+            this.ActorCutsceneAddButton.Name = "ActorCutsceneAddButton";
+            this.ActorCutsceneAddButton.Size = new System.Drawing.Size(120, 23);
+            this.ActorCutsceneAddButton.TabIndex = 8;
+            this.ActorCutsceneAddButton.Text = "Add Actor Cs";
+            this.ActorCutsceneAddButton.UseVisualStyleBackColor = true;
+            this.ActorCutsceneAddButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ActorCutsceneAddButton_MouseClick);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Enabled = false;
+            this.label37.Location = new System.Drawing.Point(11, 65);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(83, 13);
+            this.label37.TabIndex = 7;
+            this.label37.Text = "Length (frames):";
+            // 
+            // ActorCutsceneCsIndex
+            // 
+            this.ActorCutsceneCsIndex.AlwaysFireValueChanged = false;
+            this.ActorCutsceneCsIndex.DisplayDigits = 1;
+            this.ActorCutsceneCsIndex.DoValueRollover = false;
+            this.ActorCutsceneCsIndex.Enabled = false;
+            this.ActorCutsceneCsIndex.IncrementMouseWheel = 1;
+            this.ActorCutsceneCsIndex.Location = new System.Drawing.Point(100, 89);
+            this.ActorCutsceneCsIndex.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.ActorCutsceneCsIndex.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.ActorCutsceneCsIndex.Name = "ActorCutsceneCsIndex";
+            this.ActorCutsceneCsIndex.ShiftMultiplier = 20;
+            this.ActorCutsceneCsIndex.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneCsIndex.TabIndex = 12;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneCsIndex, "As of now, SharpOcarina can only have 1 cutscene, so only ID 0 or NULL are possib" +
+        "le values");
+            this.ActorCutsceneCsIndex.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneCsIndex.ValueChanged += new System.EventHandler(this.ActorCutsceneCsIndex_ValueChanged);
+            // 
+            // ActorCutsceneNumber
+            // 
+            this.ActorCutsceneNumber.Hexadecimal = true;
+            this.ActorCutsceneNumber.Location = new System.Drawing.Point(9, 22);
+            this.ActorCutsceneNumber.Name = "ActorCutsceneNumber";
+            this.ActorCutsceneNumber.Size = new System.Drawing.Size(65, 20);
+            this.ActorCutsceneNumber.TabIndex = 7;
+            this.ActorCutsceneNumber.ValueChanged += new System.EventHandler(this.ActorCutsceneNumber_ValueChanged);
+            // 
+            // label138
+            // 
+            this.label138.AutoSize = true;
+            this.label138.Enabled = false;
+            this.label138.Location = new System.Drawing.Point(11, 91);
+            this.label138.Name = "label138";
+            this.label138.Size = new System.Drawing.Size(88, 13);
+            this.label138.TabIndex = 11;
+            this.label138.Text = "Cutscene Index*:";
+            // 
+            // niceLine18
+            // 
+            this.niceLine18.Location = new System.Drawing.Point(6, 42);
+            this.niceLine18.Name = "niceLine18";
+            this.niceLine18.Size = new System.Drawing.Size(384, 15);
+            this.niceLine18.TabIndex = 20;
+            this.niceLine18.TabStop = false;
+            // 
+            // label139
+            // 
+            this.label139.AutoSize = true;
+            this.label139.Enabled = false;
+            this.label139.Location = new System.Drawing.Point(164, 65);
+            this.label139.Name = "label139";
+            this.label139.Size = new System.Drawing.Size(74, 13);
+            this.label139.TabIndex = 9;
+            this.label139.Text = "Camera index:";
+            // 
+            // ActorCutsceneLength
+            // 
+            this.ActorCutsceneLength.AlwaysFireValueChanged = false;
+            this.ActorCutsceneLength.DisplayDigits = 1;
+            this.ActorCutsceneLength.DoValueRollover = false;
+            this.ActorCutsceneLength.Enabled = false;
+            this.ActorCutsceneLength.IncrementMouseWheel = 1;
+            this.ActorCutsceneLength.Location = new System.Drawing.Point(100, 63);
+            this.ActorCutsceneLength.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.ActorCutsceneLength.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.ActorCutsceneLength.Name = "ActorCutsceneLength";
+            this.ActorCutsceneLength.ShiftMultiplier = 20;
+            this.ActorCutsceneLength.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneLength.TabIndex = 10;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneLength, "Use 135 for Chest FFF6 cutscene");
+            this.ActorCutsceneLength.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneLength.ValueChanged += new System.EventHandler(this.ActorCutsceneLength_ValueChanged);
             // 
             // groupBox13
             // 
@@ -10984,7 +11337,6 @@ namespace SharpOcarina
             // 
             // RomModeLabel
             // 
-            this.RomModeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RomModeLabel.AutoSize = true;
             this.RomModeLabel.Location = new System.Drawing.Point(611, 6);
             this.RomModeLabel.Name = "RomModeLabel";
@@ -11286,6 +11638,13 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.PolygonSelect)).EndInit();
             this.tabTransitions.ResumeLayout(false);
             this.tabPathways.ResumeLayout(false);
+            this.ActorCutsceneGroupBox.ResumeLayout(false);
+            this.ActorCutsceneGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneUnknown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneAdditionalActorCs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneCsIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneLength)).EndInit();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.PathwayZPosStrip.ResumeLayout(false);
@@ -12131,6 +12490,28 @@ namespace SharpOcarina
         private ToolStripMenuItem buildAndLaunchZ64romToolStripMenuItem;
         private ToolStripMenuItem buildAndLaunchZ64romWarpToSceneToolStripMenuItem;
         private ToolStripMenuItem DisableCutscenePreviewBlackBarsMenuItem;
+        private GroupBox ActorCutsceneGroupBox;
+        private ComboBox ActorCutsceneCamIndex;
+        private Label label142;
+        private Label label141;
+        private ComboBox ActorCutsceneRetCamera;
+        private ComboBox ActorCutsceneHudFade;
+        private CheckBox ActorCutsceneBlackBars;
+        private CheckBox ActorCutscenePuzzleSound;
+        private Label label140;
+        private NumericUpDownEx ActorCutsceneAdditionalActorCs;
+        private Button ActorCutsceneDeleteButton;
+        private Button ActorCutsceneAddButton;
+        private Label label37;
+        private NumericUpDownEx ActorCutsceneCsIndex;
+        private NumericUpDown ActorCutsceneNumber;
+        private Label label138;
+        private NiceLine niceLine18;
+        private Label label139;
+        private NumericUpDownEx ActorCutsceneLength;
+        private Label label143;
+        private NumericUpDownEx ActorCutsceneUnknown;
+        private ToolStripMenuItem importActorCutscenesFromzsceneToolStripMenuItem;
     }
     }
 

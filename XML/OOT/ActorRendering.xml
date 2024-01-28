@@ -84,14 +84,14 @@
   
   <Actor Key="01B4" Var="...." Offset="0000BEC0" Scale="0.1">object_demo_kekkai</Actor>   <!-- transparent puzzle block -->
   <Actor Key="0111" Var="...." Offset="000017C0" Scale="0.15">object_tsubo</Actor>   <!-- breakable pot -->
-  <Actor Key="01D1" Var="...." Offset="00000980" Scale="1.0">object_timeblock</Actor>   <!-- timeblock (large) -->
+  <Actor Key="01D1" Var="...." Offset="00000980" Scale="1.0" IgnoreRotation="0,0,1">object_timeblock</Actor>   <!-- timeblock (large) -->
   <Actor Key="0107" Var="...." Offset="00000180" Scale="0.1">object_spot15_obj</Actor>  <!-- milk crate -->
   <Actor Key="00F8" Var="...." Offset="000003C0" Scale="0.1">object_spot15_obj</Actor>  <!-- hyrule castle gate -->
   <Actor Key="004A" Var="FFFF" Offset="00000430" Scale="1.0">object_spot00_objects</Actor>  <!-- hyrule field bridge-->
   <Actor Key="004C" Var="FFFF" Offset="00000340" Scale="0.01" DListCount="2">object_bombf</Actor>  <!-- bomb flower-->
-  <Actor Key="000A" Var="2..." Offsets="00003680,000041B0" Scale="0.01">custom_chest</Actor>  <!-- boss chest -->
-  <Actor Key="000A" Var="[^25-8]..." Offsets="00003060,00003C60" Scale="0.01">custom_chest</Actor>  <!-- large chest -->
-  <Actor Key="000A" Var="[5-8]..." Offsets="00003060,00003C60" Scale="0.005">custom_chest</Actor>  <!-- small chest -->
+  <Actor Key="000A" Var="2..." Offsets="00003680,000041B0" Scale="0.01" IgnoreRotation="0,0,1" >custom_chest</Actor>  <!-- boss chest -->
+  <Actor Key="000A" Var="[^25-8]..." Offsets="00003060,00003C60" Scale="0.01" IgnoreRotation="0,0,1" >custom_chest</Actor>  <!-- large chest -->
+  <Actor Key="000A" Var="[5-8]..." Offsets="00003060,00003C60" Scale="0.005" IgnoreRotation="0,0,1" >custom_chest</Actor>  <!-- small chest -->
   <Actor Key="0039" Var="...9" Offset="0003C050" Scale="0.01">gameplay_keep</Actor>  <!-- unbreakable sign -->
   <Actor Key="0039" Var="...A" Offset="0003C5B0" Scale="0.01">gameplay_keep</Actor>  <!-- directional sign -->
   <Actor Key="0049" Var="...." Offset="000184B0" Scale="0.09" Colors="255,0,0,0,255,220,0,125">gameplay_keep</Actor>  <!-- fire circle (appears white)-->
@@ -105,7 +105,7 @@
   <Actor Key="014E" Var="...0" Offset="0000A880" Yoff="4" Scale="0.1">gameplay_field_keep</Actor>  <!-- small rock -->
   <Actor Key="014E" Var="...1" Offset="0000A3C0" Yoff="32" Scale="0.4">gameplay_field_keep</Actor>  <!-- silver boulder -->
   <Actor Key="0039" Var="...7" Offset="0000B9D0" Scale="1.0">gameplay_field_keep</Actor>  <!-- grass clump (BETA)-->
-  <Actor Key="009B" Var="...." Offset="00001390" Scale="0.01">gameplay_field_keep</Actor>  <!-- grotto hole -->
+  <Actor Key="009B" Var="...." Offset="00001390" Scale="0.01" IgnoreRotation="0,0,1">gameplay_field_keep</Actor>  <!-- grotto hole -->
   
   <Actor Key="012A" Var="...0" Offset="00005800" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- floor switch -->
   <Actor Key="012A" Var="...1" Offset="00005AD0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- rusted floor switch -->
@@ -128,7 +128,7 @@
   <Actor Key="00D5" Var="00.." Offset="00000E10" Scale="0.1">object_spot06_objects</Actor>  <!-- lake hylia water temple gate -->
   <Actor Key="00D5" Var="01.." Offset="00002490" Scale="0.1">object_spot06_objects</Actor>  <!-- lake hylia gate lock -->
   <Actor Key="00D5" Var="03.." Offset="00001160" Scale="0.1">object_spot06_objects</Actor>  <!-- lake hylia zora's domain ice block -->
-  <Actor Key="01A0" Var="...." Offset="00000960" Scale="0.1">object_kibako2</Actor>  <!-- wooden crate -->
+  <Actor Key="01A0" Var="...." Offset="00000960" Scale="0.1" IgnoreRotation="1,0,1">object_kibako2</Actor>  <!-- wooden crate -->
   <Actor Key="00C8" Var="...2" Offset="000038E8" Scale="0.1">object_bdan_objects</Actor>  <!-- jabujabu water plane -->
   <Actor Key="00C8" Var="...1" Offset="00004BE8" Scale="0.1">object_bdan_objects</Actor>  <!-- jabujabu elevator -->
   <Actor Key="00C8" Var="...0" Offset="00008618" Scale="0.1">object_bdan_objects</Actor>  <!-- jabujabu giant octo elevator -->
@@ -161,15 +161,15 @@
   <Actor Key="0110" Var="...." Offset="00005290" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- small liftable crate -->
   <Actor Key="0169" Var="...0" Offset="00000240" Scale="0.1">object_jya_iron</Actor>  <!-- iron knuckle pillar -->
   <Actor Key="0169" Var="...1" Offset="00001050" Scale="0.1">object_jya_iron</Actor>  <!-- iron knuckle trone -->
-  <Actor Key="0077" Var="..0[BE]" Offset="00000090" Scale="1">object_wood02</Actor>  <!-- small bush -->
-  <Actor Key="0077" Var="..(0C|10)" Offset="00000090" Scale="1.5">object_wood02</Actor>  <!-- large bush -->
-  <Actor Key="0077" Var="..1[14]" Offset="00000340" Scale="1">object_wood02</Actor>  <!-- small dark bush -->
-  <Actor Key="0077" Var="..1[26]" Offset="00000340" Scale="1.5">object_wood02</Actor>  <!-- large dark bush -->
-  <Actor Key="0077" Var="..00" Offset="000078D0" Scale="1.5" DListCount="2">object_wood02</Actor>  <!-- large tree -->
-  <Actor Key="0077" Var="..0[14]" Offset="000078D0" Scale="1" DListCount="2">object_wood02</Actor>  <!-- medium tree -->
-  <Actor Key="0077" Var="..02" Offset="000078D0" Scale="0.6" DListCount="2">object_wood02</Actor>  <!-- small tree -->
-  <Actor Key="0077" Var="..0[579]" Offset="00007CA0" Scale="1" DListCount="2">object_wood02</Actor>  <!-- medium tree dark -->
-  <Actor Key="0077" Var="..0[A]" Offset="000080D0" Scale="1" DListCount="2">object_wood02</Actor>  <!-- ugly tree -->
+  <Actor Key="0077" Var="..0[BE]" Offset="00000090" Scale="1" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- small bush -->
+  <Actor Key="0077" Var="..(0C|10)" Offset="00000090" Scale="1.5" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- large bush -->
+  <Actor Key="0077" Var="..1[14]" Offset="00000340" Scale="1" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- small dark bush -->
+  <Actor Key="0077" Var="..1[26]" Offset="00000340" Scale="1.5" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- large dark bush -->
+  <Actor Key="0077" Var="..00" Offset="000078D0" Scale="1.5" DListCount="2" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- large tree -->
+  <Actor Key="0077" Var="..0[14]" Offset="000078D0" Scale="1" DListCount="2" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- medium tree -->
+  <Actor Key="0077" Var="..02" Offset="000078D0" Scale="0.6" DListCount="2" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- small tree -->
+  <Actor Key="0077" Var="..0[579]" Offset="00007CA0" Scale="1" DListCount="2" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- medium tree dark -->
+  <Actor Key="0077" Var="..0[A]" Offset="000080D0" Scale="1" DListCount="2" IgnoreRotation="0,0,1">object_wood02</Actor>  <!-- ugly tree -->
   <Actor Key="0150" Var="...0" Offset="00000260" TextureOffsets="00000C20" Scale="0.1" DListCount="2">object_lightswitch</Actor>  <!-- sun emblem -->
   <Actor Key="0150" Var="...1" Offset="00004CD0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- sun emblem block -->
   <Actor Key="005E" Var="0..." Offset="000003A0" Scale="1" >object_syokudai</Actor>  <!-- golden torch -->
@@ -179,7 +179,7 @@
   <Actor Key="01B9" Var="...." Offset="00000950" Scale="0.1" >object_gs</Actor>  <!-- gossip stone  -->
   <Actor Key="01D2" Var="...." Offset="0000A3B8"  Scale="0.4" Colors="255,255,255,255,255,170,130,255">gameplay_field_keep</Actor>  <!-- megaton hammer rock  -->
   <Actor Key="0059" Var="...." Offset="00000040" Scale="0.1" >object_bwall</Actor>  <!-- dodongo's bombable wall  -->
-  <Actor Key="015F" Var="...." Offset="00000B70" Scale="0.1" >object_siofuki</Actor>  <!-- water spout  -->
+  <Actor Key="015F" Var="...." Offset="00000B70" Scale="0.1" ScaleMask="00FF" ScaleTarget="ZRot" ScaleArray="0.1,0.05,0.1,0.15,0.20,0.25,0.30,0.35,0.40,0.45,0.50,0.55,0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95,1.0" IgnoreRotation="1,1,1" >object_siofuki</Actor>  <!-- water spout  -->
   <Actor Key="00FC" Var="...." Offset="00010790" Scale="0.1" >object_jya_obj</Actor>  <!-- cobra mirror  -->
   <Actor Key="0009" Var=".0[89A]." Offsets="00001EC0,00002688" Scale="0.01">custom_woodendoor</Actor>  <!-- wooden door (locked) -->
   <Actor Key="0009" Var="...." Offset="00002688" Scale="0.01">custom_woodendoor</Actor>  <!-- wooden door  -->
@@ -221,7 +221,7 @@
   <Actor Key="00BC" Var="...5" Scale="0.1" Offset="00007610" >object_haka_objects</Actor><!-- Guillotine-->
   <Actor Key="00BC" Var="...4" Scale="0.1" Offset="000072C0" >object_haka_objects</Actor><!-- Propeller-->
   <Actor Key="00BC" Var="...1" Scale="0.1" Offset="00009860" >object_haka_objects</Actor><!-- Spiked box chain-->
-  <Actor Key="0130" Var="...." Scale="0.1" Offset="000006B0" >object_goroiwa</Actor><!-- Rolling Boulder-->
+  <Actor Key="0130" Var="...." Scale="0.1" Offset="000006B0" IgnoreRotation="0,0,1">object_goroiwa</Actor><!-- Rolling Boulder-->
   <Actor Key="0145" Var="...." Scale="0.1" Offset="00003B20" >object_spot01_matoya</Actor><!-- Stone Blocking Well-->
   <Actor Key="015A" Var="...." Scale="0.1" Offset="0000C0A0" >object_jya_obj</Actor><!-- Circular lifting on approach-->
   <Actor Key="015B" Var="...." Scale="0.1" Offset="0000E490" >object_jya_obj</Actor><!-- Bombable Rock Wall-->
@@ -317,7 +317,7 @@
   <Actor Key="011D" Var="...." Scale="0.1" Offset="000017C0">object_tsubo</Actor> <!-- Flying Magic Pot -->
   <Actor Key="0123" Var="00.." Scale="0.1" Offset="00001AB0" RotY="128">object_relay_objects</Actor> <!-- Rotating Windmill Mechanism -->
   <Actor Key="0123" Var="01.." Scale="0.1" Offset="000001A0" >object_relay_objects</Actor> <!-- Rotating Windmill Mechanism -->
-  <Actor Key="0126" Var="...." Scale="0.1" Offsets="00000090,00000650">object_mamenoki</Actor> <!-- Bean Planting Spot -->
+  <Actor Key="0126" Var="...." Scale="0.1" Offsets="00000090,00000650" IgnoreRotation="0,0,1">object_mamenoki</Actor> <!-- Bean Planting Spot -->
   <Actor Key="0156" Var="...." Scale="0.1" Offset="00005780">object_jya_obj</Actor> <!-- Large Stone Face (Spirit Temple) suspect B9F8-->
   <Actor Key="0159" Var="...." Scale="0.1" Offset="0000E8D0">object_jya_obj</Actor> <!-- Light Blocking Rock (Spirit Temple) -->
   <Actor Key="015C" Var="...." Scale="0.1" Offset="000018B0">object_spot18_obj</Actor> <!-- Giant Three Sided Goron Statue -->

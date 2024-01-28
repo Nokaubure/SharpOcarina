@@ -44,5 +44,11 @@
   <Actor Key="0039" Var="0..." Offset="000003A0" Scale="1" >object_syokudai</Actor>  <!-- golden torch -->
   <Actor Key="0039" Var="1..." Offset="00000B90" Scale="1" >object_syokudai</Actor>  <!-- timed torch -->
   <Actor Key="0039" Var="2..." Offset="00000870" Scale="1" >object_syokudai</Actor>  <!-- wooden torch -->
+	
+  <Actor Key="000E" Var="..00" Offset="00042440" TextureOffsets="00042140" Yoff="11" RotY="960" Scale="0.015">gameplay_keep</Actor>  <!-- 1 rupee -->
+  <Actor Key="000E" Var="..01" Offset="00042440" TextureOffsets="00042160" Yoff="11" RotY="960" Scale="0.015">gameplay_keep</Actor>  <!-- 5 rupees -->
+  <Actor Key="000E" Var="..02" Offset="00042440" TextureOffsets="00042180" Yoff="11" RotY="960" Scale="0.015">gameplay_keep</Actor>  <!-- 20 rupees -->
+  <Actor Key="000E" Var="..03" Offset="000000E0" Yoff="10" RotY="960" Scale="0.5">object_gi_heart</Actor>  <!-- heart  -->
+  <Actor Key="000E" Var="..06" Offset="0003B030" Yoff="13" RotY="960" Scale="0.02">gameplay_keep</Actor>  <!-- heart piece -->
 
 </Table>

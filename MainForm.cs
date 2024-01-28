@@ -605,6 +605,20 @@ namespace SharpOcarina
             CameraType.Items.Clear();
             CameraType.Items.AddRange(XMLreader.getXMLItems(gameprefix + "CameraTypes", "Camera"));
 
+            if (settings.MajorasMask)
+
+            {
+
+                ActorCutsceneCamIndex.Items.Clear();
+                ActorCutsceneCamIndex.Items.AddRange(XMLreader.getXMLItems(gameprefix + "Miscelaneous", "ActorCutsceneCamera"));
+
+                ActorCutsceneHudFade.Items.Clear();
+                ActorCutsceneHudFade.Items.AddRange(XMLreader.getXMLItems(gameprefix + "Miscelaneous", "ActorCutsceneHUDFade"));
+
+                ActorCutsceneRetCamera.Items.Clear();
+                ActorCutsceneRetCamera.Items.AddRange(XMLreader.getXMLItems(gameprefix + "Miscelaneous", "ActorCutsceneReturnCam"));
+            }
+
             XmlNodeList animnodes = XMLreader.getXMLNodes("OOT/" + "SceneAnimations", "Function");
 
             int incr = 0;
@@ -927,18 +941,27 @@ namespace SharpOcarina
                     GL.Translate(Actor.XPos, Actor.YPos + zobj_cache[render].Yoff, Actor.ZPos);
 
 
-                    if (settings.MajorasMask && settings.IgnoreMMDaySystem == false)
+                    if (settings.MajorasMask && !settings.IgnoreMMDaySystem)
                     {
-                        GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
-                        GL.Rotate(((ushort)Actor.YRot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
-                        GL.Rotate(((ushort)Actor.XRot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
+                        // bool[] ignore = XMLreader.getActorIgnoreMMRot(Actor.Number.ToString("X4"));
+                        float xrot = !zobj_cache[render].IgnoreRot[0] ? Actor.XRot : 0;
+                        float yrot = !zobj_cache[render].IgnoreRot[1] ? Actor.YRot : 0;
+                        float zrot = !zobj_cache[render].IgnoreRot[2] ? Actor.ZRot : 0;
+
+                        GL.Rotate(((ushort)yrot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
+                        GL.Rotate(((ushort)xrot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
+                        GL.Rotate(((ushort)zrot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
                     }
                     else
                     {
-                        
-                        GL.Rotate((Actor.YRot+ animroty) / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
-                        GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
-                        GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
+                        float xrot = !zobj_cache[render].IgnoreRot[0] ? Actor.XRot : 0;
+                        float yrot = !zobj_cache[render].IgnoreRot[1] ? Actor.YRot : 0;
+                        float zrot = !zobj_cache[render].IgnoreRot[2] ? Actor.ZRot : 0;
+
+
+                        GL.Rotate((yrot+ animroty) / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
+                        GL.Rotate(xrot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
+                        GL.Rotate(zrot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                     }
 
                     if (zobj_cache[render].ScaleArray.Length > 0)
@@ -973,34 +996,7 @@ namespace SharpOcarina
 
                         if (DL.IsTransparent == transparency)
                         {
-                            /*
-                            int DEcommand = DL.Commands.FindIndex(x => x.ID == 0xDE && x.w1 > 0x07000000);
-                            if (DEcommand != -1)
-                            {//quack
 
-                                
-                                Random r = new Random();
-                                UcodeSimulator.DLCommandStruct command = new UcodeSimulator.DLCommandStruct();
-                                command.ID = 0x00;
-                                command.w0 = (uint) ((uint) r.Next(0,0xFFFFFF) | 0x00 << 24);
-                                command.w1 = (uint)r.Next(0, 0xFFFFFF);
-                                DL.Commands[DEcommand] = command;
-
-                                //DL.GLID = GL.GenLists(1);
-
-                               // SayakaGL.UcodeSimulator.ParseDL(DL);
-
-                              //  UcodeSimulator.ParseAllDLs(ref zobj_cache[render].DLists);
-
-
-                                GL.CallList(DL.GLID);
-
-                                command.ID = 0xDE;
-                                command.w0 = 0xDE000000;
-                                command.w1 = 0x08000000;
-                                DL.Commands[DEcommand] = command;
-                            }
-                            else*/
                             GL.CallList(DL.GLID);
                         }
                     }
@@ -3989,12 +3985,16 @@ namespace SharpOcarina
                         TextureAnimsGroupBox.Visible = true;
                         WaterboxGroupBox.Location = new Point(6, 322);
                         CamerasGroupBox.Location = new Point(6, 497);
+                        SetTitlecard.Visible = false;
+                        SetRestrictionFlags.Visible = false;
                     }
                     else
                     {
                         TextureAnimsGroupBox.Visible = false;
                         WaterboxGroupBox.Location = new Point(6, 222);
                         CamerasGroupBox.Location = new Point(6, 397);
+                        SetTitlecard.Visible = true;
+                        SetRestrictionFlags.Visible = true;
                     }
 
                     RefreshExitLabels();
@@ -4091,7 +4091,7 @@ namespace SharpOcarina
 
 
                         //object size
-                        if (CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count + CurrentScene.ZObjects.Count > 0)
+                        if (CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects != null && CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count + CurrentScene.ZObjects.Count > 0)
                         {
                             RoomObjectSpace.Visible = true;
                             int size = 0 + 0x567B0 + 0x37800;
@@ -4275,6 +4275,7 @@ namespace SharpOcarina
                 UpdatePathwayEdit();
                 UpdateCutsceneEdit();
                 UpdateCameraEdit();
+                UpdateActorCutsceneEdit();
                 if (settings.command1AOoT) UpdateRenderFunctionEdit();
                 if (settings.MajorasMask) UpdateTextureAnimEdit();
                 UpdateAlternateSceneHeaders();
@@ -7460,7 +7461,7 @@ namespace SharpOcarina
             if (RoomObjectListBox.SelectedItem != null)
                 CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Remove(((ZScene.ZUShort)RoomObjectListBox.SelectedItem));
 
-            SelectRoomObject(-1);
+            SelectRoomObject(Helpers.Clamp(RoomObjectListBox.SelectedIndex, -1, CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count - 1));
             UpdateForm();
         }
 
@@ -8547,6 +8548,73 @@ namespace SharpOcarina
             }
 
             CameraView.BackColor = (previewscenecamera) ? Color.LawnGreen : Color.LightGray;
+        }
+
+
+        private void UpdateActorCutsceneEdit()
+        {
+            //TODO
+            if (!settings.MajorasMask)
+            {
+                if (ActorCutsceneGroupBox.Visible) ActorCutsceneGroupBox.Visible = false;
+                return;
+            }
+            else
+            {
+                if (!ActorCutsceneGroupBox.Visible) ActorCutsceneGroupBox.Visible = true;
+            }
+
+            if (CurrentScene.ActorCutscenes.Count != 0)
+            {
+                Helpers.SelectClamp(ActorCutsceneNumber, CurrentScene.ActorCutscenes);
+                ActorCutsceneNumber.Enabled = true;
+
+                ActorCutsceneUnknown.Value = (decimal)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Unk;
+                ActorCutsceneLength.Value = (decimal)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Length;
+                ActorCutsceneAdditionalActorCs.Value = (decimal)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].ActorCsID;
+                ActorCutsceneCsIndex.Value = (decimal)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].CsID;
+
+
+                ActorCutsceneHudFade.SelectedIndex = FindSongComboItemValue(ActorCutsceneHudFade.Items, (uint)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].HUDFade);
+                ActorCutsceneRetCamera.SelectedIndex = FindSongComboItemValue(ActorCutsceneRetCamera.Items, (uint)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].ReturnCamType);
+                ActorCutsceneCamIndex.SelectedIndex = FindSongComboItemValue(ActorCutsceneCamIndex.Items, (uint)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].CamID);
+
+                //TODO
+
+
+                foreach (Control Ctrl in ActorCutsceneGroupBox.Controls)
+                    Ctrl.Enabled = true;
+
+                ActorCutsceneDeleteButton.Enabled = true;
+
+                //AddCameraButton.Enabled = (CurrentScene.Cameras.Count < 0x0F);
+
+
+            }
+            else
+            {
+                ActorCutsceneNumber.Minimum = 0;
+                ActorCutsceneNumber.Maximum = 0;
+                ActorCutsceneNumber.Value = 0;
+                ActorCutsceneNumber.Enabled = false;
+
+                ActorCutsceneUnknown.Value = 0;
+                ActorCutsceneLength.Value = 0;
+                ActorCutsceneAdditionalActorCs.Value = 0;
+                ActorCutsceneCsIndex.Value = 0;
+
+
+                ActorCutsceneHudFade.SelectedIndex = 0;
+                ActorCutsceneRetCamera.SelectedIndex = 0;
+                ActorCutsceneCamIndex.SelectedIndex = 0;
+
+
+                foreach (Control Ctrl in ActorCutsceneGroupBox.Controls)
+                    Ctrl.Enabled = false;
+
+                ActorCutsceneDeleteButton.Enabled = false;
+            }
+            ActorCutsceneAddButton.Enabled = true;
         }
 
         private void UpdateTextureAnimEdit()
@@ -11016,7 +11084,16 @@ namespace SharpOcarina
 
         private void majorasMaskModeexperimentalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            SwapGame();
+           
+        }
+
+        private void SwapGame()
+        {
             settings.MajorasMask = majorasMaskModeexperimentalToolStripMenuItem.Checked;
+            settings.GenerateCustomDMATable = majorasMaskModeexperimentalToolStripMenuItem.Checked;
+            //if (!settings.GenerateCustomDMATable && settings.MajorasMask) settings.GenerateCustomDMATable = true;
 
             ReloadXMLs();
 
@@ -11024,7 +11101,19 @@ namespace SharpOcarina
 
             RefreshObjectCache();
 
+            MainForm.zobj_cache.Clear();
+
+            if (CurrentScene != null && CurrentScene.ColModel != null)
+                CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
+
             UpdateForm();
+
+            actorEditControl1.cacheId = 0xFEFE;
+            actorEditControl2.cacheId = 0xFEFE;
+            actorEditControl3.cacheId = 0xFEFE;
+            actorEditControl1.UpdateActorEdit();
+            actorEditControl2.UpdateActorEdit();
+            actorEditControl3.UpdateActorEdit();
         }
 
 
@@ -11396,6 +11485,37 @@ namespace SharpOcarina
             }
         }
 
+        public void RepairAlternateRooms()
+        {
+            //header.Scene.Rooms = NormalHeader.Rooms.ConvertAll(x => (x.Clone()));
+            
+
+            foreach (ZSceneHeader header in NormalHeader.SceneHeaders)
+            {
+                if (NormalHeader.Rooms.Count > header.Scene.Rooms.Count)
+                {
+                    for (int i = header.Scene.Rooms.Count - 1; i < NormalHeader.Rooms.Count - 1; i++)
+                    {
+                        header.Scene.Rooms.Add(NormalHeader.Rooms[i].Clone());
+                    }
+                }
+                else if (header.Scene.Rooms.Count > NormalHeader.Rooms.Count)
+                {
+                    header.Scene.Rooms.RemoveRange(NormalHeader.Rooms.Count - 1, header.Scene.Rooms.Count - NormalHeader.Rooms.Count);
+                }
+
+                for (int i = 0; i < header.Scene.Rooms.Count; i++)
+                {
+                    if (header.Scene.Rooms[i].TrueGroups.Count != NormalHeader.Rooms[i].TrueGroups.Count)
+                    {
+                        header.Scene.Rooms[i].TrueGroups = NormalHeader.Rooms[i].TrueGroups;
+                    }
+                }
+
+                
+            }
+        }
+
         private void AddSceneHeaderButton_Click(object sender, EventArgs e)
         {
             SceneHeaderSelector.Value = 0;
@@ -11581,13 +11701,15 @@ namespace SharpOcarina
                     UpdateGroupSelect();
                     GroupList.SelectedItem = GroupList.Items[0];
                 }
+
+
                 UpdateForm();
 
             }
             else
             {
                 int counter = CurrentScene.Rooms.Count;
-                int testcounter = CurrentScene.Rooms.Count + 1;
+                int counter2 = CurrentScene.Rooms.Count;
                 CurrentScene.AddRoom(CurrentScene.Rooms[RoomList.SelectedIndex].ModelFilename, " (Room 0)", counter);
                 int maxroom = 1;
                 int tmp = 0;
@@ -11704,7 +11826,7 @@ namespace SharpOcarina
                     SelectRoom(0);
                     UpdateGroupSelect();
                 }
-                if (CurrentScene.Rooms.Count > counter && NormalHeader.SceneHeaders.Count > 0) ResetAlternateRooms();
+                if (CurrentScene.Rooms.Count != counter2 && NormalHeader.SceneHeaders.Count > 0) RepairAlternateRooms();
                 if (!rereload) UpdateForm();
             }
 
@@ -13190,7 +13312,7 @@ namespace SharpOcarina
                     }
                 }
 
-                if (cameraoffset != 0)
+                if (cameraoffset != 0 && !settings.MajorasMask)
                 {
                     CurrentScene.Cameras.Clear();
                     //  int cameranum = Helpers.Read16S(data, cameraoffset + 2);
@@ -13262,9 +13384,13 @@ namespace SharpOcarina
 
                 for (int y = 0; y < data.Count; y += 4)
                 {
+                    
+
                     importCamerasWaterboxes(data, y);
 
-                    if (CurrentScene.Cameras.Count > 0 || CurrentScene.Waterboxes.Count > 0)
+                    if (settings.MajorasMask) importMMCameras(data, y);
+
+                    if (data[y] == 0x14)//CurrentScene.Cameras.Count > 0 || CurrentScene.Waterboxes.Count > 0)
                     {
 
                         MessageBox.Show("Cameras added: " + CurrentScene.Cameras.Count + "\nWaterboxes added: " + CurrentScene.Waterboxes.Count, "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -13853,6 +13979,8 @@ namespace SharpOcarina
 
         }
 
+
+
         private void importPathwaysFromzsceneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.FileName = "";
@@ -13886,6 +14014,131 @@ namespace SharpOcarina
                 }
             }
         }
+
+        private void importActorCutscenes(List<byte> data, int y)
+        {
+            uint test = Helpers.Read32(data, y);
+            uint test2 = Helpers.Read32(data, y + 4);
+            if ((test & 0xFF000000) == 0x1B000000 && (test2 & 0xFF000000) == 0x02000000)
+            {
+                int actorcutscenes = 0;
+                int arrayoffset = 0;
+                int count = 0;
+
+
+                arrayoffset = Helpers.Read24S(data, y + 5);
+
+                actorcutscenes = data[y + 1];
+
+                test = Helpers.Read32(data, arrayoffset + 4);
+
+                for (int i = 0; i < actorcutscenes; i++)
+                {
+                    ZActorCutscene actorcs = new ZActorCutscene();
+
+                    actorcs.Unk = Helpers.Read16(data, arrayoffset);
+                    actorcs.Length = Helpers.Read16S(data, arrayoffset +2);
+                    actorcs.CamID = Helpers.Read16(data, arrayoffset +4);
+                    actorcs.CsID = Helpers.Read16S(data, arrayoffset +6);
+                    actorcs.ActorCsID = Helpers.Read16S(data, arrayoffset +8);
+                    actorcs.Sound = data[arrayoffset + 10];
+                    //Chest is autoset +11
+                    actorcs.HUDFade = Helpers.Read16S(data, arrayoffset + 12);
+                    actorcs.ReturnCamType = data[arrayoffset + 14];
+                    actorcs.Letterbox = data[arrayoffset + 15] != 0 ? (byte)0x20 : (byte)0;
+
+
+
+                    CurrentScene.ActorCutscenes.Add(actorcs);
+                    arrayoffset += 0x10;
+                }
+            }
+
+        }
+
+        private void importMMCameras(List<byte> data, int y)
+        {
+            uint test = Helpers.Read32(data, y);
+            uint test2 = Helpers.Read32(data, y+4);
+            if ((test & 0xFF000000) == 0x02000000 && (test2 & 0xFF000000) == 0x02000000)
+            {
+
+                CurrentScene.Cameras.Clear();
+
+
+                int cameras = 0;
+                int arrayoffset = 0;
+                int cameraoffset = 0;
+                int count = 0;
+
+
+                arrayoffset = Helpers.Read24S(data, y + 5);
+
+                cameras = data[y + 1];
+                
+
+                for (int i = 0; i < cameras; i++)
+                {
+                    ZCamera camera = new ZCamera();
+                    camera.Type = (byte)Helpers.Read16(data, arrayoffset);
+
+                    int offset = (int)Helpers.Read24(data, arrayoffset + 5);
+
+                    camera.XPos = Helpers.Read16S(data, offset);
+                    camera.YPos = Helpers.Read16S(data, offset + 2);
+                    camera.ZPos = Helpers.Read16S(data, offset + 4);
+                    camera.XRot = Helpers.Read16S(data, offset + 6);
+                    camera.YRot = Helpers.Read16S(data, offset + 8);
+                    camera.ZRot = Helpers.Read16S(data, offset + 0xA);
+                    camera.Fov = Helpers.Read16S(data, offset + 0xC);
+                    camera.Unk1 = Helpers.Read16(data, offset + 0xE);
+                    camera.Unk2 = Helpers.Read16(data, offset + 0x10);
+
+
+
+                    CurrentScene.Cameras.Add(camera);
+
+                    arrayoffset += 0x8;
+                }
+            }
+
+        }
+
+        private void importActorCutscenesFromzsceneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "ZScene File (*.zscene)|*.zscene";
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                List<byte> data = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
+                CurrentScene.ActorCutscenes.Clear();
+
+                for (int y = 0; y < data.Count; y += 4)
+                {
+                    importActorCutscenes(data, y);
+                    uint test = Helpers.Read32(data, y);
+
+                    if (CurrentScene.ActorCutscenes.Count > 0)
+                    {
+                        MessageBox.Show("ActorCutscenes added: " + CurrentScene.ActorCutscenes.Count, "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        UpdateForm();
+
+                        return;
+                    }
+
+                    if (((test & 0xFF00FFFF) == 0x14000000 && data[y + 4] == 0x00))
+                    {
+                        MessageBox.Show("No actor cutscenes in this scene ", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                }
+            }
+        }
+
+
 
         private void displaySwitchFlagsUsedByAllRoomsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -14606,18 +14859,30 @@ namespace SharpOcarina
 
 
                 ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
-                if (rom.Game == "MM")
+                if (rom.Game == "MM" && !settings.MajorasMask)
                 {
                     settings.MajorasMask = true;
                     majorasMaskModeexperimentalToolStripMenuItem.Checked = true;
+                    SwapGame();
                 }
-                else
+                else if (rom.Game == "OOT" && settings.MajorasMask)
                 {
                     settings.MajorasMask = false;
                     majorasMaskModeexperimentalToolStripMenuItem.Checked = false;
+                    SwapGame();
+                }
+                else
+                {
+                    actorEditControl1.cacheId = 0xFEFE;
+                    actorEditControl2.cacheId = 0xFEFE;
+                    actorEditControl3.cacheId = 0xFEFE;
+                    actorEditControl1.UpdateActorEdit();
+                    actorEditControl2.UpdateActorEdit();
+                    actorEditControl3.UpdateActorEdit();
+                    UpdateForm();
                 }
 
-                UpdateForm();
+
             }
             else
             {
@@ -14628,13 +14893,22 @@ namespace SharpOcarina
                 RomModeLabel.ForeColor = Color.Green;
                 injectToROMToolStripMenuItem.DropDownItems.Clear();
                 MainForm.zobj_cache.Clear();
-                CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
+                if (CurrentScene != null && CurrentScene.ColModel != null)
+                    CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
                 RefreshExitCache();
                 RefreshActorCache();
                 RefreshObjectCache();
                 RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile", filename);
                 GlobalRomRefresh.Visible = true;
                 LaunchRomToolStripMenuItem.Visible = true;
+
+                actorEditControl1.cacheId = 0xFEFE;
+                actorEditControl2.cacheId = 0xFEFE;
+                actorEditControl3.cacheId = 0xFEFE;
+                actorEditControl1.UpdateActorEdit();
+                actorEditControl2.UpdateActorEdit();
+                actorEditControl3.UpdateActorEdit();
+                UpdateForm();
             }
         }
 
@@ -14736,6 +15010,7 @@ namespace SharpOcarina
 
                     properties = XMLreader.getActorProperties(nodeAtt["Key"].Value);
 
+       
                     ActorCache.Add(id, new ActorInfo(name, properties, objects));
 
                     //test += "[0x" + id.ToString("X4") + "] = " + '"' + name + '"' + ",\n";
@@ -15100,6 +15375,13 @@ namespace SharpOcarina
                 actorEditControl2.UpdateForm();
                 actorEditControl3.UpdateForm();
                 UpdateForm();
+
+                actorEditControl1.cacheId = 0xFEFE;
+                actorEditControl2.cacheId = 0xFEFE;
+                actorEditControl3.cacheId = 0xFEFE;
+                actorEditControl1.UpdateActorEdit();
+                actorEditControl2.UpdateActorEdit();
+                actorEditControl3.UpdateActorEdit();
             }
         }
 
@@ -16222,9 +16504,14 @@ namespace SharpOcarina
                 }
                 else
                 {
-                    //CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = 0;
                     TimeHour.Enabled = true;
                     TimeMinute.Enabled = true;
+                    if (CurrentScene.Rooms[RoomList.SelectedIndex].StartTime == 0xFFFF)
+                    {
+                        CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = 0x0000;
+                        TimeHour.Value = 0;
+                        TimeMinute.Value = 0;
+                    }
                 }
 
 
@@ -17505,6 +17792,85 @@ namespace SharpOcarina
             settings.DisableCutsceneBlackBars = DisableCutscenePreviewBlackBarsMenuItem.Checked;
         }
 
+        private void ActorCutsceneAddButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            CurrentScene.ActorCutscenes.Add(new ZActorCutscene());
+            UpdateForm();
+            Helpers.SelectAdd(ActorCutsceneNumber, CurrentScene.ActorCutscenes);
+        }
+
+        private void ActorCutsceneDeleteButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            ZActorCutscene Del = CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value];
+            CurrentScene.ActorCutscenes.Remove(Del);
+            UpdateForm();
+        }
+
+        private void ActorCutsceneLength_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Length = (short)ActorCutsceneLength.Value;
+
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneCsIndex_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].CsID = (short)ActorCutsceneCsIndex.Value;
+
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneAdditionalActorCs_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].ActorCsID = (short)ActorCutsceneAdditionalActorCs.Value;
+
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneUnknown_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Unk = (ushort)ActorCutsceneUnknown.Value;
+
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutscenePuzzleSound_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Sound = (byte)(ActorCutscenePuzzleSound.Checked ? 1 : 0);
+
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneBlackBars_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Letterbox = (byte)(ActorCutsceneBlackBars.Checked ? 0x20 : 0);
+
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneCamIndex_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].CamID = Convert.ToUInt16((ActorCutsceneCamIndex.SelectedItem as SongItem).Value.ToString());
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneHudFade_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].HUDFade = Convert.ToInt16((ActorCutsceneHudFade.SelectedItem as SongItem).Value.ToString());
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneRetCamera_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].ReturnCamType = Convert.ToByte((ActorCutsceneRetCamera.SelectedItem as SongItem).Value.ToString());
+            UpdateActorCutsceneEdit();
+        }
+
+        private void ActorCutsceneNumber_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateActorCutsceneEdit();
+        }
+
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);
@@ -18027,11 +18393,19 @@ namespace SharpOcarina
         public string name = "";
         public List<ActorProperty> actorproperties = new List<ActorProperty>();
         public string objects = "";
+        public sbyte NoMMYRot = 0;
         public ActorInfo(string _name, List<ActorProperty> _actorproperties, string _objects)
         {
             name = _name;
             actorproperties = _actorproperties;
             objects = _objects;
+        }
+        public ActorInfo(string _name, List<ActorProperty> _actorproperties, string _objects, sbyte _NoMMYRot)
+        {
+            name = _name;
+            actorproperties = _actorproperties;
+            objects = _objects;
+            NoMMYRot = _NoMMYRot;
         }
     }
 

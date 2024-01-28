@@ -18,6 +18,9 @@ namespace SharpOcarina
         private float _XRot, _YRot, _ZRot;
         [XmlIgnore]
         private byte _FrontSwitchTo, _FrontCamera, _BackSwitchTo, _BackCamera, _SpawnRoom = 0xFF;
+        [XmlIgnore]
+        private bool[] _IgnoreMMRot = { false, false, false };
+
 
         [XmlIgnore]
         private ZActor _Linked;
@@ -99,6 +102,29 @@ namespace SharpOcarina
             get { return _SpawnRoom; }
             set { _SpawnRoom = value; }
         }
+
+        public bool[] IgnoreMMRot
+        {
+            get { return _IgnoreMMRot; }
+            set { _IgnoreMMRot = value; }
+        }
+        /*
+        [XmlIgnore]
+        public sbyte NoMMYRot
+        {
+            get {
+
+                if (_NoMMYRot == -1)
+                {
+                    _NoMMYRot = (sbyte)XMLreader.getActorNoMMYRot(Number.ToString("X4"));
+                }
+                return _NoMMYRot;
+            }
+            set { _NoMMYRot = value; }
+        }
+
+    */
+        
 
         public ZActor Linked
         {

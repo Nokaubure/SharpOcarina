@@ -115,6 +115,67 @@ namespace SharpOcarina
             return output;
         }
 
+        public static bool[] getActorIgnoreMMRot(string id)
+        {
+            string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
+
+            bool[] ret = { false, false, false };
+
+            XmlDocument doc = new XmlDocument();
+            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            doc.Load(fs);
+            XmlNodeList nodes = doc.SelectNodes("Table/Actor");
+            if (nodes != null)
+                foreach (XmlNode node in nodes)
+                {
+                    XmlAttributeCollection nodeAtt = node.Attributes;
+                    if (nodeAtt["Key"].Value == id)
+                    {
+                        if (nodeAtt["IgnoreMMRot"] != null)
+                        {
+                            string[] values = nodeAtt["IgnoreMMRot"].Value.Split(',');
+                            for (int i = 0; i <= 2; i++)
+                            {
+                                ret[i] = values[i] == "1";
+                            }
+                            return ret;
+                        }
+                        else return ret;
+                        
+                    }
+                }
+            return ret;
+        }
+
+        public static int getActorNoMMYRot(string id)
+        {
+            string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
+
+            int ret = 0;
+
+            XmlDocument doc = new XmlDocument();
+            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            doc.Load(fs);
+            XmlNodeList nodes = doc.SelectNodes("Table/Actor");
+            if (nodes != null)
+                foreach (XmlNode node in nodes)
+                {
+                    XmlAttributeCollection nodeAtt = node.Attributes;
+                    if (nodeAtt["Key"].Value == id)
+                    {
+                        if (nodeAtt["NoMMYRot"] != null)
+                        {
+                            return Convert.ToInt32(nodeAtt["NoMMYRot"].Value);
+                        }
+                        else return ret;
+
+                    }
+                }
+            return ret;
+        }
+
         public static List<ActorProperty> getActorProperties(string id)
         {
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
@@ -275,7 +336,13 @@ namespace SharpOcarina
                         }
 
 
+                        if (MainForm.settings.MajorasMask && MainForm.settings.IgnoreMMDaySystem == true && nodeAtt["NoMMYRot"] != null)
+                        {
 
+                            output.Add(new ActorProperty(0xFF80, "Y Rotation (degrees)", "YRot"));
+                            output.Add(new ActorProperty(0x7F, "Camera index", "YRot"));
+                            
+                        }
 
                         return output;
 

@@ -71,7 +71,7 @@ namespace SharpOcarina
 
             mainform.StoreUndo((IsTransitionActor) ? 2 : (IsSpawnActor) ? 3 : 1);
 
-            ushort number = 0x0015;
+            ushort number = !MainForm.settings.MajorasMask ? (ushort)0x0015 : (ushort)0x000E;
             if (IsTransitionActor && MainForm.CurrentScene.SpecialObject == 0x0003) number = 0x002E;
             else if (IsTransitionActor && MainForm.CurrentScene.SpecialObject == 0x0002) number = 0x0023;
             else if (IsSpawnActor) number = 0x0000;
@@ -195,7 +195,7 @@ namespace SharpOcarina
             ActorYRot.Hexadecimal = MainForm.settings.HexRotations;
             ActorZRot.Hexadecimal = MainForm.settings.HexRotations;
 
-            if (Actors.Count != 0)
+            if (Actors != null && Actors.Count != 0)
             {
                 //numericUpDown3.Minimum = 1;
                 //numericUpDown3.Maximum = Actors.Count;
@@ -253,6 +253,11 @@ namespace SharpOcarina
                 foreach (Control Ctrl in panel2.Controls)
                     Ctrl.Enabled = true;
 
+                if (MainForm.settings.MajorasMask && MainForm.settings.IgnoreMMDaySystem == true)
+                {
+                    ActorYRot.Enabled = XMLreader.getActorNoMMYRot(Actors[ActorComboBox.SelectedIndex].Number.ToString("X4")) == 0;
+                }
+
                 if (Actors[ActorComboBox.SelectedIndex].Number != cacheId)
                 {
                     int propertyprevindex = ActorVariableListBox.SelectedIndex;
@@ -279,11 +284,12 @@ namespace SharpOcarina
                             properties.Add(new ActorProperty(0x4, "Spawn on Night 3", "ZRot"));
                             properties.Add(new ActorProperty(0x2, "Spawn on Day 4", "ZRot"));
                             properties.Add(new ActorProperty(0x1, "Spawn on Night 4", "ZRot"));
-                            //properties.Add(new ActorProperty(0x7F, "Spawn time flags (low bits)", "ZRot"));
-                            //properties.Add(new ActorProperty(0x7, "Spawn time flags (high bits)", "XRot"));
-                            properties.Add(new ActorProperty(0x7F, "Camera index (unsuported)", "YRot"));
+                            properties.Add(new ActorProperty(0x7F, "Camera index", "YRot"));
                         }
                     }
+
+
+
                     foreach (ActorProperty property in properties) ActorVariableListBox.Items.Add(property);
                     if (ActorVariableListBox.Items.Count > 0 && ActorVariableListBox.Items.Count - 1 >= propertyprevindex) ActorVariableListBox.SelectedIndex = propertyprevindex;
                     cacheId = Actors[ActorComboBox.SelectedIndex].Number;
