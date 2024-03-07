@@ -61,7 +61,7 @@ namespace SharpOcarina
             ApplicationTitle = MF.GetType().Namespace + GetVerString(ApplicationVersion);
 #endif
             // MF.GetType().Namespace + " 1.3";
-            ApplicationTitle = MF.GetType().Namespace + " 1.48";
+            ApplicationTitle = MF.GetType().Namespace + " 1.49";
             MF.BringToFront();
             do
             {

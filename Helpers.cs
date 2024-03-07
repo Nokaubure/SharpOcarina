@@ -206,6 +206,27 @@ namespace SharpOcarina
             else if(val.CompareTo(max) > 0) return max;
             else return val;
         }
+
+        public static bool IsFileLocked(string file)
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = File.OpenWrite(file);
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+            return false;
+        }
+
+
     }
 
     public static class StringExtensionsClass

@@ -792,6 +792,7 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.ResetGroupSettingsReloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1215,6 +1216,7 @@ namespace SharpOcarina
             this.RenderWaterboxesMenuItem,
             this.DisableTextureWarningsMenuItem,
             this.DisableCutscenePreviewBlackBarsMenuItem,
+            this.ResetGroupSettingsReloadMenuItem,
             this.toolStripSeparator1,
             this.consecutiveRoomInjectionToolStripMenuItem,
             this.AutoaddGroupsMenuItem,
@@ -1341,6 +1343,7 @@ namespace SharpOcarina
             this.applyEnvironmentLightingToolStripMenuItem.Name = "applyEnvironmentLightingToolStripMenuItem";
             this.applyEnvironmentLightingToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
             this.applyEnvironmentLightingToolStripMenuItem.Text = "&Apply Environment Lighting";
+            this.applyEnvironmentLightingToolStripMenuItem.Visible = false;
             this.applyEnvironmentLightingToolStripMenuItem.Click += new System.EventHandler(this.applyEnvironmentLightingToolStripMenuItem_Click);
             // 
             // RenderActorstoolStrip
@@ -11453,6 +11456,14 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // ResetGroupSettingsReloadMenuItem
+            // 
+            this.ResetGroupSettingsReloadMenuItem.CheckOnClick = true;
+            this.ResetGroupSettingsReloadMenuItem.Name = "ResetGroupSettingsReloadMenuItem";
+            this.ResetGroupSettingsReloadMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.ResetGroupSettingsReloadMenuItem.Text = "Reset group settings on reload";
+            this.ResetGroupSettingsReloadMenuItem.Click += new System.EventHandler(this.ResetGroupSettingsReloadMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12512,6 +12523,7 @@ namespace SharpOcarina
         private Label label143;
         private NumericUpDownEx ActorCutsceneUnknown;
         private ToolStripMenuItem importActorCutscenesFromzsceneToolStripMenuItem;
+        private ToolStripMenuItem ResetGroupSettingsReloadMenuItem;
     }
     }
 

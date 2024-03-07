@@ -80,6 +80,11 @@
             this.ClearAllMapsButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.sToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.map48x85staticbinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.icon_item_nes_staticMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendToZ64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TitleTextureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MapTextureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconX)).BeginInit();
@@ -93,6 +98,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.MapFloorHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MapFloorLabel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PaletteIndex)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // TitleLabel
@@ -367,6 +373,7 @@
             0,
             -2147483648});
             this.IconChestFlag.Name = "IconChestFlag";
+            this.IconChestFlag.ShiftMultiplier = 1;
             this.IconChestFlag.Size = new System.Drawing.Size(56, 20);
             this.IconChestFlag.TabIndex = 37;
             this.IconChestFlag.Value = new decimal(new int[] {
@@ -405,7 +412,7 @@
             // 
             this.SaveToROM.Location = new System.Drawing.Point(274, 552);
             this.SaveToROM.Name = "SaveToROM";
-            this.SaveToROM.Size = new System.Drawing.Size(88, 23);
+            this.SaveToROM.Size = new System.Drawing.Size(103, 23);
             this.SaveToROM.TabIndex = 42;
             this.SaveToROM.Text = "Save to ROM";
             this.SaveToROM.UseVisualStyleBackColor = true;
@@ -661,6 +668,47 @@
             this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(896, 24);
+            this.menuStrip1.TabIndex = 68;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // sToolStripMenuItem
+            // 
+            this.sToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.map48x85staticbinToolStripMenuItem,
+            this.icon_item_nes_staticMenuItem1,
+            this.sendToZ64romToolStripMenuItem});
+            this.sToolStripMenuItem.Name = "sToolStripMenuItem";
+            this.sToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.sToolStripMenuItem.Text = "Export...";
+            // 
+            // map48x85staticbinToolStripMenuItem
+            // 
+            this.map48x85staticbinToolStripMenuItem.Name = "map48x85staticbinToolStripMenuItem";
+            this.map48x85staticbinToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.map48x85staticbinToolStripMenuItem.Text = "export map_48x85_static.bin...";
+            this.map48x85staticbinToolStripMenuItem.Click += new System.EventHandler(this.map48x85staticbinToolStripMenuItem_Click);
+            // 
+            // icon_item_nes_staticMenuItem1
+            // 
+            this.icon_item_nes_staticMenuItem1.Name = "icon_item_nes_staticMenuItem1";
+            this.icon_item_nes_staticMenuItem1.Size = new System.Drawing.Size(247, 22);
+            this.icon_item_nes_staticMenuItem1.Text = "export icon_item_nes_static.bin...";
+            this.icon_item_nes_staticMenuItem1.Click += new System.EventHandler(this.icon_item_nes_staticMenuItem1_Click);
+            // 
+            // sendToZ64romToolStripMenuItem
+            // 
+            this.sendToZ64romToolStripMenuItem.Name = "sendToZ64romToolStripMenuItem";
+            this.sendToZ64romToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.sendToZ64romToolStripMenuItem.Text = "Send to z64rom...";
+            this.sendToZ64romToolStripMenuItem.Click += new System.EventHandler(this.sendToZ64romProjectToolStripMenuItem_Click);
+            // 
             // SubscreenMapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -716,7 +764,9 @@
             this.Controls.Add(this.TitleCardLoadFromFile);
             this.Controls.Add(this.TitleTextureBox);
             this.Controls.Add(this.TitleLabel);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "SubscreenMapEditor";
             this.Text = "Subscreen Map Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SubscreenMapEditor_FormClosed);
@@ -733,6 +783,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.MapFloorHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MapFloorLabel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PaletteIndex)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -791,5 +843,10 @@
         private System.Windows.Forms.Button ClearAllMapsButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem sToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem map48x85staticbinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendToZ64romToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem icon_item_nes_staticMenuItem1;
     }
 }

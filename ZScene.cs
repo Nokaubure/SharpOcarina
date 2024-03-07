@@ -3470,6 +3470,12 @@ namespace SharpOcarina
                         {
                             // Turn force RGBA ON for multitex material 
 
+                            if (Room.TrueGroups[x].MultiTexMaterial > MaterialsList.Count-1)
+                            {
+                                Room.TrueGroups[x].MultiTexMaterial = -1;
+                                continue;
+                            }
+
                             MaterialsList[Room.TrueGroups[x].MultiTexMaterial].ForceRGBA = true;
 
 

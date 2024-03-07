@@ -329,6 +329,7 @@ namespace SharpOcarina
         private void CustomCombiner_FormClosed(object sender, FormClosedEventArgs e)
         {
             MainForm.customcombiner_visible = false;
+            MainForm.customcombiner = null;
         }
 
         private void CompiledCombiner_KeyDown(object sender, KeyEventArgs e)

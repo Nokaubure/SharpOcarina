@@ -143,7 +143,7 @@ namespace SharpOcarina
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (IsFileLocked(saveFileDialog1.FileName))
+                if (Helpers.IsFileLocked(saveFileDialog1.FileName))
                     MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {
@@ -263,7 +263,7 @@ namespace SharpOcarina
 
         public void SaveROM(string ROM)
         {
-            if (IsFileLocked(ROM))
+            if (Helpers.IsFileLocked(ROM))
                 MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
@@ -305,25 +305,6 @@ namespace SharpOcarina
             // EntranceGrid.Rows[EntranceGrid.RowCount - 1].Cells[0].Value = "";
         }
 
-            private bool IsFileLocked(string file)
-            {
-                FileStream stream = null;
-                try
-                {
-                    stream = File.OpenWrite(file);
-                }
-                catch (IOException)
-                {
-                    return true;
-                }
-                finally
-                {
-                    if (stream != null)
-                        stream.Close();
-                }
-                return false;
-            }
-        
         private void EntranceGrid_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
             refresh(e.ColumnIndex, e.RowIndex);
@@ -434,7 +415,7 @@ namespace SharpOcarina
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (IsFileLocked(saveFileDialog1.FileName))
+                if (Helpers.IsFileLocked(saveFileDialog1.FileName))
                     MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {

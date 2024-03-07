@@ -815,15 +815,17 @@ namespace SharpOcarina
 
             if (settings.MajorasMask && settings.IgnoreMMDaySystem == false)
             {
-                GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
+                
                 GL.Rotate(((ushort)Actor.YRot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
                 GL.Rotate(((ushort)Actor.XRot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
+                GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
             }
             else
             {
-                GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
+                
                 GL.Rotate(Actor.YRot / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
                 GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
+                GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
             }
 
             GL.Scale(10.0f, 10.0f, 10.0f);
@@ -3880,6 +3882,8 @@ namespace SharpOcarina
                     ColorBlindMenuItem.Checked = settings.colorblindaxis;
                     DisableTextureWarningsMenuItem.Checked = settings.DisableTextureWarnings;
                     EnableNexExitFormatMenuItem.Checked = settings.EnableNewExitFormat;
+                    DisableCutscenePreviewBlackBarsMenuItem.Checked = settings.DisableCutsceneBlackBars;
+                    ResetGroupSettingsReloadMenuItem.Checked = settings.ResetGroupSettingsReload;
 
                     if (rom64.isSet())
                     {
@@ -5680,7 +5684,7 @@ namespace SharpOcarina
                 // DebugConsole.WriteLine("cccc" + CurrentScene.AdditionalTextures.Count);
 
                 MultiTextureComboBox.SelectedIndexChanged -= comboBox3_SelectedIndexChanged;
-                if (((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial != -1)
+                if (((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial != -1 && ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial +1 <= MultiTextureComboBox.Items.Count)
                     MultiTextureComboBox.SelectedIndex = ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial + 1;
                 else
                     MultiTextureComboBox.SelectedIndex = 0;
@@ -6088,6 +6092,11 @@ namespace SharpOcarina
                     CurrentScene.Cameras.Add(new ZCamera(0, 0, 0, 0, 0, 0, 3, 45, 0xFFFF, 0xFFFF));
                     UpdateForm();
                 }
+                if (settings.MajorasMask && CurrentScene.ActorCutscenes.Count == 0)
+                {
+                    CurrentScene.ActorCutscenes.Add(new ZActorCutscene());
+                    UpdateForm();
+                }
 
                 CurrentScene.ConvertSave(rom64.getPath() + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, 3);
 
@@ -6145,6 +6154,11 @@ namespace SharpOcarina
             if (CurrentScene.Cameras.Count == 0)
             {
                 CurrentScene.Cameras.Add(new ZCamera(0, 0, 0, 0, 0, 0, 3, 45, 0xFFFF, 0xFFFF));
+                UpdateForm();
+            }
+            if (settings.MajorasMask && CurrentScene.ActorCutscenes.Count == 0)
+            {
+                CurrentScene.ActorCutscenes.Add(new ZActorCutscene());
                 UpdateForm();
             }
             AutoFixErrors(rom);
@@ -6981,6 +6995,11 @@ namespace SharpOcarina
                     CurrentScene.Cameras.Add(new ZCamera(0, 0, 0, 0, 0, 0, 3, 45, 0xFFFF, 0xFFFF));
                     UpdateForm();
                 }
+                if (settings.MajorasMask && CurrentScene.ActorCutscenes.Count == 0)
+                {
+                    CurrentScene.ActorCutscenes.Add(new ZActorCutscene());
+                    UpdateForm();
+                }
                 AutoFixErrors("");
 
                 if (saveFileDialog1.FileName.Contains(".zzrp"))
@@ -7024,10 +7043,10 @@ namespace SharpOcarina
 
         private void SceneName_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && CurrentScene != null)
+            if (CurrentScene != null)
             {
                 CurrentScene.Name = NameTextbox.Text;
-                UpdateForm();
+                //UpdateForm();
             }
         }
 
@@ -10932,6 +10951,16 @@ namespace SharpOcarina
         private void autoplaceDoorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int doorcount = 0;
+
+            if (CurrentScene.Scale != 1.00f)
+            {
+                if (MessageBox.Show("Your scene's scale is set to " + CurrentScene.Scale + ", this feature only works fine when scale is set to 1.00, you should scale your model in Blender and set the scale to 1.00 in SharpOcarina. Continue anyways?", "WARNING",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
             StoreUndo(_Transition_);
             foreach (ObjFile.Group group in CurrentScene.ColModel.Groups)
             {
@@ -11661,31 +11690,34 @@ namespace SharpOcarina
 
                 for (int i = 0; i < room.TrueGroups.Count; i++)
                 {
-                    for (int y = 0; y < CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.Count; y++)
+                    if (!settings.ResetGroupSettingsReload)
                     {
-                        if (room.TrueGroups[i].Name == CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups[y].Name && !restored.Contains(i))
+                        for (int y = 0; y < CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.Count; y++)
                         {
-                            room.GroupSettings.CopyVals(i, CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings, y);
-                            restored.Add(i);
-                        }
-                    }
-                    if (!restored.Contains(i))
-                    {
-                        string name1 = room.TrueGroups[i].Name;
-                        if (name1.Contains("#")) name1 = name1.Split('#')[0];
-
-                        if (name1.Length > 0)
-                            for (int y = 0; y < CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.Count; y++)
+                            if (room.TrueGroups[i].Name == CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups[y].Name && !restored.Contains(i))
                             {
-                                string name2 = room.TrueGroups[y].Name;
-                                if (name2.Contains("#")) name2 = name2.Split('#')[0];
-
-                                if ((name2.Length > 0 && name1 == name2 && !restored.Contains(i)))
-                                {
-                                    room.GroupSettings.CopyVals(i, CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings, y);
-                                    restored.Add(i);
-                                }
+                                room.GroupSettings.CopyVals(i, CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings, y);
+                                restored.Add(i);
                             }
+                        }
+                        if (!restored.Contains(i))
+                        {
+                            string name1 = room.TrueGroups[i].Name;
+                            if (name1.Contains("#")) name1 = name1.Split('#')[0];
+
+                            if (name1.Length > 0)
+                                for (int y = 0; y < CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.Count; y++)
+                                {
+                                    string name2 = room.TrueGroups[y].Name;
+                                    if (name2.Contains("#")) name2 = name2.Split('#')[0];
+
+                                    if ((name2.Length > 0 && name1 == name2 && !restored.Contains(i)))
+                                    {
+                                        room.GroupSettings.CopyVals(i, CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings, y);
+                                        restored.Add(i);
+                                    }
+                                }
+                        }
                     }
 
                     CurrentScene.ApplyMeshTags(room.TrueGroups[i], room, i);
@@ -11728,9 +11760,6 @@ namespace SharpOcarina
                         string s = group.Name.Substring(group.Name.ToLower().IndexOf("#room") + 5);
                         s = s.SubstringTill(0, '#').SubstringTill(0, '.').SubstringTill(0, '_');
 
-
-                        // tmp = Convert.ToInt32(s);
-
                         if (!Int32.TryParse(s, out tmp))
                         {
                             MessageBox.Show("Bad usage of #Room tag. The tag needs to be at the end of the group name or before another tag.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -11746,7 +11775,6 @@ namespace SharpOcarina
                 {
                     for (int i = 0; i < maxroom; i++)
                     {
-                        //    DebugConsole.WriteLine("fffffffffff");
                         CurrentScene.AddRoom(CurrentScene.Rooms[0].ModelFilename, " (Room " + (i + 1) + ")", counter);
                         addedrooms++;
                         ZScene.ZRoom room = CurrentScene.Rooms[counter + i].Clone();
@@ -11754,53 +11782,38 @@ namespace SharpOcarina
 
                         cleargroupsettings(room);
 
-                        /*
-
-
-                        for (int w = 0; w < room.TrueGroups.Count; w++)
-                        {
-                            for (int y = 0; y < CurrentScene.Rooms[i].TrueGroups.Count; y++)
-                            {
-                                if (room.TrueGroups[w].Name == CurrentScene.Rooms[i].TrueGroups[y].Name)
-                                {
-                      
-                                    room.GroupSettings.CopyVals(w, CurrentScene.Rooms[i].GroupSettings, y);
-                                }
-                            }
-
-                            CurrentScene.ApplyMeshTags(room.TrueGroups[w], room, w);
-                        }
-                        */
-
                         List<int> restored = new List<int>();
 
                         for (int w = 0; w < room.TrueGroups.Count; w++)
                         {
-                            for (int y = 0; y < CurrentScene.Rooms[i].TrueGroups.Count; y++)
+                            if (!settings.ResetGroupSettingsReload)
                             {
-                                if (room.TrueGroups[w].Name == CurrentScene.Rooms[i].TrueGroups[y].Name && !restored.Contains(w))
+                                for (int y = 0; y < CurrentScene.Rooms[i].TrueGroups.Count; y++)
                                 {
-                                    room.GroupSettings.CopyVals(w, CurrentScene.Rooms[i].GroupSettings, y);
-                                    restored.Add(w);
-                                }
-                            }
-                            if (!restored.Contains(w))
-                            {
-                                string name1 = room.TrueGroups[w].Name;
-                                if (name1.Contains("#")) name1 = name1.Split('#')[0];
-
-                                if (name1.Length > 0)
-                                    for (int y = 0; y < CurrentScene.Rooms[i].TrueGroups.Count; y++)
+                                    if (room.TrueGroups[w].Name == CurrentScene.Rooms[i].TrueGroups[y].Name && !restored.Contains(w))
                                     {
-                                        string name2 = CurrentScene.Rooms[i].TrueGroups[y].Name;
-                                        if (name2.Contains("#")) name2 = name2.Split('#')[0];
-
-                                        if ((name2.Length > 0 && name1 == name2 && !restored.Contains(w)))
-                                        {
-                                            room.GroupSettings.CopyVals(w, CurrentScene.Rooms[i].GroupSettings, y);
-                                            restored.Add(w);
-                                        }
+                                        room.GroupSettings.CopyVals(w, CurrentScene.Rooms[i].GroupSettings, y);
+                                        restored.Add(w);
                                     }
+                                }
+                                if (!restored.Contains(w))
+                                {
+                                    string name1 = room.TrueGroups[w].Name;
+                                    if (name1.Contains("#")) name1 = name1.Split('#')[0];
+
+                                    if (name1.Length > 0)
+                                        for (int y = 0; y < CurrentScene.Rooms[i].TrueGroups.Count; y++)
+                                        {
+                                            string name2 = CurrentScene.Rooms[i].TrueGroups[y].Name;
+                                            if (name2.Contains("#")) name2 = name2.Split('#')[0];
+
+                                            if ((name2.Length > 0 && name1 == name2 && !restored.Contains(w)))
+                                            {
+                                                room.GroupSettings.CopyVals(w, CurrentScene.Rooms[i].GroupSettings, y);
+                                                restored.Add(w);
+                                            }
+                                        }
+                                }
                             }
 
                             CurrentScene.ApplyMeshTags(room.TrueGroups[w], room, w);
@@ -17875,6 +17888,11 @@ namespace SharpOcarina
             UpdateActorCutsceneEdit();
         }
 
+        private void ResetGroupSettingsReloadMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.ResetGroupSettingsReload = ResetGroupSettingsReloadMenuItem.Checked;
+        }
+
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);
@@ -18267,6 +18285,7 @@ namespace SharpOcarina
         public bool EnableNewExitFormat = false;
         public bool AutoReload = false;
         public bool DisableCutsceneBlackBars = false;
+        public bool ResetGroupSettingsReload = false;
     }
 
     public class UndoRedo

@@ -63,6 +63,58 @@ namespace SharpOcarina
                 OpenROM(MainForm.GlobalROM);
                 return;
             }
+            if (rom64.isSet())
+            {
+                string binarydata = rom64.getPath() + "\\tools\\sharpocarina\\binarydata";
+
+                if (!File.Exists(binarydata))
+                {
+                    MessageBox.Show("Select an uncompressed ROM, this will only be asked the first time.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    openFileDialog1.FileName = "";
+                    openFileDialog1.Filter = "Rom files (*.z64;*.rom)|*.z64;*.rom|All Files (*.*)|*.*";
+
+                    //openFileDialog1.FilterIndex = 1;
+                    if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+
+                        ROM = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
+
+                        ROM rom = MainForm.CheckVersion(ROM);
+
+                        if (rom.Game == "MM")
+                        {
+                            MessageBox.Show("MM unsupported", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            mainform.Enabled = true;
+                            this.Close();
+                            return;
+                        }
+
+                        System.IO.FileInfo file = new System.IO.FileInfo(binarydata);
+                        file.Directory.Create(); //if directory exists, does nothing
+                        File.Copy(openFileDialog1.FileName, binarydata);
+
+                        OpenROM(binarydata);
+
+                    }
+                    else
+                    {
+                        mainform.Enabled = true;
+                        this.Close();
+                    }
+
+                }
+                else
+                {
+                    OpenROM(binarydata);
+                }
+
+
+
+
+
+                return;
+            }
 
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Rom files (*.z64;*.rom)|*.z64;*.rom|All Files (*.*)|*.*";
@@ -249,11 +301,125 @@ namespace SharpOcarina
             noupdate = false;
         }
 
+
+        public List<MapFloor> GetMapFloors(int ID)
+        {
+            List<MapFloor> ret = new List<MapFloor>();
+            previd = ID;
+            noupdate = true;
+            ROM rom = MainForm.CheckVersion(ROM);
+            int Offset = ((int)rom.SubscreenMapInfo + (ID * 0x10));
+
+            for (int i = 0; i < 8; i++)
+            {
+                MapFloor floor = new MapFloor();
+                floor.textureID = ROM[Offset + 1];
+                ret.Add(floor);
+                Offset += 2;
+            }
+
+            Offset = ((int)rom.SubscreenMapInfo + 0xA0 + (ID * 0x2));
+            if (ROM[Offset + 1] <= ret.Count - 1) ret[ROM[Offset + 1]].bosslocated = true;
+
+            Offset = ((int)rom.SubscreenMapInfo2 + (ID * 0x8));
+
+            for (int i = 0; i < 8; i++)
+            {
+                ret[i].floorlabel = ROM[Offset];
+                Offset += 1;
+            }
+
+           // selectedfloor = ret.FindIndex(x => x.floorlabel > 0);
+
+            Offset = ((int)rom.SubscreenMapFloorAmount + (ID * 0x2 - 0x2));
+
+           // startfloortexture = Helpers.Read16(ROM, Offset);
+
+            Offset = ((int)rom.SubscreenMapFloorAmount + 0x14A + (ID * 0x20));
+
+            for (int i = 0; i < 8; i++)
+            {
+                ret[i].floorheight = (int)BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(ROM, Offset)), 0);
+                Offset += 4;
+            }
+
+
+            noupdate = false;
+
+            return ret;
+        }
+
+        public byte[] GetMapPaletteIndexes(int ID)
+        {
+            byte[] ret = new byte[32];
+            previd = ID;
+            noupdate = true;
+            ROM rom = MainForm.CheckVersion(ROM);
+            int Offset = ((int)rom.SubscreenMapInfo + 0xB0 + (ID * 0x40));
+
+            for (int i = 0; i < 32; i++)
+            {
+                ret[i] = ROM[Offset + 1 + (i * 2)];
+            }
+
+            noupdate = false;
+
+            return ret;
+        }
+
+
+        public List<List<CompassIcon>> GetCompassIcons(int mapID)
+        {
+            List<List<CompassIcon>> compassicons = new List<List<CompassIcon>>();
+
+            int Offset = 0;
+
+            for (int i = 0; i < 8; i++)
+            {
+                compassicons.Add(new List<CompassIcon>());
+
+                if (i >= maplist[mapID].maxfloors) continue;
+
+                for (int y = 0; y < 3; y++)
+                {
+
+                    bool bossicon = maplist[mapID].icondata[Offset + (0xA4 * y) + 1] == 1;
+
+                    byte chestnumber = maplist[mapID].icondata[Offset + (0xA4 * y) + 0x10 + 3];
+
+                    if (chestnumber == 0) continue;
+
+                    for (int w = 0; w < chestnumber; w++)
+                    {
+                        CompassIcon icon = new CompassIcon();
+                        icon.bossicon = bossicon;
+                        icon.ChestFlag = Helpers.Read16S(maplist[mapID].icondata, Offset + 0x14 + (0xA4 * y) + (0xC * w));
+                        icon.X = BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(maplist[mapID].icondata, Offset + 0x14 + (0xA4 * y) + (0xC * w) + 4)), 0);
+                        icon.Y = BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(maplist[mapID].icondata, Offset + 0x14 + (0xA4 * y) + (0xC * w) + 8)), 0);
+
+                        compassicons[i].Add(icon);
+                    }
+                }
+
+                Offset += 0x1EC;
+            }
+
+            return compassicons;
+        }
+
         public void UpdateForm()
         {
             // public Button[] floorbuttons = { Floor1 };
 
+            SaveToROM.Text = (!rom64.isSet()) ? "Save to ROM" : "Send to z64rom";
+
+            sendToZ64romToolStripMenuItem.Visible = (!rom64.isSet());
+
             FloorBossSkullIcon.Visible = false;
+
+#if DEBUG
+            GenerateMapButton.Visible = true;
+#endif
 
             for (int i = 0; i < 8; i++)
             {
@@ -576,34 +742,10 @@ namespace SharpOcarina
             ROM rom = MainForm.CheckVersion(ROM);
             BWS.Seek((int)rom.SubscreenMapTitleCards + ((int)MapID.Value * 0x600), SeekOrigin.Begin);
 
-            List<Byte> Output = new List<byte>();
+            List<Byte> Output = GenerateTitlecardTextureData();
 
-            Bitmap texture = (Bitmap)TitleTextureBox.Image;
+            
 
-            int x = 0;
-            int y = 0;
-            int gray = 0;
-            int alpha = 0;
-
-            for (int i = 0; y < 16; i++)
-            {
-                //   DebugConsole.WriteLine(((0x4F & 0xF0) >> 4).ToString("X"));
-
-                if (y < texture.Height)
-                {
-                    gray = (texture.GetPixel(x, y).R != 0) ? texture.GetPixel(x, y).R / 17 : 0;
-                    alpha = (texture.GetPixel(x, y).A != 0) ? texture.GetPixel(x, y).A / 17 : 0;
-                    Output.Add((byte)(0x00 | (gray << 4) | (alpha)));
-                }
-                else
-                {
-                    Output.Add(0x00);
-                }
-
-
-                x++;
-                if (x >= texture.Width) { x = 0; y++; }
-            }
             BWS.Write(Output.ToArray());
 
             BWS.Close();
@@ -615,7 +757,7 @@ namespace SharpOcarina
             titlecardchanged = false;
         }
 
-        public void savemap()
+        public void savemap(bool showdone = true)
         {
             maplist[(int)MapID.Value].maxfloors = 0;
             for (int i = 0; i < floors.Count; i++)
@@ -831,13 +973,8 @@ namespace SharpOcarina
 
             BWS.Seek(((int)rom.SubscreenMapFloorTextures), SeekOrigin.Begin);
 
-            for (int i = 0; i < 10; i++)
-            {
-                List<byte> data = new List<byte>(maplist[i].imagedata);
-                data.RemoveRange(maplist[i].maxfloors * 0xFF0, maplist[i].imagedata.Count - (maplist[i].maxfloors * 0xFF0));
-                Output.AddRange(data);
-                DebugConsole.WriteLine("data amount " + data.Count.ToString("X8"));
-            }
+            Output.AddRange(GenerateMapTextureData()); 
+
 
             BWS.Write(Output.ToArray());
             Output.Clear();
@@ -865,7 +1002,7 @@ namespace SharpOcarina
 
 
 
-            MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (showdone) MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
             // Reload the floors, since they may have changed due to the texture ID re-sort
@@ -950,9 +1087,11 @@ namespace SharpOcarina
         {
             if (!noupdate)
             {
+                noupdate = true;
                 if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(IconX.Value) > 10)
                     IconX.Value += (IconX.Value - (decimal)compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].X) * 9;
 
+                noupdate = false;
                 compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].X = (short)IconX.Value;
                 changed = true;
                 RefreshMapTexture();
@@ -963,8 +1102,13 @@ namespace SharpOcarina
         {
             if (!noupdate)
             {
+                noupdate = true;
                 if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(IconY.Value) > 10)
                     IconY.Value += (IconY.Value - (decimal)compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].Y) * 9;
+
+                noupdate = false;
+
+
 
 
                 compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].Y = (short)IconY.Value;
@@ -1286,10 +1430,22 @@ namespace SharpOcarina
         }
 
         private void SaveToROM_Click(object sender, EventArgs e)
-        {            
-            if (titlecardchanged) savetitlecard();
-            
-            savemap();
+        {
+            if (!rom64.isSet())
+            {
+                if (titlecardchanged) savetitlecard();
+
+                savemap();
+            }
+            else
+            {
+                sendToZ64romProjectToolStripMenuItem_Click(new object(), new EventArgs());
+
+                if (titlecardchanged) savetitlecard();
+
+                savemap(false);
+
+            }
 
         }
 
@@ -1390,6 +1546,492 @@ namespace SharpOcarina
 
 
             }
+        }
+
+        public List<Byte> GenerateMapTextureData()
+        {
+            List<Byte> Output = new List<byte>();
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                List<byte> data = new List<byte>(maplist[i].imagedata);
+                data.RemoveRange(maplist[i].maxfloors * 0xFF0, maplist[i].imagedata.Count - (maplist[i].maxfloors * 0xFF0));
+                Output.AddRange(data);
+                DebugConsole.WriteLine("data amount " + data.Count.ToString("X8"));
+            }
+
+            return Output;
+        }
+
+        public List<Byte> GenerateTitlecardTextureData()
+        {
+            List<Byte> Output = new List<byte>();
+
+            Bitmap texture = (Bitmap)TitleTextureBox.Image;
+
+            int x = 0;
+            int y = 0;
+            int gray = 0;
+            int alpha = 0;
+
+            for (int i = 0; y < 16; i++)
+            {
+
+                if (y < texture.Height)
+                {
+                    gray = (texture.GetPixel(x, y).R != 0) ? texture.GetPixel(x, y).R / 17 : 0;
+                    alpha = (texture.GetPixel(x, y).A != 0) ? texture.GetPixel(x, y).A / 17 : 0;
+                    Output.Add((byte)(0x00 | (gray << 4) | (alpha)));
+                }
+                else
+                {
+                    Output.Add(0x00);
+                }
+
+
+                x++;
+                if (x >= texture.Width) { x = 0; y++; }
+            }
+
+            return Output;
+        }
+
+        private void map48x85staticbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.CheckFileExists = false;
+            saveFileDialog1.Filter = "Save file binary (*.bin)|*.bin|All Files (*.*)|*.*";
+            saveFileDialog1.CreatePrompt = true;
+            saveFileDialog1.FileName = "map_48x85_static.bin";
+
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (Helpers.IsFileLocked(saveFileDialog1.FileName))
+                    MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                {
+                    List<Byte> TextureData = GenerateMapTextureData();
+                    File.WriteAllBytes(saveFileDialog1.FileName, TextureData.ToArray());
+                    MessageBox.Show("Done! File Size: " + TextureData.Count.ToString("X") + " bytes", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+        }
+
+
+        private void sendToZ64romProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+            string path = "",basepath = "";
+
+            if (rom64.isSet())
+            { 
+                path = (rom64.getPath() + "\\src\\system\\kaleido\\0x00-StartMenu\\KaleidoMapMarkData.c");
+                basepath = rom64.getPath() + "\\";
+            }
+            else
+            {
+                saveFileDialog1.CheckFileExists = true;
+                saveFileDialog1.Filter = "z64rom project (z64project.toml)|z64project.toml|All Files (*.*)|*.*";
+                saveFileDialog1.CreatePrompt = true;
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    path = saveFileDialog1.FileName;
+
+                    basepath = path;
+
+                    if (path.Contains("z64project.toml"))
+                        path = Path.GetDirectoryName(path) + "\\src\\system\\kaleido\\0x00-StartMenu\\KaleidoMapMarkData.c";
+                    else
+                    {
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+
+            // map static
+            string mapstaticpath = Path.GetDirectoryName(basepath) + "\\rom\\system\\static\\map_48x85_static.bin";
+            if (File.Exists(mapstaticpath)) File.Delete(mapstaticpath);
+            List<Byte> TextureData = GenerateMapTextureData();
+            File.WriteAllBytes(mapstaticpath, TextureData.ToArray());
+
+            // icon_item_nes_static
+            string nesstaticpath = Path.GetDirectoryName(basepath) + "\\rom\\system\\static\\icon_item_NES_static.bin";
+            ExportTitlecardTextures(nesstaticpath);
+
+
+            //chest locations
+            if (File.Exists(path)) File.Delete(path);
+
+            StreamWriter sw = File.CreateText(path);
+
+            string output = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/KaleidoMapMarkData.c"));
+
+            for (int i = 0; i < maplist.Length; i++)
+            {
+                List<List<CompassIcon>> tmpcompassicons = i == MapID.Value ? compassicons : GetCompassIcons(i);
+
+                int c = 0;
+                foreach (List<CompassIcon> compassiconlist in tmpcompassicons)
+                {
+                    if (c >= maplist[i].maxfloors) break;
+                    List<CompassIcon> usableicons = compassiconlist.FindAll(x => x.bossicon == false);
+
+                    output += "// Scene 0x" + i.ToString("X2") + " map " + c + "\n{\n";
+
+                    if (usableicons.Count > 0)
+                    {
+                        output += "{\n PAUSE_MAP_MARK_CHEST,\n" +
+                            "23,\n" +
+                            "sMarkChestVtx,\n" +
+                            "4,\n" +
+                            (uint)usableicons.Count + ",\n" +
+                            "{\n";
+                        foreach (CompassIcon icon in usableicons)
+                        {
+                            output += "{ " + (ushort)icon.ChestFlag + ",     " + icon.X.ToString() + ", " + icon.Y.ToString() + "},\n";
+                        }
+                        output += "} },\n";
+                    }
+
+                    usableicons = compassiconlist.FindAll(x => x.bossicon == true);
+                    if (usableicons.Count > 0)
+                    {
+                        output += "{\n PAUSE_MAP_MARK_BOSS,\n" +
+                            "23,\n" +
+                            "sMarkChestVtx,\n" +
+                            "4,\n" +
+                            (uint)usableicons.Count + ",\n" +
+                            "{\n";
+                        foreach (CompassIcon icon in usableicons)
+                        {
+                            output += "{ " + icon.ChestFlag + ", " + icon.X.ToString() + ", " + icon.Y.ToString() + "},\n";
+                        }
+                        output += "} },\n";
+                    }
+
+                    output += "{ PAUSE_MAP_MARK_NONE, 0,      NULL, 0, 0, { 0} },\n" +
+                        "},\n";
+
+                    c++;
+                }
+            }
+
+            output += "\n};";
+            sw.Write(output);
+            sw.Close();
+
+            //copy static minimap and source files
+            string z_map_data_minimap = Path.GetDirectoryName(basepath) + "\\src\\lib_user\\library\\z_map_data_minimap.h";
+            string z_map_exp_SO = Path.GetDirectoryName(basepath) + "\\src\\lib_user\\library\\z_map_exp_SO.c";
+            string subpath = Path.GetDirectoryName(basepath) + "\\src\\lib_user\\library\\z_map_data_subscreenmap.h";
+            if (File.Exists(z_map_data_minimap)) File.Delete(z_map_data_minimap);
+            if (File.Exists(z_map_exp_SO)) File.Delete(z_map_exp_SO);
+            File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/z_map_data_minimap.h"), z_map_data_minimap);
+            File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/z_map_exp_SO.c"), z_map_exp_SO);
+
+            //subscreen
+            if (File.Exists(subpath)) File.Delete(subpath);
+
+            sw = File.CreateText(subpath);
+
+            output = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/z_map_data_subscreenmap.h"));
+
+            
+
+            List<List<MapFloor>> MapFloors = new List<List<MapFloor>>();
+            List<byte[]> PaletteIndexes = new List<byte[]>();
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                if (m != MapID.Value)
+                    MapFloors.Add(GetMapFloors(m));
+                else
+                    MapFloors.Add(floors);
+                PaletteIndexes.Add(GetMapPaletteIndexes(m));
+            }
+
+            output += "static u8 sFloorID[10][8] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+
+                output += "{";
+
+
+                for (int i = 0; i < 8; i++)
+                {
+                    output += MapFloors[m][i].floorlabel + ",";
+                }
+
+                output += "},\n";
+
+            }
+
+            output += "};\n";
+
+
+
+            output += "static s16 sFloorTexIndexOffset[10][8] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                output += "{";
+
+
+                for (int i = 0; i < 8; i++)
+                {
+                    output += MapFloors[m][i].textureID + ",";
+                }
+
+                output += "},\n";
+
+            }
+
+            output += "};\n";
+
+
+
+
+            /*
+            output += "static u8 test[10][8] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                ushort roomstack = 0;
+                output += "{";
+
+
+                for (int i = 0; i < 10; i++)
+                {
+                    output += roomstack + ",";
+
+                    roomstack += (ushort)(maplist[i].maxfloors * 2);
+                    if (i == 9)
+                        output += maplist[i].maxfloors * 2 + ",";
+                }
+
+                output += "},\n";
+
+            }
+
+            output += "},\n";*/
+
+
+            output += "static f32 sFloorCoordY[10][8] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+
+                output += "{";
+
+
+                for (int i = 0; i < 8; i++)
+                {
+                    output += MapFloors[m][i].floorheight + ",";
+                }
+
+                output += "},\n";
+
+            }
+
+            output += "};\n";
+
+
+            output += "static s16 sRoomPalette[10][32] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+
+                output += "{";
+
+
+                for (int i = 0; i < 32; i++)
+                {
+                    output += PaletteIndexes[m][i] + ",";
+                }
+
+                output += "},\n";
+
+            }
+
+            output += "};\n";
+
+
+            output += "static s16 sBossFloor[8] = {\n";
+
+            for (int m = 0; m < 8; m++)
+            {
+                int bossroom = (ushort)(MapFloors[m].FindIndex(x => x.bosslocated) != -1 ? MapFloors[m].FindIndex(x => x.bosslocated) : 9);
+
+                output += bossroom + ",";
+
+
+            }
+
+            output += "};\n";
+
+
+            output += "static s16 sSkullFloorIconY[10] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                int bossroom = (ushort)(MapFloors[m].FindIndex(x => x.bosslocated) != -1 ? MapFloors[m].FindIndex(x => x.bosslocated) : 9);
+
+                output += ((bossroom != 9) ? (51 - (14 * bossroom)) : -99) + ",";
+
+
+            }
+
+            output += "};\n";
+
+
+            output += "static s16 sMaxPaletteCount[10] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+
+                output += 14 + ",";
+
+
+            }
+
+            output += "};\n";
+
+            output += "static s16 sPaletteRoom[10][8][14] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+
+                output += "{";
+
+
+                for (int i = 0; i < 8; i++)
+                {
+                    output += "{0,1,2,3,4,5,6,7,8,9,10,11,12,13},\n";
+                }
+
+                output += "},\n";
+
+            }
+
+            output += "};\n";
+
+
+            output += "static u16 sSwitchEntryCount[10] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+
+                output += 1 + ",";
+
+
+            }
+
+            output += "};\n";
+
+            output += "static u8 sSwitchFromRoom[10][51] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                output += "{255},\n";
+            }
+
+            output += "};\n";
+
+            output += "static u8 sSwitchFromFloor[10][51] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                output += "{255},\n";
+
+
+            }
+
+            output += "};\n";
+
+            output += "static u8 sSwitchToRoom[10][51] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                output += "{255},\n";
+
+            }
+
+            output += "};\n";
+
+
+
+            //output += "static s16 sMaxPaletteCount[10] = {\n";
+
+            //output += "static s16 sPaletteRoom[10][8][14] = {\n";
+
+
+            output += "\n#endif";
+            sw.Write(output);
+            sw.Close();
+
+            MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+        }
+
+        private void icon_item_nes_staticMenuItem1_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.CheckFileExists = false;
+            saveFileDialog1.Filter = "Save file binary (*.bin)|*.bin|All Files (*.*)|*.*";
+            saveFileDialog1.CreatePrompt = true;
+            saveFileDialog1.FileName = "icon_item_NES_static.bin";
+
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (Helpers.IsFileLocked(saveFileDialog1.FileName))
+                    MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                {
+                    int size = ExportTitlecardTextures(saveFileDialog1.FileName);
+
+                    MessageBox.Show("Done! File Size: " + size.ToString("X") + " bytes", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+        }
+
+        public int ExportTitlecardTextures(string FileName)
+        {
+            List<Byte> TextureData = GenerateTitlecardTextureData();
+
+            List<byte> titlecarddata = new List<byte>();
+
+            ROM rom = MainForm.CheckVersion(ROM);
+            int Offset = (int)rom.SubscreenMapTitleCards;
+
+
+            for (int y = 0; y < 0xDC80; y += 4)
+            {
+                Helpers.Append32(ref titlecarddata, Helpers.Read32(ROM, Offset + y));
+            }
+
+
+
+            File.WriteAllBytes(FileName, titlecarddata.ToArray());
+
+
+            BinaryWriter BWS = new BinaryWriter(File.OpenWrite(FileName));
+
+            BWS.Seek(((int)MapID.Value * 0x600), SeekOrigin.Begin);
+
+
+            BWS.Write(TextureData.ToArray());
+
+            BWS.Close();
+
+            return titlecarddata.Count;
         }
     }
 

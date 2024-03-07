@@ -1,4 +1,30 @@
-///CHANGELOG///
+﻿///CHANGELOG///
+
+--------------
+---1.49
+--------------
+
+- Added full z64rom support to pause screen map editor
+	- Make sure to be in z64rom mode before opening the editor
+	- Automatically creates all the necessary hooks inside lib_user for you
+
+- Added option to reset group settings on scene reload
+
+- Fixed an issue where the scene Name and other textboxes would revert back in some situations
+
+- Fixed an issue where moving chest icons by holding shift in the pause screen map editor would bring an error
+
+- Fixed an issue where visited floors pause screen maps weren't working correctly ingame (z64rom only), Thanks Jinnosuke
+
+- Fixed an issue where actors without a custom render and the 3D axis werent rotated correctly in the Z axis
+
+- [MM] Fixed an issue where SO didnt created any actor cutscene by default, leading to an ingame crash unless one was added manually
+
+- Fixed an issue where an scene could be rendered unusable if SO failed to locate multitexture files
+
+- Fixed an issue where group selection would be permanently invisible after closing optimize window (being invisible while its open is intended)
+
+- Auto-add transition doors now warns the user if scene scale is not set to 1.00
 
 --------------
 ---1.48
