@@ -76,6 +76,7 @@ namespace SharpOcarina
             this.RenderWaterboxesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableTextureWarningsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableCutscenePreviewBlackBarsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResetGroupSettingsReloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.consecutiveRoomInjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoaddGroupsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,6 +153,7 @@ namespace SharpOcarina
             this.removeAllRomScenesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rebuildDmaTableallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decompressROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dropTableEditorOoTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.SetTitlecard = new System.Windows.Forms.Button();
@@ -278,6 +280,7 @@ namespace SharpOcarina
             this.AddMultipleRooms = new System.Windows.Forms.Button();
             this.ContinualInject = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.GroupVibrant = new System.Windows.Forms.CheckBox();
             this.GroupCustomizeButton = new System.Windows.Forms.Button();
             this.GroupCustom = new System.Windows.Forms.CheckBox();
             this.GroupVertexNormals = new System.Windows.Forms.CheckBox();
@@ -792,7 +795,6 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.ResetGroupSettingsReloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1418,6 +1420,14 @@ namespace SharpOcarina
             this.DisableCutscenePreviewBlackBarsMenuItem.Text = "Disable cutscene preview black bars";
             this.DisableCutscenePreviewBlackBarsMenuItem.Click += new System.EventHandler(this.DisableCutscenePreviewBlackBarsMenuItem_Click);
             // 
+            // ResetGroupSettingsReloadMenuItem
+            // 
+            this.ResetGroupSettingsReloadMenuItem.CheckOnClick = true;
+            this.ResetGroupSettingsReloadMenuItem.Name = "ResetGroupSettingsReloadMenuItem";
+            this.ResetGroupSettingsReloadMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.ResetGroupSettingsReloadMenuItem.Text = "Reset group settings on reload";
+            this.ResetGroupSettingsReloadMenuItem.Click += new System.EventHandler(this.ResetGroupSettingsReloadMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -1907,7 +1917,8 @@ namespace SharpOcarina
             this.clearSceneDmatableToolStripMenuItem,
             this.removeAllRomScenesToolStripMenuItem,
             this.rebuildDmaTableallToolStripMenuItem,
-            this.decompressROMToolStripMenuItem});
+            this.decompressROMToolStripMenuItem,
+            this.dropTableEditorOoTToolStripMenuItem});
             this.nokaToolStripMenuItem.Name = "nokaToolStripMenuItem";
             this.nokaToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.nokaToolStripMenuItem.Text = "Tools";
@@ -2038,6 +2049,13 @@ namespace SharpOcarina
             this.decompressROMToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
             this.decompressROMToolStripMenuItem.Text = "Decompress ROM (all)";
             this.decompressROMToolStripMenuItem.Click += new System.EventHandler(this.decompressROMToolStripMenuItem_Click);
+            // 
+            // dropTableEditorOoTToolStripMenuItem
+            // 
+            this.dropTableEditorOoTToolStripMenuItem.Name = "dropTableEditorOoTToolStripMenuItem";
+            this.dropTableEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.dropTableEditorOoTToolStripMenuItem.Text = "Drop Table Editor (OoT)";
+            this.dropTableEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.dropTableEditorOoTToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -4113,7 +4131,7 @@ namespace SharpOcarina
             this.ReloadRoomButton.Size = new System.Drawing.Size(66, 23);
             this.ReloadRoomButton.TabIndex = 17;
             this.ReloadRoomButton.Text = "Reload";
-            this.EnvironmentControlTooltip.SetToolTip(this.ReloadRoomButton, "Hold SHIFT to load a new model");
+            this.EnvironmentControlTooltip.SetToolTip(this.ReloadRoomButton, "Hold SHIFT to load a new model while keeping actors and everything else");
             this.ReloadRoomButton.UseVisualStyleBackColor = true;
             this.ReloadRoomButton.Click += new System.EventHandler(this.ReloadRoomButton_Click);
             // 
@@ -4144,6 +4162,7 @@ namespace SharpOcarina
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.GroupVibrant);
             this.groupBox1.Controls.Add(this.GroupCustomizeButton);
             this.groupBox1.Controls.Add(this.GroupCustom);
             this.groupBox1.Controls.Add(this.GroupVertexNormals);
@@ -4194,6 +4213,19 @@ namespace SharpOcarina
             this.groupBox1.Tag = "a";
             this.groupBox1.Text = "Group Settings";
             // 
+            // GroupVibrant
+            // 
+            this.GroupVibrant.AutoSize = true;
+            this.GroupVibrant.Location = new System.Drawing.Point(306, 220);
+            this.GroupVibrant.Name = "GroupVibrant";
+            this.GroupVibrant.Size = new System.Drawing.Size(90, 17);
+            this.GroupVibrant.TabIndex = 45;
+            this.GroupVibrant.Text = "Vibrant Color*";
+            this.EnvironmentControlTooltip.SetToolTip(this.GroupVibrant, "Makes vertex colors more vibrant, doesnt work with multitexture");
+            this.GroupVibrant.UseVisualStyleBackColor = true;
+            this.GroupVibrant.Visible = false;
+            this.GroupVibrant.CheckedChanged += new System.EventHandler(this.GroupVibrant_CheckedChanged);
+            // 
             // GroupCustomizeButton
             // 
             this.GroupCustomizeButton.BackColor = System.Drawing.Color.Transparent;
@@ -4221,7 +4253,7 @@ namespace SharpOcarina
             // GroupVertexNormals
             // 
             this.GroupVertexNormals.AutoSize = true;
-            this.GroupVertexNormals.Location = new System.Drawing.Point(306, 233);
+            this.GroupVertexNormals.Location = new System.Drawing.Point(306, 202);
             this.GroupVertexNormals.Name = "GroupVertexNormals";
             this.GroupVertexNormals.Size = new System.Drawing.Size(97, 17);
             this.GroupVertexNormals.TabIndex = 43;
@@ -4257,7 +4289,7 @@ namespace SharpOcarina
             // GroupRenderLast
             // 
             this.GroupRenderLast.AutoSize = true;
-            this.GroupRenderLast.Location = new System.Drawing.Point(306, 213);
+            this.GroupRenderLast.Location = new System.Drawing.Point(306, 185);
             this.GroupRenderLast.Name = "GroupRenderLast";
             this.GroupRenderLast.Size = new System.Drawing.Size(84, 17);
             this.GroupRenderLast.TabIndex = 40;
@@ -4372,7 +4404,7 @@ namespace SharpOcarina
             // GroupIgnoreFog
             // 
             this.GroupIgnoreFog.AutoSize = true;
-            this.GroupIgnoreFog.Location = new System.Drawing.Point(306, 191);
+            this.GroupIgnoreFog.Location = new System.Drawing.Point(306, 166);
             this.GroupIgnoreFog.Name = "GroupIgnoreFog";
             this.GroupIgnoreFog.Size = new System.Drawing.Size(77, 17);
             this.GroupIgnoreFog.TabIndex = 32;
@@ -4383,7 +4415,7 @@ namespace SharpOcarina
             // Group2AxisBillboard
             // 
             this.Group2AxisBillboard.AutoSize = true;
-            this.Group2AxisBillboard.Location = new System.Drawing.Point(306, 168);
+            this.Group2AxisBillboard.Location = new System.Drawing.Point(306, 148);
             this.Group2AxisBillboard.Name = "Group2AxisBillboard";
             this.Group2AxisBillboard.Size = new System.Drawing.Size(99, 17);
             this.Group2AxisBillboard.TabIndex = 31;
@@ -4396,7 +4428,7 @@ namespace SharpOcarina
             // GroupBillboard
             // 
             this.GroupBillboard.AutoSize = true;
-            this.GroupBillboard.Location = new System.Drawing.Point(306, 145);
+            this.GroupBillboard.Location = new System.Drawing.Point(306, 130);
             this.GroupBillboard.Name = "GroupBillboard";
             this.GroupBillboard.Size = new System.Drawing.Size(70, 17);
             this.GroupBillboard.TabIndex = 30;
@@ -4408,7 +4440,7 @@ namespace SharpOcarina
             // GroupPixelated
             // 
             this.GroupPixelated.AutoSize = true;
-            this.GroupPixelated.Location = new System.Drawing.Point(306, 122);
+            this.GroupPixelated.Location = new System.Drawing.Point(306, 112);
             this.GroupPixelated.Name = "GroupPixelated";
             this.GroupPixelated.Size = new System.Drawing.Size(69, 17);
             this.GroupPixelated.TabIndex = 29;
@@ -4419,7 +4451,7 @@ namespace SharpOcarina
             // GroupDecal
             // 
             this.GroupDecal.AutoSize = true;
-            this.GroupDecal.Location = new System.Drawing.Point(306, 99);
+            this.GroupDecal.Location = new System.Drawing.Point(306, 94);
             this.GroupDecal.Name = "GroupDecal";
             this.GroupDecal.Size = new System.Drawing.Size(54, 17);
             this.GroupDecal.TabIndex = 28;
@@ -4475,7 +4507,7 @@ namespace SharpOcarina
             // ReverseLightCheckBox
             // 
             this.ReverseLightCheckBox.AutoSize = true;
-            this.ReverseLightCheckBox.Location = new System.Drawing.Point(272, 275);
+            this.ReverseLightCheckBox.Location = new System.Drawing.Point(272, 272);
             this.ReverseLightCheckBox.Name = "ReverseLightCheckBox";
             this.ReverseLightCheckBox.Size = new System.Drawing.Size(103, 17);
             this.ReverseLightCheckBox.TabIndex = 24;
@@ -11456,14 +11488,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // ResetGroupSettingsReloadMenuItem
-            // 
-            this.ResetGroupSettingsReloadMenuItem.CheckOnClick = true;
-            this.ResetGroupSettingsReloadMenuItem.Name = "ResetGroupSettingsReloadMenuItem";
-            this.ResetGroupSettingsReloadMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.ResetGroupSettingsReloadMenuItem.Text = "Reset group settings on reload";
-            this.ResetGroupSettingsReloadMenuItem.Click += new System.EventHandler(this.ResetGroupSettingsReloadMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12524,6 +12548,8 @@ namespace SharpOcarina
         private NumericUpDownEx ActorCutsceneUnknown;
         private ToolStripMenuItem importActorCutscenesFromzsceneToolStripMenuItem;
         private ToolStripMenuItem ResetGroupSettingsReloadMenuItem;
+        private ToolStripMenuItem dropTableEditorOoTToolStripMenuItem;
+        private CheckBox GroupVibrant;
     }
     }
 

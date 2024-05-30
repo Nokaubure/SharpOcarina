@@ -22,6 +22,11 @@ namespace SharpOcarina
         {
             InitializeComponent();
 
+            if (rom64.isSet())
+            {
+                MessageBox.Show("For z64rom use the button in general tab!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
@@ -43,6 +48,8 @@ namespace SharpOcarina
                 OpenRomToolStripMenuItem.Visible = false;
                 OpenROM(MainForm.GlobalROM);
             }
+
+
         }
 
         private void Close_MouseClick(object sender, MouseEventArgs e)

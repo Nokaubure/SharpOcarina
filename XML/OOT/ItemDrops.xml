@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt16" ValueType="System.String">
+	<Item Key="00">Green Rupee</Item>
+	<Item Key="01">Blue Rupee</Item>
+	<Item Key="02">Red Rupee</Item>
+	<Item Key="03">Recovery Heart</Item>
+	<Item Key="04">Bomb</Item>
+	<Item Key="05">Arrow (1)</Item>
+	<Item Key="06">Piece of Heart</Item>
+	<Item Key="07">Heart Container [Early]</Item>
+	<Item Key="08">Deku Seeds or Arrows (5)</Item>
+	<Item Key="09">Deku Seeds (5) or Arrows (10)</Item>
+	<Item Key="0A">Deku Seeds (5) or Arrows (30)</Item>
+	<Item Key="0B">Bomb (5)</Item>
+	<Item Key="0C">Deku Nut</Item>
+	<Item Key="0D">Deku Stick</Item>
+	<Item Key="0E">Large Magic Jar</Item>
+	<Item Key="0F">Small Magic Jar</Item>
+	<Item Key="10">Deku Seeds or Arrows (5)</Item>
+	<Item Key="11">Small Key</Item>
+	<Item Key="12">Flexible Drop</Item>
+	<Item Key="13">Orange Rupee</Item>
+	<Item Key="14">Pink Rupee</Item>
+	<Item Key="15">Deku Shield</Item>
+	<Item Key="16">Hylian Shield</Item>
+	<Item Key="17">Zora Tunic</Item>
+	<Item Key="18">Goron Tunic</Item>
+	<Item Key="19">Bomb (5)</Item>
+	<Item Key="FF">Nothing</Item>
+</Table>

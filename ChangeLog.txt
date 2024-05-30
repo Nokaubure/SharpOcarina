@@ -1,6 +1,42 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.50
+--------------
+
+- Added the drop table editor from custom actor toolkit and gave it z64rom support. SO will create all the necessary hooks inside lib_user for you.
+
+- Added property Object in actor rendering (z64rom) to load a different object from the one assigned in init_vars
+
+- Added property Collision in actor rendering, its main purpose is for other actors to detect it when using "stick to ground", also gets rendered with show collision option enabled
+
+- Delete key can now be used any selectable element, such as actors. You must select the instance in the viewport for it to work.
+
+- Armos statues and all kind of dungeon switches are now rendered properly
+
+- (Beta) Enabled the unfinished .zscene viewer, saving is disabled
+
+- Fixed an issue where the property DisplayList in actor rendering (z64rom) didnt accepted hexadecimal offsets 
+
+- Fixed an issue where FC D9 E2 tags would always prompt an usage warning, being impossible to use them
+
+- Fixed an issue where reloading a single room that has less groups than before would lead to a crash
+
+- Fixed an issue regarding relative paths not being stored correctly inside saved scenes
+
+- Fixed an issue where a scene would crash in z64rom if the texture animation list was empty with advanced texture animation option enabled
+
+- Fixed an issue where a scene would crash if alternate headers had inherit texture animations enabled while the main header had an empty texture animation list
+
+- Fixed an issue where holding Z (or using the UI) to stick an actor to collision would not ignore #NoCollision tags
+
+- Fixed an issue where an error could show up when deleting pathways
+
+- The features that dont support z64rom now warn the user in z64rom mode
+
+- The setting "Disable Texture Warnings" will also disable texture resolution warnings
+
+--------------
 ---1.49
 --------------
 

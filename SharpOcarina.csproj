@@ -278,6 +278,12 @@
     <Compile Include="ZSceneHeader.cs" />
     <Compile Include="ZTextureAnim.cs" />
     <Compile Include="ZWaterbox.cs" />
+    <Compile Include="RandomDropTableEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RandomDropTableEditor.Designer.cs">
+      <DependentUpon>RandomDropTableEditor.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="OpenRomScene.resx">
       <DependentUpon>OpenRomScene.cs</DependentUpon>
     </EmbeddedResource>
@@ -336,6 +342,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RandomDropTableEditor.resx">
+      <DependentUpon>RandomDropTableEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="AutoUpdater\RedCell.Diagnostics.Update\packages.config" />
@@ -1541,6 +1550,9 @@
     <EmbeddedResource Include="Files\Advanced_Texture_Animations">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Files\droptable_SO.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Import\import">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1578,6 +1590,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\z_map_exp_SO.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML\OOT\ItemDrops.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XML\OOT\RenderFunctions.xml">

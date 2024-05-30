@@ -129,6 +129,8 @@ namespace SharpOcarina
 
         public static bool restrictionflag_visible = false;
 
+        public static bool droptableeditor_visible = false;
+
         public static bool n64preview = false;
 
         public static Keys[] ActorControlKeys = new Keys[0];
@@ -990,10 +992,9 @@ namespace SharpOcarina
 
 
 
+
                     foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in zobj_cache[render].DLists)
                     {
-
-
 
 
                         if (DL.IsTransparent == transparency)
@@ -1001,6 +1002,12 @@ namespace SharpOcarina
 
                             GL.CallList(DL.GLID);
                         }
+                    }
+
+
+                    if (settings.ShowCollisionModel == true && zobj_cache[render].collision != null)
+                    {
+                        zobj_cache[render].collision.Render();
                     }
 
                     GL.PopMatrix();
@@ -2059,6 +2066,8 @@ namespace SharpOcarina
                     GL.Scale(CurrentScene.Scale, CurrentScene.Scale, CurrentScene.Scale);
                     CurrentScene.ColModel.Render();
                     GL.PopMatrix();
+
+
                 }
 
                 /* Render group highlight... */
@@ -2658,6 +2667,29 @@ namespace SharpOcarina
             if (KeysDown[(int)Keys.Y] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
                 Undo(true);
+            }
+            if (KeysDown[(int)Keys.Delete] && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+            {
+                if (actorpick == _Actor_)
+                    actorEditControl1.DeleteActor();
+                else if (actorpick == _Transition_)
+                    actorEditControl2.DeleteActor();
+                else if (actorpick == _Spawn_)
+                    actorEditControl3.DeleteActor();
+                else if (actorpick == _Pathway_)
+                    DeletePathwayPoint();
+                else if (actorpick == _Waterbox_)
+                    DeleteWaterbox();
+                else if (actorpick == _AddLight_)
+                    DeleteAdditionalLight();
+                else if (actorpick == _CutsceneCamera_)
+                    DeleteCutsceneCameraPoint();
+                else if (actorpick == _CutsceneActor_)
+                    DeleteCutsceneActorPoint();
+                else if (actorpick == _Camera_)
+                    DeleteCamera();
+
+                actorpick = -1;
             }
         }
 
@@ -3325,7 +3357,7 @@ namespace SharpOcarina
                     target = CurrentScene.Transitions[actorEditControl2.ActorNumber];
                 else if (actorpick == _Spawn_)
                     target = CurrentScene.SpawnPoints[actorEditControl3.ActorNumber];
-                else if (actorpick == _Pathway_)
+                else if (actorpick == _Pathway_ && PathwayListBox.SelectedIndex != -1)
                     target = CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex];
                 else if (actorpick == _Waterbox_)
                     target = CurrentScene.Waterboxes[(int)WaterboxSelect.Value];
@@ -3337,6 +3369,8 @@ namespace SharpOcarina
                     target = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex];
                 else if (actorpick == _Camera_)
                     target = CurrentScene.Cameras[(int)CameraSelect.Value];
+
+                if (target == null) return;
 
                 Vector3d objpos = (Vector3d)NullVector;
                 if (actorpick <= 3)
@@ -3665,6 +3699,12 @@ namespace SharpOcarina
                 GSet.VertexNormals.Fill(new bool[] { false });
             }
 
+            if (GSet.Vibrant.Length != GroupCount)
+            {
+                GSet.Vibrant = new bool[GroupCount];
+                GSet.Vibrant.Fill(new bool[] { false });
+            }
+
             if (GSet.Custom.Length != GroupCount)
             {
                 GSet.Custom = new bool[GroupCount];
@@ -3824,14 +3864,16 @@ namespace SharpOcarina
                     UnusedCommandCheckBox.Checked = CurrentScene.OutdoorLight;
 
 
-                    saveBinaryToolStripMenuItem.Enabled = true;
+                    saveBinaryToolStripMenuItem.Enabled = !CurrentScene.PregeneratedMesh;
                     saveSceneToolStripMenuItem.Enabled = true;
                     SaveScenetoolStripMenuItem3.Enabled = (LastScene != "");
-                    injectToROMToolStripMenuItem.Enabled = true;
-#if DEBUG
+                    injectToROMToolStripMenuItem.Enabled = !CurrentScene.PregeneratedMesh;
+//#if DEBUG
                     openZmapToolstrip.Visible = true;
                     openSceneToolStripMenuItem.Visible = true;
-#endif
+                    OpenSceneFromRoomToolStrip.Visible = true;
+                    toolStripSeparator6.Visible = true;
+//#endif
 
                     SetRestrictionFlags.Enabled = true;
                     SetTitlecard.Enabled = true;
@@ -5741,6 +5783,7 @@ namespace SharpOcarina
                 GroupRenderLast.Checked = ((ObjFile.Group)GroupList.SelectedItem).RenderLast;
                 GroupVertexNormals.Checked = ((ObjFile.Group)GroupList.SelectedItem).VertexNormals;
                 GroupCustom.Checked = ((ObjFile.Group)GroupList.SelectedItem).Custom;
+                GroupVibrant.Checked = ((ObjFile.Group)GroupList.SelectedItem).Vibrant;
 
                 //optimization
 
@@ -6692,7 +6735,12 @@ namespace SharpOcarina
 
 
             if (!File.Exists(temppath))
-                temppath = fullpath + Path.GetFileName(temppath);
+            {
+                if (Path.IsPathRooted(temppath))
+                    temppath = fullpath + Path.GetFileName(temppath);
+                else
+                    temppath = fullpath + temppath;
+            }
             if (!File.Exists(temppath))
             {
                 MessageBox.Show("File " + temppath + " doesn't exists, fix XML paths before attempting to open it again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -6707,7 +6755,10 @@ namespace SharpOcarina
                 {
                     temppath = CurrentScene.Rooms[i].ModelFilename;
                     if (!File.Exists(temppath))
-                        temppath = fullpath + Path.GetFileName(temppath);
+                        if (Path.IsPathRooted(temppath))
+                            temppath = fullpath + Path.GetFileName(temppath);
+                        else
+                            temppath = fullpath + temppath;
                     if (!File.Exists(temppath))
                     {
                         MessageBox.Show("File " + temppath + " doesn't exists, fix XML paths before attempting to open it again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -6847,6 +6898,10 @@ namespace SharpOcarina
                     if (CurrentScene.Rooms[i].GroupSettings.VertexNormals.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
                         CurrentScene.Rooms[i].GroupSettings.VertexNormals = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
 
+                    if (CurrentScene.Rooms[i].GroupSettings.Vibrant.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
+                        CurrentScene.Rooms[i].GroupSettings.Vibrant = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
+
+
                     SetTrueGroupsToGroupSettings(i);
 
 
@@ -6971,6 +7026,7 @@ namespace SharpOcarina
                 CurrentScene.Rooms[i].TrueGroups[j].VertexNormals = CurrentScene.Rooms[i].GroupSettings.VertexNormals[j];
                 CurrentScene.Rooms[i].TrueGroups[j].AlphaMask = CurrentScene.Rooms[i].GroupSettings.AlphaMask[j];
                 CurrentScene.Rooms[i].TrueGroups[j].Custom = CurrentScene.Rooms[i].GroupSettings.Custom[j];
+                CurrentScene.Rooms[i].TrueGroups[j].Vibrant = CurrentScene.Rooms[i].GroupSettings.Vibrant[j];
 
             }
         }
@@ -7804,6 +7860,11 @@ namespace SharpOcarina
         }
 
         private void DeleteWaterboxButton_Click(object sender, EventArgs e)
+        {
+            DeleteWaterbox();
+        }
+
+        private void DeleteWaterbox()
         {
             ZWaterbox DelWBox = CurrentScene.Waterboxes[(int)WaterboxSelect.Value];
             CurrentScene.Waterboxes.Remove(DelWBox);
@@ -9186,11 +9247,16 @@ namespace SharpOcarina
 
         private void DeletePathwayButton_Click(object sender, MouseEventArgs e)
         {
+            if (CurrentScene.Pathways.Count > 0)
+            { 
             ZPathway Del = CurrentScene.Pathways[(int)PathwayNumber.Value];
             CurrentScene.Pathways.Remove(Del);
             if (CurrentScene.Pathways.Count == 0) PathwayListBox.Items.Clear();
             UpdateForm();
+            }
         }
+
+        
 
         private void PathwayList_ValueChanged(object sender, EventArgs e)
         {
@@ -9299,7 +9365,13 @@ namespace SharpOcarina
 
         private void DeletePointButton_Click(object sender, EventArgs e)
         {
+            DeletePathwayPoint();
+        }
+
+        private void DeletePathwayPoint()
+        {
             CurrentScene.Pathways[(int)PathwayNumber.Value].Points.RemoveAt(PathwayListBox.SelectedIndex);
+            if (PathwayListBox.SelectedIndex >= CurrentScene.Pathways[(int)PathwayNumber.Value].Points.Count) PathwayListBox.SelectedIndex--;
             if (CurrentScene.Pathways[(int)PathwayNumber.Value].Points.Count == 0) PathwayListBox.Items.Clear();
             UpdateForm();
         }
@@ -9336,8 +9408,12 @@ namespace SharpOcarina
             float dist = 999999;
             foreach (ObjFile.Group Group in CurrentScene.ColModel.Groups)
             {
+                if (Group.Name.ToLower().Contains("#nocollision")) continue;
+
                 foreach (ObjFile.Triangle Tri in Group.Triangles)
                 {
+
+
                     Vector3 collision = ObjFile.RayCollision(
                         CurrentScene.ColModel.Vertices[Tri.VertIndex[0]],
                         CurrentScene.ColModel.Vertices[Tri.VertIndex[1]],
@@ -9352,6 +9428,40 @@ namespace SharpOcarina
                     }
                 }
 
+
+            }
+            if (settings.RenderActors)
+            {
+
+                foreach (ZActor Actor in CurrentScene.Rooms[RoomList.SelectedIndex].ZActors)
+                {
+                    int render = FindActorRender((ushort)((Actor.Number == 0 && settings.RenderChildLink) ? 0xFFFF : Actor.Number), Actor.Variable);
+                    if (render != -1 && zobj_cache[render].collision != null)
+                        foreach (ObjFile.Group Group in zobj_cache[render].collision.Groups)
+                        {
+                            foreach (ObjFile.Triangle Tri in Group.Triangles)
+                            {
+                                ObjFile.Vertex[] v = new ObjFile.Vertex[3];
+                                for (int b = 0; b < 3; b++)
+                                    v[b] = new ObjFile.Vertex(zobj_cache[render].collision.Vertices[Tri.VertIndex[b]].X * zobj_cache[render].scale + Actor.XPos,
+                                        zobj_cache[render].collision.Vertices[Tri.VertIndex[b]].Y * zobj_cache[render].scale + Actor.YPos,
+                                        zobj_cache[render].collision.Vertices[Tri.VertIndex[b]].Z * zobj_cache[render].scale + Actor.ZPos);
+
+                                Vector3 collision = ObjFile.RayCollision(
+                                    v[0],
+                                    v[1],
+                                    v[2],
+                                    pos,
+                                    dir,
+                                    1);
+                                if (collision != new Vector3(-1, -1, -1) && dist > Distance3D(pos, collision))
+                                {
+                                    dist = Distance3D(pos, collision);
+                                    output = collision;
+                                }
+                            }
+                        }
+                }
             }
             return output;
         }
@@ -9572,6 +9682,11 @@ namespace SharpOcarina
         }
 
         private void AdditionalLightDelete_Click(object sender, EventArgs e)
+        {
+            DeleteAdditionalLight();
+        }
+
+        private void DeleteAdditionalLight()
         {
             if (CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Count > 0)
             {
@@ -9909,6 +10024,11 @@ namespace SharpOcarina
         }
 
         private void CutsceneDeleteAbsolutePosition_Click(object sender, EventArgs e)
+        {
+            DeleteCutsceneCameraPoint();
+        }
+
+        private void DeleteCutsceneCameraPoint()
         {
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.RemoveAt(CutsceneAbsolutePositionListBox.SelectedIndex);
             if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Count == 0) CutsceneAbsolutePositionListBox.Items.Clear();
@@ -10615,6 +10735,11 @@ namespace SharpOcarina
 
         private void CutsceneActorDeleteAction_Click(object sender, EventArgs e)
         {
+            DeleteCutsceneActorPoint();
+        }
+
+        private void DeleteCutsceneActorPoint()
+        {
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors.RemoveAt(CutsceneActorListBox.SelectedIndex);
             if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors.Count == 0) CutsceneActorListBox.Items.Clear();
             UpdateCutsceneEdit();
@@ -11225,6 +11350,11 @@ namespace SharpOcarina
 
         private void DeleteCameraButton_Click(object sender, EventArgs e)
         {
+            DeleteCamera();
+        }
+
+        private void DeleteCamera()
+        {
             CurrentScene.Cameras.RemoveAt((int)CameraSelect.Value);
             UpdateForm();
         }
@@ -11708,7 +11838,7 @@ namespace SharpOcarina
                             if (name1.Length > 0)
                                 for (int y = 0; y < CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.Count; y++)
                                 {
-                                    string name2 = room.TrueGroups[y].Name;
+                                    string name2 = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups[y].Name;
                                     if (name2.Contains("#")) name2 = name2.Split('#')[0];
 
                                     if ((name2.Length > 0 && name1 == name2 && !restored.Contains(i)))
@@ -11952,7 +12082,7 @@ namespace SharpOcarina
                     for (int j = 0; j < Room.TrueGroups.Count; j++)
                     {
                         if (Room.TrueGroups[j].Name.ToLower().Contains("#nomesh")) continue;
-                        NDisplayList DList = new NDisplayList(CurrentScene.Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, UnusedCommandCheckBox.Checked, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].AnimationBank, bank);
+                        NDisplayList DList = new NDisplayList(CurrentScene.Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, UnusedCommandCheckBox.Checked, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].Vibrant, Room.TrueGroups[j].AnimationBank, bank);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (uint)Data.Count, CurrentScene.SceneSettings, CurrentScene.AdditionalTextures);
                         InjectMessages.Add("Group " + Room.TrueGroups[j].Name + " Offset " + (Data.Count + DList.Vertoffset).ToString("X8"));
                         Data.AddRange(DList.Data);
@@ -12637,7 +12767,7 @@ namespace SharpOcarina
             }
         }
 
-        private ObjFile importCollision(List<byte> data, int y, bool zobj = false)
+        public static ObjFile importCollision(List<byte> data, int y, bool zobj = false)
         {
             uint test = Helpers.Read32(data, y);
             if ((test & 0xFF00FFFF) == 0x03000000 || zobj)
@@ -13829,6 +13959,7 @@ namespace SharpOcarina
                 room.GroupSettings.VertexNormals[i] = false;
                 room.GroupSettings.AlphaMask[i] = false;
                 room.GroupSettings.Custom[i] = false;
+                room.GroupSettings.Vibrant[i] = false;
 
                 room.TrueGroups[i].TintAlpha = 0xFFFFFFFF;
                 room.TrueGroups[i].MultiTexAlpha = 0xFFFFFFFF;
@@ -13858,6 +13989,7 @@ namespace SharpOcarina
                 room.GroupSettings.VertexNormals[i] = false;
                 room.GroupSettings.AlphaMask[i] = false;
                 room.GroupSettings.Custom[i] = false;
+                room.GroupSettings.Vibrant[i] = false;
             }
 
 
@@ -17893,6 +18025,30 @@ namespace SharpOcarina
             settings.ResetGroupSettingsReload = ResetGroupSettingsReloadMenuItem.Checked;
         }
 
+        private void dropTableEditorOoTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!droptableeditor_visible)
+            {
+
+                RandomDropTableEditor droptableeditor = new RandomDropTableEditor();
+
+                droptableeditor.Show();
+                droptableeditor_visible = true;
+
+
+            }
+        }
+
+        private void GroupVibrant_CheckedChanged(object sender, EventArgs e)
+        {
+            ((ObjFile.Group)GroupList.SelectedItem).Vibrant = GroupVibrant.Checked;
+
+            int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
+            CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.Vibrant[Index] = ((ObjFile.Group)GroupList.SelectedItem).Vibrant;
+
+            UpdateGroupSelect(n64refresh);
+        }
+
         public void OpenRecentRom(object sender, System.EventArgs e)
         {
             InjectToRom(((ToolStripMenuItem)sender).Text);
@@ -17983,6 +18139,7 @@ namespace SharpOcarina
                                         result.ObjectTable = Convert.ToUInt32(nodeAtt["ObjectTable"].Value, 16);
                                         result.ParticleTable = Convert.ToUInt32(nodeAtt["ParticleTable"].Value, 16);
                                         result.ParticleTableEnd = Convert.ToUInt32(nodeAtt["ParticleTableEnd"].Value, 16);
+                                        result.RandomDropTable = Convert.ToUInt32(nodeAtt["RandomDropTable"].Value, 16);
 
 
                                         found = true;
@@ -18342,6 +18499,7 @@ namespace SharpOcarina
         public uint ActorTableEnd;
         public uint ParticleTable;
         public uint ParticleTableEnd;
+        public uint RandomDropTable;
     }
 
     public class Patch

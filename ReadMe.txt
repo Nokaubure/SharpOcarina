@@ -1,5 +1,5 @@
 ﻿------------------------------------------------------
-SharpOcarina v1.46 - Zelda OoT Scene Development System
+SharpOcarina v1.50 - Zelda OoT Scene Development System
              Revived in 2017-2023 by Nokaubure, started in 2011/2012 by xdaniel
 Find me on: https://discord.gg/74pHDEU
 ------------------------------------------------------

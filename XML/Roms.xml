@@ -39,6 +39,7 @@
        ParticleTable="00B8CB50"
        ParticleTableEnd="00B8CF5C"
        TitleScreenTextures="017F7000"
+	   RandomDropTable="00B8C714"
        >OoT MQ debug rom</ROM>
   <ROM Key="01" Game="OOT" Prefix="N0" Build="98-10-21 04:56:31" 
        SceneTable="00B71440" 
@@ -78,6 +79,7 @@
        ParticleTable="00B5DBA0"
        ParticleTableEnd="00B5DFAC"
        TitleScreenTextures="01795000"
+	   RandomDropTable="00B5D764"
        >OoT JP/US 1.0</ROM>
   <ROM Key="02" Game="MM" Prefix="MQU" Build="03-08-26 04:20:25" Comment="INCOMPLETE!!!"
        SceneTable="00C67660" 
@@ -117,6 +119,7 @@
        ParticleTable="0"
        ParticleTableEnd="0"
        TitleScreenTextures="0"
+	   RandomDropTable="0"
        >MM GCN USA</ROM>
   <ROM Key="03" Game="MM" Prefix="J0" Build="00-03-31 02:22:11" 
        SceneTable="00C76510" 
@@ -156,6 +159,7 @@
        ParticleTable="00C60C90"
        ParticleTableEnd="00C610D4"
        TitleScreenTextures="0"
+	   RandomDropTable="0"
        >MM J 1.0</ROM>
   <ROM Key="04" Game="MM" Prefix="U0" Build="00-07-31 17:04:16" 
        SceneTable="00C5A1E0" 
@@ -195,6 +199,7 @@
        ParticleTable="00C449E0"
        ParticleTableEnd="00C44E24"
        TitleScreenTextures="0"
+	   RandomDropTable="0"
        >MM U 1.0</ROM>
 
 

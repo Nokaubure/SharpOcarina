@@ -119,6 +119,12 @@ namespace SharpOcarina
 
         private void button5_Click(object sender, EventArgs e)
         {
+
+            DeleteActor();
+        }
+
+        public void DeleteActor()
+        {
             if (Actors == null || UpdateForm == null) throw new Exception("Interface values not set");
 
             mainform.StoreUndo((IsTransitionActor) ? 2 : (IsSpawnActor) ? 3 : 1);

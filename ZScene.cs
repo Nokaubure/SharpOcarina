@@ -106,6 +106,7 @@ namespace SharpOcarina
                 public bool[] VertexNormals = new bool[1];
                 public bool[] Custom = new bool[1];
                 public ulong[,] CustomDL = new ulong[1,4];
+                public bool[] Vibrant = new bool[1];
 
                 [XmlIgnore]
                 public string[] groupname = new string[1];
@@ -152,6 +153,7 @@ namespace SharpOcarina
                 CustomDL[indexA, 1] = B.CustomDL[index, 1];
                 CustomDL[indexA, 2] = B.CustomDL[index, 2];
                 CustomDL[indexA, 3] = B.CustomDL[index, 3];
+                Vibrant[indexA] = B.Vibrant[index];
                 }
             }
 
@@ -444,6 +446,7 @@ namespace SharpOcarina
             NewRoom.GroupSettings.VertexNormals = new bool[groupcount];
             NewRoom.GroupSettings.Custom = new bool[groupcount];
             NewRoom.GroupSettings.CustomDL = new ulong[groupcount,4];
+            NewRoom.GroupSettings.Vibrant = new bool[groupcount];
 
             for (int i = 0; i < groupcount; i++)
             {
@@ -475,6 +478,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.AlphaMask[i] = false;
                 NewRoom.GroupSettings.RenderLast[i] = false;
                 NewRoom.GroupSettings.VertexNormals[i] = false;
+                NewRoom.GroupSettings.Vibrant[i] = false;
                 NewRoom.GroupSettings.Custom[i] = false;
                 NewRoom.GroupSettings.CustomDL[i, 0] = 0;
                 NewRoom.GroupSettings.CustomDL[i, 1] = 0;
@@ -674,6 +678,11 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.VertexNormals[i] = true;
                 group.VertexNormals = true;
             }
+            if (group.Name.ToLower().Contains("#vibrant"))
+            {
+                NewRoom.GroupSettings.Vibrant[i] = true;
+                group.Vibrant = true;
+            }
             if (group.Name.ToLower().Contains("#lodgroup"))
             {
                 int animatednum = 0;
@@ -716,7 +725,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#fc"))
             {
                 ulong command = 0;
-                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#FC") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
+                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#fc") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
                     MessageBox.Show("Bad usage of FC tag. It should be #FCXXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -729,7 +738,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#d9"))
             {
                 ulong command = 0;
-                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#D9") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
+                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#d9") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
                     MessageBox.Show("Bad usage of D9 tag. It should be #D9XXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -742,7 +751,7 @@ namespace SharpOcarina
             if (group.Name.ToLower().Contains("#e2"))
             {
                 ulong command = 0;
-                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#E2") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
+                if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#e2") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
                     MessageBox.Show("Bad usage of E2 tag. It should be #E2XXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -908,7 +917,7 @@ namespace SharpOcarina
 
 
             List<byte> Temp2 = new List<byte>();
-            Helpers.Append32(ref Temp2, (uint)0x00000000 | (uint)(MainForm.settings.command1AOoT ? 0x4 : SceneSettings) << 16);
+            Helpers.Append32(ref Temp2, (uint)0x00000000 | (uint)((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) << 16);
 
 
 
@@ -1334,9 +1343,9 @@ namespace SharpOcarina
 
                 StreamWriter sw = File.CreateText(Filepath + filenameconf);
                 if (zzrp == 1)
-                    sw.Write("unk-a: 0\r\nunk-b: 0\r\nshader: " + (MainForm.settings.command1AOoT ? 0x4 : SceneSettings) + "\r\nsave: " + SceneNumber + "\r\nrestrict: " + restriction);
+                    sw.Write("unk-a: 0\r\nunk-b: 0\r\nshader: " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\nsave: " + SceneNumber + "\r\nrestrict: " + restriction);
                 else if (zzrp == 2)
-                    sw.Write("unk-a 0\r\nunk-b 0\r\nshader " + (MainForm.settings.command1AOoT ? 0x4 : SceneSettings) + "\r\nsave " + SceneNumber + "\r\nrestrict " + restriction);
+                    sw.Write("unk-a 0\r\nunk-b 0\r\nshader " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\nsave " + SceneNumber + "\r\nrestrict " + restriction);
                 else
                 {
                     string restrictiontext = "";
@@ -1362,7 +1371,7 @@ namespace SharpOcarina
                     }
 
                     sw.Write("# " + Name + "\r\n" + 
-                        "draw_func_index = " + (MainForm.settings.command1AOoT ? 0x4 : SceneSettings) + "\r\n" + 
+                        "draw_func_index = " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\n" + 
                         "[enables]\r\n" + restrictiontext);
                 }
                 sw.Close();
@@ -1410,6 +1419,7 @@ namespace SharpOcarina
             string[][] primcolorarray,
             short roty,
             bool[] ignorerot,
+            UInt32 collision,
             string file) {
             
             UInt32[] offsets = new uint[offsetsstr.Length];
@@ -1499,7 +1509,16 @@ namespace SharpOcarina
 
             }
 
+            
+
             List<byte> ClearBlock = new List<byte>(File.ReadAllBytes(file));
+
+            if (collision != 1)
+            {
+                objrender.collision = MainForm.importCollision(ClearBlock, (int)collision, true);
+                objrender.collision.Prepare(objrender.collision.Groups);
+            }
+
 
             UcodeSimulator.currentfilename = file;
             UcodeSimulator.TextureCache.Clear();
@@ -1847,6 +1866,7 @@ namespace SharpOcarina
                                     short yoff = (short)( node.HasKey("YOffset") ? node["YOffset"].AsInteger.Value : 0 );
                                     string var = node.HasKey("Regex") ? node["Regex"].AsString : "....";
                                     ushort bank = (ushort)( node.HasKey("Segment") ? node["Segment"].AsInteger.Value : 6 );
+                                    if (node.HasKey("Object")) objectid = (uint)node["Object"].AsInteger.Value;
                                     string file = rom64.getItem("rom\\object", (int)objectid);
                                     string dl = node.HasKey("DisplayList") ? node["DisplayList"].AsString.ToString() : "";
                                     short roty = (short)(node.HasKey("RotY") ? node["RotY"].AsInteger.Value : 0);
@@ -1862,6 +1882,9 @@ namespace SharpOcarina
                                     string colortarget = "";
                                     string[][] envcolorarray = new string[0][];
                                     string[][] primcolorarray = new string[0][];
+                                    uint collision = 1;
+                                    string col = node.HasKey("Collision") ? node["Collision"].AsString.ToString() : "";
+                                    //string[] dlistarray = null;
 
 
 
@@ -1990,11 +2013,37 @@ namespace SharpOcarina
 
 
                                     if (dl != "") {
+
+                                        if(dl.Substring2(0,2) == "0x")
+                                        {
+                                            offset = Convert.ToUInt32(dl.ToString(), 16);
+                                        }
+                                        else
+                                        { 
                                         string object_ld = rom64.openFile("include\\z_object_user.ld");
 
                                         Match match = Regex.Match(object_ld, dl + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
                                         if (match.Value != "")
                                             offset = Convert.ToUInt32(match.Groups[1].Value.ToString(), 16);
+                                        }
+                                    }
+
+
+                                    if (col != "")
+                                    {
+
+                                        if (col.Substring2(0, 2) == "0x")
+                                        {
+                                            collision = Convert.ToUInt32(col.ToString(), 16);
+                                        }
+                                        else
+                                        {
+                                            string object_ld = rom64.openFile("include\\z_object_user.ld");
+
+                                            Match match = Regex.Match(object_ld, col + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
+                                            if (match.Value != "")
+                                                collision = Convert.ToUInt32(match.Groups[1].Value.ToString(), 16);
+                                        }
                                     }
 
                                     if (file != "" && (offset != 0 || animated)) {
@@ -2012,7 +2061,7 @@ namespace SharpOcarina
                                             key, offset, new string[0], textureoffsets,
                                             scale, 1, animated, 
                                             1, var, animation, 
-                                            yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, roty, ignorerot, file);
+                                            yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, roty, ignorerot, collision, file);
                                     }
                                 }
                             }
@@ -2052,6 +2101,7 @@ namespace SharpOcarina
                     string scaletarget = "";
                     float[] scalearray = new float[0];
                     bool[] ignorerot = {false,false,false};
+                    UInt32 collision = (nodeAtt["Collision"] != null) ? Convert.ToUInt32(nodeAtt["Collision"].Value, 16) : 1;
 
                     if (nodeAtt["ScaleMask"] != null)
                     {
@@ -2088,7 +2138,7 @@ namespace SharpOcarina
                         key, offset, offsetsstr, textureoffsetsstr,
                         scale, dlistcount, animated,
                         hierarchy, var, animation,
-                        Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], roty, ignorerot, file);
+                        Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], roty, ignorerot, collision, file);
                 }
             }
 
@@ -2222,7 +2272,7 @@ namespace SharpOcarina
 
             }
 
-            if (Game == "MM" || (MainForm.settings.command1AOoT && SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) || (MainForm.settings.command1AOoT && cloneid > 0 && inherittextureanims))
+            if (Game == "MM" || (MainForm.settings.command1AOoT && SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) || (MainForm.settings.command1AOoT && cloneid > 0 && inherittextureanims && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1))
             {
                 MMCmdTextureAnimOffset = SceneData.Count;
                 if ((cloneid > 0 && inherittextureanims))
@@ -3040,7 +3090,7 @@ namespace SharpOcarina
                                 MessageBox.Show("Animation segment " + Room.TrueGroups[j].AnimationBank + " is empty...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
-                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].AnimationBank, 3);
+                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].Vibrant, Room.TrueGroups[j].AnimationBank, 3);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (!Prerendered) ? (uint)Room.RoomData.Count : (uint)(Room.RoomData.Count + DListData.Count), SceneSettings, AdditionalTextures);
                         if (DList.Data != null)
                         {
@@ -3909,9 +3959,10 @@ namespace SharpOcarina
                 MaxCoordinate.X = MainForm.Clamp(MaxCoordinate.X * 3, -32767, 32767);
                 MaxCoordinate.Y = MainForm.Clamp(MaxCoordinate.Y * 3, -32767, 32767);
                 MaxCoordinate.Z = MainForm.Clamp(MaxCoordinate.Z * 3, -32767, 32767);
-            }/*
-// TODO remove on build
-            if (MainForm.settings.TriplicateCollisionBounds)
+            }
+
+#if DEBUG
+            if (MainForm.settings.TriplicateCollisionBounds && MainForm.CurrentScene.Name.Contains("DunGen"))
             {
                 MinCoordinate.X = -15000;
                 MinCoordinate.Y = -1000;
@@ -3919,7 +3970,8 @@ namespace SharpOcarina
                 MaxCoordinate.X = 15000;
                 MaxCoordinate.Y = 1000;
                 MaxCoordinate.Z = 15000;
-            }*/
+            }
+#endif
 
             /* Prepare variables */
             int CmdVertexArray = -1, CmdPolygonArray = -1, CmdPolygonTypes = -1, CmdWaterBoxes = -1;
@@ -4777,6 +4829,7 @@ namespace SharpOcarina
             public RGBA8[] PrimColorArray = new RGBA8[0];
             public short RotY;
             public bool[] IgnoreRot = {false,false,false};
+            public ObjFile collision = null;
 
             public ZObjRender(UInt16 actor, string var, float scale)
             {

@@ -25,6 +25,11 @@ namespace SharpOcarina
         {
             InitializeComponent();
 
+            if (rom64.isSet())
+            {
+                MessageBox.Show("No support for z64rom yet!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
             XmlNodeList nodes = XMLreader.getXMLNodes("OOT/SceneNames", "Scene");
             SceneNames = new Dictionary<byte, string>();

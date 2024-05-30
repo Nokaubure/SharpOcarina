@@ -40,6 +40,7 @@ namespace SharpOcarina
         public bool VertexNormals;
         public bool RenderLast;
         public bool PointLight;
+        public bool Vibrant;
 
 
         public short blackvertexypos;
@@ -80,7 +81,7 @@ namespace SharpOcarina
             Animated = false;
         }
 
-        public NDisplayList(float _Scale, uint _TintAlpha, uint _MultitextureAlpha, float _TexScale, bool outdoorLight, bool _Culling, bool _Animated, bool _Metallic, bool _Decal, bool _Pixelated, bool _Billboard, bool _TwoAxisBillboard, bool _IgnoreFog, bool _SmoothRGBAEdges, bool _EnvColor, bool _AlphaMask, bool _renderLast, bool _vertexNormals, bool _PointLight, int _AnimationBank,  int _bank = 0x03)
+        public NDisplayList(float _Scale, uint _TintAlpha, uint _MultitextureAlpha, float _TexScale, bool outdoorLight, bool _Culling, bool _Animated, bool _Metallic, bool _Decal, bool _Pixelated, bool _Billboard, bool _TwoAxisBillboard, bool _IgnoreFog, bool _SmoothRGBAEdges, bool _EnvColor, bool _AlphaMask, bool _renderLast, bool _vertexNormals, bool _PointLight, bool _Vibrant, int _AnimationBank,  int _bank = 0x03)
         {
             Scale = _Scale;
             TintAlpha = _TintAlpha;
@@ -103,6 +104,7 @@ namespace SharpOcarina
             RenderLast = _renderLast;
             VertexNormals = _vertexNormals;
             PointLight = _PointLight;
+            Vibrant = _Vibrant;
         }
 
         #endregion
@@ -973,6 +975,11 @@ namespace SharpOcarina
                                 if (!OutdoorLight) Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));//1F1093FF
                                 else Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));
                             }
+                            else if (Vibrant)
+                            {
+                                if (MainForm.n64preview) Helpers.Append64(ref DList, SetCombine(0x477E01, 0xFFFE7DF8));
+                                else Helpers.Append64(ref DList, SetCombine(0x477E02, 0xFFFE7DF8));
+                            }
                             else Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
 
                             //    Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
@@ -995,6 +1002,11 @@ namespace SharpOcarina
                                 Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1FFCFDF8));
                             else if (hasalphavertex)
                                 Helpers.Append64(ref DList, SetCombine(0x121603, 0xFF5BFFF8));
+                            else if (Vibrant)
+                            {
+                                if (MainForm.n64preview) Helpers.Append64(ref DList, SetCombine(0x477E01, 0xFFFE7DF8));
+                                else Helpers.Append64(ref DList, SetCombine(0x477E02, 0xFFFE7DF8));
+                            }
                             else
                                 Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFFDF8));
                             // Helpers.Append64(ref DList, SetCombine(0x121603, 0xFFFFFDF8));
@@ -1115,13 +1127,13 @@ namespace SharpOcarina
                     }
                     else
                     {
-                        Helpers.Append64(ref DList, SetPrimColor(TintAlpha));
+                        Helpers.Append64(ref DList, SetPrimColor(TintAlpha) | (ulong)((Vibrant ? 0x80 : 0) << 32));
                     }
                 }
                 else
                 {
                     /* Insert SetPrimColor command */
-                    Helpers.Append64(ref DList, SetPrimColor(TintAlpha));
+                    Helpers.Append64(ref DList, SetPrimColor(TintAlpha) | (ulong)((Vibrant ? 0x80 : 0) << 32));
                 }
                 
                     

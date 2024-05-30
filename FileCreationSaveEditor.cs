@@ -27,6 +27,11 @@ namespace SharpOcarina
         {
             InitializeComponent();
 
+            if (rom64.isSet())
+            {
+                MessageBox.Show("No support for z64rom yet!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             defaultitems.AddRange(new List<List<byte>>()
             {
                 new List<byte>(){0x00,0xFF},

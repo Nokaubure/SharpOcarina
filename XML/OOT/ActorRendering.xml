@@ -26,7 +26,7 @@
   <Actor Key="003A" Var="...." Scale="0.005" Animated="1">object_ei</Actor>  <!-- Stinger -->
   <Actor Key="004B" Var="..00" Scale="0.02" Animated="1" Hierarchy="2">object_mb</Actor>  <!-- Ground pounding moblin -->
   <Actor Key="004B" Var="..FF" Scale="0.02" Animated="1">object_mb</Actor>  <!-- Spear moblin -->
-	<!--Actor Key="0054" Var="...." Scale="0.01" Animated="1">object_am</Actor-->  <!-- Armos -->
+	<Actor Key="0054" Var="...." Scale="0.01" Animated="1" Animation="2">object_am</Actor>  <!-- Armos -->
   <Actor Key="0055" Var="...0" Scale="0.005" Animated="1">object_dekubaba</Actor>  <!-- Deku baba -->
   <Actor Key="0055" Var="...1" Scale="0.0125" Animated="1">object_dekubaba</Actor>  <!-- Deku baba (big) -->
   <Actor Key="0060" Var="...." Scale="0.01" Animated="1">object_dekunuts</Actor>  <!-- Deku scrub -->
@@ -107,16 +107,20 @@
   <Actor Key="0039" Var="...7" Offset="0000B9D0" Scale="1.0">gameplay_field_keep</Actor>  <!-- grass clump (BETA)-->
   <Actor Key="009B" Var="...." Offset="00001390" Scale="0.01" IgnoreRotation="0,0,1">gameplay_field_keep</Actor>  <!-- grotto hole -->
   
+  <Actor Key="012A" Var="..20" Offset="00005D50" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- blue floor switch -->
+  <Actor Key="012A" Var="..10" Offset="00006170" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- red floor switch -->
   <Actor Key="012A" Var="...0" Offset="00005800" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- floor switch -->
   <Actor Key="012A" Var="...1" Offset="00005AD0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- rusted floor switch -->
-  <Actor Key="012A" Var="...2" Offset="00006610" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- yellow eye switch -->
+  <Actor Key="012A" Var="..12" Offset="00006810" TextureOffsets="0000B0A0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- silver eye switch -->
+  <Actor Key="012A" Var="...2" Offset="00006610" TextureOffsets="0000A8A0" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- yellow eye switch -->
+  <Actor Key="012A" Var="..1[3-4]" Offsets="00006D10,00007488" Colors="255,0,0,125" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- red crystal switch -->
   <Actor Key="012A" Var="...[3-4]" Offsets="00006D10,00007488" Colors="255,255,255,125" Scale="0.1">gameplay_dangeon_keep</Actor>  <!-- crystal switch -->
   <Actor Key="0127" Var="...." Offset="000009E0" Scale="0.1">object_bombiwa</Actor>  <!-- bombable boulder -->
-  <Actor Key="00FF" Var="...0" Offset="00004CD0" Scale="0.1" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
-  <Actor Key="00FF" Var="...1" Offset="00004CD0" Scale="0.1666667" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
-  <Actor Key="00FF" Var="...2" Offset="00004CD0" Scale="0.2" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
-  <Actor Key="00FF" Var="...3" Offset="00004CD0" Scale="0.33333331" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
-  <Actor Key="012D" Var="...[0-1]" Offset="00000210" Scale="0.1">object_d_hsblock</Actor>  <!-- hookshot tower -->
+  <Actor Key="00FF" Var="...0" Offset="00004CD0" Collision="00004E98" Scale="0.1" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="00FF" Var="...1" Offset="00004CD0" Collision="00004E98" Scale="0.1666667" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="00FF" Var="...2" Offset="00004CD0" Collision="00004E98" Scale="0.2" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="00FF" Var="...3" Offset="00004CD0" Collision="00004E98" Scale="0.33333331" TextureOffsets="00003350">gameplay_dangeon_keep</Actor>  <!-- pushable block -->
+  <Actor Key="012D" Var="...[0-1]" Offset="00000210" Collision="00000730" Scale="0.1">object_d_hsblock</Actor>  <!-- hookshot tower -->
   <Actor Key="012D" Var="...2" Offset="00000470" Scale="0.1">object_d_hsblock</Actor>  <!-- hookshot target -->
   <Actor Key="01BB" Var="0..." Offset="00007130" Scale="0.1">object_mizu_objects</Actor>  <!-- water temple metal gate -->
   <Actor Key="01BB" Var="1..." Offset="000072D0" Scale="0.1">object_mizu_objects</Actor>  <!-- water temple metal gate -->
