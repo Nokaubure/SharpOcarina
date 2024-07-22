@@ -269,7 +269,7 @@ namespace SharpOcarina
             [XmlIgnore]
             public ulong[] CustomDL = new ulong[4];
             [XmlIgnore]
-            public bool Vibrant = false;
+            public bool ScaledNormals = false;
 
             private List<Triangle> _Tris = new List<Triangle>();
             

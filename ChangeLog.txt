@@ -1,6 +1,14 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.51
+--------------
+
+- You can now let SO install z64rom for you, simply go to File > Create new z64rom project.
+
+- Injecting a scene on a rom bigger than 64 mb will trim its size to 64 mb. The purpose of this is to autotrim the popular "ZELOOTMA" debug rom.
+
+--------------
 ---1.50
 --------------
 

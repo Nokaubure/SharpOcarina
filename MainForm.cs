@@ -26,6 +26,8 @@ using OpenTK.Platform;
 using SharpOcarina.SayakaGL;
 using System.Drawing.Text;
 using System.Globalization;
+using System.Net;
+using Ionic.Zip;
 using RedCell.Diagnostics.Update;
 using TexLib;
 using TgaDecoderTest;
@@ -3699,10 +3701,10 @@ namespace SharpOcarina
                 GSet.VertexNormals.Fill(new bool[] { false });
             }
 
-            if (GSet.Vibrant.Length != GroupCount)
+            if (GSet.ScaledNormals.Length != GroupCount)
             {
-                GSet.Vibrant = new bool[GroupCount];
-                GSet.Vibrant.Fill(new bool[] { false });
+                GSet.ScaledNormals = new bool[GroupCount];
+                GSet.ScaledNormals.Fill(new bool[] { false });
             }
 
             if (GSet.Custom.Length != GroupCount)
@@ -5783,7 +5785,7 @@ namespace SharpOcarina
                 GroupRenderLast.Checked = ((ObjFile.Group)GroupList.SelectedItem).RenderLast;
                 GroupVertexNormals.Checked = ((ObjFile.Group)GroupList.SelectedItem).VertexNormals;
                 GroupCustom.Checked = ((ObjFile.Group)GroupList.SelectedItem).Custom;
-                GroupVibrant.Checked = ((ObjFile.Group)GroupList.SelectedItem).Vibrant;
+                GroupVibrant.Checked = ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals;
 
                 //optimization
 
@@ -6177,6 +6179,16 @@ namespace SharpOcarina
 
             if (ROM != "")
             {
+                FileInfo info = new FileInfo(ROM);
+                if (info.Length > 67108864)
+                {
+                    using (FileStream file = new FileStream(ROM, FileMode.Open, FileAccess.ReadWrite))
+                    {
+
+                            file.SetLength(67108864);
+                        
+                    }
+                }
                 InjectToRom(ROM);
             }
         }
@@ -6898,8 +6910,8 @@ namespace SharpOcarina
                     if (CurrentScene.Rooms[i].GroupSettings.VertexNormals.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
                         CurrentScene.Rooms[i].GroupSettings.VertexNormals = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
 
-                    if (CurrentScene.Rooms[i].GroupSettings.Vibrant.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
-                        CurrentScene.Rooms[i].GroupSettings.Vibrant = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
+                    if (CurrentScene.Rooms[i].GroupSettings.ScaledNormals.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
+                        CurrentScene.Rooms[i].GroupSettings.ScaledNormals = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
 
 
                     SetTrueGroupsToGroupSettings(i);
@@ -7026,7 +7038,7 @@ namespace SharpOcarina
                 CurrentScene.Rooms[i].TrueGroups[j].VertexNormals = CurrentScene.Rooms[i].GroupSettings.VertexNormals[j];
                 CurrentScene.Rooms[i].TrueGroups[j].AlphaMask = CurrentScene.Rooms[i].GroupSettings.AlphaMask[j];
                 CurrentScene.Rooms[i].TrueGroups[j].Custom = CurrentScene.Rooms[i].GroupSettings.Custom[j];
-                CurrentScene.Rooms[i].TrueGroups[j].Vibrant = CurrentScene.Rooms[i].GroupSettings.Vibrant[j];
+                CurrentScene.Rooms[i].TrueGroups[j].ScaledNormals = CurrentScene.Rooms[i].GroupSettings.ScaledNormals[j];
 
             }
         }
@@ -12082,7 +12094,7 @@ namespace SharpOcarina
                     for (int j = 0; j < Room.TrueGroups.Count; j++)
                     {
                         if (Room.TrueGroups[j].Name.ToLower().Contains("#nomesh")) continue;
-                        NDisplayList DList = new NDisplayList(CurrentScene.Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, UnusedCommandCheckBox.Checked, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].Vibrant, Room.TrueGroups[j].AnimationBank, bank);
+                        NDisplayList DList = new NDisplayList(CurrentScene.Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, UnusedCommandCheckBox.Checked, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].AnimationBank, bank);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (uint)Data.Count, CurrentScene.SceneSettings, CurrentScene.AdditionalTextures);
                         InjectMessages.Add("Group " + Room.TrueGroups[j].Name + " Offset " + (Data.Count + DList.Vertoffset).ToString("X8"));
                         Data.AddRange(DList.Data);
@@ -13959,7 +13971,7 @@ namespace SharpOcarina
                 room.GroupSettings.VertexNormals[i] = false;
                 room.GroupSettings.AlphaMask[i] = false;
                 room.GroupSettings.Custom[i] = false;
-                room.GroupSettings.Vibrant[i] = false;
+                room.GroupSettings.ScaledNormals[i] = false;
 
                 room.TrueGroups[i].TintAlpha = 0xFFFFFFFF;
                 room.TrueGroups[i].MultiTexAlpha = 0xFFFFFFFF;
@@ -13989,7 +14001,7 @@ namespace SharpOcarina
                 room.GroupSettings.VertexNormals[i] = false;
                 room.GroupSettings.AlphaMask[i] = false;
                 room.GroupSettings.Custom[i] = false;
-                room.GroupSettings.Vibrant[i] = false;
+                room.GroupSettings.ScaledNormals[i] = false;
             }
 
 
@@ -18041,12 +18053,103 @@ namespace SharpOcarina
 
         private void GroupVibrant_CheckedChanged(object sender, EventArgs e)
         {
-            ((ObjFile.Group)GroupList.SelectedItem).Vibrant = GroupVibrant.Checked;
+            ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals = GroupVibrant.Checked;
 
             int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
-            CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.Vibrant[Index] = ((ObjFile.Group)GroupList.SelectedItem).Vibrant;
+            CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.ScaledNormals[Index] = ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals;
 
             UpdateGroupSelect(n64refresh);
+        }
+
+        private void NewZ64romProject_Click(object sender, EventArgs e)
+        {
+
+            //if (outputmsg != "") MessageBox.Show(outputmsg, "Injection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            MessageBox.Show("Choose the empty directory where you want to install z64rom", "Instructions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            saveFileDialog1.FileName = "Save Here!";
+            saveFileDialog1.Filter = "All Files (*.*)|*.*";
+            saveFileDialog1.InitialDirectory = CurrentScene.BasePath;
+            saveFileDialog1.CheckFileExists = false;
+            saveFileDialog1.CreatePrompt = false;
+
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string path = Path.GetDirectoryName(saveFileDialog1.FileName) + Path.DirectorySeparatorChar;
+
+                MessageBox.Show("Select an unmodified debug rom", "Instructions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                openFileDialog1.FileName = "";
+                openFileDialog1.Filter = "Rom files (*.z64;*.rom)|*.z64;*.rom|All Files (*.*)|*.*";
+                openFileDialog1.FilterIndex = 1;
+
+
+                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    File.Copy(openFileDialog1.FileName, path + "\\BaseDebugRom.z64");
+
+                    while (!File.Exists(path + "\\BaseDebugRom.z64"))
+                    {
+                        // do nothing
+                    }
+
+
+                    using (var client = new WebClient())
+                    {
+                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                        client.DownloadFile("https://github.com/z64utils/z64rom/releases/latest/download/z64rom.zip", path + "z64rom.zip");
+
+                        using (var zip = ZipFile.Read(path + "z64rom.zip"))
+                            zip.ExtractAll(path, ExtractExistingFileAction.Throw);
+
+                    }
+
+                    using (var client = new WebClient())
+                    {
+                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                        client.DownloadFile("https://github.com/z64tools/z64rom/releases/download/binutils/mips64-binutils-win32.zip", path + "tools\\mips64-binutils-win32.zip");
+
+                        /*
+                        using (var zip = ZipFile.Read(path + "tools\\mips64-binutils-win32.zip"))
+                            zip.ExtractAll(path + "tools\\", ExtractExistingFileAction.Throw);*/
+
+                    }
+
+                    using (var client = new WebClient())
+                    {
+                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                        client.DownloadFile("https://github.com/z64tools/z64hdr/archive/refs/heads/main.zip", path + "include\\z64hdr.zip");
+                        /*
+                        using (var zip = ZipFile.Read(path + "include\\z64hdr.zip"))
+                            zip.ExtractAll(path + "include\\", ExtractExistingFileAction.Throw);*/
+
+                    }
+
+
+
+
+
+
+
+
+
+                    String pdetail = @"/c " + path + "\\z64rom.exe --auto-install --no-wait";
+                    ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
+                    pcmd.Arguments = pdetail;
+
+                    Process cmd = Process.Start(pcmd);
+                    cmd.WaitForExit();
+
+
+                }
+
+            }
+
+            //UpdateForm();
+
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

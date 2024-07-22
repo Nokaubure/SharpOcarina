@@ -47,6 +47,8 @@ namespace SharpOcarina
             this.LaunchRomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildAndLaunchZ64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.NewZ64romProject = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.openZmapToolstrip = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenSceneFromRoomToolStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -1060,6 +1062,8 @@ namespace SharpOcarina
             this.LaunchRomToolStripMenuItem,
             this.buildAndLaunchZ64romToolStripMenuItem,
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.NewZ64romProject,
             this.toolStripSeparator6,
             this.openZmapToolstrip,
             this.OpenSceneFromRoomToolStrip,
@@ -1158,11 +1162,22 @@ namespace SharpOcarina
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = false;
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(323, 6);
+            // 
+            // NewZ64romProject
+            // 
+            this.NewZ64romProject.Name = "NewZ64romProject";
+            this.NewZ64romProject.Size = new System.Drawing.Size(326, 22);
+            this.NewZ64romProject.Text = "New z64rom project";
+            this.NewZ64romProject.Click += new System.EventHandler(this.NewZ64romProject_Click);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(323, 6);
-            this.toolStripSeparator6.Visible = false;
             // 
             // openZmapToolstrip
             // 
@@ -12550,6 +12565,8 @@ namespace SharpOcarina
         private ToolStripMenuItem ResetGroupSettingsReloadMenuItem;
         private ToolStripMenuItem dropTableEditorOoTToolStripMenuItem;
         private CheckBox GroupVibrant;
+        private ToolStripSeparator toolStripSeparator8;
+        private ToolStripMenuItem NewZ64romProject;
     }
     }
 
