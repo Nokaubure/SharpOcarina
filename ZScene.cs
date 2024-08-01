@@ -106,7 +106,7 @@ namespace SharpOcarina
                 public bool[] VertexNormals = new bool[1];
                 public bool[] Custom = new bool[1];
                 public ulong[,] CustomDL = new ulong[1,4];
-                public bool[] Vibrant = new bool[1];
+                public bool[] ScaledNormals = new bool[1];
 
                 [XmlIgnore]
                 public string[] groupname = new string[1];
@@ -153,7 +153,7 @@ namespace SharpOcarina
                 CustomDL[indexA, 1] = B.CustomDL[index, 1];
                 CustomDL[indexA, 2] = B.CustomDL[index, 2];
                 CustomDL[indexA, 3] = B.CustomDL[index, 3];
-                Vibrant[indexA] = B.Vibrant[index];
+                ScaledNormals[indexA] = B.ScaledNormals[index];
                 }
             }
 
@@ -446,7 +446,7 @@ namespace SharpOcarina
             NewRoom.GroupSettings.VertexNormals = new bool[groupcount];
             NewRoom.GroupSettings.Custom = new bool[groupcount];
             NewRoom.GroupSettings.CustomDL = new ulong[groupcount,4];
-            NewRoom.GroupSettings.Vibrant = new bool[groupcount];
+            NewRoom.GroupSettings.ScaledNormals = new bool[groupcount];
 
             for (int i = 0; i < groupcount; i++)
             {
@@ -478,7 +478,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.AlphaMask[i] = false;
                 NewRoom.GroupSettings.RenderLast[i] = false;
                 NewRoom.GroupSettings.VertexNormals[i] = false;
-                NewRoom.GroupSettings.Vibrant[i] = false;
+                NewRoom.GroupSettings.ScaledNormals[i] = false;
                 NewRoom.GroupSettings.Custom[i] = false;
                 NewRoom.GroupSettings.CustomDL[i, 0] = 0;
                 NewRoom.GroupSettings.CustomDL[i, 1] = 0;
@@ -678,10 +678,10 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.VertexNormals[i] = true;
                 group.VertexNormals = true;
             }
-            if (group.Name.ToLower().Contains("#vibrant"))
+            if (group.Name.ToLower().Contains("#scalednormals"))
             {
-                NewRoom.GroupSettings.Vibrant[i] = true;
-                group.Vibrant = true;
+                NewRoom.GroupSettings.ScaledNormals[i] = true;
+                group.ScaledNormals = true;
             }
             if (group.Name.ToLower().Contains("#lodgroup"))
             {
@@ -1161,29 +1161,39 @@ namespace SharpOcarina
 
             if (zzrp > 0)
             {
+                string newdir = "";
                 if (zzrp != 3)
                 {
                     if (!Directory.Exists(Filepath + "Scene"))
                     {
                         Directory.CreateDirectory(Filepath + "Scene");
                         if (zzrp == 1)
-                            Directory.CreateDirectory(Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name));
+                        {
+                            newdir = Filepath + @"Scene\" + SceneNumber + " - " + Helpers.MakeValidFileName(Name);
+                            //Directory.CreateDirectory(Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name));
+                        }
+
                         else if (zzrp == 2)
-                            Directory.CreateDirectory(Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name));
+                        {
+                            newdir = Filepath + @"Scene\0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name);
+                            //Directory.CreateDirectory(Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name));
+                        }
+
 
                     }
                 }
                 else
                 {
-                    Directory.CreateDirectory(Filepath + @"rom/scene/0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name));
+                    newdir = Filepath + @"rom\scene\0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name);
+                    //Directory.CreateDirectory(Filepath + @"rom/scene/0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name));
                 }
-                string[] subdirectoryEntries = (zzrp != 3) ? Directory.GetDirectories(Filepath + "Scene") : Directory.GetDirectories(Filepath + "rom/scene");
+                string[] subdirectoryEntries = (zzrp != 3) ? Directory.GetDirectories(Filepath + "Scene") : Directory.GetDirectories(Filepath + "rom\\scene");
                 string target = "";
                 foreach (string subdirectory in subdirectoryEntries)
                 {
                     string number = subdirectory;
                     if (number.Contains(Path.DirectorySeparatorChar)) number = number.Substring(number.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-                    if (number.Contains(" "))
+                    if (number.Contains(" ") && zzrp != 3)
                         number = number.Split(' ')[0];
                     else
                         number = number.Split('-')[0];
@@ -1195,24 +1205,20 @@ namespace SharpOcarina
                 }
                 if (target == "")
                 {
-                    if (zzrp == 1)
-                    {
-                        Directory.CreateDirectory(Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name));
-                        target = Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name);
-                    }
-                    else if (zzrp == 2)
-                    {
-                        Directory.CreateDirectory(Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name));
-                        target = Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name);
-                    }
-                    else
-                    {
-                        Directory.CreateDirectory(Filepath + @"rom/scene/0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name));
-                        target = Filepath + @"rom/scene/0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name);
-                    }
+
+                    Directory.CreateDirectory(newdir);
+                    target = newdir;
+
                 }
-                else
+                else if (target != newdir)
                 {
+
+                    if (MessageBox.Show("There's already a scene with this scene ID but different name: \n" + Path.GetFileName(target) + "\nSelecting Yes will replace it, selecting No will abort the operation.", "WARNING",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+                    {
+                        return;
+                    }
+
                     try
                     {
                         if (zzrp == 1)
@@ -1224,6 +1230,7 @@ namespace SharpOcarina
                     }
                     catch (Exception ex)
                     {
+                        MessageBox.Show("Failed to replace " + Path.GetFileName(target) + " with 0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name) + ". Please fix it manually, aborting operation", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     if (zzrp == 1)
                         target = Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name);
@@ -2835,8 +2842,8 @@ namespace SharpOcarina
                             {
                                 if (TextureAnim.TextureSwap != null && TextureAnim.TextureSwap2 != null)
                                 {
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => x.Name == TextureAnim.TextureSwap).TexOffset)); // TODO flag not set
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => x.Name == TextureAnim.TextureSwap2).TexOffset)); // TODO flag set
+                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == TextureAnim.TextureSwap).TexOffset)); // TODO flag not set
+                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == TextureAnim.TextureSwap2).TexOffset)); // TODO flag set
                                 }
                                 else
                                 {
@@ -2893,13 +2900,20 @@ namespace SharpOcarina
 
                                 Helpers.Append16(ref SceneData, 0);
                                 Helpers.Append16(ref SceneData, 0);
-                                Helpers.Append16(ref SceneData, (ushort)TextureAnim.TextureSwapList.Count);
-                                foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
+                                Helpers.Append16(ref SceneData, (ushort)(TextureAnim.TextureSwapList.Count+1));
+                                ushort LoopPoint = 0;
+                                for(int t = 0; t < TextureAnim.TextureSwapList.Count; t++)
                                 {
-                                    Helpers.Append16(ref SceneData, tex.Duration);
+                                    Helpers.Append16(ref SceneData, LoopPoint);
+                                    LoopPoint += TextureAnim.TextureSwapList[t].Duration;
                                 }
+
+                                Helpers.Append16(ref SceneData, LoopPoint);
+
                                 if (TextureAnim.TextureSwapList.Count % 2 != 0)
                                     Helpers.Append16(ref SceneData, 0);
+
+                                
 
                                 foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
                                 {
@@ -2949,6 +2963,8 @@ namespace SharpOcarina
                                 SceneData.Add(0);
                                 Helpers.Append16(ref SceneData, 0); //padding
                             }
+
+                            AddPadding(ref SceneData, 4);
 
                             incr2++;
                         }
@@ -3090,7 +3106,7 @@ namespace SharpOcarina
                                 MessageBox.Show("Animation segment " + Room.TrueGroups[j].AnimationBank + " is empty...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
-                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].Vibrant, Room.TrueGroups[j].AnimationBank, 3);
+                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].AnimationBank, 3);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (!Prerendered) ? (uint)Room.RoomData.Count : (uint)(Room.RoomData.Count + DListData.Count), SceneSettings, AdditionalTextures);
                         if (DList.Data != null)
                         {

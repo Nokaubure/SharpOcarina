@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -20,17 +21,20 @@ namespace SharpOcarina
         Boolean isrom = false;
         SaveFile save = new SaveFile();
         List<List<byte>> defaultitems = new List<List<byte>>();
+        public string ROMpath = "";
         public bool imageloaded = false;
         public bool updating = false;
 
         public FileCreationSaveEditor()
         {
             InitializeComponent();
-
+            /*
             if (rom64.isSet())
             {
                 MessageBox.Show("No support for z64rom yet!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }*/
+
+            
 
             defaultitems.AddRange(new List<List<byte>>()
             {
@@ -201,6 +205,52 @@ namespace SharpOcarina
                 OpenRomToolStripMenuItem.Visible = false;
                 OpenROM(MainForm.GlobalROM);
             }
+            else if (rom64.isSet())
+            {
+                string binarydata = rom64.getPath() + "\\tools\\sharpocarina\\binarydata";
+
+                if (!File.Exists(binarydata))
+                {
+                    MessageBox.Show("Select an uncompressed ROM, this will only be asked the first time.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    openFileDialog1.FileName = "";
+                    openFileDialog1.Filter = "Rom files (*.z64;*.rom)|*.z64;*.rom|All Files (*.*)|*.*";
+
+                    //openFileDialog1.FilterIndex = 1;
+                    if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+
+                        List<byte> ROM = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
+
+                        ROM rom = MainForm.CheckVersion(ROM);
+
+                        if (rom.Game == "MM")
+                        {
+                            MessageBox.Show("MM unsupported", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                            return;
+                        }
+
+                        System.IO.FileInfo file = new System.IO.FileInfo(binarydata);
+                        file.Directory.Create(); //if directory exists, does nothing
+                        File.Copy(openFileDialog1.FileName, binarydata);
+
+                        OpenROM(binarydata);
+
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+
+                }
+                else
+                {
+                    OpenROM(binarydata);
+                }
+                button1.Visible = false;
+                Close.Location = new Point(Close.Location.X-53, Close.Location.Y);
+            }
 
             //for(int i = 0; i < 18; i++)
 
@@ -291,6 +341,7 @@ namespace SharpOcarina
             else if ((save.equipment[7] & 0x08) != 0 && (save.equipment[7] & 0x10) != 0)
                 save.bombupgradeindex = 3;
 
+            ROMpath = ROM;
 
             tabControl1_TabIndexChanged(null, null);
         }
@@ -299,7 +350,8 @@ namespace SharpOcarina
         {
             if (MainForm.GlobalROM != "")
             {
-                SaveROM(MainForm.GlobalROM);
+                ROMpath = MainForm.GlobalROM;
+                SaveROM();
                 return;
             }
             saveFileDialog1.CheckFileExists = true;
@@ -308,79 +360,80 @@ namespace SharpOcarina
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-
-                SaveROM(saveFileDialog1.FileName);
+                ROMpath = saveFileDialog1.FileName;
+                SaveROM();
 
             }
         }
 
-        public void SaveROM(string ROM)
+        public void SaveROM()
         {
 
-            if (IsFileLocked(ROM))
+            if (IsFileLocked(ROMpath))
                 MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                ROM rom = MainForm.CheckVersion(new List<byte>(File.ReadAllBytes(ROM)));
 
-                if (rom.Game == "MM")
-                {
-                    MessageBox.Show("MM unsupported", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                BinaryWriter BWS = new BinaryWriter(File.OpenWrite(ROM));
-
-                BWS.Seek((int)(rom.DefaultSaveFile + 0x2E), SeekOrigin.Begin);
-
-                List<Byte> Output = GenerateSaveData();
-
-
-
-                BWS.Write(Output.ToArray());
-
-                Output.Clear();
-                BWS.Seek((int)rom.HeaderTitle, SeekOrigin.Begin);
-                Helpers.Append16(ref Output, save.headertitle);
-                BWS.Write(Output.ToArray());
-                Output.Clear();
-                BWS.Seek((int)rom.EntranceTitle, SeekOrigin.Begin);
-                Helpers.Append16(ref Output, save.entrancetitle);
-                BWS.Write(Output.ToArray());
-                Output.Clear();
-                BWS.Seek((int)rom.HeaderNewFile, SeekOrigin.Begin);
-                Helpers.Append16(ref Output, save.headernewfile);
-                BWS.Write(Output.ToArray());
-                Output.Clear();
-                /*
-                BWS.Seek((int)rom.EntranceNewFile, SeekOrigin.Begin);
-                Helpers.Append16(ref Output, save.entrancenewfile);
-                BWS.Write(Output.ToArray());
-                Output.Clear();*/
-                BWS.Seek((int)rom.AgeNewFile, SeekOrigin.Begin);
-                Output.Add((byte)(save.adultlinknewfile ? 0x00 : 0x01));
-                BWS.Write(Output.ToArray());
-                Output.Clear();
-                BWS.Seek((int)rom.RespawnChild, SeekOrigin.Begin);
-                Helpers.Append16(ref Output, save.respawnchild);
-                BWS.Write(Output.ToArray());
-                Output.Clear();
-                BWS.Seek((int)rom.RespawnAdult, SeekOrigin.Begin);
-                Helpers.Append16(ref Output, save.respawnadult);
-                BWS.Write(Output.ToArray());
-                Output.Clear();
-                BWS.Seek((int)rom.AgeTitle, SeekOrigin.Begin);
-                Helpers.Append32(ref Output, save.adultlinktitle ? 0xAC400004 : 0xAC4E0004);
-                BWS.Write(Output.ToArray());
-                Output.Clear();
-
-
-
-                BWS.Close();
+                SaveRomData();
 
                 MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
+        }
+
+        public void SaveRomData()
+        {
+            ROM rom = MainForm.CheckVersion(new List<byte>(File.ReadAllBytes(ROMpath)));
+
+            if (rom.Game == "MM")
+            {
+                MessageBox.Show("MM unsupported", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            BinaryWriter BWS = new BinaryWriter(File.OpenWrite(ROMpath));
+
+            BWS.Seek((int)(rom.DefaultSaveFile + 0x2E), SeekOrigin.Begin);
+
+            List<Byte> Output = GenerateSaveData();
+
+
+
+            BWS.Write(Output.ToArray());
+
+            Output.Clear();
+            BWS.Seek((int)rom.HeaderTitle, SeekOrigin.Begin);
+            Helpers.Append16(ref Output, save.headertitle);
+            BWS.Write(Output.ToArray());
+            Output.Clear();
+            BWS.Seek((int)rom.EntranceTitle, SeekOrigin.Begin);
+            Helpers.Append16(ref Output, save.entrancetitle);
+            BWS.Write(Output.ToArray());
+            Output.Clear();
+            BWS.Seek((int)rom.HeaderNewFile, SeekOrigin.Begin);
+            Helpers.Append16(ref Output, save.headernewfile);
+            BWS.Write(Output.ToArray());
+            Output.Clear();
+            BWS.Seek((int)rom.AgeNewFile, SeekOrigin.Begin);
+            Output.Add((byte)(save.adultlinknewfile ? 0x00 : 0x01));
+            BWS.Write(Output.ToArray());
+            Output.Clear();
+            BWS.Seek((int)rom.RespawnChild, SeekOrigin.Begin);
+            Helpers.Append16(ref Output, save.respawnchild);
+            BWS.Write(Output.ToArray());
+            Output.Clear();
+            BWS.Seek((int)rom.RespawnAdult, SeekOrigin.Begin);
+            Helpers.Append16(ref Output, save.respawnadult);
+            BWS.Write(Output.ToArray());
+            Output.Clear();
+            BWS.Seek((int)rom.AgeTitle, SeekOrigin.Begin);
+            Helpers.Append32(ref Output, save.adultlinktitle ? 0xAC400004 : 0xAC4E0004);
+            BWS.Write(Output.ToArray());
+            Output.Clear();
+
+
+
+            BWS.Close();
         }
 
         private List<byte> GenerateSaveData()
@@ -812,6 +865,8 @@ namespace SharpOcarina
             }
         }
 
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             saveROMToolStripMenuItem_Click(new object(), new EventArgs());
@@ -830,6 +885,78 @@ namespace SharpOcarina
         private void FileCreationSaveEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
             MainForm.savefileeditor_visible = false;
+        }
+
+        private void exportAsZ64romPatchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            string path = "";
+
+            if (rom64.isSet())
+            {
+                path = (rom64.getPath() + "\\patch\\");
+            }
+            else
+            {
+                saveFileDialog1.CheckFileExists = true;
+                saveFileDialog1.Filter = "z64rom project (z64project.toml)|z64project.toml|All Files (*.*)|*.*";
+                saveFileDialog1.CreatePrompt = true;
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    path = saveFileDialog1.FileName;
+
+                    if (path.Contains("z64project.toml"))
+                        path = Path.GetDirectoryName(path) + "\\patch\\";
+                    else
+                    {
+                        MessageBox.Show("invalid config file, you need to import z64project.toml", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+
+            if (IsFileLocked(ROMpath))
+                MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+
+                SaveRomData();
+
+                string initialsavepath = path + "initialsave";
+                if (File.Exists(initialsavepath)) File.Delete(initialsavepath);
+                List<Byte> saveData = GenerateSaveData();
+                File.WriteAllBytes(initialsavepath, saveData.ToArray());
+
+                //patch file
+                string initialsave_SO = path + "initialsave_SO.cfg";
+
+                if (File.Exists(initialsave_SO)) File.Delete(initialsave_SO);
+
+                File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/initialsave_SO.cfg"), initialsave_SO);
+
+                if (File.Exists(path + @"src\system\state\0x04-Opening\Opening.c"))
+                {
+                    Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x" + TitleScreenEntrance.Value.ToString("X4") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
+                    Helpers.ReplaceLine("gSaveContext.cutsceneIndex", "    gSaveContext.cutsceneIndex = 0x" + TitleScreenHeader.Value.ToString("X4") + 
+                                                                      ";  gSaveContext.entranceIndex = 0x" + TitleScreenEntrance.Value.ToString("X4") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
+
+                    Helpers.ReplaceLine("gSaveContext.linkAge", "    gSaveContext.linkAge = " + (AdultLinkTitle.Checked ? "LINK_AGE_ADULT" : "LINK_AGE_CHILD") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
+
+                    Helpers.ReplaceLine("#define Patch_SaveStartEntrance", "#define Patch_SaveStartEntrance = 0x" + NewFileScene.Value.ToString("X2") + ";", path + @"src\lib_user\uLib.h");
+                    Helpers.ReplaceLine("#define Patch_SaveStartCsIndex", "#define Patch_SaveStartCsIndex = 0x" + NewFileHeader.Value.ToString("X4") + ";", path + @"src\lib_user\uLib.h");
+                    Helpers.ReplaceLine("#define Patch_SaveStartAge", "#define Patch_SaveStartAge = " + (AdultLinkNewFile.Checked ? "LINK_AGE_ADULT" : "LINK_AGE_CHILD") + ";", path + @"src\lib_user\uLib.h");
+                }
+                else
+                {
+                    MessageBox.Show(path + @"src\system\state\0x04-Opening\Opening.c not found!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+
+
         }
     }
 }

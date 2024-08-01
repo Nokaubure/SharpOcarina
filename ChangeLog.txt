@@ -4,9 +4,29 @@
 ---1.51
 --------------
 
+- Added z64rom support to Initial Filesave Editor
+
 - You can now let SO install z64rom for you, simply go to File > Create new z64rom project.
 
 - Injecting a scene on a rom bigger than 64 mb will trim its size to 64 mb. The purpose of this is to autotrim the popular "ZELOOTMA" debug rom.
+
+- The [Beta] tag of "Build and launch z64rom + warp to scene" is removed since the feature now properly works with the latest z64rom version
+
+- "Build and launch z64rom + warp to scene" now also saves the scene to z64rom, turning this option into 1 click to test
+
+- [MM] Fixed an issue where texture scrolling wasnt rendered
+
+- Turned some text fields into numeric fields
+
+- Fixed an issue where the flag value of texture animation conditions would reset to value 3F
+
+- Fixed an issue where it was impossible to import certain vanilla cutscenes
+
+- Fixed an issue where the scene name would lose the last letter if the scene was exported straight away after typing the name
+
+- Fixed an issue regarding simple texture swap animation
+
+- Fixed an issue where a texture frame animation couldnt have different frame timings
 
 --------------
 ---1.50

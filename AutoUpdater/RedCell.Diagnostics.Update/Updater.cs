@@ -148,6 +148,10 @@ namespace RedCell.Diagnostics.Update
             DialogResult dialogResult = MessageBox.Show("There's a new version " + _remoteConfig.Version + " available, update SharpOcarina?", "Update", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+
+                PleaseWait pleasewait = new PleaseWait();
+                pleasewait.Show();
+
                 Log.Write("Remote version is newer. Updating.");
                 _updating = true;
                 MainForm.updating = true;

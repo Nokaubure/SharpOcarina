@@ -156,6 +156,23 @@
     <Compile Include="AddObjectAllRooms.Designer.cs">
       <DependentUpon>AddObjectAllRooms.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Z64romInstallPostOperations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Z64romInstallPostOperations.Designer.cs">
+      <DependentUpon>Z64romInstallPostOperations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PleaseWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PleaseWait.Designer.cs">
+      <DependentUpon>PleaseWait.cs</DependentUpon>
+    </Compile>
     <Compile Include="RestrictionFlagPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,11 +196,6 @@
     </Compile>
     <Compile Include="RestrictionFlagEditor.Designer.cs">
       <DependentUpon>RestrictionFlagEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SubscreenMapEditor.cs">
       <SubType>Form</SubType>
@@ -298,6 +310,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddObjectAllRooms.resx">
       <DependentUpon>AddObjectAllRooms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Z64romInstallPostOperations.resx">
+      <DependentUpon>Z64romInstallPostOperations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PleaseWait.resx">
+      <DependentUpon>PleaseWait.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RestrictionFlagPicker.resx">
       <DependentUpon>RestrictionFlagPicker.cs</DependentUpon>
@@ -1553,6 +1571,18 @@
     <Content Include="Files\droptable_SO.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\initialsave_SO.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\0x27-BasicTitleScreen\config.toml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\0x27-BasicTitleScreen\room_0.zroom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\0x27-BasicTitleScreen\scene.zscene">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Import\import">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1592,6 +1622,8 @@
     <Content Include="Files\z_map_exp_SO.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\play.bmp" />
+    <None Include="Resources\play.png" />
     <Content Include="XML\OOT\ItemDrops.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -1675,11 +1675,22 @@ namespace SharpOcarina
 
                 if (CurrentScene.Environments.Count != 0 && (int)EnvironmentSelect.Value >= 0)
                 {
+                    
+
                     GL.Light(LightName.Light0, LightParameter.Diffuse, Color.FromArgb(
                         CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.A,
                         CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.R,
                         CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.G,
                         CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.B));
+
+                    //GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.R / 255f, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.G / 255f, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.B / 255f, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.A / 255f);
+                    /*
+                    GL.Light(LightName.Light1, LightParameter.Diffuse, Color.FromArgb(
+                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.A,
+                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.R,
+                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.G,
+                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.B));
+                        */
 
 
                     GL.Fog(FogParameter.FogMode, (int)FogMode.Linear);
@@ -1851,6 +1862,7 @@ namespace SharpOcarina
                                 GL.Enable(EnableCap.Normalize);
                                 GL.Enable(EnableCap.Lighting);
                                 GL.Enable(EnableCap.Light0);
+                                //GL.Enable(EnableCap.Light1);
                                 GL.Enable(EnableCap.Fog);
                             }
                             else
@@ -1872,6 +1884,7 @@ namespace SharpOcarina
                         {//aaa
 
                             GL.Enable(EnableCap.Light0);
+                            //GL.Enable(EnableCap.Light1);
 
 
                             // AdditionalTexturesGLID.Clear();
@@ -1897,7 +1910,8 @@ namespace SharpOcarina
 
                                     if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
                                         || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
-                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending()))
+                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
+                                        || (DL.Animation != 0 && settings.MajorasMask))
                                     {
                                         AdvancedCallList(DL);
                                     }
@@ -1949,7 +1963,8 @@ namespace SharpOcarina
 
                                     if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
                                         || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
-                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending()))
+                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
+                                        || (DL.Animation != 0 && settings.MajorasMask))
                                     {
                                         AdvancedCallList(DL);
                                     }
@@ -2230,12 +2245,12 @@ namespace SharpOcarina
 
 
                 GL.ActiveTexture(TextureUnit.Texture0);
-                GL.Translate(-(CurrentScene.TextureAnims[DL.Animation - 8].XVelocity1 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Width1)) * globalframe, -(CurrentScene.TextureAnims[DL.Animation - 8].YVelocity1 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Height1)) * globalframe, 0);
+                GL.Translate(-(CurrentScene.TextureAnims[DL.Animation - 8].XVelocity1 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Width1)) * globalframe, (CurrentScene.TextureAnims[DL.Animation - 8].YVelocity1 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Height1)) * globalframe, 0);
 
                 GL.ActiveTexture(TextureUnit.Texture1);
                 GL.PushMatrix();
 
-                GL.Translate(-(CurrentScene.TextureAnims[DL.Animation - 8].XVelocity2 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Width2)) * globalframe, -(CurrentScene.TextureAnims[DL.Animation - 8].YVelocity2 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Height2)) * globalframe, 0);
+                GL.Translate(-(CurrentScene.TextureAnims[DL.Animation - 8].XVelocity2 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Width2)) * globalframe, (CurrentScene.TextureAnims[DL.Animation - 8].YVelocity2 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Height2)) * globalframe, 0);
 
                 GL.MatrixMode(MatrixMode.Modelview);
 
@@ -5385,6 +5400,7 @@ namespace SharpOcarina
 
                     RenderFunctionFlagBitwise.Enabled = RenderFunctionFlagBitwiseLabel.Enabled = (RenderFunctionFlagType.SelectedItem as FlagItem).Bitwise;
                     RenderFunctionFlagLabel.Enabled = RenderFunctionFlagID.Enabled = (RenderFunctionFlagType.SelectedItem as FlagItem).MaxValue != 0;
+                    RenderFunctionFlagID.ValueChanged -= new EventHandler(RenderFunctionFlagID_ValueChanged);
                     RenderFunctionFlagID.Maximum = (RenderFunctionFlagType.SelectedItem as FlagItem).MaxValue;
                     RenderFunctionFlagID.Minimum = (RenderFunctionFlagType.SelectedItem as FlagItem).MinValue;
                     RenderFunctionFlagLabel.Text = (RenderFunctionFlagBitwiseLabel.Enabled) ? "Offset:" : "Flag ID:";
@@ -5395,6 +5411,7 @@ namespace SharpOcarina
                     RenderFunctionFlagBitwise.Text = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].FlagBitwise.ToString("X8");
                     RenderFunctionFlagFreezeCheckBox.Enabled = (CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].FlagType != 0xFF);
                     RenderFunctionFlagFreezeCheckBox.Checked = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].Freeze;
+                    RenderFunctionFlagID.ValueChanged += new EventHandler(RenderFunctionFlagID_ValueChanged);
 
                     if (!(new uint[] { ZTextureAnim.texframe, ZTextureAnim.texswap, ZTextureAnim.blending, ZTextureAnim.scroll }).Contains(CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].Type))
                     {
@@ -5785,7 +5802,7 @@ namespace SharpOcarina
                 GroupRenderLast.Checked = ((ObjFile.Group)GroupList.SelectedItem).RenderLast;
                 GroupVertexNormals.Checked = ((ObjFile.Group)GroupList.SelectedItem).VertexNormals;
                 GroupCustom.Checked = ((ObjFile.Group)GroupList.SelectedItem).Custom;
-                GroupVibrant.Checked = ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals;
+                GroupScaledNormals.Checked = ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals;
 
                 //optimization
 
@@ -6179,17 +6196,22 @@ namespace SharpOcarina
 
             if (ROM != "")
             {
-                FileInfo info = new FileInfo(ROM);
-                if (info.Length > 67108864)
-                {
-                    using (FileStream file = new FileStream(ROM, FileMode.Open, FileAccess.ReadWrite))
-                    {
-
-                            file.SetLength(67108864);
-                        
-                    }
-                }
+                TrimRom(ROM);
                 InjectToRom(ROM);
+            }
+        }
+
+        private void TrimRom(string rom)
+        {
+            FileInfo info = new FileInfo(rom);
+            if (info.Length > 67108864)
+            {
+                using (FileStream file = new FileStream(rom, FileMode.Open, FileAccess.ReadWrite))
+                {
+
+                    file.SetLength(67108864);
+
+                }
             }
         }
 
@@ -8005,7 +8027,7 @@ namespace SharpOcarina
         {
             CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Env = (byte)WaterboxEnv.Value;
             CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Camera = (byte)WaterboxCam.Value;
-            CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Room = byte.Parse(WaterboxRoom.Text, System.Globalization.NumberStyles.HexNumber);
+            CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Room = (byte)WaterboxRoom.Value;
             CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XPos = (float)WaterboxXPos.Value;
             CurrentScene.Waterboxes[(int)WaterboxSelect.Value].YPos = (float)WaterboxYPos.Value;
             CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZPos = (float)WaterboxZPos.Value;
@@ -8014,16 +8036,6 @@ namespace SharpOcarina
             UpdateForm();
         }
 
-
-
-        private void WaterboxRoom_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (WaterboxRoom.IntValue > CurrentScene.Rooms.Count && WaterboxRoom.IntValue != 0x3F) WaterboxRoom.Text = (CurrentScene.Rooms.Count - 1).ToString("X2");
-                UpdateWaterboxData();
-            }
-        }
 
 
 
@@ -9228,11 +9240,6 @@ namespace SharpOcarina
                 CurrentScene.NightSFX = Convert.ToByte((NightSFXComboBox.SelectedItem as SongItem).Value);
         }
 
-        private void EchoKeydown(object sender, KeyEventArgs e)
-        {
-            if (CurrentScene != null && CurrentScene.Rooms.Count > 0)
-                CurrentScene.Rooms[RoomList.SelectedIndex].Echo = (byte)SoundEcho.IntValue;
-        }
 
         private void CameraMovementChanged(object sender, EventArgs e)
         {
@@ -9255,6 +9262,8 @@ namespace SharpOcarina
             CurrentScene.Pathways.Add(new ZPathway(new List<Vector3>()));
             UpdateForm();
             Helpers.SelectAdd(PathwayNumber, CurrentScene.Pathways);
+
+
         }
 
         private void DeletePathwayButton_Click(object sender, MouseEventArgs e)
@@ -9603,46 +9612,6 @@ namespace SharpOcarina
             }
         }
 
-
-        private void TimeSpeed_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && CurrentScene.Rooms.Count > 0)
-            {
-                CurrentScene.Rooms[RoomList.SelectedIndex].TimeSpeed = (byte)TimeSpeed.IntValue;
-            }
-        }
-
-        private void WindWest_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && CurrentScene.Rooms.Count > 0)
-            {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindWest = (byte)WindWest.IntValue;
-            }
-        }
-
-        private void WindSouth_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && CurrentScene.Rooms.Count > 0)
-            {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindSouth = (byte)WindSouth.IntValue;
-            }
-        }
-
-        private void WindVertical_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && CurrentScene.Rooms.Count > 0)
-            {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindVertical = (byte)WindVertical.IntValue;
-            }
-        }
-
-        private void WindStrength_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && CurrentScene.Rooms.Count > 0)
-            {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindStrength = (byte)WindStrength.IntValue;
-            }
-        }
 
         private void AdditionalLightSelect_ValueChanged(object sender, EventArgs e)
         {
@@ -10245,7 +10214,7 @@ namespace SharpOcarina
 
         private void WaterboxRoom_Leave(object sender, EventArgs e)
         {
-            if (WaterboxRoom.IntValue > CurrentScene.Rooms.Count && WaterboxRoom.IntValue != 0x3F) WaterboxRoom.Text = (CurrentScene.Rooms.Count - 1).ToString("X2");
+            if (WaterboxRoom.Value > CurrentScene.Rooms.Count && WaterboxRoom.Value != 0x3F) WaterboxRoom.Value = (CurrentScene.Rooms.Count - 1);
             UpdateWaterboxData();
         }
 
@@ -10262,21 +10231,21 @@ namespace SharpOcarina
         {
             if (CurrentScene.Rooms.Count > 0)
             {
-                CurrentScene.Rooms[RoomList.SelectedIndex].TimeSpeed = (byte)TimeSpeed.IntValue;
+                CurrentScene.Rooms[RoomList.SelectedIndex].TimeSpeed = (byte)TimeSpeed.Value;
             }
         }
 
         private void SoundEcho_Leave(object sender, EventArgs e)
         {
             if (CurrentScene != null)
-                CurrentScene.Rooms[RoomList.SelectedIndex].Echo = (byte)SoundEcho.IntValue;
+                CurrentScene.Rooms[RoomList.SelectedIndex].Echo = (byte)SoundEcho.Value;
         }
 
         private void WindWest_Leave(object sender, EventArgs e)
         {
             if (CurrentScene.Rooms.Count > 0)
             {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindWest = (byte)WindWest.IntValue;
+                CurrentScene.Rooms[RoomList.SelectedIndex].WindWest = (byte)WindWest.Value;
             }
         }
 
@@ -10284,7 +10253,7 @@ namespace SharpOcarina
         {
             if (CurrentScene.Rooms.Count > 0)
             {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindSouth = (byte)WindSouth.IntValue;
+                CurrentScene.Rooms[RoomList.SelectedIndex].WindSouth = (byte)WindSouth.Value;
             }
         }
 
@@ -10292,7 +10261,7 @@ namespace SharpOcarina
         {
             if (CurrentScene.Rooms.Count > 0)
             {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindVertical = (byte)WindVertical.IntValue;
+                CurrentScene.Rooms[RoomList.SelectedIndex].WindVertical = (byte)WindVertical.Value;
             }
         }
 
@@ -10300,7 +10269,7 @@ namespace SharpOcarina
         {
             if (CurrentScene.Rooms.Count > 0)
             {
-                CurrentScene.Rooms[RoomList.SelectedIndex].WindStrength = (byte)WindStrength.IntValue;
+                CurrentScene.Rooms[RoomList.SelectedIndex].WindStrength = (byte)WindStrength.Value;
             }
         }
 
@@ -10876,11 +10845,22 @@ namespace SharpOcarina
 
                 if (marker == 0x0001 || marker == 0x0005)
                 {
-                    ZCutscene cutscene = new ZCutscene(marker, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
-
+                    ZCutscene cutscene;
+                    bool addpoints = true;
+                    if (CameraCommands.Count == 0)
+                    {
+                        cutscene = new ZCutscene(marker, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
+                    }
+                    else
+                    {
+                        cutscene = CameraCommands[0];
+                        addpoints = false;
+                    }
                     cutscene.StartFrame = Helpers.Read16(CutsceneBinaryData, offset + 2);
 
                     offset += 8;
+
+                    int counter = 0;
 
                     while (1 == 1)
                     {
@@ -10891,23 +10871,45 @@ namespace SharpOcarina
 
                         ZCutscenePosition cutpos = new ZCutscenePosition(0, 0, 45, pos, new Vector3());
 
-                        cutscene.Points.Add(cutpos);
+                        if (addpoints) cutscene.Points.Add(cutpos);
+                        else
+                        {
+                            cutscene.Points[counter].Position = pos;
+                        }
 
 
                         //  DebugConsole.WriteLine("offset:  " + offset);
 
                         offset += 16;
 
+                        counter++;
+
                         if (CutsceneBinaryData[offset - 16] == 0xFF) break;
                     }
 
-                    CameraCommands.Add(cutscene);
+                    if (addpoints) CameraCommands.Add(cutscene);
+                    else
+                    {
+                        CurrentScene.Cutscene.Add(cutscene);
+                        CameraCommands.RemoveAt(0); 
+
+                    }
 
                 }
-                else if (marker == 0x0002 || marker == 0x0006)
+                else if ((marker == 0x0002 || marker == 0x0006))
                 {
 
-                    ZCutscene cutscene = CameraCommands[0];
+                    ZCutscene cutscene;
+                    bool addpoints = true;
+                    if (CameraCommands.Count == 0)
+                    {
+                        cutscene = new ZCutscene(marker, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
+                    }
+                    else
+                    {
+                        cutscene = CameraCommands[0];
+                        addpoints = false;
+                    }
 
 
                     offset += 8;
@@ -10921,11 +10923,20 @@ namespace SharpOcarina
                         pos.Y = Helpers.Read16S(CutsceneBinaryData, offset + 10);
                         pos.Z = Helpers.Read16S(CutsceneBinaryData, offset + 12);
 
-                        cutscene.Points[counter].Position2 = pos;
+                        ZCutscenePosition cutpos = new ZCutscenePosition((sbyte)CutsceneBinaryData[offset + 1], Helpers.Read16(CutsceneBinaryData, offset + 2), BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(CutsceneBinaryData, offset + 4)), 0), new Vector3(), pos);
 
-                        cutscene.Points[counter].Cameraroll = (sbyte)CutsceneBinaryData[offset + 1];
-                        cutscene.Points[counter].Frames = Helpers.Read16(CutsceneBinaryData, offset + 2);
-                        cutscene.Points[counter].Angle = BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(CutsceneBinaryData, offset + 4)), 0);
+                        if (addpoints)
+                            cutscene.Points.Add(cutpos);
+                        else
+                        {
+                            cutscene.Points[counter].Position2 = pos;
+
+                            cutscene.Points[counter].Cameraroll = (sbyte)CutsceneBinaryData[offset + 1];
+                            cutscene.Points[counter].Frames = Helpers.Read16(CutsceneBinaryData, offset + 2);
+                            cutscene.Points[counter].Angle = BitConverter.ToSingle(BitConverter.GetBytes(Helpers.Read32(CutsceneBinaryData, offset + 4)), 0);
+                        }
+
+
 
                         //    DebugConsole.WriteLine("offset:  " + offset);
 
@@ -10936,10 +10947,13 @@ namespace SharpOcarina
                         if (CutsceneBinaryData[offset - 16] == 0xFF) break;
                     }
 
-                    // CameraCommands.Add(cutscene);
+                    if (addpoints) CameraCommands.Add(cutscene);
+                    else
+                    {
+                        CurrentScene.Cutscene.Add(cutscene);
+                        CameraCommands.RemoveAt(0);
 
-                    CurrentScene.Cutscene.Add(cutscene);
-                    CameraCommands.RemoveAt(0);
+                    }
 
                 }
                 else if (marker == 0x0009) //unknown, skip
@@ -13107,8 +13121,7 @@ namespace SharpOcarina
             }
             else if (rom64.isSet())
             {
-
-                Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x0000", @"\project\src\system\state\0x04-Opening\Opening.c");
+                RemoveAllZ64romScenes(rom64.getPath());
 
                 return;
             }
@@ -13289,6 +13302,39 @@ namespace SharpOcarina
 
                 }
             }
+        }
+
+        private void RemoveAllZ64romScenes(string path)
+        {
+            System.IO.DirectoryInfo di = new DirectoryInfo(path + "\\rom\\scene\\.vanilla");
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+            //File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\0x27-BasicTitleScreen"), path + "\\rom\\scene\\0x27-BasicTitleScreen");
+
+            DirectoryInfo sourcedir = new DirectoryInfo(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\0x27-BasicTitleScreen"));
+            string destinationDir = path + "rom\\scene\\0x27-BasicTitleScreen";
+            if (!Directory.Exists(destinationDir))
+            {
+                Directory.CreateDirectory(destinationDir);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = sourcedir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string tempPath = Path.Combine(destinationDir, file.Name);
+                file.CopyTo(tempPath, false);
+            }
+
+
+            Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x009B;", path + @"src\system\state\0x04-Opening\Opening.c");
+            Helpers.ReplaceLine("gSaveContext.cutsceneIndex", "    gSaveContext.cutsceneIndex = 0x0000;  gSaveContext.entranceIndex = 0x009B;", path + @"src\system\state\0x04-Opening\Opening.c");
         }
 
         private void AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -15016,6 +15062,8 @@ namespace SharpOcarina
                 RefreshObjectCache();
                 RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile", GlobalROM);
                 GlobalRomRefresh.Visible = true;
+                Z64RomPlay.Visible = true;
+                EnvironmentControlTooltip.SetToolTip(Z64RomPlay, "Inject and launch the ROM");
                 LaunchRomToolStripMenuItem.Visible = true;
 
 
@@ -15061,6 +15109,8 @@ namespace SharpOcarina
                 RefreshObjectCache();
                 RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile", filename);
                 GlobalRomRefresh.Visible = true;
+                Z64RomPlay.Visible = true;
+                EnvironmentControlTooltip.SetToolTip(Z64RomPlay, "Store scene, build and launch z64rom + warp to scene");
                 LaunchRomToolStripMenuItem.Visible = true;
 
                 actorEditControl1.cacheId = 0xFEFE;
@@ -17937,6 +17987,8 @@ namespace SharpOcarina
         {
             if (rom64.isSet())
             {
+                injectToROMToolStripMenuItem_Click(sender, e);
+
                 String pdetail = @"/c " + rom64.getPath() + "\\z64rom.exe --no-wait --instant " + CurrentScene.SceneNumber + " 0 " + " 0xF " + (settings.RenderChildLink ? "1" : "0");
                 ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
                 pcmd.Arguments = pdetail;
@@ -18053,7 +18105,7 @@ namespace SharpOcarina
 
         private void GroupVibrant_CheckedChanged(object sender, EventArgs e)
         {
-            ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals = GroupVibrant.Checked;
+            ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals = GroupScaledNormals.Checked;
 
             int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
             CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.ScaledNormals[Index] = ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals;
@@ -18085,17 +18137,27 @@ namespace SharpOcarina
                 openFileDialog1.Filter = "Rom files (*.z64;*.rom)|*.z64;*.rom|All Files (*.*)|*.*";
                 openFileDialog1.FilterIndex = 1;
 
-
+                // todo
                 if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-
-                    File.Copy(openFileDialog1.FileName, path + "\\BaseDebugRom.z64");
-
-                    while (!File.Exists(path + "\\BaseDebugRom.z64"))
+                    if (!File.Exists(path + "\\BaseDebugRom.z64") && Path.GetDirectoryName(openFileDialog1.FileName) != path)
                     {
-                        // do nothing
+
+                        File.Copy(openFileDialog1.FileName, path + "\\BaseDebugRom.z64");
+
+                        while (!File.Exists(path + "\\BaseDebugRom.z64"))
+                        {
+                            // do nothing
+                        }
+
+                        TrimRom(path + "\\BaseDebugRom.z64");
                     }
 
+                    PleaseWait pleasewait = new PleaseWait();
+                    pleasewait.Shown += (s, b) => {
+                        // 
+                    };
+                    pleasewait.Show();
 
                     using (var client = new WebClient())
                     {
@@ -18144,12 +18206,46 @@ namespace SharpOcarina
                     cmd.WaitForExit();
 
 
+
+                    pleasewait.Close();
+
+                    using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations())
+                    {
+                        if (postoperations.ShowDialog() == DialogResult.OK)
+                        {
+                            if (postoperations.removeallscenes)
+                            {
+                                RemoveAllZ64romScenes(path);
+                            }
+                            if (postoperations.removen64logo)
+                            {
+                                Helpers.ReplaceLine("this->ult++;", "this->ult++; this->exit = 1; //SO disabled logo", path + @"src\system\state\0x02-BootTitle\BootTitle.c");
+
+                            }
+                        }
+                    }
+
+
                 }
 
             }
 
             //UpdateForm();
 
+        }
+
+        private void Z64RomPlay_Click(object sender, EventArgs e)
+        {
+            if (rom64.isSet())
+            {
+                buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click(sender, e);
+            }
+            else
+            {
+                injectToROMToolStripMenuItem_Click(sender, e);
+                LaunchRomToolStripMenuItem_Click(sender, e);
+
+            }
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

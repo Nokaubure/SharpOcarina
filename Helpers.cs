@@ -182,6 +182,7 @@ namespace SharpOcarina
                 if (lines[i].Contains(search))
                 {
                     lines[i] = replace;
+                    File.WriteAllLines(path,lines);
                     return true;
                 }
             }

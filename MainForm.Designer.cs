@@ -221,10 +221,10 @@ namespace SharpOcarina
             this.label33 = new System.Windows.Forms.Label();
             this.WaterboxGroupBox = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.WaterboxRoom = new SharpOcarina.NumericUpDownEx();
             this.WaterboxCam = new SharpOcarina.NumericUpDownEx();
             this.label94 = new System.Windows.Forms.Label();
             this.WaterboxEnv = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxRoom = new SharpOcarina.NumericTextBox();
             this.WaterboxRoomLabel = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.WaterboxZPos = new SharpOcarina.NumericUpDownEx();
@@ -282,7 +282,7 @@ namespace SharpOcarina
             this.AddMultipleRooms = new System.Windows.Forms.Button();
             this.ContinualInject = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.GroupVibrant = new System.Windows.Forms.CheckBox();
+            this.GroupScaledNormals = new System.Windows.Forms.CheckBox();
             this.GroupCustomizeButton = new System.Windows.Forms.Button();
             this.GroupCustom = new System.Windows.Forms.CheckBox();
             this.GroupVertexNormals = new System.Windows.Forms.CheckBox();
@@ -423,24 +423,24 @@ namespace SharpOcarina
             this.label50 = new System.Windows.Forms.Label();
             this.RestrictionComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.WindStrength = new SharpOcarina.NumericTextBox();
+            this.WindStrength = new SharpOcarina.NumericUpDownEx();
+            this.WindSouth = new SharpOcarina.NumericUpDownEx();
+            this.WindVertical = new SharpOcarina.NumericUpDownEx();
+            this.WindWest = new SharpOcarina.NumericUpDownEx();
             this.label48 = new System.Windows.Forms.Label();
-            this.WindSouth = new SharpOcarina.NumericTextBox();
             this.label49 = new System.Windows.Forms.Label();
-            this.WindVertical = new SharpOcarina.NumericTextBox();
             this.label47 = new System.Windows.Forms.Label();
-            this.WindWest = new SharpOcarina.NumericTextBox();
             this.label46 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.SoundEcho = new SharpOcarina.NumericUpDownEx();
+            this.TimeSpeed = new SharpOcarina.NumericUpDownEx();
             this.DisableStartTime = new System.Windows.Forms.CheckBox();
             this.TimeMinute = new SharpOcarina.NumericUpDownEx();
             this.label105 = new System.Windows.Forms.Label();
             this.TimeHour = new SharpOcarina.NumericUpDownEx();
             this.label43 = new System.Windows.Forms.Label();
-            this.SoundEcho = new SharpOcarina.NumericTextBox();
             this.SunmoonCheckBox = new System.Windows.Forms.CheckBox();
             this.SkyboxCheckBox = new System.Windows.Forms.CheckBox();
-            this.TimeSpeed = new SharpOcarina.NumericTextBox();
             this.label41 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.tabCollision = new System.Windows.Forms.TabPage();
@@ -787,6 +787,7 @@ namespace SharpOcarina
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.EnvironmentControlTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.GlobalRomRefresh = new System.Windows.Forms.Button();
+            this.Z64RomPlay = new System.Windows.Forms.Button();
             this.label86 = new System.Windows.Forms.Label();
             this.CDILink = new System.Windows.Forms.PictureBox();
             this.labelcamerapos = new System.Windows.Forms.Label();
@@ -825,6 +826,7 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk12)).BeginInit();
             this.WaterboxGroupBox.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxRoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxCam)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxEnv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxZPos)).BeginInit();
@@ -896,7 +898,13 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightSelect)).BeginInit();
             this.groupBox11.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WindStrength)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindSouth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindVertical)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindWest)).BeginInit();
             this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SoundEcho)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimeSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeMinute)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeHour)).BeginInit();
             this.tabCollision.SuspendLayout();
@@ -1076,27 +1084,27 @@ namespace SharpOcarina
             // newSceneToolStripMenuItem
             // 
             this.newSceneToolStripMenuItem.Name = "newSceneToolStripMenuItem";
-            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.newSceneToolStripMenuItem.Text = "&New Scene";
             this.newSceneToolStripMenuItem.Click += new System.EventHandler(this.newSceneToolStripMenuItem_Click);
             // 
             // openSceneToolStripMenuItem
             // 
             this.openSceneToolStripMenuItem.Name = "openSceneToolStripMenuItem";
-            this.openSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.openSceneToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.openSceneToolStripMenuItem.Text = "&Open Scene";
             this.openSceneToolStripMenuItem.Click += new System.EventHandler(this.openSceneToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(323, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(321, 6);
             // 
             // SaveScenetoolStripMenuItem3
             // 
             this.SaveScenetoolStripMenuItem3.Enabled = false;
             this.SaveScenetoolStripMenuItem3.Name = "SaveScenetoolStripMenuItem3";
-            this.SaveScenetoolStripMenuItem3.Size = new System.Drawing.Size(326, 22);
+            this.SaveScenetoolStripMenuItem3.Size = new System.Drawing.Size(324, 22);
             this.SaveScenetoolStripMenuItem3.Text = "&Save Scene";
             this.SaveScenetoolStripMenuItem3.Click += new System.EventHandler(this.SaveScenetoolStripMenuItem3_Click);
             // 
@@ -1104,7 +1112,7 @@ namespace SharpOcarina
             // 
             this.saveSceneToolStripMenuItem.Enabled = false;
             this.saveSceneToolStripMenuItem.Name = "saveSceneToolStripMenuItem";
-            this.saveSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.saveSceneToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.saveSceneToolStripMenuItem.Text = "Save Scene &As...";
             this.saveSceneToolStripMenuItem.Click += new System.EventHandler(this.saveSceneToolStripMenuItem_Click);
             // 
@@ -1112,19 +1120,19 @@ namespace SharpOcarina
             // 
             this.saveBinaryToolStripMenuItem.Enabled = false;
             this.saveBinaryToolStripMenuItem.Name = "saveBinaryToolStripMenuItem";
-            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.saveBinaryToolStripMenuItem.Text = "Save &Binary";
             this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(323, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(321, 6);
             // 
             // OpenGlobalROM
             // 
             this.OpenGlobalROM.Name = "OpenGlobalROM";
-            this.OpenGlobalROM.Size = new System.Drawing.Size(326, 22);
+            this.OpenGlobalROM.Size = new System.Drawing.Size(324, 22);
             this.OpenGlobalROM.Text = "Open &Global ROM / z64rom project";
             this.OpenGlobalROM.Click += new System.EventHandler(this.OpenGlobalROM_Click);
             // 
@@ -1132,7 +1140,7 @@ namespace SharpOcarina
             // 
             this.injectToROMToolStripMenuItem.Enabled = false;
             this.injectToROMToolStripMenuItem.Name = "injectToROMToolStripMenuItem";
-            this.injectToROMToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.injectToROMToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.injectToROMToolStripMenuItem.Text = "&Inject to ROM";
             this.injectToROMToolStripMenuItem.Click += new System.EventHandler(this.injectToROMToolStripMenuItem_Click);
             // 
@@ -1140,7 +1148,7 @@ namespace SharpOcarina
             // 
             this.LaunchRomToolStripMenuItem.Enabled = false;
             this.LaunchRomToolStripMenuItem.Name = "LaunchRomToolStripMenuItem";
-            this.LaunchRomToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.LaunchRomToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.LaunchRomToolStripMenuItem.Text = "Launch ROM";
             this.LaunchRomToolStripMenuItem.Click += new System.EventHandler(this.LaunchRomToolStripMenuItem_Click);
             // 
@@ -1148,7 +1156,7 @@ namespace SharpOcarina
             // 
             this.buildAndLaunchZ64romToolStripMenuItem.Enabled = false;
             this.buildAndLaunchZ64romToolStripMenuItem.Name = "buildAndLaunchZ64romToolStripMenuItem";
-            this.buildAndLaunchZ64romToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.buildAndLaunchZ64romToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.buildAndLaunchZ64romToolStripMenuItem.Text = "Build and launch z64rom";
             this.buildAndLaunchZ64romToolStripMenuItem.Visible = false;
             this.buildAndLaunchZ64romToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romToolStripMenuItem_Click);
@@ -1157,53 +1165,53 @@ namespace SharpOcarina
             // 
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Enabled = false;
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Name = "buildAndLaunchZ64romWarpToSceneToolStripMenuItem";
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
-            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Text = "[Beta] Build and launch z64rom + warp to scene";
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Text = "Send, build and launch z64rom + warp to scene";
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = false;
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(323, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(321, 6);
             // 
             // NewZ64romProject
             // 
             this.NewZ64romProject.Name = "NewZ64romProject";
-            this.NewZ64romProject.Size = new System.Drawing.Size(326, 22);
+            this.NewZ64romProject.Size = new System.Drawing.Size(324, 22);
             this.NewZ64romProject.Text = "New z64rom project";
             this.NewZ64romProject.Click += new System.EventHandler(this.NewZ64romProject_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(323, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(321, 6);
             // 
             // openZmapToolstrip
             // 
             this.openZmapToolstrip.Name = "openZmapToolstrip";
-            this.openZmapToolstrip.Size = new System.Drawing.Size(326, 22);
-            this.openZmapToolstrip.Text = "Open .zscene (beta)";
+            this.openZmapToolstrip.Size = new System.Drawing.Size(324, 22);
+            this.openZmapToolstrip.Text = "View .zscene (beta)";
             this.openZmapToolstrip.Visible = false;
             this.openZmapToolstrip.Click += new System.EventHandler(this.openZmapToolstrip_Click);
             // 
             // OpenSceneFromRoomToolStrip
             // 
             this.OpenSceneFromRoomToolStrip.Name = "OpenSceneFromRoomToolStrip";
-            this.OpenSceneFromRoomToolStrip.Size = new System.Drawing.Size(326, 22);
-            this.OpenSceneFromRoomToolStrip.Text = "Open scene from ROM (beta)";
+            this.OpenSceneFromRoomToolStrip.Size = new System.Drawing.Size(324, 22);
+            this.OpenSceneFromRoomToolStrip.Text = "View scene from ROM (beta)";
             this.OpenSceneFromRoomToolStrip.Visible = false;
             this.OpenSceneFromRoomToolStrip.Click += new System.EventHandler(this.OpenSceneFromRoomToolStrip_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(323, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(321, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -2275,7 +2283,6 @@ namespace SharpOcarina
             // CameraView
             // 
             this.CameraView.Enabled = false;
-            this.CameraView.Image = global::SharpOcarina.Properties.Resources.eye;
             this.CameraView.Location = new System.Drawing.Point(296, 138);
             this.CameraView.Name = "CameraView";
             this.CameraView.Size = new System.Drawing.Size(68, 28);
@@ -3209,10 +3216,10 @@ namespace SharpOcarina
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.WaterboxRoom);
             this.panel1.Controls.Add(this.WaterboxCam);
             this.panel1.Controls.Add(this.label94);
             this.panel1.Controls.Add(this.WaterboxEnv);
-            this.panel1.Controls.Add(this.WaterboxRoom);
             this.panel1.Controls.Add(this.WaterboxRoomLabel);
             this.panel1.Controls.Add(this.label22);
             this.panel1.Controls.Add(this.WaterboxZPos);
@@ -3230,6 +3237,37 @@ namespace SharpOcarina
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(370, 114);
             this.panel1.TabIndex = 21;
+            // 
+            // WaterboxRoom
+            // 
+            this.WaterboxRoom.AlwaysFireValueChanged = false;
+            this.WaterboxRoom.DisplayDigits = 1;
+            this.WaterboxRoom.DoValueRollover = false;
+            this.WaterboxRoom.Enabled = false;
+            this.WaterboxRoom.Hexadecimal = true;
+            this.WaterboxRoom.IncrementMouseWheel = 1;
+            this.WaterboxRoom.Location = new System.Drawing.Point(73, 83);
+            this.WaterboxRoom.Maximum = new decimal(new int[] {
+            63,
+            0,
+            0,
+            0});
+            this.WaterboxRoom.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxRoom.Name = "WaterboxRoom";
+            this.WaterboxRoom.ShiftMultiplier = 1;
+            this.WaterboxRoom.Size = new System.Drawing.Size(47, 20);
+            this.WaterboxRoom.TabIndex = 23;
+            this.EnvironmentControlTooltip.SetToolTip(this.WaterboxRoom, "3F = all rooms");
+            this.WaterboxRoom.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxRoom.ValueChanged += new System.EventHandler(this.WaterboxRoom_Leave);
             // 
             // WaterboxCam
             // 
@@ -3300,18 +3338,6 @@ namespace SharpOcarina
             0,
             0});
             this.WaterboxEnv.ValueChanged += new System.EventHandler(this.WaterboxEnv_ValueChanged);
-            // 
-            // WaterboxRoom
-            // 
-            this.WaterboxRoom.AllowHex = true;
-            this.WaterboxRoom.Digits = 2;
-            this.WaterboxRoom.Enabled = false;
-            this.WaterboxRoom.Location = new System.Drawing.Point(74, 85);
-            this.WaterboxRoom.Name = "WaterboxRoom";
-            this.WaterboxRoom.Size = new System.Drawing.Size(45, 20);
-            this.WaterboxRoom.TabIndex = 19;
-            this.WaterboxRoom.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WaterboxRoom_KeyDown);
-            this.WaterboxRoom.Leave += new System.EventHandler(this.WaterboxRoom_Leave);
             // 
             // WaterboxRoomLabel
             // 
@@ -3668,6 +3694,7 @@ namespace SharpOcarina
             this.NameTextbox.TabIndex = 0;
             this.EnvironmentControlTooltip.SetToolTip(this.NameTextbox, "Optional field, only used by SharpOcarina");
             this.NameTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SceneName_KeyDown);
+            this.NameTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SceneName_KeyDown);
             this.NameTextbox.Leave += new System.EventHandler(this.NameTextbox_Leave);
             // 
             // label1
@@ -4177,7 +4204,7 @@ namespace SharpOcarina
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.GroupVibrant);
+            this.groupBox1.Controls.Add(this.GroupScaledNormals);
             this.groupBox1.Controls.Add(this.GroupCustomizeButton);
             this.groupBox1.Controls.Add(this.GroupCustom);
             this.groupBox1.Controls.Add(this.GroupVertexNormals);
@@ -4228,18 +4255,17 @@ namespace SharpOcarina
             this.groupBox1.Tag = "a";
             this.groupBox1.Text = "Group Settings";
             // 
-            // GroupVibrant
+            // GroupScaledNormals
             // 
-            this.GroupVibrant.AutoSize = true;
-            this.GroupVibrant.Location = new System.Drawing.Point(306, 220);
-            this.GroupVibrant.Name = "GroupVibrant";
-            this.GroupVibrant.Size = new System.Drawing.Size(90, 17);
-            this.GroupVibrant.TabIndex = 45;
-            this.GroupVibrant.Text = "Vibrant Color*";
-            this.EnvironmentControlTooltip.SetToolTip(this.GroupVibrant, "Makes vertex colors more vibrant, doesnt work with multitexture");
-            this.GroupVibrant.UseVisualStyleBackColor = true;
-            this.GroupVibrant.Visible = false;
-            this.GroupVibrant.CheckedChanged += new System.EventHandler(this.GroupVibrant_CheckedChanged);
+            this.GroupScaledNormals.AutoSize = true;
+            this.GroupScaledNormals.Location = new System.Drawing.Point(306, 220);
+            this.GroupScaledNormals.Name = "GroupScaledNormals";
+            this.GroupScaledNormals.Size = new System.Drawing.Size(100, 17);
+            this.GroupScaledNormals.TabIndex = 45;
+            this.GroupScaledNormals.Text = "Scaled Normals";
+            this.EnvironmentControlTooltip.SetToolTip(this.GroupScaledNormals, "Uses grayscale vertex color data to customize normals");
+            this.GroupScaledNormals.UseVisualStyleBackColor = true;
+            this.GroupScaledNormals.CheckedChanged += new System.EventHandler(this.GroupVibrant_CheckedChanged);
             // 
             // GroupCustomizeButton
             // 
@@ -5277,7 +5303,6 @@ namespace SharpOcarina
             // 
             // ViewNormalCopyEnvB
             // 
-            this.ViewNormalCopyEnvB.Image = global::SharpOcarina.Properties.Resources.eye;
             this.ViewNormalCopyEnvB.Location = new System.Drawing.Point(341, 56);
             this.ViewNormalCopyEnvB.Name = "ViewNormalCopyEnvB";
             this.ViewNormalCopyEnvB.Size = new System.Drawing.Size(26, 22);
@@ -5288,7 +5313,6 @@ namespace SharpOcarina
             // ViewNormalCopyEnvA
             // 
             this.ViewNormalCopyEnvA.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ViewNormalCopyEnvA.Image = global::SharpOcarina.Properties.Resources.eye;
             this.ViewNormalCopyEnvA.Location = new System.Drawing.Point(341, 31);
             this.ViewNormalCopyEnvA.Name = "ViewNormalCopyEnvA";
             this.ViewNormalCopyEnvA.Size = new System.Drawing.Size(26, 22);
@@ -6151,12 +6175,12 @@ namespace SharpOcarina
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.WindStrength);
-            this.groupBox9.Controls.Add(this.label48);
             this.groupBox9.Controls.Add(this.WindSouth);
-            this.groupBox9.Controls.Add(this.label49);
             this.groupBox9.Controls.Add(this.WindVertical);
-            this.groupBox9.Controls.Add(this.label47);
             this.groupBox9.Controls.Add(this.WindWest);
+            this.groupBox9.Controls.Add(this.label48);
+            this.groupBox9.Controls.Add(this.label49);
+            this.groupBox9.Controls.Add(this.label47);
             this.groupBox9.Controls.Add(this.label46);
             this.groupBox9.Location = new System.Drawing.Point(9, 115);
             this.groupBox9.Name = "groupBox9";
@@ -6167,15 +6191,119 @@ namespace SharpOcarina
             // 
             // WindStrength
             // 
-            this.WindStrength.AllowHex = true;
-            this.WindStrength.Digits = 2;
-            this.WindStrength.Location = new System.Drawing.Point(266, 47);
+            this.WindStrength.AlwaysFireValueChanged = false;
+            this.WindStrength.DisplayDigits = 2;
+            this.WindStrength.DoValueRollover = false;
+            this.WindStrength.Hexadecimal = true;
+            this.WindStrength.IncrementMouseWheel = 1;
+            this.WindStrength.Location = new System.Drawing.Point(257, 47);
+            this.WindStrength.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindStrength.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.WindStrength.Name = "WindStrength";
-            this.WindStrength.Size = new System.Drawing.Size(80, 20);
-            this.WindStrength.TabIndex = 50;
-            this.WindStrength.Text = "00";
-            this.WindStrength.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WindStrength_KeyDown);
-            this.WindStrength.Leave += new System.EventHandler(this.WindStrength_Leave);
+            this.WindStrength.ShiftMultiplier = 4;
+            this.WindStrength.Size = new System.Drawing.Size(50, 20);
+            this.WindStrength.TabIndex = 53;
+            this.WindStrength.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindStrength.ValueChanged += new System.EventHandler(this.WindStrength_Leave);
+            // 
+            // WindSouth
+            // 
+            this.WindSouth.AlwaysFireValueChanged = false;
+            this.WindSouth.DisplayDigits = 2;
+            this.WindSouth.DoValueRollover = false;
+            this.WindSouth.Hexadecimal = true;
+            this.WindSouth.IncrementMouseWheel = 1;
+            this.WindSouth.Location = new System.Drawing.Point(257, 23);
+            this.WindSouth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindSouth.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindSouth.Name = "WindSouth";
+            this.WindSouth.ShiftMultiplier = 4;
+            this.WindSouth.Size = new System.Drawing.Size(50, 20);
+            this.WindSouth.TabIndex = 52;
+            this.WindSouth.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindSouth.ValueChanged += new System.EventHandler(this.WindSouth_Leave);
+            // 
+            // WindVertical
+            // 
+            this.WindVertical.AlwaysFireValueChanged = false;
+            this.WindVertical.DisplayDigits = 2;
+            this.WindVertical.DoValueRollover = false;
+            this.WindVertical.Hexadecimal = true;
+            this.WindVertical.IncrementMouseWheel = 1;
+            this.WindVertical.Location = new System.Drawing.Point(83, 47);
+            this.WindVertical.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindVertical.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindVertical.Name = "WindVertical";
+            this.WindVertical.ShiftMultiplier = 4;
+            this.WindVertical.Size = new System.Drawing.Size(50, 20);
+            this.WindVertical.TabIndex = 51;
+            this.WindVertical.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindVertical.ValueChanged += new System.EventHandler(this.WindVertical_Leave);
+            // 
+            // WindWest
+            // 
+            this.WindWest.AlwaysFireValueChanged = false;
+            this.WindWest.DisplayDigits = 2;
+            this.WindWest.DoValueRollover = false;
+            this.WindWest.Hexadecimal = true;
+            this.WindWest.IncrementMouseWheel = 1;
+            this.WindWest.Location = new System.Drawing.Point(83, 23);
+            this.WindWest.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindWest.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindWest.Name = "WindWest";
+            this.WindWest.ShiftMultiplier = 4;
+            this.WindWest.Size = new System.Drawing.Size(50, 20);
+            this.WindWest.TabIndex = 50;
+            this.WindWest.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindWest.ValueChanged += new System.EventHandler(this.WindWest_Leave);
             // 
             // label48
             // 
@@ -6186,18 +6314,6 @@ namespace SharpOcarina
             this.label48.TabIndex = 49;
             this.label48.Text = "Strength:";
             // 
-            // WindSouth
-            // 
-            this.WindSouth.AllowHex = true;
-            this.WindSouth.Digits = 2;
-            this.WindSouth.Location = new System.Drawing.Point(266, 22);
-            this.WindSouth.Name = "WindSouth";
-            this.WindSouth.Size = new System.Drawing.Size(80, 20);
-            this.WindSouth.TabIndex = 48;
-            this.WindSouth.Text = "00";
-            this.WindSouth.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WindSouth_KeyDown);
-            this.WindSouth.Leave += new System.EventHandler(this.WindSouth_Leave);
-            // 
             // label49
             // 
             this.label49.AutoSize = true;
@@ -6207,18 +6323,6 @@ namespace SharpOcarina
             this.label49.TabIndex = 47;
             this.label49.Text = "South:";
             // 
-            // WindVertical
-            // 
-            this.WindVertical.AllowHex = true;
-            this.WindVertical.Digits = 2;
-            this.WindVertical.Location = new System.Drawing.Point(83, 47);
-            this.WindVertical.Name = "WindVertical";
-            this.WindVertical.Size = new System.Drawing.Size(80, 20);
-            this.WindVertical.TabIndex = 46;
-            this.WindVertical.Text = "00";
-            this.WindVertical.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WindVertical_KeyDown);
-            this.WindVertical.Leave += new System.EventHandler(this.WindVertical_Leave);
-            // 
             // label47
             // 
             this.label47.AutoSize = true;
@@ -6227,18 +6331,6 @@ namespace SharpOcarina
             this.label47.Size = new System.Drawing.Size(45, 13);
             this.label47.TabIndex = 45;
             this.label47.Text = "Vertical:";
-            // 
-            // WindWest
-            // 
-            this.WindWest.AllowHex = true;
-            this.WindWest.Digits = 2;
-            this.WindWest.Location = new System.Drawing.Point(83, 22);
-            this.WindWest.Name = "WindWest";
-            this.WindWest.Size = new System.Drawing.Size(80, 20);
-            this.WindWest.TabIndex = 44;
-            this.WindWest.Text = "00";
-            this.WindWest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WindWest_KeyDown);
-            this.WindWest.Leave += new System.EventHandler(this.WindWest_Leave);
             // 
             // label46
             // 
@@ -6251,15 +6343,15 @@ namespace SharpOcarina
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.SoundEcho);
+            this.groupBox8.Controls.Add(this.TimeSpeed);
             this.groupBox8.Controls.Add(this.DisableStartTime);
             this.groupBox8.Controls.Add(this.TimeMinute);
             this.groupBox8.Controls.Add(this.label105);
             this.groupBox8.Controls.Add(this.TimeHour);
             this.groupBox8.Controls.Add(this.label43);
-            this.groupBox8.Controls.Add(this.SoundEcho);
             this.groupBox8.Controls.Add(this.SunmoonCheckBox);
             this.groupBox8.Controls.Add(this.SkyboxCheckBox);
-            this.groupBox8.Controls.Add(this.TimeSpeed);
             this.groupBox8.Controls.Add(this.label41);
             this.groupBox8.Controls.Add(this.label40);
             this.groupBox8.Location = new System.Drawing.Point(10, 6);
@@ -6268,6 +6360,64 @@ namespace SharpOcarina
             this.groupBox8.TabIndex = 39;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Skybox && Time Settings";
+            // 
+            // SoundEcho
+            // 
+            this.SoundEcho.AlwaysFireValueChanged = false;
+            this.SoundEcho.DisplayDigits = 2;
+            this.SoundEcho.DoValueRollover = false;
+            this.SoundEcho.Hexadecimal = true;
+            this.SoundEcho.IncrementMouseWheel = 1;
+            this.SoundEcho.Location = new System.Drawing.Point(85, 71);
+            this.SoundEcho.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.SoundEcho.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SoundEcho.Name = "SoundEcho";
+            this.SoundEcho.ShiftMultiplier = 4;
+            this.SoundEcho.Size = new System.Drawing.Size(50, 20);
+            this.SoundEcho.TabIndex = 49;
+            this.SoundEcho.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SoundEcho.ValueChanged += new System.EventHandler(this.SoundEcho_Leave);
+            // 
+            // TimeSpeed
+            // 
+            this.TimeSpeed.AlwaysFireValueChanged = false;
+            this.TimeSpeed.DisplayDigits = 2;
+            this.TimeSpeed.DoValueRollover = false;
+            this.TimeSpeed.Hexadecimal = true;
+            this.TimeSpeed.IncrementMouseWheel = 1;
+            this.TimeSpeed.Location = new System.Drawing.Point(85, 47);
+            this.TimeSpeed.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.TimeSpeed.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TimeSpeed.Name = "TimeSpeed";
+            this.TimeSpeed.ShiftMultiplier = 4;
+            this.TimeSpeed.Size = new System.Drawing.Size(50, 20);
+            this.TimeSpeed.TabIndex = 48;
+            this.TimeSpeed.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.TimeSpeed.ValueChanged += new System.EventHandler(this.TimeSpeed_Leave);
             // 
             // DisableStartTime
             // 
@@ -6356,18 +6506,6 @@ namespace SharpOcarina
             this.label43.TabIndex = 38;
             this.label43.Text = "Echo:";
             // 
-            // SoundEcho
-            // 
-            this.SoundEcho.AllowHex = true;
-            this.SoundEcho.Digits = 2;
-            this.SoundEcho.Location = new System.Drawing.Point(87, 73);
-            this.SoundEcho.Name = "SoundEcho";
-            this.SoundEcho.Size = new System.Drawing.Size(78, 20);
-            this.SoundEcho.TabIndex = 37;
-            this.SoundEcho.Text = "0";
-            this.SoundEcho.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EchoKeydown);
-            this.SoundEcho.Leave += new System.EventHandler(this.SoundEcho_Leave);
-            // 
             // SunmoonCheckBox
             // 
             this.SunmoonCheckBox.AutoSize = true;
@@ -6389,19 +6527,6 @@ namespace SharpOcarina
             this.SkyboxCheckBox.Text = "Disable Skybox";
             this.SkyboxCheckBox.UseVisualStyleBackColor = true;
             this.SkyboxCheckBox.CheckedChanged += new System.EventHandler(this.SkyboxCheckBox_CheckedChanged);
-            // 
-            // TimeSpeed
-            // 
-            this.TimeSpeed.AllowHex = true;
-            this.TimeSpeed.Digits = 2;
-            this.TimeSpeed.Location = new System.Drawing.Point(85, 48);
-            this.TimeSpeed.MaxLength = 255;
-            this.TimeSpeed.Name = "TimeSpeed";
-            this.TimeSpeed.Size = new System.Drawing.Size(80, 20);
-            this.TimeSpeed.TabIndex = 41;
-            this.TimeSpeed.Text = "0A";
-            this.TimeSpeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TimeSpeed_KeyDown);
-            this.TimeSpeed.Leave += new System.EventHandler(this.TimeSpeed_Leave);
             // 
             // label41
             // 
@@ -8082,11 +8207,10 @@ namespace SharpOcarina
             this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StickToZplus,
             this.StickToZminus});
-            this.toolStripDropDownButton3.Image = global::SharpOcarina.Properties.Resources.options;
             this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
             this.toolStripDropDownButton3.ShowDropDownArrow = false;
-            this.toolStripDropDownButton3.Size = new System.Drawing.Size(20, 20);
+            this.toolStripDropDownButton3.Size = new System.Drawing.Size(4, 4);
             this.toolStripDropDownButton3.Text = "toolStripDropDownButton1";
             this.toolStripDropDownButton3.ToolTipText = "Actions";
             // 
@@ -8125,11 +8249,10 @@ namespace SharpOcarina
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StickToYplus,
             this.StickToYminus});
-            this.toolStripDropDownButton2.Image = global::SharpOcarina.Properties.Resources.options;
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.ShowDropDownArrow = false;
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(20, 20);
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(4, 4);
             this.toolStripDropDownButton2.Text = "toolStripDropDownButton1";
             this.toolStripDropDownButton2.ToolTipText = "Actions";
             // 
@@ -8168,11 +8291,10 @@ namespace SharpOcarina
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StickToXplus,
             this.StickToXminus});
-            this.toolStripDropDownButton1.Image = global::SharpOcarina.Properties.Resources.options;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ShowDropDownArrow = false;
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(20, 20);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(4, 4);
             this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ToolTipText = "Actions";
             // 
@@ -8730,7 +8852,6 @@ namespace SharpOcarina
             // CutscenePositionViewMode
             // 
             this.CutscenePositionViewMode.Enabled = false;
-            this.CutscenePositionViewMode.Image = global::SharpOcarina.Properties.Resources.eye;
             this.CutscenePositionViewMode.Location = new System.Drawing.Point(222, 227);
             this.CutscenePositionViewMode.Name = "CutscenePositionViewMode";
             this.CutscenePositionViewMode.Size = new System.Drawing.Size(68, 28);
@@ -10278,7 +10399,6 @@ namespace SharpOcarina
             // RenderFunctionPreview
             // 
             this.RenderFunctionPreview.Enabled = false;
-            this.RenderFunctionPreview.Image = global::SharpOcarina.Properties.Resources.eye;
             this.RenderFunctionPreview.Location = new System.Drawing.Point(329, 197);
             this.RenderFunctionPreview.Name = "RenderFunctionPreview";
             this.RenderFunctionPreview.Size = new System.Drawing.Size(68, 28);
@@ -10335,11 +10455,10 @@ namespace SharpOcarina
             // RenderFunctionFlagPresetButton
             // 
             this.RenderFunctionFlagPresetButton.BackColor = System.Drawing.Color.Transparent;
-            this.RenderFunctionFlagPresetButton.Image = global::SharpOcarina.Properties.Resources.options;
             this.RenderFunctionFlagPresetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RenderFunctionFlagPresetButton.Name = "RenderFunctionFlagPresetButton";
             this.RenderFunctionFlagPresetButton.ShowDropDownArrow = false;
-            this.RenderFunctionFlagPresetButton.Size = new System.Drawing.Size(59, 20);
+            this.RenderFunctionFlagPresetButton.Size = new System.Drawing.Size(43, 19);
             this.RenderFunctionFlagPresetButton.Text = "Preset";
             this.RenderFunctionFlagPresetButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.RenderFunctionFlagPresetButton.ToolTipText = "Actions";
@@ -11339,6 +11458,18 @@ namespace SharpOcarina
             this.GlobalRomRefresh.Visible = false;
             this.GlobalRomRefresh.Click += new System.EventHandler(this.DatabaseButton_Click);
             // 
+            // Z64RomPlay
+            // 
+            this.Z64RomPlay.Image = global::SharpOcarina.Properties.Resources.play;
+            this.Z64RomPlay.Location = new System.Drawing.Point(555, 2);
+            this.Z64RomPlay.Name = "Z64RomPlay";
+            this.Z64RomPlay.Size = new System.Drawing.Size(22, 22);
+            this.Z64RomPlay.TabIndex = 54;
+            this.EnvironmentControlTooltip.SetToolTip(this.Z64RomPlay, "Inject and launch the ROM");
+            this.Z64RomPlay.UseVisualStyleBackColor = true;
+            this.Z64RomPlay.Visible = false;
+            this.Z64RomPlay.Click += new System.EventHandler(this.Z64RomPlay_Click);
+            // 
             // label86
             // 
             this.label86.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -11353,7 +11484,6 @@ namespace SharpOcarina
             // 
             this.CDILink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CDILink.BackColor = System.Drawing.Color.Black;
-            this.CDILink.Image = global::SharpOcarina.Properties.Resources.cdilink;
             this.CDILink.Location = new System.Drawing.Point(13, 507);
             this.CDILink.Name = "CDILink";
             this.CDILink.Size = new System.Drawing.Size(1, 1);
@@ -11509,6 +11639,7 @@ namespace SharpOcarina
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1161, 759);
+            this.Controls.Add(this.Z64RomPlay);
             this.Controls.Add(this.label136);
             this.Controls.Add(this.RoomSelector);
             this.Controls.Add(this.label7);
@@ -11566,6 +11697,7 @@ namespace SharpOcarina
             this.WaterboxGroupBox.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxRoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxCam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxEnv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxZPos)).EndInit();
@@ -11652,8 +11784,14 @@ namespace SharpOcarina
             this.groupBox11.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WindStrength)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindSouth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindVertical)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindWest)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SoundEcho)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimeSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeMinute)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeHour)).EndInit();
             this.tabCollision.ResumeLayout(false);
@@ -11946,7 +12084,6 @@ namespace SharpOcarina
         private ComboBox NightSFXComboBox;
         private Label label35;
         private GroupBox groupBox8;
-        private NumericTextBox TimeSpeed;
         private Label label41;
         private Label label40;
         private Label label39;
@@ -11957,7 +12094,6 @@ namespace SharpOcarina
         private ComboBox ElfMessageComboBox;
         private Label label42;
         private CheckBox SunmoonCheckBox;
-        private NumericTextBox SoundEcho;
         private Label label43;
         private ToolTip EnvironmentControlTooltip;
         private GroupBox groupBox10;
@@ -11974,13 +12110,9 @@ namespace SharpOcarina
         private Label label50;
         private ComboBox RestrictionComboBox;
         private GroupBox groupBox9;
-        private NumericTextBox WindStrength;
         private Label label48;
-        private NumericTextBox WindSouth;
         private Label label49;
-        private NumericTextBox WindVertical;
         private Label label47;
-        private NumericTextBox WindWest;
         private Label label46;
         private GroupBox groupBox12;
         private Panel panel6;
@@ -12047,7 +12179,6 @@ namespace SharpOcarina
         private NiceLine niceLine7;
         private RadioButton VoidCheckBox;
         private ToolStripMenuItem showControlsToolStripMenuItem;
-        private NumericTextBox WaterboxRoom;
         private Label WaterboxRoomLabel;
         private ToolStripMenuItem autoplaceDoorsToolStripMenuItem;
         private TabPage tabCutscene;
@@ -12564,9 +12695,17 @@ namespace SharpOcarina
         private ToolStripMenuItem importActorCutscenesFromzsceneToolStripMenuItem;
         private ToolStripMenuItem ResetGroupSettingsReloadMenuItem;
         private ToolStripMenuItem dropTableEditorOoTToolStripMenuItem;
-        private CheckBox GroupVibrant;
+        private CheckBox GroupScaledNormals;
         private ToolStripSeparator toolStripSeparator8;
         private ToolStripMenuItem NewZ64romProject;
+        private NumericUpDownEx TimeSpeed;
+        private NumericUpDownEx SoundEcho;
+        private NumericUpDownEx WaterboxRoom;
+        private NumericUpDownEx WindStrength;
+        private NumericUpDownEx WindSouth;
+        private NumericUpDownEx WindVertical;
+        private NumericUpDownEx WindWest;
+        private Button Z64RomPlay;
     }
     }
 

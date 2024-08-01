@@ -136,6 +136,7 @@ namespace SharpOcarina
             this.label18 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.exportAsZ64romPatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.Items.SuspendLayout();
@@ -188,7 +189,8 @@ namespace SharpOcarina
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OpenRomToolStripMenuItem,
             this.saveROMToolStripMenuItem,
-            this.saveBinaryToolStripMenuItem});
+            this.saveBinaryToolStripMenuItem,
+            this.exportAsZ64romPatchToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -196,21 +198,21 @@ namespace SharpOcarina
             // OpenRomToolStripMenuItem
             // 
             this.OpenRomToolStripMenuItem.Name = "OpenRomToolStripMenuItem";
-            this.OpenRomToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.OpenRomToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.OpenRomToolStripMenuItem.Text = "Open ROM...";
             this.OpenRomToolStripMenuItem.Click += new System.EventHandler(this.OpenRomToolStripMenuItem_Click);
             // 
             // saveROMToolStripMenuItem
             // 
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.saveROMToolStripMenuItem.Text = "Save ROM...";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveROMToolStripMenuItem_Click);
             // 
             // saveBinaryToolStripMenuItem
             // 
             this.saveBinaryToolStripMenuItem.Name = "saveBinaryToolStripMenuItem";
-            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.saveBinaryToolStripMenuItem.Text = "Save binary...";
             this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
             // 
@@ -280,6 +282,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.MagicBeansAmount.Name = "MagicBeansAmount";
+            this.MagicBeansAmount.ShiftMultiplier = 1;
             this.MagicBeansAmount.Size = new System.Drawing.Size(48, 20);
             this.MagicBeansAmount.TabIndex = 104;
             this.MagicBeansAmount.Value = new decimal(new int[] {
@@ -316,6 +319,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.BombchusAmount.Name = "BombchusAmount";
+            this.BombchusAmount.ShiftMultiplier = 1;
             this.BombchusAmount.Size = new System.Drawing.Size(48, 20);
             this.BombchusAmount.TabIndex = 102;
             this.BombchusAmount.Value = new decimal(new int[] {
@@ -352,6 +356,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.DekuSeedsAmount.Name = "DekuSeedsAmount";
+            this.DekuSeedsAmount.ShiftMultiplier = 1;
             this.DekuSeedsAmount.Size = new System.Drawing.Size(48, 20);
             this.DekuSeedsAmount.TabIndex = 100;
             this.DekuSeedsAmount.Value = new decimal(new int[] {
@@ -388,6 +393,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.ArrowsAmount.Name = "ArrowsAmount";
+            this.ArrowsAmount.ShiftMultiplier = 1;
             this.ArrowsAmount.Size = new System.Drawing.Size(48, 20);
             this.ArrowsAmount.TabIndex = 98;
             this.ArrowsAmount.Value = new decimal(new int[] {
@@ -424,6 +430,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.BombsAmount.Name = "BombsAmount";
+            this.BombsAmount.ShiftMultiplier = 1;
             this.BombsAmount.Size = new System.Drawing.Size(48, 20);
             this.BombsAmount.TabIndex = 96;
             this.BombsAmount.Value = new decimal(new int[] {
@@ -460,6 +467,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.DekuNutsAmount.Name = "DekuNutsAmount";
+            this.DekuNutsAmount.ShiftMultiplier = 1;
             this.DekuNutsAmount.Size = new System.Drawing.Size(48, 20);
             this.DekuNutsAmount.TabIndex = 94;
             this.DekuNutsAmount.Value = new decimal(new int[] {
@@ -505,6 +513,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.DekuSticksAmount.Name = "DekuSticksAmount";
+            this.DekuSticksAmount.ShiftMultiplier = 1;
             this.DekuSticksAmount.Size = new System.Drawing.Size(48, 20);
             this.DekuSticksAmount.TabIndex = 91;
             this.DekuSticksAmount.Value = new decimal(new int[] {
@@ -624,6 +633,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.GiantKnifeUses.Name = "GiantKnifeUses";
+            this.GiantKnifeUses.ShiftMultiplier = 1;
             this.GiantKnifeUses.Size = new System.Drawing.Size(48, 20);
             this.GiantKnifeUses.TabIndex = 93;
             this.GiantKnifeUses.Value = new decimal(new int[] {
@@ -964,6 +974,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.SkulltulaTokens.Name = "SkulltulaTokens";
+            this.SkulltulaTokens.ShiftMultiplier = 1;
             this.SkulltulaTokens.Size = new System.Drawing.Size(48, 20);
             this.SkulltulaTokens.TabIndex = 93;
             this.SkulltulaTokens.Value = new decimal(new int[] {
@@ -1172,6 +1183,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.RespawnEntranceAdult.Name = "RespawnEntranceAdult";
+            this.RespawnEntranceAdult.ShiftMultiplier = 1;
             this.RespawnEntranceAdult.Size = new System.Drawing.Size(63, 20);
             this.RespawnEntranceAdult.TabIndex = 120;
             this.toolTip1.SetToolTip(this.RespawnEntranceAdult, "base index + scene setup = actual entrance index");
@@ -1210,6 +1222,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.RespawnEntranceChild.Name = "RespawnEntranceChild";
+            this.RespawnEntranceChild.ShiftMultiplier = 1;
             this.RespawnEntranceChild.Size = new System.Drawing.Size(63, 20);
             this.RespawnEntranceChild.TabIndex = 118;
             this.toolTip1.SetToolTip(this.RespawnEntranceChild, "base index + scene setup = actual entrance index");
@@ -1259,6 +1272,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.NewFileScene.Name = "NewFileScene";
+            this.NewFileScene.ShiftMultiplier = 1;
             this.NewFileScene.Size = new System.Drawing.Size(63, 20);
             this.NewFileScene.TabIndex = 115;
             this.toolTip1.SetToolTip(this.NewFileScene, "Can only be dungeon scenes (0x00 - 0x0D), link\'s house (0x34) or temple of time (" +
@@ -1297,6 +1311,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.RupeesAmount.Name = "RupeesAmount";
+            this.RupeesAmount.ShiftMultiplier = 1;
             this.RupeesAmount.Size = new System.Drawing.Size(48, 20);
             this.RupeesAmount.TabIndex = 112;
             this.RupeesAmount.Value = new decimal(new int[] {
@@ -1345,6 +1360,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.NewFileHeader.Name = "NewFileHeader";
+            this.NewFileHeader.ShiftMultiplier = 1;
             this.NewFileHeader.Size = new System.Drawing.Size(63, 20);
             this.NewFileHeader.TabIndex = 109;
             this.toolTip1.SetToolTip(this.NewFileHeader, "0000 for no cutscene, FFFx for cutscene header");
@@ -1403,6 +1419,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.TitleScreenHeader.Name = "TitleScreenHeader";
+            this.TitleScreenHeader.ShiftMultiplier = 1;
             this.TitleScreenHeader.Size = new System.Drawing.Size(63, 20);
             this.TitleScreenHeader.TabIndex = 103;
             this.toolTip1.SetToolTip(this.TitleScreenHeader, "0000 for no cutscene, FFFx for cutscene header");
@@ -1441,6 +1458,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.TitleScreenEntrance.Name = "TitleScreenEntrance";
+            this.TitleScreenEntrance.ShiftMultiplier = 1;
             this.TitleScreenEntrance.Size = new System.Drawing.Size(63, 20);
             this.TitleScreenEntrance.TabIndex = 101;
             this.toolTip1.SetToolTip(this.TitleScreenEntrance, "base index + scene setup = actual entrance index");
@@ -1498,6 +1516,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.MagicAmount.Name = "MagicAmount";
+            this.MagicAmount.ShiftMultiplier = 1;
             this.MagicAmount.Size = new System.Drawing.Size(48, 20);
             this.MagicAmount.TabIndex = 97;
             this.MagicAmount.Value = new decimal(new int[] {
@@ -1534,6 +1553,7 @@ namespace SharpOcarina
             0,
             -2147483648});
             this.MaxHearts.Name = "MaxHearts";
+            this.MaxHearts.ShiftMultiplier = 1;
             this.MaxHearts.Size = new System.Drawing.Size(48, 20);
             this.MaxHearts.TabIndex = 95;
             this.MaxHearts.Value = new decimal(new int[] {
@@ -1561,6 +1581,13 @@ namespace SharpOcarina
             this.button1.Text = "Save";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // exportAsZ64romPatchToolStripMenuItem
+            // 
+            this.exportAsZ64romPatchToolStripMenuItem.Name = "exportAsZ64romPatchToolStripMenuItem";
+            this.exportAsZ64romPatchToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.exportAsZ64romPatchToolStripMenuItem.Text = "Export as z64rom patch...";
+            this.exportAsZ64romPatchToolStripMenuItem.Click += new System.EventHandler(this.exportAsZ64romPatchToolStripMenuItem_Click);
             // 
             // FileCreationSaveEditor
             // 
@@ -1720,5 +1747,6 @@ namespace SharpOcarina
         private Label label31;
         private NumericUpDownEx RespawnEntranceChild;
         private Label label17;
+        private ToolStripMenuItem exportAsZ64romPatchToolStripMenuItem;
     }
 }

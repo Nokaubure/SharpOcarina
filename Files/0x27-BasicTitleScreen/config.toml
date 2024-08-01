@@ -1,0 +1,15 @@
+# unnamedff
+draw_func_index = 4
+[enables]
+	bottles     = true
+	a_button    = true
+	b_button    = true
+	unused      = true
+	warp_song   = true
+	ocarina     = true
+	hookshot    = true
+	trade_item  = true
+	other       = true
+	din_nayru   = true
+	farores     = true
+	sun_song    = true
