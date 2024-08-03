@@ -6213,6 +6213,28 @@ namespace SharpOcarina
 
                 }
             }
+            //zelootma patch
+            List<byte> data = new List<byte>(File.ReadAllBytes(rom));
+
+            if (data[0x00BA13BC] == 04)
+            {
+
+                BinaryWriter BWS = new BinaryWriter(File.OpenWrite(rom));
+
+                BWS.Seek(0x00BA13BC, SeekOrigin.Begin);
+
+                List<Byte> Output = new List<byte>();
+
+                Helpers.Append64(ref Output, 0x027AF000);
+                Helpers.Append64(ref Output, 0x027AF300);
+                Helpers.Append64(ref Output, 0x00000000);
+                Helpers.Append64(ref Output, 0x00000000);
+
+                BWS.Write(Output.ToArray());
+
+                Output.Clear();
+                BWS.Close();
+            }
         }
 
         private void InjectToRom(string rom)
@@ -10214,7 +10236,7 @@ namespace SharpOcarina
 
         private void WaterboxRoom_Leave(object sender, EventArgs e)
         {
-            if (WaterboxRoom.Value > CurrentScene.Rooms.Count && WaterboxRoom.Value != 0x3F) WaterboxRoom.Value = (CurrentScene.Rooms.Count - 1);
+            if (WaterboxRoom.Value > CurrentScene.Rooms.Count-1 && WaterboxRoom.Value != 0x3F) WaterboxRoom.Value = (CurrentScene.Rooms.Count - 1);
             UpdateWaterboxData();
         }
 
@@ -10832,6 +10854,7 @@ namespace SharpOcarina
 
 
             int offset = start + 8; //skip cutscene header
+            int m1 = 0, m2 = 0;
 
             while (offset < CutsceneBinaryData.Count - 1)
             {
@@ -10845,9 +10868,11 @@ namespace SharpOcarina
 
                 if (marker == 0x0001 || marker == 0x0005)
                 {
+                    Console.WriteLine("marker " + marker);
                     ZCutscene cutscene;
                     bool addpoints = true;
-                    if (CameraCommands.Count == 0)
+                    m1++;
+                    if (m1 > m2)
                     {
                         cutscene = new ZCutscene(marker, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
                     }
@@ -10872,7 +10897,7 @@ namespace SharpOcarina
                         ZCutscenePosition cutpos = new ZCutscenePosition(0, 0, 45, pos, new Vector3());
 
                         if (addpoints) cutscene.Points.Add(cutpos);
-                        else
+                        else if (counter < cutscene.Points.Count)
                         {
                             cutscene.Points[counter].Position = pos;
                         }
@@ -10898,10 +10923,11 @@ namespace SharpOcarina
                 }
                 else if ((marker == 0x0002 || marker == 0x0006))
                 {
-
+                    Console.WriteLine("marker " + marker);
                     ZCutscene cutscene;
                     bool addpoints = true;
-                    if (CameraCommands.Count == 0)
+                    m2++;
+                    if (m2 > m1)
                     {
                         cutscene = new ZCutscene(marker, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
                     }
@@ -10927,7 +10953,7 @@ namespace SharpOcarina
 
                         if (addpoints)
                             cutscene.Points.Add(cutpos);
-                        else
+                        else if (counter < cutscene.Points.Count)
                         {
                             cutscene.Points[counter].Position2 = pos;
 
@@ -11076,6 +11102,7 @@ namespace SharpOcarina
 
                     CurrentScene.Cutscene.Add(cutscene);
                 }
+
 
             }
         }
@@ -12744,8 +12771,11 @@ namespace SharpOcarina
             {
 
                 FileCreationSaveEditor filecreationsaveeditor = new FileCreationSaveEditor();
-                filecreationsaveeditor.Show();
-                savefileeditor_visible = true;
+                if (!filecreationsaveeditor.IsDisposed)
+                {
+                    filecreationsaveeditor.Show();
+                    savefileeditor_visible = true;
+                }
 
 
             }
@@ -13315,10 +13345,9 @@ namespace SharpOcarina
             {
                 dir.Delete(true);
             }
-            //File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\0x27-BasicTitleScreen"), path + "\\rom\\scene\\0x27-BasicTitleScreen");
 
-            DirectoryInfo sourcedir = new DirectoryInfo(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\0x27-BasicTitleScreen"));
-            string destinationDir = path + "rom\\scene\\0x27-BasicTitleScreen";
+            DirectoryInfo sourcedir = new DirectoryInfo(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\0x27-TitleScreen"));
+            string destinationDir = path + "rom\\scene\\0x27-TitleScreen";
             if (!Directory.Exists(destinationDir))
             {
                 Directory.CreateDirectory(destinationDir);
@@ -14577,11 +14606,15 @@ namespace SharpOcarina
         {
             if (!subscreenmapeditor_visible)
             {
-                //Enabled = false;
 
                 SubscreenMapEditor mapeditor = new SubscreenMapEditor(CurrentScene != null ? (ushort)CurrentScene.SceneNumber : (ushort)0, this);
-                mapeditor.Show();
-                subscreenmapeditor_visible = true;
+
+                if (!mapeditor.IsDisposed)
+                {
+                    mapeditor.Show();
+                    subscreenmapeditor_visible = true;
+                }
+
 
             }
         }
@@ -18223,6 +18256,12 @@ namespace SharpOcarina
 
                             }
                         }
+                    }
+
+                    DialogResult dialogResult = MessageBox.Show("Done! Load the project into SharpOcarina?", "Load?", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        OpenGlobalFile(path + "z64project.toml");
                     }
 
 

@@ -8,15 +8,23 @@
 
 - You can now let SO install z64rom for you, simply go to File > Create new z64rom project.
 
+- Added new tag #ScaledNormals, this lets you define how light A/B affects the mesh by using a grayscale of vertex colors to define the normal map.
+
 - Injecting a scene on a rom bigger than 64 mb will trim its size to 64 mb. The purpose of this is to autotrim the popular "ZELOOTMA" debug rom.
 
 - The [Beta] tag of "Build and launch z64rom + warp to scene" is removed since the feature now properly works with the latest z64rom version
 
 - "Build and launch z64rom + warp to scene" now also saves the scene to z64rom, turning this option into 1 click to test
 
-- [MM] Fixed an issue where texture scrolling wasnt rendered
+- Added play button when in global rom or z64rom mode
+global rom mode: acts as a shortcut of inject + launch rom
+z64rom mode: acts as a shortcut of build and launch z64rom + warp to scene
+
+- Added a button in the actor database to search actors by vanilla category.
 
 - Turned some text fields into numeric fields
+
+- [MM] Fixed an issue where texture scrolling wasnt rendered
 
 - Fixed an issue where the flag value of texture animation conditions would reset to value 3F
 
@@ -27,6 +35,8 @@
 - Fixed an issue regarding simple texture swap animation
 
 - Fixed an issue where a texture frame animation couldnt have different frame timings
+
+- Fixed an issue where an error would show up if you cancel "select a base rom" window
 
 --------------
 ---1.50

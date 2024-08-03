@@ -1930,18 +1930,18 @@ namespace SharpOcarina
             // 
             this.nokaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.patchROMToolStripMenuItem,
-            this.objectTableEditorToolStripMenuItem,
             this.entranceTableEditorToolStripMenuItem,
             this.cutsceneTableEditorToolStripMenuItem,
-            this.replaceSceneTitleCardTextureToolStripMenuItem,
-            this.restrictionFlagsTableEditorToolStripMenuItem,
             this.fileCreationEditorToolStripMenuItem,
             this.pauseScreenMapEditorOoTToolStripMenuItem,
+            this.dropTableEditorOoTToolStripMenuItem,
+            this.restrictionFlagsTableEditorToolStripMenuItem,
             this.clearSceneDmatableToolStripMenuItem,
             this.removeAllRomScenesToolStripMenuItem,
             this.rebuildDmaTableallToolStripMenuItem,
             this.decompressROMToolStripMenuItem,
-            this.dropTableEditorOoTToolStripMenuItem});
+            this.objectTableEditorToolStripMenuItem,
+            this.replaceSceneTitleCardTextureToolStripMenuItem});
             this.nokaToolStripMenuItem.Name = "nokaToolStripMenuItem";
             this.nokaToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.nokaToolStripMenuItem.Text = "Tools";
@@ -1955,7 +1955,7 @@ namespace SharpOcarina
             this.advancedTextureAnimationsOoTDebugToolStripMenuItem,
             this.ExtendDynapolyCountStripMenuItem});
             this.patchROMToolStripMenuItem.Name = "patchROMToolStripMenuItem";
-            this.patchROMToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.patchROMToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.patchROMToolStripMenuItem.Text = "Patch ROM...";
             // 
             // patchROMToExtendRAMAndFixBugsOoTDebugToolStripMenuItem1
@@ -1997,7 +1997,7 @@ namespace SharpOcarina
             // 
             this.objectTableEditorToolStripMenuItem.Enabled = false;
             this.objectTableEditorToolStripMenuItem.Name = "objectTableEditorToolStripMenuItem";
-            this.objectTableEditorToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.objectTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.objectTableEditorToolStripMenuItem.Text = "Object Table Editor";
             this.objectTableEditorToolStripMenuItem.Visible = false;
             this.objectTableEditorToolStripMenuItem.Click += new System.EventHandler(this.objectTableEditorToolStripMenuItem_Click);
@@ -2005,21 +2005,22 @@ namespace SharpOcarina
             // entranceTableEditorToolStripMenuItem
             // 
             this.entranceTableEditorToolStripMenuItem.Name = "entranceTableEditorToolStripMenuItem";
-            this.entranceTableEditorToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.entranceTableEditorToolStripMenuItem.Text = "Entrance Table Editor (all)";
+            this.entranceTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.entranceTableEditorToolStripMenuItem.Text = "Entrance Table Editor (OoT/MM//z64rom)";
             this.entranceTableEditorToolStripMenuItem.Click += new System.EventHandler(this.rOMEntranceTableEditorToolStripMenuItem_Click);
             // 
             // cutsceneTableEditorToolStripMenuItem
             // 
             this.cutsceneTableEditorToolStripMenuItem.Name = "cutsceneTableEditorToolStripMenuItem";
-            this.cutsceneTableEditorToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.cutsceneTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.cutsceneTableEditorToolStripMenuItem.Text = "Cutscene Table Editor (OoT)";
             this.cutsceneTableEditorToolStripMenuItem.Click += new System.EventHandler(this.cutsceneTableEditorToolStripMenuItem_Click);
             // 
             // replaceSceneTitleCardTextureToolStripMenuItem
             // 
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Enabled = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Name = "replaceSceneTitleCardTextureToolStripMenuItem";
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.replaceSceneTitleCardTextureToolStripMenuItem.Text = "Replace scene title card texture (OoT)";
             this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
@@ -2027,57 +2028,57 @@ namespace SharpOcarina
             // restrictionFlagsTableEditorToolStripMenuItem
             // 
             this.restrictionFlagsTableEditorToolStripMenuItem.Name = "restrictionFlagsTableEditorToolStripMenuItem";
-            this.restrictionFlagsTableEditorToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.restrictionFlagsTableEditorToolStripMenuItem.Text = "Restriction flags Table Editor (all)";
+            this.restrictionFlagsTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.restrictionFlagsTableEditorToolStripMenuItem.Text = "Restriction flags Table Editor (OoT/MM)";
             this.restrictionFlagsTableEditorToolStripMenuItem.Click += new System.EventHandler(this.restrictionFlagsTableEditorToolStripMenuItem_Click);
             // 
             // fileCreationEditorToolStripMenuItem
             // 
             this.fileCreationEditorToolStripMenuItem.Name = "fileCreationEditorToolStripMenuItem";
-            this.fileCreationEditorToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.fileCreationEditorToolStripMenuItem.Text = "File Creation Editor (OoT)";
+            this.fileCreationEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.fileCreationEditorToolStripMenuItem.Text = "Filesave Creation Editor (OoT/z64rom)";
             this.fileCreationEditorToolStripMenuItem.Click += new System.EventHandler(this.fileCreationEditorToolStripMenuItem_Click);
             // 
             // pauseScreenMapEditorOoTToolStripMenuItem
             // 
             this.pauseScreenMapEditorOoTToolStripMenuItem.Name = "pauseScreenMapEditorOoTToolStripMenuItem";
-            this.pauseScreenMapEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.pauseScreenMapEditorOoTToolStripMenuItem.Text = "Pause Screen Map Editor (OoT)";
+            this.pauseScreenMapEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.pauseScreenMapEditorOoTToolStripMenuItem.Text = "Pause Screen Map Editor (OoT/z64rom)";
             this.pauseScreenMapEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.pauseScreenMapEditorOoTToolStripMenuItem_Click);
             // 
             // clearSceneDmatableToolStripMenuItem
             // 
             this.clearSceneDmatableToolStripMenuItem.Name = "clearSceneDmatableToolStripMenuItem";
-            this.clearSceneDmatableToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.clearSceneDmatableToolStripMenuItem.Text = "Clear scene DMA table (all)";
+            this.clearSceneDmatableToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.clearSceneDmatableToolStripMenuItem.Text = "Clear scene DMA table (OoT/MM)";
             this.clearSceneDmatableToolStripMenuItem.Click += new System.EventHandler(this.clearSceneDmatableToolStripMenuItem_Click);
             // 
             // removeAllRomScenesToolStripMenuItem
             // 
             this.removeAllRomScenesToolStripMenuItem.Name = "removeAllRomScenesToolStripMenuItem";
-            this.removeAllRomScenesToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.removeAllRomScenesToolStripMenuItem.Text = "Remove all ROM scenes (all)";
+            this.removeAllRomScenesToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.removeAllRomScenesToolStripMenuItem.Text = "Remove all ROM scenes (OoT/MM/z64rom)";
             this.removeAllRomScenesToolStripMenuItem.Click += new System.EventHandler(this.removeAllRomScenesToolStripMenuItem_Click);
             // 
             // rebuildDmaTableallToolStripMenuItem
             // 
             this.rebuildDmaTableallToolStripMenuItem.Name = "rebuildDmaTableallToolStripMenuItem";
-            this.rebuildDmaTableallToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.rebuildDmaTableallToolStripMenuItem.Text = "Rebuild DMA table (all)";
+            this.rebuildDmaTableallToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.rebuildDmaTableallToolStripMenuItem.Text = "Rebuild DMA table (OoT/MM)";
             this.rebuildDmaTableallToolStripMenuItem.Click += new System.EventHandler(this.rebuildDmaTableallToolStripMenuItem_Click);
             // 
             // decompressROMToolStripMenuItem
             // 
             this.decompressROMToolStripMenuItem.Name = "decompressROMToolStripMenuItem";
-            this.decompressROMToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.decompressROMToolStripMenuItem.Text = "Decompress ROM (all)";
+            this.decompressROMToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.decompressROMToolStripMenuItem.Text = "Decompress ROM (OoT/MM)";
             this.decompressROMToolStripMenuItem.Click += new System.EventHandler(this.decompressROMToolStripMenuItem_Click);
             // 
             // dropTableEditorOoTToolStripMenuItem
             // 
             this.dropTableEditorOoTToolStripMenuItem.Name = "dropTableEditorOoTToolStripMenuItem";
-            this.dropTableEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.dropTableEditorOoTToolStripMenuItem.Text = "Drop Table Editor (OoT)";
+            this.dropTableEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.dropTableEditorOoTToolStripMenuItem.Text = "Drop Table Editor (OoT/z64rom)";
             this.dropTableEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.dropTableEditorOoTToolStripMenuItem_Click);
             // 
             // tabControl1

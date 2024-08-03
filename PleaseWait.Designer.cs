@@ -34,14 +34,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.label1.Location = new System.Drawing.Point(0, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(279, 23);
+            this.label1.Size = new System.Drawing.Size(275, 18);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Downloading, please wait...";
+            this.label1.Text = "Downloading and installing, please wait...";
             this.label1.UseWaitCursor = true;
+            this.label1.Visible = false;
             // 
             // PleaseWait
             // 
@@ -52,7 +53,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "PleaseWait";
-            this.Text = "Alert";
+            this.Text = "Please wait...";
             this.TopMost = true;
             this.UseWaitCursor = true;
             this.ResumeLayout(false);

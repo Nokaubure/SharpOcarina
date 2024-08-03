@@ -211,7 +211,7 @@ namespace SharpOcarina
 
                 if (!File.Exists(binarydata))
                 {
-                    MessageBox.Show("Select an uncompressed ROM, this will only be asked the first time.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Select a clean uncompressed debug ROM, this will only be asked the first time.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     openFileDialog1.FileName = "";
                     openFileDialog1.Filter = "Rom files (*.z64;*.rom)|*.z64;*.rom|All Files (*.*)|*.*";
@@ -241,6 +241,8 @@ namespace SharpOcarina
                     else
                     {
                         this.Close();
+                        FileCreationSaveEditor_FormClosed(new object(), null);
+                        return;
                     }
 
                 }
@@ -916,6 +918,8 @@ namespace SharpOcarina
                 }
             }
 
+            if (ROMpath == "") return;
+
             if (IsFileLocked(ROMpath))
                 MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
@@ -935,17 +939,21 @@ namespace SharpOcarina
 
                 File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/initialsave_SO.cfg"), initialsave_SO);
 
+                path = rom64.getPath() + "\\";
+
                 if (File.Exists(path + @"src\system\state\0x04-Opening\Opening.c"))
                 {
-                    Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x" + TitleScreenEntrance.Value.ToString("X4") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
-                    Helpers.ReplaceLine("gSaveContext.cutsceneIndex", "    gSaveContext.cutsceneIndex = 0x" + TitleScreenHeader.Value.ToString("X4") + 
-                                                                      ";  gSaveContext.entranceIndex = 0x" + TitleScreenEntrance.Value.ToString("X4") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
+;
+
+                    Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x" + ((int)TitleScreenEntrance.Value).ToString("X4") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
+                    Helpers.ReplaceLine("gSaveContext.cutsceneIndex", "    gSaveContext.cutsceneIndex = 0x" + ((int)TitleScreenHeader.Value).ToString("X4") + 
+                                                                      ";  gSaveContext.entranceIndex = 0x" + ((int)TitleScreenEntrance.Value).ToString("X4") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
 
                     Helpers.ReplaceLine("gSaveContext.linkAge", "    gSaveContext.linkAge = " + (AdultLinkTitle.Checked ? "LINK_AGE_ADULT" : "LINK_AGE_CHILD") + ";", path + @"src\system\state\0x04-Opening\Opening.c");
 
-                    Helpers.ReplaceLine("#define Patch_SaveStartEntrance", "#define Patch_SaveStartEntrance = 0x" + NewFileScene.Value.ToString("X2") + ";", path + @"src\lib_user\uLib.h");
-                    Helpers.ReplaceLine("#define Patch_SaveStartCsIndex", "#define Patch_SaveStartCsIndex = 0x" + NewFileHeader.Value.ToString("X4") + ";", path + @"src\lib_user\uLib.h");
-                    Helpers.ReplaceLine("#define Patch_SaveStartAge", "#define Patch_SaveStartAge = " + (AdultLinkNewFile.Checked ? "LINK_AGE_ADULT" : "LINK_AGE_CHILD") + ";", path + @"src\lib_user\uLib.h");
+                    Helpers.ReplaceLine("#define Patch_SaveStartEntrance", "#define Patch_SaveStartEntrance 0x" + ((int)NewFileScene.Value).ToString("X2") + "", path + @"src\lib_user\uLib.h");
+                    Helpers.ReplaceLine("#define Patch_SaveStartCsIndex", "#define Patch_SaveStartCsIndex 0x" + ((int)NewFileHeader.Value).ToString("X4") + "", path + @"src\lib_user\uLib.h");
+                    Helpers.ReplaceLine("#define Patch_SaveStartAge", "#define Patch_SaveStartAge " + (AdultLinkNewFile.Checked ? "LINK_AGE_ADULT" : "LINK_AGE_CHILD") + ";", path + @"src\lib_user\uLib.h");
                 }
                 else
                 {

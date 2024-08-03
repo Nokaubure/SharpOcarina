@@ -152,6 +152,15 @@ namespace SharpOcarina
 
                 Database.Add(new DatabaseActor((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16),values, nodeAtt["Name"].Value, xmlactor.notes + warning,xmlactor.category));
             }
+
+            foreach(string category in actor_categories)
+            {
+                ToolStripMenuItem MenuItem = new System.Windows.Forms.ToolStripMenuItem() { Name = category, Text = category };
+
+                    MenuItem.Click += new System.EventHandler(this.SearchCategory);
+
+                CategoriesButton.DropDownItems.Add(MenuItem);
+            }
         }
 
         public void UpdateWindow()
@@ -168,8 +177,6 @@ namespace SharpOcarina
                 show = false;
                 string specialfilter = "";
                 if (filter.Contains("#")) specialfilter = filter.Replace("#", "");
-
-              //  DebugConsole.WriteLine(actor.Category + " - " + Array.IndexOf(actor_categories, specialfilter));
 
                 ActorView.Nodes.Add(new ActorNode(actor.Value, 0x0000, actor.Value.ToString("X4") + " - " + actor.Name, actor.Notes));
                 if (filter == "" || actor.Name.Contains(filter, StringComparison.OrdinalIgnoreCase) || (specialfilter != "" && actor.Category == Array.IndexOf(actor_categories, specialfilter)))
@@ -234,6 +241,11 @@ namespace SharpOcarina
             }
         }
 
+        private void StickToWall(object sender, EventArgs e)
+        {
+
+        }
+
         private void ActorView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (((ActorNode)ActorView.SelectedNode).Notes.Contains("rtf1"))
@@ -242,6 +254,12 @@ namespace SharpOcarina
                 NotesTextBox.SelectedRtf = (((ActorNode)ActorView.SelectedNode).Notes);
             }
             else NotesTextBox.Text = (((ActorNode)ActorView.SelectedNode).Notes);
+        }
+
+        private void SearchCategory(object sender, EventArgs e)
+        {
+            FilterTextBox.Text = "#" + ((ToolStripMenuItem)sender).Text;
+            GoButton_Click(sender, e);
         }
     }
 

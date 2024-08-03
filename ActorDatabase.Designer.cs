@@ -35,6 +35,9 @@
             this.ActorView = new System.Windows.Forms.TreeView();
             this.GoButton = new System.Windows.Forms.Button();
             this.NotesTextBox = new System.Windows.Forms.RichTextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.CategoriesButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // SetActorButton
@@ -104,11 +107,38 @@
             this.NotesTextBox.TabIndex = 6;
             this.NotesTextBox.Text = "";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CategoriesButton});
+            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip1.Location = new System.Drawing.Point(298, 10);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(20, 19);
+            this.toolStrip1.TabIndex = 7;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // CategoriesButton
+            // 
+            this.CategoriesButton.BackColor = System.Drawing.Color.Transparent;
+            this.CategoriesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CategoriesButton.Image = global::SharpOcarina.Properties.Resources.options;
+            this.CategoriesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CategoriesButton.Name = "CategoriesButton";
+            this.CategoriesButton.ShowDropDownArrow = false;
+            this.CategoriesButton.Size = new System.Drawing.Size(20, 20);
+            this.CategoriesButton.Text = "toolStripButton1";
+            this.CategoriesButton.ToolTipText = "Categories";
+            // 
             // ActorDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 652);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.NotesTextBox);
             this.Controls.Add(this.GoButton);
             this.Controls.Add(this.ActorView);
@@ -119,6 +149,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ActorDatabase";
             this.Text = "Actor Database";
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,5 +165,7 @@
         private System.Windows.Forms.TreeView ActorView;
         private System.Windows.Forms.Button GoButton;
         private System.Windows.Forms.RichTextBox NotesTextBox;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripDropDownButton CategoriesButton;
     }
 }

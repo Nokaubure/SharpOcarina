@@ -1574,13 +1574,13 @@
     <Content Include="Files\initialsave_SO.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\0x27-BasicTitleScreen\config.toml">
+    <Content Include="Files\0x27-TitleScreen\config.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\0x27-BasicTitleScreen\room_0.zroom">
+    <Content Include="Files\0x27-TitleScreen\room_0.zroom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\0x27-BasicTitleScreen\scene.zscene">
+    <Content Include="Files\0x27-TitleScreen\scene.zscene">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Import\import">
