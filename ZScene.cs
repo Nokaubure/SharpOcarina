@@ -107,6 +107,7 @@ namespace SharpOcarina
                 public bool[] Custom = new bool[1];
                 public ulong[,] CustomDL = new ulong[1,4];
                 public bool[] ScaledNormals = new bool[1];
+                public bool[] Vibrant = new bool[1];
 
                 [XmlIgnore]
                 public string[] groupname = new string[1];
@@ -1167,19 +1168,17 @@ namespace SharpOcarina
                     if (!Directory.Exists(Filepath + "Scene"))
                     {
                         Directory.CreateDirectory(Filepath + "Scene");
-                        if (zzrp == 1)
-                        {
-                            newdir = Filepath + @"Scene\" + SceneNumber + " - " + Helpers.MakeValidFileName(Name);
-                            //Directory.CreateDirectory(Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name));
-                        }
+                    }
+                    if (zzrp == 1)
+                    {
+                        newdir = Filepath + @"Scene\" + SceneNumber + " - " + Helpers.MakeValidFileName(Name);
+                        //Directory.CreateDirectory(Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name));
+                    }
 
-                        else if (zzrp == 2)
-                        {
-                            newdir = Filepath + @"Scene\0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name);
-                            //Directory.CreateDirectory(Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name));
-                        }
-
-
+                    else if (zzrp == 2)
+                    {
+                        newdir = Filepath + @"Scene\0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name);
+                        //Directory.CreateDirectory(Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name));
                     }
                 }
                 else
@@ -1200,7 +1199,7 @@ namespace SharpOcarina
                     if (number == SceneNumber + "" || number == "0x" + this.SceneNumber.ToString("X2")) 
                     {
                         target = subdirectory;
-                        break;
+                        if (target != newdir) break;
                     }
                 }
                 if (target == "")

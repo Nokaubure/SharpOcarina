@@ -1600,9 +1600,6 @@
     <None Include="Resources\FOT-ChiaroStd-Bfix.ttf" />
     <None Include="Resources\titlescreenMM.bin" />
     <None Include="Resources\titlescreenOOT.bin" />
-    <None Include="rn64crc\DLPORTIO.SYS">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="XML\FOT-ChiaroStd-BWin7.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1696,15 +1693,6 @@
     <None Include="Resources\UIitems.png" />
     <None Include="Resources\UIitems1.png" />
     <None Include="Resources\itemicons.png" />
-    <Content Include="rn64crc\DLPORTIO.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="rn64crc\rn64crc.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="rn64crc\rn64crc.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="XML\MM\ActorNames.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

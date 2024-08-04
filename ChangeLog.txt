@@ -1,6 +1,12 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.52
+--------------
+
+- Fixed an issue where "View scenes from rom (Beta)" didnt warned about the rom being compressed
+
+--------------
 ---1.51
 --------------
 

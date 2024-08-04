@@ -10868,7 +10868,7 @@ namespace SharpOcarina
 
                 if (marker == 0x0001 || marker == 0x0005)
                 {
-                    Console.WriteLine("marker " + marker);
+                
                     ZCutscene cutscene;
                     bool addpoints = true;
                     m1++;
@@ -10923,7 +10923,7 @@ namespace SharpOcarina
                 }
                 else if ((marker == 0x0002 || marker == 0x0006))
                 {
-                    Console.WriteLine("marker " + marker);
+        
                     ZCutscene cutscene;
                     bool addpoints = true;
                     m2++;
@@ -16782,6 +16782,13 @@ namespace SharpOcarina
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     ROM = openFileDialog1.FileName;
+
+                    FileInfo info = new FileInfo(saveFileDialog1.FileName);
+                    if (info.Length < 33554432 + 50000)
+                    {
+                        MessageBox.Show("This ROM is not uncompressed! go to Tools > Decompress ROM", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else return;
             }
