@@ -120,7 +120,7 @@
             this.ActorComboBox.TabIndex = 24;
             this.ActorComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox2_DropDown);
             this.ActorComboBox.SelectionChangeCommitted += new System.EventHandler(this.ActorComboBox_ValueChanged);
-            this.ActorComboBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.ActorComboBox_MouseWheel);
+          
             // 
             // DuplicateButton
             // 

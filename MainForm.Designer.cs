@@ -144,18 +144,18 @@ namespace SharpOcarina
             this.additionalLightsFixOoTDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedTextureAnimationsOoTDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExtendDynapolyCountStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entranceTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutsceneTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restrictionFlagsTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileCreationEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseScreenMapEditorOoTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dropTableEditorOoTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restrictionFlagsTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearSceneDmatableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeAllRomScenesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rebuildDmaTableallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decompressROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dropTableEditorOoTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.SetTitlecard = new System.Windows.Forms.Button();
@@ -1034,6 +1034,7 @@ namespace SharpOcarina
             this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
             this.glControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyDown);
             this.glControl1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyUp);
+            this.glControl1.Leave += new System.EventHandler(this.glControl1_Leave);
             this.glControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseDown);
             this.glControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseMove);
             this.glControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseUp);
@@ -1843,7 +1844,7 @@ namespace SharpOcarina
             // 
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Name = "displaySwitchFlagsUsedByAllRoomsToolStripMenuItem";
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
-            this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Text = "Display Switch Flags used by all rooms";
+            this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Text = "Display Flags used by all rooms (Flag Log)";
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Click += new System.EventHandler(this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem_Click);
             // 
             // AddObjectToAllRoomsMenuItem
@@ -1993,15 +1994,6 @@ namespace SharpOcarina
             this.ExtendDynapolyCountStripMenuItem.Text = "Extend Dynapoly Vertex Limit (OoT Debug)";
             this.ExtendDynapolyCountStripMenuItem.Click += new System.EventHandler(this.ExtendDynapolyCountStripMenuItem_Click);
             // 
-            // objectTableEditorToolStripMenuItem
-            // 
-            this.objectTableEditorToolStripMenuItem.Enabled = false;
-            this.objectTableEditorToolStripMenuItem.Name = "objectTableEditorToolStripMenuItem";
-            this.objectTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
-            this.objectTableEditorToolStripMenuItem.Text = "Object Table Editor";
-            this.objectTableEditorToolStripMenuItem.Visible = false;
-            this.objectTableEditorToolStripMenuItem.Click += new System.EventHandler(this.objectTableEditorToolStripMenuItem_Click);
-            // 
             // entranceTableEditorToolStripMenuItem
             // 
             this.entranceTableEditorToolStripMenuItem.Name = "entranceTableEditorToolStripMenuItem";
@@ -2016,22 +2008,6 @@ namespace SharpOcarina
             this.cutsceneTableEditorToolStripMenuItem.Text = "Cutscene Table Editor (OoT)";
             this.cutsceneTableEditorToolStripMenuItem.Click += new System.EventHandler(this.cutsceneTableEditorToolStripMenuItem_Click);
             // 
-            // replaceSceneTitleCardTextureToolStripMenuItem
-            // 
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Enabled = false;
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Name = "replaceSceneTitleCardTextureToolStripMenuItem";
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Text = "Replace scene title card texture (OoT)";
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
-            // 
-            // restrictionFlagsTableEditorToolStripMenuItem
-            // 
-            this.restrictionFlagsTableEditorToolStripMenuItem.Name = "restrictionFlagsTableEditorToolStripMenuItem";
-            this.restrictionFlagsTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
-            this.restrictionFlagsTableEditorToolStripMenuItem.Text = "Restriction flags Table Editor (OoT/MM)";
-            this.restrictionFlagsTableEditorToolStripMenuItem.Click += new System.EventHandler(this.restrictionFlagsTableEditorToolStripMenuItem_Click);
-            // 
             // fileCreationEditorToolStripMenuItem
             // 
             this.fileCreationEditorToolStripMenuItem.Name = "fileCreationEditorToolStripMenuItem";
@@ -2045,6 +2021,20 @@ namespace SharpOcarina
             this.pauseScreenMapEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.pauseScreenMapEditorOoTToolStripMenuItem.Text = "Pause Screen Map Editor (OoT/z64rom)";
             this.pauseScreenMapEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.pauseScreenMapEditorOoTToolStripMenuItem_Click);
+            // 
+            // dropTableEditorOoTToolStripMenuItem
+            // 
+            this.dropTableEditorOoTToolStripMenuItem.Name = "dropTableEditorOoTToolStripMenuItem";
+            this.dropTableEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.dropTableEditorOoTToolStripMenuItem.Text = "Drop Table Editor (OoT/z64rom)";
+            this.dropTableEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.dropTableEditorOoTToolStripMenuItem_Click);
+            // 
+            // restrictionFlagsTableEditorToolStripMenuItem
+            // 
+            this.restrictionFlagsTableEditorToolStripMenuItem.Name = "restrictionFlagsTableEditorToolStripMenuItem";
+            this.restrictionFlagsTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.restrictionFlagsTableEditorToolStripMenuItem.Text = "Restriction flags Table Editor (OoT/MM)";
+            this.restrictionFlagsTableEditorToolStripMenuItem.Click += new System.EventHandler(this.restrictionFlagsTableEditorToolStripMenuItem_Click);
             // 
             // clearSceneDmatableToolStripMenuItem
             // 
@@ -2074,12 +2064,23 @@ namespace SharpOcarina
             this.decompressROMToolStripMenuItem.Text = "Decompress ROM (OoT/MM)";
             this.decompressROMToolStripMenuItem.Click += new System.EventHandler(this.decompressROMToolStripMenuItem_Click);
             // 
-            // dropTableEditorOoTToolStripMenuItem
+            // objectTableEditorToolStripMenuItem
             // 
-            this.dropTableEditorOoTToolStripMenuItem.Name = "dropTableEditorOoTToolStripMenuItem";
-            this.dropTableEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
-            this.dropTableEditorOoTToolStripMenuItem.Text = "Drop Table Editor (OoT/z64rom)";
-            this.dropTableEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.dropTableEditorOoTToolStripMenuItem_Click);
+            this.objectTableEditorToolStripMenuItem.Enabled = false;
+            this.objectTableEditorToolStripMenuItem.Name = "objectTableEditorToolStripMenuItem";
+            this.objectTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.objectTableEditorToolStripMenuItem.Text = "Object Table Editor";
+            this.objectTableEditorToolStripMenuItem.Visible = false;
+            this.objectTableEditorToolStripMenuItem.Click += new System.EventHandler(this.objectTableEditorToolStripMenuItem_Click);
+            // 
+            // replaceSceneTitleCardTextureToolStripMenuItem
+            // 
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Enabled = false;
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Name = "replaceSceneTitleCardTextureToolStripMenuItem";
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Text = "Replace scene title card texture (OoT)";
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
             // 
             // tabControl1
             // 

@@ -4,7 +4,37 @@
 ---1.52
 --------------
 
-- Fixed an issue where "View scenes from rom (Beta)" didnt warned about the rom being compressed
+- Greatly reduced lag when rotating actors with the mouse wheel
+
+- Reduced lag when scrolling through the actor lists with the mouse wheel
+
+- Changed the logic where you had to select an instance with right click and then middle click before being able to rotate an actor
+
+- A yellow border shows up on the instance that can be interacted with middle click/wheel
+
+- Cutscene actor points Y rotation can be modified via mouse wheel
+
+- Instance axis is now only drawn if its ready to be interacted with middle mouse
+
+- Holding CTRL while dragging middle mouse now lets you move the selected instance from anywere, good for actors that have their bounding box hidden by their 3D models
+
+- Additional lights default as point lights with radius one when added, as thats their most common use
+
+- Fixed an issue that appeared in 1.51 where it was impossible to edit multiple waterboxes if the room of one was set to a value different than 3F
+
+- Fixed an issue where all numeric fields would display an error when they have a value bigger than the maximum instead of adjusting it
+
+- Fixed an issue where SO would prompt an error if the mouse wheel was used after deleting all actors or waterboxes
+
+- Fixed an issue where play button could be pressed without creating a scene first
+
+- Fixed an issue where a compiled rom could be given when creating z64rom binary data, corrupting it
+
+- Fixed an issue where Flag Log crashed unless global rom or z64rom was being used
+
+- Fixed an issue where Flag Log crashed if an unknown actor ID was used in a room
+
+- Fixed an issue where the modifier keys to make the camera faster or slower would get stuck when interacting with the UI while moving the camera
 
 --------------
 ---1.51
@@ -43,6 +73,12 @@ z64rom mode: acts as a shortcut of build and launch z64rom + warp to scene
 - Fixed an issue where a texture frame animation couldnt have different frame timings
 
 - Fixed an issue where an error would show up if you cancel "select a base rom" window
+
+- Fixed an issue where "View scenes from rom (Beta)" didnt warned about the rom being compressed
+
+- (1.511 hotfix) Fixed not being able to save zzrtl scenes
+
+- (1.511 hotfix) Fixed not being able to open properly scenes saved in 1.50
 
 --------------
 ---1.50

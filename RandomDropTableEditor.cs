@@ -60,6 +60,14 @@ namespace SharpOcarina
                             return;
                         }
 
+                        FileInfo info = new FileInfo(openFileDialog1.FileName);
+                        if (info.Length < 0x3F00000)
+                        {
+                            MessageBox.Show("This ROM is not uncompressed! make sure you open a clean uncompressed debug ROM!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                            return;
+                        }
+
                         System.IO.FileInfo file = new System.IO.FileInfo(binarydata);
                         file.Directory.Create(); //if directory exists, does nothing
                         File.Copy(openFileDialog1.FileName, binarydata);

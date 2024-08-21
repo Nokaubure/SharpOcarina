@@ -151,6 +151,10 @@ namespace SharpOcarina
                 else
                 {
                     base.ValueChanged -= eventHandler;
+                    if (value > base.Maximum)
+                        value = base.Maximum;
+                    else if (value < base.Minimum)
+                        value = base.Minimum;
                     base.Value = value;
                     base.ValueChanged += eventHandler;
                 }

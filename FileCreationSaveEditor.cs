@@ -211,6 +211,7 @@ namespace SharpOcarina
 
                 if (!File.Exists(binarydata))
                 {
+             
                     MessageBox.Show("Select a clean uncompressed debug ROM, this will only be asked the first time.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     openFileDialog1.FileName = "";
@@ -227,6 +228,14 @@ namespace SharpOcarina
                         if (rom.Game == "MM")
                         {
                             MessageBox.Show("MM unsupported", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                            return;
+                        }
+
+                        FileInfo info = new FileInfo(openFileDialog1.FileName);
+                        if (info.Length < 0x3F00000)
+                        {
+                            MessageBox.Show("This ROM is not uncompressed! make sure you open a clean uncompressed debug ROM!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             this.Close();
                             return;
                         }

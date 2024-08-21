@@ -138,7 +138,8 @@ namespace SharpOcarina
         public static Keys[] ActorControlKeys = new Keys[0];
 
 
-        private int actorpick = -1;
+        public static int actorpick = _Spawn_;
+        private int prevactorpick = -1;
         public byte extrapick = 0;
         public string LastScene = "";
         public DateTime LastAutoSave = DateTime.Now;
@@ -809,7 +810,7 @@ namespace SharpOcarina
 
         }
 
-        private void DrawActorModel(ZActor Actor, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder)
+        private void DrawActorModel(ZActor Actor, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder, bool Actorpick = false)
         {
             DrawModelGLID = transitionids.Contains(Actor.Number) ? DoorGLID : DrawModelGLID;
 
@@ -850,7 +851,10 @@ namespace SharpOcarina
                     if (DrawBorder)
                     {
                         GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                        if (Actorpick && DrawAxis)
+                            GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                        else
+                            GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                         GL.Enable(EnableCap.PolygonOffsetLine);
                         GL.PolygonOffset(-3.0f, -3.0f);
@@ -868,7 +872,7 @@ namespace SharpOcarina
 
 
 
-            if (DrawAxis && settings.DisplayAxis)
+            if (DrawAxis && Actorpick && settings.DisplayAxis)
             {
                 if (transitionids.Contains(Actor.Number))
                 {
@@ -1080,7 +1084,7 @@ namespace SharpOcarina
                 DrawBone(Limbs, Limbs[CurrentBone].nextchild, Actor, scale, transparency);
         }
 
-        private void DrawPathway(Vector3 Pathway, Vector3 NextPathway, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder, bool SelectedPathway)
+        private void DrawPathway(Vector3 Pathway, Vector3 NextPathway, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder, bool SelectedPathway, bool Actorpick = false)
         {
             GL.PushMatrix();
 
@@ -1126,7 +1130,10 @@ namespace SharpOcarina
                     if (DrawBorder)
                     {
                         GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                        if (Actorpick && DrawAxis)
+                            GL.Color4(Color.Red.R, Color.Red.G, Color.Red.B, 1.0f);
+                        else
+                            GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                         GL.Enable(EnableCap.PolygonOffsetLine);
                         GL.PolygonOffset(-3.0f, -3.0f);
@@ -1142,14 +1149,14 @@ namespace SharpOcarina
 
 
 
-            if (DrawAxis && settings.DisplayAxis)
+            if (DrawAxis && Actorpick && settings.DisplayAxis)
                 GL.CallList(AxisMarkerGLID);
 
             GL.PopMatrix();
             GL.PopAttrib();
         }
 
-        private void DrawCameraPoint(Vector3 CameraPoint, Vector3 NextCameraPoint, Vector3 CameraPoint2, int DrawModelGLID, byte SelectedCameraPoint)
+        private void DrawCameraPoint(Vector3 CameraPoint, Vector3 NextCameraPoint, Vector3 CameraPoint2, int DrawModelGLID, byte SelectedCameraPoint, bool Actorpick = false)
         {
             GL.PushMatrix();
 
@@ -1206,7 +1213,10 @@ namespace SharpOcarina
                 if (j == 1)
                 {
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                    GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                    if (Actorpick && SelectedCameraPoint != 0)
+                        GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                    else
+                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                     GL.Enable(EnableCap.PolygonOffsetLine);
                     GL.PolygonOffset(-3.0f, -3.0f);
@@ -1219,7 +1229,7 @@ namespace SharpOcarina
                 GL.Disable(EnableCap.PolygonOffsetLine);
             }
 
-            if (SelectedCameraPoint == 1 && settings.DisplayAxis)
+            if (SelectedCameraPoint == 1 && Actorpick && settings.DisplayAxis)
                 GL.CallList(AxisMarkerGLID);
 
             GL.PopMatrix();
@@ -1247,7 +1257,10 @@ namespace SharpOcarina
                 if (j == 1)
                 {
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                    GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                    if (Actorpick && SelectedCameraPoint != 0)
+                        GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                    else
+                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                     GL.Enable(EnableCap.PolygonOffsetLine);
                     GL.PolygonOffset(-3.0f, -3.0f);
@@ -1263,14 +1276,14 @@ namespace SharpOcarina
 
 
 
-            if (SelectedCameraPoint == 2 && settings.DisplayAxis)
+            if (SelectedCameraPoint == 2 && Actorpick && settings.DisplayAxis)
                 GL.CallList(AxisMarkerGLID);
 
             GL.PopMatrix();
             GL.PopAttrib();
         }
 
-        private void DrawCutsceneActor(Vector3 StartPos, Vector3 EndPos, Vector3 Rotation, int DrawModelGLID, byte SelectedCutsceneActor)
+        private void DrawCutsceneActor(Vector3 StartPos, Vector3 EndPos, Vector3 Rotation, int DrawModelGLID, byte SelectedCutsceneActor, bool Actorpick = false)
         {
             GL.PushMatrix();
 
@@ -1316,7 +1329,10 @@ namespace SharpOcarina
                 if (j == 1)
                 {
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                    GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                    if (Actorpick && SelectedCutsceneActor != 0)
+                        GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                    else
+                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                     GL.Enable(EnableCap.PolygonOffsetLine);
                     GL.PolygonOffset(-3.0f, -3.0f);
@@ -1329,7 +1345,7 @@ namespace SharpOcarina
                 GL.Disable(EnableCap.PolygonOffsetLine);
             }
 
-            if (SelectedCutsceneActor == 1 && settings.DisplayAxis)
+            if (SelectedCutsceneActor == 1 && Actorpick && settings.DisplayAxis)
                 GL.CallList(AxisMarkerGLID);
 
             GL.PopMatrix();
@@ -1357,7 +1373,10 @@ namespace SharpOcarina
                 if (j == 1)
                 {
                     GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                    GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                    if (Actorpick && SelectedCutsceneActor != 0)
+                        GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                    else
+                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                     GL.Enable(EnableCap.PolygonOffsetLine);
                     GL.PolygonOffset(-3.0f, -3.0f);
@@ -1373,14 +1392,14 @@ namespace SharpOcarina
 
 
 
-            if (SelectedCutsceneActor == 2 && settings.DisplayAxis)
+            if (SelectedCutsceneActor == 2 && Actorpick && settings.DisplayAxis)
                 GL.CallList(AxisMarkerGLID);
 
             GL.PopMatrix();
             GL.PopAttrib();
         }
 
-        private void DrawPointLight(ZAdditionalLight Light, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder)
+        private void DrawPointLight(ZAdditionalLight Light, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder, bool Actorpick = false)
         {
             GL.PushMatrix();
 
@@ -1404,7 +1423,10 @@ namespace SharpOcarina
                     if (DrawBorder)
                     {
                         GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                        if (Actorpick && DrawAxis)
+                            GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                        else
+                            GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                         GL.Enable(EnableCap.PolygonOffsetLine);
                         GL.PolygonOffset(-3.0f, -3.0f);
@@ -1420,14 +1442,14 @@ namespace SharpOcarina
 
 
 
-            if (DrawAxis && settings.DisplayAxis)
+            if (DrawAxis && Actorpick && settings.DisplayAxis)
                 GL.CallList(AxisMarkerGLID);
 
             GL.PopMatrix();
             GL.PopAttrib();
         }
 
-        private void DrawFixedCamera(ZCamera Camera, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder)
+        private void DrawFixedCamera(ZCamera Camera, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder, bool Actorpick = false)
         {
             GL.PushMatrix();
 
@@ -1459,7 +1481,10 @@ namespace SharpOcarina
                     if (DrawBorder)
                     {
                         GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                        GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
+                        if (Actorpick && DrawAxis)
+                            GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                        else
+                            GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
 
                         GL.Enable(EnableCap.PolygonOffsetLine);
                         GL.PolygonOffset(-3.0f, -3.0f);
@@ -1475,7 +1500,7 @@ namespace SharpOcarina
 
 
 
-            if (DrawAxis && settings.DisplayAxis)
+            if (DrawAxis && Actorpick && settings.DisplayAxis)
                 GL.CallList(AxisMarkerGLID);
 
             GL.PopMatrix();
@@ -1729,7 +1754,7 @@ namespace SharpOcarina
                             DrawActorModel(Room.ZActors[i],
                                 (i == actorEditControl1.ActorNumber ? Color.FromArgb(0, 255, 0) : Color.FromArgb(192, 255, 192)),
                                 ActorCubeGLID,
-                                Convert.ToBoolean(i == actorEditControl1.ActorNumber), true);
+                                i == actorEditControl1.ActorNumber, true, actorpick == _Actor_);
                         }
                         /* Render room additional lights... */
                         for (int i = 0; i < Room.AdditionalLights.Count; i++)
@@ -1739,7 +1764,7 @@ namespace SharpOcarina
                                 DrawPointLight(Room.AdditionalLights[i],
                                     (i == AdditionalLightSelect.Value - 1 ? Color.FromArgb(255, 128, 0) : Color.FromArgb(255, 198, 70)),
                                     ActorCubeGLID,
-                                    Convert.ToBoolean(i == AdditionalLightSelect.Value - 1), true);
+                                    Convert.ToBoolean(i == AdditionalLightSelect.Value - 1), true, actorpick == _AddLight_);
                             }
                         }
                     }
@@ -1756,14 +1781,14 @@ namespace SharpOcarina
                     DrawActorModel(CurrentScene.SpawnPoints[i],
                         (i == actorEditControl3.ActorNumber ? Color.FromArgb(0, 0, 255) : Color.FromArgb(192, 192, 255)),
                         ActorPyramidGLID,
-                        Convert.ToBoolean(i == actorEditControl3.ActorNumber), true);
+                        Convert.ToBoolean(i == actorEditControl3.ActorNumber), true, actorpick == _Spawn_);
 
                 /* Render transition actors... */
                 for (int i = 0; i < CurrentScene.Transitions.Count; i++)
                     DrawActorModel(CurrentScene.Transitions[i],
                         (i == actorEditControl2.ActorNumber ? Color.FromArgb(255, 0, 0) : Color.FromArgb(255, 192, 192)),
                         ActorPyramidGLID,
-                        Convert.ToBoolean(i == actorEditControl2.ActorNumber), true);
+                        Convert.ToBoolean(i == actorEditControl2.ActorNumber), true, actorpick == _Transition_);
 
                 /* Render pathways */
                 for (int i = 0; i < CurrentScene.Pathways.Count; i++)
@@ -1779,7 +1804,7 @@ namespace SharpOcarina
                             (ii == PathwayListBox.SelectedIndex && i == PathwayNumber.Value ? Color.FromArgb(255, 255, 0) : Color.FromArgb(255, 255, 192)),
                             ActorPyramidGLID,
                             Convert.ToBoolean(i == PathwayNumber.Value && ii == PathwayListBox.SelectedIndex), true,
-                            Convert.ToBoolean(i == PathwayNumber.Value));
+                            Convert.ToBoolean(i == PathwayNumber.Value), actorpick == _Pathway_);
                     }
                 }
 
@@ -1788,7 +1813,7 @@ namespace SharpOcarina
                     DrawFixedCamera(CurrentScene.Cameras[i],
                         (i == CameraSelect.Value ? Color.FromArgb(30, 30, 30) : Color.FromArgb(75, 75, 75)),
                         ActorPyramidGLID,
-                        Convert.ToBoolean(i == CameraSelect.Value), true);
+                        Convert.ToBoolean(i == CameraSelect.Value), true, actorpick == _Camera_);
 
                 /* Render camera points only when the tab is selected */
                 if (tabControl1.SelectedIndex == 8)
@@ -1812,7 +1837,7 @@ namespace SharpOcarina
                                     NextVector = NullVector;
                                 DrawCameraPoint(CurrentScene.Cutscene[i].Points[ii].Position, NextVector, CurrentScene.Cutscene[i].Points[ii].Position2,
                                     ActorPyramidGLID,
-                                    selected);
+                                    selected, actorpick == _CutsceneCamera_);
 
                             }
                         }
@@ -1831,7 +1856,7 @@ namespace SharpOcarina
 
                                 DrawCutsceneActor(CurrentScene.Cutscene[i].CutsceneActors[ii].Position, CurrentScene.Cutscene[i].CutsceneActors[ii].Position2, CurrentScene.Cutscene[i].CutsceneActors[ii].Rotation,
                                     ActorPyramidGLID,
-                                    selected);
+                                    selected, actorpick == _CutsceneActor_);
 
                             }
                         }
@@ -2054,7 +2079,10 @@ namespace SharpOcarina
                             else
                             {
                                 GL.PolygonMode(MaterialFace.Front, PolygonMode.Line);
-                                GL.Color4(Color.Black);
+                                if (actorpick == _Waterbox_ && incr == (int)WaterboxSelect.Value)
+                                    GL.Color4(Color.Yellow.R, Color.Yellow.G, Color.Yellow.B, 1.0f);
+                                else
+                                    GL.Color4(Color.Black.R, Color.Black.G, Color.Black.B, 1.0f);
                             }
 
                             GL.Begin(BeginMode.Quads);
@@ -2754,7 +2782,7 @@ namespace SharpOcarina
 
                     for (int i = 0; i < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count; i++)
                     {
-                        if (i != actorEditControl1.ActorNumber)
+                        if (i != actorEditControl1.ActorNumber || actorpick != _Actor_)
                         {
                             DrawActorModel(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[i],
                             Color.FromArgb(192, 255, 192),
@@ -2771,7 +2799,8 @@ namespace SharpOcarina
                                 selected = true;
                                 actorEditControl1.ActorComboBox.SelectedIndex = i;
                                 actorEditControl1.UpdateActorEdit();
-                                actorEditControl1.UpdateForm();
+                                //actorEditControl1.UpdateForm();
+                                actorpick = _Actor_;
                                 break;
                             }
                         }
@@ -2785,7 +2814,7 @@ namespace SharpOcarina
                         /* Render transition actors... */
                         for (int i = 0; i < CurrentScene.Transitions.Count; i++)
                         {
-                            if (i != actorEditControl2.ActorNumber)
+                            if (i != actorEditControl2.ActorNumber || actorpick != _Transition_)
                             {
                                 DrawActorModel(CurrentScene.Transitions[i],
                                 Color.FromArgb(255, 192, 192),
@@ -2800,7 +2829,8 @@ namespace SharpOcarina
                                     selected = true;
                                     actorEditControl2.ActorComboBox.SelectedIndex = i;
                                     actorEditControl2.UpdateActorEdit();
-                                    actorEditControl2.UpdateForm();
+                                    //actorEditControl2.UpdateForm();
+                                    actorpick = _Transition_;
                                     break;
                                 }
                             }
@@ -2814,7 +2844,7 @@ namespace SharpOcarina
                         /* Render spawn points... */
                         for (int i = 0; i < CurrentScene.SpawnPoints.Count; i++)
                         {
-                            if (i != actorEditControl3.ActorNumber)
+                            if (i != actorEditControl3.ActorNumber || actorpick != _Spawn_)
                             {
                                 DrawActorModel(CurrentScene.SpawnPoints[i],
                                 Color.FromArgb(192, 192, 255),
@@ -2829,7 +2859,8 @@ namespace SharpOcarina
                                     selected = true;
                                     actorEditControl3.ActorComboBox.SelectedIndex = i;
                                     actorEditControl3.UpdateActorEdit();
-                                    actorEditControl3.UpdateForm();
+                                    //actorEditControl3.UpdateForm();
+                                    actorpick = _Spawn_;
                                     break;
                                 }
                             }
@@ -2845,7 +2876,7 @@ namespace SharpOcarina
                         {
                             for (int ii = 0; ii < CurrentScene.Pathways[i].Points.Count; ii++)
                             {
-                                if (i != PathwayNumber.Value || ii != PathwayListBox.SelectedIndex)
+                                if (i != PathwayNumber.Value || ii != PathwayListBox.SelectedIndex || actorpick != _Pathway_)
                                 {
                                     DrawPathway(CurrentScene.Pathways[i].Points[ii], NullVector,
                                         Color.FromArgb(255, 255, 192),
@@ -2863,6 +2894,7 @@ namespace SharpOcarina
                                         PathwayNumber.Value = i;
                                         PathwayListBox.SelectedIndex = ii;
                                         UpdateForm();
+                                        actorpick = _Pathway_;
                                         break;
                                     }
                                 }
@@ -2876,7 +2908,7 @@ namespace SharpOcarina
                         /* Render lightpoints... */
                         for (int i = 0; i < CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Count; i++)
                         {
-                            if (i != AdditionalLightSelect.Value - 1 && CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[i].PointLight)
+                            if ((i != AdditionalLightSelect.Value - 1 || actorpick != _AddLight_) && CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[i].PointLight)
                             {
                                 DrawPointLight(CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[i],
                                 Color.FromArgb(255, 0, 0),
@@ -2891,6 +2923,7 @@ namespace SharpOcarina
                                     selected = true;
                                     AdditionalLightSelect.Value = i + 1;
                                     UpdateForm();
+                                    actorpick = _AddLight_;
                                     break;
                                 }
                             }
@@ -2940,6 +2973,7 @@ namespace SharpOcarina
                                             CutsceneAbsolutePositionListBox.SelectedIndex = ii;
                                             extrapick = (byte)((pixel[0] == Color.RosyBrown.R) ? 1 : 0);
                                             UpdateForm();
+                                            actorpick = _CutsceneCamera_;
                                             break;
                                         }
                                         else if (pixel[0] == Color.DarkSlateGray.R || pixel[0] == Color.SaddleBrown.R)
@@ -2947,6 +2981,7 @@ namespace SharpOcarina
                                             selected = true;
                                             extrapick = (byte)((pixel[0] == Color.SaddleBrown.R) ? 1 : 0);
                                             UpdateForm();
+                                            actorpick = _CutsceneCamera_;
                                             break;
                                         }
 
@@ -2994,6 +3029,7 @@ namespace SharpOcarina
                                             CutsceneActorListBox.SelectedIndex = ii;
                                             extrapick = (byte)((pixel[0] == Color.RosyBrown.R) ? 1 : 0);
                                             UpdateForm();
+                                            actorpick = _CutsceneActor_;
                                             break;
                                         }
                                         else if (pixel[0] == Color.DarkSlateGray.R || pixel[0] == Color.SaddleBrown.R)
@@ -3001,6 +3037,7 @@ namespace SharpOcarina
                                             selected = true;
                                             extrapick = (byte)((pixel[0] == Color.SaddleBrown.R) ? 1 : 0);
                                             UpdateForm();
+                                            actorpick = _CutsceneActor_;
                                             break;
                                         }
 
@@ -3019,7 +3056,7 @@ namespace SharpOcarina
                         /* Render cameras... */
                         for (int i = 0; i < CurrentScene.Cameras.Count; i++)
                         {
-                            if (i != CameraSelect.Value)
+                            if (i != CameraSelect.Value || actorpick != _Camera_)
                             {
                                 DrawFixedCamera(CurrentScene.Cameras[i],
                                     Color.FromArgb(255, 0, 0),
@@ -3034,6 +3071,7 @@ namespace SharpOcarina
                                     selected = true;
                                     CameraSelect.Value = i;
                                     UpdateForm();
+                                    actorpick = _Camera_;
                                     break;
                                 }
                             }
@@ -3048,7 +3086,7 @@ namespace SharpOcarina
                         int incr = 0;
                         foreach (ZWaterbox WBox in CurrentScene.Waterboxes)
                         {
-                            if (incr != (int)WaterboxSelect.Value)
+                            if (incr != (int)WaterboxSelect.Value || actorpick != _Waterbox_)
                             {
                                 GL.PushMatrix();
                                 GL.Translate(WBox.XPos, WBox.YPos, WBox.ZPos);
@@ -3071,6 +3109,7 @@ namespace SharpOcarina
                                     WaterboxSelect.Value = incr;
                                     UpdateWaterboxData();
                                     UpdateForm();
+                                    actorpick = _Waterbox_;
                                     break;
                                 }
 
@@ -3158,6 +3197,8 @@ namespace SharpOcarina
 
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
                 GL.Disable(EnableCap.Texture2D);
+
+                prevactorpick = actorpick;
 
                 actorpick = -1;
 
@@ -3325,8 +3366,14 @@ namespace SharpOcarina
 
                 }
 
+                if (actorpick == -1 && (ModifierKeys & Keys.Control) != 0) actorpick = prevactorpick;
+
 
                 StoreUndo(actorpick);
+
+
+
+                if (actorpick != -1) prevactorpick = actorpick;
 
             }
 
@@ -3434,7 +3481,7 @@ namespace SharpOcarina
                 }
 
 
-                if (Control.ModifierKeys == Keys.Shift) //front/back
+                if ((ModifierKeys & Keys.Shift) != 0) //front/back
                 {
                     objpos.X += ((Math.Sin(CamYRotd) * -pickObjDisplacement.Y));
                     objpos.Z -= ((Math.Cos(CamYRotd) * -pickObjDisplacement.Y));
@@ -3534,8 +3581,14 @@ namespace SharpOcarina
             {
                 Mouse.MDown = false;
 
+                if (prevactorpick != -1)
+                {
+                    actorpick = prevactorpick;
+                    prevactorpick = -1;
+                }
+
                 actorEditControl1.UpdateActorEdit();
-                actorEditControl1.UpdateForm();
+                //actorEditControl1.UpdateForm();
                 actorEditControl2.UpdateActorEdit();
                 actorEditControl3.UpdateActorEdit();
                 UpdateForm();
@@ -4084,14 +4137,14 @@ namespace SharpOcarina
 
                         #endregion
 
-                        WindSouth.Text = CurrentScene.Rooms[RoomList.SelectedIndex].WindSouth.ToString("X2");
-                        WindStrength.Text = CurrentScene.Rooms[RoomList.SelectedIndex].WindStrength.ToString("X2");
-                        WindVertical.Text = CurrentScene.Rooms[RoomList.SelectedIndex].WindVertical.ToString("X2");
-                        WindWest.Text = CurrentScene.Rooms[RoomList.SelectedIndex].WindWest.ToString("X2");
+                        WindSouth.Value = CurrentScene.Rooms[RoomList.SelectedIndex].WindSouth;
+                        WindStrength.Value = CurrentScene.Rooms[RoomList.SelectedIndex].WindStrength;
+                        WindVertical.Value = CurrentScene.Rooms[RoomList.SelectedIndex].WindVertical;
+                        WindWest.Value = CurrentScene.Rooms[RoomList.SelectedIndex].WindWest;
                         // TimeStart.Text = CurrentScene.Rooms[RoomList.SelectedIndex].StartTime.ToString("X4");
-                        TimeSpeed.Text = CurrentScene.Rooms[RoomList.SelectedIndex].TimeSpeed.ToString("X2");
+                        TimeSpeed.Value = CurrentScene.Rooms[RoomList.SelectedIndex].TimeSpeed;
 
-                        SoundEcho.Text = CurrentScene.Rooms[RoomList.SelectedIndex].Echo.ToString("X2");
+                        SoundEcho.Value = CurrentScene.Rooms[RoomList.SelectedIndex].Echo;
 
                         DisableStartTime.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].StartTime == 0xFFFF;
 
@@ -6880,6 +6933,7 @@ namespace SharpOcarina
                     temppath = multitex.map_Kd;
                     if (!File.Exists(temppath))
                     {
+
                         if (Path.IsPathRooted(temppath))
                             temppath = fullpath + Path.GetFileName(temppath);
                         else
@@ -7853,6 +7907,7 @@ namespace SharpOcarina
 
         private void WaterboxSelect_ValueChanged(object sender, EventArgs e)
         {
+            actorpick = _Waterbox_;
             UpdateForm();
         }
 
@@ -7860,7 +7915,7 @@ namespace SharpOcarina
         {
             if (CurrentScene.ColModel == null) return;
 
-            if (Control.ModifierKeys == Keys.Shift)
+            if ((ModifierKeys & Keys.Shift) != 0)
             {
                 //create in front of the camera
 
@@ -7910,6 +7965,8 @@ namespace SharpOcarina
                 // CurrentScene.Waterboxes.Add(new ZWaterbox((float)MinCoordinate.X, (float)-20.0f, (float)MinCoordinate.Z, (float)(MaxCoordinate.X - MinCoordinate.X), (float)(MaxCoordinate.Z - MinCoordinate.Z), 1, 0, 0x3F));
 
             }
+
+            actorpick = _Waterbox_;
 
             UpdateForm();
             Helpers.SelectAdd(WaterboxSelect, CurrentScene.Waterboxes);
@@ -8008,7 +8065,7 @@ namespace SharpOcarina
                 Helpers.SelectClamp(WaterboxSelect, CurrentScene.Waterboxes);
                 WaterboxSelect.Enabled = true;
 
-                WaterboxRoom.Text = CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Room.ToString("X2");
+                WaterboxRoom.Value = (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Room;
                 WaterboxEnv.Value = (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Env;
                 WaterboxCam.Value = (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].Camera;
                 WaterboxXPos.Value = (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XPos;
@@ -8063,7 +8120,7 @@ namespace SharpOcarina
 
         private void WaterboxTransformX_ChangeValue(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxXPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(WaterboxXPos.Value) > 20)
                 WaterboxXPos.Value += (WaterboxXPos.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XPos) * 19;
 
             UpdateWaterboxData();
@@ -8071,7 +8128,7 @@ namespace SharpOcarina
 
         private void WaterboxTransformY_ChangeValue(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxYPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(WaterboxYPos.Value) > 20)
                 WaterboxYPos.Value += (WaterboxYPos.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].YPos) * 19;
 
             UpdateWaterboxData();
@@ -8079,7 +8136,7 @@ namespace SharpOcarina
 
         private void WaterboxTransformZ_ChangeValue(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxZPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(WaterboxZPos.Value) > 20)
                 WaterboxZPos.Value += (WaterboxZPos.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZPos) * 19;
 
             UpdateWaterboxData();
@@ -8088,18 +8145,18 @@ namespace SharpOcarina
         private void WaterboxSizeX_ChangeValue(object sender, EventArgs e)
         {
             int negative = (WaterboxXSize.Value < (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XSize) ? 1 : -1;
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxXSize.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(WaterboxXSize.Value) > 20)
                 WaterboxXSize.Value += (WaterboxXSize.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XSize) * 9;
-            WaterboxXPos.Value += ((Control.ModifierKeys == Keys.Shift) ? 10 : 1) * (negative);
+            WaterboxXPos.Value += ((((ModifierKeys & Keys.Shift) != 0)) ? 10 : 1) * (negative);
             UpdateWaterboxData();
         }
 
         private void WaterboxSizeY_ChangeValue(object sender, EventArgs e)
         {
             int negative = (WaterboxYSize.Value < (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZSize) ? 1 : -1;
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(WaterboxYSize.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(WaterboxYSize.Value) > 20)
                 WaterboxYSize.Value += (WaterboxYSize.Value - (decimal)CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZSize) * 9;
-            WaterboxZPos.Value += ((Control.ModifierKeys == Keys.Shift) ? 10 : 1) * (negative); 
+            WaterboxZPos.Value += ((((ModifierKeys & Keys.Shift) != 0)) ? 10 : 1) * (negative); 
             UpdateWaterboxData();
         }
 
@@ -9284,6 +9341,7 @@ namespace SharpOcarina
             CurrentScene.Pathways.Add(new ZPathway(new List<Vector3>()));
             UpdateForm();
             Helpers.SelectAdd(PathwayNumber, CurrentScene.Pathways);
+            
 
 
         }
@@ -9310,7 +9368,7 @@ namespace SharpOcarina
         private void PathwayTransformX_ValueChanged(object sender, EventArgs e)
         {
 
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(PathwayXPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(PathwayXPos.Value) > 20)
                 PathwayXPos.Value += (PathwayXPos.Value - (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].X) * 19;
 
             CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
@@ -9320,7 +9378,7 @@ namespace SharpOcarina
 
         private void PathwayTransformY_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(PathwayYPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(PathwayYPos.Value) > 20)
                 PathwayYPos.Value += (PathwayYPos.Value - (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Y) * 19;
 
             CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
@@ -9330,7 +9388,7 @@ namespace SharpOcarina
 
         private void PathwayTransformZ_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(PathwayZPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(PathwayZPos.Value) > 20)
                 PathwayZPos.Value += (PathwayZPos.Value - (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Z) * 19;
 
             CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex] = new Vector3((float)PathwayXPos.Value, (float)PathwayYPos.Value, (float)PathwayZPos.Value);
@@ -9340,14 +9398,18 @@ namespace SharpOcarina
 
         private void PathwayListBox_Click(object sender, EventArgs e)
         {
+            actorpick = _Pathway_;
             UpdateForm();
+            
         }
 
         private void AddPointButton_Click(object sender, EventArgs e)
         {
             if (CurrentScene.ColModel == null) return;
 
-            if (Control.ModifierKeys == Keys.Shift)
+
+
+            if (((ModifierKeys & Keys.Shift) != 0))
             {
                 //create in front of the camera
 
@@ -9403,6 +9465,7 @@ namespace SharpOcarina
             }
             if (PathwayListBox.Items.Count == 1) PathwayListBox.SelectedIndex = 0;
             else PathwayListBox.SelectedIndex++;
+            actorpick = _Pathway_;
             UpdateForm();
         }
 
@@ -9644,7 +9707,7 @@ namespace SharpOcarina
         {
             if (CurrentScene.ColModel == null) return;
 
-            if (Control.ModifierKeys == Keys.Shift)
+            if (((ModifierKeys & Keys.Shift) != 0))
             {
                 //create in front of the camera
 
@@ -9668,7 +9731,7 @@ namespace SharpOcarina
                 truepos.Y = Clamp(truepos.Y, -32767, 32767);
                 truepos.Z = Clamp(truepos.Z, -32767, 32767);
 
-                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)truepos.X, (short)truepos.Y, (short)truepos.Z, false, 0, 0, 0, Color.Black));
+                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)truepos.X, (short)truepos.Y, (short)truepos.Z, true, 0, 0, 1, Color.Black));
 
             }
             else
@@ -9676,9 +9739,11 @@ namespace SharpOcarina
 
                 Vector3d CenterPoint = GetCenterPoint((CurrentScene.Rooms[RoomList.SelectedIndex]).ObjModel.Vertices);
 
-                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)CenterPoint.X, (short)CenterPoint.Y, (short)CenterPoint.Z, false, 0, 0, 0, Color.Black)
+                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)CenterPoint.X, (short)CenterPoint.Y, (short)CenterPoint.Z, true, 0, 0, 1, Color.Black)
                 );
             }
+
+            actorpick = _AddLight_;
 
             UpdateForm();
             AdditionalLightSelect.Value = AdditionalLightSelect.Maximum;
@@ -9702,7 +9767,7 @@ namespace SharpOcarina
 
         private void AdditionalLightXPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(AdditionalLightXPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(AdditionalLightXPos.Value) > 20)
                 AdditionalLightXPos.Value += (AdditionalLightXPos.Value - CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].XPos) * 19;
 
             CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].XPos = (short)AdditionalLightXPos.Value;
@@ -9712,7 +9777,7 @@ namespace SharpOcarina
 
         private void AdditionalLightYPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(AdditionalLightYPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(AdditionalLightYPos.Value) > 20)
                 AdditionalLightYPos.Value += (AdditionalLightYPos.Value - CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].YPos) * 19;
 
             CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].YPos = (short)AdditionalLightYPos.Value;
@@ -9722,7 +9787,7 @@ namespace SharpOcarina
 
         private void AdditionalLightZPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(AdditionalLightZPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(AdditionalLightZPos.Value) > 20)
                 AdditionalLightZPos.Value += (AdditionalLightZPos.Value - CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].ZPos) * 19;
 
 
@@ -9947,7 +10012,9 @@ namespace SharpOcarina
         {
             if (CurrentScene.ColModel == null) return;
 
-            if (Control.ModifierKeys == Keys.Shift)
+            actorpick = _CutsceneCamera_;
+
+            if (((ModifierKeys & Keys.Shift) != 0))
             {
                 //create in front of the camera
 
@@ -10063,7 +10130,7 @@ namespace SharpOcarina
 
         private void CutsceneAbsolutePositionX_ChangeValue(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneAbsolutePositionX.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutsceneAbsolutePositionX.Value) > 20)
                 CutsceneAbsolutePositionX.Value += (CutsceneAbsolutePositionX.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position.X) * 19;
 
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position = new Vector3((float)CutsceneAbsolutePositionX.Value, (float)CutsceneAbsolutePositionY.Value, (float)CutsceneAbsolutePositionZ.Value);
@@ -10073,7 +10140,7 @@ namespace SharpOcarina
 
         private void CutsceneAbsolutePositionY_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneAbsolutePositionY.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutsceneAbsolutePositionY.Value) > 20)
                 CutsceneAbsolutePositionY.Value += (CutsceneAbsolutePositionY.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position.Y) * 19;
 
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position = new Vector3((float)CutsceneAbsolutePositionX.Value, (float)CutsceneAbsolutePositionY.Value, (float)CutsceneAbsolutePositionZ.Value);
@@ -10083,7 +10150,7 @@ namespace SharpOcarina
 
         private void CutsceneAbsolutePositionZ_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneAbsolutePositionZ.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutsceneAbsolutePositionZ.Value) > 20)
                 CutsceneAbsolutePositionZ.Value += (CutsceneAbsolutePositionZ.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position.Z) * 19;
 
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position = new Vector3((float)CutsceneAbsolutePositionX.Value, (float)CutsceneAbsolutePositionY.Value, (float)CutsceneAbsolutePositionZ.Value);
@@ -10093,6 +10160,7 @@ namespace SharpOcarina
 
         private void CutsceneAbsolutePositionListBox_Click(object sender, EventArgs e)
         {
+            actorpick = _CutsceneCamera_;
             UpdateCutsceneEdit();
             CameraPreview_UpdateTransforms();
             CameraPreview_UpdateParams();
@@ -10101,7 +10169,7 @@ namespace SharpOcarina
 
         private void CutscenePositionXFocus_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutscenePositionXFocus.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutscenePositionXFocus.Value) > 20)
                 CutscenePositionXFocus.Value += (CutscenePositionXFocus.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2.X) * 19;
 
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2 = new Vector3((float)CutscenePositionXFocus.Value, (float)CutscenePositionYFocus.Value, (float)CutscenePositionZFocus.Value);
@@ -10112,7 +10180,7 @@ namespace SharpOcarina
 
         private void CutscenePositionYFocus_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutscenePositionYFocus.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutscenePositionYFocus.Value) > 20)
                 CutscenePositionYFocus.Value += (CutscenePositionYFocus.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2.Y) * 19;
 
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2 = new Vector3((float)CutscenePositionXFocus.Value, (float)CutscenePositionYFocus.Value, (float)CutscenePositionZFocus.Value);
@@ -10123,7 +10191,7 @@ namespace SharpOcarina
 
         private void CutscenePositionZFocus_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutscenePositionZFocus.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutscenePositionZFocus.Value) > 20)
                 CutscenePositionZFocus.Value += (CutscenePositionZFocus.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2.Z) * 19;
 
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position2 = new Vector3((float)CutscenePositionXFocus.Value, (float)CutscenePositionYFocus.Value, (float)CutscenePositionZFocus.Value);
@@ -10662,7 +10730,9 @@ namespace SharpOcarina
         {
             if (CurrentScene.ColModel == null) return;
 
-            if (Control.ModifierKeys == Keys.Shift)
+            actorpick = _CutsceneActor_;
+
+            if (((ModifierKeys & Keys.Shift) != 0))
             {
                 //create in front of the camera
 
@@ -10771,6 +10841,7 @@ namespace SharpOcarina
 
         private void CutsceneActorListBox_Click(object sender, EventArgs e)
         {
+            actorpick = _CutsceneActor_;
             UpdateCutsceneEdit();
         }
 
@@ -11248,14 +11319,16 @@ namespace SharpOcarina
         private void glControl1_MouseWheel(object sender, MouseEventArgs e)
         {
             Object target = null;
-            if (actorpick == 1)
+            if (actorpick == 1 && actorEditControl1.ActorNumber != -1)
                 target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber];
-            else if (actorpick == 2)
+            else if (actorpick == 2 && actorEditControl2.ActorNumber != -1)
                 target = CurrentScene.Transitions[actorEditControl2.ActorNumber];
-            else if (actorpick == 3)
+            else if (actorpick == 3 && actorEditControl3.ActorNumber != -1)
                 target = CurrentScene.SpawnPoints[actorEditControl3.ActorNumber];
-            else if (actorpick == 5)
+            else if (actorpick == 5 && CurrentScene.Waterboxes.Count > 0)
                 target = CurrentScene.Waterboxes[(int)WaterboxSelect.Value];
+            else if (actorpick == _CutsceneActor_ && CurrentScene.Cutscene.Count > 0 && CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors.Count > 0)
+                target = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex];
 
             if (actorpick <= 3 && target != null)
             {
@@ -11263,15 +11336,15 @@ namespace SharpOcarina
                 if (newrot < -32767) newrot = 32767;
                 else if (newrot > 32767) newrot = -32767;
                 ((ZActor)target).YRot = newrot;
-
-                actorEditControl1.UpdateActorEdit();
-                actorEditControl1.UpdateForm();
-                actorEditControl2.UpdateActorEdit();
-                actorEditControl2.UpdateForm();
-                actorEditControl3.UpdateActorEdit();
-                actorEditControl3.UpdateForm();
+                
+                actorEditControl1.UpdateActorEdit_Faster();
+                //actorEditControl1.UpdateForm();
+                actorEditControl2.UpdateActorEdit_Faster();
+                //actorEditControl2.UpdateForm();
+                actorEditControl3.UpdateActorEdit_Faster();
+                //actorEditControl3.UpdateForm();
             }
-            else if (actorpick == 5)
+            else if (actorpick == 5 && target != null)
             {
                 int incr = (e.Delta > 0) ? 20 : -20;
                 float newXsize = ((ZWaterbox)target).XSize + incr, newZsize = ((ZWaterbox)target).ZSize + incr;
@@ -11283,8 +11356,20 @@ namespace SharpOcarina
                     ((ZWaterbox)target).XPos -= incr / 2;
                     ((ZWaterbox)target).ZPos -= incr / 2;
 
-                    UpdateForm();
+                    //UpdateForm();
+                    UpdateWaterboxEdit();
                 }
+            }
+            else if (actorpick == _CutsceneActor_ && target != null)
+            {
+                
+                float newrot = ((ZCutsceneActor)target).Rotation.Y + (e.Delta * 4);
+                if (newrot < -32767) newrot = 32767;
+                else if (newrot > 32767) newrot = -32767;
+                ((ZCutsceneActor)target).Rotation = new Vector3(((ZCutsceneActor)target).Rotation.X, newrot, ((ZCutsceneActor)target).Rotation.Z);
+                
+
+                UpdateForm();
             }
         }
 
@@ -11347,7 +11432,7 @@ namespace SharpOcarina
         {
             if (CurrentScene.ColModel == null) return;
 
-            if (Control.ModifierKeys == Keys.Shift)
+            if (((ModifierKeys & Keys.Shift) != 0))
             {
                 //create in front of the camera
 
@@ -11396,7 +11481,7 @@ namespace SharpOcarina
 
                 CurrentScene.Cameras.Add(new ZCamera((short)(MaxCoordinate.X - MinCoordinate.X), (short)(MaxCoordinate.Y - MinCoordinate.Y), (short)(MaxCoordinate.Z - MinCoordinate.Z), 0, 0, 0, 0, 0x2D, 0xFFFF, 0xFFFF));
             }
-
+            //actorpick = _Camera_;
             UpdateForm();
             Helpers.SelectAdd(CameraSelect, CurrentScene.Cameras);
         }
@@ -11414,6 +11499,7 @@ namespace SharpOcarina
 
         private void CameraSelect_ValueChanged(object sender, EventArgs e)
         {
+            actorpick = _Camera_;
             UpdateForm();
 
             if (previewscenecamera)
@@ -11428,7 +11514,7 @@ namespace SharpOcarina
 
         private void CameraXPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraXPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CameraXPos.Value) > 20)
                 CameraXPos.Value += (CameraXPos.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].XPos) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].XPos = (short)CameraXPos.Value;
@@ -11438,7 +11524,7 @@ namespace SharpOcarina
 
         private void CameraYPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraYPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CameraYPos.Value) > 20)
                 CameraYPos.Value += (CameraYPos.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].YPos) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].YPos = (short)CameraYPos.Value;
@@ -11448,7 +11534,7 @@ namespace SharpOcarina
 
         private void CameraZPos_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraZPos.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CameraZPos.Value) > 20)
                 CameraZPos.Value += (CameraZPos.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].ZPos) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].ZPos = (short)CameraZPos.Value;
@@ -11459,7 +11545,7 @@ namespace SharpOcarina
 
         private void CameraXRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraXRot.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CameraXRot.Value) > 1820)
                 CameraXRot.Value += (CameraXRot.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].XRot) * 9;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].XRot = (short)CameraXRot.Value;
@@ -11469,7 +11555,7 @@ namespace SharpOcarina
 
         private void CameraYRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraYRot.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CameraYRot.Value) > 1820)
                 CameraYRot.Value += (CameraYRot.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].YRot) * 9;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].YRot = (short)CameraYRot.Value;
@@ -11479,7 +11565,7 @@ namespace SharpOcarina
 
         private void CameraZRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraZRot.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CameraZRot.Value) > 1820)
                 CameraZRot.Value += (CameraZRot.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].ZRot) * 9;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].ZRot = (short)CameraZRot.Value;
@@ -11489,7 +11575,7 @@ namespace SharpOcarina
 
         private void CameraFov_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CameraFov.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CameraFov.Value) > 20)
                 CameraFov.Value += (CameraFov.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Fov) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Fov = (short)CameraFov.Value;
@@ -11830,7 +11916,7 @@ namespace SharpOcarina
             }
 
 
-            if (Control.ModifierKeys == Keys.Shift)
+            if (((ModifierKeys & Keys.Shift) != 0))
             {
                 openFileDialog1.FileName = "";
                 openFileDialog1.Filter = "Wavefront .obj / Collada .dae (*.obj;*.dae)|*.obj;*.dae|All Files (*.*)|*.*";
@@ -12188,7 +12274,7 @@ namespace SharpOcarina
 
         private void CutsceneActorXRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorXRot.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutsceneActorXRot.Value) > 1820)
                 CutsceneActorXRot.Value += (CutsceneActorXRot.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation.X) * 9;
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation = new Vector3((float)CutsceneActorXRot.Value, (float)CutsceneActorYRot.Value, (float)CutsceneActorZRot.Value);
 
@@ -12197,7 +12283,7 @@ namespace SharpOcarina
 
         private void CutsceneActorYRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorYRot.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutsceneActorYRot.Value) > 1820)
                 CutsceneActorYRot.Value += (CutsceneActorYRot.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation.Y) * 9;
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation = new Vector3((float)CutsceneActorXRot.Value, (float)CutsceneActorYRot.Value, (float)CutsceneActorZRot.Value);
 
@@ -12206,7 +12292,7 @@ namespace SharpOcarina
 
         private void CutsceneActorZRot_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(CutsceneActorZRot.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CutsceneActorZRot.Value) > 1820)
                 CutsceneActorZRot.Value += (CutsceneActorZRot.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation.Z) * 9;
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation = new Vector3((float)CutsceneActorXRot.Value, (float)CutsceneActorYRot.Value, (float)CutsceneActorZRot.Value);
 
@@ -14444,6 +14530,8 @@ namespace SharpOcarina
             List<FlagEntryInfo> skulltulaflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> pathways = new List<FlagEntryInfo>();
 
+            if (ActorCache.Count == 0) RefreshActorCache();
+
 
             int entryIndex = 0;
             int roomIndex = 0;
@@ -14452,6 +14540,7 @@ namespace SharpOcarina
                 entryIndex = 0;
                 foreach (ZActor actor in room.ZActors)
                 {
+                    if (!ActorCache.ContainsKey(actor.Number)) continue;
                     List<ActorProperty> properties = ActorCache[actor.Number].actorproperties;
 
                     foreach (ActorProperty property in properties)
@@ -15188,7 +15277,7 @@ namespace SharpOcarina
             }
         }
 
-        public void RefreshActorCache()
+        public static void RefreshActorCache()
         {
             ActorCache.Clear();
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
@@ -15644,7 +15733,7 @@ namespace SharpOcarina
 
         private void CameraUnk1_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk1.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk1.Value) > 1820)
                 CameraUnk1.Value += (CameraUnk1.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk1) * 9;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk1 = (ushort)CameraUnk1.Value;
@@ -15654,7 +15743,7 @@ namespace SharpOcarina
 
         private void CameraUnk2_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk2.Value) > 1820)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk2.Value) > 1820)
                 CameraUnk2.Value += (CameraUnk2.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk2) * 9;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk2 = (ushort)CameraUnk2.Value;
@@ -17509,7 +17598,7 @@ namespace SharpOcarina
 
         private void CameraUnk12_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk12.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk12.Value) > 20)
                 CameraUnk12.Value += (CameraUnk12.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk12) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk12 = (ushort)CameraUnk12.Value;
@@ -17519,7 +17608,7 @@ namespace SharpOcarina
 
         private void CameraUnk14_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk14.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk14.Value) > 20)
                 CameraUnk14.Value += (CameraUnk14.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk14) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk14 = (ushort)CameraUnk14.Value;
@@ -17529,7 +17618,7 @@ namespace SharpOcarina
 
         private void CameraUnk16_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk16.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk16.Value) > 20)
                 CameraUnk16.Value += (CameraUnk16.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk16) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk16 = (ushort)CameraUnk16.Value;
@@ -17539,7 +17628,7 @@ namespace SharpOcarina
 
         private void CameraUnk18_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk18.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk18.Value) > 20)
                 CameraUnk18.Value += (CameraUnk18.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk18) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk18 = (ushort)CameraUnk18.Value;
@@ -17549,7 +17638,7 @@ namespace SharpOcarina
 
         private void CameraUnk1A_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk1A.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk1A.Value) > 20)
                 CameraUnk1A.Value += (CameraUnk1A.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk1A) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk1A = (ushort)CameraUnk1A.Value;
@@ -17559,7 +17648,7 @@ namespace SharpOcarina
 
         private void CameraUnk1C_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk1C.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk1C.Value) > 20)
                 CameraUnk1C.Value += (CameraUnk1C.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk1C) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk1C = (ushort)CameraUnk1C.Value;
@@ -17569,7 +17658,7 @@ namespace SharpOcarina
 
         private void CameraUnk1E_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk1E.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk1E.Value) > 20)
                 CameraUnk1E.Value += (CameraUnk1E.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk1E) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk1E = (ushort)CameraUnk1E.Value;
@@ -17579,7 +17668,7 @@ namespace SharpOcarina
 
         private void CameraUnk20_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk20.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk20.Value) > 20)
                 CameraUnk20.Value += (CameraUnk20.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk20) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk20 = (ushort)CameraUnk20.Value;
@@ -17589,7 +17678,7 @@ namespace SharpOcarina
 
         private void CameraUnk22_ValueChanged(object sender, EventArgs e)
         {
-            if (Control.ModifierKeys == Keys.Shift && ushort.MaxValue - Math.Abs(CameraUnk22.Value) > 20)
+            if (((ModifierKeys & Keys.Shift) != 0) && ushort.MaxValue - Math.Abs(CameraUnk22.Value) > 20)
                 CameraUnk22.Value += (CameraUnk22.Value - (decimal)CurrentScene.Cameras[(int)CameraSelect.Value].Unk22) * 19;
 
             CurrentScene.Cameras[(int)CameraSelect.Value].Unk22 = (ushort)CameraUnk22.Value;
@@ -18282,6 +18371,11 @@ namespace SharpOcarina
 
         private void Z64RomPlay_Click(object sender, EventArgs e)
         {
+            if (CurrentScene == null || CurrentScene.Rooms.Count == 0)
+            {
+                MessageBox.Show("You need to create a scene in order to try it ingame...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (rom64.isSet())
             {
                 buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click(sender, e);
@@ -18292,6 +18386,11 @@ namespace SharpOcarina
                 LaunchRomToolStripMenuItem_Click(sender, e);
 
             }
+        }
+
+        private void glControl1_Leave(object sender, EventArgs e)
+        {
+            KeysDown = new bool[256];
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

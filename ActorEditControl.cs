@@ -110,6 +110,7 @@ namespace SharpOcarina
 
             }
 
+            MainForm.actorpick = IsTransitionActor ? MainForm._Transition_ : IsSpawnActor ? MainForm._Spawn_ : MainForm._Actor_;
 
             UpdateActorEdit(true);
             UpdateForm();
@@ -405,6 +406,19 @@ namespace SharpOcarina
             }
         }
 
+        public void UpdateActorEdit_Faster()
+        {
+            if (Actors != null && Actors.Count != 0)
+            {
+                ActorNumberTextbox.Text = Actors[ActorComboBox.SelectedIndex].Number.ToString("X4");
+                ActorVariableTextbox.Text = Actors[ActorComboBox.SelectedIndex].Variable.ToString("X4");
+                ActorXPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].XPos;
+                ActorYPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].YPos;
+                ActorZPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].ZPos;
+                ActorYRot.Value = (decimal)Actors[ActorComboBox.SelectedIndex].YRot;
+            }
+        }
+
         private void UpdateActorData()
         {
             if (ActorNumberTextbox.Text == string.Empty || ActorVariableTextbox.Text == string.Empty) return;
@@ -615,6 +629,8 @@ namespace SharpOcarina
                     Actors.Add(new ZActor(from.Number, from.XPos, from.YPos, from.ZPos, from.XRot, from.YRot, from.ZRot, from.Variable));
             }
 
+            MainForm.actorpick = IsTransitionActor ? MainForm._Transition_ : IsSpawnActor ? MainForm._Spawn_ : MainForm._Actor_;
+
             UpdateActorEdit(true);
             UpdateForm();
            // numericUpDown3.Value = numericUpDown3.Maximum;
@@ -625,19 +641,12 @@ namespace SharpOcarina
         {
             if (Actors == null || UpdateForm == null) throw new Exception("Interface values not set");
 
-            
-            UpdateActorEdit();
-            UpdateForm();
-        }
-
-        private void ActorComboBox_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (Actors == null || UpdateForm == null) throw new Exception("Interface values not set");
-
+            MainForm.actorpick = IsTransitionActor ? MainForm._Transition_ : IsSpawnActor ? MainForm._Spawn_ : MainForm._Actor_;
 
             UpdateActorEdit();
-            UpdateForm();
+            //UpdateForm();
         }
+
 
         private void StickToWall(object sender, EventArgs e)
         {
