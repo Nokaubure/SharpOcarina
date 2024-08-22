@@ -16,9 +16,11 @@
 
 - Instance axis is now only drawn if its ready to be interacted with middle mouse
 
-- Holding CTRL while dragging middle mouse now lets you move the selected instance from anywere, good for actors that have their bounding box hidden by their 3D models
+- Holding CTRL while dragging middle mouse now lets you move the selected instance from anywhere, good for actors that have their bounding box hidden by their 3D models
 
 - Additional lights default as point lights with radius one when added, as thats their most common use
+
+- Changed all textboxes of the actor controls into numeric boxes, allowing some advantages such as mouse wheel
 
 - Fixed an issue that appeared in 1.51 where it was impossible to edit multiple waterboxes if the room of one was set to a value different than 3F
 
@@ -35,6 +37,8 @@
 - Fixed an issue where Flag Log crashed if an unknown actor ID was used in a room
 
 - Fixed an issue where the modifier keys to make the camera faster or slower would get stuck when interacting with the UI while moving the camera
+
+- Fixed an issue that appeared in 1.51 where some buttons were missing their icons
 
 --------------
 ---1.51

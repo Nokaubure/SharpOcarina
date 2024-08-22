@@ -2285,6 +2285,7 @@ namespace SharpOcarina
             // CameraView
             // 
             this.CameraView.Enabled = false;
+            this.CameraView.Image = global::SharpOcarina.Properties.Resources.eye;
             this.CameraView.Location = new System.Drawing.Point(296, 138);
             this.CameraView.Name = "CameraView";
             this.CameraView.Size = new System.Drawing.Size(68, 28);
@@ -4856,6 +4857,7 @@ namespace SharpOcarina
             this.RoomList.Name = "RoomList";
             this.RoomList.Size = new System.Drawing.Size(397, 117);
             this.RoomList.TabIndex = 2;
+            this.EnvironmentControlTooltip.SetToolTip(this.RoomList, "Double click a room to rename it");
             this.RoomList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             this.RoomList.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
             // 
@@ -5305,20 +5307,24 @@ namespace SharpOcarina
             // 
             // ViewNormalCopyEnvB
             // 
+            this.ViewNormalCopyEnvB.Image = global::SharpOcarina.Properties.Resources.eye;
             this.ViewNormalCopyEnvB.Location = new System.Drawing.Point(341, 56);
             this.ViewNormalCopyEnvB.Name = "ViewNormalCopyEnvB";
             this.ViewNormalCopyEnvB.Size = new System.Drawing.Size(26, 22);
             this.ViewNormalCopyEnvB.TabIndex = 32;
+            this.EnvironmentControlTooltip.SetToolTip(this.ViewNormalCopyEnvB, "Use current viewport camera angle as the direction");
             this.ViewNormalCopyEnvB.UseVisualStyleBackColor = true;
             this.ViewNormalCopyEnvB.Click += new System.EventHandler(this.ViewNormalCopyEnvB_Click);
             // 
             // ViewNormalCopyEnvA
             // 
             this.ViewNormalCopyEnvA.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ViewNormalCopyEnvA.Image = global::SharpOcarina.Properties.Resources.eye;
             this.ViewNormalCopyEnvA.Location = new System.Drawing.Point(341, 31);
             this.ViewNormalCopyEnvA.Name = "ViewNormalCopyEnvA";
             this.ViewNormalCopyEnvA.Size = new System.Drawing.Size(26, 22);
             this.ViewNormalCopyEnvA.TabIndex = 31;
+            this.EnvironmentControlTooltip.SetToolTip(this.ViewNormalCopyEnvA, "Use current viewport camera angle as the direction");
             this.ViewNormalCopyEnvA.UseVisualStyleBackColor = true;
             this.ViewNormalCopyEnvA.Click += new System.EventHandler(this.ViewNormalCopyEnvA_Click);
             // 
@@ -5525,6 +5531,7 @@ namespace SharpOcarina
             this.DrawDistance.ShiftMultiplier = 20;
             this.DrawDistance.Size = new System.Drawing.Size(80, 20);
             this.DrawDistance.TabIndex = 24;
+            this.EnvironmentControlTooltip.SetToolTip(this.DrawDistance, "Max value is 3200, which means 12800 units");
             this.DrawDistance.Value = new decimal(new int[] {
             0,
             0,
@@ -5555,6 +5562,7 @@ namespace SharpOcarina
             this.FogUnknown.ShiftMultiplier = 20;
             this.FogUnknown.Size = new System.Drawing.Size(80, 20);
             this.FogUnknown.TabIndex = 23;
+            this.EnvironmentControlTooltip.SetToolTip(this.FogUnknown, "The time it takes to switch into this environment");
             this.FogUnknown.Value = new decimal(new int[] {
             0,
             0,
@@ -5585,6 +5593,7 @@ namespace SharpOcarina
             this.FogDistance.ShiftMultiplier = 20;
             this.FogDistance.Size = new System.Drawing.Size(80, 20);
             this.FogDistance.TabIndex = 22;
+            this.EnvironmentControlTooltip.SetToolTip(this.FogDistance, "Max value is 3E4, the lower the closer the fog is to the camera");
             this.FogDistance.Value = new decimal(new int[] {
             0,
             0,
@@ -8209,10 +8218,11 @@ namespace SharpOcarina
             this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StickToZplus,
             this.StickToZminus});
+            this.toolStripDropDownButton3.Image = global::SharpOcarina.Properties.Resources.options;
             this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
             this.toolStripDropDownButton3.ShowDropDownArrow = false;
-            this.toolStripDropDownButton3.Size = new System.Drawing.Size(4, 4);
+            this.toolStripDropDownButton3.Size = new System.Drawing.Size(20, 20);
             this.toolStripDropDownButton3.Text = "toolStripDropDownButton1";
             this.toolStripDropDownButton3.ToolTipText = "Actions";
             // 
@@ -8251,10 +8261,11 @@ namespace SharpOcarina
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StickToYplus,
             this.StickToYminus});
+            this.toolStripDropDownButton2.Image = global::SharpOcarina.Properties.Resources.options;
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.ShowDropDownArrow = false;
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(4, 4);
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(20, 20);
             this.toolStripDropDownButton2.Text = "toolStripDropDownButton1";
             this.toolStripDropDownButton2.ToolTipText = "Actions";
             // 
@@ -8293,10 +8304,11 @@ namespace SharpOcarina
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StickToXplus,
             this.StickToXminus});
+            this.toolStripDropDownButton1.Image = global::SharpOcarina.Properties.Resources.options;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ShowDropDownArrow = false;
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(4, 4);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(20, 20);
             this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ToolTipText = "Actions";
             // 
@@ -8854,6 +8866,7 @@ namespace SharpOcarina
             // CutscenePositionViewMode
             // 
             this.CutscenePositionViewMode.Enabled = false;
+            this.CutscenePositionViewMode.Image = global::SharpOcarina.Properties.Resources.eye;
             this.CutscenePositionViewMode.Location = new System.Drawing.Point(222, 227);
             this.CutscenePositionViewMode.Name = "CutscenePositionViewMode";
             this.CutscenePositionViewMode.Size = new System.Drawing.Size(68, 28);
@@ -10401,6 +10414,7 @@ namespace SharpOcarina
             // RenderFunctionPreview
             // 
             this.RenderFunctionPreview.Enabled = false;
+            this.RenderFunctionPreview.Image = global::SharpOcarina.Properties.Resources.eye;
             this.RenderFunctionPreview.Location = new System.Drawing.Point(329, 197);
             this.RenderFunctionPreview.Name = "RenderFunctionPreview";
             this.RenderFunctionPreview.Size = new System.Drawing.Size(68, 28);
@@ -10457,10 +10471,11 @@ namespace SharpOcarina
             // RenderFunctionFlagPresetButton
             // 
             this.RenderFunctionFlagPresetButton.BackColor = System.Drawing.Color.Transparent;
+            this.RenderFunctionFlagPresetButton.Image = global::SharpOcarina.Properties.Resources.options;
             this.RenderFunctionFlagPresetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RenderFunctionFlagPresetButton.Name = "RenderFunctionFlagPresetButton";
             this.RenderFunctionFlagPresetButton.ShowDropDownArrow = false;
-            this.RenderFunctionFlagPresetButton.Size = new System.Drawing.Size(43, 19);
+            this.RenderFunctionFlagPresetButton.Size = new System.Drawing.Size(59, 20);
             this.RenderFunctionFlagPresetButton.Text = "Preset";
             this.RenderFunctionFlagPresetButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.RenderFunctionFlagPresetButton.ToolTipText = "Actions";

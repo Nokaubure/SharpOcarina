@@ -33,6 +33,12 @@
             this.ActorComboBox = new System.Windows.Forms.ComboBox();
             this.DuplicateButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.BackCamBox = new SharpOcarina.NumericUpDownEx();
+            this.BackSwitchBox = new SharpOcarina.NumericUpDownEx();
+            this.FrontCamBox = new SharpOcarina.NumericUpDownEx();
+            this.FrontSwitchBox = new SharpOcarina.NumericUpDownEx();
+            this.ActorVariableBox = new SharpOcarina.NumericUpDownEx();
+            this.ActorNumberBox = new SharpOcarina.NumericUpDownEx();
             this.PresetDropdown = new System.Windows.Forms.ComboBox();
             this.ActorPropertyLabel = new System.Windows.Forms.Label();
             this.ActorListBoxValue = new SharpOcarina.NumericUpDownEx();
@@ -52,17 +58,11 @@
             this.StickToXminus = new System.Windows.Forms.ToolStripMenuItem();
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.BackSwitchTextBox = new SharpOcarina.NumericTextBox();
-            this.FrontCamTextBox = new SharpOcarina.NumericTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.FrontRoomLabel = new System.Windows.Forms.Label();
-            this.FrontSwitchTextbox = new SharpOcarina.NumericTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.BackCamTextBox = new SharpOcarina.NumericTextBox();
-            this.ActorNumberTextbox = new SharpOcarina.NumericTextBox();
             this.ActorZPos = new SharpOcarina.NumericUpDownEx();
             this.label13 = new System.Windows.Forms.Label();
-            this.ActorVariableTextbox = new SharpOcarina.NumericTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.ActorXRot = new SharpOcarina.NumericUpDownEx();
             this.ActorYPos = new SharpOcarina.NumericUpDownEx();
@@ -80,6 +80,12 @@
             this.ToolTipHelper = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox3.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BackCamBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BackSwitchBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FrontCamBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FrontSwitchBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorVariableBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorNumberBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorListBoxValue)).BeginInit();
             this.ZPosStrip.SuspendLayout();
             this.YPosStrip.SuspendLayout();
@@ -120,7 +126,6 @@
             this.ActorComboBox.TabIndex = 24;
             this.ActorComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox2_DropDown);
             this.ActorComboBox.SelectionChangeCommitted += new System.EventHandler(this.ActorComboBox_ValueChanged);
-          
             // 
             // DuplicateButton
             // 
@@ -139,6 +144,12 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.BackCamBox);
+            this.panel2.Controls.Add(this.BackSwitchBox);
+            this.panel2.Controls.Add(this.FrontCamBox);
+            this.panel2.Controls.Add(this.FrontSwitchBox);
+            this.panel2.Controls.Add(this.ActorVariableBox);
+            this.panel2.Controls.Add(this.ActorNumberBox);
             this.panel2.Controls.Add(this.PresetDropdown);
             this.panel2.Controls.Add(this.ActorPropertyLabel);
             this.panel2.Controls.Add(this.ActorListBoxValue);
@@ -149,17 +160,11 @@
             this.panel2.Controls.Add(this.XPosStrip);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.BackSwitchTextBox);
-            this.panel2.Controls.Add(this.FrontCamTextBox);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.FrontRoomLabel);
-            this.panel2.Controls.Add(this.FrontSwitchTextbox);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.BackCamTextBox);
-            this.panel2.Controls.Add(this.ActorNumberTextbox);
             this.panel2.Controls.Add(this.ActorZPos);
             this.panel2.Controls.Add(this.label13);
-            this.panel2.Controls.Add(this.ActorVariableTextbox);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.ActorXRot);
             this.panel2.Controls.Add(this.ActorYPos);
@@ -176,6 +181,188 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(392, 247);
             this.panel2.TabIndex = 21;
+            // 
+            // BackCamBox
+            // 
+            this.BackCamBox.AlwaysFireValueChanged = false;
+            this.BackCamBox.DisplayDigits = 1;
+            this.BackCamBox.DoValueRollover = false;
+            this.BackCamBox.Enabled = false;
+            this.BackCamBox.Hexadecimal = true;
+            this.BackCamBox.IncrementMouseWheel = 1;
+            this.BackCamBox.Location = new System.Drawing.Point(340, 107);
+            this.BackCamBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.BackCamBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackCamBox.Name = "BackCamBox";
+            this.BackCamBox.ShiftMultiplier = 20;
+            this.BackCamBox.Size = new System.Drawing.Size(37, 20);
+            this.BackCamBox.TabIndex = 37;
+            this.BackCamBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackCamBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // BackSwitchBox
+            // 
+            this.BackSwitchBox.AlwaysFireValueChanged = false;
+            this.BackSwitchBox.DisplayDigits = 1;
+            this.BackSwitchBox.DoValueRollover = false;
+            this.BackSwitchBox.Enabled = false;
+            this.BackSwitchBox.Hexadecimal = true;
+            this.BackSwitchBox.IncrementMouseWheel = 1;
+            this.BackSwitchBox.Location = new System.Drawing.Point(260, 107);
+            this.BackSwitchBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.BackSwitchBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackSwitchBox.Name = "BackSwitchBox";
+            this.BackSwitchBox.ShiftMultiplier = 20;
+            this.BackSwitchBox.Size = new System.Drawing.Size(37, 20);
+            this.BackSwitchBox.TabIndex = 36;
+            this.BackSwitchBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackSwitchBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // FrontCamBox
+            // 
+            this.FrontCamBox.AlwaysFireValueChanged = false;
+            this.FrontCamBox.DisplayDigits = 1;
+            this.FrontCamBox.DoValueRollover = false;
+            this.FrontCamBox.Enabled = false;
+            this.FrontCamBox.Hexadecimal = true;
+            this.FrontCamBox.IncrementMouseWheel = 1;
+            this.FrontCamBox.Location = new System.Drawing.Point(147, 107);
+            this.FrontCamBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FrontCamBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontCamBox.Name = "FrontCamBox";
+            this.FrontCamBox.ShiftMultiplier = 20;
+            this.FrontCamBox.Size = new System.Drawing.Size(37, 20);
+            this.FrontCamBox.TabIndex = 35;
+            this.FrontCamBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontCamBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // FrontSwitchBox
+            // 
+            this.FrontSwitchBox.AlwaysFireValueChanged = false;
+            this.FrontSwitchBox.DisplayDigits = 1;
+            this.FrontSwitchBox.DoValueRollover = false;
+            this.FrontSwitchBox.Enabled = false;
+            this.FrontSwitchBox.Hexadecimal = true;
+            this.FrontSwitchBox.IncrementMouseWheel = 1;
+            this.FrontSwitchBox.Location = new System.Drawing.Point(67, 107);
+            this.FrontSwitchBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FrontSwitchBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontSwitchBox.Name = "FrontSwitchBox";
+            this.FrontSwitchBox.ShiftMultiplier = 20;
+            this.FrontSwitchBox.Size = new System.Drawing.Size(37, 20);
+            this.FrontSwitchBox.TabIndex = 34;
+            this.FrontSwitchBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontSwitchBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // ActorVariableBox
+            // 
+            this.ActorVariableBox.AlwaysFireValueChanged = false;
+            this.ActorVariableBox.DisplayDigits = 4;
+            this.ActorVariableBox.DoValueRollover = false;
+            this.ActorVariableBox.Enabled = false;
+            this.ActorVariableBox.Hexadecimal = true;
+            this.ActorVariableBox.IncrementMouseWheel = 1;
+            this.ActorVariableBox.Location = new System.Drawing.Point(267, 3);
+            this.ActorVariableBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ActorVariableBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorVariableBox.Name = "ActorVariableBox";
+            this.ActorVariableBox.ShiftMultiplier = 20;
+            this.ActorVariableBox.Size = new System.Drawing.Size(100, 20);
+            this.ActorVariableBox.TabIndex = 33;
+            this.ToolTipHelper.SetToolTip(this.ActorVariableBox, "Hold middleclick on the actor in the viewport to move it with the mouse");
+            this.ActorVariableBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorVariableBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // ActorNumberBox
+            // 
+            this.ActorNumberBox.AlwaysFireValueChanged = false;
+            this.ActorNumberBox.DisplayDigits = 4;
+            this.ActorNumberBox.DoValueRollover = false;
+            this.ActorNumberBox.Enabled = false;
+            this.ActorNumberBox.Hexadecimal = true;
+            this.ActorNumberBox.IncrementMouseWheel = 1;
+            this.ActorNumberBox.Location = new System.Drawing.Point(74, 3);
+            this.ActorNumberBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ActorNumberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorNumberBox.Name = "ActorNumberBox";
+            this.ActorNumberBox.ShiftMultiplier = 20;
+            this.ActorNumberBox.Size = new System.Drawing.Size(100, 20);
+            this.ActorNumberBox.TabIndex = 32;
+            this.ToolTipHelper.SetToolTip(this.ActorNumberBox, "Hold middleclick on the actor in the viewport to move it with the mouse");
+            this.ActorNumberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorNumberBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
             // 
             // PresetDropdown
             // 
@@ -399,30 +586,6 @@
             this.label4.TabIndex = 25;
             this.label4.Text = "Cam:";
             // 
-            // BackSwitchTextBox
-            // 
-            this.BackSwitchTextBox.AllowHex = true;
-            this.BackSwitchTextBox.Digits = 4;
-            this.BackSwitchTextBox.Enabled = false;
-            this.BackSwitchTextBox.Location = new System.Drawing.Point(267, 107);
-            this.BackSwitchTextBox.Name = "BackSwitchTextBox";
-            this.BackSwitchTextBox.Size = new System.Drawing.Size(30, 20);
-            this.BackSwitchTextBox.TabIndex = 20;
-            this.BackSwitchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox6_KeyDown);
-            this.BackSwitchTextBox.Leave += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // FrontCamTextBox
-            // 
-            this.FrontCamTextBox.AllowHex = true;
-            this.FrontCamTextBox.Digits = 4;
-            this.FrontCamTextBox.Enabled = false;
-            this.FrontCamTextBox.Location = new System.Drawing.Point(144, 107);
-            this.FrontCamTextBox.Name = "FrontCamTextBox";
-            this.FrontCamTextBox.Size = new System.Drawing.Size(30, 20);
-            this.FrontCamTextBox.TabIndex = 19;
-            this.FrontCamTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox5_KeyDown);
-            this.FrontCamTextBox.Leave += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -443,18 +606,6 @@
             this.FrontRoomLabel.TabIndex = 21;
             this.FrontRoomLabel.Text = "Front Room:";
             // 
-            // FrontSwitchTextbox
-            // 
-            this.FrontSwitchTextbox.AllowHex = true;
-            this.FrontSwitchTextbox.Digits = 4;
-            this.FrontSwitchTextbox.Enabled = false;
-            this.FrontSwitchTextbox.Location = new System.Drawing.Point(74, 107);
-            this.FrontSwitchTextbox.Name = "FrontSwitchTextbox";
-            this.FrontSwitchTextbox.Size = new System.Drawing.Size(30, 20);
-            this.FrontSwitchTextbox.TabIndex = 18;
-            this.FrontSwitchTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox4_KeyDown);
-            this.FrontSwitchTextbox.Leave += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -464,30 +615,6 @@
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 19;
             this.label1.Text = "Back Room:";
-            // 
-            // BackCamTextBox
-            // 
-            this.BackCamTextBox.AllowHex = true;
-            this.BackCamTextBox.Digits = 4;
-            this.BackCamTextBox.Enabled = false;
-            this.BackCamTextBox.Location = new System.Drawing.Point(337, 107);
-            this.BackCamTextBox.Name = "BackCamTextBox";
-            this.BackCamTextBox.Size = new System.Drawing.Size(30, 20);
-            this.BackCamTextBox.TabIndex = 21;
-            this.BackCamTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox3_KeyDown);
-            this.BackCamTextBox.Leave += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // ActorNumberTextbox
-            // 
-            this.ActorNumberTextbox.AllowHex = true;
-            this.ActorNumberTextbox.Digits = 4;
-            this.ActorNumberTextbox.Enabled = false;
-            this.ActorNumberTextbox.Location = new System.Drawing.Point(74, 3);
-            this.ActorNumberTextbox.Name = "ActorNumberTextbox";
-            this.ActorNumberTextbox.Size = new System.Drawing.Size(96, 20);
-            this.ActorNumberTextbox.TabIndex = 3;
-            this.ActorNumberTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox1_KeyDown);
-            this.ActorNumberTextbox.Leave += new System.EventHandler(this.GenericTextbox_Leave);
             // 
             // ActorZPos
             // 
@@ -528,18 +655,6 @@
             this.label13.Size = new System.Drawing.Size(57, 13);
             this.label13.TabIndex = 11;
             this.label13.Text = "Z Position:";
-            // 
-            // ActorVariableTextbox
-            // 
-            this.ActorVariableTextbox.AllowHex = true;
-            this.ActorVariableTextbox.Digits = 4;
-            this.ActorVariableTextbox.Enabled = false;
-            this.ActorVariableTextbox.Location = new System.Drawing.Point(267, 3);
-            this.ActorVariableTextbox.Name = "ActorVariableTextbox";
-            this.ActorVariableTextbox.Size = new System.Drawing.Size(100, 20);
-            this.ActorVariableTextbox.TabIndex = 5;
-            this.ActorVariableTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox2_KeyDown);
-            this.ActorVariableTextbox.Leave += new System.EventHandler(this.GenericTextbox_Leave);
             // 
             // label12
             // 
@@ -808,6 +923,12 @@
             this.groupBox3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BackCamBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BackSwitchBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FrontCamBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FrontSwitchBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorVariableBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorNumberBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorListBoxValue)).EndInit();
             this.ZPosStrip.ResumeLayout(false);
             this.ZPosStrip.PerformLayout();
@@ -829,10 +950,8 @@
 
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Panel panel2;
-        private SharpOcarina.NumericTextBox ActorNumberTextbox;
         private SharpOcarina.NumericUpDownEx ActorZPos;
         private System.Windows.Forms.Label label13;
-        private SharpOcarina.NumericTextBox ActorVariableTextbox;
         private System.Windows.Forms.Label label12;
         private SharpOcarina.NumericUpDownEx ActorXRot;
         private SharpOcarina.NumericUpDownEx ActorYPos;
@@ -848,12 +967,8 @@
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.Button AddButton;
         private SharpOcarina.NiceLine niceLine1;
-        private SharpOcarina.NumericTextBox BackCamTextBox;
-        private SharpOcarina.NumericTextBox BackSwitchTextBox;
-        private SharpOcarina.NumericTextBox FrontCamTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label FrontRoomLabel;
-        private SharpOcarina.NumericTextBox FrontSwitchTextbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button DuplicateButton;
@@ -876,5 +991,11 @@
         private System.Windows.Forms.Label ActorPropertyLabel;
         public System.Windows.Forms.ComboBox PresetDropdown;
         private System.Windows.Forms.ToolTip ToolTipHelper;
+        private NumericUpDownEx ActorVariableBox;
+        private NumericUpDownEx ActorNumberBox;
+        private NumericUpDownEx BackCamBox;
+        private NumericUpDownEx BackSwitchBox;
+        private NumericUpDownEx FrontCamBox;
+        private NumericUpDownEx FrontSwitchBox;
     }
 }

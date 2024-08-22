@@ -128,6 +128,8 @@ namespace SharpOcarina
         {
             if (Actors == null || UpdateForm == null) throw new Exception("Interface values not set");
 
+            if (ActorComboBox.SelectedIndex == -1) return;
+
             mainform.StoreUndo((IsTransitionActor) ? 2 : (IsSpawnActor) ? 3 : 1);
 
             Actors.Remove(Actors[ActorComboBox.SelectedIndex]);
@@ -152,16 +154,16 @@ namespace SharpOcarina
                 label3.Visible = false;
                 label1.Visible = false;
                 label4.Visible = false;
-                FrontSwitchTextbox.Visible = false;
-                FrontCamTextBox.Visible = false;
-                BackSwitchTextBox.Visible = false;
-                BackCamTextBox.Visible = false;
+                FrontSwitchBox.Visible = false;
+                FrontCamBox.Visible = false;
+                BackSwitchBox.Visible = false;
+                BackCamBox.Visible = false;
 
                 if (IsSpawnActor)
                 {
                     FrontRoomLabel.Visible = true;
                     FrontRoomLabel.Text = "      Room:";
-                    FrontSwitchTextbox.Visible = true;
+                    FrontSwitchBox.Visible = true;
                 }
 
 
@@ -175,10 +177,10 @@ namespace SharpOcarina
                 label3.Visible = true;
                 label1.Visible = true;
                 label4.Visible = true;
-                FrontSwitchTextbox.Visible = true;
-                FrontCamTextBox.Visible = true;
-                BackSwitchTextBox.Visible = true;
-                BackCamTextBox.Visible = true;
+                FrontSwitchBox.Visible = true;
+                FrontCamBox.Visible = true;
+                BackSwitchBox.Visible = true;
+                BackCamBox.Visible = true;
 
                 // hide
                 ActorXRot.Visible = false;
@@ -232,8 +234,8 @@ namespace SharpOcarina
                 else ActorComboBox.SelectedIndex = 0;
 
 
-                ActorNumberTextbox.Text = Actors[ActorComboBox.SelectedIndex].Number.ToString("X4");
-                ActorVariableTextbox.Text = Actors[ActorComboBox.SelectedIndex].Variable.ToString("X4");
+                ActorNumberBox.Value = Actors[ActorComboBox.SelectedIndex].Number;
+                ActorVariableBox.Value = Actors[ActorComboBox.SelectedIndex].Variable;
                 ActorXPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].XPos;
                 ActorYPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].YPos;
                 ActorZPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].ZPos;
@@ -245,15 +247,15 @@ namespace SharpOcarina
                     ActorZRot.Value = (decimal)Actors[ActorComboBox.SelectedIndex].ZRot;
                     if (IsSpawnActor)
                     {
-                        FrontSwitchTextbox.Text = Actors[ActorComboBox.SelectedIndex].SpawnRoom.ToString("X2");
+                        FrontSwitchBox.Value = Actors[ActorComboBox.SelectedIndex].SpawnRoom;
                     }
                 }
                 else
                 {
-                    FrontSwitchTextbox.Text = Actors[ActorComboBox.SelectedIndex].FrontSwitchTo.ToString("X2");
-                    FrontCamTextBox.Text = Actors[ActorComboBox.SelectedIndex].FrontCamera.ToString("X2");
-                    BackSwitchTextBox.Text = Actors[ActorComboBox.SelectedIndex].BackSwitchTo.ToString("X2");
-                    BackCamTextBox.Text = Actors[ActorComboBox.SelectedIndex].BackCamera.ToString("X2");
+                    FrontSwitchBox.Value = Actors[ActorComboBox.SelectedIndex].FrontSwitchTo;
+                    FrontCamBox.Value = Actors[ActorComboBox.SelectedIndex].FrontCamera;
+                    BackSwitchBox.Value = Actors[ActorComboBox.SelectedIndex].BackSwitchTo;
+                    BackCamBox.Value = Actors[ActorComboBox.SelectedIndex].BackCamera;
                 }
 
 
@@ -383,8 +385,8 @@ namespace SharpOcarina
                 ActorComboBox.SelectedValue = 0;
                 ActorComboBox.Enabled = false;
 
-                ActorNumberTextbox.Text = string.Empty;
-                ActorVariableTextbox.Text = string.Empty;
+                ActorNumberBox.Value = 0;
+                ActorVariableBox.Value = 0;
                 ActorXPos.Value = 0;
                 ActorYPos.Value = 0;
                 ActorZPos.Value = 0;
@@ -410,8 +412,8 @@ namespace SharpOcarina
         {
             if (Actors != null && Actors.Count != 0)
             {
-                ActorNumberTextbox.Text = Actors[ActorComboBox.SelectedIndex].Number.ToString("X4");
-                ActorVariableTextbox.Text = Actors[ActorComboBox.SelectedIndex].Variable.ToString("X4");
+                ActorNumberBox.Value = Actors[ActorComboBox.SelectedIndex].Number;
+                ActorVariableBox.Value = Actors[ActorComboBox.SelectedIndex].Variable;
                 ActorXPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].XPos;
                 ActorYPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].YPos;
                 ActorZPos.Value = (decimal)Actors[ActorComboBox.SelectedIndex].ZPos;
@@ -421,12 +423,11 @@ namespace SharpOcarina
 
         private void UpdateActorData()
         {
-            if (ActorNumberTextbox.Text == string.Empty || ActorVariableTextbox.Text == string.Empty) return;
 
             mainform.StoreUndo((IsTransitionActor) ? 2 : (IsSpawnActor) ? 3 : 1);
 
-            Actors[ActorComboBox.SelectedIndex].Number = ushort.Parse(ActorNumberTextbox.Text, System.Globalization.NumberStyles.HexNumber);
-            Actors[ActorComboBox.SelectedIndex].Variable = ushort.Parse(ActorVariableTextbox.Text, System.Globalization.NumberStyles.HexNumber);
+            Actors[ActorComboBox.SelectedIndex].Number = (ushort)ActorNumberBox.Value;
+            Actors[ActorComboBox.SelectedIndex].Variable = (ushort)ActorVariableBox.Value;
             Actors[ActorComboBox.SelectedIndex].XPos = (short)ActorXPos.Value;
             Actors[ActorComboBox.SelectedIndex].YPos = (short)ActorYPos.Value;
             Actors[ActorComboBox.SelectedIndex].ZPos = (short)ActorZPos.Value;
@@ -438,15 +439,15 @@ namespace SharpOcarina
                 Actors[ActorComboBox.SelectedIndex].ZRot = (short)ActorZRot.Value;
                 if (IsSpawnActor)
                 {
-                    Actors[ActorComboBox.SelectedIndex].SpawnRoom = byte.Parse(FrontSwitchTextbox.Text, System.Globalization.NumberStyles.HexNumber);
+                    Actors[ActorComboBox.SelectedIndex].SpawnRoom = (byte)FrontSwitchBox.Value;
                 }
             }
             else
             {
-                Actors[ActorComboBox.SelectedIndex].FrontSwitchTo = byte.Parse(FrontSwitchTextbox.Text, System.Globalization.NumberStyles.HexNumber);
-                Actors[ActorComboBox.SelectedIndex].FrontCamera = byte.Parse(FrontCamTextBox.Text, System.Globalization.NumberStyles.HexNumber);
-                Actors[ActorComboBox.SelectedIndex].BackSwitchTo = byte.Parse(BackSwitchTextBox.Text, System.Globalization.NumberStyles.HexNumber);
-                Actors[ActorComboBox.SelectedIndex].BackCamera = byte.Parse(BackCamTextBox.Text, System.Globalization.NumberStyles.HexNumber);
+                Actors[ActorComboBox.SelectedIndex].FrontSwitchTo = (byte)FrontSwitchBox.Value;
+                Actors[ActorComboBox.SelectedIndex].FrontCamera = (byte)FrontCamBox.Value;
+                Actors[ActorComboBox.SelectedIndex].BackSwitchTo = (byte)BackSwitchBox.Value;
+                Actors[ActorComboBox.SelectedIndex].BackCamera = (byte)BackCamBox.Value;
             }
 
             UpdateActorEdit();
@@ -501,42 +502,6 @@ namespace SharpOcarina
             if (Control.ModifierKeys == Keys.Shift && short.MaxValue - Math.Abs(ActorZRot.Value) > 1820)
                 ActorZRot.Value += (ActorZRot.Value - (decimal)Actors[ActorComboBox.SelectedIndex].ZRot) * 9;
             UpdateActorData();
-        }
-
-        private void numericTextBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                UpdateActorData();
-        }
-
-        private void numericTextBox2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                UpdateActorData();
-        }
-
-        private void numericTextBox4_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                UpdateActorData();
-        }
-
-        private void numericTextBox5_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                UpdateActorData();
-        }
-
-        private void numericTextBox6_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                UpdateActorData();
-        }
-
-        private void numericTextBox3_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                UpdateActorData();
         }
 
         private void XRot_KeyDown(object sender, KeyEventArgs e)
