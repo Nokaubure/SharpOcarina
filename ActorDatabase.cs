@@ -16,14 +16,14 @@ namespace SharpOcarina
 {
     public partial class ActorDatabase : Form
     {
-        public List<DatabaseActor> Database;
+      
         public XmlNodeList nodes;
         public string filter;
         public byte target;
         public ushort initialvalue, initialvariable;
         public byte firsttime = 0;
         MainForm parent;
-        string[] actor_categories = { "Switch", "Prop (1)", "Player", "Bomb", "NPC", "Enemy", "Prop (2)", "Item/Action", "Misc", "Boss", "Transitions", "Chests" };
+        string[] actor_categories = { "Switch", "Prop (Bg)", "Player", "Bomb", "NPC", "Enemy", "Prop", "Item/Action", "Misc", "Boss", "Transitions", "Chests", "Custom Actor" };
         public ActorDatabase(MainForm _parent, byte _target, string _filter, ushort _initialvalue = 0xFFFF, ushort _initialvariable = 0xFFFF)
         {
             InitializeComponent();
@@ -38,120 +38,10 @@ namespace SharpOcarina
 
         public void Init()
         {
-            string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
-            nodes = XMLreader.getXMLNodes(gameprefix + "ActorNames", "Actor");
-            Database = new List<DatabaseActor>();
             FilterTextBox.Text = filter;
 
             if (initialvalue == 0xFFFF) firsttime = 3;
-
-            List<ushort> index_list = new List<ushort>();
-
-            if (rom64.isSet()){
-                List<String> actors = rom64.getList("src\\actor\\");
-
-                foreach(String str in actors) {
-                    string basename = "";
-                    ushort index = 0;
-
-                    if (!rom64.getNameAndIndex(str, ref basename, ref index))
-                        continue;
-
-                    var variables = new Dictionary<ushort, string>();
-                    index_list.Add(index);
-
-                    int exists = Database.FindIndex(x => x.Value == index);
-                    if(exists != -1)
-                    {
-                      //  DebugConsole.WriteLine("Removed " + Database[exists].Value.ToString("X2"));
-                        Database.RemoveAt(exists); //removes vanilla actor from db
-                        
-                    }
-
-                    TomlTable toml = rom64.parseToml(str + "\\actor.toml");
-                    TomlArray var_arr = null;
-                    byte cat = 0;
-
-                    if (toml != null) {
-                        var_arr = toml["Variables"].AsArray;
-                        if (toml.HasKey("Name"))
-                            basename = toml["Name"].AsString;
-                        if (toml.HasKey("Category")) {
-                            string catname = toml["Category"].AsString;
-
-                            switch (catname.ToLower()) {
-                                case "switch":     cat = 0; break;
-                                case "bg":         cat = 1; break;
-                                case "player":     cat = 2; break;
-                                case "explosive":  cat = 3; break;
-                                case "npc":        cat = 4; break;
-                                case "enemy":      cat = 5; break;
-                                case "prop":       cat = 6; break;
-                                case "itemaction": cat = 7; break;
-                                case "misc":       cat = 8; break;
-                                case "boss":       cat = 9; break;
-                                case "door":       cat = 10; break;
-                                case "chest":      cat = 11; break;
-                            }
-                        }
-                    }
-
-                    if (var_arr != null) {
-                        foreach (TomlArray arr in var_arr) {
-                            ushort var_index = (ushort)arr[0].AsInteger.Value;
-                            string name = arr[1].AsString;
-
-                            variables.Add(var_index, name);
-                        }
-                    } else {
-                        foreach (XmlNode node in nodes) {
-                            XmlAttributeCollection nodeAtt = node.Attributes;
-
-                            if ((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16) != index)
-                                continue;
-                            
-                            cat = Convert.ToByte(nodeAtt["Category"].Value);
-
-                            XMLactor xmlactor = XMLreader.getFullActor(nodeAtt["Key"].Value);
-                            Dictionary<ushort,string> vars = xmlactor.variables;
-
-                            foreach(KeyValuePair<ushort,string> s in vars)
-                                variables.Add(s.Key, s.Value);
-                            break;
-                        }
-                    }
-
-                    Database.Add(new DatabaseActor(index ,variables, basename, "", cat));
-                }
-            }
-
-            foreach (XmlNode node in nodes)
-            {
-                XmlAttributeCollection nodeAtt = node.Attributes;
-                var values = new Dictionary<ushort, string>(); 
-
-                XMLactor xmlactor = XMLreader.getFullActor(nodeAtt["Key"].Value);
-
-
-                if (index_list.Contains((Convert.ToUInt16(nodeAtt["Key"].Value, 16)))) continue;
-
-
-
-                Dictionary<ushort,string> vars = xmlactor.variables;
-
-                foreach(KeyValuePair<ushort,string> s in vars)
-                {
-                    values.Add(s.Key, s.Value);
-                }
-
-                string warning = "";
-                if ((MainForm.CurrentScene.SpecialObject == 0x0003 && nodeAtt["Object"] != null && (ushort)Convert.ToInt16(nodeAtt["Object"].Value.Split(',')[0].Trim(), 16) == 0x0002) ||
-                     (MainForm.CurrentScene.SpecialObject == 0x0002 && nodeAtt["Object"] != null && (ushort)Convert.ToInt16(nodeAtt["Object"].Value.Split(',')[0].Trim(), 16) == 0x0003)) warning = "\n WARNING! Change special object setting before using this actor!";
-
-
-                Database.Add(new DatabaseActor((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16),values, nodeAtt["Name"].Value, xmlactor.notes + warning,xmlactor.category));
-            }
 
             foreach(string category in actor_categories)
             {
@@ -159,7 +49,14 @@ namespace SharpOcarina
 
                     MenuItem.Click += new System.EventHandler(this.SearchCategory);
 
+                if (CategoriesButton.DropDownItems.Count == actor_categories.Length -1)
+                {
+                    CategoriesButton.DropDownItems.Add(new ToolStripSeparator());
+                }
+
                 CategoriesButton.DropDownItems.Add(MenuItem);
+
+                
             }
         }
 
@@ -172,14 +69,14 @@ namespace SharpOcarina
 
           //  ushort[] transitions = { 0x0009, 0x0023, 0x002E };
 
-            foreach (DatabaseActor actor in Database)
+            foreach (DatabaseActor actor in parent.Database)
             {
                 show = false;
                 string specialfilter = "";
                 if (filter.Contains("#")) specialfilter = filter.Replace("#", "");
 
                 ActorView.Nodes.Add(new ActorNode(actor.Value, 0x0000, actor.Value.ToString("X4") + " - " + actor.Name, actor.Notes));
-                if (filter == "" || actor.Name.Contains(filter, StringComparison.OrdinalIgnoreCase) || (specialfilter != "" && actor.Category == Array.IndexOf(actor_categories, specialfilter)))
+                if (filter == "" || actor.Name.Contains(filter, StringComparison.OrdinalIgnoreCase) || (specialfilter != "" && specialfilter != "Custom Actor" && actor.Category == Array.IndexOf(actor_categories, specialfilter)) || (specialfilter == "Custom Actor" && actor.IsCustom))
                     show = true;
 
                 if (firsttime == 0 && actor.Value == initialvalue) {ActorView.SelectedNode = ActorView.Nodes[ActorView.Nodes.Count - 1]; firsttime++; ActorView.Focus(); }
@@ -282,13 +179,15 @@ namespace SharpOcarina
         public string Name;
         public ushort Value;
         public byte Category;
-        public DatabaseActor(ushort _Value, Dictionary<ushort, string> _Variables, string _Name, string _Notes, byte _Category)
+        public bool IsCustom;
+        public DatabaseActor(ushort _Value, Dictionary<ushort, string> _Variables, string _Name, string _Notes, byte _Category, bool _isCustom)
         {
             Value = _Value;
             Variables = _Variables;
             Notes = _Notes;
             Name = _Name;
             Category = _Category;
+            IsCustom = _isCustom;
         }
 
     }

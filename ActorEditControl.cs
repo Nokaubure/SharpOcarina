@@ -718,6 +718,12 @@ namespace SharpOcarina
             if (IsTransitionActor) {filter = "#Transitions"; target = 1; }
             else if (IsSpawnActor) { filter = "Spawn point"; target = 2; }
 
+            if (MainForm.reloaddatabase)
+            {
+                mainform.GenerateActorDatabase();
+                MainForm.reloaddatabase = false;
+            }
+
             ActorDatabase actordabase = new ActorDatabase(mainform, target, filter, Actors[ActorComboBox.SelectedIndex].Number, Actors[ActorComboBox.SelectedIndex].Variable);
             actordabase.ShowDialog();
             

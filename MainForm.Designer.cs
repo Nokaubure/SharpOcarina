@@ -126,6 +126,7 @@ namespace SharpOcarina
             this.importActorCutscenesFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEmptySpaceInSceneHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dEBUGCustomActorDatabasetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddObjectToAllRoomsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadXMLMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DefaultEnvironmentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -154,6 +155,7 @@ namespace SharpOcarina
             this.removeAllRomScenesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rebuildDmaTableallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decompressROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -1159,6 +1161,7 @@ namespace SharpOcarina
             this.buildAndLaunchZ64romToolStripMenuItem.Name = "buildAndLaunchZ64romToolStripMenuItem";
             this.buildAndLaunchZ64romToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.buildAndLaunchZ64romToolStripMenuItem.Text = "Build and launch z64rom";
+            this.buildAndLaunchZ64romToolStripMenuItem.ToolTipText = "Click \"Send to z64rom\" first if you want to start on titlescreen";
             this.buildAndLaunchZ64romToolStripMenuItem.Visible = false;
             this.buildAndLaunchZ64romToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romToolStripMenuItem_Click);
             // 
@@ -1168,6 +1171,7 @@ namespace SharpOcarina
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Name = "buildAndLaunchZ64romWarpToSceneToolStripMenuItem";
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Text = "Send, build and launch z64rom + warp to scene";
+            this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.ToolTipText = "Permanently skips titlescreen until the user clicks \"Send to z64rom\"";
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = false;
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click);
             // 
@@ -1645,6 +1649,7 @@ namespace SharpOcarina
             this.iGotACrashToolStripMenuItem.Name = "iGotACrashToolStripMenuItem";
             this.iGotACrashToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.iGotACrashToolStripMenuItem.Text = "Getting crashes? go here";
+            this.iGotACrashToolStripMenuItem.ToolTipText = "Only for binary!";
             this.iGotACrashToolStripMenuItem.Click += new System.EventHandler(this.iGotACrashToolStripMenuItem_Click);
             // 
             // extraToolStripMenuItem
@@ -1660,6 +1665,7 @@ namespace SharpOcarina
             this.setRoomsToUseEnvironment1ToolStripMenuItem,
             this.autoplaceDoorsToolStripMenuItem,
             this.clearAllGroupSettingsToolStripMenuItem,
+            this.dEBUGCustomActorDatabasetoolStripMenuItem,
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem});
@@ -1844,8 +1850,15 @@ namespace SharpOcarina
             // 
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Name = "displaySwitchFlagsUsedByAllRoomsToolStripMenuItem";
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
-            this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Text = "Display Flags used by all rooms (Flag Log)";
+            this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Text = "Flag Log: Display Flags used by all rooms";
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Click += new System.EventHandler(this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem_Click);
+            // 
+            // dEBUGCustomActorDatabasetoolStripMenuItem
+            // 
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Name = "dEBUGCustomActorDatabasetoolStripMenuItem";
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Size = new System.Drawing.Size(356, 22);
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Text = "Public Custom Actor Database (z64rom)";
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Click += new System.EventHandler(this.dEBUGCustomActorDatabasetoolStripMenuItem_Click);
             // 
             // AddObjectToAllRoomsMenuItem
             // 
@@ -1941,6 +1954,7 @@ namespace SharpOcarina
             this.removeAllRomScenesToolStripMenuItem,
             this.rebuildDmaTableallToolStripMenuItem,
             this.decompressROMToolStripMenuItem,
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
             this.replaceSceneTitleCardTextureToolStripMenuItem});
             this.nokaToolStripMenuItem.Name = "nokaToolStripMenuItem";
@@ -1958,6 +1972,7 @@ namespace SharpOcarina
             this.patchROMToolStripMenuItem.Name = "patchROMToolStripMenuItem";
             this.patchROMToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.patchROMToolStripMenuItem.Text = "Patch ROM...";
+            this.patchROMToolStripMenuItem.ToolTipText = "Only for binary! (NOT z64rom)";
             // 
             // patchROMToExtendRAMAndFixBugsOoTDebugToolStripMenuItem1
             // 
@@ -2063,6 +2078,14 @@ namespace SharpOcarina
             this.decompressROMToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.decompressROMToolStripMenuItem.Text = "Decompress ROM (OoT/MM)";
             this.decompressROMToolStripMenuItem.Click += new System.EventHandler(this.decompressROMToolStripMenuItem_Click);
+            // 
+            // convertSelectedActorXMLEntryTotomlToolStripMenuItem
+            // 
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Name = "convertSelectedActorXMLEntryTotomlToolStripMenuItem";
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Text = "Convert Selected Actor XML Entry to .toml";
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Visible = false;
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Click += new System.EventHandler(this.convertSelectedActorXMLEntryTotomlToolStripMenuItem_Click);
             // 
             // objectTableEditorToolStripMenuItem
             // 
@@ -6736,9 +6759,9 @@ namespace SharpOcarina
             this.ExitShowTitlecard.AutoSize = true;
             this.ExitShowTitlecard.Location = new System.Drawing.Point(146, 58);
             this.ExitShowTitlecard.Name = "ExitShowTitlecard";
-            this.ExitShowTitlecard.Size = new System.Drawing.Size(97, 17);
+            this.ExitShowTitlecard.Size = new System.Drawing.Size(92, 17);
             this.ExitShowTitlecard.TabIndex = 108;
-            this.ExitShowTitlecard.Text = "Show Titlecard";
+            this.ExitShowTitlecard.Text = "Hide Titlecard";
             this.ExitShowTitlecard.UseVisualStyleBackColor = true;
             this.ExitShowTitlecard.CheckedChanged += new System.EventHandler(this.ExitShowTitlecard_CheckedChanged);
             // 
@@ -11473,7 +11496,7 @@ namespace SharpOcarina
             this.EnvironmentControlTooltip.SetToolTip(this.GlobalRomRefresh, "Reload actor, object and exit cache");
             this.GlobalRomRefresh.UseVisualStyleBackColor = true;
             this.GlobalRomRefresh.Visible = false;
-            this.GlobalRomRefresh.Click += new System.EventHandler(this.DatabaseButton_Click);
+            this.GlobalRomRefresh.Click += new System.EventHandler(this.ReloadButton_Click);
             // 
             // Z64RomPlay
             // 
@@ -11681,6 +11704,7 @@ namespace SharpOcarina
             this.Tag = "a";
             this.Text = "---";
             this.Activated += new System.EventHandler(this.MainForm_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -12723,6 +12747,8 @@ namespace SharpOcarina
         private NumericUpDownEx WindVertical;
         private NumericUpDownEx WindWest;
         private Button Z64RomPlay;
+        private ToolStripMenuItem dEBUGCustomActorDatabasetoolStripMenuItem;
+        private ToolStripMenuItem convertSelectedActorXMLEntryTotomlToolStripMenuItem;
     }
     }
 

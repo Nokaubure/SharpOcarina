@@ -171,13 +171,13 @@ namespace SharpOcarina
             return (ulong)(Data[Offset] << 56 | Data[Offset + 1] << 48 | Data[Offset + 2] << 40 | Data[Offset + 3] << 32 | Data[Offset +4] << 24 | Data[Offset + 5] << 16 | Data[Offset + 6] << 8 | Data[Offset + 7]);
         }
 
-        public static bool ReplaceLine(string search, string replace, string path)
+        public static bool ReplaceLine(string search, string replace, string path, int max = 999999)
         {
             if (!File.Exists(path)) return false;
 
             string[] lines = File.ReadAllLines(path);
 
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < lines.Length && i < 999999; i++)
             {
                 if (lines[i].Contains(search))
                 {

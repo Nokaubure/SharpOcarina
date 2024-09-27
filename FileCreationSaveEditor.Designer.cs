@@ -37,6 +37,7 @@ namespace SharpOcarina
             this.OpenRomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsZ64romPatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -135,8 +136,8 @@ namespace SharpOcarina
             this.MaxHearts = new SharpOcarina.NumericUpDownEx();
             this.label18 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.exportAsZ64romPatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.OverwriteDebugSave = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.Items.SuspendLayout();
@@ -166,9 +167,9 @@ namespace SharpOcarina
             // 
             // Close
             // 
-            this.Close.Location = new System.Drawing.Point(350, 372);
+            this.Close.Location = new System.Drawing.Point(340, 372);
             this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(75, 23);
+            this.Close.Size = new System.Drawing.Size(89, 23);
             this.Close.TabIndex = 1;
             this.Close.Text = "Close";
             this.Close.UseVisualStyleBackColor = true;
@@ -215,6 +216,13 @@ namespace SharpOcarina
             this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.saveBinaryToolStripMenuItem.Text = "Save binary...";
             this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
+            // 
+            // exportAsZ64romPatchToolStripMenuItem
+            // 
+            this.exportAsZ64romPatchToolStripMenuItem.Name = "exportAsZ64romPatchToolStripMenuItem";
+            this.exportAsZ64romPatchToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.exportAsZ64romPatchToolStripMenuItem.Text = "Export as z64rom patch...";
+            this.exportAsZ64romPatchToolStripMenuItem.Click += new System.EventHandler(this.exportAsZ64romPatchToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -1133,6 +1141,7 @@ namespace SharpOcarina
             // 
             // Other
             // 
+            this.Other.Controls.Add(this.OverwriteDebugSave);
             this.Other.Controls.Add(this.RespawnEntranceAdult);
             this.Other.Controls.Add(this.label31);
             this.Other.Controls.Add(this.RespawnEntranceChild);
@@ -1251,7 +1260,8 @@ namespace SharpOcarina
             this.label28.Size = new System.Drawing.Size(19, 13);
             this.label28.TabIndex = 116;
             this.label28.Text = "(?)";
-            this.toolTip1.SetToolTip(this.label28, "Can only be dungeon scenes (0x00 - 0x0D) or link\'s house (0x34)");
+            this.toolTip1.SetToolTip(this.label28, "Can only be dungeon scenes (0x00 - 0x0D), link\'s house (0x34) or temple of time (" +
+        "0x43)");
             // 
             // NewFileScene
             // 
@@ -1572,29 +1582,34 @@ namespace SharpOcarina
             this.label18.TabIndex = 94;
             this.label18.Text = "Heart Amount:";
             // 
-            // button1
+            // SaveButton
             // 
-            this.button1.Location = new System.Drawing.Point(245, 372);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.SaveButton.Location = new System.Drawing.Point(245, 372);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(89, 23);
+            this.SaveButton.TabIndex = 4;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // exportAsZ64romPatchToolStripMenuItem
+            // OverwriteDebugSave
             // 
-            this.exportAsZ64romPatchToolStripMenuItem.Name = "exportAsZ64romPatchToolStripMenuItem";
-            this.exportAsZ64romPatchToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.exportAsZ64romPatchToolStripMenuItem.Text = "Export as z64rom patch...";
-            this.exportAsZ64romPatchToolStripMenuItem.Click += new System.EventHandler(this.exportAsZ64romPatchToolStripMenuItem_Click);
+            this.OverwriteDebugSave.AutoSize = true;
+            this.OverwriteDebugSave.Location = new System.Drawing.Point(22, 251);
+            this.OverwriteDebugSave.Name = "OverwriteDebugSave";
+            this.OverwriteDebugSave.Size = new System.Drawing.Size(185, 17);
+            this.OverwriteDebugSave.TabIndex = 121;
+            this.OverwriteDebugSave.Text = "Overwrite debug savefile data too";
+            this.toolTip1.SetToolTip(this.OverwriteDebugSave, "Makes so the starting items and equipment match the starting savefile ones when t" +
+        "esting maps via debug map select");
+            this.OverwriteDebugSave.UseVisualStyleBackColor = true;
             // 
             // FileCreationSaveEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(654, 416);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.Close);
             this.Controls.Add(this.menuStrip1);
@@ -1739,7 +1754,7 @@ namespace SharpOcarina
         private NumericUpDownEx NewFileScene;
         private Label label29;
         private ToolStripMenuItem saveBinaryToolStripMenuItem;
-        private Button button1;
+        private Button SaveButton;
         private CheckBox AllMaps;
         private NumericUpDownEx SkulltulaTokens;
         private Label label30;
@@ -1748,5 +1763,6 @@ namespace SharpOcarina
         private NumericUpDownEx RespawnEntranceChild;
         private Label label17;
         private ToolStripMenuItem exportAsZ64romPatchToolStripMenuItem;
+        private CheckBox OverwriteDebugSave;
     }
 }

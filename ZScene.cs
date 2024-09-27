@@ -773,6 +773,12 @@ namespace SharpOcarina
 
         public void ConvertInject(string Filename, bool ConsecutiveRoomInject, bool ForceRGBATextures, string Game)
         {
+            if (_Rooms.Count == 0)
+            {
+                MessageBox.Show("There's no rooms in this scene!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var data = new List<byte>(File.ReadAllBytes(Filename));
             ROM rom = MainForm.CheckVersion(data);
 
@@ -2145,6 +2151,22 @@ namespace SharpOcarina
                         scale, dlistcount, animated,
                         hierarchy, var, animation,
                         Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], roty, ignorerot, collision, file);
+                    /*
+                    if (MainForm.tomlconversionID != 0)
+                    {
+                        MainForm.tomlconversionID = 0;
+
+                        string clipboard = "";
+                        MainForm.
+                        string name = nodeAtt["Name"].Value;
+                        int category = ((nodeAtt["Category"] != null) ? Convert.ToInt32(nodeAtt["Category"].Value) : 0);
+
+                        clipboard += "Name = \"{name}\"\n" +
+                                     "Category = \"{category}\"\n" +
+                                     "Version = 1";
+
+                        Clipboard.SetText(clipboard);
+                    }*/
                 }
             }
 
@@ -3689,6 +3711,11 @@ namespace SharpOcarina
                 if (cutscene.StartFrame + cutscene.GetTotalFrames() > totalframes) totalframes = cutscene.StartFrame + cutscene.GetTotalFrames();
                 if (Game == "OOT" && cutscene.Marker == 0x01 || Game == "OOT" && cutscene.Marker == 0x05) //position
                 {
+                    if (cutscene.Points.Count == 0)
+                    {
+                        MessageBox.Show("There's a camera cutscene command with 0 points!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        continue;
+                    }
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
 
                     Helpers.Append16(ref data, 0x0000); //unknown w

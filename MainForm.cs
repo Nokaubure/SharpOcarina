@@ -95,6 +95,11 @@ namespace SharpOcarina
 
         public List<ZCutscenePosition> playcamerapointscache = new List<ZCutscenePosition>();
 
+        public List<DatabaseActor> Database;
+
+        public static bool savechanges = false;
+
+        public static bool reloaddatabase = true;
 
         public static bool updateavailable = false;
         public static bool updating = false;
@@ -136,6 +141,8 @@ namespace SharpOcarina
         public static bool n64preview = false;
 
         public static Keys[] ActorControlKeys = new Keys[0];
+
+        public static int tomlconversionID = 0;
 
 
         public static int actorpick = _Spawn_;
@@ -2672,7 +2679,28 @@ namespace SharpOcarina
 
             if (e.KeyCode == Keys.F && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
-                if (tabControl1.SelectedTab == tabControl1.TabPages["tabActors"] && CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0)
+
+                Vector3d truepos = new Vector3d(-99999,-99999,-99999);
+                if (actorpick == _Actor_ && CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0)
+                    truepos = new Vector3d(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].XPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].YPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].ZPos);
+                else if (actorpick == _Transition_ && CurrentScene.Transitions.Count > 0)
+                    truepos = new Vector3d(CurrentScene.Transitions[actorEditControl2.ActorNumber].XPos, CurrentScene.Transitions[actorEditControl2.ActorNumber].YPos, CurrentScene.Transitions[actorEditControl2.ActorNumber].ZPos);
+                else if (actorpick == _Spawn_ && CurrentScene.SpawnPoints.Count > 0)
+                    truepos = new Vector3d(CurrentScene.SpawnPoints[actorEditControl3.ActorNumber].XPos, CurrentScene.SpawnPoints[actorEditControl3.ActorNumber].YPos, CurrentScene.SpawnPoints[actorEditControl3.ActorNumber].ZPos);
+                else if (actorpick == _Pathway_ && PathwayListBox.SelectedIndex != -1)
+                    truepos = new Vector3d(CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].X, CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Y, CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Z);
+                else if (actorpick == _Waterbox_ && CurrentScene.Waterboxes.Count > 0)
+                    truepos = new Vector3d(CurrentScene.Waterboxes[(int)WaterboxSelect.Value].XPos, CurrentScene.Waterboxes[(int)WaterboxSelect.Value].YPos, CurrentScene.Waterboxes[(int)WaterboxSelect.Value].ZPos);
+                else if (actorpick == _AddLight_ && CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Count > 0)
+                    truepos = new Vector3d(CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].XPos, CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].YPos, CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].ZPos);
+                else if (actorpick == _CutsceneCamera_ && CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Count > 0)
+                    truepos = (Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[CutsceneAbsolutePositionListBox.SelectedIndex].Position;
+                else if (actorpick == _CutsceneActor_ && CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors.Count > 0)
+                    truepos = (Vector3d)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Position;
+                else if (actorpick == _Camera_ && CurrentScene.Cameras.Count > 0)
+                    truepos = (Vector3d)CurrentScene.Cameras[(int)CameraSelect.Value].Position;
+
+                if (truepos != new Vector3d(-99999, -99999, -99999))
                 {
                     //TODO
                     //doesnt quite work the way I want yet
@@ -2680,7 +2708,7 @@ namespace SharpOcarina
                     double RotYRad = (Camera.Rot.Y / 180.0f * Math.PI);
                     double RotXRad = (Camera.Rot.X / 180.0f * Math.PI);
 
-                    Vector3d truepos = new Vector3d(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].XPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].YPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].ZPos);
+                   // Vector3d truepos = new Vector3d(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].XPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].YPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].ZPos);
 
                     if (Camera.Rot.X >= 90.0f || Camera.Rot.X <= -90.0f)
                     {
@@ -6051,6 +6079,9 @@ namespace SharpOcarina
 
         private void newSceneToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            if (!WarningUnsavedChanges(true)) return;
+
             NowLoading = true;
 
             SimulateN64CheckBox.Checked = false;
@@ -6195,6 +6226,7 @@ namespace SharpOcarina
         {
 
             string ROM = "";
+            savechanges = true;
 
             if (rom64.isSet())
             {   
@@ -6437,8 +6469,14 @@ namespace SharpOcarina
         {
             int prev = CurrentScene.cloneid;
             if (prev > 0) SetSceneHeader(0);
-            if (!autosave) AddMissingObjects();
-            if (!autosave) LastScene = FileName;
+            if (!autosave)
+            {
+                AddMissingObjects();
+                LastScene = FileName;
+                savechanges = false;
+
+            }
+
 
             string GetRelativePath(string relativeTo, string path)
             {
@@ -6801,6 +6839,8 @@ namespace SharpOcarina
 
         private void openSceneToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!WarningUnsavedChanges(true)) return;
+
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "XML Scene File (*.xml)|*.xml|All Files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
@@ -7155,6 +7195,7 @@ namespace SharpOcarina
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                savechanges = true;
                 AddMissingObjects();
                 if (CurrentScene.Cameras.Count == 0)
                 {
@@ -7239,6 +7280,7 @@ namespace SharpOcarina
                 CurrentScene.AddRoom(openFileDialog1.FileName);
                 ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
                 CurrentScene.NewRoomMode = false;
+                savechanges = true;
 
                 if (settings.MajorasMask)
                 {
@@ -7277,6 +7319,8 @@ namespace SharpOcarina
                 CurrentScene.ColModel = new ObjFile(openFileDialog1.FileName, true);
                 CurrentScene.CollisionFilename = openFileDialog1.FileName;
 
+                savechanges = true;
+
                 UpdateForm();
 
                 if (CurrentScene.ColModel.Vertices.Count > 0x1FFF)
@@ -7308,6 +7352,8 @@ namespace SharpOcarina
         private void DeleteRoom_Click(object sender, EventArgs e)
         {
             if (customcombiner != null) customcombiner.Close();
+
+            savechanges = true;
 
             if (RoomList.SelectedItem != null)
             {
@@ -10665,6 +10711,7 @@ namespace SharpOcarina
                 CurrentScene.AddRoom(openFileDialog1.FileName, " (Room 0)");
                 int maxroom = 0;
                 int tmp = 0;
+                savechanges = true;
                 foreach (ObjFile.Group group in CurrentScene.Rooms[0].ObjModel.Groups)
                 {
                     // DebugConsole.WriteLine(group.Name.ToLower());
@@ -11904,6 +11951,8 @@ namespace SharpOcarina
 
             if (customcombiner != null) customcombiner.Close();
 
+            savechanges = true;
+
             if (!File.Exists(CurrentScene.Rooms[RoomList.SelectedIndex].ModelFilename) && Control.ModifierKeys != Keys.Shift)
             {
                 MessageBox.Show("Room file no longer exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -12105,7 +12154,7 @@ namespace SharpOcarina
                 }
                 ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
 
-                if (CurrentScene.Rooms.Count > 0)
+                if (CurrentScene.Rooms.Count > 0 && GroupList.Items.Count > 0)
                 {
                     RoomList.SelectedIndex = 0;
                     GroupList.SelectedIndex = 0;
@@ -12607,6 +12656,7 @@ namespace SharpOcarina
                                 //  DebugConsole.WriteLine("result " + i.ToString("X8"));
                             }
                         }
+
                     }
 
                     if (importEnvironments(data, i))
@@ -14565,7 +14615,7 @@ namespace SharpOcarina
                             {
                                 flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                             }
-                            string name = ActorCache[actor.Number].name;
+                            string name = ActorCache[actor.Number].name + " " + actor.Variable.ToString("X4");
                             string roomName = roomIndex.ToString("d") + ". " + room.ModelShortFilename;
 
                             if (property.Name.ToLower().Contains("switch flag"))
@@ -15280,6 +15330,7 @@ namespace SharpOcarina
         public static void RefreshActorCache()
         {
             ActorCache.Clear();
+            reloaddatabase = true;
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
@@ -15651,7 +15702,7 @@ namespace SharpOcarina
 
         }
 
-        private void DatabaseButton_Click(object sender, EventArgs e)
+        private void ReloadButton_Click(object sender, EventArgs e)
         {
             if (rom64.isSet())
             {
@@ -15907,6 +15958,8 @@ namespace SharpOcarina
 
         private void openZmapToolstrip_Click(object sender, EventArgs e)
         {
+            if (!WarningUnsavedChanges(true)) return;
+
             openFileDialog1.CheckFileExists = true;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "ZScene File (*.zscene)|*.zscene|All Files (*.*)|*.*";
@@ -16854,7 +16907,7 @@ namespace SharpOcarina
 
         private void OpenSceneFromRoomToolStrip_Click(object sender, EventArgs e)
         {
-            //TODO
+            if (!WarningUnsavedChanges(true)) return;
 
             string ROM = "";
             if (GlobalROM != "")
@@ -16872,7 +16925,7 @@ namespace SharpOcarina
                 {
                     ROM = openFileDialog1.FileName;
 
-                    FileInfo info = new FileInfo(saveFileDialog1.FileName);
+                    FileInfo info = new FileInfo(openFileDialog1.FileName);
                     if (info.Length < 33554432 + 50000)
                     {
                         MessageBox.Show("This ROM is not uncompressed! go to Tools > Decompress ROM", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -18101,7 +18154,7 @@ namespace SharpOcarina
         {
             if (rom64.isSet())
             {
-                String pdetail = @"/c " + rom64.getPath() + "\\z64rom.exe --no-wait";
+                String pdetail = @"/c """ + rom64.getPath() + "\\z64rom.exe\" --no-wait";
                 ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
                 pcmd.Arguments = pdetail;
 
@@ -18116,9 +18169,10 @@ namespace SharpOcarina
         {
             if (rom64.isSet())
             {
+                savechanges = true;
                 injectToROMToolStripMenuItem_Click(sender, e);
 
-                String pdetail = @"/c " + rom64.getPath() + "\\z64rom.exe --no-wait --instant " + CurrentScene.SceneNumber + " 0 " + " 0xF " + (settings.RenderChildLink ? "1" : "0");
+                String pdetail = @"/c """ + rom64.getPath() + "\\z64rom.exe\" --no-wait --instant " + CurrentScene.SceneNumber + " 0 " + " 0xF " + (settings.RenderChildLink ? "1" : "0");
                 ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
                 pcmd.Arguments = pdetail;
 
@@ -18327,7 +18381,7 @@ namespace SharpOcarina
 
 
 
-                    String pdetail = @"/c " + path + "\\z64rom.exe --auto-install --no-wait";
+                    String pdetail = @"/c """ + path + "\\z64rom.exe\" --auto-install --no-wait";
                     ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
                     pcmd.Arguments = pdetail;
 
@@ -18391,6 +18445,215 @@ namespace SharpOcarina
         private void glControl1_Leave(object sender, EventArgs e)
         {
             KeysDown = new bool[256];
+        }
+
+        public void GenerateActorDatabase()
+        {
+            string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
+
+            XmlNodeList nodes = XMLreader.getXMLNodes(gameprefix + "ActorNames", "Actor");
+            Database = new List<DatabaseActor>();
+
+
+            List<ushort> index_list = new List<ushort>();
+
+            if (rom64.isSet())
+            {
+                List<String> actors = rom64.getList("src\\actor\\");
+
+                foreach (String str in actors)
+                {
+                    string basename = "";
+                    string notes = "";
+                    ushort index = 0;
+
+                    if (!rom64.getNameAndIndex(str, ref basename, ref index))
+                        continue;
+
+                    var variables = new Dictionary<ushort, string>();
+                    index_list.Add(index);
+
+                    int exists = Database.FindIndex(x => x.Value == index);
+                    if (exists != -1)
+                    {
+                        //  DebugConsole.WriteLine("Removed " + Database[exists].Value.ToString("X2"));
+                        Database.RemoveAt(exists); //removes vanilla actor from db
+
+                    }
+
+                    TomlTable toml = rom64.parseToml(str + "\\actor.toml");
+                    TomlArray var_arr = null;
+                    byte cat = 0;
+
+                    if (toml != null)
+                    {
+                        var_arr = toml["Variables"].AsArray;
+                        if (toml.HasKey("Name"))
+                            basename = toml["Name"].AsString;
+                        if (toml.HasKey("Notes"))
+                            notes = toml["Notes"].AsString;
+                        if (toml.HasKey("Category"))
+                        {
+                            string catname = toml["Category"].AsString;
+
+                            switch (catname.ToLower())
+                            {
+                                case "switch": cat = 0; break;
+                                case "bg": cat = 1; break;
+                                case "player": cat = 2; break;
+                                case "explosive": cat = 3; break;
+                                case "npc": cat = 4; break;
+                                case "enemy": cat = 5; break;
+                                case "prop": cat = 6; break;
+                                case "itemaction": cat = 7; break;
+                                case "misc": cat = 8; break;
+                                case "boss": cat = 9; break;
+                                case "door": cat = 10; break;
+                                case "chest": cat = 11; break;
+                            }
+                        }
+                    }
+
+                    if (var_arr != null)
+                    {
+                        foreach (TomlArray arr in var_arr)
+                        {
+                            ushort var_index = (ushort)arr[0].AsInteger.Value;
+                            string name = arr[1].AsString;
+
+                            variables.Add(var_index, name);
+                        }
+                    }
+                    else
+                    {
+                        foreach (XmlNode node in nodes)
+                        {
+                            XmlAttributeCollection nodeAtt = node.Attributes;
+
+                            if ((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16) != index)
+                                continue;
+
+                            cat = Convert.ToByte(nodeAtt["Category"].Value);
+
+                            XMLactor xmlactor = XMLreader.getFullActor(nodeAtt["Key"].Value);
+                            Dictionary<ushort, string> vars = xmlactor.variables;
+
+                            foreach (KeyValuePair<ushort, string> s in vars)
+                                variables.Add(s.Key, s.Value);
+                            break;
+                        }
+                    }
+
+                    Database.Add(new DatabaseActor(index, variables, basename, notes, cat, true));
+                }
+            }
+
+            foreach (XmlNode node in nodes)
+            {
+                XmlAttributeCollection nodeAtt = node.Attributes;
+                var values = new Dictionary<ushort, string>();
+
+                XMLactor xmlactor = XMLreader.getFullActor(nodeAtt["Key"].Value);
+
+
+                if (index_list.Contains((Convert.ToUInt16(nodeAtt["Key"].Value, 16)))) continue;
+
+
+
+                Dictionary<ushort, string> vars = xmlactor.variables;
+
+                foreach (KeyValuePair<ushort, string> s in vars)
+                {
+                    values.Add(s.Key, s.Value);
+                }
+
+                string warning = "";
+                if ((MainForm.CurrentScene.SpecialObject == 0x0003 && nodeAtt["Object"] != null && (ushort)Convert.ToInt16(nodeAtt["Object"].Value.Split(',')[0].Trim(), 16) == 0x0002) ||
+                     (MainForm.CurrentScene.SpecialObject == 0x0002 && nodeAtt["Object"] != null && (ushort)Convert.ToInt16(nodeAtt["Object"].Value.Split(',')[0].Trim(), 16) == 0x0003)) warning = "\n WARNING! Change special object setting before using this actor!";
+
+
+                Database.Add(new DatabaseActor((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16), values, nodeAtt["Name"].Value, xmlactor.notes + warning, xmlactor.category, false));
+            }
+
+            Database = Database.OrderBy(x => x.Value).ToList();
+        }
+
+        private void dEBUGCustomActorDatabasetoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!rom64.isSet())
+            {
+                MessageBox.Show("You must load a z64rom project first!", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+            CustomActorDatabase actordatabase = new CustomActorDatabase(this);
+            actordatabase.ShowDialog();
+            if (actordatabase.reload)
+            {
+                if (MessageBox.Show("To properly display some changes you need to build rom, continue?", "Build z64rom",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+
+                    String pdetail = @"/c """ + rom64.getPath() + "\\z64rom.exe\" --no-wait";
+                    ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
+                    pcmd.Arguments = pdetail;
+
+                    Process cmd = Process.Start(pcmd);
+                    cmd.WaitForExit();
+
+                }
+                ReloadButton_Click(sender,e);
+            }
+        }
+
+        private bool WarningUnsavedChanges(bool action = false)
+        {
+            if (!savechanges) return true;
+            bool answer;
+
+            if (!action)
+            {
+                answer = MessageBox.Show("You have unsaved changes! are you sure you want to exit the application?", "Unsaved changes",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+            }
+            else
+            {
+                answer = MessageBox.Show("You have unsaved changes! are you sure you want to continue?", "Unsaved changes",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+            }
+            if (answer) savechanges = false;
+            return answer;
+            
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (!WarningUnsavedChanges())
+                e.Cancel = true;
+        }
+
+        private void convertSelectedActorXMLEntryTotomlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurrentScene != null & CurrentScene.Rooms.Count > 0 & CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0 && actorEditControl3.ActorComboBox.SelectedIndex != -1)
+            {
+                tomlconversionID = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl3.ActorComboBox.SelectedIndex].Number;
+                if (tomlconversionID != 0)
+                {
+                    ReloadXMLs();
+
+                    RefreshActorCache();
+
+                    RefreshObjectCache();
+
+                    MainForm.zobj_cache.Clear();
+
+                    if (CurrentScene != null && CurrentScene.ColModel != null)
+                        CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
+
+                    MessageBox.Show("Done!\nClose this window to copy the generated toml data to your clipboard", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                }
+            }
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)
@@ -18779,7 +19042,7 @@ namespace SharpOcarina
         public bool colorblindaxis = false;
         public bool DisableRGBA32 = false;
         public bool firsttime = true;
-        public bool command1AOoT = false;
+        public bool command1AOoT = true;
         public bool AutoFixErrors = true;
         public bool OnlyRenderWaterboxesGeneral = true;
         public bool DisableTextureWarnings = false;

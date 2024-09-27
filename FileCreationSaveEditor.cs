@@ -259,8 +259,14 @@ namespace SharpOcarina
                 {
                     OpenROM(binarydata);
                 }
-                button1.Visible = false;
-                Close.Location = new Point(Close.Location.X-53, Close.Location.Y);
+                SaveButton.Text = "Save to z64rom";
+                RespawnEntranceAdult.Enabled = false;
+                RespawnEntranceChild.Enabled = false;
+                if (File.Exists(rom64.getPath() + "\\patch\\debugsave_SO.cfg"))
+                {
+                    OverwriteDebugSave.Checked = true;
+                }
+                //Close.Location = new Point(Close.Location.X-53, Close.Location.Y);
             }
 
             //for(int i = 0; i < 18; i++)
@@ -408,9 +414,14 @@ namespace SharpOcarina
 
             List<Byte> Output = GenerateSaveData();
 
-
-
             BWS.Write(Output.ToArray());
+
+            if (OverwriteDebugSave.Checked)
+            {
+                BWS.Seek((int)(rom.DefaultSaveFile + 0x2E + 0xBC), SeekOrigin.Begin);
+
+                BWS.Write(Output.ToArray());
+            }
 
             Output.Clear();
             BWS.Seek((int)rom.HeaderTitle, SeekOrigin.Begin);
@@ -878,9 +889,14 @@ namespace SharpOcarina
 
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
-            saveROMToolStripMenuItem_Click(new object(), new EventArgs());
+            if (SaveButton.Text == "Save to z64rom")
+            {
+                exportAsZ64romPatchToolStripMenuItem_Click(sender,e);
+            }
+            else
+                saveROMToolStripMenuItem_Click(new object(), new EventArgs());
         }
 
         private void SkulltulaTokens_ValueChanged(object sender, EventArgs e)
@@ -943,10 +959,16 @@ namespace SharpOcarina
 
                 //patch file
                 string initialsave_SO = path + "initialsave_SO.cfg";
+                string debugsave_SO = path + "debugsave_SO.cfg";
 
                 if (File.Exists(initialsave_SO)) File.Delete(initialsave_SO);
+                if (File.Exists(debugsave_SO)) File.Delete(debugsave_SO);
 
                 File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/initialsave_SO.cfg"), initialsave_SO);
+
+                if (OverwriteDebugSave.Checked)
+                    File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/debugsave_SO.cfg"), debugsave_SO);
+
 
                 path = rom64.getPath() + "\\";
 

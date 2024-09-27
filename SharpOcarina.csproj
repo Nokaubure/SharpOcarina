@@ -115,6 +115,12 @@
     <Reference Include="windowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomActorDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomActorDatabase.Designer.cs">
+      <DependentUpon>CustomActorDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="OpenRomScene.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,12 @@
     </Compile>
     <Compile Include="AddObjectAllRooms.Designer.cs">
       <DependentUpon>AddObjectAllRooms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PickCustomActorID.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PickCustomActorID.Designer.cs">
+      <DependentUpon>PickCustomActorID.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -296,6 +308,9 @@
     <Compile Include="RandomDropTableEditor.Designer.cs">
       <DependentUpon>RandomDropTableEditor.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CustomActorDatabase.resx">
+      <DependentUpon>CustomActorDatabase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OpenRomScene.resx">
       <DependentUpon>OpenRomScene.cs</DependentUpon>
     </EmbeddedResource>
@@ -310,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddObjectAllRooms.resx">
       <DependentUpon>AddObjectAllRooms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PickCustomActorID.resx">
+      <DependentUpon>PickCustomActorID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Z64romInstallPostOperations.resx">
       <DependentUpon>Z64romInstallPostOperations.cs</DependentUpon>
@@ -1583,6 +1601,7 @@
     <Content Include="Files\0x27-TitleScreen\scene.zscene">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Files\debugsave_SO.cfg" />
     <None Include="Import\import">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

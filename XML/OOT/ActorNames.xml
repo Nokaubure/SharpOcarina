@@ -1488,9 +1488,37 @@ The sun switch has to be between 252 and 308 units from the cobra mirror to be a
 		<Variable Var="FFFF"> No Item to Spawn</Variable>
 <Notes>Check actor 15 for collectible variables</Notes>
   </Actor>
-  <Actor Key="0111" Object="0003" Name="Breakable Pot" Properties="7E00,00FF" PropertiesNames="Collectible Flag,Collectible Var" Category="6">
-<Notes>+0x7E00 = Collectible Flag
-+0xFF = Collectible var //See Actor 0015</Notes>
+  <Actor Key="0111" Object="0001" Name="Breakable Pot" Properties="7E00,0100" PropertiesNames="Collectible Flag,Object" Dropdown=",0;1" DropdownNames=",0003 - Special Dungeon Object;0127 - Breakable Pot Object" Category="6">
+	  <Variable Var="0000"> Green Rupee</Variable>
+	  <Variable Var="0001"> Blue Rupee</Variable>
+	  <Variable Var="0002"> Red Rupee</Variable>
+	  <Variable Var="0003"> Recovery Heart</Variable>
+	  <Variable Var="0004"> Bomb</Variable>
+	  <Variable Var="0005"> Arrow (1) //Used for collecting arrows stuck in walls </Variable>
+	  <Variable Var="0006"> Heart Piece</Variable>
+	  <Variable Var="0008"> Deku Seeds (5) or Arrows (5)</Variable>
+	  <Variable Var="0009"> Deku Seeds (5) or Arrows (10)</Variable>
+	  <Variable Var="000A"> Deku Seeds (5) or Arrows (30)</Variable>
+	  <Variable Var="000B"> Bombs (5)</Variable>
+	  <Variable Var="000C"> Deku Nut</Variable>
+	  <Variable Var="000D"> Deku Stick</Variable>
+	  <Variable Var="000E"> Large Magic Jar</Variable>
+	  <Variable Var="000F"> Small Magic Jar</Variable>
+	  <Variable Var="0010"> Deku Seeds (5) or Arrows (5)</Variable>
+	  <Variable Var="0011"> Small Key</Variable>
+	  <Variable Var="0012"> Flexible Drop //Used for randomized drops, see comments. Will spawn as an invisible Recovery Heart in some situations</Variable>
+	  <Variable Var="0013"> Giant Orange Rupee</Variable>
+	  <Variable Var="0014"> Large Purple Rupee</Variable>
+	  <Variable Var="0015"> Deku Shield //May require Child Link's object</Variable>
+	  <Variable Var="0016"> Hylian Shield</Variable>
+	  <Variable Var="0017"> Zora Tunic</Variable>
+	  <Variable Var="0018"> Goron Tunic</Variable>
+	  <Variable Var="0019"> Bombs (5)</Variable>
+	  <Variable Var="001A"> Invisible Item</Variable>
+<Notes>+0x0100 = Object to use, 0003 or 0127
++0x7E00 = Collectible Flag
++0x00FF = Collectible var //See Actor 0015
+</Notes>
   </Actor>
   <Actor Key="0112" Name="Invisible Collectable" Properties="003F,07C0,00FF" PropertiesNames="Switch Flag,Collectible to Spawn,# of Collectibles / Spawn Trigger" PropertiesTarget="Var,Var,ZRot" Category="6">
 		<Variable Var="0000"> Collect Immediately //Not used?</Variable>
