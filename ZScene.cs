@@ -1546,12 +1546,16 @@ namespace SharpOcarina
 
                 for (int i = 0; i < zobj.Length; i += 0x4)
                 {
-                    if (zobj[i] == bank && zobj[i + 5] == 0x00 && zobj[i + 6] == 0x00 && zobj[i + 7] == 0x00)
+                    if (zobj[i] == bank && (zobj[i + 3] & 3) == 0 && zobj[i + 4] != 0 && zobj[i + 5] == 0x00 && zobj[i + 6] == 0x00 && zobj[i + 7] == 0x00)
                     {
+                        if (Helpers.Read24(zobj.ToList(), i + 1) > zobj.Length) continue;
+                        
                         int check = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i + 1], zobj[i + 2], zobj[i + 3]), 16);
                         int check_prev = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i - 3], zobj[i - 2], zobj[i - 1]), 16);
                         if (check - check_prev != 0x0C && check - check_prev != 0x10)
                             continue;
+                        
+
                         if (++hierarchyfound != hierarchy)
                         {
                             if (hierarchy == 14) DebugConsole.WriteLine("hf " + hierarchyfound);
@@ -1569,7 +1573,7 @@ namespace SharpOcarina
                         {
                             if (!(ii + 4 > zobj.GetUpperBound(0)))
                             {
-                                if (zobj[ii + 2] == 0x00 && zobj[ii + 3] == 0x00 && zobj[ii + 4] == bank && zobj[ii + 8] == bank && zobj[ii + 14] == 0x00 && zobj[ii + 15] == 0x00)
+                                if (zobj[ii + 2] == 0x00 && zobj[ii + 3] == 0x00 && zobj[ii + 4] == bank && zobj[ii + 8] == bank && zobj[ii + 14] == 0x00 && zobj[ii + 15] == 0x00 && Helpers.Read24S(zobjlist, ii + 5) < zobj.Length)
                                 {
                                     animationfound++;
 
@@ -1880,8 +1884,10 @@ namespace SharpOcarina
                                     ushort bank = (ushort)( node.HasKey("Segment") ? node["Segment"].AsInteger.Value : 6 );
                                     if (node.HasKey("Object")) objectid = (uint)node["Object"].AsInteger.Value;
                                     string file = rom64.getItem("rom\\object", (int)objectid);
+                                    if (file == "") file = rom64.getItem("rom\\object\\.vanilla", (int)objectid);
                                     string dl = node.HasKey("DisplayList") ? node["DisplayList"].AsString.ToString() : "";
                                     short roty = (short)(node.HasKey("RotY") ? node["RotY"].AsInteger.Value : 0);
+                                    int hierarchy = (int)(node.HasKey("Hierarchy") ? node["Hierarchy"].AsInteger.Value : 1);
                                     string[] textureoffsets = new string[0];
                                     string[] env = null;
                                     string[] prim = null;
@@ -1895,6 +1901,8 @@ namespace SharpOcarina
                                     string[][] envcolorarray = new string[0][];
                                     string[][] primcolorarray = new string[0][];
                                     uint collision = 1;
+                                    uint dlistcount = 1;
+                                    string[] offsets = new string[0];
                                     string col = node.HasKey("Collision") ? node["Collision"].AsString.ToString() : "";
                                     //string[] dlistarray = null;
 
@@ -1932,6 +1940,7 @@ namespace SharpOcarina
                                     if (node.HasKey("TextureOffsets"))
                                     {
 
+
                                         TomlArray tmp = node["TextureOffsets"].AsArray;
                                         textureoffsets = new string[tmp.ChildrenCount];
                                         string object_ld = rom64.openFile("include\\z_object_user.ld");
@@ -1939,9 +1948,17 @@ namespace SharpOcarina
 
                                         for (int i = 0; i < tmp.ChildrenCount; i++)
                                         {
-                                            Match match = Regex.Match(object_ld, tmp[i].AsString + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
-                                            if (match.Value != "")
-                                                textureoffsets[i] = match.Groups[1].Value.ToString();
+                                            if (tmp[i].AsString.ToString().Substring2(0, 2) == "0x")
+                                            {
+                                                textureoffsets[i] = tmp[i].AsString;
+                                                textureoffsets[i].Replace("0x", "");
+                                            }
+                                            else
+                                            {
+                                                Match match = Regex.Match(object_ld, tmp[i].AsString + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
+                                                if (match.Value != "")
+                                                    textureoffsets[i] = match.Groups[1].Value.ToString();
+                                            }
                                         }
                                     }
 
@@ -2025,18 +2042,28 @@ namespace SharpOcarina
 
 
                                     if (dl != "") {
-
-                                        if(dl.Substring2(0,2) == "0x")
+                                        string[] splitarray = dl.Split(',');
+                                        foreach (string dls in splitarray)
                                         {
-                                            offset = Convert.ToUInt32(dl.ToString(), 16);
-                                        }
-                                        else
-                                        { 
-                                        string object_ld = rom64.openFile("include\\z_object_user.ld");
+                                            if (dls.Substring2(0, 2) == "0x")
+                                            {
+                                                offset = Convert.ToUInt32(dls.ToString(), 16);
+                                            }
+                                            else
+                                            {
+                                                string object_ld = rom64.openFile("include\\z_object_user.ld");
 
-                                        Match match = Regex.Match(object_ld, dl + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
-                                        if (match.Value != "")
-                                            offset = Convert.ToUInt32(match.Groups[1].Value.ToString(), 16);
+                                                Match match = Regex.Match(object_ld, dls + "[^=]*=[^0]*(0x[0-9a-fA-F]*)");
+                                                if (match.Value != "")
+                                                    offset = Convert.ToUInt32(match.Groups[1].Value.ToString(), 16);
+                                            }
+                                            if (splitarray.Length > 1)
+                                            {
+                                                List<string> tmplist = offsets.ToList();
+                                                tmplist.Add(offset.ToString("X8"));
+                                                offsets = tmplist.ToArray();
+                                                offset = 0;
+                                            }
                                         }
                                     }
 
@@ -2058,7 +2085,7 @@ namespace SharpOcarina
                                         }
                                     }
 
-                                    if (file != "" && (offset != 0 || animated)) {
+                                    if (file != "" && (offset != 0 || animated || offsets.Length > 0)) {
 #if DEBUG
                                         DebugConsole.WriteLine("Register Actor Preview: " + file);
                                         DebugConsole.WriteLine("key:    " + index.ToString("X04"));
@@ -2067,12 +2094,13 @@ namespace SharpOcarina
                                         DebugConsole.WriteLine("var:    " + var);
                                         DebugConsole.WriteLine("offset: " + offset.ToString("X08"));
                                         DebugConsole.WriteLine("bank:   " + bank.ToString("X02"));
+                                        DebugConsole.WriteLine("textureoffsets:   " + textureoffsets.ToString());
 #endif
 
                                         RegisterActorPreview(
-                                            key, offset, new string[0], textureoffsets,
-                                            scale, 1, animated, 
-                                            1, var, animation, 
+                                            key, offset, offsets, textureoffsets,
+                                            scale, dlistcount, animated, 
+                                            hierarchy, var, animation, 
                                             yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, roty, ignorerot, collision, file);
                                     }
                                 }

@@ -4,21 +4,34 @@
 ---1.53
 --------------
 
-- Instance focus (F key) now works with all kinds of instances, not just actors
+- Added Custom Actor Database! download custom actors made by other people with ease! accessible in Tools tab (z64rom needed)
 
-- Flag log now displays actor variable
+- Instance focus (F key) now works with all kinds of instances, not just actors
 
 - Added a "Custom Actor" filter in the actor database, filter both custom actors and edited vanilla actors (Only works with z64rom)
 
 - Changed so custom actors no longer appear at the beginning of the actor database
 
-- Greatly improved Actor Database loading speed after the first time by storing the data in a cache
+- Increased Actor Database filtering speed, and also loading speed after the first time by storing the data in a cache
+
+- Actor database now can setup multiple actors in real time without automatically closing, and added a "set on select" checkbox
 
 - Its now possible to write database notes for the custom actors in the actor.toml using the Notes tag (z64rom)
+
+- Actor.toml now supports multiple display lists (separated by comma), loading display lists and textures from vanilla zobjs and using hierarchys other than the first
 
 - SO will warn the user if they want to close the application or opening another scene without saving after changing collision, rooms, injecting or saving binary
 
 - Added "Overwrite debug savefile data too" option in Filesave creation editor (both binary and z64rom)
+
+- Updated SO export plugin to 1.1.0 (previous version was 1.0.8):
+	- Addressed an issue where it was impossible to keep group setting changes made inside SO when reloading model (1.0.9)
+	- Fixed a bug where camera ID was exported incorrectly
+	(install the plugin manually from BlenderScripts folder)
+
+- Installing z64rom now also creates binary data (used by a few of the editors) and applies the titlescreen values if selected
+
+- Flag log now displays actor variable
 
 - Fixed an issue where having a cutscene camera command without points would prompt an index error
 
@@ -31,6 +44,10 @@
 - Fixed an issue where breakable pot wasn't documented enough and always asked for object 0003
 
 - Fixed an issue where z64rom projects couldn't be used if the path had blank spaces
+
+- Fixed an issue where installing z64rom without creating a new scene would prompt an error
+
+- Fixed an issue with the autodetection of hierarchies when drawing actors
 
 - Fixed an inconvenience where the save button disappeared in filesave editor when in z64rom mode
 

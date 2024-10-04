@@ -732,7 +732,11 @@ namespace SharpOcarina.SayakaGL
                                 if (j != ThisMacro.Commands.Length) NextCmds[j] = ThisDL.Commands[i + j].ID;
                                 NextW0[j] = ThisDL.Commands[i + j].w0;
                                 NextW1[j] = ThisDL.Commands[i + j].w1;
+
                             }
+
+
+
 
                             // Compare the bytes to the macro and execute it if we have a match
                             if (CompareBytes(NextCmds, ThisMacro.Commands))
@@ -790,6 +794,22 @@ namespace SharpOcarina.SayakaGL
                     (byte)UcodeG.RDPLOADSYNC,
                     (byte)UcodeG.LOADTLUT,
                     (byte)UcodeG.RDPPIPESYNC
+                }
+            });
+
+            // this seems to be zobjs exported with fast64
+            Macros.Add(new MacroStruct()
+            {
+                Function = MacroLoadTLUT,
+                Commands = new byte[] {
+                    (byte)UcodeG.SETTIMG,
+                    (byte)UcodeG.SETTILE,
+                    (byte)UcodeG.LOADTLUT,
+                    (byte)UcodeG.SETTIMG,
+                    (byte)UcodeG.SETTILE,
+                    (byte)UcodeG.LOADBLOCK,
+                    (byte)UcodeG.SETTILE,
+                    (byte)UcodeG.SETTILESIZE
                 }
             });
         }
@@ -1027,6 +1047,7 @@ namespace SharpOcarina.SayakaGL
 
         private static void Ucode_G_SETTIMG(UInt32 w0, UInt32 w1)
         {
+
             if (IsMacro)
                 TexAddr = w1;
             else
@@ -1395,8 +1416,12 @@ namespace SharpOcarina.SayakaGL
 
         private static void InitLoadTexture()
         {
-       
+
+
+
             UInt32 TextureSegment = ((NGraphics.Textures[0].Address & 0xFF000000) >> 24);
+
+
             if (CurrentDL.TextureAnimation >= 8 && !currentfilename.Contains(".zobj"))
             {
                 DebugConsole.WriteLine($"Special texture " + TextureSegment);
@@ -1659,6 +1684,9 @@ namespace SharpOcarina.SayakaGL
 
         public static int CheckTextureCache(int ActiveTexture)
         {
+
+
+
             foreach (TextureCacheStruct ThisCache in TextureCache)
             {
                 if (ThisCache.Format == NGraphics.Textures[ActiveTexture].Format &&
@@ -1690,9 +1718,12 @@ namespace SharpOcarina.SayakaGL
             UInt32 TextureSegment = ((NGraphics.Textures[ActiveTexture].Address & 0xFF000000) >> 24);
             UInt32 TextureOffset = (NGraphics.Textures[ActiveTexture].Address & 0x00FFFFFF);
 
+
+
             uint BufferSize = NGraphics.Textures[ActiveTexture].RealWidth * NGraphics.Textures[ActiveTexture].RealHeight * 4;
 
             byte[] TextureBuffer = new byte[BufferSize];
+
 
             if (GameHandler.IsAddressValid(NGraphics.Textures[ActiveTexture].Address) == true)
             {
@@ -1710,7 +1741,7 @@ namespace SharpOcarina.SayakaGL
                 if (currentfilename.Contains(".zobj"))
                 {
                     NImageUtil.ConvertTexture((byte)NGraphics.Textures[ActiveTexture].Format,
-                    GameHandler.RAM[currentfilename.Contains("gameplay_dangeon_keep") || currentfilename.Contains("gameplay_field_keep") ? 0x5 : currentfilename.Contains("gameplay_keep") ? 0x4 : 0x6].Data,
+                    GameHandler.RAM[(currentfilename.Contains("gameplay_dangeon_keep") || currentfilename.Contains("GamePlay_Dungeon") || currentfilename.Contains("GamePlay_Field") || currentfilename.Contains("gameplay_field_keep")) ? 0x5 : (currentfilename.Contains("gameplay_keep") || currentfilename.Contains("GamePlay_Global")) ? 0x4 : 0x6].Data,
                     textureoffsets[TextureSegment] & 0x00FFFFFF,
                     ref TextureBuffer,
                     NGraphics.Textures[ActiveTexture].Width,

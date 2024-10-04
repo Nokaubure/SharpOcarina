@@ -126,7 +126,6 @@ namespace SharpOcarina
             this.importActorCutscenesFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEmptySpaceInSceneHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dEBUGCustomActorDatabasetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddObjectToAllRoomsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadXMLMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DefaultEnvironmentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -158,6 +157,7 @@ namespace SharpOcarina
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dEBUGCustomActorDatabasetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.SetTitlecard = new System.Windows.Forms.Button();
@@ -1665,7 +1665,6 @@ namespace SharpOcarina
             this.setRoomsToUseEnvironment1ToolStripMenuItem,
             this.autoplaceDoorsToolStripMenuItem,
             this.clearAllGroupSettingsToolStripMenuItem,
-            this.dEBUGCustomActorDatabasetoolStripMenuItem,
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem});
@@ -1853,13 +1852,6 @@ namespace SharpOcarina
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Text = "Flag Log: Display Flags used by all rooms";
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Click += new System.EventHandler(this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem_Click);
             // 
-            // dEBUGCustomActorDatabasetoolStripMenuItem
-            // 
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Name = "dEBUGCustomActorDatabasetoolStripMenuItem";
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Size = new System.Drawing.Size(356, 22);
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Text = "Public Custom Actor Database (z64rom)";
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Click += new System.EventHandler(this.dEBUGCustomActorDatabasetoolStripMenuItem_Click);
-            // 
             // AddObjectToAllRoomsMenuItem
             // 
             this.AddObjectToAllRoomsMenuItem.Name = "AddObjectToAllRoomsMenuItem";
@@ -1954,6 +1946,7 @@ namespace SharpOcarina
             this.removeAllRomScenesToolStripMenuItem,
             this.rebuildDmaTableallToolStripMenuItem,
             this.decompressROMToolStripMenuItem,
+            this.dEBUGCustomActorDatabasetoolStripMenuItem,
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
             this.replaceSceneTitleCardTextureToolStripMenuItem});
@@ -2081,6 +2074,7 @@ namespace SharpOcarina
             // 
             // convertSelectedActorXMLEntryTotomlToolStripMenuItem
             // 
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Enabled = false;
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Name = "convertSelectedActorXMLEntryTotomlToolStripMenuItem";
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Text = "Convert Selected Actor XML Entry to .toml";
@@ -2104,6 +2098,13 @@ namespace SharpOcarina
             this.replaceSceneTitleCardTextureToolStripMenuItem.Text = "Replace scene title card texture (OoT)";
             this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
+            // 
+            // dEBUGCustomActorDatabasetoolStripMenuItem
+            // 
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Name = "dEBUGCustomActorDatabasetoolStripMenuItem";
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Text = "Public Custom Actor Database (z64rom)";
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Click += new System.EventHandler(this.dEBUGCustomActorDatabasetoolStripMenuItem_Click);
             // 
             // tabControl1
             // 

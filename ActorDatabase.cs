@@ -41,6 +41,8 @@ namespace SharpOcarina
 
             FilterTextBox.Text = filter;
 
+            AutoSetCheckbox.Checked = MainForm.DatabaseAutoSet;
+
             if (initialvalue == 0xFFFF) firsttime = 3;
 
             foreach(string category in actor_categories)
@@ -62,13 +64,15 @@ namespace SharpOcarina
 
         public void UpdateWindow()
         {
+            ActorView.BeginUpdate();
+
             ActorView.Nodes.Clear();
             SetActorButton.Enabled = false;
             NotesTextBox.Text = "";
             bool show;
 
-          //  ushort[] transitions = { 0x0009, 0x0023, 0x002E };
-
+            //  ushort[] transitions = { 0x0009, 0x0023, 0x002E };
+            
             foreach (DatabaseActor actor in parent.Database)
             {
                 show = false;
@@ -81,6 +85,7 @@ namespace SharpOcarina
 
                 if (firsttime == 0 && actor.Value == initialvalue) {ActorView.SelectedNode = ActorView.Nodes[ActorView.Nodes.Count - 1]; firsttime++; ActorView.Focus(); }
 
+                
                 if (actor.Variables.Count >= 1)
                 {
                     foreach (KeyValuePair<ushort, string> variable in actor.Variables)
@@ -104,6 +109,7 @@ namespace SharpOcarina
 
                 if (!show) ActorView.Nodes[ActorView.Nodes.Count - 1].Remove();
             }
+            ActorView.EndUpdate();
 
             firsttime = 3;
         }
@@ -111,7 +117,6 @@ namespace SharpOcarina
         private void SetActorButton_Click(object sender, EventArgs e)
         {
             parent.SetActorFromDatabase(((ActorNode)ActorView.SelectedNode).Value, ((ActorNode)ActorView.SelectedNode).Variable, target);
-            this.Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -126,7 +131,18 @@ namespace SharpOcarina
 
         private void GoButton_Click(object sender, EventArgs e)
         {
+            Go();
+        }
+
+        public void Go()
+        {
             filter = FilterTextBox.Text;
+            UpdateWindow();
+        }
+
+        public void Go2()
+        {
+            FilterTextBox.Text = filter;
             UpdateWindow();
         }
 
@@ -134,7 +150,7 @@ namespace SharpOcarina
         {
             if (e.KeyCode == Keys.Enter)
             {
-                GoButton_Click(sender,e);
+                Go();
             }
         }
 
@@ -151,12 +167,31 @@ namespace SharpOcarina
                 NotesTextBox.SelectedRtf = (((ActorNode)ActorView.SelectedNode).Notes);
             }
             else NotesTextBox.Text = (((ActorNode)ActorView.SelectedNode).Notes);
+
+            if (AutoSetCheckbox.Checked)
+            {
+                SetActorButton_Click(sender,e);
+            }
+        }
+
+        private void ActorDatabase_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MainForm.actordatabase = null; 
+        }
+
+        private void AutoSetCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            MainForm.DatabaseAutoSet = AutoSetCheckbox.Checked;
+            if (AutoSetCheckbox.Checked && ActorView.SelectedNode != null)
+            {
+                ActorView_AfterSelect(sender,null);
+            }
         }
 
         private void SearchCategory(object sender, EventArgs e)
         {
             FilterTextBox.Text = "#" + ((ToolStripMenuItem)sender).Text;
-            GoButton_Click(sender, e);
+            Go();
         }
     }
 

@@ -37,6 +37,7 @@
             this.NotesTextBox = new System.Windows.Forms.RichTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.CategoriesButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.AutoSetCheckbox = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,11 +134,23 @@
             this.CategoriesButton.Text = "toolStripButton1";
             this.CategoriesButton.ToolTipText = "Categories";
             // 
+            // AutoSetCheckbox
+            // 
+            this.AutoSetCheckbox.AutoSize = true;
+            this.AutoSetCheckbox.Location = new System.Drawing.Point(130, 621);
+            this.AutoSetCheckbox.Name = "AutoSetCheckbox";
+            this.AutoSetCheckbox.Size = new System.Drawing.Size(90, 17);
+            this.AutoSetCheckbox.TabIndex = 8;
+            this.AutoSetCheckbox.Text = "Set on Select";
+            this.AutoSetCheckbox.UseVisualStyleBackColor = true;
+            this.AutoSetCheckbox.CheckedChanged += new System.EventHandler(this.AutoSetCheckbox_CheckedChanged);
+            // 
             // ActorDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 652);
+            this.Controls.Add(this.AutoSetCheckbox);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.NotesTextBox);
             this.Controls.Add(this.GoButton);
@@ -149,6 +162,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ActorDatabase";
             this.Text = "Actor Database";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ActorDatabase_FormClosed);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -167,5 +181,6 @@
         private System.Windows.Forms.RichTextBox NotesTextBox;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton CategoriesButton;
+        private System.Windows.Forms.CheckBox AutoSetCheckbox;
     }
 }

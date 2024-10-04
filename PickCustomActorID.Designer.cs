@@ -42,7 +42,7 @@
             // 
             // Ok
             // 
-            this.Ok.Location = new System.Drawing.Point(82, 134);
+            this.Ok.Location = new System.Drawing.Point(98, 134);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 0;
@@ -163,7 +163,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 169);
+            this.ClientSize = new System.Drawing.Size(262, 169);
             this.Controls.Add(this.ObjectInUseLabel);
             this.Controls.Add(this.ActorInUseLabel);
             this.Controls.Add(this.FindEmptyIDs);

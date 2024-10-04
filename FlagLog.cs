@@ -12,11 +12,13 @@ namespace SharpOcarina
     public partial class FlagLog : Form
     {
         public string text;
+        public MainForm mainform;
 
-        public FlagLog(string _text)
+        public FlagLog(string _text, MainForm _mainform)
         {
             InitializeComponent();
             text = _text;
+            mainform = _mainform;
             Init();
         }
         public void Init()
@@ -33,7 +35,7 @@ namespace SharpOcarina
         private void Refresh_Click(object sender, EventArgs e)
         {
             TextBox.Clear();
-            TextBox.SelectedRtf = MainForm.GenerateFlagLog();
+            TextBox.SelectedRtf = mainform.GenerateFlagLog();
         }
 
         private void FlagLog_FormClosed(object sender, FormClosedEventArgs e)

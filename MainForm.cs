@@ -140,6 +140,10 @@ namespace SharpOcarina
 
         public static bool n64preview = false;
 
+        public static bool DatabaseAutoSet = false;
+
+        public static ActorDatabase actordatabase;
+
         public static Keys[] ActorControlKeys = new Keys[0];
 
         public static int tomlconversionID = 0;
@@ -2733,11 +2737,12 @@ namespace SharpOcarina
                     
                 }
             }
-            if (KeysDown[(int)Keys.Z] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+           
+            if (KeysDown[(int)Keys.Z] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !Mouse.MDown)
             {
                 Undo();
             }
-            if (KeysDown[(int)Keys.Y] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+            if (KeysDown[(int)Keys.Y] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !Mouse.MDown)
             {
                 Undo(true);
             }
@@ -3443,7 +3448,7 @@ namespace SharpOcarina
                 double CamYRotd = Camera.Rot.Y * (double)(Math.PI / 180);
 
                 Object target = null;
-                if (actorpick == _Actor_)
+                if (actorpick == _Actor_ && actorEditControl1.ActorNumber > -1 && actorEditControl1.ActorNumber < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count)
                     target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber];
                 else if (actorpick == _Transition_)
                     target = CurrentScene.Transitions[actorEditControl2.ActorNumber];
@@ -4451,6 +4456,7 @@ namespace SharpOcarina
 
 
             }
+            patchROMToolStripMenuItem.Enabled = !rom64.isSet();
         }
 
         public void RefreshExitLabels()
@@ -10417,30 +10423,33 @@ namespace SharpOcarina
 
         public void SetActorFromDatabase(ushort number, ushort variable, byte target)
         {
-            if (target == 0)
+            if (CurrentScene != null)
             {
-                StoreUndo(_Actor_);
-                CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorComboBox.SelectedIndex].Number = number;
-                CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorComboBox.SelectedIndex].Variable = variable;
-                actorEditControl1.UpdateActorEdit();
-                actorEditControl1.UpdateForm();
+                if (actorpick == _Actor_ && CurrentScene.Rooms.Count > 0 && actorEditControl1.ActorComboBox.SelectedIndex > -1 && actorEditControl1.ActorComboBox.SelectedIndex < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count)
+                {
+                    StoreUndo(_Actor_);
+                    CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorComboBox.SelectedIndex].Number = number;
+                    CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorComboBox.SelectedIndex].Variable = variable;
+                    actorEditControl1.UpdateActorEdit();
+                    actorEditControl1.UpdateForm();
 
-            }
-            else if (target == 1)
-            {
-                StoreUndo(_Transition_);
-                CurrentScene.Transitions[actorEditControl2.ActorComboBox.SelectedIndex].Number = number;
-                CurrentScene.Transitions[actorEditControl2.ActorComboBox.SelectedIndex].Variable = variable;
-                actorEditControl2.UpdateActorEdit();
-                actorEditControl2.UpdateForm();
-            }
-            else if (target == 2)
-            {
-                StoreUndo(_Spawn_);
-                CurrentScene.SpawnPoints[actorEditControl3.ActorComboBox.SelectedIndex].Number = number;
-                CurrentScene.SpawnPoints[actorEditControl3.ActorComboBox.SelectedIndex].Variable = variable;
-                actorEditControl3.UpdateActorEdit();
-                actorEditControl3.UpdateForm();
+                }
+                else if (actorpick == _Transition_ && actorEditControl2.ActorComboBox.SelectedIndex  > -1 && actorEditControl2.ActorComboBox.SelectedIndex < CurrentScene.Transitions.Count)
+                {
+                    StoreUndo(_Transition_);
+                    CurrentScene.Transitions[actorEditControl2.ActorComboBox.SelectedIndex].Number = number;
+                    CurrentScene.Transitions[actorEditControl2.ActorComboBox.SelectedIndex].Variable = variable;
+                    actorEditControl2.UpdateActorEdit();
+                    actorEditControl2.UpdateForm();
+                }
+                else if (actorpick == _Spawn_ && actorEditControl3.ActorComboBox.SelectedIndex > -1 && actorEditControl3.ActorComboBox.SelectedIndex < CurrentScene.SpawnPoints.Count)
+                {
+                    StoreUndo(_Spawn_);
+                    CurrentScene.SpawnPoints[actorEditControl3.ActorComboBox.SelectedIndex].Number = number;
+                    CurrentScene.SpawnPoints[actorEditControl3.ActorComboBox.SelectedIndex].Variable = variable;
+                    actorEditControl3.UpdateActorEdit();
+                    actorEditControl3.UpdateForm();
+                }
             }
         }
 
@@ -13500,6 +13509,29 @@ namespace SharpOcarina
 
             Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x009B;", path + @"src\system\state\0x04-Opening\Opening.c");
             Helpers.ReplaceLine("gSaveContext.cutsceneIndex", "    gSaveContext.cutsceneIndex = 0x0000;  gSaveContext.entranceIndex = 0x009B;", path + @"src\system\state\0x04-Opening\Opening.c");
+
+            if (File.Exists(path + "\\tools\\sharpocarina\\binarydata"))
+            {
+
+                ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(path + "\\tools\\sharpocarina\\binarydata")));
+
+                BinaryWriter BWS = new BinaryWriter(File.OpenWrite(path + "\\tools\\sharpocarina\\binarydata"));
+
+                List<Byte> Output = new List<byte>();
+
+
+                BWS.Seek((int)rom.HeaderTitle, SeekOrigin.Begin);
+                Helpers.Append16(ref Output, 0x0000);
+                BWS.Write(Output.ToArray());
+                Output.Clear();
+                BWS.Seek((int)rom.EntranceTitle, SeekOrigin.Begin);
+                Helpers.Append16(ref Output, 0x009B);
+                BWS.Write(Output.ToArray());
+                Output.Clear();
+
+                BWS.Close();
+            }
+
         }
 
         private void AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -14517,7 +14549,7 @@ namespace SharpOcarina
             if (CurrentScene != null && CurrentScene.Rooms.Count > 0 && !flaglog_visible)
             {
 
-                FlagLog flaglog = new FlagLog(GenerateFlagLog());
+                FlagLog flaglog = new FlagLog(GenerateFlagLog(), this);
                 flaglog.Show();
                 flaglog_visible = true;
 
@@ -14572,7 +14604,7 @@ namespace SharpOcarina
             }
         }
 
-        public static string GenerateFlagLog()
+        public string GenerateFlagLog()
         {
             List<FlagEntryInfo> switchflags = new List<FlagEntryInfo>();
             List<FlagEntryInfo> chestflags = new List<FlagEntryInfo>();
@@ -15327,7 +15359,7 @@ namespace SharpOcarina
             }
         }
 
-        public static void RefreshActorCache()
+        public void RefreshActorCache()
         {
             ActorCache.Clear();
             reloaddatabase = true;
@@ -15570,6 +15602,13 @@ namespace SharpOcarina
 
                     MessageBox.Show("Warning! Following toml files do not have some of the required variables defined!\n\n" + msg, "actor.toml warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+            }
+
+            if (actordatabase != null)
+            {
+                GenerateActorDatabase();
+                reloaddatabase = false;
+                actordatabase.Go();
             }
         }
 
@@ -18305,7 +18344,7 @@ namespace SharpOcarina
 
             saveFileDialog1.FileName = "Save Here!";
             saveFileDialog1.Filter = "All Files (*.*)|*.*";
-            saveFileDialog1.InitialDirectory = CurrentScene.BasePath;
+            //saveFileDialog1.InitialDirectory = CurrentScene.BasePath;
             saveFileDialog1.CheckFileExists = false;
             saveFileDialog1.CreatePrompt = false;
 
@@ -18391,6 +18430,12 @@ namespace SharpOcarina
 
 
                     pleasewait.Close();
+
+                    //creates binary data
+                    string binarydata = path + "\\tools\\sharpocarina\\binarydata";
+                    System.IO.FileInfo file = new System.IO.FileInfo(binarydata);
+                    file.Directory.Create(); //if directory exists, does nothing
+                    File.Copy(path + "\\BaseDebugRom.z64", binarydata);
 
                     using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations())
                     {
@@ -18602,7 +18647,9 @@ namespace SharpOcarina
 
                 }
                 ReloadButton_Click(sender,e);
+                
             }
+            
         }
 
         private bool WarningUnsavedChanges(bool action = false)

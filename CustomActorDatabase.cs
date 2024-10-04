@@ -20,11 +20,14 @@ namespace SharpOcarina
     public partial class CustomActorDatabase : Form
     {
         string[] actor_categories = { "Puzzle", "Enemy", "Boss", "NPC", "Utility","Other" };
-        string path = "Z:\\Users\\Noka\\Documents\\GitHub\\CustomActorDatabase\\";
+        //string path = "Z:\\Users\\Noka\\Documents\\GitHub\\CustomActorDatabase\\";
+        string website = "https://raw.githubusercontent.com/Nokaubure/CustomActorDatabase/";
         public List<DatabaseCustomActor> Database;
         public XmlNodeList nodes;
         public string filter = "";
+        string tempw = "";
         public MainForm mainform;
+        public WebClient client;
         public List<CustomActorz64rom> z64romactors = new List<CustomActorz64rom>();
         public List<CustomObjectz64rom> z64romobjects = new List<CustomObjectz64rom>();
         public bool reload = false;
@@ -50,8 +53,22 @@ namespace SharpOcarina
 
             }
 
+
+            tempw = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Tempw\\");
+            if (!Directory.Exists(tempw)) Directory.CreateDirectory(tempw);
+
+            client = new WebClient();
+
+
+            using (client)
+            {
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                client.DownloadFile(website + "master/CustomActors.xml", tempw + "CustomActors.xml");
+
+            }
+
             XmlDocument doc = new XmlDocument();
-            var fileName = path + "CustomActors.xml";
+            var fileName = tempw + "CustomActors.xml";
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -69,7 +86,7 @@ namespace SharpOcarina
                 {
                     string basename = "";
                     ushort index = 0;
-                    int version = 0;
+                    int version = -1;
 
                     if (!rom64.getNameAndIndex(str, ref basename, ref index))
                         continue;
@@ -128,7 +145,11 @@ namespace SharpOcarina
                 if (match != null)
                 {
                     CustomActor.Installed = true;
-                    if (match.version < Version)
+                    if (match.version == -1)
+                    {
+                        CustomActor.Conflict = true;
+                    }
+                    else if (match.version < Version)
                     {
                         CustomObjectz64rom z64romobject = z64romobjects.Find(x => x.name == FolderName);
                         if (z64romobject != null)
@@ -137,6 +158,18 @@ namespace SharpOcarina
                             CustomActor.ActorID = match.ID;
                             CustomActor.ObjectID = z64romobject.ID;
                         }
+                        else
+                        {
+                            CustomActor.Conflict = true;
+                        }
+                    }
+                }
+                else
+                {
+                    CustomObjectz64rom z64romobject = z64romobjects.Find(x => x.name == FolderName);
+                    if (z64romobject != null)
+                    {
+                        CustomActor.Conflict = true;
                     }
                 }
 
@@ -144,12 +177,14 @@ namespace SharpOcarina
 
             }
 
+            fs.Close();
+
 
         }
 
         public void UpdateWindow()
         {
-
+            ActorView.BeginUpdate();
             ActorView.Nodes.Clear();
             //SetActorButton.Enabled = false;
             ActorDescription.Text = "";
@@ -176,8 +211,9 @@ namespace SharpOcarina
             foreach (CustomActorNode child in ActorView.Nodes)
             {
                 if (child.Actor.Installed)
-                    child.ForeColor = child.Actor.Outdated ? Color.Orange : Color.Green;
+                    child.ForeColor = child.Actor.Conflict ? Color.Red : child.Actor.Outdated ? Color.Orange : Color.Green;
             }
+            ActorView.EndUpdate();
 
         }
 
@@ -193,12 +229,25 @@ namespace SharpOcarina
                 if (node.Actor.HasCustomObject) ActorProperties.Text += "Uses custom object" + Environment.NewLine;
 
                 ActorDescription.Text = node.Actor.Notes;
-                if (File.Exists(path + "CustomActors\\" + node.Actor.FolderName + "\\image.jpg"))
-                    ActorImage.Image = Image.FromFile(path + "CustomActors\\" + node.Actor.FolderName + "\\image.jpg");
-                else
+                try
+                {
+                    using (client)
+                    {
+                        byte[] imageBytes = client.DownloadData(website + "master/CustomActors/" + node.Actor.FolderName + "/image.jpg");
+                        using (var stream = new System.IO.MemoryStream(imageBytes))
+                        {
+                            ActorImage.Image = Image.FromStream(stream);
+                        }
+                        //ActorImage.Image = Image.FromFile(path + "CustomActors\\" + node.Actor.FolderName + "\\image.jpg");
+                    }
+                }
+                catch (WebException)
+                {
                     ActorImage.Image = null;
+                }
 
-                InstallButton.Enabled = !node.Actor.Installed || node.Actor.Outdated;
+
+                InstallButton.Enabled = (!node.Actor.Installed || node.Actor.Outdated) && !node.Actor.Conflict;
                 InstallButton.Text = (!node.Actor.Outdated) ? "Install Actor" : "Update Actor";
             }
             else
@@ -242,17 +291,8 @@ namespace SharpOcarina
 
                 if (Directory.Exists(temppath))
                 {
-
-                    DirectoryInfo di = new DirectoryInfo(temppath);
-
-                    foreach (FileInfo file in di.GetFiles())
-                    {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in di.GetDirectories())
-                    {
-                        dir.Delete(true);
-                    }
+                    
+                    DeleteDirectory(temppath);
                     Directory.CreateDirectory(temppath);
                 }
                 else 
@@ -260,31 +300,35 @@ namespace SharpOcarina
                     Directory.CreateDirectory(temppath);
                 }
 
-                using (var client = new WebClient())
+                using (client)
                 {
-                    //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                    //client.DownloadFile("https://github.com/z64utils/z64rom/releases/latest/download/z64rom.zip", path + "z64rom.zip");
+                    System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                    client.DownloadFile(website + "master/CustomActors/" + node.Actor.FolderName + "/data.zip", tempw + "data.zip");
 
-                   //TODO move unzip here
+                    using (var zip = ZipFile.Read(tempw + "data.zip"))
+                        zip.ExtractAll(temppath, ExtractExistingFileAction.Throw);
 
                 }
-
+                /*
                 using (var zip = ZipFile.Read(path + "CustomActors\\" + node.Actor.FolderName + "\\data.zip"))
-                    zip.ExtractAll(temppath, ExtractExistingFileAction.Throw);
+                    zip.ExtractAll(temppath, ExtractExistingFileAction.Throw);*/
 
-                System.IO.DirectoryInfo di2 = new DirectoryInfo(temppath + "include\\object\\");
-
-
-                if (node.Actor.HasCustomObject)
+                if (Directory.Exists(temppath + "include\\object\\"))
                 {
-                    FileInfo[] dirfiles2 = di2.GetFiles();
-                    foreach (FileInfo dirfile in dirfiles2)
+                    System.IO.DirectoryInfo di2 = new DirectoryInfo(temppath + "include\\object\\");
+
+
+                    if (node.Actor.HasCustomObject)
                     {
+                        FileInfo[] dirfiles2 = di2.GetFiles();
+                        foreach (FileInfo dirfile in dirfiles2)
+                        {
 
-                        string sourcefile = Path.Combine(temppath + "include\\object\\", dirfile.Name);
-                        string targetfile = Path.Combine(temppath + "include\\object\\", "0x" + ObjectID.ToString("X4") + "-" + node.Actor.FolderName + dirfile.Extension);
-                        File.Move(sourcefile, targetfile);
+                            string sourcefile = Path.Combine(temppath + "include\\object\\", dirfile.Name);
+                            string targetfile = Path.Combine(temppath + "include\\object\\", "0x" + ObjectID.ToString("X4") + "-" + node.Actor.FolderName + dirfile.Extension);
+                            File.Move(sourcefile, targetfile);
 
+                        }
                     }
                 }
 
@@ -307,7 +351,7 @@ namespace SharpOcarina
                             FileInfo[] dirfiles = dir.GetFiles();
                             foreach (FileInfo dirfile in dirfiles)
                             {
-                                if (dirfile.Extension == ".c")
+                                if (dirfile.Extension == ".c" || dirfile.Extension == ".h")
                                 {
                                     string targetfile = Path.Combine(dir.FullName, dirfile.Name);
                                     Helpers.ReplaceLine("#define ACT_ID", "#define ACT_ID 0x" + ActorID.ToString("X4"), targetfile, 100);
@@ -323,6 +367,7 @@ namespace SharpOcarina
 
                         string name = dir.Name;
                         name = "0x" + renamerID[i].ToString("X4") + "-" + node.Actor.FolderName;
+                        if (!Directory.Exists(temppath + renamer[i] + name))
                         dir.MoveTo(temppath + renamer[i] + name);
                     }
                 }
@@ -349,10 +394,13 @@ namespace SharpOcarina
                 if (!node.Actor.Outdated)
                 {
                     z64romactors.Add(new CustomActorz64rom(ActorID, node.Actor.Name, node.Actor.Version));
+                    if (MainForm.ActorCache.ContainsKey(ActorID)) MainForm.ActorCache.Remove(ActorID);
                     MainForm.ActorCache.Add(ActorID, new ActorInfo(node.Actor.Name, new List<ActorProperty>(), "" + ObjectID.ToString("X4")));
                     if (node.Actor.HasCustomObject)
                     {
+
                         z64romobjects.Add(new CustomObjectz64rom(ObjectID, node.Actor.FolderName));
+                        if (MainForm.ObjectCache.ContainsKey(ObjectID)) MainForm.ObjectCache.Remove(ObjectID);
                         MainForm.ObjectCache.Add(ObjectID, new ObjectInfo(1, node.Actor.FolderName, "" + ActorID.ToString("X4")));
                     }
                 }
@@ -369,6 +417,8 @@ namespace SharpOcarina
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
+
+
             this.Close();
         }
 
@@ -398,6 +448,36 @@ namespace SharpOcarina
         {
             UpdateWindow();
         }
+
+        private void CustomActorDatabase_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            string tmp = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Temp\\");
+
+            //Directory.Delete(tmp, true);
+            //Directory.Delete(tempw, true);
+            DeleteDirectory(tmp);
+            DeleteDirectory(tempw);
+        }
+
+        public void DeleteDirectory(string target_dir)
+        {
+            if (!Directory.Exists(target_dir)) return;
+            string[] files = Directory.GetFiles(target_dir);
+            string[] dirs = Directory.GetDirectories(target_dir);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteDirectory(dir);
+            }
+
+            Directory.Delete(target_dir, false);
+        }
     }
 
     public class DatabaseCustomActor
@@ -414,6 +494,7 @@ namespace SharpOcarina
         public string Author;
         public bool Installed = false;
         public bool Outdated = false;
+        public bool Conflict = false;
         public DatabaseCustomActor(int _Key, int _Version, string _Name, string _FolderName, bool _HasCustomObject, int _ActorID, int _ObjectID, string _Category, string _Author, string _Notes)
         {
             Key = _Key;
@@ -439,7 +520,7 @@ namespace SharpOcarina
         {
             Value = actor.Key;
             Actor = actor;
-            Text = Actor.Name + " " + (Actor.Outdated ? "[Update Available]" : Actor.Installed ? "[Up to date]" : "");
+            Text = Actor.Name + " " + (Actor.Conflict ? "[Name Conflict]" : Actor.Outdated ? "[Update Available]" : Actor.Installed ? "[Up to date]" : "");
         }
         
     }

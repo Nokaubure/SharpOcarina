@@ -195,6 +195,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "CustomActorDatabase";
             this.Text = "Custom Actor Database";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CustomActorDatabase_FormClosed);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ActorImage)).EndInit();

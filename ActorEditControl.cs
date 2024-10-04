@@ -718,14 +718,32 @@ namespace SharpOcarina
             if (IsTransitionActor) {filter = "#Transitions"; target = 1; }
             else if (IsSpawnActor) { filter = "Spawn point"; target = 2; }
 
+            MainForm.actorpick = IsTransitionActor ? MainForm._Transition_ : IsSpawnActor ? MainForm._Spawn_ : MainForm._Actor_;
+
             if (MainForm.reloaddatabase)
             {
                 mainform.GenerateActorDatabase();
                 MainForm.reloaddatabase = false;
             }
 
-            ActorDatabase actordabase = new ActorDatabase(mainform, target, filter, Actors[ActorComboBox.SelectedIndex].Number, Actors[ActorComboBox.SelectedIndex].Variable);
-            actordabase.ShowDialog();
+            if (MainForm.CurrentScene != null && MainForm.CurrentScene.Rooms.Count > 0)
+            {
+                if (MainForm.actordatabase == null)
+                {
+                    MainForm.actordatabase = new ActorDatabase(mainform, target, filter, Actors[ActorComboBox.SelectedIndex].Number, Actors[ActorComboBox.SelectedIndex].Variable);
+                    MainForm.actordatabase.Show(mainform);
+                }
+                else
+                {
+                    MainForm.actordatabase.filter = filter;
+                    MainForm.actordatabase.Go2();
+                }
+
+
+            }
+
+            //ActorDatabase actordabase = new ActorDatabase(mainform, target, filter, Actors[ActorComboBox.SelectedIndex].Number, Actors[ActorComboBox.SelectedIndex].Variable);
+            //actordabase.ShowDialog();
             
         }
 
