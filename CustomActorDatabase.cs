@@ -71,7 +71,12 @@ namespace SharpOcarina
             var fileName = tempw + "CustomActors.xml";
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
+#if DEBUG
+            XmlNodeList nodes = doc.SelectNodes("Table/Actor | Table/Debug");
+#else
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
+#endif
+
 
             Database = new List<DatabaseCustomActor>();
             // FilterTextBox.Text = filter;

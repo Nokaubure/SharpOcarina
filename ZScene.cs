@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -1440,7 +1441,7 @@ namespace SharpOcarina
 
 
             for(int i = 0; i < offsetsstr.Length; i++)
-                offsets[i] = Convert.ToUInt16(offsetsstr[i], 16 ) | (bank << 24);
+                offsets[i] = Convert.ToUInt32(offsetsstr[i], 16 ) | (bank << 24);
 
             for (int i = 8; i < textureoffsetsstr.Length+8; i++)
                 textureoffsets[i] = Convert.ToUInt32(textureoffsetsstr[i-8], 16) | (bank << 24);
@@ -1713,7 +1714,7 @@ namespace SharpOcarina
             // Load the converted scene data into dummy memory
             if (OriginalSceneData != null && OriginalSceneData.Count != 0)
             {
-                SayakaGL.GameHandler.LoadToRAM(MainForm.NormalHeader.OriginalSceneData.ToArray(), 0x02); 
+                SayakaGL.GameHandler.LoadToRAM(MainForm.NormalHeader.OriginalSceneData.ToArray(), 0x02);
             }
             else
             {
@@ -1741,10 +1742,10 @@ namespace SharpOcarina
                     SayakaGL.GameHandler.LoadToRAM(_Rooms[i].RoomData.ToArray(), 0x03);
                     DLOffsets = SayakaGL.GameHandler.GetDisplayLists((uint)(_Rooms[i].MeshHeaderOffset | (0x03 << 24)));
                 }
-                
+
 
                 // Get the Display Lists offsets back from the mesh header and read each DList
-                
+
                 foreach (UInt32 DL in DLOffsets)
                 {
                     SayakaGL.UcodeSimulator.ReadDL(0, DL, ref _Rooms[i].N64DLists);
@@ -1752,99 +1753,41 @@ namespace SharpOcarina
                 // Finally parse all the DLists
                 SayakaGL.UcodeSimulator.ParseAllDLs(ref _Rooms[i].N64DLists);
 
-               
+
             }
 
-            if (MainForm.skyboxdlists[0].Count == 0)
+            string[] skyboxfiles = { "skybox01.zobj", "skybox01cloudy.zobj", "skybox05.zobj", "skybox01MM.zobj" };
+            uint[] skyboxoffsets = { 0x06017400, 0x06017020, 0x0601B380, 0x06010B40 };
+
+            for (int i = 0; i < skyboxfiles.Length; i++)
             {
-                List<byte> skybox = new List<byte>(File.ReadAllBytes("F3DEX2" + Path.DirectorySeparatorChar + "skybox01.zobj"));
 
-                UcodeSimulator.currentfilename = "skybox01.zobj";
-
-                SayakaGL.GameHandler.LoadToRAM(skybox.ToArray(), 0x06);
-
-                List<UcodeSimulator.DisplayListStruct> templist = new List<UcodeSimulator.DisplayListStruct>();
-
-                uint asd = SayakaGL.UcodeSimulator.ReadDL((int)0x06, 0x06017400, ref templist);
-
-                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in templist)
+                if (MainForm.skyboxdlists[i].Count == 0)
                 {
-                    SayakaGL.UcodeSimulator.ParseDL(DL);
+
+                    List<byte> skybox = new List<byte>(File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"F3DEX2\" + skyboxfiles[i])));
+
+                    UcodeSimulator.currentfilename = skyboxfiles[i];
+
+                    SayakaGL.GameHandler.LoadToRAM(skybox.ToArray(), 0x06);
+
+                    List<UcodeSimulator.DisplayListStruct> templist = new List<UcodeSimulator.DisplayListStruct>();
+
+                    uint asd = SayakaGL.UcodeSimulator.ReadDL((int)0x06, skyboxoffsets[i], ref templist);
+
+                    foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in templist)
+                    {
+                        SayakaGL.UcodeSimulator.ParseDL(DL);
+                    }
+
+                    SayakaGL.UcodeSimulator.ParseAllDLs(ref templist);
+
+                    MainForm.skyboxdlists[i] = templist;
+
+                    UcodeSimulator.currentfilename = "";
                 }
-
-                SayakaGL.UcodeSimulator.ParseAllDLs(ref templist);
-
-                MainForm.skyboxdlists[0] = templist;
-
-                UcodeSimulator.currentfilename = "";
             }
-            if (MainForm.skyboxdlists[1].Count == 0)
-            {
-                List<byte> skybox = new List<byte>(File.ReadAllBytes("F3DEX2" + Path.DirectorySeparatorChar + "skybox01cloudy.zobj"));
-
-                UcodeSimulator.currentfilename = "skybox01cloudy.zobj";
-
-                SayakaGL.GameHandler.LoadToRAM(skybox.ToArray(), 0x06);
-
-                List<UcodeSimulator.DisplayListStruct> templist = new List<UcodeSimulator.DisplayListStruct>();
-
-                uint asd = SayakaGL.UcodeSimulator.ReadDL((int)0x06, 0x06017020, ref templist);
-
-                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in templist)
-                {
-                    SayakaGL.UcodeSimulator.ParseDL(DL);
-                }
-
-                SayakaGL.UcodeSimulator.ParseAllDLs(ref templist);
-                MainForm.skyboxdlists[1] = templist;
-
-                UcodeSimulator.currentfilename = "";
-
-            }
-            if (MainForm.skyboxdlists[2].Count == 0)
-            {
-                List<byte> skybox = new List<byte>(File.ReadAllBytes("F3DEX2" + Path.DirectorySeparatorChar + "skybox05.zobj"));
-
-                UcodeSimulator.currentfilename = "skybox05.zobj";
-
-                SayakaGL.GameHandler.LoadToRAM(skybox.ToArray(), 0x06);
-
-                List<UcodeSimulator.DisplayListStruct> templist = new List<UcodeSimulator.DisplayListStruct>();
-
-                uint asd = SayakaGL.UcodeSimulator.ReadDL((int)0x06, 0x0601B380, ref templist);
-
-                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in templist)
-                {
-                    SayakaGL.UcodeSimulator.ParseDL(DL);
-                }
-
-                SayakaGL.UcodeSimulator.ParseAllDLs(ref templist);
-                MainForm.skyboxdlists[2] = templist;
-
-                UcodeSimulator.currentfilename = "";
-            }
-            if (MainForm.skyboxdlists[3].Count == 0)
-            {
-                List<byte> skybox = new List<byte>(File.ReadAllBytes("F3DEX2" + Path.DirectorySeparatorChar + "skybox01MM.zobj"));
-
-                UcodeSimulator.currentfilename = "skybox01MM.zobj";
-
-                SayakaGL.GameHandler.LoadToRAM(skybox.ToArray(), 0x06);
-
-                List<UcodeSimulator.DisplayListStruct> templist = new List<UcodeSimulator.DisplayListStruct>();
-
-                uint asd = SayakaGL.UcodeSimulator.ReadDL((int)0x06, 0x06010B40, ref templist);
-
-                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in templist)
-                {
-                    SayakaGL.UcodeSimulator.ParseDL(DL);
-                }
-
-                SayakaGL.UcodeSimulator.ParseAllDLs(ref templist);
-                MainForm.skyboxdlists[3] = templist;
-
-                UcodeSimulator.currentfilename = "";
-            }
+            
 
 
             if (MainForm.zobj_cache.Count == 0 && MainForm.settings.RenderActors)

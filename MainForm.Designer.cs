@@ -154,10 +154,12 @@ namespace SharpOcarina
             this.removeAllRomScenesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rebuildDmaTableallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decompressROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dEBUGCustomActorDatabasetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageTocArrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ZobjCopyToolMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dEBUGCustomActorDatabasetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.SetTitlecard = new System.Windows.Forms.Button();
@@ -1096,6 +1098,7 @@ namespace SharpOcarina
             this.openSceneToolStripMenuItem.Name = "openSceneToolStripMenuItem";
             this.openSceneToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.openSceneToolStripMenuItem.Text = "&Open Scene";
+            this.openSceneToolStripMenuItem.ToolTipText = "Click to open it from the file browser";
             this.openSceneToolStripMenuItem.Click += new System.EventHandler(this.openSceneToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
@@ -1700,7 +1703,7 @@ namespace SharpOcarina
             this.puzzleTestToolStripMenuItem,
             this.EasterEggToolStripMenuItem});
             this.quickTestToolStripMenuItem.Name = "quickTestToolStripMenuItem";
-            this.quickTestToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.quickTestToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.quickTestToolStripMenuItem.Text = "Fill room with actors...";
             // 
             // EnemyTestToolStripMenuItem
@@ -1728,21 +1731,21 @@ namespace SharpOcarina
             // createPathwaysForEachBoundingBoxToolStripMenuItem
             // 
             this.createPathwaysForEachBoundingBoxToolStripMenuItem.Name = "createPathwaysForEachBoundingBoxToolStripMenuItem";
-            this.createPathwaysForEachBoundingBoxToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.createPathwaysForEachBoundingBoxToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.createPathwaysForEachBoundingBoxToolStripMenuItem.Text = "Create pathway for selected DList BBox";
             this.createPathwaysForEachBoundingBoxToolStripMenuItem.Click += new System.EventHandler(this.createPathwaysForEachBoundingBoxToolStripMenuItem_Click);
             // 
             // openCutsceneRawDataToolStripMenuItem
             // 
             this.openCutsceneRawDataToolStripMenuItem.Name = "openCutsceneRawDataToolStripMenuItem";
-            this.openCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.openCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.openCutsceneRawDataToolStripMenuItem.Text = "Open cutscene raw data (OoT)";
             this.openCutsceneRawDataToolStripMenuItem.Click += new System.EventHandler(this.openCutsceneRawDataToolStripMenuItem_Click);
             // 
             // exportCutsceneRawDataToolStripMenuItem
             // 
             this.exportCutsceneRawDataToolStripMenuItem.Name = "exportCutsceneRawDataToolStripMenuItem";
-            this.exportCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.exportCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.exportCutsceneRawDataToolStripMenuItem.Text = "Export cutscene raw data";
             this.exportCutsceneRawDataToolStripMenuItem.Click += new System.EventHandler(this.exportCutsceneRawDataToolStripMenuItem_DisplayStyleChanged);
             // 
@@ -1754,7 +1757,7 @@ namespace SharpOcarina
             this.bank0x04ToolStripMenuItem,
             this.writeCollisionToolStripMenuItem});
             this.exportAszobjToolStripMenuItem.Name = "exportAszobjToolStripMenuItem";
-            this.exportAszobjToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.exportAszobjToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.exportAszobjToolStripMenuItem.Text = "Export current room as .zobj";
             // 
             // bank0x06ToolStripMenuItem
@@ -1791,49 +1794,49 @@ namespace SharpOcarina
             // importEnvironmentsToolStripMenuItem
             // 
             this.importEnvironmentsToolStripMenuItem.Name = "importEnvironmentsToolStripMenuItem";
-            this.importEnvironmentsToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.importEnvironmentsToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.importEnvironmentsToolStripMenuItem.Text = "Import Environments from .zscene";
             this.importEnvironmentsToolStripMenuItem.Click += new System.EventHandler(this.importEnvironmentsToolStripMenuItem_Click);
             // 
             // importActorsAndObjectsOfZmapToolStripMenuItem
             // 
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Name = "importActorsAndObjectsOfZmapToolStripMenuItem";
-            this.importActorsAndObjectsOfZmapToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
-            this.importActorsAndObjectsOfZmapToolStripMenuItem.Text = "Import Actors and objects from .zmap";
+            this.importActorsAndObjectsOfZmapToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importActorsAndObjectsOfZmapToolStripMenuItem.Text = "Import Actors and objects from .zmap/.zroom";
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Click += new System.EventHandler(this.importActorsAndObjectsOfZmapToolStripMenuItem_Click);
             // 
             // importCollisionFromzsceneToolStripMenuItem
             // 
             this.importCollisionFromzsceneToolStripMenuItem.Name = "importCollisionFromzsceneToolStripMenuItem";
-            this.importCollisionFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.importCollisionFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.importCollisionFromzsceneToolStripMenuItem.Text = "Import Collision from .zscene";
             this.importCollisionFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importCollisionFromzsceneToolStripMenuItem_Click);
             // 
             // importCamerasAndWaterboxFromzsceneToolStripMenuItem
             // 
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Name = "importCamerasAndWaterboxFromzsceneToolStripMenuItem";
-            this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Text = "Import Cameras and Waterbox from .zscene";
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importCamerasAndWaterboxFromzsceneToolStripMenuItem_Click);
             // 
             // importTransitionsAndSpawnsFromzsceneToolStripMenuItem
             // 
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Name = "importTransitionsAndSpawnsFromzsceneToolStripMenuItem";
-            this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Text = "Import Transitions and Spawns from .zscene";
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem_Click);
             // 
             // importPathwaysFromzsceneToolStripMenuItem
             // 
             this.importPathwaysFromzsceneToolStripMenuItem.Name = "importPathwaysFromzsceneToolStripMenuItem";
-            this.importPathwaysFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.importPathwaysFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.importPathwaysFromzsceneToolStripMenuItem.Text = "Import Pathways from .zscene";
             this.importPathwaysFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importPathwaysFromzsceneToolStripMenuItem_Click);
             // 
             // importActorCutscenesFromzsceneToolStripMenuItem
             // 
             this.importActorCutscenesFromzsceneToolStripMenuItem.Name = "importActorCutscenesFromzsceneToolStripMenuItem";
-            this.importActorCutscenesFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.importActorCutscenesFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.importActorCutscenesFromzsceneToolStripMenuItem.Text = "Import Actor Cutscenes from .zscene (MM)";
             this.importActorCutscenesFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importActorCutscenesFromzsceneToolStripMenuItem_Click);
             // 
@@ -1841,7 +1844,7 @@ namespace SharpOcarina
             // 
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.CheckOnClick = true;
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Name = "addEmptySpaceInSceneHeaderToolStripMenuItem";
-            this.addEmptySpaceInSceneHeaderToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.addEmptySpaceInSceneHeaderToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Text = "Add empty space in scene header / zobj";
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Click += new System.EventHandler(this.addEmptySpaceInSceneHeaderToolStripMenuItem_Click);
             // 
@@ -1947,6 +1950,8 @@ namespace SharpOcarina
             this.rebuildDmaTableallToolStripMenuItem,
             this.decompressROMToolStripMenuItem,
             this.dEBUGCustomActorDatabasetoolStripMenuItem,
+            this.imageTocArrayToolStripMenuItem,
+            this.ZobjCopyToolMenuItem3,
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
             this.replaceSceneTitleCardTextureToolStripMenuItem});
@@ -1963,7 +1968,7 @@ namespace SharpOcarina
             this.advancedTextureAnimationsOoTDebugToolStripMenuItem,
             this.ExtendDynapolyCountStripMenuItem});
             this.patchROMToolStripMenuItem.Name = "patchROMToolStripMenuItem";
-            this.patchROMToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.patchROMToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.patchROMToolStripMenuItem.Text = "Patch ROM...";
             this.patchROMToolStripMenuItem.ToolTipText = "Only for binary! (NOT z64rom)";
             // 
@@ -2005,78 +2010,99 @@ namespace SharpOcarina
             // entranceTableEditorToolStripMenuItem
             // 
             this.entranceTableEditorToolStripMenuItem.Name = "entranceTableEditorToolStripMenuItem";
-            this.entranceTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.entranceTableEditorToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.entranceTableEditorToolStripMenuItem.Text = "Entrance Table Editor (OoT/MM//z64rom)";
             this.entranceTableEditorToolStripMenuItem.Click += new System.EventHandler(this.rOMEntranceTableEditorToolStripMenuItem_Click);
             // 
             // cutsceneTableEditorToolStripMenuItem
             // 
             this.cutsceneTableEditorToolStripMenuItem.Name = "cutsceneTableEditorToolStripMenuItem";
-            this.cutsceneTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.cutsceneTableEditorToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.cutsceneTableEditorToolStripMenuItem.Text = "Cutscene Table Editor (OoT)";
             this.cutsceneTableEditorToolStripMenuItem.Click += new System.EventHandler(this.cutsceneTableEditorToolStripMenuItem_Click);
             // 
             // fileCreationEditorToolStripMenuItem
             // 
             this.fileCreationEditorToolStripMenuItem.Name = "fileCreationEditorToolStripMenuItem";
-            this.fileCreationEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.fileCreationEditorToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.fileCreationEditorToolStripMenuItem.Text = "Filesave Creation Editor (OoT/z64rom)";
             this.fileCreationEditorToolStripMenuItem.Click += new System.EventHandler(this.fileCreationEditorToolStripMenuItem_Click);
             // 
             // pauseScreenMapEditorOoTToolStripMenuItem
             // 
             this.pauseScreenMapEditorOoTToolStripMenuItem.Name = "pauseScreenMapEditorOoTToolStripMenuItem";
-            this.pauseScreenMapEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.pauseScreenMapEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.pauseScreenMapEditorOoTToolStripMenuItem.Text = "Pause Screen Map Editor (OoT/z64rom)";
             this.pauseScreenMapEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.pauseScreenMapEditorOoTToolStripMenuItem_Click);
             // 
             // dropTableEditorOoTToolStripMenuItem
             // 
             this.dropTableEditorOoTToolStripMenuItem.Name = "dropTableEditorOoTToolStripMenuItem";
-            this.dropTableEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.dropTableEditorOoTToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.dropTableEditorOoTToolStripMenuItem.Text = "Drop Table Editor (OoT/z64rom)";
             this.dropTableEditorOoTToolStripMenuItem.Click += new System.EventHandler(this.dropTableEditorOoTToolStripMenuItem_Click);
             // 
             // restrictionFlagsTableEditorToolStripMenuItem
             // 
             this.restrictionFlagsTableEditorToolStripMenuItem.Name = "restrictionFlagsTableEditorToolStripMenuItem";
-            this.restrictionFlagsTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.restrictionFlagsTableEditorToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.restrictionFlagsTableEditorToolStripMenuItem.Text = "Restriction flags Table Editor (OoT/MM)";
             this.restrictionFlagsTableEditorToolStripMenuItem.Click += new System.EventHandler(this.restrictionFlagsTableEditorToolStripMenuItem_Click);
             // 
             // clearSceneDmatableToolStripMenuItem
             // 
             this.clearSceneDmatableToolStripMenuItem.Name = "clearSceneDmatableToolStripMenuItem";
-            this.clearSceneDmatableToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.clearSceneDmatableToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.clearSceneDmatableToolStripMenuItem.Text = "Clear scene DMA table (OoT/MM)";
             this.clearSceneDmatableToolStripMenuItem.Click += new System.EventHandler(this.clearSceneDmatableToolStripMenuItem_Click);
             // 
             // removeAllRomScenesToolStripMenuItem
             // 
             this.removeAllRomScenesToolStripMenuItem.Name = "removeAllRomScenesToolStripMenuItem";
-            this.removeAllRomScenesToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.removeAllRomScenesToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.removeAllRomScenesToolStripMenuItem.Text = "Remove all ROM scenes (OoT/MM/z64rom)";
             this.removeAllRomScenesToolStripMenuItem.Click += new System.EventHandler(this.removeAllRomScenesToolStripMenuItem_Click);
             // 
             // rebuildDmaTableallToolStripMenuItem
             // 
             this.rebuildDmaTableallToolStripMenuItem.Name = "rebuildDmaTableallToolStripMenuItem";
-            this.rebuildDmaTableallToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.rebuildDmaTableallToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.rebuildDmaTableallToolStripMenuItem.Text = "Rebuild DMA table (OoT/MM)";
             this.rebuildDmaTableallToolStripMenuItem.Click += new System.EventHandler(this.rebuildDmaTableallToolStripMenuItem_Click);
             // 
             // decompressROMToolStripMenuItem
             // 
             this.decompressROMToolStripMenuItem.Name = "decompressROMToolStripMenuItem";
-            this.decompressROMToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.decompressROMToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.decompressROMToolStripMenuItem.Text = "Decompress ROM (OoT/MM)";
             this.decompressROMToolStripMenuItem.Click += new System.EventHandler(this.decompressROMToolStripMenuItem_Click);
+            // 
+            // dEBUGCustomActorDatabasetoolStripMenuItem
+            // 
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Name = "dEBUGCustomActorDatabasetoolStripMenuItem";
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Size = new System.Drawing.Size(328, 22);
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Text = "Public Custom Actor Database (z64rom)";
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Click += new System.EventHandler(this.dEBUGCustomActorDatabasetoolStripMenuItem_Click);
+            // 
+            // imageTocArrayToolStripMenuItem
+            // 
+            this.imageTocArrayToolStripMenuItem.Name = "imageTocArrayToolStripMenuItem";
+            this.imageTocArrayToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
+            this.imageTocArrayToolStripMenuItem.Text = "Convert image or file to C array";
+            this.imageTocArrayToolStripMenuItem.Click += new System.EventHandler(this.imageTocArrayToolStripMenuItem_Click);
+            // 
+            // ZobjCopyToolMenuItem3
+            // 
+            this.ZobjCopyToolMenuItem3.Name = "ZobjCopyToolMenuItem3";
+            this.ZobjCopyToolMenuItem3.Size = new System.Drawing.Size(328, 22);
+            this.ZobjCopyToolMenuItem3.Text = "Transfer data between .zobjs (OoT/MM/z64rom)";
+            this.ZobjCopyToolMenuItem3.Click += new System.EventHandler(this.ZobjCopyToolMenuItem3_Click);
             // 
             // convertSelectedActorXMLEntryTotomlToolStripMenuItem
             // 
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Enabled = false;
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Name = "convertSelectedActorXMLEntryTotomlToolStripMenuItem";
-            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Text = "Convert Selected Actor XML Entry to .toml";
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Visible = false;
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem.Click += new System.EventHandler(this.convertSelectedActorXMLEntryTotomlToolStripMenuItem_Click);
@@ -2085,7 +2111,7 @@ namespace SharpOcarina
             // 
             this.objectTableEditorToolStripMenuItem.Enabled = false;
             this.objectTableEditorToolStripMenuItem.Name = "objectTableEditorToolStripMenuItem";
-            this.objectTableEditorToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.objectTableEditorToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.objectTableEditorToolStripMenuItem.Text = "Object Table Editor";
             this.objectTableEditorToolStripMenuItem.Visible = false;
             this.objectTableEditorToolStripMenuItem.Click += new System.EventHandler(this.objectTableEditorToolStripMenuItem_Click);
@@ -2094,17 +2120,10 @@ namespace SharpOcarina
             // 
             this.replaceSceneTitleCardTextureToolStripMenuItem.Enabled = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Name = "replaceSceneTitleCardTextureToolStripMenuItem";
-            this.replaceSceneTitleCardTextureToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
+            this.replaceSceneTitleCardTextureToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.replaceSceneTitleCardTextureToolStripMenuItem.Text = "Replace scene title card texture (OoT)";
             this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
-            // 
-            // dEBUGCustomActorDatabasetoolStripMenuItem
-            // 
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Name = "dEBUGCustomActorDatabasetoolStripMenuItem";
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Size = new System.Drawing.Size(305, 22);
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Text = "Public Custom Actor Database (z64rom)";
-            this.dEBUGCustomActorDatabasetoolStripMenuItem.Click += new System.EventHandler(this.dEBUGCustomActorDatabasetoolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -12750,6 +12769,8 @@ namespace SharpOcarina
         private Button Z64RomPlay;
         private ToolStripMenuItem dEBUGCustomActorDatabasetoolStripMenuItem;
         private ToolStripMenuItem convertSelectedActorXMLEntryTotomlToolStripMenuItem;
+        private ToolStripMenuItem imageTocArrayToolStripMenuItem;
+        private ToolStripMenuItem ZobjCopyToolMenuItem3;
     }
     }
 

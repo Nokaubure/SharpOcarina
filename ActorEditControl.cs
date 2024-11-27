@@ -328,6 +328,7 @@ namespace SharpOcarina
                         ActorListBoxValue.Value = ((ushort)Actors[ActorComboBox.SelectedIndex].ZRot & prop.Mask) >> prop.Position;
 
                     ActorListBoxValue.Maximum = prop.Max;
+                    ActorListBoxValue.Hexadecimal = !prop.Decimal;
 
                     if (prop.DropdItems.Count > 0)
                     {
@@ -830,7 +831,7 @@ namespace SharpOcarina
         public string Target;
         public List<SongItem> DropdItems;
         public CheckBox Check;
-
+        public bool Decimal;
 
         public override string ToString()
         {
@@ -842,13 +843,14 @@ namespace SharpOcarina
             DropdItems = new List<SongItem>();
         }
 
-        public ActorProperty(ushort _Mask, string _Name, string _Target)
+        public ActorProperty(ushort _Mask, string _Name, string _Target, bool _Decimal = false)
         {
             Name = _Name;
             Mask = _Mask;
             Target = _Target;
             Max = Mask;
             DropdItems = new List<SongItem>();
+            Decimal = _Decimal;
 
             while ((Max & 1) == 0)
             {

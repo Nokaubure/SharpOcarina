@@ -227,6 +227,12 @@ namespace SharpOcarina
             return false;
         }
 
+        public static void AddPadding(ref List<byte> Data, int Length)
+        {
+            int ToAdd = Length - (Data.Count % Length);
+            if (ToAdd != Length) for (int i = 0; i < ToAdd; i++) Data.Add(0);
+        }
+
 
 
     }

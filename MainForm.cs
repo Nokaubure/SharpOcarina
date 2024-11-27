@@ -120,6 +120,10 @@ namespace SharpOcarina
 
         public static bool flaglog_visible = false;
 
+        public static bool filetoC_visible = false;
+
+        public static bool zobjcopy_visible = false;
+
         public static CustomCombiner customcombiner;
 
         public static bool customcombiner_visible = false;
@@ -2276,7 +2280,7 @@ namespace SharpOcarina
 
         public void AdvancedCallList(UcodeSimulator.DisplayListStruct DL)
         {
-            if (settings.MajorasMask)
+            if (settings.MajorasMask && CurrentScene.TextureAnims.Count > DL.Animation - 8)
             {
                 GL.MatrixMode(MatrixMode.Texture);
 
@@ -10545,7 +10549,11 @@ namespace SharpOcarina
 
         private void cutsceneTableEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!cutscenetable_visible)
+            if (rom64.isSet())
+            {
+                ClearCutsceneTableZ64rom(rom64.getPath(), true);
+            }
+            else if (!cutscenetable_visible)
             {
 
                 CutsceneTableEditor cutscenetableeditor = new CutsceneTableEditor();
@@ -12691,7 +12699,7 @@ namespace SharpOcarina
             }
 
             openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "ZScene File (*.zmap)|*.zmap";
+            openFileDialog1.Filter = "ZScene File (*.zmap;*.zroom)|*.zmap;*.zroom";
 
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -13530,6 +13538,32 @@ namespace SharpOcarina
                 Output.Clear();
 
                 BWS.Close();
+            }
+
+        }
+
+        private void ClearCutsceneTableZ64rom(string path, bool confirm)
+        {
+            if (!confirm || (MessageBox.Show("This will clean the cutscene table of your z64rom project, as actor 0x01E0 gives more freedom than the table. Continue?", "Confirmation",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == DialogResult.Yes))
+            {
+            string cutscenetable = path + "\\src\\spawn_cutscene_table.toml";
+            if (File.Exists(cutscenetable))
+            {
+                string[] lines = File.ReadAllLines(cutscenetable);
+                List<string> newlines = new List<string>();
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (lines[i].Length > 0 && lines[i].StartsWith("#"))
+                    {
+                        newlines.Add(lines[i]);
+                    }
+                }
+
+                File.WriteAllLines(path, newlines);
+            }
             }
 
         }
@@ -15269,6 +15303,7 @@ namespace SharpOcarina
                 Z64RomPlay.Visible = true;
                 EnvironmentControlTooltip.SetToolTip(Z64RomPlay, "Inject and launch the ROM");
                 LaunchRomToolStripMenuItem.Visible = true;
+                cutsceneTableEditorToolStripMenuItem.Text = "Cutscene Table Editor (OoT)";
 
 
                 ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
@@ -15316,6 +15351,7 @@ namespace SharpOcarina
                 Z64RomPlay.Visible = true;
                 EnvironmentControlTooltip.SetToolTip(Z64RomPlay, "Store scene, build and launch z64rom + warp to scene");
                 LaunchRomToolStripMenuItem.Visible = true;
+                cutsceneTableEditorToolStripMenuItem.Text = "Remove Cutscene Table (z64rom)";
 
                 actorEditControl1.cacheId = 0xFEFE;
                 actorEditControl2.cacheId = 0xFEFE;
@@ -15548,7 +15584,8 @@ namespace SharpOcarina
                             ActorProperty p = new ActorProperty(
                                 (ushort)tbl["Mask"].AsInteger.Value,
                                 tbl["Name"].AsString,
-                                tbl["Target"].AsString
+                                tbl["Target"].AsString,
+                                tbl.HasKey("Decimal") ? tbl["Decimal"].AsBoolean : false
                             );
 
                             DebugConsole.WriteLine("Name: " + p.Name);
@@ -15704,7 +15741,15 @@ namespace SharpOcarina
                     basename = basename.Substring(basename.IndexOf("-") + 1);
 
                     var rompath = str.Replace("\\src\\", "\\rom\\");
-                    long size = new FileInfo(rompath + "\\object.zobj").Length;
+                    long size = 0;
+                    try
+                    {
+                        size = new FileInfo(rompath + "\\object.zobj").Length;
+                    }
+                    catch (System.IO.FileNotFoundException)
+                    {
+                        MessageBox.Show(rompath + "\\object.zobj" + " not found! build the project and refresh it", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                     if (ObjectCache.ContainsKey(index))
                         ObjectCache.Remove(index);
@@ -18448,7 +18493,10 @@ namespace SharpOcarina
                             if (postoperations.removen64logo)
                             {
                                 Helpers.ReplaceLine("this->ult++;", "this->ult++; this->exit = 1; //SO disabled logo", path + @"src\system\state\0x02-BootTitle\BootTitle.c");
-
+                            }
+                            if (postoperations.clearcutscenetable)
+                            {
+                                ClearCutsceneTableZ64rom(path, false);
                             }
                         }
                     }
@@ -18700,6 +18748,32 @@ namespace SharpOcarina
                     MessageBox.Show("Done!\nClose this window to copy the generated toml data to your clipboard", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
                 }
+            }
+        }
+
+        private void imageTocArrayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!filetoC_visible)
+            {
+
+                FileToC filetoC = new FileToC();
+                filetoC.Show();
+                filetoC_visible = true;
+
+
+            }
+        }
+
+        private void ZobjCopyToolMenuItem3_Click(object sender, EventArgs e)
+        {
+            if (!zobjcopy_visible)
+            {
+
+                ZobjCopyToolForm zobjcopy = new ZobjCopyToolForm();
+                zobjcopy.Show();
+                zobjcopy_visible = true;
+
+
             }
         }
 

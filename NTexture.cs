@@ -259,7 +259,7 @@ namespace SharpOcarina
                 //TODO
                 if (IsSizeValid() == false)
                 {
-                    if (!MainForm.settings.DisableTextureWarnings) MessageBox.Show(string.Format("Invalid texture size {0}x{1}, converting to RGB format meanwhile for \"{2}\"", Width, Height, Material.map_Kd), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (!MainForm.settings.DisableTextureWarnings && Material.ForcedFormat == "") MessageBox.Show(string.Format("Invalid texture size {0}x{1}, converting to RGB format meanwhile for \"{2}\"", Width, Height, Material.map_Kd), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Material.ForceRGBA = true;
                 }
                 try

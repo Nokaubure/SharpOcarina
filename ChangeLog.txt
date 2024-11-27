@@ -1,6 +1,30 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.54
+--------------
+
+- Added a new tool "Zobj Copy Tool" that allows transfering data between .zobjs, among other things this provides the ability to easily edit the gameplay_keep objects in z64rom
+
+- Added a new tool "Convert image or file to C array", with it you can instantly convert an image to N64 format and turn it into a C array
+
+- Added a new param "Decimal" in the property fields of actor.toml. Set it to true to turn the numeric box decimal
+
+- Cutscene Table Editor becomes Remove Cutscene Table when in z64rom mode, and it has been added in z64rom post-installation options (use actor 0x01E0 to start cutscenes)
+
+- Changed so .zroom is an allowed extension whith "import actors and objects from room" option, and also in io_import_z64.py plugin
+
+- Updated SO Blender export plugin, now supports Blender 4.1+ (thanks Dragorn421)
+
+- Fixed an issue where the program would prompt an error if a z64rom actor attempted to load an object that was still not compiled
+
+- Fixed an issue where attempting to render multiple dlists in an actor.toml would sometimes prompt an error
+
+- Fixed an issue where the program would set its working directory as system32 when starting it from the start menu
+
+- Fixed an issue where View scenes (beta) would crash in MM mode
+
+--------------
 ---1.53
 --------------
 

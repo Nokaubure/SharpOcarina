@@ -1868,7 +1868,7 @@ class ImportZ64(bpy.types.Operator, ImportHelper):
     bl_label     = "Import Zelda64"
     bl_options   = {'PRESET', 'UNDO'}
     filename_ext = ".zobj"
-    filter_glob  = StringProperty(default="*.zobj;*.zmap", options={'HIDDEN'})
+    filter_glob  = StringProperty(default="*.zobj;*.zmap;*.zroom", options={'HIDDEN'})
     loadOtherSegments = BoolProperty(name="Load Data From Other Segments",
                                     description="Load data from other segments",
                                     default=True,)
