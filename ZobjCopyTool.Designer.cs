@@ -57,13 +57,14 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.AutomaticallyUpdateLDCheckbox = new System.Windows.Forms.CheckBox();
             this.TargetBankNumeric = new SharpOcarina.NumericUpDownEx();
             this.SourceBankNumeric = new SharpOcarina.NumericUpDownEx();
             this.SourceTextureHeight = new SharpOcarina.NumericUpDownEx();
             this.SourceTextureWidth = new SharpOcarina.NumericUpDownEx();
             this.AlsoUpdateHfileCheckbox = new System.Windows.Forms.CheckBox();
             this.DontReloadTargetCheckbox = new System.Windows.Forms.CheckBox();
-            this.AutomaticallyUpdateLDCheckbox = new System.Windows.Forms.CheckBox();
+            this.UnderscoreCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.TargetBankNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceBankNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceTextureHeight)).BeginInit();
@@ -322,6 +323,20 @@
             this.label55.TabIndex = 31;
             this.label55.Text = "Target Bank:";
             // 
+            // AutomaticallyUpdateLDCheckbox
+            // 
+            this.AutomaticallyUpdateLDCheckbox.AutoSize = true;
+            this.AutomaticallyUpdateLDCheckbox.Checked = true;
+            this.AutomaticallyUpdateLDCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutomaticallyUpdateLDCheckbox.Location = new System.Drawing.Point(479, 580);
+            this.AutomaticallyUpdateLDCheckbox.Name = "AutomaticallyUpdateLDCheckbox";
+            this.AutomaticallyUpdateLDCheckbox.Size = new System.Drawing.Size(196, 17);
+            this.AutomaticallyUpdateLDCheckbox.TabIndex = 35;
+            this.AutomaticallyUpdateLDCheckbox.Text = "Automatically update .ld in /include/";
+            this.toolTip1.SetToolTip(this.AutomaticallyUpdateLDCheckbox, "Automatically update .ld in /include/object/ folder if the zobj is inside a z64ro" +
+        "m structure");
+            this.AutomaticallyUpdateLDCheckbox.UseVisualStyleBackColor = true;
+            // 
             // TargetBankNumeric
             // 
             this.TargetBankNumeric.AlwaysFireValueChanged = false;
@@ -444,7 +459,7 @@
             this.AlsoUpdateHfileCheckbox.AutoSize = true;
             this.AlsoUpdateHfileCheckbox.Checked = true;
             this.AlsoUpdateHfileCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AlsoUpdateHfileCheckbox.Location = new System.Drawing.Point(479, 616);
+            this.AlsoUpdateHfileCheckbox.Location = new System.Drawing.Point(479, 603);
             this.AlsoUpdateHfileCheckbox.Name = "AlsoUpdateHfileCheckbox";
             this.AlsoUpdateHfileCheckbox.Size = new System.Drawing.Size(196, 17);
             this.AlsoUpdateHfileCheckbox.TabIndex = 33;
@@ -461,25 +476,26 @@
             this.DontReloadTargetCheckbox.Text = "Don\'t reload target list on next search";
             this.DontReloadTargetCheckbox.UseVisualStyleBackColor = true;
             // 
-            // AutomaticallyUpdateLDCheckbox
+            // UnderscoreCheckBox
             // 
-            this.AutomaticallyUpdateLDCheckbox.AutoSize = true;
-            this.AutomaticallyUpdateLDCheckbox.Checked = true;
-            this.AutomaticallyUpdateLDCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AutomaticallyUpdateLDCheckbox.Location = new System.Drawing.Point(479, 593);
-            this.AutomaticallyUpdateLDCheckbox.Name = "AutomaticallyUpdateLDCheckbox";
-            this.AutomaticallyUpdateLDCheckbox.Size = new System.Drawing.Size(196, 17);
-            this.AutomaticallyUpdateLDCheckbox.TabIndex = 35;
-            this.AutomaticallyUpdateLDCheckbox.Text = "Automatically update .ld in /include/";
-            this.toolTip1.SetToolTip(this.AutomaticallyUpdateLDCheckbox, "Automatically update .ld in /include/object/ folder if the zobj is inside a z64ro" +
-        "m structure");
-            this.AutomaticallyUpdateLDCheckbox.UseVisualStyleBackColor = true;
+            this.UnderscoreCheckBox.AutoSize = true;
+            this.UnderscoreCheckBox.Checked = true;
+            this.UnderscoreCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.UnderscoreCheckBox.Location = new System.Drawing.Point(479, 626);
+            this.UnderscoreCheckBox.Name = "UnderscoreCheckBox";
+            this.UnderscoreCheckBox.Size = new System.Drawing.Size(217, 17);
+            this.UnderscoreCheckBox.TabIndex = 36;
+            this.UnderscoreCheckBox.Text = "Avoid name conflicts with an underscore";
+            this.toolTip1.SetToolTip(this.UnderscoreCheckBox, "Recommended if you\'re editing a vanilla object such as gameplay keep, uncheck if " +
+        "its custom");
+            this.UnderscoreCheckBox.UseVisualStyleBackColor = true;
             // 
             // ZobjCopyToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(689, 647);
+            this.Controls.Add(this.UnderscoreCheckBox);
             this.Controls.Add(this.AutomaticallyUpdateLDCheckbox);
             this.Controls.Add(this.DontReloadTargetCheckbox);
             this.Controls.Add(this.AlsoUpdateHfileCheckbox);
@@ -562,5 +578,6 @@
         private System.Windows.Forms.CheckBox AlsoUpdateHfileCheckbox;
         private System.Windows.Forms.CheckBox DontReloadTargetCheckbox;
         private System.Windows.Forms.CheckBox AutomaticallyUpdateLDCheckbox;
+        private System.Windows.Forms.CheckBox UnderscoreCheckBox;
     }
 }

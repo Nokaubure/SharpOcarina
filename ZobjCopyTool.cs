@@ -59,6 +59,7 @@ namespace SharpOcarina
                 new SongItem {Text = "IA16", Value = 7},
                 new SongItem {Text = "CI4", Value = 8},
                 new SongItem {Text = "CI8", Value = 9},
+                new SongItem {Text = "TLUT", Value = 10},
             };
             SourceTextureFormatComboBox.Items.AddRange(objs);
 
@@ -79,7 +80,7 @@ namespace SharpOcarina
             SaveAsButton.Enabled = GenerateLdButton.Enabled =  (SourceElements.Count > 0);
             SaveButton.Enabled = (TargetFilename.Text != "" && SourceElements.Count > 0);
 
-            MoveButton.Enabled = (SourceElements.Count > 0 && !SourceElements[SourceListBox.SelectedIndex].moved);
+            MoveButton.Enabled = (SourceElements.Count > 0 && !SourceElements[SourceListBox.SelectedIndex].moved && TargetElements.FindIndex(x => x.name == SourceElements[SourceListBox.SelectedIndex].name) == -1);
 
             SourceOffset.Enabled = (SourceZobj.Count > 0);
 
@@ -98,9 +99,12 @@ namespace SharpOcarina
             else
             {
                 string text = "";
-                if (SourceOffsetFilename.Text == "") text += "Source elements will be guessed (only animations!)";
-                else text += "Source elements will be read from " + Path.GetExtension(SourceOffsetFilename.Text) + " file";
-                if (TargetZobj.Count != 0)
+                if (SourceFilename.Text != "")
+                {
+                    if (SourceOffsetFilename.Text == "") text += "Source elements will be guessed (only animations!)";
+                    else text += "Source elements will be read from " + Path.GetExtension(SourceOffsetFilename.Text) + " file";
+                }
+                if (TargetFilename.Text != "")
                 {
                     if (TargetOffsetFilename.Text == "") text += ", Target elements will be guessed (only animations!)";
                     else text += ", Target elements will be read from " + Path.GetExtension(TargetOffsetFilename.Text) + " file";
@@ -253,14 +257,17 @@ namespace SharpOcarina
                                     }
                                 }
                                 XmlAttributeCollection nodeAtt = node.Attributes;
+                                XmlAttributeCollection filenodeAtt = filenode.Attributes;
                                 string name = (nodeAtt["Name"] != null) ? nodeAtt["Name"].Value : "Unk";
                                 uint offset = (nodeAtt["Offset"] != null) ? Convert.ToUInt32(nodeAtt["Offset"].Value, 16) : 9;
                                 if (offset == 9) continue;
-                                byte bank = (byte) ((offset & 0x0F000000) >> 24);
-                                if (listbox == SourceListBox && SourceBankNumeric.Value != 6) SourceBankNumeric.Value = bank;
-                                else if (listbox == TargetListBox && TargetBankNumeric.Value != 6) TargetBankNumeric.Value = bank;
+                                byte bank = (byte) ((filenodeAtt["Segment"] != null) ? Convert.ToByte(filenodeAtt["Segment"].Value, 16) : 6);
+                                
+
+                                if (listbox == SourceListBox) SourceBankNumeric.Value = bank;
+                                else if (listbox == TargetListBox) TargetBankNumeric.Value = bank;
                                 byte[] data = { };
-                                ZobjElement element = new ZobjElement(name, offset, data, type);
+                                ZobjElement element = new ZobjElement(name, (uint) (offset | (bank << 24)), data, type);
                                 
 
                                 if (type == ZobjType.TEXTURE)
@@ -313,8 +320,8 @@ namespace SharpOcarina
                         string name = line.Split('=')[0].Replace(" ", "");
                         uint offset =  Convert.ToUInt32(line.Split('=')[1].Replace(" ", "").Replace(";",""), 16);
                         byte bank = (byte)((offset & 0x0F000000) >> 24);
-                        if (listbox == SourceListBox && SourceBankNumeric.Value != 6) SourceBankNumeric.Value = bank;
-                        else if (listbox == TargetListBox && TargetBankNumeric.Value != 6) TargetBankNumeric.Value = bank;
+                        if (listbox == SourceListBox) SourceBankNumeric.Value = bank;
+                        else if (listbox == TargetListBox) TargetBankNumeric.Value = bank;
                         byte[] data = { };
                         elements.Add(new ZobjElement(name, offset, data, type));
 
@@ -612,7 +619,7 @@ namespace SharpOcarina
                             //uint fulloffset = Helpers.Read32(TargetZobj, i + 4);
                             //uint offset = Helpers.Read24(TargetZobj, i + 5);
 
-                            uint offsetInTarget = (uint)(e.Key - startoffset + newoffset);
+                            uint offsetInTarget = (uint)(e.Key - startoffset + newoffset) & 0x00FFFFFF;
                             if (e.Value == 9)
                             {
                                 uint newoffsetInTarget = Helpers.Read24(TargetZobj, (int)(offsetInTarget + 5)) - startoffset + newoffset;
@@ -948,15 +955,25 @@ namespace SharpOcarina
             if (SourceZobj.Count > 0)
             {
                 UpdateListbox(SourceZobj, ref SourceElements, ref SourceListBox, SourceOffsetFilename.Text);
-                if (TargetFilename.Text == "") TargetZobj = new List<byte>();
+                //if (TargetFilename.Text == "") TargetZobj = new List<byte>();
             }
             if (TargetZobj.Count > 0)
             {
-                UpdateListbox(TargetZobj, ref TargetElements, ref TargetListBox, TargetOffsetFilename.Text);
+                if (DontReloadTargetCheckbox.Checked && TargetFilename.Text == LastTargetFilename)
+                {
+
+                }
+                else
+                {
+                    LastTargetFilename = TargetFilename.Text;
+                    TargetZobj = new List<byte>();
+                    TargetElements.Clear();
+                    UpdateListbox(TargetZobj, ref TargetElements, ref TargetListBox, TargetOffsetFilename.Text);
+                }
             }
             else
             {
-                LastTargetFilename = TargetFilename.Text;
+                
                 if (DontReloadTargetCheckbox.Checked && TargetFilename.Text == LastTargetFilename)
                 {
 
@@ -1193,7 +1210,7 @@ namespace SharpOcarina
                             appears = true;
                         }
                     }
-                    if (!appears) linestoadd.Add("extern " + headernames[(int) element.type] + " " + element.name + "[];");
+                    if (!appears) linestoadd.Add("extern " + headernames[(int) element.type] + " " + element.name + ((UnderscoreCheckBox.Checked) ? "_" : "") + "[];");
                 }
 
                 if (targetline == -1) targetline = lines.Count - 1;
@@ -1204,28 +1221,17 @@ namespace SharpOcarina
                 }
 
 
-                /*
-                StreamWriter SW = File.CreateText(path);
-
-                foreach (string line in lines)
-                {
-                    SW.WriteLine(line);
-                }
-
-
-                SW.Close();*/
-
             }
             else if (!File.Exists(path))
             {
-                lines.Add("#ifndef __" + Path.GetFileNameWithoutExtension(path) + "_H__");
-                lines.Add("#define __" + Path.GetFileNameWithoutExtension(path) + "_H__");
+                lines.Add("#ifndef __" + Path.GetFileNameWithoutExtension(path).Replace("-","") + "_H__");
+                lines.Add("#define __" + Path.GetFileNameWithoutExtension(path).Replace("-", "") + "_H__");
                 foreach (ZobjElement element in TargetElements)
                 {
-                    lines.Add("extern " + headernames[(int)element.type] + " " + element.name + "[];");
+                    lines.Add("extern " + headernames[(int)element.type] + " " + element.name + ((UnderscoreCheckBox.Checked) ? "_" : "") +  "[];");
                 }
                 lines.Add("");
-                lines.Add("#endif /* #define __" + Path.GetFileNameWithoutExtension(path) + "_H__ *\\");
+                lines.Add("#endif /* __" + Path.GetFileNameWithoutExtension(path).Replace("-", "") + "_H__ */");
             }
 
             File.WriteAllLines(path, lines);
@@ -1242,7 +1248,7 @@ namespace SharpOcarina
 
                 foreach (ZobjElement element in TargetElements)
                 {
-                    SW.WriteLine(element.name + " = 0x" + (element.newoffset != 9 ? element.newoffset.ToString("X8") : element.offset.ToString("X8")) + ";");
+                    SW.WriteLine(element.name + "_ = 0x" + (element.newoffset != 9 ? element.newoffset.ToString("X8") : element.offset.ToString("X8")) + ";");
                 }
 
 
