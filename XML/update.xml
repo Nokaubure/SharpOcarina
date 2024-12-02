@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Manifest version="1.53">
+<Manifest version="1.54">
   <CheckInterval>99999999</CheckInterval>
   <RemoteConfigUri>http://nexus.inpureprojects.info/noka/sharpocarina/update.xml</RemoteConfigUri>
   <SecurityToken>FEF0FEF0-A1A2-B3B4-C5C6-AA15DDDD15AB</SecurityToken>

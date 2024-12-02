@@ -58,13 +58,13 @@
             this.label55 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.AutomaticallyUpdateLDCheckbox = new System.Windows.Forms.CheckBox();
+            this.UnderscoreCheckBox = new System.Windows.Forms.CheckBox();
             this.TargetBankNumeric = new SharpOcarina.NumericUpDownEx();
             this.SourceBankNumeric = new SharpOcarina.NumericUpDownEx();
             this.SourceTextureHeight = new SharpOcarina.NumericUpDownEx();
             this.SourceTextureWidth = new SharpOcarina.NumericUpDownEx();
             this.AlsoUpdateHfileCheckbox = new System.Windows.Forms.CheckBox();
             this.DontReloadTargetCheckbox = new System.Windows.Forms.CheckBox();
-            this.UnderscoreCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.TargetBankNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceBankNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceTextureHeight)).BeginInit();
@@ -337,6 +337,18 @@
         "m structure");
             this.AutomaticallyUpdateLDCheckbox.UseVisualStyleBackColor = true;
             // 
+            // UnderscoreCheckBox
+            // 
+            this.UnderscoreCheckBox.AutoSize = true;
+            this.UnderscoreCheckBox.Location = new System.Drawing.Point(479, 626);
+            this.UnderscoreCheckBox.Name = "UnderscoreCheckBox";
+            this.UnderscoreCheckBox.Size = new System.Drawing.Size(217, 17);
+            this.UnderscoreCheckBox.TabIndex = 36;
+            this.UnderscoreCheckBox.Text = "Avoid name conflicts with an underscore";
+            this.toolTip1.SetToolTip(this.UnderscoreCheckBox, "Recommended if you\'re editing a vanilla object such as gameplay keep, uncheck if " +
+        "its custom");
+            this.UnderscoreCheckBox.UseVisualStyleBackColor = true;
+            // 
             // TargetBankNumeric
             // 
             this.TargetBankNumeric.AlwaysFireValueChanged = false;
@@ -475,20 +487,6 @@
             this.DontReloadTargetCheckbox.TabIndex = 34;
             this.DontReloadTargetCheckbox.Text = "Don\'t reload target list on next search";
             this.DontReloadTargetCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // UnderscoreCheckBox
-            // 
-            this.UnderscoreCheckBox.AutoSize = true;
-            this.UnderscoreCheckBox.Checked = true;
-            this.UnderscoreCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.UnderscoreCheckBox.Location = new System.Drawing.Point(479, 626);
-            this.UnderscoreCheckBox.Name = "UnderscoreCheckBox";
-            this.UnderscoreCheckBox.Size = new System.Drawing.Size(217, 17);
-            this.UnderscoreCheckBox.TabIndex = 36;
-            this.UnderscoreCheckBox.Text = "Avoid name conflicts with an underscore";
-            this.toolTip1.SetToolTip(this.UnderscoreCheckBox, "Recommended if you\'re editing a vanilla object such as gameplay keep, uncheck if " +
-        "its custom");
-            this.UnderscoreCheckBox.UseVisualStyleBackColor = true;
             // 
             // ZobjCopyToolForm
             // 

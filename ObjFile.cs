@@ -251,6 +251,8 @@ namespace SharpOcarina
             [XmlIgnore]
             public int MultiTexMaterial = -1, ShiftS = 0, ShiftT = 0;
             [XmlIgnore]
+            public string MultiTexMaterialName = "";
+            [XmlIgnore]
             public int BaseShiftS = 0, BaseShiftT = 0, AnimationBank = 8;
             [XmlIgnore]
             public int LodGroup = 0, LodDistance = 0;

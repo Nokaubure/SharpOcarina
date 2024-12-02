@@ -818,22 +818,29 @@ namespace SharpOcarina
                     Bank = prevbank;
                     ThisTexture.TexOffset = prevoffset;
 
-                    if (Group.MultiTexMaterial != -1)
+                    if (Group.MultiTexMaterialName != "")
                     {
                         tileS = Group.TileS;
                         tileT = Group.TileT;
 
-                        if (MatList[Group.MultiTexMaterial].map_Kd != null && MatList[Group.MultiTexMaterial].map_Kd.ToLower().Contains("#clampx")) tileS = 2;
-                        else if (MatList[Group.MultiTexMaterial].map_Kd != null && MatList[Group.MultiTexMaterial].map_Kd.ToLower().Contains("#mirrorx")) tileS = 1;
+                        ObjFile.Material mat = MatList.Find(x => x.Name == Group.MultiTexMaterialName);
+                        int matindex = MatList.FindIndex(x => x.Name == Group.MultiTexMaterialName);
 
-                        if (MatList[Group.MultiTexMaterial].map_Kd != null && MatList[Group.MultiTexMaterial].map_Kd.ToLower().Contains("#clampy")) tileT = 2;
-                        else if (MatList[Group.MultiTexMaterial].map_Kd != null && MatList[Group.MultiTexMaterial].map_Kd.ToLower().Contains("#mirrory")) tileT = 1;
+                        if (mat != null)
+                        {
+                            if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#clampx")) tileS = 2;
+                            else if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#mirrorx")) tileS = 1;
 
-                        InsertTextureLoad(ref DList, MatList[Group.MultiTexMaterial].Width,
-                            MatList[Group.MultiTexMaterial].Height,
-                            Textures[Group.MultiTexMaterial], TexPal, GBI.G_TX_RENDERTILE + 1,
-                            tileS, tileT,
-                           Group.ShiftS, Group.ShiftT, Group.BaseShiftS, Group.BaseShiftT);
+                            if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#clampy")) tileT = 2;
+                            else if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#mirrory")) tileT = 1;
+
+                            //TODO is using matindex correct?
+                            InsertTextureLoad(ref DList, mat.Width,
+                                mat.Height,
+                                Textures[matindex], TexPal, GBI.G_TX_RENDERTILE + 1,
+                                tileS, tileT,
+                               Group.ShiftS, Group.ShiftT, Group.BaseShiftS, Group.BaseShiftT);
+                        }
                     }
 
                     if (Animated && MainForm.settings.MajorasMask) Helpers.Append64(ref DList, 0xDE00000000000000 | (ulong)(AnimationBank << 24));
@@ -904,7 +911,7 @@ namespace SharpOcarina
                     }
                     else
                     {
-
+                        int matindex = MatList.FindIndex(x => x.Name == Group.MultiTexMaterialName);
                         if (IsTranslucent == true)
                         {
                             /* Translucent surface */
@@ -912,7 +919,7 @@ namespace SharpOcarina
                             if (hasalphavertex)
                             {
                                 //TODO
-                                if (Group.MultiTexMaterial == -1)
+                                if (Group.MultiTexMaterialName == "")
                                     if (OutdoorLight)
                                         Helpers.Append64(ref DList, 0xFC272C041F1093FF); // dafuq?
                                     else
@@ -933,11 +940,12 @@ namespace SharpOcarina
 
                             }
 
-                            else if (!OutdoorLight && !ThisTexture.HasAlpha && Group.MultiTexMaterial == -1)
+                            else if (!OutdoorLight && !ThisTexture.HasAlpha && Group.MultiTexMaterialName == "")
                                 Helpers.Append64(ref DList, SetCombine(0x167E04, 0xFF0FFDFF)); // vertex color single texture
-                            else if (Group.MultiTexMaterial != -1)
+                            else if (Group.MultiTexMaterialName != "")
                             {
-                                if ((Textures[Group.MultiTexMaterial].HasAlpha))
+                                
+                                if ((Textures[matindex].HasAlpha))
                                 {
                                     if (AlphaMask) Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF5F8));
                                     else if (!OutdoorLight) Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));//1F1093FF
@@ -947,7 +955,7 @@ namespace SharpOcarina
                                     Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1F0CFDFF));
 
                             }
-                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterial != -1 && Textures[Group.MultiTexMaterial].HasAlpha)) Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
+                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha)) Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
                             else Helpers.Append64(ref DList, SetCombine(0x167E03, 0xFF0FFDFF));
 
 
@@ -959,17 +967,17 @@ namespace SharpOcarina
                                 Helpers.Append64(ref DList, 0xE200001C0C1849D8 | (ulong)((Decal) ? 0xC00 : 0x000));
                                 Helpers.Append64(ref DList, 0xD9FEFFFF00000000);
                             }
-                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterial != -1 && Textures[Group.MultiTexMaterial].HasAlpha))
+                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha))
                                 Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D0 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
                             else
                                 Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D8 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
                             //Helpers.Append64(ref DList, SetRenderMode(0x18, 0xC8113078));   
 
                         }
-                        else if (ThisTexture.HasAlpha || (Group.MultiTexMaterial != -1 && Textures[Group.MultiTexMaterial].HasAlpha))
+                        else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha))
                         {
                             /* Texture with alpha channel */
-                            if (Group.MultiTexMaterial != -1)
+                            if (Group.MultiTexMaterialName != "")
                             {
 
                                 if (!OutdoorLight) Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));//1F1093FF
@@ -979,7 +987,7 @@ namespace SharpOcarina
 
                             //    Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
 
-                            if ((Group.MultiTexMaterial != -1 && Textures[Group.MultiTexMaterial].HasAlpha && Textures[Group.MultiTexMaterial].Format != GBI.G_IM_FMT_RGBA)) Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D0 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
+                            if ((Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha && Textures[matindex].Format != GBI.G_IM_FMT_RGBA)) Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D0 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
                             else Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x08100078 | ((SmoothRGBAEdges) ? 0x4000 : 0x3000) | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000)))); //crap solution
                                                                                                                                                                                                                      // 0xC8104B50
 
@@ -992,7 +1000,7 @@ namespace SharpOcarina
                             /*if (VertexNormals) 
                                 Helpers.Append64(ref DList, SetCombine(0x121805, 0xFF0FFFFF));
                             else */
-                            if (Group.MultiTexMaterial != -1)
+                            if (Group.MultiTexMaterialName != "")
                                 // Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1DFCFCF8));
                                 Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1FFCFDF8));
                             else if (hasalphavertex)
@@ -1105,7 +1113,7 @@ namespace SharpOcarina
                     }
                 }
 
-                if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && Group.MultiTexMaterial == -1)
+                if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && Group.MultiTexMaterialName != "")
                 {
                     if (MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasBlending())
                     {
@@ -1128,7 +1136,7 @@ namespace SharpOcarina
                 
                     
 
-                if (Group.MultiTexMaterial != -1)
+                if (Group.MultiTexMaterialName != "")
                     Helpers.Append64(ref DList, SetEnvColor(MultitextureAlpha));
                 else if (EnvColor)
                     Helpers.Append64(ref DList, SetEnvColor(TintAlpha));

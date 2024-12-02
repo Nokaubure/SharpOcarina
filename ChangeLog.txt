@@ -4,7 +4,7 @@
 ---1.54
 --------------
 
-- Added a new tool "Zobj Copy Tool" that allows transfering data between .zobjs, among other things this provides the ability to easily edit the gameplay_keep objects in z64rom
+- Added a new tool "Copy data between .zobjs" that allows transfering data between .zobjs, among other things this provides the ability to easily edit the gameplay_keep objects in z64rom
 
 - Added a new tool "Convert image or file to C array", with it you can instantly convert an image to N64 format and turn it into a C array
 
@@ -15,6 +15,8 @@
 - Changed so .zroom is an allowed extension whith "import actors and objects from room" option, and also in io_import_z64.py plugin
 
 - Updated SO Blender export plugin, now supports Blender 4.1+ (thanks Dragorn421)
+
+- Fixed an issue where multitextures could get corrupted if a texture was deleted in the model, alongside possible crashes when loading a scene, WARNING from now on 2 textures cant have same filename!
 
 - Fixed an issue where the program would prompt an error if a z64rom actor attempted to load an object that was still not compiled
 

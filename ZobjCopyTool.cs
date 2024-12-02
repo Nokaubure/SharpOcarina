@@ -20,6 +20,7 @@ namespace SharpOcarina
         string TargetZobjFilename = "";
         List<ZobjElement> SourceElements = new List<ZobjElement>();
         List<ZobjElement> TargetElements = new List<ZobjElement>();
+        DateTime SourceWriteTime;
         int SourceBank = 6;
         int TargetBank = 6;
         string LastTargetFilename = "";
@@ -30,7 +31,7 @@ namespace SharpOcarina
 
         string[] headernames = { "u16", "AnimationHeader", "Gfx", "CollisionHeader", "u16", "FlexSkeletonHeader", "LinkAnimationHeader", "Gfx", "Gfx" };
 
-        float[] texturebyteweight = { 0f, 2f, 4f, 0.5f, 1f, 0.5f, 1f, 2f, 0.5f, 1f, 1f };
+        float[] texturebyteweight = { 0f, 2f, 4f, 0.5f, 1f, 0.5f, 1f, 2f, 0.5f, 1f, 2f };
 
         const int RGBA16 = 1;
         const int RGBA32 = 2;
@@ -150,6 +151,9 @@ namespace SharpOcarina
 
                 SourceZobj = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
 
+
+                SourceWriteTime = new FileInfo(openFileDialog1.FileName).LastWriteTime;
+
                 SourceFilename.Text = openFileDialog1.FileName;
 
                 if (openFileDialog1.FileName.Contains("\\rom\\object\\"))
@@ -182,6 +186,21 @@ namespace SharpOcarina
                 TargetZobj = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
 
                 TargetFilename.Text = openFileDialog1.FileName;
+
+                if (openFileDialog1.FileName.Contains("\\rom\\object\\"))
+                {
+                    string[] splits = openFileDialog1.FileName.Split(new string[] { "rom\\object\\" }, StringSplitOptions.None);
+                    string basefolder = splits[0];
+                    if (File.Exists(basefolder + "z64project.toml"))
+                    {
+                        string rest = splits[1].Split(new string[] { "\\" }, StringSplitOptions.None)[0];
+                        string ldfile = basefolder + "include\\object\\" + rest + ".ld";
+                        if (File.Exists(ldfile))
+                        {
+                            TargetOffsetFilename.Text = ldfile;
+                        }
+                    }
+                }
 
                 UpdateForm();
 
@@ -399,7 +418,7 @@ namespace SharpOcarina
             UpdateHorizontalScrollbarWidth(listbox);
         }
 
-        private void MoveChildElement(uint fulloffset, int i, ref Dictionary<uint,uint> movedOffsets, ref uint startoffset, ref uint endoffset)
+        private bool MoveChildElement(uint fulloffset, int i, ref Dictionary<uint,uint> movedOffsets, ref uint startoffset, ref uint endoffset)
         {
             int index = TargetElements.FindIndex(x => x.moved && x.offset == fulloffset);
             uint offset = fulloffset & 0x00FFFFFF;
@@ -408,6 +427,8 @@ namespace SharpOcarina
                 DebugConsole.WriteLine("Offset " + fulloffset.ToString("X8") + " exists in a target element ");
 
                 if (!movedOffsets.ContainsKey((uint)i)) movedOffsets.Add((uint)i, (uint)(TargetElements[index].newoffset));
+
+                return false;
             }
             else
             {
@@ -419,6 +440,8 @@ namespace SharpOcarina
                     uint newoffset_ = MoveElement(SourceElements[index]);
 
                     if (!movedOffsets.ContainsKey((uint)i)) movedOffsets.Add((uint)i, (uint)(newoffset_ | (TargetBank << 24)));
+
+                    return false;
                 }
                 else
                 {
@@ -427,6 +450,8 @@ namespace SharpOcarina
                     if (!movedOffsets.ContainsKey((uint)i)) movedOffsets.Add((uint)i, 9);
                     if (offset < startoffset) startoffset = offset;
                     if (offset > endoffset) endoffset = offset;
+
+                    return true;
                 }
             }
             //offsetsToChange.Add((uint)i);
@@ -434,6 +459,8 @@ namespace SharpOcarina
 
         private uint MoveElement(ZobjElement sourceElement)
         {
+            DebugConsole.WriteLine("Moving " + sourceElement.name);
+
             List<byte> elementdata = new List<byte>();
 
             switch (sourceElement.type)
@@ -482,7 +509,7 @@ namespace SharpOcarina
 
                         uint startoffset = (uint)Maths.Min(collisionoffset, vertexoffset, polygonoffset, polytypeoffset);
 
-                        uint endoffset = (uint)Maths.Max(collisionoffset + 0x2C, vertexoffset + (0x06 * vertexnum), polygonoffset + (0x10 * polynum), polytypeoffset + (0x8 * (maxpolytype + 1)));
+                        uint endoffset = (uint)Maths.Max(collisionoffset + 0x30, vertexoffset + (0x06 * vertexnum), polygonoffset + (0x10 * polynum), polytypeoffset + (0x8 * (maxpolytype + 1)));
 
                         for (uint i = startoffset; i < endoffset; i++)
                         {
@@ -550,18 +577,33 @@ namespace SharpOcarina
                                         DEreturn = true;
                                         DEoffset = i;
                                     }
-                                    MoveChildElement(fulloffset, i, ref movedOffsets, ref startoffset, ref endoffset);
-                                    i = (int)offset;
+                                    bool jump = MoveChildElement(fulloffset, i, ref movedOffsets, ref startoffset, ref endoffset);
+                                    //i = (int)offset; // TODO remove
+
                                     //jump is within the object
                                     if (SourceElements.FindIndex(x => x.offset == fulloffset) == -1)
                                     {
+                                        i = (int)offset;
                                         if (i < startoffset) startoffset = (uint)i;
                                         if (i > endoffset) endoffset = (uint)i;
                                         trackendoffset.Add(true);
+                                        DebugConsole.WriteLine("Jumping to offset " + i.ToString("X8"));
                                     }
                                     else
                                     {
-                                        trackendoffset.Add(false);
+                                        //trackendoffset.Add(false);
+                                        
+                                        if (!DEreturn)
+                                        {
+                                            i = (int)offset;
+                                            trackendoffset.Add(true);
+                                            DebugConsole.WriteLine("Jumping to offset " + i.ToString("X8"));
+                                        }
+                                        else
+                                        {
+                                            DEreturn = false;
+                                            i += 8;
+                                        }
                                     }
 
                                     continue;
@@ -614,12 +656,26 @@ namespace SharpOcarina
 
                         TargetZobj.AddRange(elementdata);
 
+                        DebugConsole.WriteLine("original startoffset " + originalstartoffset.ToString("X8") +
+                                               "\nnewoffset " + newoffset.ToString("X8") +
+                                               "\nstartoffset " + startoffset.ToString("X8") +
+                                               "\nendoffset " + endoffset.ToString("X8"));
+
                         foreach (KeyValuePair<uint,uint> e in movedOffsets)
                         {
                             //uint fulloffset = Helpers.Read32(TargetZobj, i + 4);
                             //uint offset = Helpers.Read24(TargetZobj, i + 5);
 
+                            if (e.Key < startoffset || e.Key > endoffset)
+                            {
+                                MessageBox.Show("Offset out of bounds? this should never happen! " + "KeyPair " + e.Key.ToString("X8") + " - " + e.Value.ToString("X8"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                continue;
+                            }
+
                             uint offsetInTarget = (uint)(e.Key - startoffset + newoffset) & 0x00FFFFFF;
+
+                            DebugConsole.WriteLine("Updating KeyPair " + e.Key.ToString("X8") + " - " + e.Value.ToString("X8"));
+
                             if (e.Value == 9)
                             {
                                 uint newoffsetInTarget = Helpers.Read24(TargetZobj, (int)(offsetInTarget + 5)) - startoffset + newoffset;
@@ -629,7 +685,7 @@ namespace SharpOcarina
                             }
                             else
                             {
-                                DebugConsole.WriteLine((Helpers.Read32(TargetZobj, (int)offsetInTarget + 0x4)).ToString("X8") + " -> " + e.Value.ToString("X8"));
+                                DebugConsole.WriteLine("Done update " + (Helpers.Read32(TargetZobj, (int)offsetInTarget + 0x4)).ToString("X8") + " -> " + e.Value.ToString("X8"));
                                 Helpers.Overwrite32(ref TargetZobj, (int)offsetInTarget + 0x4, e.Value);
                             }
                         }
@@ -644,7 +700,7 @@ namespace SharpOcarina
                     {
                         int skeletonoffset = (int) (sourceElement.offset & 0x00FFFFFF);
                         byte bank = SourceZobj[skeletonoffset];
-                        byte limbnumber = SourceZobj[skeletonoffset + 8];
+                        byte limbnumber = SourceZobj[skeletonoffset + 4];
                         Dictionary<uint, uint> movedOffsets = new Dictionary<uint, uint>();
                         if (bank != SourceBank)
                         {
@@ -652,12 +708,21 @@ namespace SharpOcarina
                             break;
                         }
                         uint limbindexoffset = Helpers.Read24(SourceZobj, (int)skeletonoffset + 1);
+                        movedOffsets.Add((uint)(skeletonoffset-4), 9);
+
+                        uint startoffset = (uint) skeletonoffset;
+                        uint endoffset = (uint)skeletonoffset + 0xC;
 
                         for (int i = 0; i < limbnumber; i++)
                         {
                             //offsetsToChange.Add((uint) (limbindexoffset + (i*4)));
-                            movedOffsets.Add((uint) (limbindexoffset + (i * 4)),9);
+                            movedOffsets.Add((uint) (limbindexoffset + (i * 4) -4),9);
                             uint limboffset = Helpers.Read24(SourceZobj, (int)(limbindexoffset + (i * 4) + 1));
+
+                            if (limboffset < startoffset) startoffset = limboffset;
+                            if (limboffset > endoffset) endoffset = limboffset+0xC;
+
+                            DebugConsole.WriteLine("limboffset " + limboffset.ToString("X8"));
                             
                             byte limbbank = SourceZobj[(int)limboffset+8];
                             uint fulloffset = Helpers.Read32(SourceZobj, (int) (limboffset + 8));
@@ -665,7 +730,7 @@ namespace SharpOcarina
                             {
                                 //offsetsToChange.Add((uint)(limboffset + 8));
                                 uint temp = 0;
-                                MoveChildElement(fulloffset, i, ref movedOffsets, ref temp, ref temp);
+                                MoveChildElement(fulloffset, (int)(limboffset + 4), ref movedOffsets, ref temp, ref temp);
                             }
                             else
                             {
@@ -675,8 +740,9 @@ namespace SharpOcarina
                             
                         }
 
-                        uint startoffset = Maths.Min((uint)skeletonoffset, limbindexoffset, movedOffsets.MinBy(x => x.Key)[0].Key);
-                        uint endoffset = Maths.Max((uint)skeletonoffset + 0xC, limbindexoffset + 0x4, movedOffsets.MaxBy(x => x.Key)[0].Key + 0xC);
+                        startoffset = Maths.Min(startoffset,(uint)skeletonoffset, limbindexoffset);
+                        endoffset = Maths.Max(endoffset,(uint)skeletonoffset + 0xC, limbindexoffset + 0x4);
+
 
                         
                         uint newoffset = (uint)TargetZobj.Count;
@@ -685,7 +751,12 @@ namespace SharpOcarina
 
                         sourceElement.newoffset = (uint)(newheader | (TargetBank << 24));
 
-                        
+
+                        DebugConsole.WriteLine("original startoffset " + sourceElement.offset.ToString("X8") +
+                                               "\nnewoffset " + newoffset.ToString("X8") +
+                                               "\nstartoffset " + startoffset.ToString("X8") +
+                                               "\nendoffset " + endoffset.ToString("X8"));
+
 
                         for (int y = (int)startoffset; y < endoffset; y++)
                         {
@@ -696,6 +767,12 @@ namespace SharpOcarina
 
                         foreach (KeyValuePair<uint, uint> e in movedOffsets)
                         {
+
+                            if (e.Key < startoffset || e.Key > endoffset)
+                            {
+                                MessageBox.Show("Offset out of bounds? this should never happen! " + "KeyPair " + e.Key.ToString("X8") + " - " + e.Value.ToString("X8"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                continue;
+                            }
 
                             uint offsetInTarget = (uint)(e.Key - startoffset + newoffset);
                             if (e.Value == 9)
@@ -814,6 +891,8 @@ namespace SharpOcarina
             sourceElement.moved = true;
             TargetElements.Add(sourceElement);
 
+            DebugConsole.WriteLine("Finished moving " + sourceElement.name);
+
             return sourceElement.newoffset;
 
         }
@@ -831,7 +910,7 @@ namespace SharpOcarina
             MoveElement(SourceElements[SourceListBox.SelectedIndex]);
 
 
-
+            RefreshListbox(SourceListBox,SourceElements);
             RefreshListbox(TargetListBox,TargetElements);
 
             UpdateForm();
@@ -954,6 +1033,14 @@ namespace SharpOcarina
         {
             if (SourceZobj.Count > 0)
             {
+                DateTime compare = new FileInfo(SourceFilename.Text).LastWriteTime;
+                if (SourceWriteTime != compare)
+                {
+                    SourceWriteTime = compare;
+                    SourceZobj = new List<byte>(File.ReadAllBytes(SourceFilename.Text));
+                    UpdateForm();
+                    MessageBox.Show("The source file has been modified! reloading it", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 UpdateListbox(SourceZobj, ref SourceElements, ref SourceListBox, SourceOffsetFilename.Text);
                 //if (TargetFilename.Text == "") TargetZobj = new List<byte>();
             }
@@ -966,7 +1053,8 @@ namespace SharpOcarina
                 else
                 {
                     LastTargetFilename = TargetFilename.Text;
-                    TargetZobj = new List<byte>();
+                    if (TargetFilename.Text != "") TargetZobj = new List<byte>(File.ReadAllBytes(TargetFilename.Text));
+                    else TargetZobj = new List<byte>();
                     TargetElements.Clear();
                     UpdateListbox(TargetZobj, ref TargetElements, ref TargetListBox, TargetOffsetFilename.Text);
                 }
@@ -987,6 +1075,8 @@ namespace SharpOcarina
 
             }
 
+            //TargetZobj.AddRange(new byte[0x100]); //please remove
+
             if (Path.GetExtension(SourceOffsetFilename.Text) == ".ld" && 
                 SourceElements.Find(x => x.type == ZobjType.TEXTURE && x.textureFormat == 0) != null)
             {
@@ -1001,15 +1091,19 @@ namespace SharpOcarina
                     while (1 == 1)
                     {
                         byte opcode = SourceZobj[i];
-                        
+                        //DebugConsole.WriteLine("i: " + i.ToString("X8") + " opcode " + opcode.ToString("X2") + " test " + test.ToString("X8"));
                         if (new byte[] { 0xFD}.Contains(opcode))
                         {
                             uint fulloffset = Helpers.Read32(SourceZobj, i + 4);
                             targetelement = SourceElements.Find(x => x.offset == fulloffset);
                             if (targetelement == null)
                             {
-                                targetelement = new ZobjElement("UnkTexture" + fulloffset.ToString("X8"), fulloffset, new byte[0], ZobjType.TEXTURE);
+                                targetelement = new ZobjElement("Unk_Tex" + fulloffset.ToString("X8"), fulloffset, new byte[0], ZobjType.TEXTURE);
                                 newelements.Add(targetelement);
+                                possiblepalette = true;
+                            }
+                            else if (targetelement.textureFormat == 0)
+                            {
                                 possiblepalette = true;
                             }
                         }
@@ -1068,6 +1162,17 @@ namespace SharpOcarina
                                 targetelement.textureFormat = TLUT;
                                 ushort newwidth = (ushort)(size / 4);
                                 if (newwidth > 255) newwidth = 255;
+                                uint closestoffset = 999999;
+                                uint targetoffset = targetelement.offset & 0x00FFFFFF;
+                                foreach (ZobjElement el in SourceElements)
+                                {
+                                    uint eloffset = el.offset & 0x00FFFFFF;
+                                    if (eloffset > targetoffset && eloffset < closestoffset)
+                                    {
+                                        closestoffset = eloffset;
+                                    }
+                                }
+                                if ((closestoffset - targetoffset)/2 < newwidth) newwidth = (ushort) ((ushort)(closestoffset - targetoffset) / 2);
                                 while (newwidth % 4 != 0) newwidth++;
                                 targetelement.textureWidth = newwidth;
                                 targetelement.textureHeight = 1;
@@ -1084,6 +1189,7 @@ namespace SharpOcarina
                         }
                         if (opcode == 0xDF)
                         {
+                            DebugConsole.WriteLine("break!");
                             break;
                         }
                         i += 8;
@@ -1094,6 +1200,7 @@ namespace SharpOcarina
                 if (newelements.Count > 0) SourceElements.AddRange(newelements);
             }
 
+            SourceElements.Sort((x,y) => x.offset.CompareTo(y.offset));
             UpdateForm();
             RefreshListbox(SourceListBox, SourceElements);
             RefreshListbox(TargetListBox, TargetElements);
@@ -1156,9 +1263,10 @@ namespace SharpOcarina
                 element = TargetElements[e.Index];
             }
             bool isRedItem = element.type == ZobjType.TEXTURE && (element.textureFormat == 0 || element.textureWidth == 0 || element.textureHeight == 0);
-            
+            bool isBlueItem = element.moved;
+
             //e.DrawBackground();
-            var textBrush = isRedItem ? Brushes.Red : Brushes.Black;
+            var textBrush = isRedItem ? Brushes.Red : element.moved ? Brushes.DarkBlue : Brushes.Black;
             
             bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
             
@@ -1210,7 +1318,7 @@ namespace SharpOcarina
                             appears = true;
                         }
                     }
-                    if (!appears) linestoadd.Add("extern " + headernames[(int) element.type] + " " + element.name + ((UnderscoreCheckBox.Checked) ? "_" : "") + "[];");
+                    if (!appears) linestoadd.Add("extern " + headernames[(int) element.type] + " " + element.name + ((UnderscoreCheckBox.Checked && element.name[element.name.Length-1] != '_') ? "_" : "") + "[];");
                 }
 
                 if (targetline == -1) targetline = lines.Count - 1;
@@ -1228,7 +1336,7 @@ namespace SharpOcarina
                 lines.Add("#define __" + Path.GetFileNameWithoutExtension(path).Replace("-", "") + "_H__");
                 foreach (ZobjElement element in TargetElements)
                 {
-                    lines.Add("extern " + headernames[(int)element.type] + " " + element.name + ((UnderscoreCheckBox.Checked) ? "_" : "") +  "[];");
+                    lines.Add("extern " + headernames[(int)element.type] + " " + element.name + ((UnderscoreCheckBox.Checked && element.name[element.name.Length - 1] != '_') ? "_" : "") +  "[];");
                 }
                 lines.Add("");
                 lines.Add("#endif /* __" + Path.GetFileNameWithoutExtension(path).Replace("-", "") + "_H__ */");
@@ -1248,7 +1356,7 @@ namespace SharpOcarina
 
                 foreach (ZobjElement element in TargetElements)
                 {
-                    SW.WriteLine(element.name + "_ = 0x" + (element.newoffset != 9 ? element.newoffset.ToString("X8") : element.offset.ToString("X8")) + ";");
+                    SW.WriteLine(element.name + ((UnderscoreCheckBox.Checked && element.name[element.name.Length - 1] != '_') ? "_" : "") + " = 0x" + (element.newoffset != 9 ? element.newoffset.ToString("X8") : element.offset.ToString("X8")) + ";");
                 }
 
 
@@ -1284,8 +1392,10 @@ namespace SharpOcarina
                 }
             }
 
-
-            GenerateLDFile(saveFileDialog1.FileName);
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                GenerateLDFile(saveFileDialog1.FileName);
+            }
         }
 
         private void TargetBankNumeric_ValueChanged(object sender, EventArgs e)

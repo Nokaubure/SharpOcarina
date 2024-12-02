@@ -3740,6 +3740,12 @@ namespace SharpOcarina
                 GSet.MultiTexMaterial.Fill(new int[] { -1 });
             }
 
+            if (GSet.MultiTexMaterialName.Length != GroupCount)
+            {
+                GSet.MultiTexMaterialName = new string[GroupCount];
+                GSet.MultiTexMaterialName.Fill(new string[] { "" });
+            }
+
             if (GSet.ShiftS.Length != GroupCount)
             {
                 GSet.ShiftS = new int[GroupCount];
@@ -4502,7 +4508,7 @@ namespace SharpOcarina
                 undo.RemoveAt(0);
             }
 
-            if (datatype > 3) return; //TODO remove this
+            
 
             redo.Clear();
 
@@ -5826,18 +5832,37 @@ namespace SharpOcarina
                 MultiTextureComboBox.Items.Clear();
                 MultiTextureComboBox.DisplayMember = "DisplayName";
                 MultiTextureComboBox.Items.Add(DummyMaterial);
+                List<ObjFile.Material> allmats = new List<ObjFile.Material>();
+                allmats.Add(DummyMaterial);
                 foreach (ObjFile.Material Mat in CurrentScene.Rooms[RoomList.SelectedIndex].ObjModel.Materials)
+                {
                     MultiTextureComboBox.Items.Add(Mat);
+                    allmats.Add(Mat);
+                }
 
                 foreach (ObjFile.Material Mat in CurrentScene.AdditionalTextures)
+                {
                     MultiTextureComboBox.Items.Add(Mat);
+                    allmats.Add(Mat);
+                }
 
 
                 // DebugConsole.WriteLine("cccc" + CurrentScene.AdditionalTextures.Count);
 
                 MultiTextureComboBox.SelectedIndexChanged -= comboBox3_SelectedIndexChanged;
-                if (((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial != -1 && ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial +1 <= MultiTextureComboBox.Items.Count)
-                    MultiTextureComboBox.SelectedIndex = ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial + 1;
+                if (((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterialName != "")
+                {
+                    int index = allmats.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterialName);
+                    if (index == -1)
+                    {
+                        ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterialName = "";
+                        MultiTextureComboBox.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        MultiTextureComboBox.SelectedIndex = index;
+                    }
+                }
                 else
                     MultiTextureComboBox.SelectedIndex = 0;
                 MultiTextureComboBox.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
@@ -6479,6 +6504,8 @@ namespace SharpOcarina
         {
             int prev = CurrentScene.cloneid;
             if (prev > 0) SetSceneHeader(0);
+            CurrentScene.version = Program.ApplicationVersion;
+
             if (!autosave)
             {
                 AddMissingObjects();
@@ -7061,10 +7088,38 @@ namespace SharpOcarina
                     if (CurrentScene.Rooms[i].GroupSettings.ScaledNormals.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
                         CurrentScene.Rooms[i].GroupSettings.ScaledNormals = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
 
+                    if (CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
+                        CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName = new String[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
+
+                    //TODO fix old scenes
+                    if (CurrentScene.version <= 0x1530)
+                    {
+                        List<ObjFile.Material> allmats = new List<ObjFile.Material>();
+                        //allmats.Add(DummyMaterial);
+                        foreach (ObjFile.Material Mat in CurrentScene.Rooms[i].ObjModel.Materials)
+                        {
+                            allmats.Add(Mat);
+                        }
+
+                        foreach (ObjFile.Material Mat in CurrentScene.AdditionalTextures)
+                        {
+                            allmats.Add(Mat);
+                        }
+
+                        for (int y = 0; y < CurrentScene.Rooms[i].GroupSettings.MultiTexMaterial.Length; y++)
+                        {
+                            if (CurrentScene.Rooms[i].GroupSettings.MultiTexMaterial[y] != -1)
+                            {
+                                // build the array and search
+                                //CurrentScene.Rooms[i].TrueGroups[y].MultiTexMaterialName = allmats[CurrentScene.Rooms[i].GroupSettings.MultiTexMaterial[y]].Name;
+                                CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName[y] = allmats[CurrentScene.Rooms[i].GroupSettings.MultiTexMaterial[y]].Name;
+                                CurrentScene.Rooms[i].GroupSettings.MultiTexMaterial[y] = -1;
+                            }
+                        }
+                    }
+
 
                     SetTrueGroupsToGroupSettings(i);
-
-
 
 
                     CurrentScene.Rooms[i].ObjModel.Prepare(CurrentScene.Rooms[i].TrueGroups);
@@ -7173,6 +7228,7 @@ namespace SharpOcarina
                 CurrentScene.Rooms[i].TrueGroups[j].Billboard = CurrentScene.Rooms[i].GroupSettings.Billboard[j];
                 CurrentScene.Rooms[i].TrueGroups[j].TwoAxisBillboard = CurrentScene.Rooms[i].GroupSettings.TwoAxisBillboard[j];
                 CurrentScene.Rooms[i].TrueGroups[j].MultiTexMaterial = CurrentScene.Rooms[i].GroupSettings.MultiTexMaterial[j];
+                CurrentScene.Rooms[i].TrueGroups[j].MultiTexMaterialName = CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName[j];
                 CurrentScene.Rooms[i].TrueGroups[j].ShiftS = CurrentScene.Rooms[i].GroupSettings.ShiftS[j];
                 CurrentScene.Rooms[i].TrueGroups[j].ShiftT = CurrentScene.Rooms[i].GroupSettings.ShiftT[j];
                 CurrentScene.Rooms[i].TrueGroups[j].BaseShiftS = CurrentScene.Rooms[i].GroupSettings.BaseShiftS[j];
@@ -7521,10 +7577,10 @@ namespace SharpOcarina
         {
             if (GroupList.SelectedItem != null)
             {
-                ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial = MultiTextureComboBox.SelectedIndex - 1;
+                ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterialName = (((ObjFile.Material)MultiTextureComboBox.SelectedItem).Name);
 
                 int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
-                CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.MultiTexMaterial[Index] = ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial;
+                CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.MultiTexMaterialName[Index] = ((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterialName;
 
                 UpdateGroupSelect(n64refresh);
             }
@@ -8792,7 +8848,7 @@ namespace SharpOcarina
 
         private void UpdateActorCutsceneEdit()
         {
-            //TODO
+            
             if (!settings.MajorasMask)
             {
                 if (ActorCutsceneGroupBox.Visible) ActorCutsceneGroupBox.Visible = false;
@@ -8818,8 +8874,7 @@ namespace SharpOcarina
                 ActorCutsceneRetCamera.SelectedIndex = FindSongComboItemValue(ActorCutsceneRetCamera.Items, (uint)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].ReturnCamType);
                 ActorCutsceneCamIndex.SelectedIndex = FindSongComboItemValue(ActorCutsceneCamIndex.Items, (uint)CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].CamID);
 
-                //TODO
-
+               
 
                 ActorCutscenePuzzleSound.Checked = CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Sound != 0;
                 ActorCutsceneBlackBars.Checked = CurrentScene.ActorCutscenes[(int)ActorCutsceneNumber.Value].Letterbox != 0;
@@ -9076,18 +9131,19 @@ namespace SharpOcarina
                         ObjFile.Material material = room.ObjModel.GetMaterial(tri.MaterialName);
                         if (material != null && material.map_Ks != null)
                         {
-                         
-                            int multitextindex = -1;
+
+
+                            string multitextindex = "";
                             int y = 0;
                             foreach(ObjFile.Material mat in MultiTextureComboBox.Items)
                             {
-                                if (mat.map_Kd == material.map_Ks) multitextindex = y-1;
+                                if (mat.map_Kd == material.map_Ks) multitextindex = mat.Name;
                                 y++;
                             }
-                            if (multitextindex == -1) break;
-                            room.GroupSettings.MultiTexMaterial[i] = multitextindex;
-                            room.ObjModel.Groups[i].MultiTexMaterial = multitextindex;
-                            group.MultiTexMaterial = multitextindex;
+                            if (multitextindex == "") break;
+                            room.GroupSettings.MultiTexMaterialName[i] = multitextindex;
+                            room.ObjModel.Groups[i].MultiTexMaterialName = multitextindex;
+                            group.MultiTexMaterialName = multitextindex;
                             //if (GroupList.FindString(group.Name) == -1) break;
                            //((ObjFile.Group)GroupList.Items[GroupList.FindString(group.Name)]).MultiTexMaterial = multitextindex;
                             
@@ -12517,12 +12573,14 @@ namespace SharpOcarina
 
             // if (((ObjFile.Group)GroupList.SelectedItem).MultiTexMaterial = MultiTextureComboBox.SelectedIndex - 1; ;
 
+            string removedtexname = CurrentScene.AdditionalTextures[(int)AdditionalTextureList.Value - 1].Name;
+
             foreach (ZScene.ZRoom room in CurrentScene.Rooms)
             {
                 foreach (ObjFile.Group grp in room.TrueGroups)
                 {
-                    if (grp.MultiTexMaterial >= CurrentScene.Rooms[RoomList.SelectedIndex].ObjModel.Materials.Count + AdditionalTextureList.Value - 1)
-                        grp.MultiTexMaterial -= 1;
+                    if (grp.MultiTexMaterialName == removedtexname)
+                        grp.MultiTexMaterialName = "";
 
                 }
             }
@@ -13562,7 +13620,7 @@ namespace SharpOcarina
                     }
                 }
 
-                File.WriteAllLines(path, newlines);
+                File.WriteAllLines(cutscenetable, newlines);
             }
             }
 
@@ -14237,6 +14295,7 @@ namespace SharpOcarina
                 room.GroupSettings.TwoAxisBillboard[i] = false;
                 room.GroupSettings.ReverseLight[i] = false;
                 room.GroupSettings.MultiTexMaterial[i] = -1;
+                room.GroupSettings.MultiTexMaterialName[i] = "";
                 room.GroupSettings.ShiftS[i] = GBI.G_TX_NOLOD;
                 room.GroupSettings.ShiftT[i] = GBI.G_TX_NOLOD;
                 room.GroupSettings.BaseShiftS[i] = GBI.G_TX_NOLOD;
@@ -14266,6 +14325,7 @@ namespace SharpOcarina
                 room.TrueGroups[i].TwoAxisBillboard = false;
                 room.TrueGroups[i].ReverseLight = false;
                 room.TrueGroups[i].MultiTexMaterial = -1;
+                room.TrueGroups[i].MultiTexMaterialName = "";
                 room.TrueGroups[i].ShiftS = GBI.G_TX_NOLOD;
                 room.TrueGroups[i].ShiftT = GBI.G_TX_NOLOD;
                 room.TrueGroups[i].BaseShiftS = GBI.G_TX_NOLOD;
@@ -18404,7 +18464,7 @@ namespace SharpOcarina
                 openFileDialog1.Filter = "Rom files (*.z64;*.rom)|*.z64;*.rom|All Files (*.*)|*.*";
                 openFileDialog1.FilterIndex = 1;
 
-                // todo
+                
                 if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     if (!File.Exists(path + "\\BaseDebugRom.z64") && Path.GetDirectoryName(openFileDialog1.FileName) != path)

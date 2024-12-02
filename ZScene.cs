@@ -92,6 +92,7 @@ namespace SharpOcarina
                 public bool[] Billboard = new bool[1];
                 public bool[] TwoAxisBillboard = new bool[1];
                 public int[] MultiTexMaterial = new int[1];
+                public string[] MultiTexMaterialName = new string[1];
                 public int[] ShiftS = new int[1];
                 public int[] ShiftT = new int[1];
                 public int[] BaseShiftS = new int[1];
@@ -134,6 +135,7 @@ namespace SharpOcarina
                 IgnoreFog[indexA] = B.IgnoreFog[index];
                 SmoothRGBAEdges[indexA] = B.SmoothRGBAEdges[index];
                 MultiTexMaterial[indexA] = B.MultiTexMaterial[index];
+                MultiTexMaterialName[indexA] = B.MultiTexMaterialName[index];
                 ShiftS[indexA] = B.ShiftS[index];
                 ShiftT[indexA] = B.ShiftT[index];
                 BaseShiftS[indexA] = B.BaseShiftS[index];
@@ -434,6 +436,7 @@ namespace SharpOcarina
             NewRoom.GroupSettings.TwoAxisBillboard = new bool[groupcount];
             NewRoom.GroupSettings.ReverseLight = new bool[groupcount];
             NewRoom.GroupSettings.MultiTexMaterial = new int[groupcount];
+            NewRoom.GroupSettings.MultiTexMaterialName = new string[groupcount];
             NewRoom.GroupSettings.ShiftS = new int[groupcount];
             NewRoom.GroupSettings.ShiftT = new int[groupcount];
             NewRoom.GroupSettings.BaseShiftS = new int[groupcount];
@@ -469,6 +472,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.TwoAxisBillboard[i] = false;
                 NewRoom.GroupSettings.ReverseLight[i] = false;
                 NewRoom.GroupSettings.MultiTexMaterial[i] = -1;
+                NewRoom.GroupSettings.MultiTexMaterialName[i] = "";
                 NewRoom.GroupSettings.ShiftS[i] = GBI.G_TX_NOLOD;
                 NewRoom.GroupSettings.ShiftT[i] = GBI.G_TX_NOLOD;
                 NewRoom.GroupSettings.BaseShiftS[i] = GBI.G_TX_NOLOD;
@@ -3481,7 +3485,7 @@ namespace SharpOcarina
                 {
                     for (int x = 0; x < Room.TrueGroups.Count; x++)
                     {
-                        if (Room.TrueGroups[x].MultiTexMaterial == M) { appears = true; }
+                        if (Room.TrueGroups[x].MultiTexMaterialName == MaterialsList[M].Name) { appears = true; }
                         for (int y = 0; y < Room.TrueGroups[x].Triangles.Count; y++)
                         {
                             if (Room.TrueGroups[x].Triangles[y].MaterialName == Mat.Name)
@@ -3524,17 +3528,17 @@ namespace SharpOcarina
                     {
 
                         // If group has multitex material number... 
-                        if (Room.TrueGroups[x].MultiTexMaterial != -1)
+                        if (Room.TrueGroups[x].MultiTexMaterialName != "")
                         {
                             // Turn force RGBA ON for multitex material 
 
-                            if (Room.TrueGroups[x].MultiTexMaterial > MaterialsList.Count-1)
+                            if (MaterialsList.FindIndex(w => w.Name == Room.TrueGroups[x].MultiTexMaterialName) == -1)
                             {
-                                Room.TrueGroups[x].MultiTexMaterial = -1;
+                                Room.TrueGroups[x].MultiTexMaterialName = "";
                                 continue;
                             }
 
-                            MaterialsList[Room.TrueGroups[x].MultiTexMaterial].ForceRGBA = true;
+                            MaterialsList[MaterialsList.FindIndex(w => w.Name == Room.TrueGroups[x].MultiTexMaterialName)].ForceRGBA = true;
 
 
                             // Scan group's triangles for current material name... 
