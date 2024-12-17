@@ -1947,10 +1947,10 @@ namespace SharpOcarina
                                         if (DL.Billboard == 1)
                                             GL.Rotate(-Camera.Rot.X, 1.0f, 0.0f, 0.0f);
                                     }
-
-                                    if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
-                                        || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
-                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
+                                    ZScene TargetScene = CurrentScene.inherittextureanims ? NormalHeader : CurrentScene;
+                                    if ((DL.Animation != 0 && DL.Animation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.Animation - 8].HasScroll())
+                                        || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
+                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
                                         || (DL.Animation != 0 && settings.MajorasMask))
                                     {
                                         AdvancedCallList(DL);
@@ -2000,10 +2000,10 @@ namespace SharpOcarina
                                         // GL.Translate(-DL.midX, -DL.midY, -DL.midZ);
                                         
                                     }
-
-                                    if ((DL.Animation != 0 && DL.Animation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.Animation - 8].HasScroll())
-                                        || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
-                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < CurrentScene.SegmentFunctions.Count && CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
+                                    ZScene TargetScene = CurrentScene.inherittextureanims ? NormalHeader : CurrentScene;
+                                    if ((DL.Animation != 0 && DL.Animation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.Animation - 8].HasScroll())
+                                        || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
+                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
                                         || (DL.Animation != 0 && settings.MajorasMask))
                                     {
                                         AdvancedCallList(DL);
@@ -2280,7 +2280,9 @@ namespace SharpOcarina
 
         public void AdvancedCallList(UcodeSimulator.DisplayListStruct DL)
         {
-            if (settings.MajorasMask && CurrentScene.TextureAnims.Count > DL.Animation - 8)
+            ZScene TargetScene = CurrentScene.inherittextureanims ? NormalHeader : CurrentScene;
+
+            if (settings.MajorasMask && NormalHeader.TextureAnims.Count > DL.Animation - 8)
             {
                 GL.MatrixMode(MatrixMode.Texture);
 
@@ -2288,12 +2290,12 @@ namespace SharpOcarina
 
 
                 GL.ActiveTexture(TextureUnit.Texture0);
-                GL.Translate(-(CurrentScene.TextureAnims[DL.Animation - 8].XVelocity1 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Width1)) * globalframe, (CurrentScene.TextureAnims[DL.Animation - 8].YVelocity1 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Height1)) * globalframe, 0);
+                GL.Translate(-(NormalHeader.TextureAnims[DL.Animation - 8].XVelocity1 / 80f * (20f / NormalHeader.TextureAnims[DL.Animation - 8].Width1)) * globalframe, (NormalHeader.TextureAnims[DL.Animation - 8].YVelocity1 / 80f * (20f / NormalHeader.TextureAnims[DL.Animation - 8].Height1)) * globalframe, 0);
 
                 GL.ActiveTexture(TextureUnit.Texture1);
                 GL.PushMatrix();
 
-                GL.Translate(-(CurrentScene.TextureAnims[DL.Animation - 8].XVelocity2 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Width2)) * globalframe, (CurrentScene.TextureAnims[DL.Animation - 8].YVelocity2 / 80f * (20f / CurrentScene.TextureAnims[DL.Animation - 8].Height2)) * globalframe, 0);
+                GL.Translate(-(NormalHeader.TextureAnims[DL.Animation - 8].XVelocity2 / 80f * (20f / NormalHeader.TextureAnims[DL.Animation - 8].Width2)) * globalframe, (NormalHeader.TextureAnims[DL.Animation - 8].YVelocity2 / 80f * (20f / NormalHeader.TextureAnims[DL.Animation - 8].Height2)) * globalframe, 0);
 
                 GL.MatrixMode(MatrixMode.Modelview);
 
@@ -2315,11 +2317,13 @@ namespace SharpOcarina
 
                 bool drawn = false;
 
+                
+
                 if (DL.ColorAnimation != 0)
                 {
 
 
-                    ZTextureAnim targetfunction = CurrentScene.SegmentFunctions[DL.ColorAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.blending && x.Preview);
+                    ZTextureAnim targetfunction = TargetScene.SegmentFunctions[DL.ColorAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.blending && x.Preview);
 
                     if (targetfunction != null && targetfunction.ColorList.Count > 0)
                     {
@@ -2430,7 +2434,7 @@ namespace SharpOcarina
 
                 if (DL.Animation != 0)
                 {
-                    ZTextureAnim TextureScroll = CurrentScene.SegmentFunctions[DL.Animation - 8].Functions.Find(x => x.Type == ZTextureAnim.scroll && x.Preview);
+                    ZTextureAnim TextureScroll = TargetScene.SegmentFunctions[DL.Animation - 8].Functions.Find(x => x.Type == ZTextureAnim.scroll && x.Preview);
 
 
 
@@ -2481,11 +2485,11 @@ namespace SharpOcarina
                     int tempframe = 0;
 
 
-                    ZTextureAnim targetfunction = CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe && x.Preview);
+                    ZTextureAnim targetfunction = TargetScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe && x.Preview);
 
                     if (targetfunction == null)
                     {
-                        targetfunction = CurrentScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texswap && x.Preview);
+                        targetfunction = TargetScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texswap && x.Preview);
 
 
                     }
@@ -2518,7 +2522,7 @@ namespace SharpOcarina
 
                                         //textureglid -= AdditionalTexturesGLID.Count;
 
-                                        textureglid = CurrentScene.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwapList[i].Texture).GLID;
+                                        textureglid = NormalHeader.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwapList[i].Texture).GLID;
 
                                         // DebugConsole.WriteLine("Texture GLID" + textureglid);
                                         // textureglid = i;
@@ -2530,8 +2534,8 @@ namespace SharpOcarina
                         }
                         else
                         {
-                            if (CurrentScene.AdditionalTextures.FindIndex(x => x.DisplayName == targetfunction.TextureSwap2) != -1)
-                                textureglid = CurrentScene.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwap2).GLID;
+                            if (NormalHeader.AdditionalTextures.FindIndex(x => x.DisplayName == targetfunction.TextureSwap2) != -1)
+                                textureglid = NormalHeader.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwap2).GLID;
 
                         }
 
@@ -3978,6 +3982,7 @@ namespace SharpOcarina
 
 
                     saveBinaryToolStripMenuItem.Enabled = !CurrentScene.PregeneratedMesh;
+                    exportCArrayMenuItem3.Enabled = !CurrentScene.PregeneratedMesh;
                     saveSceneToolStripMenuItem.Enabled = true;
                     SaveScenetoolStripMenuItem3.Enabled = (LastScene != "");
                     injectToROMToolStripMenuItem.Enabled = !CurrentScene.PregeneratedMesh;
@@ -16086,8 +16091,20 @@ namespace SharpOcarina
             {
                 if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Count < 4)
                 {
-                    MessageBox.Show("You need atleast 4 camera points to play the command!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    CutscenePreview_Clear();
+                    if (!settings.NoDummyPoints)
+                    {
+                        int lastid = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Count - 1;
+                        while (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Count < 4)
+                        {
+                            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points.Add(new ZCutscenePosition(CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[lastid].Cameraroll, 1, 60, CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[lastid].Position, CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Points[lastid].Position2));
+                        }
+                        CutscenePreview_Set();
+                    }
+                    else
+                    {
+                        MessageBox.Show("You need atleast 4 camera points to play the command!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        CutscenePreview_Clear();
+                    }
                 }
                 else
                 {
@@ -18835,6 +18852,51 @@ namespace SharpOcarina
 
 
             }
+        }
+
+        private void exportCArrayMenuItem3_Click(object sender, EventArgs e)
+        {
+
+            saveFileDialog1.FileName = "Save Here";
+            saveFileDialog1.Filter = "All Files (*.*)|*.*";
+            saveFileDialog1.InitialDirectory = CurrentScene.BasePath;
+            saveFileDialog1.CheckFileExists = false;
+            saveFileDialog1.CreatePrompt = true;
+
+            int prev = CurrentScene.cloneid;
+            if (prev > 0) SetSceneHeader(0);
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                savechanges = true;
+                AddMissingObjects();
+                if (CurrentScene.Cameras.Count == 0)
+                {
+                    CurrentScene.Cameras.Add(new ZCamera(0, 0, 0, 0, 0, 0, 3, 45, 0xFFFF, 0xFFFF));
+                    UpdateForm();
+                }
+                if (settings.MajorasMask && CurrentScene.ActorCutscenes.Count == 0)
+                {
+                    CurrentScene.ActorCutscenes.Add(new ZActorCutscene());
+                    UpdateForm();
+                }
+                AutoFixErrors("");
+
+                CurrentScene.ConvertSave(Path.GetDirectoryName(saveFileDialog1.FileName) + Path.DirectorySeparatorChar, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, 4);
+
+                string outputmsg = "";
+                while (InjectMessages.Count != 0)
+                {
+                    outputmsg += InjectMessages[0] + "\n";
+                    InjectMessages.RemoveAt(0);
+                }
+                if (outputmsg != "") MessageBox.Show(outputmsg, "Injection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+
+            if (prev > 0) SetSceneHeader(prev);
+
+            UpdateForm();
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

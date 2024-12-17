@@ -1171,7 +1171,7 @@ namespace SharpOcarina
         {
             string game = (!MainForm.settings.MajorasMask) ? "OOT" : "MM";
 
-            if (zzrp > 0)
+            if (zzrp > 0 && zzrp != 4)
             {
                 string newdir = "";
                 if (zzrp != 3)
@@ -1255,9 +1255,9 @@ namespace SharpOcarina
 
             ConvertScene(ConsecutiveRoomInject, ForceRGBATextures,this, game);
 
-#if DEBUG
+
             DebugConsole.WriteLine("scene count" + SceneData.Count.ToString("X"));
-#endif
+
             foreach (ZSceneHeader sceneheader in SceneHeaders)
             {
                 if (!sceneheader.SameAsPrevious) sceneheader.Scene.ConvertScene(ConsecutiveRoomInject, ForceRGBATextures, this, game);
@@ -1288,6 +1288,9 @@ namespace SharpOcarina
 
             }
 
+            if (zzrp != 4)
+            {
+
             for (int i = 0; i < _Rooms.Count; i++)
             {
                 string SaveRoomTo = "";
@@ -1301,9 +1304,9 @@ namespace SharpOcarina
                     SaveRoomTo = Filepath + (_Rooms[i].InjectOffset+_Rooms[i].FullDataLength).ToString("X8") + extension;
                 else
                     SaveRoomTo = Filepath + Helpers.MakeValidFileName(Name) + "_room_" + i + extension;
-#if DEBUG
+
                 DebugConsole.WriteLine("SAVING DATA TO " + SaveRoomTo);
-#endif 
+
                 if (MainForm.IsFileLocked(SaveRoomTo))
                 { 
                     MessageBox.Show("File " + SaveRoomTo + " is in use, try again later.", "Saving failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1320,9 +1323,9 @@ namespace SharpOcarina
                 SaveSceneTo = Filepath + "scene.zscene";
             else
                 SaveSceneTo = Filepath + Helpers.MakeValidFileName(Name) + "_scene.zscene";
-#if DEBUG
+
             DebugConsole.WriteLine("SAVING DATA TO " + SaveSceneTo);
-#endif
+
 
             if (MainForm.IsFileLocked(SaveSceneTo))
             {
@@ -1335,25 +1338,11 @@ namespace SharpOcarina
             BWS.Write(SceneData.ToArray());
             BWS.Close();
 
-            if (zzrp > 0)
+            if (zzrp > 0 && zzrp != 4)
             {
                 uint restriction = RestrictionFlags;
 
-                /*
-                if (MainForm.GlobalROM != "")
-                {
-                    List<byte> byteList = new List<byte>((IEnumerable<byte>)File.ReadAllBytes(MainForm.GlobalROM));
-                    ROM rom = MainForm.CheckVersion(byteList);
-                    for (uint restrictionFlagStart = rom.RestrictionFlagStart; (long)restrictionFlagStart < (long)((int)rom.RestrictionFlagEnd - 1); restrictionFlagStart += 4U)
-                    {
-                        if ((int)byteList[(int)restrictionFlagStart] == this.SceneNumber)
-                        {
-                            restriction = Helpers.Read24(byteList, (int)restrictionFlagStart + 1);
-                            break;
-                        }
-                    }
-                }*/
-
+                
                 string filenameconf = (zzrp != 3) ? "conf.txt" : "config.toml";
 
                 if (File.Exists(Filepath + filenameconf)) File.Delete(Filepath + filenameconf);
@@ -1367,44 +1356,177 @@ namespace SharpOcarina
                 {
                     string restrictiontext = "";
                     var dict = new Dictionary<string, uint>(){
-                        { "\tbottles     = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x03)) },
-                        { "\ta_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x0C)) },
-                        { "\tb_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x30)) },
-                        { "\tunused      = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0xC0)) },
-                        { "\twarp_song   = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x03))  },
-                        { "\tocarina     = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x0C))  },
-                        { "\thookshot    = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x30))  },
-                        { "\ttrade_item  = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0xC0))  },
-                        { "\tother       = ",  ((((RestrictionFlags & 0x000000FF)) & 0x03))       },
-                        { "\tdin_nayru   = ",  ((((RestrictionFlags & 0x000000FF)) & 0x0C))       },
-                        { "\tfarores     = ",  ((((RestrictionFlags & 0x000000FF)) & 0x30))       },
-                        { "\tsun_song    = ",  ((((RestrictionFlags & 0x000000FF)) & 0xC0))       },
-                    };
+                    { "\tbottles     = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x03)) },
+                    { "\ta_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x0C)) },
+                    { "\tb_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x30)) },
+                    { "\tunused      = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0xC0)) },
+                    { "\twarp_song   = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x03))  },
+                    { "\tocarina     = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x0C))  },
+                    { "\thookshot    = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x30))  },
+                    { "\ttrade_item  = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0xC0))  },
+                    { "\tother       = ",  ((((RestrictionFlags & 0x000000FF)) & 0x03))       },
+                    { "\tdin_nayru   = ",  ((((RestrictionFlags & 0x000000FF)) & 0x0C))       },
+                    { "\tfarores     = ",  ((((RestrictionFlags & 0x000000FF)) & 0x30))       },
+                    { "\tsun_song    = ",  ((((RestrictionFlags & 0x000000FF)) & 0xC0))       },
+                };
 
-                    foreach(var i in dict) {
+                    foreach (var i in dict)
+                    {
                         restrictiontext += i.Key;
                         if (i.Value != 0) restrictiontext += "false\r\n";
                         else restrictiontext += "true\r\n";
                     }
 
-                    sw.Write("# " + Name + "\r\n" + 
-                        "draw_func_index = " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\n" + 
+                    sw.Write("# " + Name + "\r\n" +
+                        "draw_func_index = " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\n" +
                         "[enables]\r\n" + restrictiontext);
                 }
                 sw.Close();
-                //File.WriteAllText(Filepath + "conf.txt", "unk-a: 0\r\n   unk-b: 0\r\n  shader: " + SceneSettings + "\r\n    save: 1\r\nrestrict: 0");
                 
+
+            }
 
             //title card
 
             if (TitleCard.Length > 0)
             {
-                    MemoryStream ms = new MemoryStream(TitleCard);
-                    Image returnImage = Image.FromStream(ms);
-                    returnImage.Save(Filepath + "title.png", ImageFormat.Png);
+                MemoryStream ms = new MemoryStream(TitleCard);
+                Image returnImage = Image.FromStream(ms);
+                returnImage.Save(Filepath + "title.png", ImageFormat.Png);
             }
 
+            }
+            else
+            {
+                StreamWriter sw = File.CreateText(Filepath + Name + "_scene.c");
 
+                Helpers.AddPadding(ref SceneData, 8);
+
+                string output = "#include \"ultra64.h\"\n";
+
+                for(int i = 0; i < Rooms.Count; i++)
+                {
+                    output += "extern u8 _" + Name + "_room_" + i + "SegmentRomStart[];\n";
+                    output += "extern u8 _" + Name + "_room_" + i + "SegmentRomEnd[];\n";
+                }
+
+                output += "u32 " + Name + "_scene[] = {\n";
+
+                int column = 0;
+                bool command4 = false;
+                bool command18 = false;
+                uint roomlistoffset = 9;
+                uint headerlistoffset = 9;
+                List<uint> headeroffsets = new List<uint>();
+
+                for (int i = 0; i < SceneData.Count - 1; i += 4)
+                {
+                    uint curvalue = Helpers.Read32(SceneData, i);
+                    uint curvaluemasked = Helpers.Read32(SceneData, i) & 0x00FFFFFF;
+
+                    int header = headeroffsets.FindIndex(x => x == i);
+                    if (header != -1 && curvalue != 0)
+                    {
+                        command4 = false;
+                        command18 = false;
+                    }
+                    if (!command4 && ((curvalue & 0xFF00FFFF) == 0x04000000 && SceneData[i + 4] == 0x02))
+                    {
+                        roomlistoffset = Helpers.Read32(SceneData, i + 4) & 0x00FFFFFF;
+                        command4 = true;
+
+                    }
+                    if (!command18 && ((curvalue & 0xFFFFFFFF) == 0x18000000 && SceneData[i + 4] == 0x02))
+                    {
+                        headerlistoffset = Helpers.Read32(SceneData, i + 4) & 0x00FFFFFF;
+                        command18 = true;
+
+                    }
+                    if (i == roomlistoffset)
+                    {
+                        output += "\n";
+                        for (int y = 0; y < Rooms.Count; y++)
+                        {
+                            
+                            output += "(u32)_" + Name + "_room_" + y + "SegmentRomStart, ";
+                            output += "(u32)_" + Name + "_room_" + y + "SegmentRomEnd, // room " + y + "\n";
+                            i += 8;
+                        }
+                        column = 0;
+                        i -= 4;
+                        continue;
+                    }
+                    if (i == headerlistoffset)
+                    {
+                        output += "\n";
+                        for (int y = 0; y < SceneHeaders.Count; y++)
+                        {
+                            uint headervaluemasked = Helpers.Read32(SceneData, i) & 0x00FFFFFF;
+                            if (headervaluemasked == 0) output += "0x00000000, ";
+                            else
+                            {
+                                output += "(u32*)(((u8*)" + Name + "_scene" + ")+0x" + headervaluemasked.ToString("X") + "), \n";
+                                headeroffsets.Add(headervaluemasked);
+                            }
+                            i += 4;
+                            
+                        }
+                        column = 0;
+                        i -= 4;
+                        continue;
+                    }
+                    //if (_Rooms.FindIndex(x => x.InjectOffset ))
+
+                    output += "0x" + curvalue.ToString("X8") + ", ";
+                    column++;
+                    if (column == 8)
+                    {
+                        output += "\n";
+                        column = 0;
+                    }
+                }
+
+                output = output.Substring(0, output.LastIndexOf(","));
+                output += "\n};";
+
+                sw.Write(output);
+
+                sw.Close();
+
+                for (int i = 0; i < Rooms.Count; i++)
+                {
+                    sw = File.CreateText(Filepath + Name + "_room_" + i + ".c");
+                    output = "";
+                    output += "#include \"ultra64.h\"\n";
+                    output += "u32 " + Name + "_room_" + i + "[] = {\n";
+
+                    column = 0;
+
+                    Helpers.AddPadding(ref Rooms[i].RoomData, 8);
+
+                    for (int y = 0; y < Rooms[i].RoomData.Count - 1; y += 4)
+                    {
+                        
+                        output += "0x" + Helpers.Read32(Rooms[i].RoomData, y).ToString("X8") + ", ";
+                        column++;
+                        if (column == 8)
+                        {
+                            output += "\n";
+                            column = 0;
+                        }
+                    }
+
+                    output = output.Substring(0, output.LastIndexOf(","));
+                    output += "\n};";
+
+                    sw.Write(output);
+
+                    sw.Close();
+                }
+
+
+
+                
             }
             
         }
@@ -1708,8 +1830,11 @@ namespace SharpOcarina
             {
                 MainForm.n64preview = true;
 
-                if (cloneid > 0) { MainForm.NormalHeader.ConvertPreview(ConsecutiveRoomInject, ForceRGBATextures); return; }
-                else ConvertScene(ConsecutiveRoomInject, ForceRGBATextures, this, game);
+                if (ColModel != null)
+                {
+                    if (cloneid > 0) { MainForm.NormalHeader.ConvertPreview(ConsecutiveRoomInject, ForceRGBATextures); return; }
+                    else ConvertScene(ConsecutiveRoomInject, ForceRGBATextures, this, game);
+                }
             }
 
             // Alright, convert the scene

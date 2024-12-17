@@ -802,6 +802,7 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.exportCArrayMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1069,6 +1070,7 @@ namespace SharpOcarina
             this.SaveScenetoolStripMenuItem3,
             this.saveSceneToolStripMenuItem,
             this.saveBinaryToolStripMenuItem,
+            this.exportCArrayMenuItem3,
             this.toolStripMenuItem2,
             this.OpenGlobalROM,
             this.injectToROMToolStripMenuItem,
@@ -1127,7 +1129,7 @@ namespace SharpOcarina
             this.saveBinaryToolStripMenuItem.Enabled = false;
             this.saveBinaryToolStripMenuItem.Name = "saveBinaryToolStripMenuItem";
             this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
-            this.saveBinaryToolStripMenuItem.Text = "Save &Binary";
+            this.saveBinaryToolStripMenuItem.Text = "Export &Binary";
             this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
@@ -11693,6 +11695,14 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // exportCArrayMenuItem3
+            // 
+            this.exportCArrayMenuItem3.Enabled = false;
+            this.exportCArrayMenuItem3.Name = "exportCArrayMenuItem3";
+            this.exportCArrayMenuItem3.Size = new System.Drawing.Size(324, 22);
+            this.exportCArrayMenuItem3.Text = "Export C array";
+            this.exportCArrayMenuItem3.Click += new System.EventHandler(this.exportCArrayMenuItem3_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12771,6 +12781,7 @@ namespace SharpOcarina
         private ToolStripMenuItem convertSelectedActorXMLEntryTotomlToolStripMenuItem;
         private ToolStripMenuItem imageTocArrayToolStripMenuItem;
         private ToolStripMenuItem ZobjCopyToolMenuItem3;
+        private ToolStripMenuItem exportCArrayMenuItem3;
     }
     }
 

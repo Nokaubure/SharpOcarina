@@ -1,6 +1,26 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.55
+--------------
+
+- Changed z64rom exit's default header to 0
+
+- Changed spawner's default variable to 0FFF
+
+- Updated the parameter values of wooden doors and sliding doors
+
+- Added an option to export a scene as C array to use in decomp based projects (no more support is planned besides this)
+
+- Changed so dummy points are added when attempting to preview a cutscene camera with less than 4 points and dummy points setting is enabled
+
+- Fixed an issue where trying to update Set Cutscene custom actor in the custom actor database would give a name conflict
+
+- Fixed an issue where multitextures would not be rendered in alternate headers
+
+- Fixed an issue where "there's no collision file!" error would sometimes appear when loading z64rom project
+
+--------------
 ---1.54
 --------------
 

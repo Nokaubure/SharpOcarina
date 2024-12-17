@@ -10,7 +10,7 @@ namespace SharpOcarina
     {
         public ZExit()
         {
-            HeaderIndex = 0xF;
+            //HeaderIndex = 0xF; //why was 0xF
         }
 
         public ZExit(uint _Raw)

@@ -71,10 +71,11 @@ namespace SharpOcarina
 
             mainform.StoreUndo((IsTransitionActor) ? 2 : (IsSpawnActor) ? 3 : 1);
 
+            ushort variable = 0;
             ushort number = !MainForm.settings.MajorasMask ? (ushort)0x0015 : (ushort)0x000E;
             if (IsTransitionActor && MainForm.CurrentScene.SpecialObject == 0x0003) number = 0x002E;
             else if (IsTransitionActor && MainForm.CurrentScene.SpecialObject == 0x0002) number = 0x0023;
-            else if (IsSpawnActor) number = 0x0000;
+            else if (IsSpawnActor) {number = 0x0000; variable = 0x0FFF; }
 
             if (Control.ModifierKeys == Keys.Shift)
             {
@@ -100,13 +101,13 @@ namespace SharpOcarina
                 truepos.Y = Helpers.Clamp(truepos.Y, -32767, 32767);
                 truepos.Z = Helpers.Clamp(truepos.Z, -32767, 32767);
 
-                Actors.Add(new ZActor(number, (short)truepos.X, (short)truepos.Y, (short)truepos.Z, 0.0f, 0.0f, 0.0f, 0));
+                Actors.Add(new ZActor(number, (short)truepos.X, (short)truepos.Y, (short)truepos.Z, 0.0f, 0.0f, 0.0f, variable));
 
             }
             else
             { 
 
-                Actors.Add(new ZActor(0x00, 0x00, 0x00, 0x00, number, 0.0f, 0.0f, 0.0f, 0.0f, 0x0000));
+                Actors.Add(new ZActor(0x00, 0x00, 0x00, 0x00, number, 0.0f, 0.0f, 0.0f, 0.0f, variable));
 
             }
 

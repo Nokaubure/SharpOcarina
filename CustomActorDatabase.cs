@@ -68,7 +68,11 @@ namespace SharpOcarina
             }
 
             XmlDocument doc = new XmlDocument();
+#if DEBUG
+            var fileName = "Z:\\Users\\Noka\\Documents\\GitHub\\CustomActorDatabase\\CustomActors.xml"; 
+#else
             var fileName = tempw + "CustomActors.xml";
+#endif
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
 #if DEBUG
@@ -144,6 +148,7 @@ namespace SharpOcarina
                 string Category = nodeAtt["Category"].Value;
                 string Author = nodeAtt["Author"].Value;
                 string Notes = node.InnerText.TrimStart();
+                bool ForceUpdate = (nodeAtt["ForceUpdate"] != null);
 
                 CustomActor = new DatabaseCustomActor(Key, Version, Name, FolderName, HasCustomObject, ActorID, ObjectID, Category, Author, Notes);
                 CustomActorz64rom match = z64romactors.Find(x => x.name == FolderName);
@@ -152,16 +157,17 @@ namespace SharpOcarina
                     CustomActor.Installed = true;
                     if (match.version == -1)
                     {
-                        CustomActor.Conflict = true;
+                        if (ForceUpdate) CustomActor.Outdated = true;
+                        else CustomActor.Conflict = true;
                     }
                     else if (match.version < Version)
                     {
                         CustomObjectz64rom z64romobject = z64romobjects.Find(x => x.name == FolderName);
-                        if (z64romobject != null)
+                        if (z64romobject != null || !HasCustomObject)
                         {
                             CustomActor.Outdated = true;
                             CustomActor.ActorID = match.ID;
-                            CustomActor.ObjectID = z64romobject.ID;
+                            if (HasCustomObject) CustomActor.ObjectID = z64romobject.ID;
                         }
                         else
                         {
