@@ -217,13 +217,18 @@ namespace SharpOcarina
                 
 
                 int incr = 0;
+                ushort ActorID;
                 foreach (ZActor actor in Actors)
                 {
                     ActorItem item = new ActorItem();
-                    if (MainForm.ActorCache.ContainsKey(actor.Number))
-                        item.Text = incr + "- " + MainForm.ActorCache[actor.Number].name;
+
+                    ActorID = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
+
+
+                    if (MainForm.ActorCache.ContainsKey(ActorID))
+                        item.Text = incr + "- " + MainForm.ActorCache[ActorID].name;
                     else
-                        item.Text = incr + "- " + XMLreader.getActorName(actor.Number.ToString("X4"));
+                        item.Text = incr + "- " + XMLreader.getActorName(ActorID.ToString("X4"));
                     item.Value = incr;
                     ActorComboBox.Items.Add(item);
                     incr++;
@@ -268,17 +273,19 @@ namespace SharpOcarina
                     ActorYRot.Enabled = XMLreader.getActorNoMMYRot(Actors[ActorComboBox.SelectedIndex].Number.ToString("X4")) == 0;
                 }
 
-                if (Actors[ActorComboBox.SelectedIndex].Number != cacheId)
+                ActorID = !MainForm.settings.MajorasMask ? Actors[ActorComboBox.SelectedIndex].Number : (ushort)(Actors[ActorComboBox.SelectedIndex].Number & 0x0FFF);
+
+                if (ActorID != cacheId)
                 {
                     int propertyprevindex = ActorVariableListBox.SelectedIndex;
                     ActorVariableListBox.Items.Clear();
                     List<ActorProperty> properties;
-                    if (MainForm.ActorCache.ContainsKey(Actors[ActorComboBox.SelectedIndex].Number))
-                        properties = MainForm.ActorCache[Actors[ActorComboBox.SelectedIndex].Number].actorproperties;
+                    if (MainForm.ActorCache.ContainsKey(ActorID))
+                        properties = MainForm.ActorCache[ActorID].actorproperties;
                     else
                     {
                         
-                        properties = XMLreader.getActorProperties(Actors[ActorComboBox.SelectedIndex].Number.ToString("X4"));
+                        properties = XMLreader.getActorProperties(ActorID.ToString("X4"));
                         if (MainForm.settings.MajorasMask && MainForm.settings.IgnoreMMDaySystem == false && !IsTransitionActor && !IsSpawnActor)
                         {
                             properties.Add(new ActorProperty(0xFF80, "X Rotation (degrees)","XRot"));
@@ -302,7 +309,7 @@ namespace SharpOcarina
 
                     foreach (ActorProperty property in properties) ActorVariableListBox.Items.Add(property);
                     if (ActorVariableListBox.Items.Count > 0 && ActorVariableListBox.Items.Count - 1 >= propertyprevindex) ActorVariableListBox.SelectedIndex = propertyprevindex;
-                    cacheId = Actors[ActorComboBox.SelectedIndex].Number;
+                    cacheId = ActorID;
                 }
 
                 if (ActorVariableListBox.Items.Count > 0)

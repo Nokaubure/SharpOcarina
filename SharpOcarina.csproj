@@ -412,6 +412,9 @@
     <None Include="app.config" />
     <None Include="AutoUpdater\RedCell.Diagnostics.Update\packages.config" />
     <None Include="AutoUpdater\RedCell.Diagnostics.Update\Update.cd" />
+    <None Include="BlenderScripts\io_export_objex2.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="BlenderScripts\io_export_so_3.0.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

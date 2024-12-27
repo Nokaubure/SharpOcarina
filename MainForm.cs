@@ -875,8 +875,8 @@ namespace SharpOcarina
                         GL.PolygonOffset(-3.0f, -3.0f);
                     }
                 }
-
-                if (SimulateN64Gfx && DrawBorder && FindActorRender(Actor.Number, Actor.Variable) != -1 && j != 1 && settings.RenderActors) { }
+                ushort ActorID = !MainForm.settings.MajorasMask ? Actor.Number : (ushort)(Actor.Number & 0x0FFF);
+                if (SimulateN64Gfx && DrawBorder && FindActorRender(ActorID, Actor.Variable) != -1 && j != 1 && settings.RenderActors) { }
                 else { GL.CallList(DrawModelGLID); }
 
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
@@ -907,8 +907,8 @@ namespace SharpOcarina
         private void DrawActorModel2(ZActor Actor, bool DrawBorder, bool transparency)
         {
             if (!SimulateN64Gfx) return;
-
-            int render = FindActorRender((ushort)((Actor.Number == 0 && settings.RenderChildLink) ? 0xFFFF : Actor.Number), Actor.Variable);
+            ushort ActorID = !MainForm.settings.MajorasMask ? Actor.Number : (ushort)(Actor.Number & 0x0FFF);
+            int render = FindActorRender((ushort)((ActorID == 0 && settings.RenderChildLink) ? 0xFFFF : ActorID), Actor.Variable);
             float animroty = (render != -1) ? zobj_cache[render].RotY * globalframe : 0.0f;
 
             if (render != -1 && DrawBorder)
@@ -6581,11 +6581,12 @@ namespace SharpOcarina
                         {
                             // DebugConsole.WriteLine("before " + actor.Number.ToString("X4"));
                             int[] actorobjects = new int[0];
-                            if (ActorCache.ContainsKey(actor.Number))
+                            ushort ActorID = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
+                            if (ActorCache.ContainsKey(ActorID))
                             {
-                                if (ActorCache[actor.Number].objects != "")
+                                if (ActorCache[ActorID].objects != "")
                                 {
-                                    string[] strobjects = ActorCache[actor.Number].objects.Split(',');
+                                    string[] strobjects = ActorCache[ActorID].objects.Split(',');
                                     actorobjects = new int[strobjects.Length];
                                     int incr = 0;
                                     foreach (String s in strobjects)
@@ -6597,7 +6598,7 @@ namespace SharpOcarina
                                 }
                             }
                             else
-                                actorobjects = XMLreader.getActorObject(actor.Number.ToString("X4"));
+                                actorobjects = XMLreader.getActorObject(ActorID.ToString("X4"));
                             //DebugConsole.WriteLine("after " + actorgroups.ToString("X4"));
                             foreach (int actorobject in actorobjects)
                             {
@@ -6918,6 +6919,7 @@ namespace SharpOcarina
             fullpath = Path.GetDirectoryName(FileName) + Path.DirectorySeparatorChar;
             temppath = CurrentScene.CollisionFilename;
 
+
             while (CurrentScene.SegmentFunctions.Count < 8)
             {
                 CurrentScene.SegmentFunctions.Add(new ZSegmentFunction());
@@ -7020,6 +7022,9 @@ namespace SharpOcarina
                             temppath = fullpath + Path.GetFileName(temppath);
                         else
                             temppath = fullpath + temppath;
+
+                        //temppath = Path.GetFullPath(temppath);
+                        
                         if (!File.Exists(temppath))
                         {
                             MessageBox.Show("Texture " + temppath + " doesn't exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
@@ -7094,7 +7099,7 @@ namespace SharpOcarina
                         CurrentScene.Rooms[i].GroupSettings.ScaledNormals = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
 
                     if (CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
-                        CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName = new String[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
+                        CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName = Enumerable.Repeat("", CurrentScene.Rooms[i].GroupSettings.TileS.Length).ToArray();
 
                     //TODO fix old scenes
                     if (CurrentScene.version <= 0x1530)
@@ -7373,6 +7378,9 @@ namespace SharpOcarina
                 }
 
                 AddRoomsAdditionalTextures();
+
+                if (SimulateN64Gfx == true && CurrentScene.ColModel != null)
+                    CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
             }
         }
 
@@ -9116,9 +9124,9 @@ namespace SharpOcarina
 
             foreach(ZScene.ZRoom room in CurrentScene.Rooms)
             {
-                foreach (string s in room.ObjModel.AdditionalTextures)
+                foreach (ObjFile.Material s in room.ObjModel.AdditionalTextures)
                 {
-                    if(CurrentScene.AdditionalTextures.Find(x => x.map_Kd == s) == null) AdditionalTexture_Add(s);
+                    if(CurrentScene.AdditionalTextures.Find(x => x.Name == Path.GetFileName(s.map_Kd)) == null) AdditionalTexture_Add(s.map_Kd);
                 }
             }
 
@@ -9658,7 +9666,8 @@ namespace SharpOcarina
 
                 foreach (ZActor Actor in CurrentScene.Rooms[RoomList.SelectedIndex].ZActors)
                 {
-                    int render = FindActorRender((ushort)((Actor.Number == 0 && settings.RenderChildLink) ? 0xFFFF : Actor.Number), Actor.Variable);
+                    ushort ActorID = !MainForm.settings.MajorasMask ? Actor.Number : (ushort)(Actor.Number & 0x0FFF);
+                    int render = FindActorRender((ushort)((ActorID == 0 && settings.RenderChildLink) ? 0xFFFF : ActorID), Actor.Variable);
                     if (render != -1 && zobj_cache[render].collision != null)
                         foreach (ObjFile.Group Group in zobj_cache[render].collision.Groups)
                         {
@@ -10848,6 +10857,9 @@ namespace SharpOcarina
                 SelectRoom(0);
 
                 AddRoomsAdditionalTextures();
+
+                if (SimulateN64Gfx == true && CurrentScene.ColModel != null)
+                    CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
             }
         }
 
@@ -12468,7 +12480,7 @@ namespace SharpOcarina
 
         }
 
-        public void AdditionalTexture_Add(string filename)
+        public void AdditionalTexture_Add(string filename, string tags = "")
         {
             ObjFile.Material mat = new ObjFile.Material();
 
@@ -12493,6 +12505,7 @@ namespace SharpOcarina
                     //   DebugConsole.WriteLine(Path.GetDirectoryName(LoadPath) + "\\" + Path.GetFileNameWithoutExtension(LoadPath) + ".png");
                     mat.TexImage = ObjFile.BitmapFromFile(Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".png");
                     mat.map_Kd = Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".png";
+                    mat.tags = "";
                 }
                 else if (Path.GetExtension(filename).ToLowerInvariant() == ".gif")
                 {
@@ -14721,8 +14734,10 @@ namespace SharpOcarina
                 entryIndex = 0;
                 foreach (ZActor actor in room.ZActors)
                 {
-                    if (!ActorCache.ContainsKey(actor.Number)) continue;
-                    List<ActorProperty> properties = ActorCache[actor.Number].actorproperties;
+                    ushort ActorID = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
+
+                    if (!ActorCache.ContainsKey(ActorID)) continue;
+                    List<ActorProperty> properties = ActorCache[ActorID].actorproperties;
 
                     foreach (ActorProperty property in properties)
                     {
@@ -14746,7 +14761,7 @@ namespace SharpOcarina
                             {
                                 flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                             }
-                            string name = ActorCache[actor.Number].name + " " + actor.Variable.ToString("X4");
+                            string name = ActorCache[ActorID].name + " " + actor.Variable.ToString("X4");
                             string roomName = roomIndex.ToString("d") + ". " + room.ModelShortFilename;
 
                             if (property.Name.ToLower().Contains("switch flag"))
@@ -14771,6 +14786,7 @@ namespace SharpOcarina
             foreach (ZActor actor in CurrentScene.Transitions)
             {
                 List<ActorProperty> properties = ActorCache[actor.Number].actorproperties;
+                ushort ActorID = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
 
                 foreach (ActorProperty property in properties)
                 {
@@ -14794,7 +14810,7 @@ namespace SharpOcarina
                         {
                             flag = (((ushort)actor.ZRot & property.Mask) >> property.Position);
                         }
-                        string name = ActorCache[actor.Number].name;
+                        string name = ActorCache[ActorID].name;
                         switchflags.Add(new FlagEntryInfo(flag, "", name, entryIndex));
                     }
                 }
@@ -15360,9 +15376,6 @@ namespace SharpOcarina
                 RomModeLabel.Text = "Global ROM Mode: ON";
                 RomModeLabel.ForeColor = Color.Green;
                 injectToROMToolStripMenuItem.DropDownItems.Clear();
-                RefreshExitCache();
-                RefreshActorCache();
-                RefreshObjectCache();
                 RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile", GlobalROM);
                 GlobalRomRefresh.Visible = true;
                 Z64RomPlay.Visible = true;
@@ -15386,6 +15399,9 @@ namespace SharpOcarina
                 }
                 else
                 {
+                    RefreshExitCache();
+                    RefreshActorCache();
+                    RefreshObjectCache();
                     actorEditControl1.cacheId = 0xFEFE;
                     actorEditControl2.cacheId = 0xFEFE;
                     actorEditControl3.cacheId = 0xFEFE;
@@ -16153,9 +16169,10 @@ namespace SharpOcarina
                 originaldata = new List<byte>(data);
                 rom = MainForm.CheckVersion(data);
 
+                int rowsize = (rom.Game == "MM") ? 0x10 : 0x14;
 
-                zsceneoffset = Helpers.Read32(data, (int)(rom.SceneTable + sceneid * 0x14));
-                zsceneendoffset = Helpers.Read32(data, (int)(rom.SceneTable + sceneid * 0x14 + 4));
+                zsceneoffset = Helpers.Read32(data, (int)(rom.SceneTable + sceneid * rowsize));
+                zsceneendoffset = Helpers.Read32(data, (int)(rom.SceneTable + sceneid * rowsize + 4));
 
 
                 data = new List<byte>(originaldata.GetRange((int)zsceneoffset, (int)(zsceneendoffset - zsceneoffset)));

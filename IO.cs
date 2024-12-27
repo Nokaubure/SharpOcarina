@@ -18,6 +18,7 @@ namespace SharpOcarina
         public static void Export<T>(T Object, string Filename)
         {
             XmlWriterSettings XWS = new XmlWriterSettings();
+            XWS.NamespaceHandling = NamespaceHandling.OmitDuplicates;
             XWS.NewLineChars = Environment.NewLine;
             XWS.Indent = true;
 
@@ -27,7 +28,7 @@ namespace SharpOcarina
             StreamWriter SW = new StreamWriter(Filename);
             XmlWriter XW = XmlWriter.Create(SW, XWS);
 
-
+            
 
             XW.WriteStartDocument();
             XW.WriteComment("Created with " + Program.ApplicationTitle);

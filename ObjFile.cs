@@ -173,7 +173,7 @@ namespace SharpOcarina
             public float[] Ka, Kd, Ks;
             public float Tr;
             public int illum;
-            public string map_Ka, map_Kd, map_Ks, map_d, map_bump;
+            public string map_Ka, map_Kd, map_Ks, map_d, map_bump, tags, tags_1;
 
             [XmlIgnore]
             public Bitmap TexImage;
@@ -195,6 +195,8 @@ namespace SharpOcarina
                 Ks = new float[] { 1.0f, 1.0f, 1.0f };
                 Tr = 1.0f;
                 illum = 0;
+                tags = "";
+                tags_1 = "";
 
                 ForceRGBA = false;
             }
@@ -302,7 +304,7 @@ namespace SharpOcarina
         private List<TextureCoord> _TexCoords = new List<TextureCoord>();
         private List<Normal> _Norms = new List<Normal>();
         private List<Material> _Mats = new List<Material>();
-        private List<String> _AdditionalTextures = new List<String>();
+        private List<Material> _AdditionalTextures = new List<Material>();
         private List<List<int>> _Islands = new List<List<int>>();
 
         public List<Group> Groups
@@ -336,7 +338,7 @@ namespace SharpOcarina
             get { return _VertColors; }
         }
 
-        public List<string> AdditionalTextures
+        public List<Material> AdditionalTextures
         {
             get { return _AdditionalTextures; }
         }
@@ -1175,6 +1177,13 @@ namespace SharpOcarina
                     case "map_bump":
                         NewMaterial.map_bump = Line.Substring(Line.IndexOf(' ') + 1);
                         break;
+
+                    case "tags_0":
+                        NewMaterial.tags = Line.Substring(Line.IndexOf(' ') + 1);
+                        break;
+                    case "tags_1":
+                        NewMaterial.tags_1 = Line.Substring(Line.IndexOf(' ') + 1);
+                        break;
                 }
             }
 
@@ -1197,11 +1206,15 @@ namespace SharpOcarina
                 //if (MatToAdd.map_Ka != null && MatToAdd.map_Kd != null)
                 Materials.Add(MatToAdd);
 
-                if (MatToAdd.map_Ks != null && AdditionalTextures.Find(x => x == MatToAdd.map_Ks) == null)
+                if (MatToAdd.map_Ks != null && AdditionalTextures.Find(x => x.map_Kd == MatToAdd.map_Ks) == null)
                 {
                     string LoadPath = Path.IsPathRooted(MatToAdd.map_Ks) == true ? MatToAdd.map_Ks :  _BasePath + MatToAdd.map_Ks;
                     MatToAdd.map_Ks = Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileName(LoadPath);
-                    AdditionalTextures.Add(MatToAdd.map_Ks);
+                    Material mat = new Material();
+                    mat.map_Kd = mat.Name = MatToAdd.map_Ks;
+                    mat.tags = MatToAdd.tags_1;
+                    MatToAdd.tags_1 = "";
+                    AdditionalTextures.Add(mat);
                 }
 
                 MaterialIsOpen = false;

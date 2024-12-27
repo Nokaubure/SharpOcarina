@@ -41,6 +41,7 @@ namespace SharpOcarina
             this.SaveScenetoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCArrayMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.OpenGlobalROM = new System.Windows.Forms.ToolStripMenuItem();
             this.injectToROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -306,20 +307,20 @@ namespace SharpOcarina
             this.GroupPixelated = new System.Windows.Forms.CheckBox();
             this.GroupDecal = new System.Windows.Forms.CheckBox();
             this.label93 = new System.Windows.Forms.Label();
-            this.ShiftTNumeric = new System.Windows.Forms.NumericUpDown();
-            this.ShiftSNumeric = new System.Windows.Forms.NumericUpDown();
+            this.ShiftTNumeric = new NumericUpDownEx();
+            this.ShiftSNumeric = new NumericUpDownEx();
             this.ReverseLightCheckBox = new System.Windows.Forms.CheckBox();
-            this.GroupMultitextureAlpha = new System.Windows.Forms.NumericUpDown();
+            this.GroupMultitextureAlpha = new NumericUpDownEx();
             this.label79 = new System.Windows.Forms.Label();
             this.GroupMetallic = new System.Windows.Forms.CheckBox();
             this.GroupAnimated = new System.Windows.Forms.CheckBox();
             this.label34 = new System.Windows.Forms.Label();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown6 = new NumericUpDownEx();
+            this.numericUpDown5 = new NumericUpDownEx();
             this.label30 = new System.Windows.Forms.Label();
             this.MultiTextureComboBox = new System.Windows.Forms.ComboBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.GroupPolygonType = new System.Windows.Forms.NumericUpDown();
+            this.GroupPolygonType = new SharpOcarina.NumericUpDownEx();
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -327,7 +328,7 @@ namespace SharpOcarina
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown2 = new NumericUpDownEx();
             this.label5 = new System.Windows.Forms.Label();
             this.RoomInjectionOffset = new SharpOcarina.NumericTextBox();
             this.GroupList = new System.Windows.Forms.ListBox();
@@ -802,7 +803,6 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.exportCArrayMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1131,6 +1131,14 @@ namespace SharpOcarina
             this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
             this.saveBinaryToolStripMenuItem.Text = "Export &Binary";
             this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
+            // 
+            // exportCArrayMenuItem3
+            // 
+            this.exportCArrayMenuItem3.Enabled = false;
+            this.exportCArrayMenuItem3.Name = "exportCArrayMenuItem3";
+            this.exportCArrayMenuItem3.Size = new System.Drawing.Size(324, 22);
+            this.exportCArrayMenuItem3.Text = "Export C array";
+            this.exportCArrayMenuItem3.Click += new System.EventHandler(this.exportCArrayMenuItem3_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -4738,10 +4746,30 @@ namespace SharpOcarina
             // 
             // GroupPolygonType
             // 
+            this.GroupPolygonType.AlwaysFireValueChanged = false;
+            this.GroupPolygonType.DisplayDigits = 1;
+            this.GroupPolygonType.DoValueRollover = true;
+            this.GroupPolygonType.IncrementMouseWheel = 3;
             this.GroupPolygonType.Location = new System.Drawing.Point(96, 72);
+            this.GroupPolygonType.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.GroupPolygonType.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.GroupPolygonType.Name = "GroupPolygonType";
+            this.GroupPolygonType.ShiftMultiplier = 1;
             this.GroupPolygonType.Size = new System.Drawing.Size(80, 20);
             this.GroupPolygonType.TabIndex = 13;
+            this.GroupPolygonType.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.GroupPolygonType.ValueChanged += new System.EventHandler(this.GroupPolygonType_ValueChanged);
             // 
             // label12
@@ -11695,14 +11723,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // exportCArrayMenuItem3
-            // 
-            this.exportCArrayMenuItem3.Enabled = false;
-            this.exportCArrayMenuItem3.Name = "exportCArrayMenuItem3";
-            this.exportCArrayMenuItem3.Size = new System.Drawing.Size(324, 22);
-            this.exportCArrayMenuItem3.Text = "Export C array";
-            this.exportCArrayMenuItem3.Click += new System.EventHandler(this.exportCArrayMenuItem3_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12041,7 +12061,7 @@ namespace SharpOcarina
         private System.Windows.Forms.ToolStripMenuItem showCollisionModelToolStripMenuItem;
         private System.Windows.Forms.ListBox GroupList;
         private System.Windows.Forms.ListBox RoomList;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private NumericUpDownEx numericUpDown2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
         private SharpOcarina.NumericTextBox InjectoffsetTextbox;
@@ -12092,7 +12112,7 @@ namespace SharpOcarina
         private System.Windows.Forms.TabPage tabCollision;
         private NiceLine niceLine1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.NumericUpDown GroupPolygonType;
+        private NumericUpDownEx GroupPolygonType;
         private System.Windows.Forms.Label label12;
         private NiceLine niceLine4;
         private NumericUpDownEx EnvironmentType;
@@ -12124,8 +12144,8 @@ namespace SharpOcarina
         private System.Windows.Forms.ComboBox MultiTextureComboBox;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
+        private NumericUpDownEx numericUpDown6;
+        private NumericUpDownEx numericUpDown5;
         private System.Windows.Forms.ToolStripMenuItem forceRGBATexturesToolStripMenuItem;
         private System.Windows.Forms.CheckBox SimulateN64CheckBox;
         private System.Windows.Forms.ComboBox SongComboBox;
@@ -12370,7 +12390,7 @@ namespace SharpOcarina
         private NumericUpDown CameraSelect;
         private NiceLine niceLine8;
         private ToolStripMenuItem replaceSceneTitleCardTextureToolStripMenuItem;
-        private NumericUpDown GroupMultitextureAlpha;
+        private NumericUpDownEx GroupMultitextureAlpha;
         private Label label79;
         private ToolStripMenuItem SaveScenetoolStripMenuItem3;
         private ToolStripMenuItem autosaveSceneXmlToolStripMenuItem;
@@ -12450,8 +12470,8 @@ namespace SharpOcarina
         private ToolStripMenuItem fileCreationEditorToolStripMenuItem;
         private CheckBox ReverseLightCheckBox;
         private Label label93;
-        private NumericUpDown ShiftTNumeric;
-        private NumericUpDown ShiftSNumeric;
+        private NumericUpDownEx ShiftTNumeric;
+        private NumericUpDownEx ShiftSNumeric;
         private ToolStripMenuItem importCollisionFromzsceneToolStripMenuItem;
         private ToolStripMenuItem AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem;
         private ToolStripMenuItem removeAllRomScenesToolStripMenuItem;

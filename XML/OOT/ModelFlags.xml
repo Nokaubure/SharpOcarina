@@ -98,6 +98,9 @@
   <!-- #Pixelated-->
   <!-- #EnvColor-->
   <!-- #ReverseLight-->
+  <!-- #MaskAlpha-->
+  <!-- #RenderLast-->
+  <!-- #ScaledNormals-->
   <!-- #LodGroupX usage: LodGroupX where X is the LOD group in Hex-->
   <!-- #LodDistanceXXX" usage: LodDistanceXXXX where XXXX is the LOD distance in Dec -->
   <!-- #Tint usage: TintXXXXXX where XXXXXX is RRGGBB in hex -->

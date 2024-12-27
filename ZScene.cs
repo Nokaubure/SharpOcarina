@@ -92,7 +92,7 @@ namespace SharpOcarina
                 public bool[] Billboard = new bool[1];
                 public bool[] TwoAxisBillboard = new bool[1];
                 public int[] MultiTexMaterial = new int[1];
-                public string[] MultiTexMaterialName = new string[1];
+                public string[] MultiTexMaterialName = { "" };
                 public int[] ShiftS = new int[1];
                 public int[] ShiftT = new int[1];
                 public int[] BaseShiftS = new int[1];
@@ -669,7 +669,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.ReverseLight[i] = true;
                 group.ReverseLight = true;
             }
-            if (group.Name.ToLower().Contains("#alphamask"))
+            if (group.Name.ToLower().Contains("#maskalpha"))
             {
                 NewRoom.GroupSettings.AlphaMask[i] = true;
                 group.AlphaMask = true;
@@ -3576,35 +3576,36 @@ namespace SharpOcarina
                 Mat.ForceRGBA = MainForm.settings.ForceRGBATextures;
 
                 string name = Mat.DisplayName.ToLower();
+                string tags = Mat.tags.ToLower();
 
-                if (name.Contains("#forcergba") || name.Contains("#rgba16"))
+                if (name.Contains("#forcergba") || name.Contains("#rgba16") || tags.Contains("#forcergba") || tags.Contains("#rgba16"))
                     Mat.ForceRGBA = true;
 
-                else if (name.Contains("#rgba32"))
+                else if (name.Contains("#rgba32") || tags.Contains("#rgba32"))
                     Mat.ForcedFormat = "RGBA32";
 
-                else if (name.Contains("#ci4"))
+                else if (name.Contains("#ci4") || tags.Contains("#ci4"))
                     Mat.ForcedFormat = "CI4";
 
-                else if (name.Contains("#ci8"))
+                else if (name.Contains("#ci8") || tags.Contains("#ci8"))
                     Mat.ForcedFormat = "CI8";
 
-                else if (name.Contains("#i4"))
+                else if (name.Contains("#i4") || tags.Contains("#i4"))
                     Mat.ForcedFormat = "I4";
 
-                else if (name.Contains("#i8"))
+                else if (name.Contains("#i8") || tags.Contains("#i8"))
                     Mat.ForcedFormat = "I8";
 
-                else if (name.Contains("#ia8"))
+                else if (name.Contains("#ia8") || tags.Contains("#ia8"))
                     Mat.ForcedFormat = "IA8";
 
-                else if (name.Contains("#ia8"))
+                else if (name.Contains("#ia16") || tags.Contains("#ia16"))
                     Mat.ForcedFormat = "IA16";
 
                 bool appears = false;
                 //check if material is used first....
 
-                if (name.Contains("#special"))
+                if (name.Contains("#special") || tags.Contains("#special"))
                     appears = true;
                 else
                 {
@@ -4120,12 +4121,13 @@ namespace SharpOcarina
             int VertexArrayOffset = -1, PolygonArrayOffset = -1, PolygonTypesOffset = -1, WaterBoxesOffset = -1, CameraOffset = -1;
 
             /* Write collision header */
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MinCoordinate.X));  /* Absolute minimum X/Y/Z */
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MinCoordinate.Y));
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MinCoordinate.Z));
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MaxCoordinate.X));  /* Absolute maximum X/Y/Z */
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MaxCoordinate.Y));
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MaxCoordinate.Z));
+           
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCoordinate.X, -32768, 32767)));  /* Absolute minimum X/Y/Z */
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCoordinate.Y, -32768, 32767)));
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCoordinate.Z, -32768, 32767)));
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCoordinate.X, -32768, 32767)));  /* Absolute maximum X/Y/Z */
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCoordinate.Y, -32768, 32767)));
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCoordinate.Z, -32768, 32767)));
             CmdVertexArray = Data.Count;
             Helpers.Append32(ref Data, 0x00000000);                                /* Vertex count */
             Helpers.Append32(ref Data, 0x00000000);                                /* Vertex array offset */
@@ -4146,9 +4148,9 @@ namespace SharpOcarina
             VertexArrayOffset = Data.Count;
             foreach (ObjFile.Vertex Vtx in ColModel.Vertices)
             {
-                Helpers.Append16(ref Data, (ushort)Convert.ToInt16(Vtx.X * Scale));
-                Helpers.Append16(ref Data, (ushort)Convert.ToInt16(Vtx.Y * Scale));
-                Helpers.Append16(ref Data, (ushort)Convert.ToInt16(Vtx.Z * Scale));
+                Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(Vtx.X * Scale, -32768, 32767)));
+                Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(Vtx.Y * Scale, -32768, 32767)));
+                Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(Vtx.Z * Scale, -32768, 32767)));
             }
             Helpers.Overwrite32(ref Data, CmdVertexArray, (uint)(ColModel.Vertices.Count << 16));
             Helpers.Overwrite32(ref Data, CmdVertexArray + 4, (uint)(0x00000000 | bank << 24 | VertexArrayOffset));

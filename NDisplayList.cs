@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 using OpenTK;
 using OpenTK.Graphics;
@@ -789,11 +790,11 @@ namespace SharpOcarina
                     int tileS = Group.TileS;
                     int tileT = Group.TileT;
 
-                    if (targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#clampx")) tileS = 2;
-                    else if (targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#mirrorx")) tileS = 1;
+                    if ((targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#clampx")) || (targetmat.tags != null && targetmat.tags.ToLower().Contains("#clampx"))) tileS = 2;
+                    else if ((targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#mirrorx")) || (targetmat.tags != null && targetmat.tags.ToLower().Contains("#mirrorx"))) tileS = 1;
 
-                    if (targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#clampy")) tileT = 2;
-                    else if (targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#mirrory")) tileT = 1;
+                    if ((targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#clampy")) || (targetmat.tags != null && targetmat.tags.ToLower().Contains("#clampy"))) tileT = 2;
+                    else if ((targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#mirrory")) || (targetmat.tags != null && targetmat.tags.ToLower().Contains("#mirrory"))) tileT = 1;
 
                     int prevbank = Bank;
                     uint prevoffset = ThisTexture.TexOffset;
@@ -828,11 +829,11 @@ namespace SharpOcarina
 
                         if (mat != null)
                         {
-                            if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#clampx")) tileS = 2;
-                            else if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#mirrorx")) tileS = 1;
+                            if ((mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#clampx")) || (mat.tags != null && mat.tags.ToLower().Contains("#clampx"))) tileS = 2;
+                            else if ((mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#mirrorx")) || (mat.tags != null && mat.tags.ToLower().Contains("#mirrorx"))) tileS = 1;
 
-                            if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#clampy")) tileT = 2;
-                            else if (mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#mirrory")) tileT = 1;
+                            if ((mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#clampy")) || (mat.tags != null && mat.tags.ToLower().Contains("#clampy"))) tileT = 2;
+                            else if ((mat.map_Kd != null && mat.map_Kd.ToLower().Contains("#mirrory")) || (mat.tags != null && mat.tags.ToLower().Contains("#mirrory"))) tileT = 1;
 
                             //TODO is using matindex correct?
                             InsertTextureLoad(ref DList, mat.Width,
@@ -1210,13 +1211,23 @@ namespace SharpOcarina
 
                         for (int j = 0; j < VertList.Count; j++)
                         {
-                            Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(VertList[j].Position.X * Scale) - midX));
-                            Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(VertList[j].Position.Y * Scale) - midY));
-                            Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(VertList[j].Position.Z * Scale) - midZ));
-                            Helpers.Append16(ref VertData, 0);
-                            Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt32(VertList[j].TexCoord.X * 1024.0f) & 0xFFFF));
-                            Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt32(VertList[j].TexCoord.Y * 1024.0f) & 0xFFFF));
-                            //TODO remove this (???)
+                            try
+                            {
+
+                                Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(MainForm.Clamp(VertList[j].Position.X * Scale, -32768, 32767)) - midX));
+                                Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(MainForm.Clamp(VertList[j].Position.Y * Scale, -32768, 32767)) - midY));
+                                Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(MainForm.Clamp(VertList[j].Position.Z * Scale, -32768, 32767)) - midZ));
+                                Helpers.Append16(ref VertData, 0);
+                                Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt32(VertList[j].TexCoord.X * 1024.0f) & 0xFFFF));
+                                Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt32(VertList[j].TexCoord.Y * 1024.0f) & 0xFFFF));
+                            }
+                            catch(System.OverflowException e)
+                            {
+                                MessageBox.Show("Vertex overflow! is the scale of the map too big?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                            
+                            //(???)
                             if (OutdoorLight)
                             {
                                 Vector3d tmpNormals = VertList[j].Normals;

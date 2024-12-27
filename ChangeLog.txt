@@ -1,8 +1,38 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.56
+--------------
+Note: This update has been released sooner due a critical issue
+
+- Fixed a critical issue where opening a scene made before 1.54 and saving it would make it impossible to open back
+
+- Fixed an issue where vertex beyond int16 range would crash SO when rendering. They now get clamped as failsafe
+
+- Fixed an issue where reload button would not update the rendering without the user having to reenable it manually
+
+- [MM] Fixed an issue where view scenes from ROM (beta) didnt worked with MM roms
+
+- [MM] Fixed an issue where actors with locked rotation would appear as Unknown, not render, not get their object autoadded and not appear in the flag log
+
+--------------
 ---1.55
 --------------
+
+- Updated SharpOcarina plugin to 1.1.2 (update it manually by importing BlenderScripts\io_export_so_3.0.zip)
+	- Added a few missing tags in the form of checkboxes, only Alpha Mask is rendered inside Blender
+	- Initializing a material that was a Fast64 material before will transfer some data to SO and remove all Fast64 related data
+	- Added a Mass Initialize button in viewport sidemenu, this inits all materials as SO materials (the feature mentioned above also applies)
+	- Added dropdowns to choose the texture format of each texture
+	- Clamp and mirror are now texture tags instead of group tags
+
+- Updated Objex2 plugin to 2.6 (update it manually by importing BlenderScripts\io_export_objex2.zip)
+	- Initializing a material that was a Fast64 material before will transfer some data to Objex2 and remove all Fast64 related data
+	- Added a Mass Initialize button in viewport sidemenu, this inits all materials as Objex2 materials (the feature mentioned above also applies)
+	- Fixed an issue where everything was rendered black&white if it was used above Blender 3.0 version
+	Note: it still crashes if used above 3.4, so stay at 3.3 LTS or 3.4 for now
+
+- Texture tags can now also go in a Tags line inside the .mtl
 
 - Changed z64rom exit's default header to 0
 
@@ -14,11 +44,18 @@
 
 - Changed so dummy points are added when attempting to preview a cutscene camera with less than 4 points and dummy points setting is enabled
 
+- Changed #AlphaMask tag to #MaskAlpha to avoid parse issues
+
 - Fixed an issue where trying to update Set Cutscene custom actor in the custom actor database would give a name conflict
 
 - Fixed an issue where multitextures would not be rendered in alternate headers
 
 - Fixed an issue where "there's no collision file!" error would sometimes appear when loading z64rom project
+
+- Fixed an issue where additional textures would be added multiple times when reloading a model
+
+- Fixed an issue where texture tag #ia16 would set the texture to IA8 instead
+
 
 --------------
 ---1.54
