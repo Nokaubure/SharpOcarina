@@ -706,7 +706,7 @@
             // 
             this.sendToZ64romToolStripMenuItem.Name = "sendToZ64romToolStripMenuItem";
             this.sendToZ64romToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.sendToZ64romToolStripMenuItem.Text = "Send to z64rom...";
+            this.sendToZ64romToolStripMenuItem.Text = "Save and send to z64rom...";
             this.sendToZ64romToolStripMenuItem.Click += new System.EventHandler(this.sendToZ64romProjectToolStripMenuItem_Click);
             // 
             // SubscreenMapEditor

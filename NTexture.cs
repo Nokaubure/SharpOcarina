@@ -453,6 +453,32 @@ namespace SharpOcarina
                     Data[j + 3] = Raw[i + 3];
                 }
             }
+            else if (type == "IA4")
+            {
+                /* Set type, IA 4-bit */
+                Format = GBI.G_IM_FMT_IA;
+                Size = GBI.G_IM_SIZ_4b;
+
+                /* Generate texture buffer */
+                Data = new byte[(Material.Width * Material.Height) / 2];
+                Palette = null;
+
+                /* Loop through pixels, convert to IA 4-bit, write to texture buffer */
+                for (int i = 0, j = 0; i < Raw.Length; i += 8, j++)
+                {
+
+                    byte a1 = (byte)((Raw[i + 3] > 127) ? 1 : 0);
+                    byte a2 = (byte)((Raw[i + 7] > 127) ? 1 : 0);
+
+                    byte g1 = (byte)((Raw[i] + Raw[i + 1] + Raw[i + 2]) / 3);
+                    byte g2 = (byte)((Raw[i + 4] + Raw[i + 5] + Raw[i + 6]) / 3);
+
+                    byte c1 = (byte)(g1 * 7 / 255);
+                    byte c2 = (byte)(g2 * 7 / 255);
+                    
+                    Data[j] = (byte)((c1 << 5) | (a1 << 4) | (c2 << 1) | a2);
+                }
+            }
             else if (type == "IA8")
             {
                 /* Set type, IA 8-bit */

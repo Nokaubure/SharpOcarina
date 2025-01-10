@@ -123,6 +123,9 @@
   <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>571, 17</value>
   </metadata>
+  <data name="GroupAlphaMask.ToolTip" xml:space="preserve">
+    <value>Erase alpha from the first texture based on the alpha of the second. Use IA4, IA8 or IA16 formats on the second texture. You need to manually specify the texture formats with the new SO plugin, or use texture tags in the texture filename such as #IA8 or enable the option "Don't convert multitextures to RGBA"</value>
+  </data>
   <data name="ExitFadeOut.ToolTip" xml:space="preserve">
     <value>00 - Spiky (Glitched?)
 01 - Triforce

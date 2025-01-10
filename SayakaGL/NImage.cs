@@ -112,7 +112,7 @@ namespace NImage
 
         #region IA
 
-        public static void IA4(uint Width, uint Height, uint LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
+        public static void IA4(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
         {
             int TargetOffset = 0;
 
@@ -139,11 +139,11 @@ namespace NImage
 
                     if (SourceOffset >= Source.Length) break;
                 }
-                SourceOffset += LineSize * 8 - (Width / 2);
+                SourceOffset += (uint)(LineSize * 8) - (Width / 2);
             }
         }
 
-        public static void IA8(uint Width, uint Height, uint LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
+        public static void IA8(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
         {
             int TargetOffset = 0;
 
@@ -162,11 +162,11 @@ namespace NImage
 
                     if (SourceOffset >= Source.Length) break;
                 }
-                SourceOffset += LineSize * 8 - Width;
+                SourceOffset += (uint)(LineSize * 8) - Width;
             }
         }
 
-        public static void IA16(uint Width, uint Height, uint LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
+        public static void IA16(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
         {
             int TargetOffset = 0;
 
@@ -184,7 +184,7 @@ namespace NImage
 
                     if (SourceOffset >= Source.Length) break;
                 }
-                SourceOffset += LineSize * 4 - Width;
+                SourceOffset += (uint)(LineSize * 4) - Width;
             }
         }
 
@@ -192,7 +192,7 @@ namespace NImage
 
         #region I
 
-        public static void I4(uint Width, uint Height, uint LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
+        public static void I4(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
         {
             int TargetOffset = 0;
 
@@ -217,11 +217,11 @@ namespace NImage
 
                     if (SourceOffset >= Source.Length) break;
                 }
-                SourceOffset += LineSize * 8 - (Width / 2);
+                SourceOffset += (uint)(LineSize * 8) - (Width / 2);
             }
         }
 
-        public static void I8(uint Width, uint Height, uint LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
+        public static void I8(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
         {
             int TargetOffset = 0;
 
@@ -239,7 +239,7 @@ namespace NImage
 
                     if (SourceOffset >= Source.Length) break;
                 }
-                SourceOffset += LineSize * 8 - Width;
+                SourceOffset += (uint)(LineSize * 8) - Width;
             }
         }
 

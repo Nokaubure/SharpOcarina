@@ -16,7 +16,7 @@ namespace SharpOcarina
         public static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
         public static string ApplicationTitle;
-        public static int ApplicationVersion = 0x1560;
+        public static int ApplicationVersion = 0x1570;
 
         public static MainForm MF;
         public static bool QuitProgram = false;
@@ -35,13 +35,17 @@ namespace SharpOcarina
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not detect keyboard layout, so using QWERTY");
+                //MessageBox.Show("Could not detect keyboard layout, so using QWERTY");
                 KeyboardLayout = "QWERTY";
             }
 
-            MF = new MainForm();
+            
 
+            MF = new MainForm(args);
+            ApplicationTitle = MF.GetType().Namespace + " 1.57";
             MF.Text = ApplicationTitle;
+
+
 
             MF.FormClosed += new FormClosedEventHandler(MF_FormClosed);
             MF.Show();
@@ -61,7 +65,7 @@ namespace SharpOcarina
             ApplicationTitle = MF.GetType().Namespace + GetVerString(ApplicationVersion);
 #endif
             // MF.GetType().Namespace + " 1.3";
-            ApplicationTitle = MF.GetType().Namespace + " 1.56";
+            
             MF.BringToFront();
             do
             {

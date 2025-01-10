@@ -28,11 +28,9 @@ namespace SharpOcarina
                 new SongItem {Text = "RGBA32", Value = 1},
                 new SongItem {Text = "I4", Value = 2},
                 new SongItem {Text = "I8", Value = 3},
-                new SongItem {Text = "IA8", Value = 4},
-                new SongItem {Text = "IA16", Value = 5},
-                new SongItem {Text = "IA16", Value = 5},
-                new SongItem {Text = "IA16", Value = 5},
-                new SongItem {Text = "IA16", Value = 5},
+                new SongItem {Text = "IA4", Value = 4},
+                new SongItem {Text = "IA8", Value = 5},
+                new SongItem {Text = "IA16", Value = 6},
             };
             ImageFormatComboBox.Items.AddRange(objs);
         }
@@ -47,30 +45,37 @@ namespace SharpOcarina
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
-                Data = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
+                LoadFile(openFileDialog1.FileName);
 
-                SourceFilename.Text = openFileDialog1.FileName;
-
-                if (ObjFile.ValidImageTypes.IndexOf(Path.GetExtension(SourceFilename.Text).ToLowerInvariant()) != -1)
-                {
-                    ImageFormatComboBox.Enabled = ImageFormatLabel.Enabled = true;
-                    ImageFormatComboBox.SelectedIndex = 0;
-                    GenerateTexture();
-
-                }
-                else
-                {
-                    ImageFormatComboBox.Enabled = ImageFormatLabel.Enabled = false;
-                    TextureBox.Image = null;
-                    ConvertedData = new List<byte>();
-                }
-
-                SaveButton.Enabled = true;
-                SizeLabel.Visible = true;
-                SizeLabel.Text = "Size: " + Data.Count + " bytes";
             }
 
 
+        }
+
+        private void LoadFile(string FileName)
+        {
+
+            Data = new List<byte>(File.ReadAllBytes(FileName));
+
+            SourceFilename.Text = FileName;
+
+            if (ObjFile.ValidImageTypes.IndexOf(Path.GetExtension(SourceFilename.Text).ToLowerInvariant()) != -1)
+            {
+                ImageFormatComboBox.Enabled = ImageFormatLabel.Enabled = true;
+                ImageFormatComboBox.SelectedIndex = 0;
+                GenerateTexture();
+
+            }
+            else
+            {
+                ImageFormatComboBox.Enabled = ImageFormatLabel.Enabled = false;
+                TextureBox.Image = null;
+                ConvertedData = new List<byte>();
+            }
+
+            SaveButton.Enabled = true;
+            SizeLabel.Visible = true;
+            SizeLabel.Text = "Size: " + Data.Count + " bytes";
         }
 
         private void GenerateTexture()
@@ -91,7 +96,8 @@ namespace SharpOcarina
             {
                 case "RGBA16":
                 {
-                    NImageUtil.RGBA16((uint)Texture.Width, (uint)Texture.Height, 4, Texture.Data, 0, ref Result);
+                    uint linesize = (uint) (Texture.Width / 4);
+                    NImageUtil.RGBA16((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
                     break;
                 }
                 case "RGBA32":
@@ -101,48 +107,56 @@ namespace SharpOcarina
                 }
                 case "I4":
                 {
-                    uint linesize = 1;
-                    if (Texture.Width == 32) linesize = 2;
-                    else if (Texture.Width == 64) linesize = 4;
-                    else if (Texture.Width == 128) linesize = 8;
+                    float linesize = Texture.Width / 16.0f;
                     NImageUtil.I4((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
                     break;
                 }
                 case "I8":
                 {
-                    uint linesize = 2;
-                    if (Texture.Width == 32) linesize = 4;
-                    else if (Texture.Width == 64) linesize = 8;
-                    else if (Texture.Width == 128) linesize = 16;
+                    float linesize = Texture.Width / 8.0f;
                     NImageUtil.I8((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
+                    break;
+                }
+                case "IA4":
+                {
+                    float linesize = Texture.Width / 16.0f;
+                    NImageUtil.IA4((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
                     break;
                 }
                 case "IA8":
                 {
-                    uint linesize = 2;
-                    if (Texture.Width == 32) linesize = 4;
-                    else if (Texture.Width == 64) linesize = 8;
-                    else if (Texture.Width == 128) linesize = 16;
+                    float linesize = Texture.Width / 8.0f;
                     NImageUtil.IA8((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
                     break;
                 }
                 case "IA16":
                 {
-                    uint linesize = 4;
-                    if (Texture.Width == 32) linesize = 8;
-                    else if (Texture.Width == 64) linesize = 16;
-                    else if (Texture.Width == 128) linesize = 32;
-                    NImageUtil.IA16((uint)Texture.Width, (uint)Texture.Height, 4, Texture.Data, 0, ref Result);
+                    float linesize = Texture.Width / 4.0f;
+                    NImageUtil.IA16((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
                     break;
                 }
 
             }
             
-            TextureBox.Image = ArrayToBitmap(Result, Texture.Width, Texture.Height);/*
+            TextureBox.Image = ResizeImage(ArrayToBitmap(Result, Texture.Width, Texture.Height), Texture.Width*2, Texture.Height*2);
+            
+            /*
+            
             using (var ms = new MemoryStream(Result))
             {
                 TextureBox.Image = Image.FromStream(ms);
             }*/
+        }
+
+        private Image ResizeImage(Image image, int width, int height)
+        {
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.DrawImage(image, 0, 0, width, height);
+            }
+            return resizedImage;
         }
 
         private Bitmap ArrayToBitmap(byte[] data, int width, int height)
@@ -217,6 +231,37 @@ namespace SharpOcarina
         private void ImageFormatComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             GenerateTexture();
+        }
+
+        private void SizeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FileToC_DragDrop(object sender, DragEventArgs e)
+        {
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length > 0)
+                {
+                    LoadFile(files[0]);
+                }
+
+            }
+        }
+
+        private void FileToC_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
         }
     }
 }

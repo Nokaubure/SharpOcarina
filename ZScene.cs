@@ -389,7 +389,7 @@ namespace SharpOcarina
                     {
                         continue;
                     }
-                    DebugConsole.WriteLine(tmp);
+                    //DebugConsole.WriteLine(tmp);
                     if (tmp == _Rooms.Count - subs)
                     {
                         groupcount++;
@@ -1252,6 +1252,8 @@ namespace SharpOcarina
                 Filepath = target + Path.DirectorySeparatorChar;
 
             }
+
+            MainForm.n64preview = false;
 
             ConvertScene(ConsecutiveRoomInject, ForceRGBATextures,this, game);
 
@@ -2656,35 +2658,7 @@ namespace SharpOcarina
                     SceneData.Add(ActorCutscene.Letterbox);
                 }
 
-                /*
-                Helpers.Append64(ref SceneData, 0x02BCFFFFFFFDFFFF);
-                Helpers.Append64(ref SceneData, 0x000100FF0000001B);
-                Helpers.Append64(ref SceneData, 0x0258FFFFFFFEFFFF);
-                Helpers.Append64(ref SceneData, 0x000200FF0000001B);
-                Helpers.Append64(ref SceneData, 0x02BCFFFFFFFCFFFF);
-                Helpers.Append64(ref SceneData, 0x000300FF0000001B);
-                Helpers.Append64(ref SceneData, 0x02BCFFFFFFFBFFFF);
-                Helpers.Append64(ref SceneData, 0x000400FF0000001B);
-                Helpers.Append64(ref SceneData, 0x01F4FFFFFFF9FFFF);
-                Helpers.Append64(ref SceneData, 0x000500FF00000020);
-                Helpers.Append64(ref SceneData, 0x0190FFFFFFF5FFFF);
-                Helpers.Append64(ref SceneData, 0x000600FF00000120);
-                Helpers.Append64(ref SceneData, 0x0064FFFFFFF8FFFF);
-                Helpers.Append64(ref SceneData, 0x000700FF00000020);
-                Helpers.Append64(ref SceneData, 0x00C8FFFFFFF7FFFF);
-                Helpers.Append64(ref SceneData, 0x000800FF00000020);
-                Helpers.Append64(ref SceneData, 0x0320FFFFFFFAFFFF);
-                Helpers.Append64(ref SceneData, 0xFFFF00FF00000020);
-                Helpers.Append64(ref SceneData, 0x0352FFFF0000FFFF);
-                Helpers.Append64(ref SceneData, 0x000A00FF00000120);
-                Helpers.Append64(ref SceneData, 0x035CFFFF0001FFFF);
-                Helpers.Append64(ref SceneData, 0xFFFF00FF00000120);
-                Helpers.Append64(ref SceneData, 0x000B0087FFF6FFFF);
-                Helpers.Append64(ref SceneData, 0xFFFF000100000120);
-                Helpers.Append64(ref SceneData, 0x0384003C0002FFFF);
-                Helpers.Append64(ref SceneData, 0xFFFF00FF00000020);
-                Helpers.Append64(ref SceneData, 0xFFFFFFFF0003FFFF);
-                Helpers.Append64(ref SceneData, 0xFFFF00FF00000020);*/
+                
                 AddPadding(ref SceneData, 8);
                 
 
@@ -3595,6 +3569,9 @@ namespace SharpOcarina
 
                 else if (name.Contains("#i8") || tags.Contains("#i8"))
                     Mat.ForcedFormat = "I8";
+
+                else if (name.Contains("#ia4") || tags.Contains("#ia4"))
+                    Mat.ForcedFormat = "IA4";
 
                 else if (name.Contains("#ia8") || tags.Contains("#ia8"))
                     Mat.ForcedFormat = "IA8";

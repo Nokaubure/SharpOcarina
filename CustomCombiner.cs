@@ -57,8 +57,8 @@ namespace SharpOcarina
             Object[] objs = new[]
             {
                 "Combined color",
+                "Texture0 color",
                 "Texture1 color",
-                "Texture2 color",
                 "Prim color",
                 "Vtx color",
                 "Env color",
@@ -80,8 +80,8 @@ namespace SharpOcarina
             objs = new[]
                         {
                 "Combined color",
+                "Texture0 color",
                 "Texture1 color",
-                "Texture2 color",
                 "Prim color",
                 "Vtx color",
                 "Env color",
@@ -103,15 +103,15 @@ namespace SharpOcarina
             objs = new[]
                        {
                 "Combined color",
+                "Texture0 color",
                 "Texture1 color",
-                "Texture2 color",
                 "Prim color",
                 "Vtx color",
                 "Env color",
                 "Keyscale",
                 "Combined alpha",
+                "Texture0 alpha",
                 "Texture1 alpha",
-                "Texture2 alpha",
                 "Prim alpha",
                 "Vtx alpha",
                 "Env alpha",
@@ -142,8 +142,8 @@ namespace SharpOcarina
             objs = new[]
                        {
                 "Combined color",
+                "Texture0 color",
                 "Texture1 color",
-                "Texture2 color",
                 "Prim color",
                 "Vtx color",
                 "Env color",
@@ -157,8 +157,8 @@ namespace SharpOcarina
             objs = new[]
                        {
                 "Combined alpha",
+                "Texture0 alpha",
                 "Texture1 alpha",
-                "Texture2 alpha",
                 "Prim alpha",
                 "Vtx alpha",
                 "Env alpha",
@@ -178,8 +178,8 @@ namespace SharpOcarina
             objs = new[]
                        {
                 "Combined alpha",
+                "Texture0 alpha",
                 "Texture1 alpha",
-                "Texture2 alpha",
                 "Prim alpha",
                 "Vtx alpha",
                 "Env alpha",

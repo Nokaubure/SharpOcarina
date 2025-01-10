@@ -193,7 +193,11 @@ namespace SharpOcarina
 
         public Stopwatch stopwatch = new Stopwatch();
 
+        public string[] args;
+
         int ActorCubeGLID = 0, ActorPyramidGLID = 0, AxisMarkerGLID = 0, DoorGLID = 0, EnemyGLID = 0, BossGLID = 0, ActorCameraGLID = 0;
+
+        
 
         //test
 
@@ -209,10 +213,12 @@ namespace SharpOcarina
 
         MouseStruct Mouse = new MouseStruct();
 
-        public MainForm()
+        public MainForm(string[] args)
         {
 
             InitializeComponent();
+
+            this.args = args;
 
             //   ChangeTheme(new ColorScheme(true),tabControl1.Controls);
 
@@ -591,6 +597,47 @@ namespace SharpOcarina
 
             renderer = new TextRendering.TextRenderer(glControl1.Width, glControl1.Height);
 
+            string LoadScene = "";
+            string LoadROM = "";
+            string LoadModel = "";
+
+            foreach(string arg in args)
+            {
+                switch (Path.GetExtension(arg).ToLower())
+                {
+                    case ".xml":
+                    {
+                            LoadScene = arg;
+                            break;
+                    }
+                    case ".z64":
+                    case ".toml":
+                    {
+                            LoadROM = arg;
+                            break;
+                    }
+                    case ".obj":
+                    {
+                            LoadModel = arg;
+                            break;
+                    }
+                }
+            }
+            
+            if (LoadScene != "" && File.Exists(LoadScene))
+                OpenScene(LoadScene); 
+            else
+                newSceneToolStripMenuItem_Click(new object(), new EventArgs());
+
+            if (LoadROM != "" && File.Exists(LoadROM))
+                OpenGlobalFile(LoadROM);
+
+            if (LoadModel != "" && LoadScene == "" && File.Exists(LoadModel))
+            {
+                LoadCollision(LoadModel);
+                AddMultipleRoomsFunc(LoadModel);
+            }
+
         }
 
         private void ReloadXMLs()
@@ -771,6 +818,7 @@ namespace SharpOcarina
                 }
             RenderFunctionFlagPresetButton.DropDownItems.Clear();
             RenderFunctionFlagPresetButton.DropDownItems.AddRange(flagoutput2);
+
 
         }
 
@@ -2131,7 +2179,7 @@ namespace SharpOcarina
                 }
 
                 /* Render group highlight... */
-                if (((ObjFile.Group)GroupList.SelectedItem) != null && (tabControl1.SelectedIndex == 1 || (tabControl1.SelectedIndex != 1 && selectedtimer > 0)) && customcombiner == null)
+                if (((ObjFile.Group)GroupList.SelectedItem) != null && (tabControl1.SelectedIndex == 1 || (tabControl1.SelectedIndex != 1 && selectedtimer > 0)) && customcombiner == null) //TODO setting to disable it
                 {
                     GL.PushMatrix();
                     GL.PushAttrib(AttribMask.AllAttribBits);
@@ -3989,7 +4037,7 @@ namespace SharpOcarina
 //#if DEBUG
                     openZmapToolstrip.Visible = true;
                     openSceneToolStripMenuItem.Visible = true;
-                    OpenSceneFromRoomToolStrip.Visible = true;
+                    OpenSceneFromRomToolStrip.Visible = true;
                     toolStripSeparator6.Visible = true;
 //#endif
 
@@ -4463,9 +4511,12 @@ namespace SharpOcarina
 
                 if (CurrentScene.PregeneratedMesh)
                 {
-                    foreach (Control Ctrl in tabCollision.Controls)
+                    AddpolygonButton.Enabled = false;
+                    DeletepolygonButton.Enabled = false;
+                    /*
+                    foreach (Control Ctrl in groupBoxCollisionPolytype.Controls)
                         if (Ctrl != ExitList && Ctrl != ExitNumber && Ctrl != ExitListLabel && Ctrl != AddexitButton && Ctrl != DeleteexitButton) Ctrl.Enabled = false;
-
+*/
                 }
 
 
@@ -7394,20 +7445,24 @@ namespace SharpOcarina
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                LoadCollision(openFileDialog1.FileName);
 
-                CurrentScene.ColModel = new ObjFile(openFileDialog1.FileName, true);
-                CurrentScene.CollisionFilename = openFileDialog1.FileName;
+            }
+        }
 
-                savechanges = true;
+        private void LoadCollision(string FileName)
+        {
+            CurrentScene.ColModel = new ObjFile(FileName, true);
+            CurrentScene.CollisionFilename = FileName;
 
-                UpdateForm();
+            savechanges = true;
 
-                if (CurrentScene.ColModel.Vertices.Count > 0x1FFF)
-                {
-                    MessageBox.Show("This collision mesh has more than 8191 vertex! this is going to crash the game, try reducing triangle count.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            UpdateForm();
 
-                }
+            if (CurrentScene.ColModel.Vertices.Count > 0x1FFF)
+            {
+                MessageBox.Show("This collision mesh has more than 8191 vertex! this is going to crash the game, try reducing triangle count.",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
         }
@@ -8303,6 +8358,7 @@ namespace SharpOcarina
                 PolygonSelect.Minimum = 1;
                 PolygonSelect.Maximum = CurrentScene.PolyTypes.Count;
                 PolygonSelect.Enabled = true;
+                if (PolygonSelect.Value == 0) PolygonSelect.Value = 1;
 
                 if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber >= CurrentScene.ExitList.Count)
                     CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber = CurrentScene.ExitList.Count;
@@ -9099,6 +9155,8 @@ namespace SharpOcarina
                 AdditionalTextureList.Minimum = 1;
                 AdditionalTextureList.Maximum = CurrentScene.AdditionalTextures.Count;
                 AdditionalTextureList.Enabled = true;
+
+                
 
 
                 DeleteAdditionalTexture.Enabled = true;
@@ -10795,72 +10853,78 @@ namespace SharpOcarina
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                CurrentScene.AddRoom(openFileDialog1.FileName, " (Room 0)");
-                int maxroom = 0;
-                int tmp = 0;
-                savechanges = true;
-                foreach (ObjFile.Group group in CurrentScene.Rooms[0].ObjModel.Groups)
-                {
-                    // DebugConsole.WriteLine(group.Name.ToLower());
-                    group.Name = group.Name.Replace("TAG_", "#");
-
-                    if (group.Name.ToLower().Contains("#room"))
-                    {
-
-                        string s = group.Name.ToLower().Substring(group.Name.ToLower().IndexOf("#room") + 5);
-                        s = s.SubstringTill(0, '#').SubstringTill(0, '.').SubstringTill(0, '_');
-
-                        if (!Int32.TryParse(s, out tmp))
-                        {
-                            MessageBox.Show("Bad usage of #Room tag. The tag needs to be at the end of the group name or before another tag.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                            CurrentScene.Rooms.Clear(); CurrentScene.NewRoomMode = false;
-                            ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
-                            if (NormalHeader.SceneHeaders.Count > 0) ResetAlternateRooms();
-                            GroupList.DataSource = null;
-                            UpdateForm();
-                            SelectRoom();
-                            return;
-                        }
-                        //tmp = Convert.ToInt32(s);
-                        if (tmp > maxroom) maxroom = tmp;
-                    }
-                }
-
-                if (maxroom > 0)
-                {
-                    for (int i = 0; i < maxroom; i++)
-                    {
-                        CurrentScene.AddRoom(openFileDialog1.FileName, " (Room " + (i + 1) + ")");
-
-                        if (settings.MajorasMask)
-                        {
-                            CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindSouth = 0;
-                            CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindStrength = 0;
-                            CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindVertical = 0;
-                            CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindWest = 0;
-                        }
-
-                        if (CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].TrueGroups.Count == 0)
-                        {
-                            MessageBox.Show("Room " + (CurrentScene.Rooms.Count - 1) + " has no groups, probably due to bad export settings, or maybe because you didn't assigned any group to this room. If using blender, try installing the SharpOcarina export plugin.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-
-
-                ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
-
-                if (NormalHeader.SceneHeaders.Count > 0) ResetAlternateRooms();
-
-                UpdateForm();
-                SelectRoom(0);
-
-                AddRoomsAdditionalTextures();
-
-                if (SimulateN64Gfx == true && CurrentScene.ColModel != null)
-                    CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
+                AddMultipleRoomsFunc(openFileDialog1.FileName);
             }
+        }
+
+        private void AddMultipleRoomsFunc(string FileName)
+        {
+
+            CurrentScene.AddRoom(FileName, " (Room 0)");
+            int maxroom = 0;
+            int tmp = 0;
+            savechanges = true;
+            foreach (ObjFile.Group group in CurrentScene.Rooms[0].ObjModel.Groups)
+            {
+                // DebugConsole.WriteLine(group.Name.ToLower());
+                group.Name = group.Name.Replace("TAG_", "#");
+
+                if (group.Name.ToLower().Contains("#room"))
+                {
+
+                    string s = group.Name.ToLower().Substring(group.Name.ToLower().IndexOf("#room") + 5);
+                    s = s.SubstringTill(0, '#').SubstringTill(0, '.').SubstringTill(0, '_');
+
+                    if (!Int32.TryParse(s, out tmp))
+                    {
+                        MessageBox.Show("Bad usage of #Room tag. The tag needs to be at the end of the group name or before another tag.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        CurrentScene.Rooms.Clear(); CurrentScene.NewRoomMode = false;
+                        ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
+                        if (NormalHeader.SceneHeaders.Count > 0) ResetAlternateRooms();
+                        GroupList.DataSource = null;
+                        UpdateForm();
+                        SelectRoom();
+                        return;
+                    }
+                    //tmp = Convert.ToInt32(s);
+                    if (tmp > maxroom) maxroom = tmp;
+                }
+            }
+
+            if (maxroom > 0)
+            {
+                for (int i = 0; i < maxroom; i++)
+                {
+                    CurrentScene.AddRoom(FileName, " (Room " + (i + 1) + ")");
+
+                    if (settings.MajorasMask)
+                    {
+                        CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindSouth = 0;
+                        CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindStrength = 0;
+                        CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindVertical = 0;
+                        CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].WindWest = 0;
+                    }
+
+                    if (CurrentScene.Rooms[CurrentScene.Rooms.Count - 1].TrueGroups.Count == 0)
+                    {
+                        MessageBox.Show("Room " + (CurrentScene.Rooms.Count - 1) + " has no groups, probably due to bad export settings, or maybe because you didn't assigned any group to this room. If using blender, try installing the SharpOcarina export plugin.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+
+
+            ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
+
+            if (NormalHeader.SceneHeaders.Count > 0) ResetAlternateRooms();
+
+            UpdateForm();
+            SelectRoom(0);
+
+            AddRoomsAdditionalTextures();
+
+            if (SimulateN64Gfx == true && CurrentScene.ColModel != null)
+                CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
         }
 
         private void CutsceneActorAddAction_Click(object sender, EventArgs e)
@@ -12241,6 +12305,13 @@ namespace SharpOcarina
                     if (addedrooms > 0) rereload = true;
                     while (CurrentScene.Rooms.Count > counter)
                         CurrentScene.Rooms.RemoveAt(CurrentScene.Rooms.Count - 1 - addedrooms);
+                    //temporal fix
+                    for(int r = 0; r < CurrentScene.Rooms.Count; r++)
+                    {
+                        string roomname = Path.GetFileNameWithoutExtension(CurrentScene.Rooms[0].ModelFilename);
+                        if (CurrentScene.Rooms[r].ModelShortFilename.Contains(roomname + " (Room"))
+                            CurrentScene.Rooms[r].ModelShortFilename = roomname + " (Room " + (r) + ")";
+                    }
                 }
                 ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
 
@@ -15349,6 +15420,7 @@ namespace SharpOcarina
 
         public void OpenGlobalFile(string filename)
         {
+            
             FileInfo info = new FileInfo(filename);
 
             injectToROMToolStripMenuItem.Text = "&Inject to ROM";
@@ -16349,6 +16421,8 @@ namespace SharpOcarina
                                 CurrentScene.ExitList.Add(new ZScene.ZUShort(Helpers.Read16(data, i)));
                             }
 
+
+
                         }
 
                         //skybox settings
@@ -16803,6 +16877,7 @@ namespace SharpOcarina
             actorEditControl3.UpdateActorEdit();
             actorEditControl3.UpdateForm();
             UpdateForm();
+            if (ExitList.Items.Count > 0) SelectExit(0);
 
             if (CurrentScene.prerenderimages.Count > 0)
             {
@@ -17083,7 +17158,7 @@ namespace SharpOcarina
             }
         }
 
-        private void OpenSceneFromRoomToolStrip_Click(object sender, EventArgs e)
+        private void OpenSceneFromRomToolStrip_Click(object sender, EventArgs e)
         {
             if (!WarningUnsavedChanges(true)) return;
 
@@ -17952,7 +18027,7 @@ namespace SharpOcarina
                 int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
                 CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.Custom[Index] = ((ObjFile.Group)GroupList.SelectedItem).Custom;
 
-                UpdateGroupSelect();
+                UpdateGroupSelect(n64refresh);
             }
         }
 
@@ -18186,6 +18261,7 @@ namespace SharpOcarina
         {
 
         }
+
 
         private double DegToRad(double val)
         {

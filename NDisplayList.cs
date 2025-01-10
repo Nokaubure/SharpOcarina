@@ -49,6 +49,41 @@ namespace SharpOcarina
         public Vector3d MinCoordinate = new Vector3d(32766, 32766, 32766);
         public Vector3d MaxCoordinate = new Vector3d(-32766, -32766, -32766);
 
+
+        public const int C_COMBINED = 0;
+        public const int C_TEXEL0 = 1;
+        public const int C_TEXEL1 = 2;
+        public const int C_PRIMITIVE = 3;
+        public const int C_SHADE = 4;
+        public const int C_ENVIRONMENT = 5;
+        public const int C_CENTER = 6;
+        public const int C_SCALE = 6;
+        public const int C_COMBINED_ALPHA = 7;
+        public const int C_TEXEL0_ALPHA = 8;
+        public const int C_TEXEL1_ALPHA = 9;
+        public const int C_PRIMITIVE_ALPHA = 10;
+        public const int C_SHADE_ALPHA = 11;
+        public const int C_ENV_ALPHA = 12;
+        public const int C_LOD_FRACTION = 13;
+        public const int C_PRIM_LOD_FRAC = 14;
+        public const int C_NOISE = 7;
+        public const int C_K4 = 7;
+        public const int C_K5 = 15;
+        public const int C_1 = 6;
+        public const int C_0 = 31;
+        public const int A_COMBINED = 0;
+        public const int A_TEXEL0 = 1;
+        public const int A_TEXEL1 = 2;
+        public const int A_PRIMITIVE = 3;
+        public const int A_SHADE = 4;
+        public const int A_ENVIRONMENT = 5;
+        public const int A_LOD_FRACTION = 0;
+        public const int A_PRIM_LOD_FRAC = 6;
+        public const int A_1 = 6;
+        public const int A_0 = 7;
+        
+
+
         public class NVertex
         {
             public Vector3d Position;
@@ -340,6 +375,12 @@ namespace SharpOcarina
             return Param(GBI.G_SETPRIMCOLOR, (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24)));
         }
 
+        private ulong SetPrimColorNew(uint ARGB, uint primlodfrac)
+        {
+            return 0xFA00000000000000 | (primlodfrac << 32) | (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24));
+           // return Param(GBI.G_SETPRIMCOLOR, (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24)));
+        }
+
         private ulong SetEnvColor(uint ARGB)
         {
             return Param(GBI.G_SETENVCOLOR, (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24)));
@@ -353,6 +394,40 @@ namespace SharpOcarina
         private ulong SetCombine(uint MuxS0, uint MuxS1)
         {
             return ((ulong)(Helpers.ShiftL(GBI.G_SETCOMBINE, 24, 8) | Helpers.ShiftL(MuxS0, 0, 24)) << 32) | (MuxS1 & 0xFFFFFFFF);
+        }
+
+        private ulong SetCombineNew(ulong C1A, ulong C1B, ulong C1C, ulong C1D, ulong C2A, ulong C2B, ulong C2C, ulong C2D,
+                                    ulong A1A, ulong A1B, ulong A1C, ulong A1D, ulong A2A, ulong A2B, ulong A2C, ulong A2D)
+        {
+            C1A &= 0xF;
+            C2A &= 0xF;
+            C1B &= 0xF;
+            C2B &= 0xF;
+            C1D &= 0x7;
+            C2D &= 0x7;
+            ulong Combiner = (0 | ((C1A << (20 + 32)))
+                            | ((C1B << 28))
+                            | ((C1C << (15 + 32)))
+                            | ((C1D << 15))
+
+                            | ((C2A << (5 + 32)))
+                            | ((C2B << 24))
+                            | ((C2C << (0 + 32)))
+                            | ((C2D << 6))
+
+                            | ((A1A << (12 + 32)))
+                            | ((A1B << 12))
+                            | ((A1C << (9 + 32)))
+                            | ((A1D << 9))
+
+                            | ((A2A << 21))
+                            | ((A2B << 3))
+                            | ((A2C << 18))
+                            | ((A2D << 0)));
+
+            //DebugConsole.WriteLine((0xFC00000000000000 | Combiner).ToString("X16"));
+
+            return 0xFC00000000000000 | Combiner;
         }
 
 
@@ -873,27 +948,55 @@ namespace SharpOcarina
 
                 //
 
+                bool HasBlendingAnimation = (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask
+                    && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasBlending());
+
+                bool WritePrim = (TintAlpha != 0xFFFFFFFF || IsTranslucent || hasalphavertex || HasBlendingAnimation || Group.MultiTexMaterialName != "" || AlphaMask);
+
+                ulong LerpValue = (ulong) (!HasBlendingAnimation ? C_PRIM_LOD_FRAC : C_ENV_ALPHA);
+
+
+
                 if (!Group.Custom)
                 {
-
-
                     if (Surf.textureless)
                     {
-
-
                         if (!hasalphavertex)
                         {
                             if (IsTranslucent == true)
-                                Helpers.Append64(ref DList, 0xFCBD7E038FFE7DFB);
+                                //Helpers.Append64(ref DList, 0xFCBD7E038FFE7DFB);
+                                //textureless transparent
+                                Helpers.Append64(ref DList, SetCombineNew(
+                                    C_0,        C_0, C_0,         C_SHADE,
+                                    C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                    A_0,        A_0, A_0,         A_0,
+                                    A_0,        A_0, A_0,         A_PRIMITIVE));
                             else
-                                Helpers.Append64(ref DList, 0xFCBD7E038FFE7DF8);
-                            // Helpers.Append64(ref DList, SetCombine(0xF9FE03, 0xFFFE7DF8));
+                                //Helpers.Append64(ref DList, 0xFCBD7E038FFE7DF8);
+                                //textureless opaque
+                                if (WritePrim)
+                                    Helpers.Append64(ref DList, SetCombineNew(
+                                        C_0,        C_0, C_0,         C_SHADE,
+                                        C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                        A_0,        A_0, A_0,         A_0,
+                                        A_0,        A_0, A_0,         A_1));
+                                else
+                                    Helpers.Append64(ref DList, SetCombineNew(
+                                        C_0,        C_0, C_0,         C_SHADE,
+                                        C_0,        C_0, C_0,         C_COMBINED,
+                                        A_0,        A_0, A_0,         A_0,
+                                        A_0,        A_0, A_0,         A_1));
                         }
                         else
                         {
 
-                            Helpers.Append64(ref DList, 0xFCDC7E03FF1E7DFC);
-                            //Helpers.Append64(ref DList, SetCombine(0xDC7E03, 0xDF0E7DFF));
+                            //Helpers.Append64(ref DList, 0xFCDC7E03FF1E7DFC);
+                            //textureless vertex alpha
+                            Helpers.Append64(ref DList, SetCombineNew(
+                                C_0,        C_0, C_0,         C_SHADE,
+                                C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                A_0,        A_0, A_0,         A_0,
+                                A_0,        A_0, A_0,         A_SHADE));
                         }
 
                         if (hasalphavertex)
@@ -901,13 +1004,6 @@ namespace SharpOcarina
                             Helpers.Append64(ref DList, 0xE200001C0C1849D8 | (ulong)((Decal) ? 0xC00 : 0x000));
                             Helpers.Append64(ref DList, 0xD9FEFFFF00000000);
                         }
-                        else
-                        {
-                            //      Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x08110078 | ((SmoothRGBAEdges) ? 0x4000 : 0x3000) | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
-                        }
-
-
-
                         //  DebugConsole.WriteLine("textureless");
                     }
                     else
@@ -915,54 +1011,99 @@ namespace SharpOcarina
                         int matindex = MatList.FindIndex(x => x.Name == Group.MultiTexMaterialName);
                         if (IsTranslucent == true)
                         {
-                            /* Translucent surface */
-
+                            // XLU
                             if (hasalphavertex)
                             {
-                                //TODO
                                 if (Group.MultiTexMaterialName == "")
-                                    if (OutdoorLight)
-                                        Helpers.Append64(ref DList, 0xFC272C041F1093FF); // dafuq?
+                                {
+                                    if (!ThisTexture.HasAlpha)
+                                        //Helpers.Append64(ref DList, 0xFC127E03FF1FFDFC);
+                                        // Vertex alpha, single opaque texture
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                            C_TEXEL0,   C_0, C_SHADE,     C_0,
+                                            C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                            A_0,        A_0, A_0,         A_PRIMITIVE,
+                                            A_COMBINED, A_0, A_SHADE,     A_0));
                                     else
-                                    {
-                                        if (!ThisTexture.HasAlpha)
-                                            Helpers.Append64(ref DList, 0xFC127E03FF1FFDFC);
-                                        else
-                                            Helpers.Append64(ref DList, 0xFC272C041F1093FF);
-
-                                    }
+                                        //Helpers.Append64(ref DList, 0xFC272C041F1093FF);
+                                        // Vertex alpha, single transparent texture
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                            C_TEXEL0,   C_0, C_SHADE,     C_0,
+                                            C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                            A_TEXEL0,   A_0, A_PRIMITIVE, A_0,
+                                            A_COMBINED, A_0, A_SHADE,     A_0));
+                                }
                                 else
                                 {
-                                    if (OutdoorLight)
-                                        Helpers.Append64(ref DList, 0xFC267E041F1CFDFC);
+                                    if (!ThisTexture.HasAlpha)
+                                        // Vertex alpha, multi opaque texture
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                            C_TEXEL1,   C_TEXEL0, LerpValue,   C_TEXEL0,
+                                            C_COMBINED, C_0,      C_SHADE,     C_0,
+                                            A_0,        A_0,      A_0,         A_PRIMITIVE,
+                                            A_COMBINED, A_0,      A_SHADE,     A_0));
                                     else
-                                        Helpers.Append64(ref DList, 0xFC267E041F1CFDFC); //why the same
+                                        // Vertex alpha, multi transparent texture
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                            C_TEXEL1,   C_TEXEL0, LerpValue,       C_TEXEL0,
+                                            C_COMBINED, C_0,      C_SHADE,         C_0,
+                                            A_TEXEL1,   A_TEXEL0, A_0,             A_TEXEL0,
+                                            A_COMBINED, A_0,      A_SHADE,         A_0));
                                 }
-
                             }
-
-                            else if (!OutdoorLight && !ThisTexture.HasAlpha && Group.MultiTexMaterialName == "")
-                                Helpers.Append64(ref DList, SetCombine(0x167E04, 0xFF0FFDFF)); // vertex color single texture
                             else if (Group.MultiTexMaterialName != "")
                             {
-                                
                                 if ((Textures[matindex].HasAlpha))
                                 {
-                                    if (AlphaMask) Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF5F8));
-                                    else if (!OutdoorLight) Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));//1F1093FF
-                                    else Helpers.Append64(ref DList, SetCombine(0x262A05, 0x1FFC93F8));
+                                    if (AlphaMask)
+                                        //Helpers.Append64(ref DList, SetCombine(0x127E03FFFFF5F8));
+                                        //Alpha mask, transparent multitexture
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                            C_TEXEL0,   C_0, C_SHADE,     C_0,
+                                            C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                            A_TEXEL1,   A_0, A_PRIMITIVE, A_0,
+                                            A_0,        A_0, A_0,         A_COMBINED));
+                                    else
+                                        //Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));
+                                        //transparent multitexture
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                            C_TEXEL1,   C_TEXEL0, LerpValue,     C_TEXEL1,
+                                            C_COMBINED, C_0,      C_SHADE,       C_0,
+                                            A_TEXEL1,   A_TEXEL0, A_0,           A_TEXEL0,
+                                            A_COMBINED, A_0,      A_PRIMITIVE,   A_0));
+                                    //else Helpers.Append64(ref DList, SetCombine(0x262A051FFC93F8));
                                 }
                                 else
-                                    Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1F0CFDFF));
+                                    //Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1F0CFDFF));
+                                    //opaque multitexture
+                                    Helpers.Append64(ref DList, SetCombineNew(
+                                        C_TEXEL1,   C_TEXEL0, LerpValue,   C_TEXEL0,
+                                        C_COMBINED, C_0,      C_SHADE,     C_0,
+                                        A_0,        A_0,      A_0,         A_1,
+                                        A_COMBINED, A_0,      A_PRIMITIVE, A_0));
 
                             }
-                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha)) Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
-                            else Helpers.Append64(ref DList, SetCombine(0x167E03, 0xFF0FFDFF));
+                            else if (ThisTexture.HasAlpha)
+                                //Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
+                                //xlu single transparent texture
+                                Helpers.Append64(ref DList, SetCombineNew(
+                                    C_TEXEL0,   C_0, C_SHADE,     C_0,
+                                    C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                    A_0,        A_0, A_0,         A_TEXEL0,
+                                    A_COMBINED, A_0, A_PRIMITIVE, A_0));
+
+                            else
+                                //Helpers.Append64(ref DList, SetCombine(0x167E03, 0xFF0FFDFF));
+                                //xlu single opaque texture
+                                Helpers.Append64(ref DList, SetCombineNew(
+                                    C_TEXEL0,   C_0, C_SHADE,     C_0,
+                                    C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                    A_0,        A_0, A_0,         A_0,
+                                    A_0,        A_0, A_0,         A_PRIMITIVE));
 
 
 
-                            //Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1F0CFDFF));
-
+                           
                             if (hasalphavertex)
                             {
                                 Helpers.Append64(ref DList, 0xE200001C0C1849D8 | (ulong)((Decal) ? 0xC00 : 0x000));
@@ -974,19 +1115,35 @@ namespace SharpOcarina
                                 Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D8 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
                             //Helpers.Append64(ref DList, SetRenderMode(0x18, 0xC8113078));   
 
-                        }
+                        } //Non-translucent
                         else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha))
                         {
                             /* Texture with alpha channel */
                             if (Group.MultiTexMaterialName != "")
                             {
 
-                                if (!OutdoorLight) Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));//1F1093FF
-                                else Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));
+                                //Helpers.Append64(ref DList, SetCombine(0x262A04, 0x1FFC93F8));
+                                //opa multitexture, one of the textures is transparent
+                                Helpers.Append64(ref DList, SetCombineNew(
+                                    C_TEXEL1,   C_TEXEL0, LerpValue,     C_TEXEL0,
+                                    C_COMBINED, C_0,      C_SHADE,       C_0,
+                                    A_TEXEL1,   A_TEXEL0, A_ENVIRONMENT, A_TEXEL0,
+                                    A_0,        A_0,      A_0,           A_COMBINED));
                             }
-                            else Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
-
-                            //    Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
+                            else //Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
+                                //opa single transparent texture
+                                if (WritePrim)
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                        C_TEXEL0,   C_0,   C_SHADE,     C_0,
+                                        C_COMBINED, C_0,   C_PRIMITIVE, C_0,
+                                        A_0,        A_0,   A_0,         A_TEXEL0,
+                                        A_0,        A_0,   A_0,         A_COMBINED));
+                                else
+                                        Helpers.Append64(ref DList, SetCombineNew(
+                                        C_TEXEL0,   C_0,   C_SHADE,     C_0,
+                                        C_0,        C_0,   C_0,         C_COMBINED,
+                                        A_0,        A_0,   A_0,         A_TEXEL0,
+                                        A_0,        A_0,   A_0,         A_COMBINED));
 
                             if ((Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha && Textures[matindex].Format != GBI.G_IM_FMT_RGBA)) Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D0 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
                             else Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x08100078 | ((SmoothRGBAEdges) ? 0x4000 : 0x3000) | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000)))); //crap solution
@@ -995,37 +1152,47 @@ namespace SharpOcarina
                         }
                         else
                         {
-                            /* Solid surface */
-                            // if (Metallic) Helpers.Append64(ref DList, SetCombine(0x347E04, 0x5FFEFDF8));
-
-                            /*if (VertexNormals) 
-                                Helpers.Append64(ref DList, SetCombine(0x121805, 0xFF0FFFFF));
-                            else */
                             if (Group.MultiTexMaterialName != "")
-                                // Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1DFCFCF8));
-                                Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1FFCFDF8));
-                            else if (hasalphavertex)
-                                Helpers.Append64(ref DList, SetCombine(0x121603, 0xFF5BFFF8));
+                                //Helpers.Append64(ref DList, SetCombine(0x267E04, 0x1FFCFDF8));
+                                //opa multitexture
+                                if (!hasalphavertex)
+                                    Helpers.Append64(ref DList, SetCombineNew(
+                                        C_TEXEL1,   C_TEXEL0, LerpValue,   C_TEXEL0,
+                                        C_COMBINED, C_0,      C_SHADE,     C_0,
+                                        A_0,        A_0,      A_0,         A_0,
+                                        A_0,        A_0,      A_0,         A_1));
+                                else 
+                                    //Helpers.Append64(ref DList, SetCombine(0x121603, 0xFF5BFFF8));
+                                    //opa multitexture alpha vertex (makes second texture appear when alpha = 0)
+                                    Helpers.Append64(ref DList, SetCombineNew(
+                                        C_TEXEL0,   C_TEXEL1, A_SHADE, C_TEXEL1,
+                                        C_COMBINED, C_0,      C_SHADE, C_0,
+                                        A_0,        A_0,      A_0,     A_0,
+                                        A_0,        A_0,      A_0,     A_1));
                             else
-                                Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFFDF8));
-                            // Helpers.Append64(ref DList, SetCombine(0x121603, 0xFFFFFDF8));
-                            //FC127E03
+                                //Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFFDF8));
+                                //opa single texture
+                                if (WritePrim)
+                                    Helpers.Append64(ref DList, SetCombineNew(
+                                        C_TEXEL0,   C_0, C_SHADE,     C_0,
+                                        C_COMBINED, C_0, C_PRIMITIVE, C_0,
+                                        A_0,        A_0, A_0,         A_0,
+                                        A_0,        A_0, A_0,         A_1));
+                                else
+                                    Helpers.Append64(ref DList, SetCombineNew(
+                                        C_TEXEL0,   C_0, C_SHADE,     C_0,
+                                        C_0,        C_0, C_0,         C_COMBINED,
+                                        A_0,        A_0, A_0,         A_0,
+                                        A_0,        A_0, A_0,         A_1));
 
                             if (VertexNormals) Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0xC8112078 | ((Decal) ? 0xC00 : 0x000))));
                             else if (hasalphavertex) Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0xC81049D8 | ((Decal) ? 0xC00 : 0x000))));
                             else Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x08110078 | ((SmoothRGBAEdges) ? 0x4000 : 0x3000) | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
-                            // Helpers.Append64(ref DList, SetRenderMode(0x18, 0xC8112078));
-                            //  Helpers.Append64(ref DList, SetRenderMode(0x18, 0xC81049D8));
 
                             // DebugConsole.WriteLine("alpha vertex!");
 
                         }
                     }
-                    /*if (VertexNormals)
-                    {
-                        Helpers.Append64(ref DList, 0xD9F3FDFF00230405);
-                    }
-                    else */
                     if (OutdoorLight)
                     {
                         if (IsTranslucent == true || !Culling)
@@ -1114,41 +1281,35 @@ namespace SharpOcarina
                     }
                 }
 
-                if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && Group.MultiTexMaterialName != "")
+                uint primlodfrac = MultitextureAlpha >> 24;
+
+                if (HasBlendingAnimation)
                 {
-                    if (MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasBlending())
-                    {
-                        if (!DEplaced) Helpers.Append64(ref DList, 0xDE00000000000000 | (ulong)(AnimationBank << 24));
 
-                        Helpers.Append64(ref DList, 0x0000000012345600 | (ulong)(AnimationBank));
+                    if (!DEplaced) Helpers.Append64(ref DList, 0xDE00000000000000 | (ulong)(AnimationBank << 24));
+                    Helpers.Append64(ref DList, SetEnvColor(MultitextureAlpha));
+                    if (MainForm.n64preview) Helpers.Append64(ref DList, 0x0000000012345600 | (ulong)(AnimationBank));
 
-
-                    }
-                    else
-                    {
-                        Helpers.Append64(ref DList, SetPrimColor(TintAlpha));
-                    }
                 }
                 else
                 {
-                    /* Insert SetPrimColor command */
-                    Helpers.Append64(ref DList, SetPrimColor(TintAlpha));
+                    if (WritePrim) Helpers.Append64(ref DList, SetPrimColorNew(TintAlpha, primlodfrac));
                 }
                 
                     
-
+                /*
                 if (Group.MultiTexMaterialName != "")
                     Helpers.Append64(ref DList, SetEnvColor(MultitextureAlpha));
                 else if (EnvColor)
                     Helpers.Append64(ref DList, SetEnvColor(TintAlpha));
                 else
                     Helpers.Append64(ref DList, SetEnvColor(0xFFFFFFFF));
-
+                */
 
                 if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional())
                 {
 
-                    if (MainForm.n64preview == false)
+                    if (!MainForm.n64preview)
                     {
 
 

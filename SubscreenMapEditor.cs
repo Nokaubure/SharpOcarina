@@ -158,12 +158,30 @@ namespace SharpOcarina
 
             ROMfile = romfile;
             if (sceneid <= 0x9)
+            {
+                noupdate = true;
                 MapID.Value = sceneid;
+                noupdate = false;
+            }
 
             for (int i = 0; i < 32; i++)
             {
                 PaletteListBox.Items.Add("Room " + i);
             }
+
+
+
+            // Offset = ((int)rom.SubscreenMapCompassIcons + ((int)startfloortexture/2 * 0x1EC));
+            LoadMaps();
+            LoadFloors();
+            RefreshTitleCardTexture();
+            RefreshMapTexture();
+        }
+
+        public void LoadMaps()
+        {
+            ROM rom = MainForm.CheckVersion(ROM);
+
             int Offset;
             int maxfloorstack = 0;
             for (int i = 0; i < 10; i++)
@@ -212,11 +230,6 @@ namespace SharpOcarina
                 // DebugConsole.WriteLine("end icon offset: " + Offset2.ToString("X8") + "\n");
                 c++;
             }
-
-            // Offset = ((int)rom.SubscreenMapCompassIcons + ((int)startfloortexture/2 * 0x1EC));
-            LoadFloors();
-            RefreshTitleCardTexture();
-            RefreshMapTexture();
         }
 
         public void LoadFloors()
@@ -456,6 +469,18 @@ namespace SharpOcarina
 
             PaletteIndex.Value = paletteindexes[PaletteListBox.SelectedIndex];
 
+            
+
+            RefreshIconList();
+
+
+
+            noupdate = false;
+
+        }
+
+        public void RefreshIconList()
+        {
             int prevsel = IconListBox.SelectedIndex;
 
             IconListBox.Items.Clear();
@@ -464,7 +489,7 @@ namespace SharpOcarina
             {
                 for (int i = 0; i < compassicons[(int)MapFloorTextureID.Value / 2].Count; i++)
                 {
-                    IconListBox.Items.Add("(X " + compassicons[(int)MapFloorTextureID.Value / 2][i].X + " Y " + compassicons[(int)MapFloorTextureID.Value / 2][i].Y + ")");
+                    IconListBox.Items.Add("(X " + compassicons[(int)MapFloorTextureID.Value / 2][i].X + ", Y " + compassicons[(int)MapFloorTextureID.Value / 2][i].Y + ", Flag " + compassicons[(int)MapFloorTextureID.Value / 2][i].ChestFlag.ToString("X1") + ")");
                 }
             }
 
@@ -510,11 +535,6 @@ namespace SharpOcarina
                 IconBossCheckbox.Checked = false;
                 IconChestFlag.Value = 0;
             }
-
-
-
-            noupdate = false;
-
         }
 
         public void RefreshTitleCardTexture()
@@ -616,20 +636,26 @@ namespace SharpOcarina
 
                     if (!compassicons[(int)MapFloorTextureID.Value / 2][i].bossicon)
                     {
-                        System.Drawing.Imaging.PixelFormat format = chesticon.PixelFormat;
-                        g.DrawImage(chesticon, compassicons[(int)MapFloorTextureID.Value / 2][i].X * 4 - 16, -compassicons[(int)MapFloorTextureID.Value / 2][i].Y * 4 + 12, 32f, 32f);
+                        float X = compassicons[(int)MapFloorTextureID.Value / 2][i].X * 4 - 16;
+                        float Y = -compassicons[(int)MapFloorTextureID.Value / 2][i].Y * 4 + 12;
+                        g.DrawImage(chesticon, X, Y, 32f, 32f);
+                        if (IconListBox.SelectedIndex == i)
+                        {
+                            g.DrawImage(selecticon, X -1, Y -1, 32f, 32f);
+                        }
                     }
                     else
                     {
-                        System.Drawing.Imaging.PixelFormat format = bossicon.PixelFormat;
-                        g.DrawImage(bossicon, compassicons[(int)MapFloorTextureID.Value / 2][i].X * 4 - 16, -compassicons[(int)MapFloorTextureID.Value / 2][i].Y * 4 + 12, 32f, 32f);
+                        float X = compassicons[(int)MapFloorTextureID.Value / 2][i].X * 4 - 16;
+                        float Y = -compassicons[(int)MapFloorTextureID.Value / 2][i].Y * 4 + 12;
+                        g.DrawImage(bossicon, X, Y, 32f, 32f);
+                        if (IconListBox.SelectedIndex == i)
+                        {
+                            g.DrawImage(selecticon, X -1, Y -1, 32f, 32f);
+                        }
                     }
 
-                    if (IconListBox.SelectedIndex == i)
-                    {
-                        System.Drawing.Imaging.PixelFormat format = bossicon.PixelFormat;
-                        g.DrawImage(selecticon, compassicons[(int)MapFloorTextureID.Value / 2][i].X * 4 - 16 - 1, -compassicons[(int)MapFloorTextureID.Value / 2][i].Y * 4 + 12 - 1, 32f, 32f);
-                    }
+
 
                     g = MapTextureBox.CreateGraphics();
 
@@ -1014,6 +1040,7 @@ namespace SharpOcarina
 
 
             // Reload the floors, since they may have changed due to the texture ID re-sort
+            LoadMaps();
             LoadFloors();
             RefreshMapTexture();
         }
@@ -1103,6 +1130,7 @@ namespace SharpOcarina
                 compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].X = (short)IconX.Value;
                 changed = true;
                 RefreshMapTexture();
+                RefreshIconList();
             }
         }
 
@@ -1122,6 +1150,7 @@ namespace SharpOcarina
                 compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].Y = (short)IconY.Value;
                 changed = true;
                 RefreshMapTexture();
+                RefreshIconList();
             }
         }
 
@@ -1141,6 +1170,7 @@ namespace SharpOcarina
             {
                 compassicons[(int)MapFloorTextureID.Value / 2][IconListBox.SelectedIndex].ChestFlag = (short)IconChestFlag.Value;
                 changed = true;
+                RefreshIconList();
             }
         }
 
@@ -1449,10 +1479,6 @@ namespace SharpOcarina
             {
                 sendToZ64romProjectToolStripMenuItem_Click(new object(), new EventArgs());
 
-                if (titlecardchanged) savetitlecard();
-
-                savemap(false);
-
             }
 
         }
@@ -1659,7 +1685,12 @@ namespace SharpOcarina
                         return;
                     }
                 }
+                else return;
             }
+
+            if (titlecardchanged) savetitlecard();
+
+            savemap(false);
 
             // map static
             string mapstaticpath = Path.GetDirectoryName(basepath) + "\\rom\\system\\static\\map_48x85_static.bin";
@@ -1701,7 +1732,7 @@ namespace SharpOcarina
                             "{\n";
                         foreach (CompassIcon icon in usableicons)
                         {
-                            output += "{ " + (ushort)icon.ChestFlag + ",     " + icon.X.ToString() + ", " + icon.Y.ToString() + "},\n";
+                            output += "{ " + icon.ChestFlag + ",     " + icon.X.ToString() + ", " + icon.Y.ToString() + "},\n";
                         }
                         output += "} },\n";
                     }
@@ -1870,9 +1901,9 @@ namespace SharpOcarina
             output += "};\n";
 
 
-            output += "static s16 sBossFloor[8] = {\n";
+            output += "static s16 sBossFloor[10] = {\n";
 
-            for (int m = 0; m < 8; m++)
+            for (int m = 0; m < maplist.Length; m++)
             {
                 int bossroom = (ushort)(MapFloors[m].FindIndex(x => x.bosslocated) != -1 ? MapFloors[m].FindIndex(x => x.bosslocated) : 9);
 
@@ -1928,7 +1959,7 @@ namespace SharpOcarina
             }
 
             output += "};\n";
-
+            
 
             output += "static u16 sSwitchEntryCount[10] = {\n";
 
@@ -1971,6 +2002,18 @@ namespace SharpOcarina
             }
 
             output += "};\n";
+
+            ushort roomstack = 0;
+
+            output += "static u16 sDgnTexIndexBase[10] = {\n";
+
+            for (int m = 0; m < maplist.Length; m++)
+            {
+                output += roomstack + ",";
+                roomstack += (ushort)(maplist[m].maxfloors * 2);
+            }
+
+            output += "\n};\n";
 
 
 
@@ -2061,7 +2104,7 @@ namespace SharpOcarina
     public class CompassIcon
     {
         public float X = 0, Y = 0;
-        public short ChestFlag = -1;
+        public short ChestFlag = 0;
         public bool bossicon = false;
     }
 

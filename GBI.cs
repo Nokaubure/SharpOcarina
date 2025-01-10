@@ -150,6 +150,7 @@ namespace SharpOcarina
         public const int G_ACMUX_0 = 1;
         public const int G_ACMUX_LOD_FRACTION = 1;
         public const int G_ACMUX_PRIM_LOD_FRAC = 1;
+        
 
         public static class G_IM_BYTES
         {

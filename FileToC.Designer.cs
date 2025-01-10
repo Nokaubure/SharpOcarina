@@ -42,7 +42,7 @@
             // SaveButton
             // 
             this.SaveButton.Enabled = false;
-            this.SaveButton.Location = new System.Drawing.Point(193, 166);
+            this.SaveButton.Location = new System.Drawing.Point(118, 294);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 13;
@@ -94,8 +94,8 @@
             this.TextureBox.BackColor = System.Drawing.Color.Aqua;
             this.TextureBox.Location = new System.Drawing.Point(329, 61);
             this.TextureBox.Name = "TextureBox";
-            this.TextureBox.Size = new System.Drawing.Size(128, 128);
-            this.TextureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.TextureBox.Size = new System.Drawing.Size(256, 256);
+            this.TextureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.TextureBox.TabIndex = 18;
             this.TextureBox.TabStop = false;
             // 
@@ -106,18 +106,20 @@
             // SizeLabel
             // 
             this.SizeLabel.AutoSize = true;
-            this.SizeLabel.Location = new System.Drawing.Point(70, 171);
+            this.SizeLabel.Location = new System.Drawing.Point(462, 28);
             this.SizeLabel.Name = "SizeLabel";
             this.SizeLabel.Size = new System.Drawing.Size(67, 13);
             this.SizeLabel.TabIndex = 19;
             this.SizeLabel.Text = "Size: 0 bytes";
             this.SizeLabel.Visible = false;
+            this.SizeLabel.Click += new System.EventHandler(this.SizeLabel_Click);
             // 
             // FileToC
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(468, 204);
+            this.ClientSize = new System.Drawing.Size(606, 333);
             this.Controls.Add(this.SizeLabel);
             this.Controls.Add(this.TextureBox);
             this.Controls.Add(this.ImageFormatComboBox);
@@ -128,6 +130,8 @@
             this.Name = "FileToC";
             this.Text = "Convert File to C array";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FileToC_FormClosed);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileToC_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileToC_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.TextureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

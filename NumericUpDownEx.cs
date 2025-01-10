@@ -42,15 +42,20 @@ namespace SharpOcarina
         protected override void UpdateEditText()
         {
             if (base.Hexadecimal == true)
-               // if (Minimum >= -32768 && Minimum != 0)
-              //  {
-           //         base.Text = string.Format(@"{0:X" + displayDigits + "}", (Int32)base.Value);
+                /* if (Minimum >= -32768 && Minimum != 0)
+                  {
+                         base.Text = string.Format(@"{0:X" + displayDigits + "}", (Int32)base.Value);
 
-           //     }
-            //    else
-                    base.Text = string.Format(@"{0:X" + displayDigits + "}", (Int32)base.Value);
+                     }
+                    else*/
+                base.Text = string.Format(@"{0:X" + displayDigits + "}", (Int32)base.Value);
             else
-                base.Text = string.Format(@"{0:D" + displayDigits + "}", (Int32)base.Value);
+            {
+                if (base.DecimalPlaces > 0)
+                    base.Text = base.Value.ToString($"F{this.DecimalPlaces}");
+                else
+                    base.Text = string.Format(@"{0:D" + displayDigits + "}", (Int32)base.Value);
+            }
         }
 
         [Category("Behavior")]
@@ -201,33 +206,7 @@ namespace SharpOcarina
 
         protected override void OnValueChanged(EventArgs e)
         {
-            // Make value roll over once (minimum + 1) or (maximum - 1) is hit
-            
-            
-            /*
-
-            // Non functional, tried to make the shift modifier globally but nope
-
-            if (nofire) return;
-
-            Console.WriteLine("Value " + this.Value + " prevval " + prevval);
-
-            decimal currentValue = this.Value;
-
-            bool isShiftKeyDown = (Control.ModifierKeys == Keys.Shift);
-            int incrementMultiplier = isShiftKeyDown ? (shiftMultiplier - 1) : 1;
-
-            decimal sign = Helpers.Clamp((currentValue - prevval), -1, 1);
-
-
-            nofire = true;
-
-            this.Value += (Increment * incrementMultiplier) * sign;
-
-            nofire = false;*/
-
-
-            //prevval = this.Value;
+    
 
             if (doValueRollover)
             {
