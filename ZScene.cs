@@ -2965,7 +2965,7 @@ namespace SharpOcarina
                                     }
                                 }
                                 Helpers.Append16(ref SceneData, 0);
-                                Helpers.Append16(ref SceneData, (ushort)(TextureAnim.Freeze ? 1 : 0));
+                                Helpers.Append16(ref SceneData, (ushort)(0 | (TextureAnim.Freeze ? 1 : 0) | (TextureAnim.FreezeAtEnd ? 2 : 0)));
                                 Helpers.Append16(ref SceneData, 0);
                             }
 

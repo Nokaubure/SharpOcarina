@@ -41,6 +41,8 @@ namespace SharpOcarina
         [XmlIgnore]
         private bool _Freeze;
         [XmlIgnore]
+        private bool _FreezeAtEnd;
+        [XmlIgnore]
         private byte _CameraEffect;
 
 
@@ -62,6 +64,7 @@ namespace SharpOcarina
             _TextureSwapList = new List<ZTextureAnimImage>();
             _ColorList = new List<ZTextureAnimColor>();
             _Freeze = true;
+            _FreezeAtEnd = false;
 
         }
 
@@ -159,6 +162,12 @@ namespace SharpOcarina
         {
             get { return _Freeze; }
             set { _Freeze = value; }
+        }
+
+        public bool FreezeAtEnd
+        {
+            get { return _FreezeAtEnd; }
+            set { _FreezeAtEnd = value; }
         }
 
         [XmlIgnore]

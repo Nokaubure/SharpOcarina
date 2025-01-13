@@ -11,6 +11,16 @@
 
 - Added support for IA4 texture format across the entire application
 
+- Added controls for command E2 (SetOtherMode_L) in the customizer
+
+- Added a setting to only render pathways in pathway tab
+
+- Added a setting to not render group selection highlight (it will do a short flash instead)
+
+- Added a setting to use Majora's Mask texture scrolling orientation (z64rom)
+
+- Optimized display lists to use 1 less command (reduces room filesize by 8 bytes per group)
+
 - Added arguments to SharpOcarina.exe (draw&drop files inside it or pass them via shortcut param / cmd)
 	- if a ROM .z64 or a z64rom .toml is present, they will be loaded as Global ROM/z64rom
 	- if a .xml is present, it will open the scene
@@ -28,7 +38,11 @@
 	- Any setting will react to prim color when multitexture is disabled
 	- NEW: Using vertex alpha with 255 alpha will make so vertex alpha erases the 1st texture
 
-- Optimized display lists to use 1 less command (reduces room filesize by 8 bytes per group)
+- Features and fixed issues regarding Texture Anims:
+    - Fixed conditional draw animation not working at all in z64rom projects
+	- Fixed an issue where the first frame of a color blend animation would be black if "Freeze if flag is not set" was checked
+	- Added "Freeze at End" checkbox, this will stop the color blend animation at the last frame
+	- SharpOcarina can now automatically prompt an update if the SceneRender version is outdated
 
 - Fixed various issues with pause map editor in z64rom mode
 	- Fixed an issue where it would crash if the current scene ID is 0-9
@@ -54,6 +68,10 @@
 - Fixed an issue where unchecking customize in group setting would not cause a render refresh
 
 - Fixed an issue where conditional draw animation would sometimes not write a required dlist in z64rom mode
+
+- Fixed an issue where the D9 command of the customizer wasnt saved correctly when using the checkboxes
+
+- Fixed an issue where the exit numeric box of collision tab didnt worked with z64rom exit mode
 
 --------------
 ---1.56

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomCombiner));
             this.Ok = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.C1A = new System.Windows.Forms.ComboBox();
@@ -62,18 +63,41 @@
             this.label15 = new System.Windows.Forms.Label();
             this.A2A = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.CompiledCombiner = new SharpOcarina.NumericTextBox();
             this.PreviewCheckbox = new System.Windows.Forms.CheckBox();
             this.labelFC = new System.Windows.Forms.Label();
             this.DefaultButton = new System.Windows.Forms.Button();
             this.labelE2 = new System.Windows.Forms.Label();
-            this.CompiledE2 = new SharpOcarina.NumericTextBox();
             this.labelD9 = new System.Windows.Forms.Label();
-            this.CompiledD9 = new SharpOcarina.NumericTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.FC = new System.Windows.Forms.TabPage();
+            this.CompiledCombiner = new SharpOcarina.NumericTextBox();
             this.E2 = new System.Windows.Forms.TabPage();
-            this.label17 = new System.Windows.Forms.Label();
+            this.B2 = new System.Windows.Forms.ComboBox();
+            this.M2 = new System.Windows.Forms.ComboBox();
+            this.A2 = new System.Windows.Forms.ComboBox();
+            this.P2 = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.B1 = new System.Windows.Forms.ComboBox();
+            this.M1 = new System.Windows.Forms.ComboBox();
+            this.A1 = new System.Windows.Forms.ComboBox();
+            this.P1 = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.ZMODE_ = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.CVG_DST_ = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.G_MDSFT_ALPHACOMPARE = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.FORCE_BL = new System.Windows.Forms.CheckBox();
+            this.ALPHA_CVG_SEL = new System.Windows.Forms.CheckBox();
+            this.CVG_X_ALPHA = new System.Windows.Forms.CheckBox();
+            this.CLR_ON_CVG = new System.Windows.Forms.CheckBox();
+            this.IM_RD = new System.Windows.Forms.CheckBox();
+            this.Z_UPD = new System.Windows.Forms.CheckBox();
+            this.Z_CMP = new System.Windows.Forms.CheckBox();
+            this.AA_EN = new System.Windows.Forms.CheckBox();
+            this.G_MDSFT_ZSRCSEL = new System.Windows.Forms.CheckBox();
+            this.CompiledE2 = new SharpOcarina.NumericTextBox();
             this.D9 = new System.Windows.Forms.TabPage();
             this.G_CLIPPING = new System.Windows.Forms.CheckBox();
             this.G_SHADING_SMOOTH = new System.Windows.Forms.CheckBox();
@@ -85,6 +109,7 @@
             this.G_CULL_FRONT = new System.Windows.Forms.CheckBox();
             this.G_SHADE = new System.Windows.Forms.CheckBox();
             this.G_ZBUFFER = new System.Windows.Forms.CheckBox();
+            this.CompiledD9 = new SharpOcarina.NumericTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.FC.SuspendLayout();
@@ -422,21 +447,6 @@
             this.label16.TabIndex = 25;
             this.label16.Text = "Alpha 2nd cycle";
             // 
-            // CompiledCombiner
-            // 
-            this.CompiledCombiner.AllowHex = true;
-            this.CompiledCombiner.Digits = 14;
-            this.CompiledCombiner.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CompiledCombiner.Location = new System.Drawing.Point(414, 189);
-            this.CompiledCombiner.MaxLength = 255;
-            this.CompiledCombiner.Name = "CompiledCombiner";
-            this.CompiledCombiner.Size = new System.Drawing.Size(105, 20);
-            this.CompiledCombiner.TabIndex = 42;
-            this.CompiledCombiner.Text = "00000000000000";
-            this.CompiledCombiner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CompiledCombiner.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompiledCombiner_KeyDown);
-            this.CompiledCombiner.Leave += new System.EventHandler(this.CompiledCombiner_Leave);
-            // 
             // PreviewCheckbox
             // 
             this.PreviewCheckbox.AutoSize = true;
@@ -480,21 +490,6 @@
             this.labelE2.TabIndex = 47;
             this.labelE2.Text = "E2";
             // 
-            // CompiledE2
-            // 
-            this.CompiledE2.AllowHex = true;
-            this.CompiledE2.Digits = 14;
-            this.CompiledE2.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CompiledE2.Location = new System.Drawing.Point(414, 189);
-            this.CompiledE2.MaxLength = 255;
-            this.CompiledE2.Name = "CompiledE2";
-            this.CompiledE2.Size = new System.Drawing.Size(105, 20);
-            this.CompiledE2.TabIndex = 46;
-            this.CompiledE2.Text = "00000000000000";
-            this.CompiledE2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CompiledE2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompiledE2_KeyDown);
-            this.CompiledE2.Leave += new System.EventHandler(this.CompiledE2_Leave);
-            // 
             // labelD9
             // 
             this.labelD9.AutoSize = true;
@@ -504,21 +499,6 @@
             this.labelD9.Size = new System.Drawing.Size(21, 14);
             this.labelD9.TabIndex = 49;
             this.labelD9.Text = "D9";
-            // 
-            // CompiledD9
-            // 
-            this.CompiledD9.AllowHex = true;
-            this.CompiledD9.Digits = 14;
-            this.CompiledD9.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CompiledD9.Location = new System.Drawing.Point(414, 189);
-            this.CompiledD9.MaxLength = 255;
-            this.CompiledD9.Name = "CompiledD9";
-            this.CompiledD9.Size = new System.Drawing.Size(105, 20);
-            this.CompiledD9.TabIndex = 48;
-            this.CompiledD9.Text = "00000000000000";
-            this.CompiledD9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CompiledD9.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompiledD9_KeyDown);
-            this.CompiledD9.Leave += new System.EventHandler(this.CompiledD9_Leave);
             // 
             // tabControl1
             // 
@@ -575,11 +555,50 @@
             this.FC.Text = "FC SetCombine";
             this.FC.UseVisualStyleBackColor = true;
             // 
+            // CompiledCombiner
+            // 
+            this.CompiledCombiner.AllowHex = true;
+            this.CompiledCombiner.Digits = 14;
+            this.CompiledCombiner.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CompiledCombiner.Location = new System.Drawing.Point(414, 189);
+            this.CompiledCombiner.MaxLength = 255;
+            this.CompiledCombiner.Name = "CompiledCombiner";
+            this.CompiledCombiner.Size = new System.Drawing.Size(105, 20);
+            this.CompiledCombiner.TabIndex = 42;
+            this.CompiledCombiner.Text = "00000000000000";
+            this.CompiledCombiner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CompiledCombiner.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompiledCombiner_KeyDown);
+            this.CompiledCombiner.Leave += new System.EventHandler(this.CompiledCombiner_Leave);
+            // 
             // E2
             // 
-            this.E2.Controls.Add(this.label17);
-            this.E2.Controls.Add(this.CompiledE2);
+            this.E2.Controls.Add(this.B2);
+            this.E2.Controls.Add(this.M2);
+            this.E2.Controls.Add(this.A2);
+            this.E2.Controls.Add(this.P2);
+            this.E2.Controls.Add(this.label22);
+            this.E2.Controls.Add(this.B1);
+            this.E2.Controls.Add(this.M1);
+            this.E2.Controls.Add(this.A1);
+            this.E2.Controls.Add(this.P1);
+            this.E2.Controls.Add(this.label21);
+            this.E2.Controls.Add(this.ZMODE_);
+            this.E2.Controls.Add(this.label20);
+            this.E2.Controls.Add(this.CVG_DST_);
+            this.E2.Controls.Add(this.label19);
+            this.E2.Controls.Add(this.G_MDSFT_ALPHACOMPARE);
+            this.E2.Controls.Add(this.label18);
+            this.E2.Controls.Add(this.FORCE_BL);
+            this.E2.Controls.Add(this.ALPHA_CVG_SEL);
+            this.E2.Controls.Add(this.CVG_X_ALPHA);
+            this.E2.Controls.Add(this.CLR_ON_CVG);
+            this.E2.Controls.Add(this.IM_RD);
+            this.E2.Controls.Add(this.Z_UPD);
+            this.E2.Controls.Add(this.Z_CMP);
+            this.E2.Controls.Add(this.AA_EN);
+            this.E2.Controls.Add(this.G_MDSFT_ZSRCSEL);
             this.E2.Controls.Add(this.labelE2);
+            this.E2.Controls.Add(this.CompiledE2);
             this.E2.Location = new System.Drawing.Point(4, 22);
             this.E2.Name = "E2";
             this.E2.Padding = new System.Windows.Forms.Padding(3);
@@ -588,14 +607,319 @@
             this.E2.Text = "E2 SetOtherMode_L";
             this.E2.UseVisualStyleBackColor = true;
             // 
-            // label17
+            // B2
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 13);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(77, 13);
-            this.label17.TabIndex = 48;
-            this.label17.Text = "Coming soon...";
+            this.B2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.B2.FormattingEnabled = true;
+            this.B2.Location = new System.Drawing.Point(270, 192);
+            this.B2.Name = "B2";
+            this.B2.Size = new System.Drawing.Size(109, 21);
+            this.B2.TabIndex = 82;
+            this.toolTip1.SetToolTip(this.B2, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.B2.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.B2.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // M2
+            // 
+            this.M2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.M2.FormattingEnabled = true;
+            this.M2.Location = new System.Drawing.Point(270, 166);
+            this.M2.Name = "M2";
+            this.M2.Size = new System.Drawing.Size(109, 21);
+            this.M2.TabIndex = 81;
+            this.toolTip1.SetToolTip(this.M2, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.M2.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.M2.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // A2
+            // 
+            this.A2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.A2.FormattingEnabled = true;
+            this.A2.Location = new System.Drawing.Point(270, 139);
+            this.A2.Name = "A2";
+            this.A2.Size = new System.Drawing.Size(109, 21);
+            this.A2.TabIndex = 80;
+            this.toolTip1.SetToolTip(this.A2, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.A2.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.A2.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // P2
+            // 
+            this.P2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.P2.FormattingEnabled = true;
+            this.P2.Location = new System.Drawing.Point(270, 112);
+            this.P2.Name = "P2";
+            this.P2.Size = new System.Drawing.Size(109, 21);
+            this.P2.TabIndex = 79;
+            this.toolTip1.SetToolTip(this.P2, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.P2.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.P2.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(267, 96);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(72, 13);
+            this.label22.TabIndex = 78;
+            this.label22.Text = "Blend Cycle 2";
+            // 
+            // B1
+            // 
+            this.B1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.B1.FormattingEnabled = true;
+            this.B1.Location = new System.Drawing.Point(155, 192);
+            this.B1.Name = "B1";
+            this.B1.Size = new System.Drawing.Size(109, 21);
+            this.B1.TabIndex = 77;
+            this.toolTip1.SetToolTip(this.B1, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.B1.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.B1.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // M1
+            // 
+            this.M1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.M1.FormattingEnabled = true;
+            this.M1.Location = new System.Drawing.Point(155, 166);
+            this.M1.Name = "M1";
+            this.M1.Size = new System.Drawing.Size(109, 21);
+            this.M1.TabIndex = 76;
+            this.toolTip1.SetToolTip(this.M1, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.M1.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.M1.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // A1
+            // 
+            this.A1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.A1.FormattingEnabled = true;
+            this.A1.Location = new System.Drawing.Point(155, 139);
+            this.A1.Name = "A1";
+            this.A1.Size = new System.Drawing.Size(109, 21);
+            this.A1.TabIndex = 75;
+            this.toolTip1.SetToolTip(this.A1, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.A1.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.A1.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // P1
+            // 
+            this.P1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.P1.FormattingEnabled = true;
+            this.P1.Location = new System.Drawing.Point(155, 112);
+            this.P1.Name = "P1";
+            this.P1.Size = new System.Drawing.Size(109, 21);
+            this.P1.TabIndex = 74;
+            this.toolTip1.SetToolTip(this.P1, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.P1.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.P1.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(152, 96);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(72, 13);
+            this.label21.TabIndex = 73;
+            this.label21.Text = "Blend Cycle 1";
+            // 
+            // ZMODE_
+            // 
+            this.ZMODE_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ZMODE_.FormattingEnabled = true;
+            this.ZMODE_.Location = new System.Drawing.Point(325, 55);
+            this.ZMODE_.Name = "ZMODE_";
+            this.ZMODE_.Size = new System.Drawing.Size(109, 21);
+            this.ZMODE_.TabIndex = 72;
+            this.toolTip1.SetToolTip(this.ZMODE_, "This mode is unfortunately completely unexplained. Judging by the name, it contro" +
+        "ls the usage of the depth buffer, depending on the type of surface being rendere" +
+        "d.");
+            this.ZMODE_.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.ZMODE_.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(267, 58);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(52, 13);
+            this.label20.TabIndex = 71;
+            this.label20.Text = "ZMODE_";
+            // 
+            // CVG_DST_
+            // 
+            this.CVG_DST_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CVG_DST_.FormattingEnabled = true;
+            this.CVG_DST_.Location = new System.Drawing.Point(325, 32);
+            this.CVG_DST_.Name = "CVG_DST_";
+            this.CVG_DST_.Size = new System.Drawing.Size(109, 21);
+            this.CVG_DST_.TabIndex = 70;
+            this.toolTip1.SetToolTip(this.CVG_DST_, "Configures out to handle the coverage value in the framebuffer (CVG_DST presumabl" +
+        "y means \"coverage [value] destination\").");
+            this.CVG_DST_.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.CVG_DST_.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(256, 35);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(63, 13);
+            this.label19.TabIndex = 69;
+            this.label19.Text = "CVG_DST_";
+            // 
+            // G_MDSFT_ALPHACOMPARE
+            // 
+            this.G_MDSFT_ALPHACOMPARE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.G_MDSFT_ALPHACOMPARE.FormattingEnabled = true;
+            this.G_MDSFT_ALPHACOMPARE.Location = new System.Drawing.Point(325, 9);
+            this.G_MDSFT_ALPHACOMPARE.Name = "G_MDSFT_ALPHACOMPARE";
+            this.G_MDSFT_ALPHACOMPARE.Size = new System.Drawing.Size(109, 21);
+            this.G_MDSFT_ALPHACOMPARE.TabIndex = 68;
+            this.toolTip1.SetToolTip(this.G_MDSFT_ALPHACOMPARE, "Decides how to compare the input (new) pixel\'s alpha value");
+            this.G_MDSFT_ALPHACOMPARE.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.G_MDSFT_ALPHACOMPARE.SelectionChangeCommitted += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(167, 13);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(152, 13);
+            this.label18.TabIndex = 67;
+            this.label18.Text = "G_MDSFT_ALPHACOMPARE";
+            // 
+            // FORCE_BL
+            // 
+            this.FORCE_BL.AutoSize = true;
+            this.FORCE_BL.Location = new System.Drawing.Point(11, 197);
+            this.FORCE_BL.Name = "FORCE_BL";
+            this.FORCE_BL.Size = new System.Drawing.Size(81, 17);
+            this.FORCE_BL.TabIndex = 66;
+            this.FORCE_BL.Text = "FORCE_BL";
+            this.toolTip1.SetToolTip(this.FORCE_BL, "\"Forces blending\" if enabled. What this means is not explained.");
+            this.FORCE_BL.UseVisualStyleBackColor = true;
+            this.FORCE_BL.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // ALPHA_CVG_SEL
+            // 
+            this.ALPHA_CVG_SEL.AutoSize = true;
+            this.ALPHA_CVG_SEL.Location = new System.Drawing.Point(11, 174);
+            this.ALPHA_CVG_SEL.Name = "ALPHA_CVG_SEL";
+            this.ALPHA_CVG_SEL.Size = new System.Drawing.Size(115, 17);
+            this.ALPHA_CVG_SEL.TabIndex = 65;
+            this.ALPHA_CVG_SEL.Text = "ALPHA_CVG_SEL";
+            this.toolTip1.SetToolTip(this.ALPHA_CVG_SEL, "Use the coverage value for alpha instead (does nothing different if CVG_X_ALPHA i" +
+        "s enabled)");
+            this.ALPHA_CVG_SEL.UseVisualStyleBackColor = true;
+            this.ALPHA_CVG_SEL.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // CVG_X_ALPHA
+            // 
+            this.CVG_X_ALPHA.AutoSize = true;
+            this.CVG_X_ALPHA.Location = new System.Drawing.Point(11, 151);
+            this.CVG_X_ALPHA.Name = "CVG_X_ALPHA";
+            this.CVG_X_ALPHA.Size = new System.Drawing.Size(102, 17);
+            this.CVG_X_ALPHA.TabIndex = 64;
+            this.CVG_X_ALPHA.Text = "CVG_X_ALPHA";
+            this.toolTip1.SetToolTip(this.CVG_X_ALPHA, "Multiplies coverage and alpha values and uses the result as both the coverage and" +
+        " the alpha.");
+            this.CVG_X_ALPHA.UseVisualStyleBackColor = true;
+            this.CVG_X_ALPHA.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // CLR_ON_CVG
+            // 
+            this.CLR_ON_CVG.AutoSize = true;
+            this.CLR_ON_CVG.Location = new System.Drawing.Point(11, 128);
+            this.CLR_ON_CVG.Name = "CLR_ON_CVG";
+            this.CLR_ON_CVG.Size = new System.Drawing.Size(97, 17);
+            this.CLR_ON_CVG.TabIndex = 63;
+            this.CLR_ON_CVG.Text = "CLR_ON_CVG";
+            this.toolTip1.SetToolTip(this.CLR_ON_CVG, resources.GetString("CLR_ON_CVG.ToolTip"));
+            this.CLR_ON_CVG.UseVisualStyleBackColor = true;
+            this.CLR_ON_CVG.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // IM_RD
+            // 
+            this.IM_RD.AutoSize = true;
+            this.IM_RD.Location = new System.Drawing.Point(11, 105);
+            this.IM_RD.Name = "IM_RD";
+            this.IM_RD.Size = new System.Drawing.Size(60, 17);
+            this.IM_RD.TabIndex = 62;
+            this.IM_RD.Text = "IM_RD";
+            this.toolTip1.SetToolTip(this.IM_RD, resources.GetString("IM_RD.ToolTip"));
+            this.IM_RD.UseVisualStyleBackColor = true;
+            this.IM_RD.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // Z_UPD
+            // 
+            this.Z_UPD.AutoSize = true;
+            this.Z_UPD.Location = new System.Drawing.Point(11, 82);
+            this.Z_UPD.Name = "Z_UPD";
+            this.Z_UPD.Size = new System.Drawing.Size(62, 17);
+            this.Z_UPD.TabIndex = 61;
+            this.Z_UPD.Text = "Z_UPD";
+            this.toolTip1.SetToolTip(this.Z_UPD, "Updates the depth buffer when writing a new pixel. If disabled, the depth buffer " +
+        "value for a pixel will stay the same even after writing a closer pixel to the fr" +
+        "amebuffer.");
+            this.Z_UPD.UseVisualStyleBackColor = true;
+            this.Z_UPD.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // Z_CMP
+            // 
+            this.Z_CMP.AutoSize = true;
+            this.Z_CMP.Location = new System.Drawing.Point(11, 59);
+            this.Z_CMP.Name = "Z_CMP";
+            this.Z_CMP.Size = new System.Drawing.Size(62, 17);
+            this.Z_CMP.TabIndex = 60;
+            this.Z_CMP.Text = "Z_CMP";
+            this.toolTip1.SetToolTip(this.Z_CMP, "Enables use of the Z buffer to check if an input pixel should be written to the f" +
+        "ramebuffer.");
+            this.Z_CMP.UseVisualStyleBackColor = true;
+            this.Z_CMP.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // AA_EN
+            // 
+            this.AA_EN.AutoSize = true;
+            this.AA_EN.Location = new System.Drawing.Point(11, 36);
+            this.AA_EN.Name = "AA_EN";
+            this.AA_EN.Size = new System.Drawing.Size(61, 17);
+            this.AA_EN.TabIndex = 59;
+            this.AA_EN.Text = "AA_EN";
+            this.toolTip1.SetToolTip(this.AA_EN, "Judging by the name, enables antialiasing. The only description in the SDK is a c" +
+        "ryptic \"if no FORCE_BL set, allow blend enable - use cvgbit.\"");
+            this.AA_EN.UseVisualStyleBackColor = true;
+            this.AA_EN.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // G_MDSFT_ZSRCSEL
+            // 
+            this.G_MDSFT_ZSRCSEL.AutoSize = true;
+            this.G_MDSFT_ZSRCSEL.Location = new System.Drawing.Point(11, 13);
+            this.G_MDSFT_ZSRCSEL.Name = "G_MDSFT_ZSRCSEL";
+            this.G_MDSFT_ZSRCSEL.Size = new System.Drawing.Size(132, 17);
+            this.G_MDSFT_ZSRCSEL.TabIndex = 58;
+            this.G_MDSFT_ZSRCSEL.Text = "G_MDSFT_ZSRCSEL";
+            this.toolTip1.SetToolTip(this.G_MDSFT_ZSRCSEL, resources.GetString("G_MDSFT_ZSRCSEL.ToolTip"));
+            this.G_MDSFT_ZSRCSEL.UseVisualStyleBackColor = true;
+            this.G_MDSFT_ZSRCSEL.CheckedChanged += new System.EventHandler(this.OtherModeL_CheckedChanged);
+            // 
+            // CompiledE2
+            // 
+            this.CompiledE2.AllowHex = true;
+            this.CompiledE2.Digits = 14;
+            this.CompiledE2.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CompiledE2.Location = new System.Drawing.Point(414, 189);
+            this.CompiledE2.MaxLength = 255;
+            this.CompiledE2.Name = "CompiledE2";
+            this.CompiledE2.Size = new System.Drawing.Size(105, 20);
+            this.CompiledE2.TabIndex = 46;
+            this.CompiledE2.Text = "00000000000000";
+            this.CompiledE2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CompiledE2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompiledE2_KeyDown);
+            this.CompiledE2.Leave += new System.EventHandler(this.CompiledE2_Leave);
             // 
             // D9
             // 
@@ -743,6 +1067,21 @@
             this.G_ZBUFFER.UseVisualStyleBackColor = true;
             this.G_ZBUFFER.CheckedChanged += new System.EventHandler(this.GeometryMode_CheckedChange);
             // 
+            // CompiledD9
+            // 
+            this.CompiledD9.AllowHex = true;
+            this.CompiledD9.Digits = 14;
+            this.CompiledD9.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CompiledD9.Location = new System.Drawing.Point(414, 189);
+            this.CompiledD9.MaxLength = 255;
+            this.CompiledD9.Name = "CompiledD9";
+            this.CompiledD9.Size = new System.Drawing.Size(105, 20);
+            this.CompiledD9.TabIndex = 48;
+            this.CompiledD9.Text = "00000000000000";
+            this.CompiledD9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CompiledD9.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompiledD9_KeyDown);
+            this.CompiledD9.Leave += new System.EventHandler(this.CompiledD9_Leave);
+            // 
             // CustomCombiner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -814,7 +1153,6 @@
         private System.Windows.Forms.TabPage FC;
         private System.Windows.Forms.TabPage E2;
         private System.Windows.Forms.TabPage D9;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox G_CLIPPING;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox G_SHADING_SMOOTH;
@@ -826,5 +1164,30 @@
         private System.Windows.Forms.CheckBox G_CULL_FRONT;
         private System.Windows.Forms.CheckBox G_SHADE;
         private System.Windows.Forms.CheckBox G_ZBUFFER;
+        private System.Windows.Forms.CheckBox G_MDSFT_ZSRCSEL;
+        private System.Windows.Forms.CheckBox FORCE_BL;
+        private System.Windows.Forms.CheckBox ALPHA_CVG_SEL;
+        private System.Windows.Forms.CheckBox CVG_X_ALPHA;
+        private System.Windows.Forms.CheckBox CLR_ON_CVG;
+        private System.Windows.Forms.CheckBox IM_RD;
+        private System.Windows.Forms.CheckBox Z_UPD;
+        private System.Windows.Forms.CheckBox Z_CMP;
+        private System.Windows.Forms.CheckBox AA_EN;
+        private System.Windows.Forms.ComboBox B2;
+        private System.Windows.Forms.ComboBox M2;
+        private System.Windows.Forms.ComboBox A2;
+        private System.Windows.Forms.ComboBox P2;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox B1;
+        private System.Windows.Forms.ComboBox M1;
+        private System.Windows.Forms.ComboBox A1;
+        private System.Windows.Forms.ComboBox P1;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox ZMODE_;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.ComboBox CVG_DST_;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox G_MDSFT_ALPHACOMPARE;
+        private System.Windows.Forms.Label label18;
     }
 }

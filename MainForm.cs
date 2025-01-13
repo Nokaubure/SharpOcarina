@@ -193,6 +193,8 @@ namespace SharpOcarina
 
         public Stopwatch stopwatch = new Stopwatch();
 
+        public const float SceneRenderVersion = 1.2f;
+
         public string[] args;
 
         int ActorCubeGLID = 0, ActorPyramidGLID = 0, AxisMarkerGLID = 0, DoorGLID = 0, EnemyGLID = 0, BossGLID = 0, ActorCameraGLID = 0;
@@ -1854,6 +1856,8 @@ namespace SharpOcarina
                         Convert.ToBoolean(i == actorEditControl2.ActorNumber), true, actorpick == _Transition_);
 
                 /* Render pathways */
+                if ((settings.OnlyRenderPathwaysInTab && tabControl1.SelectedIndex == 6) 
+                        || !settings.OnlyRenderPathwaysInTab)
                 for (int i = 0; i < CurrentScene.Pathways.Count; i++)
                 {
                     for (int ii = 0; ii < CurrentScene.Pathways[i].Points.Count; ii++)
@@ -2179,7 +2183,7 @@ namespace SharpOcarina
                 }
 
                 /* Render group highlight... */
-                if (((ObjFile.Group)GroupList.SelectedItem) != null && (tabControl1.SelectedIndex == 1 || (tabControl1.SelectedIndex != 1 && selectedtimer > 0)) && customcombiner == null) //TODO setting to disable it
+                if (((ObjFile.Group)GroupList.SelectedItem) != null && (tabControl1.SelectedIndex == 1 || (tabControl1.SelectedIndex != 1 && selectedtimer > 0)) && customcombiner == null)
                 {
                     GL.PushMatrix();
                     GL.PushAttrib(AttribMask.AllAttribBits);
@@ -2192,7 +2196,7 @@ namespace SharpOcarina
                     GL.PolygonOffset(-5.0f, -5.0f);
 
                     GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                    if (tabControl1.SelectedIndex == 1) GL.Color4(1.0f, 0.5f, 0.0f, 0.5f);
+                    if (tabControl1.SelectedIndex == 1 && settings.RenderSelectedGroup) GL.Color4(1.0f, 0.5f, 0.0f, 0.5f);
                     else
                     {
                         GL.Color4(1.0f, 0.5f, 0.0f, selectedtimer > 60 ? 0.5f : 0.0083f * selectedtimer);
@@ -2484,31 +2488,27 @@ namespace SharpOcarina
                 {
                     ZTextureAnim TextureScroll = TargetScene.SegmentFunctions[DL.Animation - 8].Functions.Find(x => x.Type == ZTextureAnim.scroll && x.Preview);
 
-
-
-
-
                     GL.MatrixMode(MatrixMode.Texture);
 
                     GL.PushMatrix();
 
-
-
-
                     GL.ActiveTexture(TextureUnit.Texture0);
-                    if (TextureScroll != null) GL.Translate(-(TextureScroll.XVelocity1 / 80f * (20f / TextureScroll.Width1)) * globalframe, -(TextureScroll.YVelocity1 / 80f * (20f / TextureScroll.Height1)) * globalframe, 0);
-
+                    if (TextureScroll != null)
+                        if (!settings.MMTextureScroll)
+                            GL.Translate(-(TextureScroll.XVelocity1 / 80f * (20f / TextureScroll.Width1)) * globalframe, -(TextureScroll.YVelocity1 / 80f * (20f / TextureScroll.Height1)) * globalframe, 0);
+                        else
+                            GL.Translate(-(TextureScroll.XVelocity1 / 80f * (20f / TextureScroll.Width1)) * globalframe, (TextureScroll.YVelocity1 / 80f * (20f / TextureScroll.Height1)) * globalframe, 0);
                     GL.ActiveTexture(TextureUnit.Texture1);
                     GL.PushMatrix();
 
-                    if (TextureScroll != null) GL.Translate(-(TextureScroll.XVelocity2 / 80f * (20f / TextureScroll.Width2)) * globalframe, -(TextureScroll.YVelocity2 / 80f * (20f / TextureScroll.Height2)) * globalframe, 0);
-
+                    if (TextureScroll != null)
+                        if (!settings.MMTextureScroll)
+                            GL.Translate(-(TextureScroll.XVelocity2 / 80f * (20f / TextureScroll.Width2)) * globalframe, -(TextureScroll.YVelocity2 / 80f * (20f / TextureScroll.Height2)) * globalframe, 0);
+                        else
+                            GL.Translate(-(TextureScroll.XVelocity2 / 80f * (20f / TextureScroll.Width2)) * globalframe, (TextureScroll.YVelocity2 / 80f * (20f / TextureScroll.Height2)) * globalframe, 0);
                     GL.MatrixMode(MatrixMode.Modelview);
 
                     GL.ActiveTexture(TextureUnit.Texture0);
-
-
-
 
                     GL.CallList(DL.GLID);
 
@@ -2961,6 +2961,8 @@ namespace SharpOcarina
                     {
                         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
                         /* Render pathways */
+                        if ((settings.OnlyRenderPathwaysInTab && tabControl1.SelectedIndex == 6)
+                                || !settings.OnlyRenderPathwaysInTab)
                         for (int i = 0; i < CurrentScene.Pathways.Count && !selected; i++)
                         {
                             for (int ii = 0; ii < CurrentScene.Pathways[i].Points.Count; ii++)
@@ -3341,7 +3343,8 @@ namespace SharpOcarina
                     }
                 }
                 // pathways
-                if (actorpick == -1 && CurrentScene.Pathways.Count > 0)
+                if (actorpick == -1 && CurrentScene.Pathways.Count > 0 && ((settings.OnlyRenderPathwaysInTab && tabControl1.SelectedIndex == 6)
+                                || !settings.OnlyRenderPathwaysInTab))
                 {
                     DrawPathway(CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex], NullVector,
                         Color.FromArgb(255, 0, 0),
@@ -4092,6 +4095,9 @@ namespace SharpOcarina
                     EnableNexExitFormatMenuItem.Checked = settings.EnableNewExitFormat;
                     DisableCutscenePreviewBlackBarsMenuItem.Checked = settings.DisableCutsceneBlackBars;
                     ResetGroupSettingsReloadMenuItem.Checked = settings.ResetGroupSettingsReload;
+                    RenderPathwaystoolStripMenuItem3.Checked = settings.OnlyRenderPathwaysInTab;
+                    MMTextureScrolltoolStripMenuItem3.Checked = settings.MMTextureScroll;
+                    ShowSelectedGrouptoolStripMenuItem3.Checked = settings.RenderSelectedGroup;
 
                     if (rom64.isSet())
                     {
@@ -4547,7 +4553,7 @@ namespace SharpOcarina
             {
                 if (ExitNumber.Value == 0)
                     PolytypeExitLabel.Text = "";
-                else if (ExitNumber.Value <= ExitList.Items.Count)
+                else if (ExitNumber.Value <= ExitList.Items.Count && ExitNumber.Value >= 0)
                 {
                     PolytypeExitLabel.Text = "(Exit " + CurrentScene.ExitList[ExitList.SelectedIndex].Value.ToString("X4") + ")";
                 }
@@ -5564,6 +5570,7 @@ namespace SharpOcarina
                     RenderFunctionFlagBitwise.Text = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].FlagBitwise.ToString("X8");
                     RenderFunctionFlagFreezeCheckBox.Enabled = (CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].FlagType != 0xFF);
                     RenderFunctionFlagFreezeCheckBox.Checked = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].Freeze;
+                    RenderFunctionFlagFreezeAtEndCheckBox.Checked = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].FreezeAtEnd;
                     RenderFunctionFlagID.ValueChanged += new EventHandler(RenderFunctionFlagID_ValueChanged);
 
                     if (!(new uint[] { ZTextureAnim.texframe, ZTextureAnim.texswap, ZTextureAnim.blending, ZTextureAnim.scroll }).Contains(CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].Type))
@@ -7545,6 +7552,7 @@ namespace SharpOcarina
         {
             if (customcombiner != null) customcombiner.Close();
             UpdateGroupSelect();
+            if (!settings.RenderSelectedGroup) selectedtimer = 90;
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
@@ -8360,8 +8368,10 @@ namespace SharpOcarina
                 PolygonSelect.Enabled = true;
                 if (PolygonSelect.Value == 0) PolygonSelect.Value = 1;
 
-                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber >= CurrentScene.ExitList.Count)
-                    CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber = CurrentScene.ExitList.Count;
+                int MaxExit = settings.EnableNewExitFormat ? CurrentScene.ExitListV2.Count : CurrentScene.ExitList.Count;
+
+                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber >= MaxExit)
+                    CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber = MaxExit;
                 ExitNumber.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber;
                 //  ExitNumber.Maximum = 0xFF;
 
@@ -9123,7 +9133,7 @@ namespace SharpOcarina
                 PrerenderedList.Enabled = true;
 
 
-                JFIFLabel.Text = "Used in: " + CurrentScene.prerenderimages[(int)(PrerenderedList.Value - 1)];
+                JFIFLabel.Text = "" + CurrentScene.prerenderimages[(int)(PrerenderedList.Value - 1)];
 
                 CurrentScene.Prerendered = true;
             }
@@ -15506,6 +15516,8 @@ namespace SharpOcarina
                 LaunchRomToolStripMenuItem.Visible = true;
                 cutsceneTableEditorToolStripMenuItem.Text = "Remove Cutscene Table (z64rom)";
 
+                UpdateSceneRender(rom64.getPath() + "\\", true);
+
                 actorEditControl1.cacheId = 0xFEFE;
                 actorEditControl2.cacheId = 0xFEFE;
                 actorEditControl3.cacheId = 0xFEFE;
@@ -18671,6 +18683,9 @@ namespace SharpOcarina
                         }
                     }
 
+                    //Last version of SceneRender is mandatory in install
+                    UpdateSceneRender(path,false);
+
                     DialogResult dialogResult = MessageBox.Show("Done! Load the project into SharpOcarina?", "Load?", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
@@ -18684,6 +18699,56 @@ namespace SharpOcarina
 
             //UpdateForm();
 
+        }
+
+        private void UpdateSceneRender(string path, bool ask)
+        {
+            if (!File.Exists(path + @"src\lib_user\library\SceneRender.c")) return;
+            string[] lines = File.ReadAllLines(path + @"src\lib_user\library\SceneRender.c");
+            float curVer = 1.0f;
+            for (int i = 0; i < 10; i++)
+            {
+
+                if (lines[i].Contains("//Version:"))
+                {
+                    curVer = Convert.ToSingle(lines[i].Replace("//Version:", "").Replace(" ", ""), CultureInfo.InvariantCulture);
+                    return;
+                }
+            }
+            if (curVer < SceneRenderVersion)
+            {
+                if (!ask || MessageBox.Show("Your project has an outdated version of SceneRender.c, SO will update it with a more recent one. If you edited the file at /src/lib_user/library/SceneRender.c then select No.", "SceneRender z64rom",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    string[] files =
+                    {
+                            Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\SceneRender.c") ,
+                            Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\SceneRender.h")
+                        };
+                    string[] oldfiles =
+                    {
+                            path + @"src\lib_user\library\SceneRender.c" ,
+                            path + @"src\lib_user\library\SceneRender.h"
+                        };
+                    for (int i = 0; i < files.Length; i++)
+                    {
+                        if (File.Exists(oldfiles[i]))
+                            File.Delete(oldfiles[i]);
+                        File.Copy(files[i], oldfiles[i]);
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show("Never ask again in this project?", "SceneRender z64rom",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        string file = File.ReadAllText(path + @"src\lib_user\library\SceneRender.c");
+                        string data = "//Version: 99" + Environment.NewLine + file;
+                        File.WriteAllText(path + @"src\lib_user\library\SceneRender.c", data);
+                    }
+                }
+
+            }
         }
 
         private void Z64RomPlay_Click(object sender, EventArgs e)
@@ -18990,6 +19055,28 @@ namespace SharpOcarina
             if (prev > 0) SetSceneHeader(prev);
 
             UpdateForm();
+        }
+
+        private void ShowSelectedGrouptoolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            settings.RenderSelectedGroup = ShowSelectedGrouptoolStripMenuItem3.Checked;
+        }
+
+        private void RenderPathwaystoolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            settings.OnlyRenderPathwaysInTab = RenderPathwaystoolStripMenuItem3.Checked;
+        }
+
+        private void MMTextureScrolltoolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            settings.MMTextureScroll = MMTextureScrolltoolStripMenuItem3.Checked;
+        }
+
+        private void RenderFunctionFlagFreezeAtEndCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentScene.SegmentFunctions[(int)(RenderFunctionID.Value - 8)].Functions[RenderFunctionSelect.SelectedIndex].FreezeAtEnd = RenderFunctionFlagFreezeAtEndCheckBox.Checked;
+
+            UpdateRenderFunctionEdit();
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)
@@ -19386,6 +19473,9 @@ namespace SharpOcarina
         public bool AutoReload = false;
         public bool DisableCutsceneBlackBars = false;
         public bool ResetGroupSettingsReload = false;
+        public bool OnlyRenderPathwaysInTab = false;
+        public bool MMTextureScroll = false;
+        public bool RenderSelectedGroup = false;
     }
 
     public class UndoRedo

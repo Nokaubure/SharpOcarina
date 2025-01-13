@@ -120,4 +120,13 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="CLR_ON_CVG.ToolTip" xml:space="preserve">
+    <value>Prevents updating the color of a pixel unless its coverage value overflows, at which point the color is set and the coverage value is set to the lower four bits of the overflowing summed coverage value. Note that coverage value is always updated, this mode doesn't prevent it.</value>
+  </data>
+  <data name="IM_RD.ToolTip" xml:space="preserve">
+    <value>According to description, enables read/write memory access for color and coverage values. The true meaning of this flag is unclear, though, since it's apparently not needed by all of the pre-assembled rendering modes. It seems to be the deciding factor between the two different kinds of antialiasing provided (with this option disabled leading to the faster but uglier version), but that's not the sole pattern in pre-assembled modes.</value>
+  </data>
+  <data name="G_MDSFT_ZSRCSEL.ToolTip" xml:space="preserve">
+    <value>Selects the source of depth information for pixels. If enabled, it uses the depth value from the primitive depth value for the entire primitive. If disabled, the depth value is calculated per-pixel and used instead.</value>
+  </data>
 </root>

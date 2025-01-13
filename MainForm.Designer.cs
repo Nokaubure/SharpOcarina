@@ -68,6 +68,7 @@ namespace SharpOcarina
             this.showCollisionModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showRoomModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayAxisMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowSelectedGrouptoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.ColorBlindMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyEnvironmentLightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderActorstoolStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,9 +78,11 @@ namespace SharpOcarina
             this.DisableRGBA32ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderSelectedCutsceneCommandsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderWaterboxesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RenderPathwaystoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableTextureWarningsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableCutscenePreviewBlackBarsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ResetGroupSettingsReloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MMTextureScrolltoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.consecutiveRoomInjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoaddGroupsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -166,35 +169,56 @@ namespace SharpOcarina
             this.SetTitlecard = new System.Windows.Forms.Button();
             this.SetRestrictionFlags = new System.Windows.Forms.Button();
             this.AutoInjectOffsetCheckBox = new System.Windows.Forms.CheckBox();
+            this.ScenenumberTextbox = new SharpOcarina.NumericUpDownEx();
             this.CamerasGroupBox = new System.Windows.Forms.GroupBox();
             this.CameraPanel = new System.Windows.Forms.Panel();
             this.CameraPage2 = new System.Windows.Forms.Button();
             this.CameraCopyViewport = new System.Windows.Forms.Button();
             this.CameraView = new System.Windows.Forms.Button();
             this.label104 = new System.Windows.Forms.Label();
+            this.CameraUnk1 = new SharpOcarina.NumericUpDownEx();
             this.label103 = new System.Windows.Forms.Label();
+            this.CameraUnk2 = new SharpOcarina.NumericUpDownEx();
             this.label78 = new System.Windows.Forms.Label();
+            this.CameraFov = new SharpOcarina.NumericUpDownEx();
             this.CameraType = new System.Windows.Forms.ComboBox();
             this.label77 = new System.Windows.Forms.Label();
+            this.CameraZRot = new SharpOcarina.NumericUpDownEx();
             this.label71 = new System.Windows.Forms.Label();
             this.label72 = new System.Windows.Forms.Label();
+            this.CameraZPos = new SharpOcarina.NumericUpDownEx();
             this.label73 = new System.Windows.Forms.Label();
             this.label74 = new System.Windows.Forms.Label();
+            this.CameraXRot = new SharpOcarina.NumericUpDownEx();
             this.label75 = new System.Windows.Forms.Label();
+            this.CameraYPos = new SharpOcarina.NumericUpDownEx();
+            this.CameraYRot = new SharpOcarina.NumericUpDownEx();
             this.label76 = new System.Windows.Forms.Label();
+            this.CameraXPos = new SharpOcarina.NumericUpDownEx();
             this.DeleteCameraButton = new System.Windows.Forms.Button();
             this.AddCameraButton = new System.Windows.Forms.Button();
+            this.CameraSelect = new SharpOcarina.NumericUpDownEx();
+            this.niceLine8 = new SharpOcarina.NiceLine();
             this.CameraPanel2 = new System.Windows.Forms.Panel();
             this.label121 = new System.Windows.Forms.Label();
+            this.CameraUnk22 = new SharpOcarina.NumericUpDownEx();
+            this.CameraUnk1E = new SharpOcarina.NumericUpDownEx();
             this.label122 = new System.Windows.Forms.Label();
+            this.CameraUnk20 = new SharpOcarina.NumericUpDownEx();
             this.label123 = new System.Windows.Forms.Label();
             this.CameraPage1 = new System.Windows.Forms.Button();
             this.label124 = new System.Windows.Forms.Label();
+            this.CameraUnk1C = new SharpOcarina.NumericUpDownEx();
             this.label126 = new System.Windows.Forms.Label();
+            this.CameraUnk16 = new SharpOcarina.NumericUpDownEx();
             this.label127 = new System.Windows.Forms.Label();
             this.label128 = new System.Windows.Forms.Label();
+            this.CameraUnk18 = new SharpOcarina.NumericUpDownEx();
             this.label129 = new System.Windows.Forms.Label();
+            this.CameraUnk14 = new SharpOcarina.NumericUpDownEx();
+            this.CameraUnk1A = new SharpOcarina.NumericUpDownEx();
             this.label130 = new System.Windows.Forms.Label();
+            this.CameraUnk12 = new SharpOcarina.NumericUpDownEx();
             this.SceneSettingsComboBox = new System.Windows.Forms.ComboBox();
             this.SceneFunctionLabel = new System.Windows.Forms.Label();
             this.ElfMessageComboBox = new System.Windows.Forms.ComboBox();
@@ -205,39 +229,63 @@ namespace SharpOcarina
             this.label33 = new System.Windows.Forms.Label();
             this.WaterboxGroupBox = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.WaterboxRoom = new SharpOcarina.NumericUpDownEx();
+            this.WaterboxCam = new SharpOcarina.NumericUpDownEx();
             this.label94 = new System.Windows.Forms.Label();
+            this.WaterboxEnv = new SharpOcarina.NumericUpDownEx();
             this.WaterboxRoomLabel = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.WaterboxZPos = new SharpOcarina.NumericUpDownEx();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
+            this.WaterboxXSize = new SharpOcarina.NumericUpDownEx();
             this.label18 = new System.Windows.Forms.Label();
+            this.WaterboxYPos = new SharpOcarina.NumericUpDownEx();
+            this.WaterboxYSize = new SharpOcarina.NumericUpDownEx();
             this.label23 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
+            this.WaterboxXPos = new SharpOcarina.NumericUpDownEx();
             this.DeletewaterboxButton = new System.Windows.Forms.Button();
             this.AddwaterboxButton = new System.Windows.Forms.Button();
+            this.WaterboxSelect = new SharpOcarina.NumericUpDownEx();
+            this.niceLine2 = new SharpOcarina.NiceLine();
+            this.InjectoffsetTextbox = new SharpOcarina.NumericTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.CollisionTextbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.ScaleNumericbox = new SharpOcarina.NumericUpDownEx();
             this.label2 = new System.Windows.Forms.Label();
             this.NameTextbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.TextureAnimsGroupBox = new System.Windows.Forms.GroupBox();
             this.label98 = new System.Windows.Forms.Label();
+            this.TextureAnimHeight2 = new SharpOcarina.NumericUpDownEx();
             this.label99 = new System.Windows.Forms.Label();
+            this.TextureAnimWidth2 = new SharpOcarina.NumericUpDownEx();
             this.label100 = new System.Windows.Forms.Label();
+            this.TextureAnimYVelocity2 = new SharpOcarina.NumericUpDownEx();
             this.label101 = new System.Windows.Forms.Label();
+            this.TextureAnimXVelocity2 = new SharpOcarina.NumericUpDownEx();
+            this.niceLine14 = new SharpOcarina.NiceLine();
             this.label96 = new System.Windows.Forms.Label();
+            this.TextureAnimHeight1 = new SharpOcarina.NumericUpDownEx();
             this.label97 = new System.Windows.Forms.Label();
+            this.TextureAnimWidth1 = new SharpOcarina.NumericUpDownEx();
             this.label95 = new System.Windows.Forms.Label();
+            this.TextureAnimYVelocity1 = new SharpOcarina.NumericUpDownEx();
             this.label59 = new System.Windows.Forms.Label();
             this.DeleteTextureAnim = new System.Windows.Forms.Button();
+            this.TextureAnimXVelocity1 = new SharpOcarina.NumericUpDownEx();
             this.AddTextureAnim = new System.Windows.Forms.Button();
+            this.TextureAnimSelect = new SharpOcarina.NumericUpDownEx();
+            this.niceLine13 = new SharpOcarina.NiceLine();
             this.tabRooms = new System.Windows.Forms.TabPage();
             this.AdditionalTexturesGroupBox = new System.Windows.Forms.GroupBox();
             this.AdditionalTextureLabel = new System.Windows.Forms.Label();
             this.DeleteAdditionalTexture = new System.Windows.Forms.Button();
             this.AddAdditionalTexture = new System.Windows.Forms.Button();
+            this.AdditionalTextureList = new SharpOcarina.NumericUpDownEx();
             this.ReloadRoomButton = new System.Windows.Forms.Button();
             this.AddMultipleRooms = new System.Windows.Forms.Button();
             this.ContinualInject = new System.Windows.Forms.CheckBox();
@@ -249,24 +297,33 @@ namespace SharpOcarina
             this.GroupAlphaMask = new System.Windows.Forms.CheckBox();
             this.GroupEnvColor = new System.Windows.Forms.CheckBox();
             this.GroupRenderLast = new System.Windows.Forms.CheckBox();
+            this.GroupLODDIstance = new SharpOcarina.NumericUpDownEx();
             this.label102 = new System.Windows.Forms.Label();
+            this.GroupLODGroup = new SharpOcarina.NumericUpDownEx();
             this.GroupLod = new System.Windows.Forms.CheckBox();
             this.GroupSmoothRgbaEdges = new System.Windows.Forms.CheckBox();
             this.AnimationLabel = new System.Windows.Forms.Label();
+            this.GroupAnimatedBank = new SharpOcarina.NumericUpDownEx();
             this.GroupIgnoreFog = new System.Windows.Forms.CheckBox();
             this.Group2AxisBillboard = new System.Windows.Forms.CheckBox();
             this.GroupBillboard = new System.Windows.Forms.CheckBox();
             this.GroupPixelated = new System.Windows.Forms.CheckBox();
             this.GroupDecal = new System.Windows.Forms.CheckBox();
             this.label93 = new System.Windows.Forms.Label();
+            this.ShiftTNumeric = new SharpOcarina.NumericUpDownEx();
+            this.ShiftSNumeric = new SharpOcarina.NumericUpDownEx();
             this.ReverseLightCheckBox = new System.Windows.Forms.CheckBox();
+            this.GroupMultitextureAlpha = new SharpOcarina.NumericUpDownEx();
             this.label79 = new System.Windows.Forms.Label();
             this.GroupMetallic = new System.Windows.Forms.CheckBox();
             this.GroupAnimated = new System.Windows.Forms.CheckBox();
             this.label34 = new System.Windows.Forms.Label();
+            this.numericUpDown6 = new SharpOcarina.NumericUpDownEx();
+            this.numericUpDown5 = new SharpOcarina.NumericUpDownEx();
             this.label30 = new System.Windows.Forms.Label();
             this.MultiTextureComboBox = new System.Windows.Forms.ComboBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.GroupPolygonType = new SharpOcarina.NumericUpDownEx();
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -274,7 +331,9 @@ namespace SharpOcarina
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new SharpOcarina.NumericUpDownEx();
             this.label5 = new System.Windows.Forms.Label();
+            this.RoomInjectionOffset = new SharpOcarina.NumericTextBox();
             this.GroupList = new System.Windows.Forms.ListBox();
             this.DeleteRoom = new System.Windows.Forms.Button();
             this.AddRoom = new System.Windows.Forms.Button();
@@ -282,13 +341,18 @@ namespace SharpOcarina
             this.tabSceneEnv = new System.Windows.Forms.TabPage();
             this.PrerenderedGroupBox = new System.Windows.Forms.GroupBox();
             this.DeleteJFIF = new System.Windows.Forms.Button();
+            this.niceLine15 = new SharpOcarina.NiceLine();
             this.JFIFLabel = new System.Windows.Forms.Label();
+            this.PrerenderedList = new SharpOcarina.NumericUpDownEx();
             this.LoadJFIF = new System.Windows.Forms.Button();
             this.AlternateHeadersGroupBox = new System.Windows.Forms.GroupBox();
+            this.SceneHeaderCopyList = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderUsedLabel = new System.Windows.Forms.Label();
             this.SceneHeaderSameCheckbox = new System.Windows.Forms.CheckBox();
             this.DeleteSceneHeaderButton = new System.Windows.Forms.Button();
             this.AddSceneHeaderButton = new System.Windows.Forms.Button();
+            this.SceneHeaderList = new SharpOcarina.NumericUpDownEx();
+            this.niceLine9 = new SharpOcarina.NiceLine();
             this.PrerenderedCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.label45 = new System.Windows.Forms.Label();
@@ -313,6 +377,15 @@ namespace SharpOcarina
             this.label21 = new System.Windows.Forms.Label();
             this.ViewNormalCopyEnvB = new System.Windows.Forms.Button();
             this.ViewNormalCopyEnvA = new System.Windows.Forms.Button();
+            this.EnvironmentDirectionBZ = new SharpOcarina.NumericUpDownEx();
+            this.EnvironmentDirectionBY = new SharpOcarina.NumericUpDownEx();
+            this.EnvironmentDirectionAZ = new SharpOcarina.NumericUpDownEx();
+            this.EnvironmentDirectionAY = new SharpOcarina.NumericUpDownEx();
+            this.EnvironmentDirectionBX = new SharpOcarina.NumericUpDownEx();
+            this.EnvironmentDirectionAX = new SharpOcarina.NumericUpDownEx();
+            this.DrawDistance = new SharpOcarina.NumericUpDownEx();
+            this.FogUnknown = new SharpOcarina.NumericUpDownEx();
+            this.FogDistance = new SharpOcarina.NumericUpDownEx();
             this.label85 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
@@ -325,6 +398,8 @@ namespace SharpOcarina
             this.label19 = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
+            this.EnvironmentSelect = new SharpOcarina.NumericUpDownEx();
+            this.niceLine3 = new SharpOcarina.NiceLine();
             this.tabRoomEnv = new System.Windows.Forms.TabPage();
             this.Roomaffectedpointlightscheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
@@ -332,14 +407,22 @@ namespace SharpOcarina
             this.PointLightCheckBox = new System.Windows.Forms.CheckBox();
             this.AdditionalLightColor = new System.Windows.Forms.PictureBox();
             this.AdditionalLightDirectionLabel3 = new System.Windows.Forms.Label();
+            this.AdditionalLightRadius = new SharpOcarina.NumericUpDownEx();
             this.AdditionalLightLabel1 = new System.Windows.Forms.Label();
             this.AdditionalLightPointLabel1 = new System.Windows.Forms.Label();
+            this.AdditionalLightZPos = new SharpOcarina.NumericUpDownEx();
             this.AdditionalLightPointLabel3 = new System.Windows.Forms.Label();
             this.AdditionalLightPointLabel2 = new System.Windows.Forms.Label();
+            this.AdditionalLightNS = new SharpOcarina.NumericUpDownEx();
             this.AdditionalLightDirectionLabel2 = new System.Windows.Forms.Label();
+            this.AdditionalLightYPos = new SharpOcarina.NumericUpDownEx();
+            this.AdditionalLightEW = new SharpOcarina.NumericUpDownEx();
             this.AdditionalLightDirectionLabel1 = new System.Windows.Forms.Label();
+            this.AdditionalLightXPos = new SharpOcarina.NumericUpDownEx();
             this.AdditionalLightDelete = new System.Windows.Forms.Button();
             this.AdditionalLightAdd = new System.Windows.Forms.Button();
+            this.AdditionalLightSelect = new SharpOcarina.NumericUpDownEx();
+            this.niceLine5 = new SharpOcarina.NiceLine();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.WarpsongsCheckBox = new System.Windows.Forms.CheckBox();
             this.InvisibleActorsCheckBox = new System.Windows.Forms.CheckBox();
@@ -348,13 +431,21 @@ namespace SharpOcarina
             this.label50 = new System.Windows.Forms.Label();
             this.RestrictionComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.WindStrength = new SharpOcarina.NumericUpDownEx();
+            this.WindSouth = new SharpOcarina.NumericUpDownEx();
+            this.WindVertical = new SharpOcarina.NumericUpDownEx();
+            this.WindWest = new SharpOcarina.NumericUpDownEx();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.SoundEcho = new SharpOcarina.NumericUpDownEx();
+            this.TimeSpeed = new SharpOcarina.NumericUpDownEx();
             this.DisableStartTime = new System.Windows.Forms.CheckBox();
+            this.TimeMinute = new SharpOcarina.NumericUpDownEx();
             this.label105 = new System.Windows.Forms.Label();
+            this.TimeHour = new SharpOcarina.NumericUpDownEx();
             this.label43 = new System.Windows.Forms.Label();
             this.SunmoonCheckBox = new System.Windows.Forms.CheckBox();
             this.SkyboxCheckBox = new System.Windows.Forms.CheckBox();
@@ -365,13 +456,18 @@ namespace SharpOcarina
             this.AddexitButton = new System.Windows.Forms.Button();
             this.DeleteexitButton = new System.Windows.Forms.Button();
             this.ExitGroupBox = new System.Windows.Forms.GroupBox();
+            this.ExitHeaderIndex = new SharpOcarina.NumericUpDownEx();
+            this.ExitSceneIndex = new SharpOcarina.NumericUpDownEx();
             this.label134 = new System.Windows.Forms.Label();
             this.ExitMusicOn = new System.Windows.Forms.CheckBox();
+            this.ExitSpawnIndex = new SharpOcarina.NumericUpDownEx();
             this.ExitShowTitlecard = new System.Windows.Forms.CheckBox();
             this.label133 = new System.Windows.Forms.Label();
             this.label132 = new System.Windows.Forms.Label();
+            this.ExitFadeOut = new SharpOcarina.NumericUpDownEx();
             this.label1331 = new System.Windows.Forms.Label();
             this.label131 = new System.Windows.Forms.Label();
+            this.ExitFadeIn = new SharpOcarina.NumericUpDownEx();
             this.ExitListLabel = new System.Windows.Forms.Label();
             this.ExitList = new System.Windows.Forms.ListBox();
             this.groupBoxCollisionPolytype = new System.Windows.Forms.GroupBox();
@@ -389,19 +485,25 @@ namespace SharpOcarina
             this.WallDamageCheck = new System.Windows.Forms.CheckBox();
             this.label92 = new System.Windows.Forms.Label();
             this.label91 = new System.Windows.Forms.Label();
+            this.niceLine12 = new SharpOcarina.NiceLine();
             this.GroupDetectionB8 = new System.Windows.Forms.CheckBox();
             this.label90 = new System.Windows.Forms.Label();
             this.GroupDetectionB4 = new System.Windows.Forms.CheckBox();
+            this.PolytypeUnk2 = new SharpOcarina.NumericUpDownEx();
             this.GroupDetectionB2 = new System.Windows.Forms.CheckBox();
             this.label89 = new System.Windows.Forms.Label();
+            this.PolytypeUnk1 = new SharpOcarina.NumericUpDownEx();
             this.label88 = new System.Windows.Forms.Label();
             this.label87 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.GroupDetectionA8 = new System.Windows.Forms.CheckBox();
             this.GroupDetectionA4 = new System.Windows.Forms.CheckBox();
             this.GroupDetectionA2 = new System.Windows.Forms.CheckBox();
+            this.niceLine7 = new SharpOcarina.NiceLine();
+            this.CameraAngleNumeric = new SharpOcarina.NumericUpDownEx();
             this.CameraAngleLabel = new System.Windows.Forms.Label();
             this.HookshotableCheckbox = new System.Windows.Forms.CheckBox();
+            this.ExitNumber = new SharpOcarina.NumericUpDownEx();
             this.label17 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.IceRadioButton = new System.Windows.Forms.RadioButton();
@@ -421,17 +523,30 @@ namespace SharpOcarina
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.SteepterrainCheckbox = new System.Windows.Forms.CheckBox();
+            this.TerrainType = new SharpOcarina.NumericUpDownEx();
             this.label15 = new System.Windows.Forms.Label();
+            this.GroundType = new SharpOcarina.NumericUpDownEx();
             this.label16 = new System.Windows.Forms.Label();
+            this.EnvironmentType = new SharpOcarina.NumericUpDownEx();
             this.label14 = new System.Windows.Forms.Label();
+            this.EchoRange = new SharpOcarina.NumericUpDownEx();
             this.label13 = new System.Windows.Forms.Label();
+            this.niceLine4 = new SharpOcarina.NiceLine();
+            this.PolygonRawdata = new SharpOcarina.NumericTextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.niceLine10 = new SharpOcarina.NiceLine();
+            this.niceLine11 = new SharpOcarina.NiceLine();
+            this.niceLine1 = new SharpOcarina.NiceLine();
             this.DeletepolygonButton = new System.Windows.Forms.Button();
             this.AddpolygonButton = new System.Windows.Forms.Button();
+            this.PolygonSelect = new SharpOcarina.NumericUpDownEx();
             this.tabTransitions = new System.Windows.Forms.TabPage();
+            this.actorEditControl3 = new SharpOcarina.ActorEditControl();
+            this.actorEditControl2 = new SharpOcarina.ActorEditControl();
             this.tabPathways = new System.Windows.Forms.TabPage();
             this.ActorCutsceneGroupBox = new System.Windows.Forms.GroupBox();
             this.label143 = new System.Windows.Forms.Label();
+            this.ActorCutsceneUnknown = new SharpOcarina.NumericUpDownEx();
             this.ActorCutsceneCamIndex = new System.Windows.Forms.ComboBox();
             this.label142 = new System.Windows.Forms.Label();
             this.label141 = new System.Windows.Forms.Label();
@@ -440,11 +555,16 @@ namespace SharpOcarina
             this.ActorCutsceneBlackBars = new System.Windows.Forms.CheckBox();
             this.ActorCutscenePuzzleSound = new System.Windows.Forms.CheckBox();
             this.label140 = new System.Windows.Forms.Label();
+            this.ActorCutsceneAdditionalActorCs = new SharpOcarina.NumericUpDownEx();
             this.ActorCutsceneDeleteButton = new System.Windows.Forms.Button();
             this.ActorCutsceneAddButton = new System.Windows.Forms.Button();
             this.label37 = new System.Windows.Forms.Label();
+            this.ActorCutsceneCsIndex = new SharpOcarina.NumericUpDownEx();
+            this.ActorCutsceneNumber = new SharpOcarina.NumericUpDownEx();
             this.label138 = new System.Windows.Forms.Label();
+            this.niceLine18 = new SharpOcarina.NiceLine();
             this.label139 = new System.Windows.Forms.Label();
+            this.ActorCutsceneLength = new SharpOcarina.NumericUpDownEx();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.PathwayDown = new System.Windows.Forms.Button();
             this.PathwayUp = new System.Windows.Forms.Button();
@@ -466,8 +586,13 @@ namespace SharpOcarina
             this.PathwayDeleteButton = new System.Windows.Forms.Button();
             this.PathwayAddButton = new System.Windows.Forms.Button();
             this.PathwayLabel1 = new System.Windows.Forms.Label();
+            this.PathwayZPos = new SharpOcarina.NumericUpDownEx();
+            this.PathwayNumber = new SharpOcarina.NumericUpDownEx();
             this.PathwayLabel3 = new System.Windows.Forms.Label();
+            this.niceLine6 = new SharpOcarina.NiceLine();
             this.PathwayLabel2 = new System.Windows.Forms.Label();
+            this.PathwayXPos = new SharpOcarina.NumericUpDownEx();
+            this.PathwayYPos = new SharpOcarina.NumericUpDownEx();
             this.tabActors = new System.Windows.Forms.TabPage();
             this.ObjectTabMenu = new System.Windows.Forms.TabControl();
             this.RoomObjectPage = new System.Windows.Forms.TabPage();
@@ -481,6 +606,7 @@ namespace SharpOcarina
             this.SceneObjectDeleteButton = new System.Windows.Forms.Button();
             this.SceneObjectAddButton = new System.Windows.Forms.Button();
             this.RoomObjectSpace = new System.Windows.Forms.Label();
+            this.actorEditControl1 = new SharpOcarina.ActorEditControl();
             this.tabCutscene = new System.Windows.Forms.TabPage();
             this.DebugTextBox = new System.Windows.Forms.RichTextBox();
             this.CutsceneTableEntryLabel = new System.Windows.Forms.Label();
@@ -488,6 +614,7 @@ namespace SharpOcarina
             this.CutsceneSpawnLabel = new System.Windows.Forms.Label();
             this.CutsceneEntranceLabel = new System.Windows.Forms.Label();
             this.CutsceneGroupBox = new System.Windows.Forms.GroupBox();
+            this.MarkerEndFrame = new SharpOcarina.NumericTextBox();
             this.CutsceneTabs = new System.Windows.Forms.TabControl();
             this.CameraPositions = new System.Windows.Forms.TabPage();
             this.CutscenePositionPlayMode = new System.Windows.Forms.Button();
@@ -495,21 +622,32 @@ namespace SharpOcarina
             this.CutscenePositionUp = new System.Windows.Forms.Button();
             this.CutscenePositionCopyCamera = new System.Windows.Forms.Button();
             this.CutscenePositionViewMode = new System.Windows.Forms.Button();
+            this.CutsceneAbsolutePositionAngleView = new SharpOcarina.NumericUpDownEx();
+            this.CutscenePositionFrameDuration = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneAbsolutePositionCameraRoll = new SharpOcarina.NumericUpDownEx();
             this.label60 = new System.Windows.Forms.Label();
             this.CutscenePositionXFocusLabel = new System.Windows.Forms.Label();
+            this.CutscenePositionZFocus = new SharpOcarina.NumericUpDownEx();
             this.CutscenePositionZFocusLabel = new System.Windows.Forms.Label();
             this.CutscenePositionYFocusLabel = new System.Windows.Forms.Label();
+            this.CutscenePositionXFocus = new SharpOcarina.NumericUpDownEx();
+            this.CutscenePositionYFocus = new SharpOcarina.NumericUpDownEx();
             this.CutsceneDeleteAbsolutePosition = new System.Windows.Forms.Button();
             this.CutsceneAddAbsolutePosition = new System.Windows.Forms.Button();
             this.CutsceneAbsolutePositionListBox = new System.Windows.Forms.ListBox();
             this.label56 = new System.Windows.Forms.Label();
+            this.CutsceneAbsolutePositionZ = new SharpOcarina.NumericUpDownEx();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
+            this.CutsceneAbsolutePositionX = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneAbsolutePositionY = new SharpOcarina.NumericUpDownEx();
             this.label55 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
             this.SpecialExecution = new System.Windows.Forms.TabPage();
             this.label83 = new System.Windows.Forms.Label();
             this.label84 = new System.Windows.Forms.Label();
+            this.CutsceneSetTimeHours = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneSetTimeMinutes = new SharpOcarina.NumericUpDownEx();
             this.Unknown = new System.Windows.Forms.TabPage();
             this.Textbox = new System.Windows.Forms.TabPage();
             this.CutsceneTextboxDown = new System.Windows.Forms.Button();
@@ -521,6 +659,10 @@ namespace SharpOcarina
             this.CutsceneTextboxMessageIdLabel = new System.Windows.Forms.Label();
             this.CutsceneDeleteTextbox = new System.Windows.Forms.Button();
             this.CutsceneAddTextbox = new System.Windows.Forms.Button();
+            this.CutsceneTextboxBottomMessageID = new SharpOcarina.NumericTextBox();
+            this.CutsceneTextboxFrames = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneTextboxTopMessageID = new SharpOcarina.NumericTextBox();
+            this.CutsceneTextboxMessageId = new SharpOcarina.NumericTextBox();
             this.CutsceneTextboxList = new System.Windows.Forms.ListBox();
             this.TransitionEffect = new System.Windows.Forms.TabPage();
             this.label70 = new System.Windows.Forms.Label();
@@ -545,7 +687,17 @@ namespace SharpOcarina
             this.label69 = new System.Windows.Forms.Label();
             this.CutsceneActorDeleteAction = new System.Windows.Forms.Button();
             this.CutsceneActorAddAction = new System.Windows.Forms.Button();
+            this.CutsceneActorFrameDuration = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorZRot = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorXRot = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorYRot = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorZEnd = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorXEnd = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorYEnd = new SharpOcarina.NumericUpDownEx();
             this.CutsceneActorListBox = new System.Windows.Forms.ListBox();
+            this.CutsceneActorZStart = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorXStart = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneActorYStart = new SharpOcarina.NumericUpDownEx();
             this.label51 = new System.Windows.Forms.Label();
             this.MarkerTypeLabel = new System.Windows.Forms.Label();
             this.MarkerType = new System.Windows.Forms.ComboBox();
@@ -555,6 +707,11 @@ namespace SharpOcarina
             this.AddMarker = new System.Windows.Forms.Button();
             this.MarkerSelect = new System.Windows.Forms.ListBox();
             this.label54 = new System.Windows.Forms.Label();
+            this.MarkerStartFrame = new SharpOcarina.NumericTextBox();
+            this.CutsceneTableEntry = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneFlag = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneSpawn = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneEntrance = new SharpOcarina.NumericUpDownEx();
             this.tabAnimations = new System.Windows.Forms.TabPage();
             this.RenderFunctionInherit = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -565,20 +722,33 @@ namespace SharpOcarina
             this.RenderFunctionFlagPresetToolStrip = new System.Windows.Forms.ToolStrip();
             this.RenderFunctionFlagPresetButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.RenderFunctionFlagBitwiseLabel = new System.Windows.Forms.Label();
+            this.RenderFunctionFlagBitwise = new SharpOcarina.NumericTextBox();
             this.RenderFunctionFlagReverseCheckbox = new System.Windows.Forms.CheckBox();
             this.RenderFunctionFlagLabel = new System.Windows.Forms.Label();
             this.label114 = new System.Windows.Forms.Label();
+            this.RenderFunctionFlagID = new SharpOcarina.NumericUpDownEx();
             this.RenderFunctionFlagType = new System.Windows.Forms.ComboBox();
             this.label137 = new System.Windows.Forms.Label();
+            this.RenderFunctionID = new SharpOcarina.NumericUpDownEx();
             this.RenderFunctionTabs = new System.Windows.Forms.TabControl();
             this.tabTextureScroll = new System.Windows.Forms.TabPage();
             this.label106 = new System.Windows.Forms.Label();
+            this.FunctionTextureScrollHeight2 = new SharpOcarina.NumericUpDownEx();
+            this.FunctionTextureScrollXVelocity = new SharpOcarina.NumericUpDownEx();
             this.label107 = new System.Windows.Forms.Label();
+            this.niceLine17 = new SharpOcarina.NiceLine();
+            this.FunctionTextureScrollWidth2 = new SharpOcarina.NumericUpDownEx();
             this.label113 = new System.Windows.Forms.Label();
             this.label108 = new System.Windows.Forms.Label();
+            this.FunctionTextureScrollYVelocity = new SharpOcarina.NumericUpDownEx();
+            this.FunctionTextureScrollYVelocity2 = new SharpOcarina.NumericUpDownEx();
             this.label112 = new System.Windows.Forms.Label();
             this.label109 = new System.Windows.Forms.Label();
+            this.FunctionTextureScrollWidth = new SharpOcarina.NumericUpDownEx();
+            this.FunctionTextureScrollXVelocity2 = new SharpOcarina.NumericUpDownEx();
             this.label111 = new System.Windows.Forms.Label();
+            this.niceLine16 = new SharpOcarina.NiceLine();
+            this.FunctionTextureScrollHeight = new SharpOcarina.NumericUpDownEx();
             this.label110 = new System.Windows.Forms.Label();
             this.tabColorBlending = new System.Windows.Forms.TabPage();
             this.label125 = new System.Windows.Forms.Label();
@@ -589,6 +759,8 @@ namespace SharpOcarina
             this.FunctionColorBlendUp = new System.Windows.Forms.Button();
             this.FunctionColorBlendDelete = new System.Windows.Forms.Button();
             this.FunctionColorBlendAdd = new System.Windows.Forms.Button();
+            this.FunctionColorBlendAlpha = new SharpOcarina.NumericUpDownEx();
+            this.FunctionColorBlendFrames = new SharpOcarina.NumericUpDownEx();
             this.FunctionColorBlendList = new System.Windows.Forms.ListBox();
             this.tabTextureSwap = new System.Windows.Forms.TabPage();
             this.FunctionTextureSwapPictureBox2 = new System.Windows.Forms.PictureBox();
@@ -605,6 +777,7 @@ namespace SharpOcarina
             this.label117 = new System.Windows.Forms.Label();
             this.FunctionTextureSwapAnimationDelete = new System.Windows.Forms.Button();
             this.FunctionTextureSwapAnimationAdd = new System.Windows.Forms.Button();
+            this.FunctionTextureSwapAnimationDuration = new SharpOcarina.NumericUpDownEx();
             this.FunctionTextureSwapAnimationList = new System.Windows.Forms.ListBox();
             this.tabCameraEffect = new System.Windows.Forms.TabPage();
             this.FunctionCameraEffectDropdown = new System.Windows.Forms.ComboBox();
@@ -633,255 +806,13 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.ScenenumberTextbox = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk1 = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk2 = new SharpOcarina.NumericUpDownEx();
-            this.CameraFov = new SharpOcarina.NumericUpDownEx();
-            this.CameraZRot = new SharpOcarina.NumericUpDownEx();
-            this.CameraZPos = new SharpOcarina.NumericUpDownEx();
-            this.CameraXRot = new SharpOcarina.NumericUpDownEx();
-            this.CameraYPos = new SharpOcarina.NumericUpDownEx();
-            this.CameraYRot = new SharpOcarina.NumericUpDownEx();
-            this.CameraXPos = new SharpOcarina.NumericUpDownEx();
-            this.CameraSelect = new SharpOcarina.NumericUpDownEx();
-            this.niceLine8 = new SharpOcarina.NiceLine();
-            this.CameraUnk22 = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk1E = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk20 = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk1C = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk16 = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk18 = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk14 = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk1A = new SharpOcarina.NumericUpDownEx();
-            this.CameraUnk12 = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxRoom = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxCam = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxEnv = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxZPos = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxXSize = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxYPos = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxYSize = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxXPos = new SharpOcarina.NumericUpDownEx();
-            this.WaterboxSelect = new SharpOcarina.NumericUpDownEx();
-            this.niceLine2 = new SharpOcarina.NiceLine();
-            this.InjectoffsetTextbox = new SharpOcarina.NumericTextBox();
-            this.ScaleNumericbox = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimHeight2 = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimWidth2 = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimYVelocity2 = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimXVelocity2 = new SharpOcarina.NumericUpDownEx();
-            this.niceLine14 = new SharpOcarina.NiceLine();
-            this.TextureAnimHeight1 = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimWidth1 = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimYVelocity1 = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimXVelocity1 = new SharpOcarina.NumericUpDownEx();
-            this.TextureAnimSelect = new SharpOcarina.NumericUpDownEx();
-            this.niceLine13 = new SharpOcarina.NiceLine();
-            this.AdditionalTextureList = new SharpOcarina.NumericUpDownEx();
-            this.GroupLODDIstance = new SharpOcarina.NumericUpDownEx();
-            this.GroupLODGroup = new SharpOcarina.NumericUpDownEx();
-            this.GroupAnimatedBank = new SharpOcarina.NumericUpDownEx();
-            this.ShiftTNumeric = new SharpOcarina.NumericUpDownEx();
-            this.ShiftSNumeric = new SharpOcarina.NumericUpDownEx();
-            this.GroupMultitextureAlpha = new SharpOcarina.NumericUpDownEx();
-            this.numericUpDown6 = new SharpOcarina.NumericUpDownEx();
-            this.numericUpDown5 = new SharpOcarina.NumericUpDownEx();
-            this.GroupPolygonType = new SharpOcarina.NumericUpDownEx();
-            this.numericUpDown2 = new SharpOcarina.NumericUpDownEx();
-            this.RoomInjectionOffset = new SharpOcarina.NumericTextBox();
-            this.niceLine15 = new SharpOcarina.NiceLine();
-            this.PrerenderedList = new SharpOcarina.NumericUpDownEx();
-            this.SceneHeaderCopyList = new SharpOcarina.NumericUpDownEx();
-            this.SceneHeaderList = new SharpOcarina.NumericUpDownEx();
-            this.niceLine9 = new SharpOcarina.NiceLine();
-            this.EnvironmentDirectionBZ = new SharpOcarina.NumericUpDownEx();
-            this.EnvironmentDirectionBY = new SharpOcarina.NumericUpDownEx();
-            this.EnvironmentDirectionAZ = new SharpOcarina.NumericUpDownEx();
-            this.EnvironmentDirectionAY = new SharpOcarina.NumericUpDownEx();
-            this.EnvironmentDirectionBX = new SharpOcarina.NumericUpDownEx();
-            this.EnvironmentDirectionAX = new SharpOcarina.NumericUpDownEx();
-            this.DrawDistance = new SharpOcarina.NumericUpDownEx();
-            this.FogUnknown = new SharpOcarina.NumericUpDownEx();
-            this.FogDistance = new SharpOcarina.NumericUpDownEx();
-            this.EnvironmentSelect = new SharpOcarina.NumericUpDownEx();
-            this.niceLine3 = new SharpOcarina.NiceLine();
-            this.AdditionalLightRadius = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightZPos = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightNS = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightYPos = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightEW = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightXPos = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightSelect = new SharpOcarina.NumericUpDownEx();
-            this.niceLine5 = new SharpOcarina.NiceLine();
-            this.WindStrength = new SharpOcarina.NumericUpDownEx();
-            this.WindSouth = new SharpOcarina.NumericUpDownEx();
-            this.WindVertical = new SharpOcarina.NumericUpDownEx();
-            this.WindWest = new SharpOcarina.NumericUpDownEx();
-            this.SoundEcho = new SharpOcarina.NumericUpDownEx();
-            this.TimeSpeed = new SharpOcarina.NumericUpDownEx();
-            this.TimeMinute = new SharpOcarina.NumericUpDownEx();
-            this.TimeHour = new SharpOcarina.NumericUpDownEx();
-            this.ExitHeaderIndex = new SharpOcarina.NumericUpDownEx();
-            this.ExitSceneIndex = new SharpOcarina.NumericUpDownEx();
-            this.ExitSpawnIndex = new SharpOcarina.NumericUpDownEx();
-            this.ExitFadeOut = new SharpOcarina.NumericUpDownEx();
-            this.ExitFadeIn = new SharpOcarina.NumericUpDownEx();
-            this.niceLine12 = new SharpOcarina.NiceLine();
-            this.PolytypeUnk2 = new SharpOcarina.NumericUpDownEx();
-            this.PolytypeUnk1 = new SharpOcarina.NumericUpDownEx();
-            this.niceLine7 = new SharpOcarina.NiceLine();
-            this.CameraAngleNumeric = new SharpOcarina.NumericUpDownEx();
-            this.ExitNumber = new SharpOcarina.NumericUpDownEx();
-            this.TerrainType = new SharpOcarina.NumericUpDownEx();
-            this.GroundType = new SharpOcarina.NumericUpDownEx();
-            this.EnvironmentType = new SharpOcarina.NumericUpDownEx();
-            this.EchoRange = new SharpOcarina.NumericUpDownEx();
-            this.niceLine4 = new SharpOcarina.NiceLine();
-            this.PolygonRawdata = new SharpOcarina.NumericTextBox();
-            this.niceLine10 = new SharpOcarina.NiceLine();
-            this.niceLine11 = new SharpOcarina.NiceLine();
-            this.niceLine1 = new SharpOcarina.NiceLine();
-            this.PolygonSelect = new SharpOcarina.NumericUpDownEx();
-            this.actorEditControl3 = new SharpOcarina.ActorEditControl();
-            this.actorEditControl2 = new SharpOcarina.ActorEditControl();
-            this.ActorCutsceneUnknown = new SharpOcarina.NumericUpDownEx();
-            this.ActorCutsceneAdditionalActorCs = new SharpOcarina.NumericUpDownEx();
-            this.ActorCutsceneCsIndex = new SharpOcarina.NumericUpDownEx();
-            this.ActorCutsceneNumber = new SharpOcarina.NumericUpDownEx();
-            this.niceLine18 = new SharpOcarina.NiceLine();
-            this.ActorCutsceneLength = new SharpOcarina.NumericUpDownEx();
-            this.PathwayZPos = new SharpOcarina.NumericUpDownEx();
-            this.PathwayNumber = new SharpOcarina.NumericUpDownEx();
-            this.niceLine6 = new SharpOcarina.NiceLine();
-            this.PathwayXPos = new SharpOcarina.NumericUpDownEx();
-            this.PathwayYPos = new SharpOcarina.NumericUpDownEx();
-            this.actorEditControl1 = new SharpOcarina.ActorEditControl();
-            this.MarkerEndFrame = new SharpOcarina.NumericTextBox();
-            this.CutsceneAbsolutePositionAngleView = new SharpOcarina.NumericUpDownEx();
-            this.CutscenePositionFrameDuration = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneAbsolutePositionCameraRoll = new SharpOcarina.NumericUpDownEx();
-            this.CutscenePositionZFocus = new SharpOcarina.NumericUpDownEx();
-            this.CutscenePositionXFocus = new SharpOcarina.NumericUpDownEx();
-            this.CutscenePositionYFocus = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneAbsolutePositionZ = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneAbsolutePositionX = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneAbsolutePositionY = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneSetTimeHours = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneSetTimeMinutes = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneTextboxBottomMessageID = new SharpOcarina.NumericTextBox();
-            this.CutsceneTextboxFrames = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneTextboxTopMessageID = new SharpOcarina.NumericTextBox();
-            this.CutsceneTextboxMessageId = new SharpOcarina.NumericTextBox();
-            this.CutsceneActorFrameDuration = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorZRot = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorXRot = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorYRot = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorZEnd = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorXEnd = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorYEnd = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorZStart = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorXStart = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneActorYStart = new SharpOcarina.NumericUpDownEx();
-            this.MarkerStartFrame = new SharpOcarina.NumericTextBox();
-            this.CutsceneTableEntry = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneFlag = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneSpawn = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneEntrance = new SharpOcarina.NumericUpDownEx();
-            this.RenderFunctionFlagBitwise = new SharpOcarina.NumericTextBox();
-            this.RenderFunctionFlagID = new SharpOcarina.NumericUpDownEx();
-            this.RenderFunctionID = new SharpOcarina.NumericUpDownEx();
-            this.FunctionTextureScrollHeight2 = new SharpOcarina.NumericUpDownEx();
-            this.FunctionTextureScrollXVelocity = new SharpOcarina.NumericUpDownEx();
-            this.niceLine17 = new SharpOcarina.NiceLine();
-            this.FunctionTextureScrollWidth2 = new SharpOcarina.NumericUpDownEx();
-            this.FunctionTextureScrollYVelocity = new SharpOcarina.NumericUpDownEx();
-            this.FunctionTextureScrollYVelocity2 = new SharpOcarina.NumericUpDownEx();
-            this.FunctionTextureScrollWidth = new SharpOcarina.NumericUpDownEx();
-            this.FunctionTextureScrollXVelocity2 = new SharpOcarina.NumericUpDownEx();
-            this.niceLine16 = new SharpOcarina.NiceLine();
-            this.FunctionTextureScrollHeight = new SharpOcarina.NumericUpDownEx();
-            this.FunctionColorBlendAlpha = new SharpOcarina.NumericUpDownEx();
-            this.FunctionColorBlendFrames = new SharpOcarina.NumericUpDownEx();
-            this.FunctionTextureSwapAnimationDuration = new SharpOcarina.NumericUpDownEx();
+            this.RenderFunctionFlagFreezeAtEndCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScenenumberTextbox)).BeginInit();
             this.CamerasGroupBox.SuspendLayout();
             this.CameraPanel.SuspendLayout();
-            this.CameraPanel2.SuspendLayout();
-            this.WaterboxGroupBox.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.TextureAnimsGroupBox.SuspendLayout();
-            this.tabRooms.SuspendLayout();
-            this.AdditionalTexturesGroupBox.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            this.tabSceneEnv.SuspendLayout();
-            this.PrerenderedGroupBox.SuspendLayout();
-            this.AlternateHeadersGroupBox.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LightingE)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FogColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LightingC)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LightingA)).BeginInit();
-            this.tabRoomEnv.SuspendLayout();
-            this.groupBox12.SuspendLayout();
-            this.panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightColor)).BeginInit();
-            this.groupBox11.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.tabCollision.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.ExitGroupBox.SuspendLayout();
-            this.groupBoxCollisionPolytype.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel8.SuspendLayout();
-            this.panel7.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.tabTransitions.SuspendLayout();
-            this.tabPathways.SuspendLayout();
-            this.ActorCutsceneGroupBox.SuspendLayout();
-            this.groupBox13.SuspendLayout();
-            this.PathwayZPosStrip.SuspendLayout();
-            this.PathwayYPosStrip.SuspendLayout();
-            this.PathwayXPosStrip.SuspendLayout();
-            this.tabActors.SuspendLayout();
-            this.ObjectTabMenu.SuspendLayout();
-            this.RoomObjectPage.SuspendLayout();
-            this.SceneObjectPage.SuspendLayout();
-            this.tabCutscene.SuspendLayout();
-            this.CutsceneGroupBox.SuspendLayout();
-            this.CutsceneTabs.SuspendLayout();
-            this.CameraPositions.SuspendLayout();
-            this.SpecialExecution.SuspendLayout();
-            this.Textbox.SuspendLayout();
-            this.TransitionEffect.SuspendLayout();
-            this.AsmExecution.SuspendLayout();
-            this.ActorCommand.SuspendLayout();
-            this.tabAnimations.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.RenderFunctionGroupBoxFlag.SuspendLayout();
-            this.RenderFunctionFlagPresetToolStrip.SuspendLayout();
-            this.RenderFunctionTabs.SuspendLayout();
-            this.tabTextureScroll.SuspendLayout();
-            this.tabColorBlending.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendColor)).BeginInit();
-            this.tabTextureSwap.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox)).BeginInit();
-            this.tabTextureSwapFrames.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationPictureBox)).BeginInit();
-            this.tabCameraEffect.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ScenenumberTextbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraFov)).BeginInit();
@@ -892,6 +823,7 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CameraYRot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraSelect)).BeginInit();
+            this.CameraPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1E)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk20)).BeginInit();
@@ -901,6 +833,8 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1A)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk12)).BeginInit();
+            this.WaterboxGroupBox.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxRoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxCam)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxEnv)).BeginInit();
@@ -911,6 +845,7 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WaterboxSelect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleNumericbox)).BeginInit();
+            this.TextureAnimsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TextureAnimHeight2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextureAnimWidth2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextureAnimYVelocity2)).BeginInit();
@@ -920,7 +855,10 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.TextureAnimYVelocity1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextureAnimXVelocity1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextureAnimSelect)).BeginInit();
+            this.tabRooms.SuspendLayout();
+            this.AdditionalTexturesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalTextureList)).BeginInit();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GroupLODDIstance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GroupLODGroup)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GroupAnimatedBank)).BeginInit();
@@ -930,10 +868,18 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GroupPolygonType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            this.tabSceneEnv.SuspendLayout();
+            this.PrerenderedGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PrerenderedList)).BeginInit();
+            this.AlternateHeadersGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderCopyList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderList)).BeginInit();
+            this.groupBox10.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionAZ)).BeginInit();
@@ -943,7 +889,15 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.DrawDistance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FogUnknown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FogDistance)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LightingE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FogColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LightingC)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LightingA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvironmentSelect)).BeginInit();
+            this.tabRoomEnv.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightRadius)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightZPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightNS)).BeginInit();
@@ -951,37 +905,64 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightEW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightSelect)).BeginInit();
+            this.groupBox11.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WindStrength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WindSouth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WindVertical)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WindWest)).BeginInit();
+            this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SoundEcho)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeMinute)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeHour)).BeginInit();
+            this.tabCollision.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.ExitGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExitHeaderIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitSceneIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitSpawnIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitFadeOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitFadeIn)).BeginInit();
+            this.groupBoxCollisionPolytype.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk1)).BeginInit();
+            this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraAngleNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitNumber)).BeginInit();
+            this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TerrainType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GroundType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvironmentType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EchoRange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PolygonSelect)).BeginInit();
+            this.tabTransitions.SuspendLayout();
+            this.tabPathways.SuspendLayout();
+            this.ActorCutsceneGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneUnknown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneAdditionalActorCs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneCsIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneLength)).BeginInit();
+            this.groupBox13.SuspendLayout();
+            this.PathwayZPosStrip.SuspendLayout();
+            this.PathwayYPosStrip.SuspendLayout();
+            this.PathwayXPosStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayZPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PathwayYPos)).BeginInit();
+            this.tabActors.SuspendLayout();
+            this.ObjectTabMenu.SuspendLayout();
+            this.RoomObjectPage.SuspendLayout();
+            this.SceneObjectPage.SuspendLayout();
+            this.tabCutscene.SuspendLayout();
+            this.CutsceneGroupBox.SuspendLayout();
+            this.CutsceneTabs.SuspendLayout();
+            this.CameraPositions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionAngleView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutscenePositionFrameDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionCameraRoll)).BeginInit();
@@ -991,9 +972,14 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionY)).BeginInit();
+            this.SpecialExecution.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetTimeHours)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetTimeMinutes)).BeginInit();
+            this.Textbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxFrames)).BeginInit();
+            this.TransitionEffect.SuspendLayout();
+            this.AsmExecution.SuspendLayout();
+            this.ActorCommand.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorFrameDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorZRot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorXRot)).BeginInit();
@@ -1008,8 +994,14 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneFlag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSpawn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneEntrance)).BeginInit();
+            this.tabAnimations.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.RenderFunctionGroupBoxFlag.SuspendLayout();
+            this.RenderFunctionFlagPresetToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderFunctionFlagID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RenderFunctionID)).BeginInit();
+            this.RenderFunctionTabs.SuspendLayout();
+            this.tabTextureScroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollHeight2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollXVelocity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollWidth2)).BeginInit();
@@ -1018,9 +1010,21 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollXVelocity2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollHeight)).BeginInit();
+            this.tabColorBlending.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendAlpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendFrames)).BeginInit();
+            this.tabTextureSwap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox)).BeginInit();
+            this.tabTextureSwapFrames.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationDuration)).BeginInit();
+            this.tabCameraEffect.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).BeginInit();
             this.SuspendLayout();
             // 
             // glControl1
@@ -1246,6 +1250,7 @@ namespace SharpOcarina
             this.showCollisionModelToolStripMenuItem,
             this.showRoomModelsToolStripMenuItem,
             this.DisplayAxisMenuItem,
+            this.ShowSelectedGrouptoolStripMenuItem3,
             this.ColorBlindMenuItem,
             this.applyEnvironmentLightingToolStripMenuItem,
             this.RenderActorstoolStrip,
@@ -1255,9 +1260,11 @@ namespace SharpOcarina
             this.DisableRGBA32ToolStrip,
             this.RenderSelectedCutsceneCommandsMenuItem,
             this.RenderWaterboxesMenuItem,
+            this.RenderPathwaystoolStripMenuItem3,
             this.DisableTextureWarningsMenuItem,
             this.DisableCutscenePreviewBlackBarsMenuItem,
             this.ResetGroupSettingsReloadMenuItem,
+            this.MMTextureScrolltoolStripMenuItem3,
             this.toolStripSeparator1,
             this.consecutiveRoomInjectionToolStripMenuItem,
             this.AutoaddGroupsMenuItem,
@@ -1369,6 +1376,14 @@ namespace SharpOcarina
             this.DisplayAxisMenuItem.Text = "Show Selected Instance Axis";
             this.DisplayAxisMenuItem.Click += new System.EventHandler(this.DisplayAxisMenuItem_Click);
             // 
+            // ShowSelectedGrouptoolStripMenuItem3
+            // 
+            this.ShowSelectedGrouptoolStripMenuItem3.CheckOnClick = true;
+            this.ShowSelectedGrouptoolStripMenuItem3.Name = "ShowSelectedGrouptoolStripMenuItem3";
+            this.ShowSelectedGrouptoolStripMenuItem3.Size = new System.Drawing.Size(311, 22);
+            this.ShowSelectedGrouptoolStripMenuItem3.Text = "Show Selected Group Highlight";
+            this.ShowSelectedGrouptoolStripMenuItem3.Click += new System.EventHandler(this.ShowSelectedGrouptoolStripMenuItem3_Click);
+            // 
             // ColorBlindMenuItem
             // 
             this.ColorBlindMenuItem.CheckOnClick = true;
@@ -1383,6 +1398,7 @@ namespace SharpOcarina
             this.applyEnvironmentLightingToolStripMenuItem.Name = "applyEnvironmentLightingToolStripMenuItem";
             this.applyEnvironmentLightingToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
             this.applyEnvironmentLightingToolStripMenuItem.Text = "&Apply Environment Lighting";
+            this.applyEnvironmentLightingToolStripMenuItem.ToolTipText = "Only with simulate N64 graphics disabled";
             this.applyEnvironmentLightingToolStripMenuItem.Visible = false;
             this.applyEnvironmentLightingToolStripMenuItem.Click += new System.EventHandler(this.applyEnvironmentLightingToolStripMenuItem_Click);
             // 
@@ -1442,6 +1458,14 @@ namespace SharpOcarina
             this.RenderWaterboxesMenuItem.Text = "Only render waterboxes in general tab";
             this.RenderWaterboxesMenuItem.Click += new System.EventHandler(this.RenderWaterboxesMenuItem_Click);
             // 
+            // RenderPathwaystoolStripMenuItem3
+            // 
+            this.RenderPathwaystoolStripMenuItem3.CheckOnClick = true;
+            this.RenderPathwaystoolStripMenuItem3.Name = "RenderPathwaystoolStripMenuItem3";
+            this.RenderPathwaystoolStripMenuItem3.Size = new System.Drawing.Size(311, 22);
+            this.RenderPathwaystoolStripMenuItem3.Text = "Only render pathways in pathway tab";
+            this.RenderPathwaystoolStripMenuItem3.Click += new System.EventHandler(this.RenderPathwaystoolStripMenuItem3_Click);
+            // 
             // DisableTextureWarningsMenuItem
             // 
             this.DisableTextureWarningsMenuItem.CheckOnClick = true;
@@ -1465,6 +1489,14 @@ namespace SharpOcarina
             this.ResetGroupSettingsReloadMenuItem.Size = new System.Drawing.Size(311, 22);
             this.ResetGroupSettingsReloadMenuItem.Text = "Reset group settings on reload";
             this.ResetGroupSettingsReloadMenuItem.Click += new System.EventHandler(this.ResetGroupSettingsReloadMenuItem_Click);
+            // 
+            // MMTextureScrolltoolStripMenuItem3
+            // 
+            this.MMTextureScrolltoolStripMenuItem3.CheckOnClick = true;
+            this.MMTextureScrolltoolStripMenuItem3.Name = "MMTextureScrolltoolStripMenuItem3";
+            this.MMTextureScrolltoolStripMenuItem3.Size = new System.Drawing.Size(311, 22);
+            this.MMTextureScrolltoolStripMenuItem3.Text = "Use Majora\'s Mask texture scroll direction";
+            this.MMTextureScrolltoolStripMenuItem3.Click += new System.EventHandler(this.MMTextureScrolltoolStripMenuItem3_Click);
             // 
             // toolStripSeparator1
             // 
@@ -1545,7 +1577,8 @@ namespace SharpOcarina
             this.dListCullingMenuItem.CheckOnClick = true;
             this.dListCullingMenuItem.Name = "dListCullingMenuItem";
             this.dListCullingMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.dListCullingMenuItem.Text = "DList culling command";
+            this.dListCullingMenuItem.Text = "Write DList culling command";
+            this.dListCullingMenuItem.ToolTipText = "Writes a culling command on each dlist that improves ingame performance";
             this.dListCullingMenuItem.Click += new System.EventHandler(this.dListCullingMenuItem_Click);
             // 
             // triplicateCollisionBoundsToolStripMenuItem
@@ -2235,6 +2268,36 @@ namespace SharpOcarina
             this.AutoInjectOffsetCheckBox.UseVisualStyleBackColor = true;
             this.AutoInjectOffsetCheckBox.CheckedChanged += new System.EventHandler(this.AutoInjectOffsetCheckBox_CheckedChanged);
             // 
+            // ScenenumberTextbox
+            // 
+            this.ScenenumberTextbox.AlwaysFireValueChanged = false;
+            this.ScenenumberTextbox.DisplayDigits = 1;
+            this.ScenenumberTextbox.DoValueRollover = false;
+            this.ScenenumberTextbox.Hexadecimal = true;
+            this.ScenenumberTextbox.IncrementMouseWheel = 1;
+            this.ScenenumberTextbox.Location = new System.Drawing.Point(322, 58);
+            this.ScenenumberTextbox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.ScenenumberTextbox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ScenenumberTextbox.Name = "ScenenumberTextbox";
+            this.ScenenumberTextbox.ShiftMultiplier = 1;
+            this.ScenenumberTextbox.Size = new System.Drawing.Size(60, 20);
+            this.ScenenumberTextbox.TabIndex = 42;
+            this.EnvironmentControlTooltip.SetToolTip(this.ScenenumberTextbox, "High values will render the rom unusable (max 6D for debug ROM)");
+            this.ScenenumberTextbox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ScenenumberTextbox.ValueChanged += new System.EventHandler(this.ScenenumberTextbox_ValueChanged);
+            // 
             // CamerasGroupBox
             // 
             this.CamerasGroupBox.Controls.Add(this.CameraPanel);
@@ -2325,6 +2388,36 @@ namespace SharpOcarina
             this.label104.TabIndex = 43;
             this.label104.Text = "Background:";
             // 
+            // CameraUnk1
+            // 
+            this.CameraUnk1.AlwaysFireValueChanged = false;
+            this.CameraUnk1.DisplayDigits = 1;
+            this.CameraUnk1.DoValueRollover = false;
+            this.CameraUnk1.Enabled = false;
+            this.CameraUnk1.Hexadecimal = true;
+            this.CameraUnk1.IncrementMouseWheel = 1;
+            this.CameraUnk1.Location = new System.Drawing.Point(74, 110);
+            this.CameraUnk1.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1.Name = "CameraUnk1";
+            this.CameraUnk1.ShiftMultiplier = 1;
+            this.CameraUnk1.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk1.TabIndex = 42;
+            this.CameraUnk1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1.ValueChanged += new System.EventHandler(this.CameraUnk1_ValueChanged);
+            // 
             // label103
             // 
             this.label103.AutoSize = true;
@@ -2335,6 +2428,36 @@ namespace SharpOcarina
             this.label103.TabIndex = 41;
             this.label103.Text = "Unk:";
             // 
+            // CameraUnk2
+            // 
+            this.CameraUnk2.AlwaysFireValueChanged = false;
+            this.CameraUnk2.DisplayDigits = 1;
+            this.CameraUnk2.DoValueRollover = false;
+            this.CameraUnk2.Enabled = false;
+            this.CameraUnk2.Hexadecimal = true;
+            this.CameraUnk2.IncrementMouseWheel = 1;
+            this.CameraUnk2.Location = new System.Drawing.Point(267, 112);
+            this.CameraUnk2.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk2.Name = "CameraUnk2";
+            this.CameraUnk2.ShiftMultiplier = 1;
+            this.CameraUnk2.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk2.TabIndex = 40;
+            this.CameraUnk2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk2.ValueChanged += new System.EventHandler(this.CameraUnk2_ValueChanged);
+            // 
             // label78
             // 
             this.label78.AutoSize = true;
@@ -2344,6 +2467,35 @@ namespace SharpOcarina
             this.label78.Size = new System.Drawing.Size(31, 13);
             this.label78.TabIndex = 21;
             this.label78.Text = "FOV:";
+            // 
+            // CameraFov
+            // 
+            this.CameraFov.AlwaysFireValueChanged = false;
+            this.CameraFov.DisplayDigits = 1;
+            this.CameraFov.DoValueRollover = false;
+            this.CameraFov.Enabled = false;
+            this.CameraFov.IncrementMouseWheel = 1;
+            this.CameraFov.Location = new System.Drawing.Point(267, 84);
+            this.CameraFov.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CameraFov.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CameraFov.Name = "CameraFov";
+            this.CameraFov.ShiftMultiplier = 1;
+            this.CameraFov.Size = new System.Drawing.Size(100, 20);
+            this.CameraFov.TabIndex = 20;
+            this.CameraFov.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraFov.ValueChanged += new System.EventHandler(this.CameraFov_ValueChanged);
             // 
             // CameraType
             // 
@@ -2366,6 +2518,40 @@ namespace SharpOcarina
             this.label77.TabIndex = 21;
             this.label77.Text = "Z Rotation:";
             // 
+            // CameraZRot
+            // 
+            this.CameraZRot.AlwaysFireValueChanged = false;
+            this.CameraZRot.DisplayDigits = 1;
+            this.CameraZRot.DoValueRollover = false;
+            this.CameraZRot.Enabled = false;
+            this.CameraZRot.Increment = new decimal(new int[] {
+            182,
+            0,
+            0,
+            0});
+            this.CameraZRot.IncrementMouseWheel = 182;
+            this.CameraZRot.Location = new System.Drawing.Point(267, 57);
+            this.CameraZRot.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CameraZRot.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CameraZRot.Name = "CameraZRot";
+            this.CameraZRot.ShiftMultiplier = 1;
+            this.CameraZRot.Size = new System.Drawing.Size(100, 20);
+            this.CameraZRot.TabIndex = 20;
+            this.CameraZRot.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraZRot.ValueChanged += new System.EventHandler(this.CameraZRot_ValueChanged);
+            // 
             // label71
             // 
             this.label71.AutoSize = true;
@@ -2385,6 +2571,35 @@ namespace SharpOcarina
             this.label72.Size = new System.Drawing.Size(57, 13);
             this.label72.TabIndex = 7;
             this.label72.Text = "X Position:";
+            // 
+            // CameraZPos
+            // 
+            this.CameraZPos.AlwaysFireValueChanged = false;
+            this.CameraZPos.DisplayDigits = 1;
+            this.CameraZPos.DoValueRollover = false;
+            this.CameraZPos.Enabled = false;
+            this.CameraZPos.IncrementMouseWheel = 1;
+            this.CameraZPos.Location = new System.Drawing.Point(74, 57);
+            this.CameraZPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CameraZPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CameraZPos.Name = "CameraZPos";
+            this.CameraZPos.ShiftMultiplier = 20;
+            this.CameraZPos.Size = new System.Drawing.Size(100, 20);
+            this.CameraZPos.TabIndex = 12;
+            this.CameraZPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraZPos.ValueChanged += new System.EventHandler(this.CameraZPos_ValueChanged);
             // 
             // label73
             // 
@@ -2406,6 +2621,40 @@ namespace SharpOcarina
             this.label74.TabIndex = 9;
             this.label74.Text = "Y Position:";
             // 
+            // CameraXRot
+            // 
+            this.CameraXRot.AlwaysFireValueChanged = false;
+            this.CameraXRot.DisplayDigits = 1;
+            this.CameraXRot.DoValueRollover = false;
+            this.CameraXRot.Enabled = false;
+            this.CameraXRot.Increment = new decimal(new int[] {
+            182,
+            0,
+            0,
+            0});
+            this.CameraXRot.IncrementMouseWheel = 182;
+            this.CameraXRot.Location = new System.Drawing.Point(267, 5);
+            this.CameraXRot.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CameraXRot.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CameraXRot.Name = "CameraXRot";
+            this.CameraXRot.ShiftMultiplier = 1;
+            this.CameraXRot.Size = new System.Drawing.Size(100, 20);
+            this.CameraXRot.TabIndex = 13;
+            this.CameraXRot.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraXRot.ValueChanged += new System.EventHandler(this.CameraXRot_ValueChanged);
+            // 
             // label75
             // 
             this.label75.AutoSize = true;
@@ -2416,6 +2665,69 @@ namespace SharpOcarina
             this.label75.TabIndex = 17;
             this.label75.Text = "Y Rotation:";
             // 
+            // CameraYPos
+            // 
+            this.CameraYPos.AlwaysFireValueChanged = false;
+            this.CameraYPos.DisplayDigits = 1;
+            this.CameraYPos.DoValueRollover = false;
+            this.CameraYPos.Enabled = false;
+            this.CameraYPos.IncrementMouseWheel = 1;
+            this.CameraYPos.Location = new System.Drawing.Point(74, 31);
+            this.CameraYPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CameraYPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CameraYPos.Name = "CameraYPos";
+            this.CameraYPos.ShiftMultiplier = 20;
+            this.CameraYPos.Size = new System.Drawing.Size(100, 20);
+            this.CameraYPos.TabIndex = 11;
+            this.CameraYPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraYPos.ValueChanged += new System.EventHandler(this.CameraYPos_ValueChanged);
+            // 
+            // CameraYRot
+            // 
+            this.CameraYRot.AlwaysFireValueChanged = false;
+            this.CameraYRot.DisplayDigits = 1;
+            this.CameraYRot.DoValueRollover = false;
+            this.CameraYRot.Enabled = false;
+            this.CameraYRot.Increment = new decimal(new int[] {
+            182,
+            0,
+            0,
+            0});
+            this.CameraYRot.IncrementMouseWheel = 182;
+            this.CameraYRot.Location = new System.Drawing.Point(267, 31);
+            this.CameraYRot.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CameraYRot.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CameraYRot.Name = "CameraYRot";
+            this.CameraYRot.ShiftMultiplier = 1;
+            this.CameraYRot.Size = new System.Drawing.Size(100, 20);
+            this.CameraYRot.TabIndex = 14;
+            this.CameraYRot.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraYRot.ValueChanged += new System.EventHandler(this.CameraYRot_ValueChanged);
+            // 
             // label76
             // 
             this.label76.AutoSize = true;
@@ -2425,6 +2737,35 @@ namespace SharpOcarina
             this.label76.Size = new System.Drawing.Size(60, 13);
             this.label76.TabIndex = 13;
             this.label76.Text = "X Rotation:";
+            // 
+            // CameraXPos
+            // 
+            this.CameraXPos.AlwaysFireValueChanged = false;
+            this.CameraXPos.DisplayDigits = 1;
+            this.CameraXPos.DoValueRollover = false;
+            this.CameraXPos.Enabled = false;
+            this.CameraXPos.IncrementMouseWheel = 1;
+            this.CameraXPos.Location = new System.Drawing.Point(74, 5);
+            this.CameraXPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CameraXPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CameraXPos.Name = "CameraXPos";
+            this.CameraXPos.ShiftMultiplier = 20;
+            this.CameraXPos.Size = new System.Drawing.Size(100, 20);
+            this.CameraXPos.TabIndex = 10;
+            this.CameraXPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraXPos.ValueChanged += new System.EventHandler(this.CameraXPos_ValueChanged);
             // 
             // DeleteCameraButton
             // 
@@ -2448,6 +2789,43 @@ namespace SharpOcarina
             this.EnvironmentControlTooltip.SetToolTip(this.AddCameraButton, "Hold SHIFT to add in front of camera");
             this.AddCameraButton.UseVisualStyleBackColor = false;
             this.AddCameraButton.Click += new System.EventHandler(this.AddCameraButton_Click);
+            // 
+            // CameraSelect
+            // 
+            this.CameraSelect.AlwaysFireValueChanged = false;
+            this.CameraSelect.DisplayDigits = 1;
+            this.CameraSelect.DoValueRollover = true;
+            this.CameraSelect.Hexadecimal = true;
+            this.CameraSelect.IncrementMouseWheel = 3;
+            this.CameraSelect.Location = new System.Drawing.Point(9, 22);
+            this.CameraSelect.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.CameraSelect.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CameraSelect.Name = "CameraSelect";
+            this.CameraSelect.ShiftMultiplier = 1;
+            this.CameraSelect.Size = new System.Drawing.Size(65, 20);
+            this.CameraSelect.TabIndex = 7;
+            this.CameraSelect.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraSelect.ValueChanged += new System.EventHandler(this.CameraSelect_ValueChanged);
+            // 
+            // niceLine8
+            // 
+            this.niceLine8.Location = new System.Drawing.Point(9, 46);
+            this.niceLine8.Name = "niceLine8";
+            this.niceLine8.Size = new System.Drawing.Size(384, 15);
+            this.niceLine8.TabIndex = 20;
+            this.niceLine8.TabStop = false;
             // 
             // CameraPanel2
             // 
@@ -2487,6 +2865,66 @@ namespace SharpOcarina
             this.label121.TabIndex = 79;
             this.label121.Text = "Unk 0x22:";
             // 
+            // CameraUnk22
+            // 
+            this.CameraUnk22.AlwaysFireValueChanged = false;
+            this.CameraUnk22.DisplayDigits = 1;
+            this.CameraUnk22.DoValueRollover = false;
+            this.CameraUnk22.Enabled = false;
+            this.CameraUnk22.Hexadecimal = true;
+            this.CameraUnk22.IncrementMouseWheel = 1;
+            this.CameraUnk22.Location = new System.Drawing.Point(267, 135);
+            this.CameraUnk22.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk22.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk22.Name = "CameraUnk22";
+            this.CameraUnk22.ShiftMultiplier = 1;
+            this.CameraUnk22.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk22.TabIndex = 78;
+            this.CameraUnk22.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk22.ValueChanged += new System.EventHandler(this.CameraUnk22_ValueChanged);
+            // 
+            // CameraUnk1E
+            // 
+            this.CameraUnk1E.AlwaysFireValueChanged = false;
+            this.CameraUnk1E.DisplayDigits = 1;
+            this.CameraUnk1E.DoValueRollover = false;
+            this.CameraUnk1E.Enabled = false;
+            this.CameraUnk1E.Hexadecimal = true;
+            this.CameraUnk1E.IncrementMouseWheel = 1;
+            this.CameraUnk1E.Location = new System.Drawing.Point(267, 83);
+            this.CameraUnk1E.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk1E.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1E.Name = "CameraUnk1E";
+            this.CameraUnk1E.ShiftMultiplier = 1;
+            this.CameraUnk1E.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk1E.TabIndex = 74;
+            this.CameraUnk1E.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1E.ValueChanged += new System.EventHandler(this.CameraUnk1E_ValueChanged);
+            // 
             // label122
             // 
             this.label122.AutoSize = true;
@@ -2496,6 +2934,36 @@ namespace SharpOcarina
             this.label122.Size = new System.Drawing.Size(56, 13);
             this.label122.TabIndex = 77;
             this.label122.Text = "Unk 0x20:";
+            // 
+            // CameraUnk20
+            // 
+            this.CameraUnk20.AlwaysFireValueChanged = false;
+            this.CameraUnk20.DisplayDigits = 1;
+            this.CameraUnk20.DoValueRollover = false;
+            this.CameraUnk20.Enabled = false;
+            this.CameraUnk20.Hexadecimal = true;
+            this.CameraUnk20.IncrementMouseWheel = 1;
+            this.CameraUnk20.Location = new System.Drawing.Point(267, 109);
+            this.CameraUnk20.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk20.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk20.Name = "CameraUnk20";
+            this.CameraUnk20.ShiftMultiplier = 1;
+            this.CameraUnk20.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk20.TabIndex = 76;
+            this.CameraUnk20.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk20.ValueChanged += new System.EventHandler(this.CameraUnk20_ValueChanged);
             // 
             // label123
             // 
@@ -2528,6 +2996,36 @@ namespace SharpOcarina
             this.label124.TabIndex = 21;
             this.label124.Text = "Unk 0x1C:";
             // 
+            // CameraUnk1C
+            // 
+            this.CameraUnk1C.AlwaysFireValueChanged = false;
+            this.CameraUnk1C.DisplayDigits = 1;
+            this.CameraUnk1C.DoValueRollover = false;
+            this.CameraUnk1C.Enabled = false;
+            this.CameraUnk1C.Hexadecimal = true;
+            this.CameraUnk1C.IncrementMouseWheel = 1;
+            this.CameraUnk1C.Location = new System.Drawing.Point(267, 57);
+            this.CameraUnk1C.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk1C.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1C.Name = "CameraUnk1C";
+            this.CameraUnk1C.ShiftMultiplier = 1;
+            this.CameraUnk1C.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk1C.TabIndex = 20;
+            this.CameraUnk1C.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1C.ValueChanged += new System.EventHandler(this.CameraUnk1C_ValueChanged);
+            // 
             // label126
             // 
             this.label126.AutoSize = true;
@@ -2537,6 +3035,36 @@ namespace SharpOcarina
             this.label126.Size = new System.Drawing.Size(56, 13);
             this.label126.TabIndex = 7;
             this.label126.Text = "Unk 0x12:";
+            // 
+            // CameraUnk16
+            // 
+            this.CameraUnk16.AlwaysFireValueChanged = false;
+            this.CameraUnk16.DisplayDigits = 1;
+            this.CameraUnk16.DoValueRollover = false;
+            this.CameraUnk16.Enabled = false;
+            this.CameraUnk16.Hexadecimal = true;
+            this.CameraUnk16.IncrementMouseWheel = 1;
+            this.CameraUnk16.Location = new System.Drawing.Point(74, 57);
+            this.CameraUnk16.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk16.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk16.Name = "CameraUnk16";
+            this.CameraUnk16.ShiftMultiplier = 1;
+            this.CameraUnk16.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk16.TabIndex = 12;
+            this.CameraUnk16.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk16.ValueChanged += new System.EventHandler(this.CameraUnk16_ValueChanged);
             // 
             // label127
             // 
@@ -2558,6 +3086,36 @@ namespace SharpOcarina
             this.label128.TabIndex = 9;
             this.label128.Text = "Unk 0x14:";
             // 
+            // CameraUnk18
+            // 
+            this.CameraUnk18.AlwaysFireValueChanged = false;
+            this.CameraUnk18.DisplayDigits = 1;
+            this.CameraUnk18.DoValueRollover = false;
+            this.CameraUnk18.Enabled = false;
+            this.CameraUnk18.Hexadecimal = true;
+            this.CameraUnk18.IncrementMouseWheel = 1;
+            this.CameraUnk18.Location = new System.Drawing.Point(267, 5);
+            this.CameraUnk18.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk18.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk18.Name = "CameraUnk18";
+            this.CameraUnk18.ShiftMultiplier = 1;
+            this.CameraUnk18.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk18.TabIndex = 13;
+            this.CameraUnk18.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk18.ValueChanged += new System.EventHandler(this.CameraUnk18_ValueChanged);
+            // 
             // label129
             // 
             this.label129.AutoSize = true;
@@ -2568,6 +3126,66 @@ namespace SharpOcarina
             this.label129.TabIndex = 17;
             this.label129.Text = "Unk 0x1A:";
             // 
+            // CameraUnk14
+            // 
+            this.CameraUnk14.AlwaysFireValueChanged = false;
+            this.CameraUnk14.DisplayDigits = 1;
+            this.CameraUnk14.DoValueRollover = false;
+            this.CameraUnk14.Enabled = false;
+            this.CameraUnk14.Hexadecimal = true;
+            this.CameraUnk14.IncrementMouseWheel = 1;
+            this.CameraUnk14.Location = new System.Drawing.Point(74, 31);
+            this.CameraUnk14.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk14.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk14.Name = "CameraUnk14";
+            this.CameraUnk14.ShiftMultiplier = 1;
+            this.CameraUnk14.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk14.TabIndex = 11;
+            this.CameraUnk14.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk14.ValueChanged += new System.EventHandler(this.CameraUnk14_ValueChanged);
+            // 
+            // CameraUnk1A
+            // 
+            this.CameraUnk1A.AlwaysFireValueChanged = false;
+            this.CameraUnk1A.DisplayDigits = 1;
+            this.CameraUnk1A.DoValueRollover = false;
+            this.CameraUnk1A.Enabled = false;
+            this.CameraUnk1A.Hexadecimal = true;
+            this.CameraUnk1A.IncrementMouseWheel = 1;
+            this.CameraUnk1A.Location = new System.Drawing.Point(267, 31);
+            this.CameraUnk1A.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk1A.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1A.Name = "CameraUnk1A";
+            this.CameraUnk1A.ShiftMultiplier = 1;
+            this.CameraUnk1A.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk1A.TabIndex = 14;
+            this.CameraUnk1A.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk1A.ValueChanged += new System.EventHandler(this.CameraUnk1A_ValueChanged);
+            // 
             // label130
             // 
             this.label130.AutoSize = true;
@@ -2577,6 +3195,36 @@ namespace SharpOcarina
             this.label130.Size = new System.Drawing.Size(56, 13);
             this.label130.TabIndex = 13;
             this.label130.Text = "Unk 0x18:";
+            // 
+            // CameraUnk12
+            // 
+            this.CameraUnk12.AlwaysFireValueChanged = false;
+            this.CameraUnk12.DisplayDigits = 1;
+            this.CameraUnk12.DoValueRollover = false;
+            this.CameraUnk12.Enabled = false;
+            this.CameraUnk12.Hexadecimal = true;
+            this.CameraUnk12.IncrementMouseWheel = 1;
+            this.CameraUnk12.Location = new System.Drawing.Point(74, 5);
+            this.CameraUnk12.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CameraUnk12.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk12.Name = "CameraUnk12";
+            this.CameraUnk12.ShiftMultiplier = 1;
+            this.CameraUnk12.Size = new System.Drawing.Size(100, 20);
+            this.CameraUnk12.TabIndex = 10;
+            this.CameraUnk12.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraUnk12.ValueChanged += new System.EventHandler(this.CameraUnk12_ValueChanged);
             // 
             // SceneSettingsComboBox
             // 
@@ -2696,6 +3344,67 @@ namespace SharpOcarina
             this.panel1.Size = new System.Drawing.Size(370, 114);
             this.panel1.TabIndex = 21;
             // 
+            // WaterboxRoom
+            // 
+            this.WaterboxRoom.AlwaysFireValueChanged = false;
+            this.WaterboxRoom.DisplayDigits = 1;
+            this.WaterboxRoom.DoValueRollover = false;
+            this.WaterboxRoom.Enabled = false;
+            this.WaterboxRoom.Hexadecimal = true;
+            this.WaterboxRoom.IncrementMouseWheel = 1;
+            this.WaterboxRoom.Location = new System.Drawing.Point(73, 83);
+            this.WaterboxRoom.Maximum = new decimal(new int[] {
+            63,
+            0,
+            0,
+            0});
+            this.WaterboxRoom.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxRoom.Name = "WaterboxRoom";
+            this.WaterboxRoom.ShiftMultiplier = 1;
+            this.WaterboxRoom.Size = new System.Drawing.Size(47, 20);
+            this.WaterboxRoom.TabIndex = 23;
+            this.EnvironmentControlTooltip.SetToolTip(this.WaterboxRoom, "3F = all rooms");
+            this.WaterboxRoom.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxRoom.ValueChanged += new System.EventHandler(this.WaterboxRoom_Leave);
+            // 
+            // WaterboxCam
+            // 
+            this.WaterboxCam.AlwaysFireValueChanged = false;
+            this.WaterboxCam.DisplayDigits = 1;
+            this.WaterboxCam.DoValueRollover = false;
+            this.WaterboxCam.Enabled = false;
+            this.WaterboxCam.Hexadecimal = true;
+            this.WaterboxCam.IncrementMouseWheel = 1;
+            this.WaterboxCam.Location = new System.Drawing.Point(267, 86);
+            this.WaterboxCam.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WaterboxCam.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxCam.Name = "WaterboxCam";
+            this.WaterboxCam.ShiftMultiplier = 1;
+            this.WaterboxCam.Size = new System.Drawing.Size(47, 20);
+            this.WaterboxCam.TabIndex = 22;
+            this.WaterboxCam.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxCam.ValueChanged += new System.EventHandler(this.WaterboxCam_ValueChanged);
+            // 
             // label94
             // 
             this.label94.AutoSize = true;
@@ -2705,6 +3414,36 @@ namespace SharpOcarina
             this.label94.Size = new System.Drawing.Size(46, 13);
             this.label94.TabIndex = 21;
             this.label94.Text = "Camera:";
+            // 
+            // WaterboxEnv
+            // 
+            this.WaterboxEnv.AlwaysFireValueChanged = false;
+            this.WaterboxEnv.DisplayDigits = 1;
+            this.WaterboxEnv.DoValueRollover = false;
+            this.WaterboxEnv.Enabled = false;
+            this.WaterboxEnv.Hexadecimal = true;
+            this.WaterboxEnv.IncrementMouseWheel = 1;
+            this.WaterboxEnv.Location = new System.Drawing.Point(267, 57);
+            this.WaterboxEnv.Maximum = new decimal(new int[] {
+            31,
+            0,
+            0,
+            0});
+            this.WaterboxEnv.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxEnv.Name = "WaterboxEnv";
+            this.WaterboxEnv.ShiftMultiplier = 1;
+            this.WaterboxEnv.Size = new System.Drawing.Size(47, 20);
+            this.WaterboxEnv.TabIndex = 20;
+            this.WaterboxEnv.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxEnv.ValueChanged += new System.EventHandler(this.WaterboxEnv_ValueChanged);
             // 
             // WaterboxRoomLabel
             // 
@@ -2726,6 +3465,35 @@ namespace SharpOcarina
             this.label22.TabIndex = 7;
             this.label22.Text = "X Position:";
             // 
+            // WaterboxZPos
+            // 
+            this.WaterboxZPos.AlwaysFireValueChanged = false;
+            this.WaterboxZPos.DisplayDigits = 1;
+            this.WaterboxZPos.DoValueRollover = false;
+            this.WaterboxZPos.Enabled = false;
+            this.WaterboxZPos.IncrementMouseWheel = 1;
+            this.WaterboxZPos.Location = new System.Drawing.Point(74, 57);
+            this.WaterboxZPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.WaterboxZPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.WaterboxZPos.Name = "WaterboxZPos";
+            this.WaterboxZPos.ShiftMultiplier = 20;
+            this.WaterboxZPos.Size = new System.Drawing.Size(100, 20);
+            this.WaterboxZPos.TabIndex = 12;
+            this.WaterboxZPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxZPos.ValueChanged += new System.EventHandler(this.WaterboxTransformZ_ChangeValue);
+            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -2746,6 +3514,40 @@ namespace SharpOcarina
             this.label24.TabIndex = 9;
             this.label24.Text = "Y Position:";
             // 
+            // WaterboxXSize
+            // 
+            this.WaterboxXSize.AlwaysFireValueChanged = false;
+            this.WaterboxXSize.DisplayDigits = 1;
+            this.WaterboxXSize.DoValueRollover = false;
+            this.WaterboxXSize.Enabled = false;
+            this.WaterboxXSize.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.WaterboxXSize.IncrementMouseWheel = 2;
+            this.WaterboxXSize.Location = new System.Drawing.Point(267, 5);
+            this.WaterboxXSize.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.WaterboxXSize.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.WaterboxXSize.Name = "WaterboxXSize";
+            this.WaterboxXSize.ShiftMultiplier = 10;
+            this.WaterboxXSize.Size = new System.Drawing.Size(100, 20);
+            this.WaterboxXSize.TabIndex = 13;
+            this.WaterboxXSize.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxXSize.ValueChanged += new System.EventHandler(this.WaterboxSizeX_ChangeValue);
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -2755,6 +3557,69 @@ namespace SharpOcarina
             this.label18.Size = new System.Drawing.Size(40, 13);
             this.label18.TabIndex = 17;
             this.label18.Text = "Z Size:";
+            // 
+            // WaterboxYPos
+            // 
+            this.WaterboxYPos.AlwaysFireValueChanged = false;
+            this.WaterboxYPos.DisplayDigits = 1;
+            this.WaterboxYPos.DoValueRollover = false;
+            this.WaterboxYPos.Enabled = false;
+            this.WaterboxYPos.IncrementMouseWheel = 1;
+            this.WaterboxYPos.Location = new System.Drawing.Point(74, 31);
+            this.WaterboxYPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.WaterboxYPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.WaterboxYPos.Name = "WaterboxYPos";
+            this.WaterboxYPos.ShiftMultiplier = 20;
+            this.WaterboxYPos.Size = new System.Drawing.Size(100, 20);
+            this.WaterboxYPos.TabIndex = 11;
+            this.WaterboxYPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxYPos.ValueChanged += new System.EventHandler(this.WaterboxTransformY_ChangeValue);
+            // 
+            // WaterboxYSize
+            // 
+            this.WaterboxYSize.AlwaysFireValueChanged = false;
+            this.WaterboxYSize.DisplayDigits = 1;
+            this.WaterboxYSize.DoValueRollover = false;
+            this.WaterboxYSize.Enabled = false;
+            this.WaterboxYSize.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.WaterboxYSize.IncrementMouseWheel = 2;
+            this.WaterboxYSize.Location = new System.Drawing.Point(267, 31);
+            this.WaterboxYSize.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.WaterboxYSize.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.WaterboxYSize.Name = "WaterboxYSize";
+            this.WaterboxYSize.ShiftMultiplier = 10;
+            this.WaterboxYSize.Size = new System.Drawing.Size(100, 20);
+            this.WaterboxYSize.TabIndex = 14;
+            this.WaterboxYSize.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxYSize.ValueChanged += new System.EventHandler(this.WaterboxSizeY_ChangeValue);
             // 
             // label23
             // 
@@ -2776,6 +3641,35 @@ namespace SharpOcarina
             this.label20.TabIndex = 4;
             this.label20.Text = "Environment:";
             // 
+            // WaterboxXPos
+            // 
+            this.WaterboxXPos.AlwaysFireValueChanged = false;
+            this.WaterboxXPos.DisplayDigits = 1;
+            this.WaterboxXPos.DoValueRollover = false;
+            this.WaterboxXPos.Enabled = false;
+            this.WaterboxXPos.IncrementMouseWheel = 1;
+            this.WaterboxXPos.Location = new System.Drawing.Point(74, 5);
+            this.WaterboxXPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.WaterboxXPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.WaterboxXPos.Name = "WaterboxXPos";
+            this.WaterboxXPos.ShiftMultiplier = 20;
+            this.WaterboxXPos.Size = new System.Drawing.Size(100, 20);
+            this.WaterboxXPos.TabIndex = 10;
+            this.WaterboxXPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxXPos.ValueChanged += new System.EventHandler(this.WaterboxTransformX_ChangeValue);
+            // 
             // DeletewaterboxButton
             // 
             this.DeletewaterboxButton.Location = new System.Drawing.Point(250, 19);
@@ -2796,6 +3690,54 @@ namespace SharpOcarina
             this.EnvironmentControlTooltip.SetToolTip(this.AddwaterboxButton, "Hold SHIFT to add in front of camera");
             this.AddwaterboxButton.UseVisualStyleBackColor = true;
             this.AddwaterboxButton.Click += new System.EventHandler(this.AddWaterboxButton_Click);
+            // 
+            // WaterboxSelect
+            // 
+            this.WaterboxSelect.AlwaysFireValueChanged = false;
+            this.WaterboxSelect.DisplayDigits = 1;
+            this.WaterboxSelect.DoValueRollover = true;
+            this.WaterboxSelect.Hexadecimal = true;
+            this.WaterboxSelect.IncrementMouseWheel = 3;
+            this.WaterboxSelect.Location = new System.Drawing.Point(9, 22);
+            this.WaterboxSelect.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.WaterboxSelect.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.WaterboxSelect.Name = "WaterboxSelect";
+            this.WaterboxSelect.ShiftMultiplier = 1;
+            this.WaterboxSelect.Size = new System.Drawing.Size(65, 20);
+            this.WaterboxSelect.TabIndex = 7;
+            this.WaterboxSelect.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WaterboxSelect.ValueChanged += new System.EventHandler(this.WaterboxSelect_ValueChanged);
+            // 
+            // niceLine2
+            // 
+            this.niceLine2.Location = new System.Drawing.Point(9, 46);
+            this.niceLine2.Name = "niceLine2";
+            this.niceLine2.Size = new System.Drawing.Size(384, 15);
+            this.niceLine2.TabIndex = 20;
+            this.niceLine2.TabStop = false;
+            // 
+            // InjectoffsetTextbox
+            // 
+            this.InjectoffsetTextbox.AllowHex = true;
+            this.InjectoffsetTextbox.Digits = 8;
+            this.InjectoffsetTextbox.Location = new System.Drawing.Point(254, 31);
+            this.InjectoffsetTextbox.Name = "InjectoffsetTextbox";
+            this.InjectoffsetTextbox.Size = new System.Drawing.Size(98, 20);
+            this.InjectoffsetTextbox.TabIndex = 2;
+            this.InjectoffsetTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox3_KeyDown);
+            this.InjectoffsetTextbox.Leave += new System.EventHandler(this.InjectoffsetTextbox_Leave);
             // 
             // label6
             // 
@@ -2831,6 +3773,40 @@ namespace SharpOcarina
             this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Collision Model:";
+            // 
+            // ScaleNumericbox
+            // 
+            this.ScaleNumericbox.AlwaysFireValueChanged = false;
+            this.ScaleNumericbox.DecimalPlaces = 2;
+            this.ScaleNumericbox.DisplayDigits = 1;
+            this.ScaleNumericbox.DoValueRollover = true;
+            this.ScaleNumericbox.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            131072});
+            this.ScaleNumericbox.IncrementMouseWheel = 3;
+            this.ScaleNumericbox.Location = new System.Drawing.Point(50, 32);
+            this.ScaleNumericbox.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            131072});
+            this.ScaleNumericbox.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            131072});
+            this.ScaleNumericbox.Name = "ScaleNumericbox";
+            this.ScaleNumericbox.ShiftMultiplier = 1;
+            this.ScaleNumericbox.Size = new System.Drawing.Size(98, 20);
+            this.ScaleNumericbox.TabIndex = 1;
+            this.ScaleNumericbox.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            131072});
+            this.ScaleNumericbox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label2
             // 
@@ -2902,6 +3878,35 @@ namespace SharpOcarina
             this.label98.TabIndex = 39;
             this.label98.Text = "Height:";
             // 
+            // TextureAnimHeight2
+            // 
+            this.TextureAnimHeight2.AlwaysFireValueChanged = false;
+            this.TextureAnimHeight2.DisplayDigits = 1;
+            this.TextureAnimHeight2.DoValueRollover = false;
+            this.TextureAnimHeight2.Enabled = false;
+            this.TextureAnimHeight2.IncrementMouseWheel = 1;
+            this.TextureAnimHeight2.Location = new System.Drawing.Point(221, 147);
+            this.TextureAnimHeight2.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.TextureAnimHeight2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimHeight2.Name = "TextureAnimHeight2";
+            this.TextureAnimHeight2.ShiftMultiplier = 1;
+            this.TextureAnimHeight2.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimHeight2.TabIndex = 40;
+            this.TextureAnimHeight2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimHeight2.ValueChanged += new System.EventHandler(this.TextureAnimHeight2_ValueChanged);
+            // 
             // label99
             // 
             this.label99.AutoSize = true;
@@ -2911,6 +3916,35 @@ namespace SharpOcarina
             this.label99.Size = new System.Drawing.Size(38, 13);
             this.label99.TabIndex = 37;
             this.label99.Text = "Width:";
+            // 
+            // TextureAnimWidth2
+            // 
+            this.TextureAnimWidth2.AlwaysFireValueChanged = false;
+            this.TextureAnimWidth2.DisplayDigits = 1;
+            this.TextureAnimWidth2.DoValueRollover = false;
+            this.TextureAnimWidth2.Enabled = false;
+            this.TextureAnimWidth2.IncrementMouseWheel = 1;
+            this.TextureAnimWidth2.Location = new System.Drawing.Point(221, 121);
+            this.TextureAnimWidth2.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.TextureAnimWidth2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimWidth2.Name = "TextureAnimWidth2";
+            this.TextureAnimWidth2.ShiftMultiplier = 1;
+            this.TextureAnimWidth2.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimWidth2.TabIndex = 38;
+            this.TextureAnimWidth2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimWidth2.ValueChanged += new System.EventHandler(this.TextureAnimWidth2_ValueChanged);
             // 
             // label100
             // 
@@ -2922,6 +3956,35 @@ namespace SharpOcarina
             this.label100.TabIndex = 35;
             this.label100.Text = "Y Velocity:";
             // 
+            // TextureAnimYVelocity2
+            // 
+            this.TextureAnimYVelocity2.AlwaysFireValueChanged = false;
+            this.TextureAnimYVelocity2.DisplayDigits = 1;
+            this.TextureAnimYVelocity2.DoValueRollover = false;
+            this.TextureAnimYVelocity2.Enabled = false;
+            this.TextureAnimYVelocity2.IncrementMouseWheel = 1;
+            this.TextureAnimYVelocity2.Location = new System.Drawing.Point(83, 147);
+            this.TextureAnimYVelocity2.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.TextureAnimYVelocity2.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.TextureAnimYVelocity2.Name = "TextureAnimYVelocity2";
+            this.TextureAnimYVelocity2.ShiftMultiplier = 1;
+            this.TextureAnimYVelocity2.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimYVelocity2.TabIndex = 36;
+            this.TextureAnimYVelocity2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimYVelocity2.ValueChanged += new System.EventHandler(this.TextureAnimYVelocity2_ValueChanged);
+            // 
             // label101
             // 
             this.label101.AutoSize = true;
@@ -2931,6 +3994,43 @@ namespace SharpOcarina
             this.label101.Size = new System.Drawing.Size(57, 13);
             this.label101.TabIndex = 33;
             this.label101.Text = "X Velocity:";
+            // 
+            // TextureAnimXVelocity2
+            // 
+            this.TextureAnimXVelocity2.AlwaysFireValueChanged = false;
+            this.TextureAnimXVelocity2.DisplayDigits = 1;
+            this.TextureAnimXVelocity2.DoValueRollover = false;
+            this.TextureAnimXVelocity2.Enabled = false;
+            this.TextureAnimXVelocity2.IncrementMouseWheel = 1;
+            this.TextureAnimXVelocity2.Location = new System.Drawing.Point(83, 121);
+            this.TextureAnimXVelocity2.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.TextureAnimXVelocity2.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.TextureAnimXVelocity2.Name = "TextureAnimXVelocity2";
+            this.TextureAnimXVelocity2.ShiftMultiplier = 1;
+            this.TextureAnimXVelocity2.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimXVelocity2.TabIndex = 34;
+            this.TextureAnimXVelocity2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimXVelocity2.ValueChanged += new System.EventHandler(this.TextureAnimXVelocity2_ValueChanged);
+            // 
+            // niceLine14
+            // 
+            this.niceLine14.Location = new System.Drawing.Point(5, 105);
+            this.niceLine14.Name = "niceLine14";
+            this.niceLine14.Size = new System.Drawing.Size(384, 15);
+            this.niceLine14.TabIndex = 22;
+            this.niceLine14.TabStop = false;
             // 
             // label96
             // 
@@ -2942,6 +4042,35 @@ namespace SharpOcarina
             this.label96.TabIndex = 30;
             this.label96.Text = "Height:";
             // 
+            // TextureAnimHeight1
+            // 
+            this.TextureAnimHeight1.AlwaysFireValueChanged = false;
+            this.TextureAnimHeight1.DisplayDigits = 1;
+            this.TextureAnimHeight1.DoValueRollover = false;
+            this.TextureAnimHeight1.Enabled = false;
+            this.TextureAnimHeight1.IncrementMouseWheel = 1;
+            this.TextureAnimHeight1.Location = new System.Drawing.Point(221, 84);
+            this.TextureAnimHeight1.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.TextureAnimHeight1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimHeight1.Name = "TextureAnimHeight1";
+            this.TextureAnimHeight1.ShiftMultiplier = 1;
+            this.TextureAnimHeight1.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimHeight1.TabIndex = 31;
+            this.TextureAnimHeight1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimHeight1.ValueChanged += new System.EventHandler(this.TextureAnimHeight1_ValueChanged);
+            // 
             // label97
             // 
             this.label97.AutoSize = true;
@@ -2952,6 +4081,35 @@ namespace SharpOcarina
             this.label97.TabIndex = 28;
             this.label97.Text = "Width:";
             // 
+            // TextureAnimWidth1
+            // 
+            this.TextureAnimWidth1.AlwaysFireValueChanged = false;
+            this.TextureAnimWidth1.DisplayDigits = 1;
+            this.TextureAnimWidth1.DoValueRollover = false;
+            this.TextureAnimWidth1.Enabled = false;
+            this.TextureAnimWidth1.IncrementMouseWheel = 1;
+            this.TextureAnimWidth1.Location = new System.Drawing.Point(221, 58);
+            this.TextureAnimWidth1.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.TextureAnimWidth1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimWidth1.Name = "TextureAnimWidth1";
+            this.TextureAnimWidth1.ShiftMultiplier = 1;
+            this.TextureAnimWidth1.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimWidth1.TabIndex = 29;
+            this.TextureAnimWidth1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimWidth1.ValueChanged += new System.EventHandler(this.TextureAnimWidth1_ValueChanged);
+            // 
             // label95
             // 
             this.label95.AutoSize = true;
@@ -2961,6 +4119,35 @@ namespace SharpOcarina
             this.label95.Size = new System.Drawing.Size(57, 13);
             this.label95.TabIndex = 26;
             this.label95.Text = "Y Velocity:";
+            // 
+            // TextureAnimYVelocity1
+            // 
+            this.TextureAnimYVelocity1.AlwaysFireValueChanged = false;
+            this.TextureAnimYVelocity1.DisplayDigits = 1;
+            this.TextureAnimYVelocity1.DoValueRollover = false;
+            this.TextureAnimYVelocity1.Enabled = false;
+            this.TextureAnimYVelocity1.IncrementMouseWheel = 1;
+            this.TextureAnimYVelocity1.Location = new System.Drawing.Point(83, 84);
+            this.TextureAnimYVelocity1.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.TextureAnimYVelocity1.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.TextureAnimYVelocity1.Name = "TextureAnimYVelocity1";
+            this.TextureAnimYVelocity1.ShiftMultiplier = 1;
+            this.TextureAnimYVelocity1.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimYVelocity1.TabIndex = 27;
+            this.TextureAnimYVelocity1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimYVelocity1.ValueChanged += new System.EventHandler(this.TextureAnimYVelocity1_ValueChanged);
             // 
             // label59
             // 
@@ -2982,6 +4169,35 @@ namespace SharpOcarina
             this.DeleteTextureAnim.UseVisualStyleBackColor = true;
             this.DeleteTextureAnim.Click += new System.EventHandler(this.DeleteTextureAnim_Click);
             // 
+            // TextureAnimXVelocity1
+            // 
+            this.TextureAnimXVelocity1.AlwaysFireValueChanged = false;
+            this.TextureAnimXVelocity1.DisplayDigits = 1;
+            this.TextureAnimXVelocity1.DoValueRollover = false;
+            this.TextureAnimXVelocity1.Enabled = false;
+            this.TextureAnimXVelocity1.IncrementMouseWheel = 1;
+            this.TextureAnimXVelocity1.Location = new System.Drawing.Point(83, 58);
+            this.TextureAnimXVelocity1.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.TextureAnimXVelocity1.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.TextureAnimXVelocity1.Name = "TextureAnimXVelocity1";
+            this.TextureAnimXVelocity1.ShiftMultiplier = 1;
+            this.TextureAnimXVelocity1.Size = new System.Drawing.Size(44, 20);
+            this.TextureAnimXVelocity1.TabIndex = 24;
+            this.TextureAnimXVelocity1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimXVelocity1.ValueChanged += new System.EventHandler(this.TextureAnimXVelocity1_ValueChanged);
+            // 
             // AddTextureAnim
             // 
             this.AddTextureAnim.Location = new System.Drawing.Point(121, 19);
@@ -2991,6 +4207,43 @@ namespace SharpOcarina
             this.AddTextureAnim.Text = "Add Animation";
             this.AddTextureAnim.UseVisualStyleBackColor = true;
             this.AddTextureAnim.Click += new System.EventHandler(this.AddTextureAnim_Click);
+            // 
+            // TextureAnimSelect
+            // 
+            this.TextureAnimSelect.AlwaysFireValueChanged = false;
+            this.TextureAnimSelect.DisplayDigits = 1;
+            this.TextureAnimSelect.DoValueRollover = true;
+            this.TextureAnimSelect.Hexadecimal = true;
+            this.TextureAnimSelect.IncrementMouseWheel = 3;
+            this.TextureAnimSelect.Location = new System.Drawing.Point(6, 22);
+            this.TextureAnimSelect.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.TextureAnimSelect.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.TextureAnimSelect.Name = "TextureAnimSelect";
+            this.TextureAnimSelect.ShiftMultiplier = 1;
+            this.TextureAnimSelect.Size = new System.Drawing.Size(65, 20);
+            this.TextureAnimSelect.TabIndex = 22;
+            this.TextureAnimSelect.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TextureAnimSelect.ValueChanged += new System.EventHandler(this.TextureAnimSelect_ValueChanged);
+            // 
+            // niceLine13
+            // 
+            this.niceLine13.Location = new System.Drawing.Point(6, 46);
+            this.niceLine13.Name = "niceLine13";
+            this.niceLine13.Size = new System.Drawing.Size(384, 15);
+            this.niceLine13.TabIndex = 25;
+            this.niceLine13.TabStop = false;
             // 
             // tabRooms
             // 
@@ -3055,6 +4308,34 @@ namespace SharpOcarina
             this.AddAdditionalTexture.Text = "Add Texture";
             this.AddAdditionalTexture.UseVisualStyleBackColor = false;
             this.AddAdditionalTexture.Click += new System.EventHandler(this.AddAdditionalTexture_Click);
+            // 
+            // AdditionalTextureList
+            // 
+            this.AdditionalTextureList.AlwaysFireValueChanged = false;
+            this.AdditionalTextureList.DisplayDigits = 1;
+            this.AdditionalTextureList.DoValueRollover = false;
+            this.AdditionalTextureList.IncrementMouseWheel = 3;
+            this.AdditionalTextureList.Location = new System.Drawing.Point(9, 22);
+            this.AdditionalTextureList.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.AdditionalTextureList.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalTextureList.Name = "AdditionalTextureList";
+            this.AdditionalTextureList.ShiftMultiplier = 1;
+            this.AdditionalTextureList.Size = new System.Drawing.Size(65, 20);
+            this.AdditionalTextureList.TabIndex = 7;
+            this.AdditionalTextureList.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalTextureList.ValueChanged += new System.EventHandler(this.AdditionalTextureList_ValueChanged);
             // 
             // ReloadRoomButton
             // 
@@ -3229,6 +4510,39 @@ namespace SharpOcarina
             this.GroupRenderLast.UseVisualStyleBackColor = true;
             this.GroupRenderLast.CheckedChanged += new System.EventHandler(this.GroupRenderLast_CheckedChanged);
             // 
+            // GroupLODDIstance
+            // 
+            this.GroupLODDIstance.AlwaysFireValueChanged = false;
+            this.GroupLODDIstance.DisplayDigits = 1;
+            this.GroupLODDIstance.DoValueRollover = true;
+            this.GroupLODDIstance.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.GroupLODDIstance.IncrementMouseWheel = 3;
+            this.GroupLODDIstance.Location = new System.Drawing.Point(182, 240);
+            this.GroupLODDIstance.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.GroupLODDIstance.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.GroupLODDIstance.Name = "GroupLODDIstance";
+            this.GroupLODDIstance.ShiftMultiplier = 1;
+            this.GroupLODDIstance.Size = new System.Drawing.Size(80, 20);
+            this.GroupLODDIstance.TabIndex = 39;
+            this.GroupLODDIstance.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.GroupLODDIstance.ValueChanged += new System.EventHandler(this.GroupLODDIstance_ValueChanged);
+            // 
             // label102
             // 
             this.label102.AutoSize = true;
@@ -3237,6 +4551,36 @@ namespace SharpOcarina
             this.label102.Size = new System.Drawing.Size(49, 13);
             this.label102.TabIndex = 38;
             this.label102.Text = "Distance";
+            // 
+            // GroupLODGroup
+            // 
+            this.GroupLODGroup.AlwaysFireValueChanged = false;
+            this.GroupLODGroup.DisplayDigits = 1;
+            this.GroupLODGroup.DoValueRollover = false;
+            this.GroupLODGroup.Enabled = false;
+            this.GroupLODGroup.Hexadecimal = true;
+            this.GroupLODGroup.IncrementMouseWheel = 3;
+            this.GroupLODGroup.Location = new System.Drawing.Point(63, 240);
+            this.GroupLODGroup.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.GroupLODGroup.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.GroupLODGroup.Name = "GroupLODGroup";
+            this.GroupLODGroup.ShiftMultiplier = 1;
+            this.GroupLODGroup.Size = new System.Drawing.Size(58, 20);
+            this.GroupLODGroup.TabIndex = 37;
+            this.GroupLODGroup.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.GroupLODGroup.ValueChanged += new System.EventHandler(this.GroupLODGroup_ValueChanged);
             // 
             // GroupLod
             // 
@@ -3269,6 +4613,36 @@ namespace SharpOcarina
             this.AnimationLabel.Size = new System.Drawing.Size(16, 13);
             this.AnimationLabel.TabIndex = 34;
             this.AnimationLabel.Text = "   ";
+            // 
+            // GroupAnimatedBank
+            // 
+            this.GroupAnimatedBank.AlwaysFireValueChanged = false;
+            this.GroupAnimatedBank.DisplayDigits = 1;
+            this.GroupAnimatedBank.DoValueRollover = true;
+            this.GroupAnimatedBank.Enabled = false;
+            this.GroupAnimatedBank.Hexadecimal = true;
+            this.GroupAnimatedBank.IncrementMouseWheel = 3;
+            this.GroupAnimatedBank.Location = new System.Drawing.Point(85, 210);
+            this.GroupAnimatedBank.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.GroupAnimatedBank.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.GroupAnimatedBank.Name = "GroupAnimatedBank";
+            this.GroupAnimatedBank.ShiftMultiplier = 1;
+            this.GroupAnimatedBank.Size = new System.Drawing.Size(58, 20);
+            this.GroupAnimatedBank.TabIndex = 33;
+            this.GroupAnimatedBank.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.GroupAnimatedBank.ValueChanged += new System.EventHandler(this.GroupAnimatedBank_ValueChanged);
             // 
             // GroupIgnoreFog
             // 
@@ -3337,6 +4711,62 @@ namespace SharpOcarina
             this.label93.TabIndex = 27;
             this.label93.Text = "Texture Shift X/Y:";
             // 
+            // ShiftTNumeric
+            // 
+            this.ShiftTNumeric.AlwaysFireValueChanged = false;
+            this.ShiftTNumeric.DisplayDigits = 1;
+            this.ShiftTNumeric.DoValueRollover = true;
+            this.ShiftTNumeric.IncrementMouseWheel = 3;
+            this.ShiftTNumeric.Location = new System.Drawing.Point(220, 97);
+            this.ShiftTNumeric.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.ShiftTNumeric.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.ShiftTNumeric.Name = "ShiftTNumeric";
+            this.ShiftTNumeric.ShiftMultiplier = 1;
+            this.ShiftTNumeric.Size = new System.Drawing.Size(80, 20);
+            this.ShiftTNumeric.TabIndex = 26;
+            this.ShiftTNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ShiftTNumeric.ValueChanged += new System.EventHandler(this.ShiftTNumeric_ValueChanged);
+            // 
+            // ShiftSNumeric
+            // 
+            this.ShiftSNumeric.AlwaysFireValueChanged = false;
+            this.ShiftSNumeric.DisplayDigits = 1;
+            this.ShiftSNumeric.DoValueRollover = true;
+            this.ShiftSNumeric.IncrementMouseWheel = 3;
+            this.ShiftSNumeric.Location = new System.Drawing.Point(122, 97);
+            this.ShiftSNumeric.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.ShiftSNumeric.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.ShiftSNumeric.Name = "ShiftSNumeric";
+            this.ShiftSNumeric.ShiftMultiplier = 1;
+            this.ShiftSNumeric.Size = new System.Drawing.Size(80, 20);
+            this.ShiftSNumeric.TabIndex = 25;
+            this.ShiftSNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ShiftSNumeric.ValueChanged += new System.EventHandler(this.ShiftSNumeric_ValueChanged);
+            // 
             // ReverseLightCheckBox
             // 
             this.ReverseLightCheckBox.AutoSize = true;
@@ -3347,6 +4777,39 @@ namespace SharpOcarina
             this.ReverseLightCheckBox.Text = "Use vertex color";
             this.ReverseLightCheckBox.UseVisualStyleBackColor = true;
             this.ReverseLightCheckBox.CheckedChanged += new System.EventHandler(this.ReverseLightCheckBox_CheckedChanged);
+            // 
+            // GroupMultitextureAlpha
+            // 
+            this.GroupMultitextureAlpha.AlwaysFireValueChanged = false;
+            this.GroupMultitextureAlpha.DisplayDigits = 1;
+            this.GroupMultitextureAlpha.DoValueRollover = true;
+            this.GroupMultitextureAlpha.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.GroupMultitextureAlpha.IncrementMouseWheel = 3;
+            this.GroupMultitextureAlpha.Location = new System.Drawing.Point(106, 180);
+            this.GroupMultitextureAlpha.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.GroupMultitextureAlpha.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.GroupMultitextureAlpha.Name = "GroupMultitextureAlpha";
+            this.GroupMultitextureAlpha.ShiftMultiplier = 1;
+            this.GroupMultitextureAlpha.Size = new System.Drawing.Size(80, 20);
+            this.GroupMultitextureAlpha.TabIndex = 23;
+            this.GroupMultitextureAlpha.Value = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.GroupMultitextureAlpha.ValueChanged += new System.EventHandler(this.GroupMultitextureAlpha_ValueChanged);
             // 
             // label79
             // 
@@ -3388,6 +4851,62 @@ namespace SharpOcarina
             this.label34.TabIndex = 19;
             this.label34.Text = "Multitexture Shift X/Y:";
             // 
+            // numericUpDown6
+            // 
+            this.numericUpDown6.AlwaysFireValueChanged = false;
+            this.numericUpDown6.DisplayDigits = 1;
+            this.numericUpDown6.DoValueRollover = true;
+            this.numericUpDown6.IncrementMouseWheel = 3;
+            this.numericUpDown6.Location = new System.Drawing.Point(218, 152);
+            this.numericUpDown6.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown6.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown6.Name = "numericUpDown6";
+            this.numericUpDown6.ShiftMultiplier = 1;
+            this.numericUpDown6.Size = new System.Drawing.Size(80, 20);
+            this.numericUpDown6.TabIndex = 18;
+            this.numericUpDown6.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDown6.ValueChanged += new System.EventHandler(this.numericUpDown6_ValueChanged);
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.AlwaysFireValueChanged = false;
+            this.numericUpDown5.DisplayDigits = 1;
+            this.numericUpDown5.DoValueRollover = true;
+            this.numericUpDown5.IncrementMouseWheel = 3;
+            this.numericUpDown5.Location = new System.Drawing.Point(120, 152);
+            this.numericUpDown5.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.ShiftMultiplier = 1;
+            this.numericUpDown5.Size = new System.Drawing.Size(80, 20);
+            this.numericUpDown5.TabIndex = 17;
+            this.numericUpDown5.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDown5.ValueChanged += new System.EventHandler(this.numericUpDown5_ValueChanged);
+            // 
             // label30
             // 
             this.label30.AutoSize = true;
@@ -3420,6 +4939,34 @@ namespace SharpOcarina
             this.checkBox3.Text = "Backface Culling";
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // GroupPolygonType
+            // 
+            this.GroupPolygonType.AlwaysFireValueChanged = false;
+            this.GroupPolygonType.DisplayDigits = 1;
+            this.GroupPolygonType.DoValueRollover = true;
+            this.GroupPolygonType.IncrementMouseWheel = 3;
+            this.GroupPolygonType.Location = new System.Drawing.Point(96, 72);
+            this.GroupPolygonType.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.GroupPolygonType.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.GroupPolygonType.Name = "GroupPolygonType";
+            this.GroupPolygonType.ShiftMultiplier = 1;
+            this.GroupPolygonType.Size = new System.Drawing.Size(80, 20);
+            this.GroupPolygonType.TabIndex = 13;
+            this.GroupPolygonType.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.GroupPolygonType.ValueChanged += new System.EventHandler(this.GroupPolygonType_ValueChanged);
             // 
             // label12
             // 
@@ -3495,6 +5042,39 @@ namespace SharpOcarina
             this.label8.TabIndex = 6;
             this.label8.Text = "Texture Tiling X:";
             // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.AlwaysFireValueChanged = false;
+            this.numericUpDown2.DisplayDigits = 1;
+            this.numericUpDown2.DoValueRollover = true;
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown2.IncrementMouseWheel = 3;
+            this.numericUpDown2.Location = new System.Drawing.Point(96, 19);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.ShiftMultiplier = 1;
+            this.numericUpDown2.Size = new System.Drawing.Size(80, 20);
+            this.numericUpDown2.TabIndex = 5;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -3504,6 +5084,19 @@ namespace SharpOcarina
             this.label5.TabIndex = 4;
             this.label5.Text = "Alpha:";
             // 
+            // RoomInjectionOffset
+            // 
+            this.RoomInjectionOffset.AllowHex = true;
+            this.RoomInjectionOffset.Digits = 8;
+            this.RoomInjectionOffset.Enabled = false;
+            this.RoomInjectionOffset.Location = new System.Drawing.Point(101, 155);
+            this.RoomInjectionOffset.Name = "RoomInjectionOffset";
+            this.RoomInjectionOffset.Size = new System.Drawing.Size(98, 20);
+            this.RoomInjectionOffset.TabIndex = 3;
+            this.RoomInjectionOffset.Visible = false;
+            this.RoomInjectionOffset.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RoomInjectionOffset_KeyDown);
+            this.RoomInjectionOffset.Leave += new System.EventHandler(this.RoomInjectionOffset_Leave);
+            // 
             // GroupList
             // 
             this.GroupList.FormattingEnabled = true;
@@ -3512,6 +5105,7 @@ namespace SharpOcarina
             this.GroupList.Name = "GroupList";
             this.GroupList.Size = new System.Drawing.Size(397, 138);
             this.GroupList.TabIndex = 4;
+            this.EnvironmentControlTooltip.SetToolTip(this.GroupList, "You can also CTRL + right click on the groups in the viewport to select them");
             this.GroupList.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             this.GroupList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox2_MouseDown);
             // 
@@ -3586,6 +5180,14 @@ namespace SharpOcarina
             this.DeleteJFIF.UseVisualStyleBackColor = true;
             this.DeleteJFIF.Click += new System.EventHandler(this.DeleteJFIF_Click);
             // 
+            // niceLine15
+            // 
+            this.niceLine15.Location = new System.Drawing.Point(9, 48);
+            this.niceLine15.Name = "niceLine15";
+            this.niceLine15.Size = new System.Drawing.Size(384, 15);
+            this.niceLine15.TabIndex = 44;
+            this.niceLine15.TabStop = false;
+            // 
             // JFIFLabel
             // 
             this.JFIFLabel.AutoSize = true;
@@ -3594,6 +5196,34 @@ namespace SharpOcarina
             this.JFIFLabel.Size = new System.Drawing.Size(27, 13);
             this.JFIFLabel.TabIndex = 41;
             this.JFIFLabel.Text = "JFIF";
+            // 
+            // PrerenderedList
+            // 
+            this.PrerenderedList.AlwaysFireValueChanged = false;
+            this.PrerenderedList.DisplayDigits = 1;
+            this.PrerenderedList.DoValueRollover = false;
+            this.PrerenderedList.IncrementMouseWheel = 3;
+            this.PrerenderedList.Location = new System.Drawing.Point(9, 22);
+            this.PrerenderedList.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.PrerenderedList.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PrerenderedList.Name = "PrerenderedList";
+            this.PrerenderedList.ShiftMultiplier = 1;
+            this.PrerenderedList.Size = new System.Drawing.Size(65, 20);
+            this.PrerenderedList.TabIndex = 44;
+            this.PrerenderedList.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PrerenderedList.ValueChanged += new System.EventHandler(this.PrerenderedList_ValueChanged);
             // 
             // LoadJFIF
             // 
@@ -3620,6 +5250,36 @@ namespace SharpOcarina
             this.AlternateHeadersGroupBox.TabIndex = 43;
             this.AlternateHeadersGroupBox.TabStop = false;
             this.AlternateHeadersGroupBox.Text = "Alternate Scene Headers";
+            // 
+            // SceneHeaderCopyList
+            // 
+            this.SceneHeaderCopyList.AlwaysFireValueChanged = false;
+            this.SceneHeaderCopyList.DisplayDigits = 1;
+            this.SceneHeaderCopyList.DoValueRollover = false;
+            this.SceneHeaderCopyList.Enabled = false;
+            this.SceneHeaderCopyList.Hexadecimal = true;
+            this.SceneHeaderCopyList.IncrementMouseWheel = 1;
+            this.SceneHeaderCopyList.Location = new System.Drawing.Point(307, 61);
+            this.SceneHeaderCopyList.Maximum = new decimal(new int[] {
+            16777215,
+            0,
+            0,
+            0});
+            this.SceneHeaderCopyList.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SceneHeaderCopyList.Name = "SceneHeaderCopyList";
+            this.SceneHeaderCopyList.ShiftMultiplier = 1;
+            this.SceneHeaderCopyList.Size = new System.Drawing.Size(80, 20);
+            this.SceneHeaderCopyList.TabIndex = 27;
+            this.SceneHeaderCopyList.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SceneHeaderCopyList.ValueChanged += new System.EventHandler(this.SceneHeaderCopyList_ValueChanged);
             // 
             // SceneHeaderUsedLabel
             // 
@@ -3664,6 +5324,42 @@ namespace SharpOcarina
             this.AddSceneHeaderButton.Text = "Add Header";
             this.AddSceneHeaderButton.UseVisualStyleBackColor = false;
             this.AddSceneHeaderButton.Click += new System.EventHandler(this.AddSceneHeaderButton_Click);
+            // 
+            // SceneHeaderList
+            // 
+            this.SceneHeaderList.AlwaysFireValueChanged = false;
+            this.SceneHeaderList.DisplayDigits = 1;
+            this.SceneHeaderList.DoValueRollover = false;
+            this.SceneHeaderList.IncrementMouseWheel = 3;
+            this.SceneHeaderList.Location = new System.Drawing.Point(9, 22);
+            this.SceneHeaderList.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.SceneHeaderList.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SceneHeaderList.Name = "SceneHeaderList";
+            this.SceneHeaderList.ShiftMultiplier = 1;
+            this.SceneHeaderList.Size = new System.Drawing.Size(65, 20);
+            this.SceneHeaderList.TabIndex = 7;
+            this.SceneHeaderList.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SceneHeaderList.ValueChanged += new System.EventHandler(this.SceneHeaderList_ValueChanged);
+            // 
+            // niceLine9
+            // 
+            this.niceLine9.Location = new System.Drawing.Point(9, 46);
+            this.niceLine9.Name = "niceLine9";
+            this.niceLine9.Size = new System.Drawing.Size(384, 15);
+            this.niceLine9.TabIndex = 20;
+            this.niceLine9.TabStop = false;
             // 
             // PrerenderedCheckbox
             // 
@@ -3952,6 +5648,279 @@ namespace SharpOcarina
             this.ViewNormalCopyEnvA.UseVisualStyleBackColor = true;
             this.ViewNormalCopyEnvA.Click += new System.EventHandler(this.ViewNormalCopyEnvA_Click);
             // 
+            // EnvironmentDirectionBZ
+            // 
+            this.EnvironmentDirectionBZ.AlwaysFireValueChanged = false;
+            this.EnvironmentDirectionBZ.DisplayDigits = 2;
+            this.EnvironmentDirectionBZ.DoValueRollover = false;
+            this.EnvironmentDirectionBZ.Enabled = false;
+            this.EnvironmentDirectionBZ.Hexadecimal = true;
+            this.EnvironmentDirectionBZ.IncrementMouseWheel = 1;
+            this.EnvironmentDirectionBZ.Location = new System.Drawing.Point(304, 57);
+            this.EnvironmentDirectionBZ.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBZ.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBZ.Name = "EnvironmentDirectionBZ";
+            this.EnvironmentDirectionBZ.ShiftMultiplier = 20;
+            this.EnvironmentDirectionBZ.Size = new System.Drawing.Size(39, 20);
+            this.EnvironmentDirectionBZ.TabIndex = 30;
+            this.EnvironmentDirectionBZ.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBZ.ValueChanged += new System.EventHandler(this.EnvironmentDirectionBZ_ValueChanged);
+            // 
+            // EnvironmentDirectionBY
+            // 
+            this.EnvironmentDirectionBY.AlwaysFireValueChanged = false;
+            this.EnvironmentDirectionBY.DisplayDigits = 2;
+            this.EnvironmentDirectionBY.DoValueRollover = false;
+            this.EnvironmentDirectionBY.Enabled = false;
+            this.EnvironmentDirectionBY.Hexadecimal = true;
+            this.EnvironmentDirectionBY.IncrementMouseWheel = 1;
+            this.EnvironmentDirectionBY.Location = new System.Drawing.Point(266, 57);
+            this.EnvironmentDirectionBY.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBY.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBY.Name = "EnvironmentDirectionBY";
+            this.EnvironmentDirectionBY.ShiftMultiplier = 20;
+            this.EnvironmentDirectionBY.Size = new System.Drawing.Size(39, 20);
+            this.EnvironmentDirectionBY.TabIndex = 29;
+            this.EnvironmentDirectionBY.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBY.ValueChanged += new System.EventHandler(this.EnvironmentDirectionBY_ValueChanged);
+            // 
+            // EnvironmentDirectionAZ
+            // 
+            this.EnvironmentDirectionAZ.AlwaysFireValueChanged = false;
+            this.EnvironmentDirectionAZ.DisplayDigits = 2;
+            this.EnvironmentDirectionAZ.DoValueRollover = false;
+            this.EnvironmentDirectionAZ.Enabled = false;
+            this.EnvironmentDirectionAZ.Hexadecimal = true;
+            this.EnvironmentDirectionAZ.IncrementMouseWheel = 1;
+            this.EnvironmentDirectionAZ.Location = new System.Drawing.Point(304, 32);
+            this.EnvironmentDirectionAZ.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAZ.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAZ.Name = "EnvironmentDirectionAZ";
+            this.EnvironmentDirectionAZ.ShiftMultiplier = 20;
+            this.EnvironmentDirectionAZ.Size = new System.Drawing.Size(39, 20);
+            this.EnvironmentDirectionAZ.TabIndex = 28;
+            this.EnvironmentDirectionAZ.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAZ.ValueChanged += new System.EventHandler(this.EnvironmentDirectionAZ_ValueChanged);
+            // 
+            // EnvironmentDirectionAY
+            // 
+            this.EnvironmentDirectionAY.AlwaysFireValueChanged = false;
+            this.EnvironmentDirectionAY.DisplayDigits = 2;
+            this.EnvironmentDirectionAY.DoValueRollover = false;
+            this.EnvironmentDirectionAY.Enabled = false;
+            this.EnvironmentDirectionAY.Hexadecimal = true;
+            this.EnvironmentDirectionAY.IncrementMouseWheel = 1;
+            this.EnvironmentDirectionAY.Location = new System.Drawing.Point(266, 32);
+            this.EnvironmentDirectionAY.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAY.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAY.Name = "EnvironmentDirectionAY";
+            this.EnvironmentDirectionAY.ShiftMultiplier = 20;
+            this.EnvironmentDirectionAY.Size = new System.Drawing.Size(39, 20);
+            this.EnvironmentDirectionAY.TabIndex = 27;
+            this.EnvironmentDirectionAY.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAY.ValueChanged += new System.EventHandler(this.EnvironmentDirectionAY_ValueChanged);
+            // 
+            // EnvironmentDirectionBX
+            // 
+            this.EnvironmentDirectionBX.AlwaysFireValueChanged = false;
+            this.EnvironmentDirectionBX.DisplayDigits = 2;
+            this.EnvironmentDirectionBX.DoValueRollover = false;
+            this.EnvironmentDirectionBX.Enabled = false;
+            this.EnvironmentDirectionBX.Hexadecimal = true;
+            this.EnvironmentDirectionBX.IncrementMouseWheel = 1;
+            this.EnvironmentDirectionBX.Location = new System.Drawing.Point(228, 57);
+            this.EnvironmentDirectionBX.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBX.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBX.Name = "EnvironmentDirectionBX";
+            this.EnvironmentDirectionBX.ShiftMultiplier = 20;
+            this.EnvironmentDirectionBX.Size = new System.Drawing.Size(39, 20);
+            this.EnvironmentDirectionBX.TabIndex = 26;
+            this.EnvironmentDirectionBX.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionBX.ValueChanged += new System.EventHandler(this.EnvironmentDirectionB_ValueChanged);
+            // 
+            // EnvironmentDirectionAX
+            // 
+            this.EnvironmentDirectionAX.AlwaysFireValueChanged = false;
+            this.EnvironmentDirectionAX.DisplayDigits = 2;
+            this.EnvironmentDirectionAX.DoValueRollover = false;
+            this.EnvironmentDirectionAX.Enabled = false;
+            this.EnvironmentDirectionAX.Hexadecimal = true;
+            this.EnvironmentDirectionAX.IncrementMouseWheel = 1;
+            this.EnvironmentDirectionAX.Location = new System.Drawing.Point(227, 32);
+            this.EnvironmentDirectionAX.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAX.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAX.Name = "EnvironmentDirectionAX";
+            this.EnvironmentDirectionAX.ShiftMultiplier = 20;
+            this.EnvironmentDirectionAX.Size = new System.Drawing.Size(39, 20);
+            this.EnvironmentDirectionAX.TabIndex = 25;
+            this.EnvironmentDirectionAX.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentDirectionAX.ValueChanged += new System.EventHandler(this.EnvironmentDirectionA_ValueChanged);
+            // 
+            // DrawDistance
+            // 
+            this.DrawDistance.AlwaysFireValueChanged = false;
+            this.DrawDistance.DisplayDigits = 1;
+            this.DrawDistance.DoValueRollover = false;
+            this.DrawDistance.Enabled = false;
+            this.DrawDistance.Hexadecimal = true;
+            this.DrawDistance.IncrementMouseWheel = 1;
+            this.DrawDistance.Location = new System.Drawing.Point(287, 107);
+            this.DrawDistance.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.DrawDistance.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.DrawDistance.Name = "DrawDistance";
+            this.DrawDistance.ShiftMultiplier = 20;
+            this.DrawDistance.Size = new System.Drawing.Size(80, 20);
+            this.DrawDistance.TabIndex = 24;
+            this.EnvironmentControlTooltip.SetToolTip(this.DrawDistance, "Max value is 3200, which means 12800 units");
+            this.DrawDistance.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.DrawDistance.ValueChanged += new System.EventHandler(this.DrawDistance_Leave);
+            // 
+            // FogUnknown
+            // 
+            this.FogUnknown.AlwaysFireValueChanged = false;
+            this.FogUnknown.DisplayDigits = 1;
+            this.FogUnknown.DoValueRollover = false;
+            this.FogUnknown.Enabled = false;
+            this.FogUnknown.Hexadecimal = true;
+            this.FogUnknown.IncrementMouseWheel = 1;
+            this.FogUnknown.Location = new System.Drawing.Point(287, 82);
+            this.FogUnknown.Maximum = new decimal(new int[] {
+            63,
+            0,
+            0,
+            0});
+            this.FogUnknown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FogUnknown.Name = "FogUnknown";
+            this.FogUnknown.ShiftMultiplier = 20;
+            this.FogUnknown.Size = new System.Drawing.Size(80, 20);
+            this.FogUnknown.TabIndex = 23;
+            this.EnvironmentControlTooltip.SetToolTip(this.FogUnknown, "The time it takes to switch into this environment");
+            this.FogUnknown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FogUnknown.ValueChanged += new System.EventHandler(this.FogDistance_Leave);
+            // 
+            // FogDistance
+            // 
+            this.FogDistance.AlwaysFireValueChanged = false;
+            this.FogDistance.DisplayDigits = 1;
+            this.FogDistance.DoValueRollover = false;
+            this.FogDistance.Enabled = false;
+            this.FogDistance.Hexadecimal = true;
+            this.FogDistance.IncrementMouseWheel = 1;
+            this.FogDistance.Location = new System.Drawing.Point(85, 107);
+            this.FogDistance.Maximum = new decimal(new int[] {
+            1023,
+            0,
+            0,
+            0});
+            this.FogDistance.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FogDistance.Name = "FogDistance";
+            this.FogDistance.ShiftMultiplier = 20;
+            this.FogDistance.Size = new System.Drawing.Size(80, 20);
+            this.FogDistance.TabIndex = 22;
+            this.EnvironmentControlTooltip.SetToolTip(this.FogDistance, "Max value is 3E4, the lower the closer the fog is to the camera");
+            this.FogDistance.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FogDistance.ValueChanged += new System.EventHandler(this.FogDistance_Leave);
+            // 
             // label85
             // 
             this.label85.AutoSize = true;
@@ -4069,6 +6038,43 @@ namespace SharpOcarina
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.AddEnvironmentButton_Click);
             // 
+            // EnvironmentSelect
+            // 
+            this.EnvironmentSelect.AlwaysFireValueChanged = false;
+            this.EnvironmentSelect.DisplayDigits = 1;
+            this.EnvironmentSelect.DoValueRollover = true;
+            this.EnvironmentSelect.Hexadecimal = true;
+            this.EnvironmentSelect.IncrementMouseWheel = 3;
+            this.EnvironmentSelect.Location = new System.Drawing.Point(9, 22);
+            this.EnvironmentSelect.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.EnvironmentSelect.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.EnvironmentSelect.Name = "EnvironmentSelect";
+            this.EnvironmentSelect.ShiftMultiplier = 1;
+            this.EnvironmentSelect.Size = new System.Drawing.Size(65, 20);
+            this.EnvironmentSelect.TabIndex = 16;
+            this.EnvironmentSelect.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentSelect.ValueChanged += new System.EventHandler(this.EnvironmentSelect_ValueChanged);
+            // 
+            // niceLine3
+            // 
+            this.niceLine3.Location = new System.Drawing.Point(9, 45);
+            this.niceLine3.Name = "niceLine3";
+            this.niceLine3.Size = new System.Drawing.Size(381, 15);
+            this.niceLine3.TabIndex = 20;
+            this.niceLine3.TabStop = false;
+            // 
             // tabRoomEnv
             // 
             this.tabRoomEnv.Controls.Add(this.Roomaffectedpointlightscheckbox);
@@ -4164,6 +6170,35 @@ namespace SharpOcarina
             this.AdditionalLightDirectionLabel3.TabIndex = 19;
             this.AdditionalLightDirectionLabel3.Text = "Radius:";
             // 
+            // AdditionalLightRadius
+            // 
+            this.AdditionalLightRadius.AlwaysFireValueChanged = false;
+            this.AdditionalLightRadius.DisplayDigits = 1;
+            this.AdditionalLightRadius.DoValueRollover = false;
+            this.AdditionalLightRadius.Enabled = false;
+            this.AdditionalLightRadius.IncrementMouseWheel = 1;
+            this.AdditionalLightRadius.Location = new System.Drawing.Point(261, 82);
+            this.AdditionalLightRadius.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.AdditionalLightRadius.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightRadius.Name = "AdditionalLightRadius";
+            this.AdditionalLightRadius.ShiftMultiplier = 10;
+            this.AdditionalLightRadius.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightRadius.TabIndex = 18;
+            this.AdditionalLightRadius.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightRadius.ValueChanged += new System.EventHandler(this.AdditionalLightRadius_ValueChanged);
+            // 
             // AdditionalLightLabel1
             // 
             this.AdditionalLightLabel1.AutoSize = true;
@@ -4183,6 +6218,35 @@ namespace SharpOcarina
             this.AdditionalLightPointLabel1.Size = new System.Drawing.Size(57, 13);
             this.AdditionalLightPointLabel1.TabIndex = 7;
             this.AdditionalLightPointLabel1.Text = "X Position:";
+            // 
+            // AdditionalLightZPos
+            // 
+            this.AdditionalLightZPos.AlwaysFireValueChanged = false;
+            this.AdditionalLightZPos.DisplayDigits = 1;
+            this.AdditionalLightZPos.DoValueRollover = false;
+            this.AdditionalLightZPos.Enabled = false;
+            this.AdditionalLightZPos.IncrementMouseWheel = 1;
+            this.AdditionalLightZPos.Location = new System.Drawing.Point(74, 84);
+            this.AdditionalLightZPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.AdditionalLightZPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.AdditionalLightZPos.Name = "AdditionalLightZPos";
+            this.AdditionalLightZPos.ShiftMultiplier = 20;
+            this.AdditionalLightZPos.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightZPos.TabIndex = 12;
+            this.AdditionalLightZPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightZPos.ValueChanged += new System.EventHandler(this.AdditionalLightZPos_ValueChanged);
             // 
             // AdditionalLightPointLabel3
             // 
@@ -4204,6 +6268,35 @@ namespace SharpOcarina
             this.AdditionalLightPointLabel2.TabIndex = 9;
             this.AdditionalLightPointLabel2.Text = "Y Position:";
             // 
+            // AdditionalLightNS
+            // 
+            this.AdditionalLightNS.AlwaysFireValueChanged = false;
+            this.AdditionalLightNS.DisplayDigits = 1;
+            this.AdditionalLightNS.DoValueRollover = false;
+            this.AdditionalLightNS.Enabled = false;
+            this.AdditionalLightNS.IncrementMouseWheel = 1;
+            this.AdditionalLightNS.Location = new System.Drawing.Point(261, 30);
+            this.AdditionalLightNS.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.AdditionalLightNS.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightNS.Name = "AdditionalLightNS";
+            this.AdditionalLightNS.ShiftMultiplier = 1;
+            this.AdditionalLightNS.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightNS.TabIndex = 13;
+            this.AdditionalLightNS.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightNS.ValueChanged += new System.EventHandler(this.AdditionalLightNS_ValueChanged);
+            // 
             // AdditionalLightDirectionLabel2
             // 
             this.AdditionalLightDirectionLabel2.AutoSize = true;
@@ -4214,6 +6307,64 @@ namespace SharpOcarina
             this.AdditionalLightDirectionLabel2.TabIndex = 17;
             this.AdditionalLightDirectionLabel2.Text = "East-West:";
             // 
+            // AdditionalLightYPos
+            // 
+            this.AdditionalLightYPos.AlwaysFireValueChanged = false;
+            this.AdditionalLightYPos.DisplayDigits = 1;
+            this.AdditionalLightYPos.DoValueRollover = false;
+            this.AdditionalLightYPos.Enabled = false;
+            this.AdditionalLightYPos.IncrementMouseWheel = 1;
+            this.AdditionalLightYPos.Location = new System.Drawing.Point(74, 58);
+            this.AdditionalLightYPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.AdditionalLightYPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.AdditionalLightYPos.Name = "AdditionalLightYPos";
+            this.AdditionalLightYPos.ShiftMultiplier = 20;
+            this.AdditionalLightYPos.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightYPos.TabIndex = 11;
+            this.AdditionalLightYPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightYPos.ValueChanged += new System.EventHandler(this.AdditionalLightYPos_ValueChanged);
+            // 
+            // AdditionalLightEW
+            // 
+            this.AdditionalLightEW.AlwaysFireValueChanged = false;
+            this.AdditionalLightEW.DisplayDigits = 1;
+            this.AdditionalLightEW.DoValueRollover = false;
+            this.AdditionalLightEW.Enabled = false;
+            this.AdditionalLightEW.IncrementMouseWheel = 1;
+            this.AdditionalLightEW.Location = new System.Drawing.Point(261, 56);
+            this.AdditionalLightEW.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.AdditionalLightEW.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightEW.Name = "AdditionalLightEW";
+            this.AdditionalLightEW.ShiftMultiplier = 1;
+            this.AdditionalLightEW.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightEW.TabIndex = 14;
+            this.AdditionalLightEW.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightEW.ValueChanged += new System.EventHandler(this.AdditionalLightEW_ValueChanged);
+            // 
             // AdditionalLightDirectionLabel1
             // 
             this.AdditionalLightDirectionLabel1.AutoSize = true;
@@ -4223,6 +6374,35 @@ namespace SharpOcarina
             this.AdditionalLightDirectionLabel1.Size = new System.Drawing.Size(67, 13);
             this.AdditionalLightDirectionLabel1.TabIndex = 13;
             this.AdditionalLightDirectionLabel1.Text = "North-South:";
+            // 
+            // AdditionalLightXPos
+            // 
+            this.AdditionalLightXPos.AlwaysFireValueChanged = false;
+            this.AdditionalLightXPos.DisplayDigits = 1;
+            this.AdditionalLightXPos.DoValueRollover = false;
+            this.AdditionalLightXPos.Enabled = false;
+            this.AdditionalLightXPos.IncrementMouseWheel = 1;
+            this.AdditionalLightXPos.Location = new System.Drawing.Point(74, 32);
+            this.AdditionalLightXPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.AdditionalLightXPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.AdditionalLightXPos.Name = "AdditionalLightXPos";
+            this.AdditionalLightXPos.ShiftMultiplier = 20;
+            this.AdditionalLightXPos.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightXPos.TabIndex = 10;
+            this.AdditionalLightXPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightXPos.ValueChanged += new System.EventHandler(this.AdditionalLightXPos_ValueChanged);
             // 
             // AdditionalLightDelete
             // 
@@ -4244,6 +6424,42 @@ namespace SharpOcarina
             this.EnvironmentControlTooltip.SetToolTip(this.AdditionalLightAdd, "Hold SHIFT to add in front of camera");
             this.AdditionalLightAdd.UseVisualStyleBackColor = true;
             this.AdditionalLightAdd.Click += new System.EventHandler(this.AdditionalLightAdd_Click);
+            // 
+            // AdditionalLightSelect
+            // 
+            this.AdditionalLightSelect.AlwaysFireValueChanged = false;
+            this.AdditionalLightSelect.DisplayDigits = 1;
+            this.AdditionalLightSelect.DoValueRollover = true;
+            this.AdditionalLightSelect.IncrementMouseWheel = 3;
+            this.AdditionalLightSelect.Location = new System.Drawing.Point(9, 22);
+            this.AdditionalLightSelect.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightSelect.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.AdditionalLightSelect.Name = "AdditionalLightSelect";
+            this.AdditionalLightSelect.ShiftMultiplier = 1;
+            this.AdditionalLightSelect.Size = new System.Drawing.Size(65, 20);
+            this.AdditionalLightSelect.TabIndex = 7;
+            this.AdditionalLightSelect.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightSelect.ValueChanged += new System.EventHandler(this.AdditionalLightSelect_ValueChanged);
+            // 
+            // niceLine5
+            // 
+            this.niceLine5.Location = new System.Drawing.Point(6, 42);
+            this.niceLine5.Name = "niceLine5";
+            this.niceLine5.Size = new System.Drawing.Size(384, 15);
+            this.niceLine5.TabIndex = 20;
+            this.niceLine5.TabStop = false;
             // 
             // groupBox11
             // 
@@ -4339,6 +6555,122 @@ namespace SharpOcarina
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Wind";
             // 
+            // WindStrength
+            // 
+            this.WindStrength.AlwaysFireValueChanged = false;
+            this.WindStrength.DisplayDigits = 2;
+            this.WindStrength.DoValueRollover = false;
+            this.WindStrength.Hexadecimal = true;
+            this.WindStrength.IncrementMouseWheel = 1;
+            this.WindStrength.Location = new System.Drawing.Point(257, 47);
+            this.WindStrength.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindStrength.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindStrength.Name = "WindStrength";
+            this.WindStrength.ShiftMultiplier = 4;
+            this.WindStrength.Size = new System.Drawing.Size(50, 20);
+            this.WindStrength.TabIndex = 53;
+            this.WindStrength.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindStrength.ValueChanged += new System.EventHandler(this.WindStrength_Leave);
+            // 
+            // WindSouth
+            // 
+            this.WindSouth.AlwaysFireValueChanged = false;
+            this.WindSouth.DisplayDigits = 2;
+            this.WindSouth.DoValueRollover = false;
+            this.WindSouth.Hexadecimal = true;
+            this.WindSouth.IncrementMouseWheel = 1;
+            this.WindSouth.Location = new System.Drawing.Point(257, 23);
+            this.WindSouth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindSouth.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindSouth.Name = "WindSouth";
+            this.WindSouth.ShiftMultiplier = 4;
+            this.WindSouth.Size = new System.Drawing.Size(50, 20);
+            this.WindSouth.TabIndex = 52;
+            this.WindSouth.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindSouth.ValueChanged += new System.EventHandler(this.WindSouth_Leave);
+            // 
+            // WindVertical
+            // 
+            this.WindVertical.AlwaysFireValueChanged = false;
+            this.WindVertical.DisplayDigits = 2;
+            this.WindVertical.DoValueRollover = false;
+            this.WindVertical.Hexadecimal = true;
+            this.WindVertical.IncrementMouseWheel = 1;
+            this.WindVertical.Location = new System.Drawing.Point(83, 47);
+            this.WindVertical.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindVertical.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindVertical.Name = "WindVertical";
+            this.WindVertical.ShiftMultiplier = 4;
+            this.WindVertical.Size = new System.Drawing.Size(50, 20);
+            this.WindVertical.TabIndex = 51;
+            this.WindVertical.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindVertical.ValueChanged += new System.EventHandler(this.WindVertical_Leave);
+            // 
+            // WindWest
+            // 
+            this.WindWest.AlwaysFireValueChanged = false;
+            this.WindWest.DisplayDigits = 2;
+            this.WindWest.DoValueRollover = false;
+            this.WindWest.Hexadecimal = true;
+            this.WindWest.IncrementMouseWheel = 1;
+            this.WindWest.Location = new System.Drawing.Point(83, 23);
+            this.WindWest.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.WindWest.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindWest.Name = "WindWest";
+            this.WindWest.ShiftMultiplier = 4;
+            this.WindWest.Size = new System.Drawing.Size(50, 20);
+            this.WindWest.TabIndex = 50;
+            this.WindWest.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.WindWest.ValueChanged += new System.EventHandler(this.WindWest_Leave);
+            // 
             // label48
             // 
             this.label48.AutoSize = true;
@@ -4395,6 +6727,64 @@ namespace SharpOcarina
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Skybox && Time Settings";
             // 
+            // SoundEcho
+            // 
+            this.SoundEcho.AlwaysFireValueChanged = false;
+            this.SoundEcho.DisplayDigits = 2;
+            this.SoundEcho.DoValueRollover = false;
+            this.SoundEcho.Hexadecimal = true;
+            this.SoundEcho.IncrementMouseWheel = 1;
+            this.SoundEcho.Location = new System.Drawing.Point(85, 71);
+            this.SoundEcho.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.SoundEcho.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SoundEcho.Name = "SoundEcho";
+            this.SoundEcho.ShiftMultiplier = 4;
+            this.SoundEcho.Size = new System.Drawing.Size(50, 20);
+            this.SoundEcho.TabIndex = 49;
+            this.SoundEcho.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SoundEcho.ValueChanged += new System.EventHandler(this.SoundEcho_Leave);
+            // 
+            // TimeSpeed
+            // 
+            this.TimeSpeed.AlwaysFireValueChanged = false;
+            this.TimeSpeed.DisplayDigits = 2;
+            this.TimeSpeed.DoValueRollover = false;
+            this.TimeSpeed.Hexadecimal = true;
+            this.TimeSpeed.IncrementMouseWheel = 1;
+            this.TimeSpeed.Location = new System.Drawing.Point(85, 47);
+            this.TimeSpeed.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.TimeSpeed.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TimeSpeed.Name = "TimeSpeed";
+            this.TimeSpeed.ShiftMultiplier = 4;
+            this.TimeSpeed.Size = new System.Drawing.Size(50, 20);
+            this.TimeSpeed.TabIndex = 48;
+            this.TimeSpeed.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.TimeSpeed.ValueChanged += new System.EventHandler(this.TimeSpeed_Leave);
+            // 
             // DisableStartTime
             // 
             this.DisableStartTime.AutoSize = true;
@@ -4406,6 +6796,35 @@ namespace SharpOcarina
             this.DisableStartTime.UseVisualStyleBackColor = true;
             this.DisableStartTime.CheckedChanged += new System.EventHandler(this.DisableStartTime_CheckedChanged);
             // 
+            // TimeMinute
+            // 
+            this.TimeMinute.AlwaysFireValueChanged = false;
+            this.TimeMinute.DisplayDigits = 1;
+            this.TimeMinute.DoValueRollover = false;
+            this.TimeMinute.Enabled = false;
+            this.TimeMinute.IncrementMouseWheel = 1;
+            this.TimeMinute.Location = new System.Drawing.Point(194, 22);
+            this.TimeMinute.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.TimeMinute.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TimeMinute.Name = "TimeMinute";
+            this.TimeMinute.ShiftMultiplier = 10;
+            this.TimeMinute.Size = new System.Drawing.Size(50, 20);
+            this.TimeMinute.TabIndex = 46;
+            this.TimeMinute.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TimeMinute.ValueChanged += new System.EventHandler(this.TimeMinute_ValueChanged);
+            // 
             // label105
             // 
             this.label105.AutoSize = true;
@@ -4414,6 +6833,35 @@ namespace SharpOcarina
             this.label105.Size = new System.Drawing.Size(42, 13);
             this.label105.TabIndex = 45;
             this.label105.Text = "Minute:";
+            // 
+            // TimeHour
+            // 
+            this.TimeHour.AlwaysFireValueChanged = false;
+            this.TimeHour.DisplayDigits = 1;
+            this.TimeHour.DoValueRollover = false;
+            this.TimeHour.Enabled = false;
+            this.TimeHour.IncrementMouseWheel = 1;
+            this.TimeHour.Location = new System.Drawing.Point(85, 22);
+            this.TimeHour.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.TimeHour.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TimeHour.Name = "TimeHour";
+            this.TimeHour.ShiftMultiplier = 4;
+            this.TimeHour.Size = new System.Drawing.Size(50, 20);
+            this.TimeHour.TabIndex = 44;
+            this.TimeHour.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TimeHour.ValueChanged += new System.EventHandler(this.TimeHour_ValueChanged);
             // 
             // label43
             // 
@@ -4531,6 +6979,64 @@ namespace SharpOcarina
             this.ExitGroupBox.TabIndex = 117;
             this.ExitGroupBox.TabStop = false;
             // 
+            // ExitHeaderIndex
+            // 
+            this.ExitHeaderIndex.AlwaysFireValueChanged = false;
+            this.ExitHeaderIndex.DisplayDigits = 1;
+            this.ExitHeaderIndex.DoValueRollover = false;
+            this.ExitHeaderIndex.Hexadecimal = true;
+            this.ExitHeaderIndex.IncrementMouseWheel = 1;
+            this.ExitHeaderIndex.Location = new System.Drawing.Point(221, 9);
+            this.ExitHeaderIndex.Maximum = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.ExitHeaderIndex.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.ExitHeaderIndex.Name = "ExitHeaderIndex";
+            this.ExitHeaderIndex.ShiftMultiplier = 1;
+            this.ExitHeaderIndex.Size = new System.Drawing.Size(40, 20);
+            this.ExitHeaderIndex.TabIndex = 112;
+            this.ExitHeaderIndex.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ExitHeaderIndex.ValueChanged += new System.EventHandler(this.ExitHeaderIndex_ValueChanged);
+            // 
+            // ExitSceneIndex
+            // 
+            this.ExitSceneIndex.AlwaysFireValueChanged = false;
+            this.ExitSceneIndex.DisplayDigits = 1;
+            this.ExitSceneIndex.DoValueRollover = true;
+            this.ExitSceneIndex.Hexadecimal = true;
+            this.ExitSceneIndex.IncrementMouseWheel = 1;
+            this.ExitSceneIndex.Location = new System.Drawing.Point(90, 9);
+            this.ExitSceneIndex.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.ExitSceneIndex.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.ExitSceneIndex.Name = "ExitSceneIndex";
+            this.ExitSceneIndex.ShiftMultiplier = 1;
+            this.ExitSceneIndex.Size = new System.Drawing.Size(40, 20);
+            this.ExitSceneIndex.TabIndex = 116;
+            this.ExitSceneIndex.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ExitSceneIndex.ValueChanged += new System.EventHandler(this.ExitSceneIndex_ValueChanged);
+            // 
             // label134
             // 
             this.label134.AutoSize = true;
@@ -4550,6 +7056,35 @@ namespace SharpOcarina
             this.ExitMusicOn.Text = "Keep Playing Music";
             this.ExitMusicOn.UseVisualStyleBackColor = true;
             this.ExitMusicOn.CheckedChanged += new System.EventHandler(this.ExitMusicOn_CheckedChanged);
+            // 
+            // ExitSpawnIndex
+            // 
+            this.ExitSpawnIndex.AlwaysFireValueChanged = false;
+            this.ExitSpawnIndex.DisplayDigits = 1;
+            this.ExitSpawnIndex.DoValueRollover = false;
+            this.ExitSpawnIndex.Hexadecimal = true;
+            this.ExitSpawnIndex.IncrementMouseWheel = 1;
+            this.ExitSpawnIndex.Location = new System.Drawing.Point(90, 32);
+            this.ExitSpawnIndex.Maximum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.ExitSpawnIndex.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.ExitSpawnIndex.Name = "ExitSpawnIndex";
+            this.ExitSpawnIndex.ShiftMultiplier = 1;
+            this.ExitSpawnIndex.Size = new System.Drawing.Size(40, 20);
+            this.ExitSpawnIndex.TabIndex = 114;
+            this.ExitSpawnIndex.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ExitSpawnIndex.ValueChanged += new System.EventHandler(this.ExitSpawnIndex_ValueChanged);
             // 
             // ExitShowTitlecard
             // 
@@ -4580,6 +7115,36 @@ namespace SharpOcarina
             this.label132.TabIndex = 111;
             this.label132.Text = "Header Index:";
             // 
+            // ExitFadeOut
+            // 
+            this.ExitFadeOut.AlwaysFireValueChanged = false;
+            this.ExitFadeOut.DisplayDigits = 1;
+            this.ExitFadeOut.DoValueRollover = true;
+            this.ExitFadeOut.Hexadecimal = true;
+            this.ExitFadeOut.IncrementMouseWheel = 1;
+            this.ExitFadeOut.Location = new System.Drawing.Point(90, 78);
+            this.ExitFadeOut.Maximum = new decimal(new int[] {
+            63,
+            0,
+            0,
+            0});
+            this.ExitFadeOut.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.ExitFadeOut.Name = "ExitFadeOut";
+            this.ExitFadeOut.ShiftMultiplier = 1;
+            this.ExitFadeOut.Size = new System.Drawing.Size(40, 20);
+            this.ExitFadeOut.TabIndex = 110;
+            this.EnvironmentControlTooltip.SetToolTip(this.ExitFadeOut, resources.GetString("ExitFadeOut.ToolTip"));
+            this.ExitFadeOut.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ExitFadeOut.ValueChanged += new System.EventHandler(this.ExitFadeOut_ValueChanged);
+            // 
             // label1331
             // 
             this.label1331.AutoSize = true;
@@ -4597,6 +7162,36 @@ namespace SharpOcarina
             this.label131.Size = new System.Drawing.Size(54, 13);
             this.label131.TabIndex = 109;
             this.label131.Text = "Fade Out:";
+            // 
+            // ExitFadeIn
+            // 
+            this.ExitFadeIn.AlwaysFireValueChanged = false;
+            this.ExitFadeIn.DisplayDigits = 1;
+            this.ExitFadeIn.DoValueRollover = true;
+            this.ExitFadeIn.Hexadecimal = true;
+            this.ExitFadeIn.IncrementMouseWheel = 1;
+            this.ExitFadeIn.Location = new System.Drawing.Point(90, 55);
+            this.ExitFadeIn.Maximum = new decimal(new int[] {
+            63,
+            0,
+            0,
+            0});
+            this.ExitFadeIn.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.ExitFadeIn.Name = "ExitFadeIn";
+            this.ExitFadeIn.ShiftMultiplier = 1;
+            this.ExitFadeIn.Size = new System.Drawing.Size(40, 20);
+            this.ExitFadeIn.TabIndex = 107;
+            this.EnvironmentControlTooltip.SetToolTip(this.ExitFadeIn, resources.GetString("ExitFadeIn.ToolTip"));
+            this.ExitFadeIn.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ExitFadeIn.ValueChanged += new System.EventHandler(this.ExitFadeIn_ValueChanged);
             // 
             // ExitListLabel
             // 
@@ -4823,6 +7418,14 @@ namespace SharpOcarina
             this.label91.TabIndex = 101;
             this.label91.Text = "Properties";
             // 
+            // niceLine12
+            // 
+            this.niceLine12.Location = new System.Drawing.Point(3, 261);
+            this.niceLine12.Name = "niceLine12";
+            this.niceLine12.Size = new System.Drawing.Size(385, 15);
+            this.niceLine12.TabIndex = 100;
+            this.niceLine12.TabStop = false;
+            // 
             // GroupDetectionB8
             // 
             this.GroupDetectionB8.AutoSize = true;
@@ -4854,6 +7457,36 @@ namespace SharpOcarina
             this.GroupDetectionB4.UseVisualStyleBackColor = true;
             this.GroupDetectionB4.CheckedChanged += new System.EventHandler(this.GroupDetectionB4_CheckedChanged);
             // 
+            // PolytypeUnk2
+            // 
+            this.PolytypeUnk2.AlwaysFireValueChanged = false;
+            this.PolytypeUnk2.DisplayDigits = 1;
+            this.PolytypeUnk2.DoValueRollover = true;
+            this.PolytypeUnk2.Hexadecimal = true;
+            this.PolytypeUnk2.IncrementMouseWheel = 3;
+            this.PolytypeUnk2.Location = new System.Drawing.Point(169, 405);
+            this.PolytypeUnk2.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.PolytypeUnk2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.PolytypeUnk2.Name = "PolytypeUnk2";
+            this.PolytypeUnk2.ShiftMultiplier = 1;
+            this.PolytypeUnk2.Size = new System.Drawing.Size(40, 20);
+            this.PolytypeUnk2.TabIndex = 97;
+            this.EnvironmentControlTooltip.SetToolTip(this.PolytypeUnk2, "asd");
+            this.PolytypeUnk2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PolytypeUnk2.ValueChanged += new System.EventHandler(this.numericUpDownEx2_ValueChanged_1);
+            // 
             // GroupDetectionB2
             // 
             this.GroupDetectionB2.AutoSize = true;
@@ -4873,6 +7506,36 @@ namespace SharpOcarina
             this.label89.Size = new System.Drawing.Size(41, 13);
             this.label89.TabIndex = 96;
             this.label89.Text = "Speed:";
+            // 
+            // PolytypeUnk1
+            // 
+            this.PolytypeUnk1.AlwaysFireValueChanged = false;
+            this.PolytypeUnk1.DisplayDigits = 1;
+            this.PolytypeUnk1.DoValueRollover = true;
+            this.PolytypeUnk1.Hexadecimal = true;
+            this.PolytypeUnk1.IncrementMouseWheel = 3;
+            this.PolytypeUnk1.Location = new System.Drawing.Point(64, 405);
+            this.PolytypeUnk1.Maximum = new decimal(new int[] {
+            63,
+            0,
+            0,
+            0});
+            this.PolytypeUnk1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.PolytypeUnk1.Name = "PolytypeUnk1";
+            this.PolytypeUnk1.ShiftMultiplier = 1;
+            this.PolytypeUnk1.Size = new System.Drawing.Size(40, 20);
+            this.PolytypeUnk1.TabIndex = 95;
+            this.EnvironmentControlTooltip.SetToolTip(this.PolytypeUnk1, "asd");
+            this.PolytypeUnk1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PolytypeUnk1.ValueChanged += new System.EventHandler(this.numericUpDownEx1_ValueChanged_1);
             // 
             // label88
             // 
@@ -4936,6 +7599,44 @@ namespace SharpOcarina
             this.GroupDetectionA2.UseVisualStyleBackColor = true;
             this.GroupDetectionA2.CheckedChanged += new System.EventHandler(this.GroupDetectionA2_CheckedChanged);
             // 
+            // niceLine7
+            // 
+            this.niceLine7.Location = new System.Drawing.Point(6, 202);
+            this.niceLine7.Name = "niceLine7";
+            this.niceLine7.Size = new System.Drawing.Size(385, 15);
+            this.niceLine7.TabIndex = 90;
+            this.niceLine7.TabStop = false;
+            // 
+            // CameraAngleNumeric
+            // 
+            this.CameraAngleNumeric.AlwaysFireValueChanged = false;
+            this.CameraAngleNumeric.DisplayDigits = 1;
+            this.CameraAngleNumeric.DoValueRollover = false;
+            this.CameraAngleNumeric.Hexadecimal = true;
+            this.CameraAngleNumeric.IncrementMouseWheel = 1;
+            this.CameraAngleNumeric.Location = new System.Drawing.Point(324, 56);
+            this.CameraAngleNumeric.Maximum = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.CameraAngleNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.CameraAngleNumeric.Name = "CameraAngleNumeric";
+            this.CameraAngleNumeric.ShiftMultiplier = 1;
+            this.CameraAngleNumeric.Size = new System.Drawing.Size(40, 20);
+            this.CameraAngleNumeric.TabIndex = 89;
+            this.EnvironmentControlTooltip.SetToolTip(this.CameraAngleNumeric, "Changes the camera ID when Link steps on it");
+            this.CameraAngleNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraAngleNumeric.ValueChanged += new System.EventHandler(this.CameraAngleNumeric_ValueChanged);
+            // 
             // CameraAngleLabel
             // 
             this.CameraAngleLabel.AutoSize = true;
@@ -4955,6 +7656,36 @@ namespace SharpOcarina
             this.HookshotableCheckbox.Text = "Hookshot-able";
             this.HookshotableCheckbox.UseVisualStyleBackColor = true;
             this.HookshotableCheckbox.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
+            // ExitNumber
+            // 
+            this.ExitNumber.AlwaysFireValueChanged = false;
+            this.ExitNumber.DisplayDigits = 1;
+            this.ExitNumber.DoValueRollover = false;
+            this.ExitNumber.Hexadecimal = true;
+            this.ExitNumber.IncrementMouseWheel = 1;
+            this.ExitNumber.Location = new System.Drawing.Point(89, 56);
+            this.ExitNumber.Maximum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.ExitNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.ExitNumber.Name = "ExitNumber";
+            this.ExitNumber.ShiftMultiplier = 1;
+            this.ExitNumber.Size = new System.Drawing.Size(40, 20);
+            this.ExitNumber.TabIndex = 1;
+            this.EnvironmentControlTooltip.SetToolTip(this.ExitNumber, "Exit ID that will be triggered when Link steps or is slightly above of it.");
+            this.ExitNumber.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ExitNumber.ValueChanged += new System.EventHandler(this.numericUpDownEx10_ValueChanged);
             // 
             // label17
             // 
@@ -5176,6 +7907,36 @@ namespace SharpOcarina
             this.SteepterrainCheckbox.UseVisualStyleBackColor = true;
             this.SteepterrainCheckbox.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
+            // TerrainType
+            // 
+            this.TerrainType.AlwaysFireValueChanged = false;
+            this.TerrainType.DisplayDigits = 1;
+            this.TerrainType.DoValueRollover = true;
+            this.TerrainType.Hexadecimal = true;
+            this.TerrainType.IncrementMouseWheel = 3;
+            this.TerrainType.Location = new System.Drawing.Point(89, 108);
+            this.TerrainType.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.TerrainType.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.TerrainType.Name = "TerrainType";
+            this.TerrainType.ShiftMultiplier = 1;
+            this.TerrainType.Size = new System.Drawing.Size(40, 20);
+            this.TerrainType.TabIndex = 32;
+            this.EnvironmentControlTooltip.SetToolTip(this.TerrainType, resources.GetString("TerrainType.ToolTip"));
+            this.TerrainType.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.TerrainType.ValueChanged += new System.EventHandler(this.numericUpDownEx8_ValueChanged);
+            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -5184,6 +7945,36 @@ namespace SharpOcarina
             this.label15.Size = new System.Drawing.Size(70, 13);
             this.label15.TabIndex = 31;
             this.label15.Text = "Terrain Type:";
+            // 
+            // GroundType
+            // 
+            this.GroundType.AlwaysFireValueChanged = false;
+            this.GroundType.DisplayDigits = 1;
+            this.GroundType.DoValueRollover = true;
+            this.GroundType.Hexadecimal = true;
+            this.GroundType.IncrementMouseWheel = 3;
+            this.GroundType.Location = new System.Drawing.Point(324, 108);
+            this.GroundType.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.GroundType.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.GroundType.Name = "GroundType";
+            this.GroundType.ShiftMultiplier = 1;
+            this.GroundType.Size = new System.Drawing.Size(40, 20);
+            this.GroundType.TabIndex = 80;
+            this.EnvironmentControlTooltip.SetToolTip(this.GroundType, resources.GetString("GroundType.ToolTip"));
+            this.GroundType.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.GroundType.ValueChanged += new System.EventHandler(this.numericUpDownEx9_ValueChanged);
             // 
             // label16
             // 
@@ -5194,6 +7985,38 @@ namespace SharpOcarina
             this.label16.TabIndex = 29;
             this.label16.Text = "Ground Type:";
             // 
+            // EnvironmentType
+            // 
+            this.EnvironmentType.AlwaysFireValueChanged = false;
+            this.EnvironmentType.DisplayDigits = 1;
+            this.EnvironmentType.DoValueRollover = true;
+            this.EnvironmentType.Hexadecimal = true;
+            this.EnvironmentType.IncrementMouseWheel = 1;
+            this.EnvironmentType.Location = new System.Drawing.Point(324, 82);
+            this.EnvironmentType.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.EnvironmentType.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.EnvironmentType.Name = "EnvironmentType";
+            this.EnvironmentType.ShiftMultiplier = 1;
+            this.EnvironmentType.Size = new System.Drawing.Size(40, 20);
+            this.EnvironmentType.TabIndex = 26;
+            this.EnvironmentControlTooltip.SetToolTip(this.EnvironmentType, "0: Default, loads the first 4 environments\r\n1-7: Loads environments X to X+3, X b" +
+        "eing flag * 4\r\n8-F: Same as 0-7\r\nNote: Each one of the 4 environments is used fo" +
+        "r a different time of the day");
+            this.EnvironmentType.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EnvironmentType.ValueChanged += new System.EventHandler(this.numericUpDownEx7_ValueChanged);
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -5202,6 +8025,36 @@ namespace SharpOcarina
             this.label14.Size = new System.Drawing.Size(69, 13);
             this.label14.TabIndex = 25;
             this.label14.Text = "Environment:";
+            // 
+            // EchoRange
+            // 
+            this.EchoRange.AlwaysFireValueChanged = false;
+            this.EchoRange.DisplayDigits = 1;
+            this.EchoRange.DoValueRollover = true;
+            this.EchoRange.Hexadecimal = true;
+            this.EchoRange.IncrementMouseWheel = 3;
+            this.EchoRange.Location = new System.Drawing.Point(89, 82);
+            this.EchoRange.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.EchoRange.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.EchoRange.Name = "EchoRange";
+            this.EchoRange.ShiftMultiplier = 1;
+            this.EchoRange.Size = new System.Drawing.Size(40, 20);
+            this.EchoRange.TabIndex = 24;
+            this.EnvironmentControlTooltip.SetToolTip(this.EchoRange, "Sound echo when Link steps on it\r\n0: Use map value\r\n1-F: Echo ranges");
+            this.EchoRange.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.EchoRange.ValueChanged += new System.EventHandler(this.numericUpDownEx3_ValueChanged);
             // 
             // label13
             // 
@@ -5212,6 +8065,26 @@ namespace SharpOcarina
             this.label13.TabIndex = 23;
             this.label13.Text = "Echo Range:";
             // 
+            // niceLine4
+            // 
+            this.niceLine4.Location = new System.Drawing.Point(3, 35);
+            this.niceLine4.Name = "niceLine4";
+            this.niceLine4.Size = new System.Drawing.Size(385, 15);
+            this.niceLine4.TabIndex = 22;
+            this.niceLine4.TabStop = false;
+            // 
+            // PolygonRawdata
+            // 
+            this.PolygonRawdata.AllowHex = true;
+            this.PolygonRawdata.Digits = 16;
+            this.PolygonRawdata.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PolygonRawdata.Location = new System.Drawing.Point(89, 9);
+            this.PolygonRawdata.Name = "PolygonRawdata";
+            this.PolygonRawdata.Size = new System.Drawing.Size(275, 20);
+            this.PolygonRawdata.TabIndex = 0;
+            this.PolygonRawdata.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PolygonRawData_KeyDown);
+            this.PolygonRawdata.Leave += new System.EventHandler(this.PolygonRawdata_Leave);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -5220,6 +8093,30 @@ namespace SharpOcarina
             this.label11.Size = new System.Drawing.Size(58, 13);
             this.label11.TabIndex = 1;
             this.label11.Text = "Raw Data:";
+            // 
+            // niceLine10
+            // 
+            this.niceLine10.Location = new System.Drawing.Point(7, 339);
+            this.niceLine10.Name = "niceLine10";
+            this.niceLine10.Size = new System.Drawing.Size(385, 15);
+            this.niceLine10.TabIndex = 93;
+            this.niceLine10.TabStop = false;
+            // 
+            // niceLine11
+            // 
+            this.niceLine11.Location = new System.Drawing.Point(6, 384);
+            this.niceLine11.Name = "niceLine11";
+            this.niceLine11.Size = new System.Drawing.Size(385, 15);
+            this.niceLine11.TabIndex = 99;
+            this.niceLine11.TabStop = false;
+            // 
+            // niceLine1
+            // 
+            this.niceLine1.Location = new System.Drawing.Point(9, 46);
+            this.niceLine1.Name = "niceLine1";
+            this.niceLine1.Size = new System.Drawing.Size(382, 15);
+            this.niceLine1.TabIndex = 21;
+            this.niceLine1.TabStop = false;
             // 
             // DeletepolygonButton
             // 
@@ -5241,6 +8138,35 @@ namespace SharpOcarina
             this.AddpolygonButton.UseVisualStyleBackColor = true;
             this.AddpolygonButton.Click += new System.EventHandler(this.button5_Click);
             // 
+            // PolygonSelect
+            // 
+            this.PolygonSelect.AlwaysFireValueChanged = false;
+            this.PolygonSelect.DisplayDigits = 1;
+            this.PolygonSelect.DoValueRollover = true;
+            this.PolygonSelect.Enabled = false;
+            this.PolygonSelect.IncrementMouseWheel = 3;
+            this.PolygonSelect.Location = new System.Drawing.Point(9, 22);
+            this.PolygonSelect.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.PolygonSelect.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PolygonSelect.Name = "PolygonSelect";
+            this.PolygonSelect.ShiftMultiplier = 1;
+            this.PolygonSelect.Size = new System.Drawing.Size(65, 20);
+            this.PolygonSelect.TabIndex = 2;
+            this.PolygonSelect.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PolygonSelect.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
+            // 
             // tabTransitions
             // 
             this.tabTransitions.Controls.Add(this.actorEditControl3);
@@ -5252,6 +8178,24 @@ namespace SharpOcarina
             this.tabTransitions.TabIndex = 3;
             this.tabTransitions.Text = "Transitions & Spawns";
             this.tabTransitions.UseVisualStyleBackColor = true;
+            // 
+            // actorEditControl3
+            // 
+            this.actorEditControl3.ActorNumber = -1;
+            this.actorEditControl3.Enabled = false;
+            this.actorEditControl3.Location = new System.Drawing.Point(3, 328);
+            this.actorEditControl3.Name = "actorEditControl3";
+            this.actorEditControl3.Size = new System.Drawing.Size(402, 319);
+            this.actorEditControl3.TabIndex = 1;
+            // 
+            // actorEditControl2
+            // 
+            this.actorEditControl2.ActorNumber = -1;
+            this.actorEditControl2.Enabled = false;
+            this.actorEditControl2.Location = new System.Drawing.Point(3, 3);
+            this.actorEditControl2.Name = "actorEditControl2";
+            this.actorEditControl2.Size = new System.Drawing.Size(402, 319);
+            this.actorEditControl2.TabIndex = 0;
             // 
             // tabPathways
             // 
@@ -5304,6 +8248,37 @@ namespace SharpOcarina
             this.label143.Size = new System.Drawing.Size(56, 13);
             this.label143.TabIndex = 50;
             this.label143.Text = "Unknown:";
+            // 
+            // ActorCutsceneUnknown
+            // 
+            this.ActorCutsceneUnknown.AlwaysFireValueChanged = false;
+            this.ActorCutsceneUnknown.DisplayDigits = 1;
+            this.ActorCutsceneUnknown.DoValueRollover = false;
+            this.ActorCutsceneUnknown.Enabled = false;
+            this.ActorCutsceneUnknown.Hexadecimal = true;
+            this.ActorCutsceneUnknown.IncrementMouseWheel = 1;
+            this.ActorCutsceneUnknown.Location = new System.Drawing.Point(100, 141);
+            this.ActorCutsceneUnknown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ActorCutsceneUnknown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneUnknown.Name = "ActorCutsceneUnknown";
+            this.ActorCutsceneUnknown.ShiftMultiplier = 20;
+            this.ActorCutsceneUnknown.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneUnknown.TabIndex = 51;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneUnknown, "Value 0 causes bugs");
+            this.ActorCutsceneUnknown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneUnknown.ValueChanged += new System.EventHandler(this.ActorCutsceneUnknown_ValueChanged);
             // 
             // ActorCutsceneCamIndex
             // 
@@ -5392,6 +8367,36 @@ namespace SharpOcarina
             this.label140.TabIndex = 21;
             this.label140.Text = "Add. Actor Cs:";
             // 
+            // ActorCutsceneAdditionalActorCs
+            // 
+            this.ActorCutsceneAdditionalActorCs.AlwaysFireValueChanged = false;
+            this.ActorCutsceneAdditionalActorCs.DisplayDigits = 1;
+            this.ActorCutsceneAdditionalActorCs.DoValueRollover = false;
+            this.ActorCutsceneAdditionalActorCs.Enabled = false;
+            this.ActorCutsceneAdditionalActorCs.IncrementMouseWheel = 1;
+            this.ActorCutsceneAdditionalActorCs.Location = new System.Drawing.Point(100, 115);
+            this.ActorCutsceneAdditionalActorCs.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.ActorCutsceneAdditionalActorCs.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.ActorCutsceneAdditionalActorCs.Name = "ActorCutsceneAdditionalActorCs";
+            this.ActorCutsceneAdditionalActorCs.ShiftMultiplier = 20;
+            this.ActorCutsceneAdditionalActorCs.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneAdditionalActorCs.TabIndex = 22;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneAdditionalActorCs, "Additional Actor Cutscene ID (needed for chests)");
+            this.ActorCutsceneAdditionalActorCs.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneAdditionalActorCs.ValueChanged += new System.EventHandler(this.ActorCutsceneAdditionalActorCs_ValueChanged);
+            // 
             // ActorCutsceneDeleteButton
             // 
             this.ActorCutsceneDeleteButton.Location = new System.Drawing.Point(250, 19);
@@ -5422,6 +8427,66 @@ namespace SharpOcarina
             this.label37.TabIndex = 7;
             this.label37.Text = "Length (frames):";
             // 
+            // ActorCutsceneCsIndex
+            // 
+            this.ActorCutsceneCsIndex.AlwaysFireValueChanged = false;
+            this.ActorCutsceneCsIndex.DisplayDigits = 1;
+            this.ActorCutsceneCsIndex.DoValueRollover = false;
+            this.ActorCutsceneCsIndex.Enabled = false;
+            this.ActorCutsceneCsIndex.IncrementMouseWheel = 1;
+            this.ActorCutsceneCsIndex.Location = new System.Drawing.Point(100, 89);
+            this.ActorCutsceneCsIndex.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.ActorCutsceneCsIndex.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.ActorCutsceneCsIndex.Name = "ActorCutsceneCsIndex";
+            this.ActorCutsceneCsIndex.ShiftMultiplier = 20;
+            this.ActorCutsceneCsIndex.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneCsIndex.TabIndex = 12;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneCsIndex, "As of now, SharpOcarina can only have 1 cutscene, so only ID 0 or NULL are possib" +
+        "le values");
+            this.ActorCutsceneCsIndex.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneCsIndex.ValueChanged += new System.EventHandler(this.ActorCutsceneCsIndex_ValueChanged);
+            // 
+            // ActorCutsceneNumber
+            // 
+            this.ActorCutsceneNumber.AlwaysFireValueChanged = false;
+            this.ActorCutsceneNumber.DisplayDigits = 1;
+            this.ActorCutsceneNumber.DoValueRollover = true;
+            this.ActorCutsceneNumber.Hexadecimal = true;
+            this.ActorCutsceneNumber.IncrementMouseWheel = 3;
+            this.ActorCutsceneNumber.Location = new System.Drawing.Point(9, 22);
+            this.ActorCutsceneNumber.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.ActorCutsceneNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ActorCutsceneNumber.Name = "ActorCutsceneNumber";
+            this.ActorCutsceneNumber.ShiftMultiplier = 1;
+            this.ActorCutsceneNumber.Size = new System.Drawing.Size(65, 20);
+            this.ActorCutsceneNumber.TabIndex = 7;
+            this.ActorCutsceneNumber.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneNumber.ValueChanged += new System.EventHandler(this.ActorCutsceneNumber_ValueChanged);
+            // 
             // label138
             // 
             this.label138.AutoSize = true;
@@ -5432,6 +8497,14 @@ namespace SharpOcarina
             this.label138.TabIndex = 11;
             this.label138.Text = "Cutscene Index*:";
             // 
+            // niceLine18
+            // 
+            this.niceLine18.Location = new System.Drawing.Point(6, 42);
+            this.niceLine18.Name = "niceLine18";
+            this.niceLine18.Size = new System.Drawing.Size(384, 15);
+            this.niceLine18.TabIndex = 20;
+            this.niceLine18.TabStop = false;
+            // 
             // label139
             // 
             this.label139.AutoSize = true;
@@ -5441,6 +8514,36 @@ namespace SharpOcarina
             this.label139.Size = new System.Drawing.Size(74, 13);
             this.label139.TabIndex = 9;
             this.label139.Text = "Camera index:";
+            // 
+            // ActorCutsceneLength
+            // 
+            this.ActorCutsceneLength.AlwaysFireValueChanged = false;
+            this.ActorCutsceneLength.DisplayDigits = 1;
+            this.ActorCutsceneLength.DoValueRollover = false;
+            this.ActorCutsceneLength.Enabled = false;
+            this.ActorCutsceneLength.IncrementMouseWheel = 1;
+            this.ActorCutsceneLength.Location = new System.Drawing.Point(100, 63);
+            this.ActorCutsceneLength.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.ActorCutsceneLength.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.ActorCutsceneLength.Name = "ActorCutsceneLength";
+            this.ActorCutsceneLength.ShiftMultiplier = 20;
+            this.ActorCutsceneLength.Size = new System.Drawing.Size(53, 20);
+            this.ActorCutsceneLength.TabIndex = 10;
+            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneLength, "Use 135 for Chest FFF6 cutscene");
+            this.ActorCutsceneLength.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorCutsceneLength.ValueChanged += new System.EventHandler(this.ActorCutsceneLength_ValueChanged);
             // 
             // groupBox13
             // 
@@ -5679,6 +8782,64 @@ namespace SharpOcarina
             this.PathwayLabel1.TabIndex = 7;
             this.PathwayLabel1.Text = "X Position:";
             // 
+            // PathwayZPos
+            // 
+            this.PathwayZPos.AlwaysFireValueChanged = false;
+            this.PathwayZPos.DisplayDigits = 1;
+            this.PathwayZPos.DoValueRollover = false;
+            this.PathwayZPos.Enabled = false;
+            this.PathwayZPos.IncrementMouseWheel = 1;
+            this.PathwayZPos.Location = new System.Drawing.Point(286, 139);
+            this.PathwayZPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.PathwayZPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.PathwayZPos.Name = "PathwayZPos";
+            this.PathwayZPos.ShiftMultiplier = 20;
+            this.PathwayZPos.Size = new System.Drawing.Size(84, 20);
+            this.PathwayZPos.TabIndex = 12;
+            this.PathwayZPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PathwayZPos.ValueChanged += new System.EventHandler(this.PathwayTransformZ_ValueChanged);
+            // 
+            // PathwayNumber
+            // 
+            this.PathwayNumber.AlwaysFireValueChanged = false;
+            this.PathwayNumber.DisplayDigits = 1;
+            this.PathwayNumber.DoValueRollover = true;
+            this.PathwayNumber.Hexadecimal = true;
+            this.PathwayNumber.IncrementMouseWheel = 3;
+            this.PathwayNumber.Location = new System.Drawing.Point(9, 22);
+            this.PathwayNumber.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.PathwayNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PathwayNumber.Name = "PathwayNumber";
+            this.PathwayNumber.ShiftMultiplier = 1;
+            this.PathwayNumber.Size = new System.Drawing.Size(65, 20);
+            this.PathwayNumber.TabIndex = 7;
+            this.PathwayNumber.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PathwayNumber.ValueChanged += new System.EventHandler(this.PathwayList_ValueChanged);
+            // 
             // PathwayLabel3
             // 
             this.PathwayLabel3.AutoSize = true;
@@ -5689,6 +8850,14 @@ namespace SharpOcarina
             this.PathwayLabel3.TabIndex = 11;
             this.PathwayLabel3.Text = "Z Position:";
             // 
+            // niceLine6
+            // 
+            this.niceLine6.Location = new System.Drawing.Point(6, 42);
+            this.niceLine6.Name = "niceLine6";
+            this.niceLine6.Size = new System.Drawing.Size(384, 15);
+            this.niceLine6.TabIndex = 20;
+            this.niceLine6.TabStop = false;
+            // 
             // PathwayLabel2
             // 
             this.PathwayLabel2.AutoSize = true;
@@ -5698,6 +8867,64 @@ namespace SharpOcarina
             this.PathwayLabel2.Size = new System.Drawing.Size(57, 13);
             this.PathwayLabel2.TabIndex = 9;
             this.PathwayLabel2.Text = "Y Position:";
+            // 
+            // PathwayXPos
+            // 
+            this.PathwayXPos.AlwaysFireValueChanged = false;
+            this.PathwayXPos.DisplayDigits = 1;
+            this.PathwayXPos.DoValueRollover = false;
+            this.PathwayXPos.Enabled = false;
+            this.PathwayXPos.IncrementMouseWheel = 1;
+            this.PathwayXPos.Location = new System.Drawing.Point(286, 87);
+            this.PathwayXPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.PathwayXPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.PathwayXPos.Name = "PathwayXPos";
+            this.PathwayXPos.ShiftMultiplier = 20;
+            this.PathwayXPos.Size = new System.Drawing.Size(84, 20);
+            this.PathwayXPos.TabIndex = 10;
+            this.PathwayXPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PathwayXPos.ValueChanged += new System.EventHandler(this.PathwayTransformX_ValueChanged);
+            // 
+            // PathwayYPos
+            // 
+            this.PathwayYPos.AlwaysFireValueChanged = false;
+            this.PathwayYPos.DisplayDigits = 1;
+            this.PathwayYPos.DoValueRollover = false;
+            this.PathwayYPos.Enabled = false;
+            this.PathwayYPos.IncrementMouseWheel = 1;
+            this.PathwayYPos.Location = new System.Drawing.Point(286, 113);
+            this.PathwayYPos.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.PathwayYPos.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.PathwayYPos.Name = "PathwayYPos";
+            this.PathwayYPos.ShiftMultiplier = 20;
+            this.PathwayYPos.Size = new System.Drawing.Size(84, 20);
+            this.PathwayYPos.TabIndex = 11;
+            this.PathwayYPos.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.PathwayYPos.ValueChanged += new System.EventHandler(this.PathwayTransformY_ValueChanged);
             // 
             // tabActors
             // 
@@ -5836,6 +9063,16 @@ namespace SharpOcarina
             this.RoomObjectSpace.TabIndex = 27;
             this.RoomObjectSpace.Text = "ObjectSpace";
             // 
+            // actorEditControl1
+            // 
+            this.actorEditControl1.ActorNumber = -1;
+            this.actorEditControl1.Enabled = false;
+            this.actorEditControl1.Location = new System.Drawing.Point(3, 163);
+            this.actorEditControl1.Name = "actorEditControl1";
+            this.actorEditControl1.Size = new System.Drawing.Size(405, 319);
+            this.actorEditControl1.TabIndex = 3;
+            this.actorEditControl1.Load += new System.EventHandler(this.actorEditControl1_Load);
+            // 
             // tabCutscene
             // 
             this.tabCutscene.Controls.Add(this.DebugTextBox);
@@ -5927,6 +9164,20 @@ namespace SharpOcarina
             this.CutsceneGroupBox.TabStop = false;
             this.CutsceneGroupBox.Text = "Entrance Cutscene";
             this.CutsceneGroupBox.Enter += new System.EventHandler(this.CutsceneGroupBox_Enter);
+            // 
+            // MarkerEndFrame
+            // 
+            this.MarkerEndFrame.AllowHex = false;
+            this.MarkerEndFrame.Digits = 5;
+            this.MarkerEndFrame.Enabled = false;
+            this.MarkerEndFrame.Location = new System.Drawing.Point(355, 201);
+            this.MarkerEndFrame.MaxLength = 255;
+            this.MarkerEndFrame.Name = "MarkerEndFrame";
+            this.MarkerEndFrame.Size = new System.Drawing.Size(37, 20);
+            this.MarkerEndFrame.TabIndex = 64;
+            this.MarkerEndFrame.Text = "0";
+            this.MarkerEndFrame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MarkerEndFrame_KeyDown);
+            this.MarkerEndFrame.Leave += new System.EventHandler(this.MarkerEndFrame_Leave);
             // 
             // CutsceneTabs
             // 
@@ -6040,6 +9291,93 @@ namespace SharpOcarina
             this.CutscenePositionViewMode.UseVisualStyleBackColor = true;
             this.CutscenePositionViewMode.Click += new System.EventHandler(this.CutscenePositionViewMode_Click);
             // 
+            // CutsceneAbsolutePositionAngleView
+            // 
+            this.CutsceneAbsolutePositionAngleView.AlwaysFireValueChanged = false;
+            this.CutsceneAbsolutePositionAngleView.DisplayDigits = 1;
+            this.CutsceneAbsolutePositionAngleView.DoValueRollover = false;
+            this.CutsceneAbsolutePositionAngleView.Enabled = false;
+            this.CutsceneAbsolutePositionAngleView.IncrementMouseWheel = 1;
+            this.CutsceneAbsolutePositionAngleView.Location = new System.Drawing.Point(98, 250);
+            this.CutsceneAbsolutePositionAngleView.Maximum = new decimal(new int[] {
+            179,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionAngleView.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionAngleView.Name = "CutsceneAbsolutePositionAngleView";
+            this.CutsceneAbsolutePositionAngleView.ShiftMultiplier = 10;
+            this.CutsceneAbsolutePositionAngleView.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneAbsolutePositionAngleView.TabIndex = 69;
+            this.CutsceneAbsolutePositionAngleView.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionAngleView.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionAngleView_ValueChanged);
+            // 
+            // CutscenePositionFrameDuration
+            // 
+            this.CutscenePositionFrameDuration.AlwaysFireValueChanged = false;
+            this.CutscenePositionFrameDuration.DisplayDigits = 1;
+            this.CutscenePositionFrameDuration.DoValueRollover = false;
+            this.CutscenePositionFrameDuration.Enabled = false;
+            this.CutscenePositionFrameDuration.IncrementMouseWheel = 1;
+            this.CutscenePositionFrameDuration.Location = new System.Drawing.Point(98, 198);
+            this.CutscenePositionFrameDuration.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutscenePositionFrameDuration.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePositionFrameDuration.Name = "CutscenePositionFrameDuration";
+            this.CutscenePositionFrameDuration.ShiftMultiplier = 20;
+            this.CutscenePositionFrameDuration.Size = new System.Drawing.Size(84, 20);
+            this.CutscenePositionFrameDuration.TabIndex = 67;
+            this.CutscenePositionFrameDuration.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePositionFrameDuration.ValueChanged += new System.EventHandler(this.CutscenePositionFrameDuration_Leave);
+            // 
+            // CutsceneAbsolutePositionCameraRoll
+            // 
+            this.CutsceneAbsolutePositionCameraRoll.AlwaysFireValueChanged = false;
+            this.CutsceneAbsolutePositionCameraRoll.DisplayDigits = 1;
+            this.CutsceneAbsolutePositionCameraRoll.DoValueRollover = false;
+            this.CutsceneAbsolutePositionCameraRoll.Enabled = false;
+            this.CutsceneAbsolutePositionCameraRoll.IncrementMouseWheel = 1;
+            this.CutsceneAbsolutePositionCameraRoll.Location = new System.Drawing.Point(98, 224);
+            this.CutsceneAbsolutePositionCameraRoll.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionCameraRoll.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneAbsolutePositionCameraRoll.Name = "CutsceneAbsolutePositionCameraRoll";
+            this.CutsceneAbsolutePositionCameraRoll.ShiftMultiplier = 20;
+            this.CutsceneAbsolutePositionCameraRoll.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneAbsolutePositionCameraRoll.TabIndex = 68;
+            this.CutsceneAbsolutePositionCameraRoll.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionCameraRoll.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionCameraRoll_ValueChanged);
+            // 
             // label60
             // 
             this.label60.AutoSize = true;
@@ -6058,6 +9396,35 @@ namespace SharpOcarina
             this.CutscenePositionXFocusLabel.Size = new System.Drawing.Size(49, 13);
             this.CutscenePositionXFocusLabel.TabIndex = 57;
             this.CutscenePositionXFocusLabel.Text = "X Focus:";
+            // 
+            // CutscenePositionZFocus
+            // 
+            this.CutscenePositionZFocus.AlwaysFireValueChanged = false;
+            this.CutscenePositionZFocus.DisplayDigits = 1;
+            this.CutscenePositionZFocus.DoValueRollover = false;
+            this.CutscenePositionZFocus.Enabled = false;
+            this.CutscenePositionZFocus.IncrementMouseWheel = 1;
+            this.CutscenePositionZFocus.Location = new System.Drawing.Point(289, 171);
+            this.CutscenePositionZFocus.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutscenePositionZFocus.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CutscenePositionZFocus.Name = "CutscenePositionZFocus";
+            this.CutscenePositionZFocus.ShiftMultiplier = 20;
+            this.CutscenePositionZFocus.Size = new System.Drawing.Size(84, 20);
+            this.CutscenePositionZFocus.TabIndex = 62;
+            this.CutscenePositionZFocus.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePositionZFocus.ValueChanged += new System.EventHandler(this.CutscenePositionZFocus_ValueChanged);
             // 
             // CutscenePositionZFocusLabel
             // 
@@ -6078,6 +9445,64 @@ namespace SharpOcarina
             this.CutscenePositionYFocusLabel.Size = new System.Drawing.Size(52, 13);
             this.CutscenePositionYFocusLabel.TabIndex = 58;
             this.CutscenePositionYFocusLabel.Text = "Y Focus: ";
+            // 
+            // CutscenePositionXFocus
+            // 
+            this.CutscenePositionXFocus.AlwaysFireValueChanged = false;
+            this.CutscenePositionXFocus.DisplayDigits = 1;
+            this.CutscenePositionXFocus.DoValueRollover = false;
+            this.CutscenePositionXFocus.Enabled = false;
+            this.CutscenePositionXFocus.IncrementMouseWheel = 1;
+            this.CutscenePositionXFocus.Location = new System.Drawing.Point(289, 119);
+            this.CutscenePositionXFocus.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutscenePositionXFocus.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CutscenePositionXFocus.Name = "CutscenePositionXFocus";
+            this.CutscenePositionXFocus.ShiftMultiplier = 20;
+            this.CutscenePositionXFocus.Size = new System.Drawing.Size(84, 20);
+            this.CutscenePositionXFocus.TabIndex = 59;
+            this.CutscenePositionXFocus.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePositionXFocus.ValueChanged += new System.EventHandler(this.CutscenePositionXFocus_ValueChanged);
+            // 
+            // CutscenePositionYFocus
+            // 
+            this.CutscenePositionYFocus.AlwaysFireValueChanged = false;
+            this.CutscenePositionYFocus.DisplayDigits = 1;
+            this.CutscenePositionYFocus.DoValueRollover = false;
+            this.CutscenePositionYFocus.Enabled = false;
+            this.CutscenePositionYFocus.IncrementMouseWheel = 1;
+            this.CutscenePositionYFocus.Location = new System.Drawing.Point(289, 145);
+            this.CutscenePositionYFocus.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutscenePositionYFocus.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CutscenePositionYFocus.Name = "CutscenePositionYFocus";
+            this.CutscenePositionYFocus.ShiftMultiplier = 20;
+            this.CutscenePositionYFocus.Size = new System.Drawing.Size(84, 20);
+            this.CutscenePositionYFocus.TabIndex = 61;
+            this.CutscenePositionYFocus.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePositionYFocus.ValueChanged += new System.EventHandler(this.CutscenePositionYFocus_ValueChanged);
             // 
             // CutsceneDeleteAbsolutePosition
             // 
@@ -6121,6 +9546,35 @@ namespace SharpOcarina
             this.label56.TabIndex = 48;
             this.label56.Text = "X Position:";
             // 
+            // CutsceneAbsolutePositionZ
+            // 
+            this.CutsceneAbsolutePositionZ.AlwaysFireValueChanged = false;
+            this.CutsceneAbsolutePositionZ.DisplayDigits = 1;
+            this.CutsceneAbsolutePositionZ.DoValueRollover = false;
+            this.CutsceneAbsolutePositionZ.Enabled = false;
+            this.CutsceneAbsolutePositionZ.IncrementMouseWheel = 1;
+            this.CutsceneAbsolutePositionZ.Location = new System.Drawing.Point(289, 92);
+            this.CutsceneAbsolutePositionZ.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionZ.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneAbsolutePositionZ.Name = "CutsceneAbsolutePositionZ";
+            this.CutsceneAbsolutePositionZ.ShiftMultiplier = 20;
+            this.CutsceneAbsolutePositionZ.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneAbsolutePositionZ.TabIndex = 53;
+            this.CutsceneAbsolutePositionZ.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionZ.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionZ_ValueChanged);
+            // 
             // label57
             // 
             this.label57.AutoSize = true;
@@ -6140,6 +9594,64 @@ namespace SharpOcarina
             this.label58.Size = new System.Drawing.Size(57, 13);
             this.label58.TabIndex = 49;
             this.label58.Text = "Y Position:";
+            // 
+            // CutsceneAbsolutePositionX
+            // 
+            this.CutsceneAbsolutePositionX.AlwaysFireValueChanged = false;
+            this.CutsceneAbsolutePositionX.DisplayDigits = 1;
+            this.CutsceneAbsolutePositionX.DoValueRollover = false;
+            this.CutsceneAbsolutePositionX.Enabled = false;
+            this.CutsceneAbsolutePositionX.IncrementMouseWheel = 1;
+            this.CutsceneAbsolutePositionX.Location = new System.Drawing.Point(289, 40);
+            this.CutsceneAbsolutePositionX.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionX.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneAbsolutePositionX.Name = "CutsceneAbsolutePositionX";
+            this.CutsceneAbsolutePositionX.ShiftMultiplier = 20;
+            this.CutsceneAbsolutePositionX.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneAbsolutePositionX.TabIndex = 50;
+            this.CutsceneAbsolutePositionX.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionX.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionX_ChangeValue);
+            // 
+            // CutsceneAbsolutePositionY
+            // 
+            this.CutsceneAbsolutePositionY.AlwaysFireValueChanged = false;
+            this.CutsceneAbsolutePositionY.DisplayDigits = 1;
+            this.CutsceneAbsolutePositionY.DoValueRollover = false;
+            this.CutsceneAbsolutePositionY.Enabled = false;
+            this.CutsceneAbsolutePositionY.IncrementMouseWheel = 1;
+            this.CutsceneAbsolutePositionY.Location = new System.Drawing.Point(289, 66);
+            this.CutsceneAbsolutePositionY.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionY.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneAbsolutePositionY.Name = "CutsceneAbsolutePositionY";
+            this.CutsceneAbsolutePositionY.ShiftMultiplier = 20;
+            this.CutsceneAbsolutePositionY.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneAbsolutePositionY.TabIndex = 52;
+            this.CutsceneAbsolutePositionY.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneAbsolutePositionY.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionY_ValueChanged);
             // 
             // label55
             // 
@@ -6190,6 +9702,62 @@ namespace SharpOcarina
             this.label84.Size = new System.Drawing.Size(47, 13);
             this.label84.TabIndex = 63;
             this.label84.Text = "Minutes:";
+            // 
+            // CutsceneSetTimeHours
+            // 
+            this.CutsceneSetTimeHours.AlwaysFireValueChanged = false;
+            this.CutsceneSetTimeHours.DisplayDigits = 1;
+            this.CutsceneSetTimeHours.DoValueRollover = false;
+            this.CutsceneSetTimeHours.IncrementMouseWheel = 1;
+            this.CutsceneSetTimeHours.Location = new System.Drawing.Point(78, 12);
+            this.CutsceneSetTimeHours.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.CutsceneSetTimeHours.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSetTimeHours.Name = "CutsceneSetTimeHours";
+            this.CutsceneSetTimeHours.ShiftMultiplier = 1;
+            this.CutsceneSetTimeHours.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneSetTimeHours.TabIndex = 64;
+            this.CutsceneSetTimeHours.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSetTimeHours.ValueChanged += new System.EventHandler(this.CutsceneSetTimeHours_ValueChanged);
+            // 
+            // CutsceneSetTimeMinutes
+            // 
+            this.CutsceneSetTimeMinutes.AlwaysFireValueChanged = false;
+            this.CutsceneSetTimeMinutes.DisplayDigits = 1;
+            this.CutsceneSetTimeMinutes.DoValueRollover = false;
+            this.CutsceneSetTimeMinutes.IncrementMouseWheel = 1;
+            this.CutsceneSetTimeMinutes.Location = new System.Drawing.Point(78, 38);
+            this.CutsceneSetTimeMinutes.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.CutsceneSetTimeMinutes.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSetTimeMinutes.Name = "CutsceneSetTimeMinutes";
+            this.CutsceneSetTimeMinutes.ShiftMultiplier = 1;
+            this.CutsceneSetTimeMinutes.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneSetTimeMinutes.TabIndex = 65;
+            this.CutsceneSetTimeMinutes.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSetTimeMinutes.ValueChanged += new System.EventHandler(this.CutsceneSetTimeMinutes_ValueChanged);
             // 
             // Unknown
             // 
@@ -6311,6 +9879,71 @@ namespace SharpOcarina
             this.CutsceneAddTextbox.Text = "Add Textbox";
             this.CutsceneAddTextbox.UseVisualStyleBackColor = true;
             this.CutsceneAddTextbox.Click += new System.EventHandler(this.CutsceneAddTextbox_Click);
+            // 
+            // CutsceneTextboxBottomMessageID
+            // 
+            this.CutsceneTextboxBottomMessageID.AllowHex = true;
+            this.CutsceneTextboxBottomMessageID.Digits = 4;
+            this.CutsceneTextboxBottomMessageID.Location = new System.Drawing.Point(283, 121);
+            this.CutsceneTextboxBottomMessageID.MaxLength = 255;
+            this.CutsceneTextboxBottomMessageID.Name = "CutsceneTextboxBottomMessageID";
+            this.CutsceneTextboxBottomMessageID.Size = new System.Drawing.Size(91, 20);
+            this.CutsceneTextboxBottomMessageID.TabIndex = 70;
+            this.CutsceneTextboxBottomMessageID.Text = "00";
+            this.CutsceneTextboxBottomMessageID.Leave += new System.EventHandler(this.CutsceneTextboxBottomMessageID_Leave);
+            // 
+            // CutsceneTextboxFrames
+            // 
+            this.CutsceneTextboxFrames.AlwaysFireValueChanged = false;
+            this.CutsceneTextboxFrames.DisplayDigits = 1;
+            this.CutsceneTextboxFrames.DoValueRollover = false;
+            this.CutsceneTextboxFrames.Enabled = false;
+            this.CutsceneTextboxFrames.IncrementMouseWheel = 1;
+            this.CutsceneTextboxFrames.Location = new System.Drawing.Point(92, 240);
+            this.CutsceneTextboxFrames.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxFrames.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxFrames.Name = "CutsceneTextboxFrames";
+            this.CutsceneTextboxFrames.ShiftMultiplier = 1;
+            this.CutsceneTextboxFrames.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneTextboxFrames.TabIndex = 69;
+            this.CutsceneTextboxFrames.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxFrames.ValueChanged += new System.EventHandler(this.CutsceneTextboxFrames_ValueChanged);
+            // 
+            // CutsceneTextboxTopMessageID
+            // 
+            this.CutsceneTextboxTopMessageID.AllowHex = true;
+            this.CutsceneTextboxTopMessageID.Digits = 4;
+            this.CutsceneTextboxTopMessageID.Location = new System.Drawing.Point(283, 93);
+            this.CutsceneTextboxTopMessageID.MaxLength = 255;
+            this.CutsceneTextboxTopMessageID.Name = "CutsceneTextboxTopMessageID";
+            this.CutsceneTextboxTopMessageID.Size = new System.Drawing.Size(91, 20);
+            this.CutsceneTextboxTopMessageID.TabIndex = 66;
+            this.CutsceneTextboxTopMessageID.Text = "00";
+            this.CutsceneTextboxTopMessageID.Leave += new System.EventHandler(this.CutsceneTextboxTopMessageID_Leave);
+            // 
+            // CutsceneTextboxMessageId
+            // 
+            this.CutsceneTextboxMessageId.AllowHex = true;
+            this.CutsceneTextboxMessageId.Digits = 4;
+            this.CutsceneTextboxMessageId.Location = new System.Drawing.Point(283, 65);
+            this.CutsceneTextboxMessageId.MaxLength = 255;
+            this.CutsceneTextboxMessageId.Name = "CutsceneTextboxMessageId";
+            this.CutsceneTextboxMessageId.Size = new System.Drawing.Size(91, 20);
+            this.CutsceneTextboxMessageId.TabIndex = 60;
+            this.CutsceneTextboxMessageId.Text = "00";
+            this.CutsceneTextboxMessageId.Leave += new System.EventHandler(this.CutsceneTextboxMessageId_Leave);
             // 
             // CutsceneTextboxList
             // 
@@ -6591,6 +10224,227 @@ namespace SharpOcarina
             this.CutsceneActorAddAction.UseVisualStyleBackColor = true;
             this.CutsceneActorAddAction.Click += new System.EventHandler(this.CutsceneActorAddAction_Click);
             // 
+            // CutsceneActorFrameDuration
+            // 
+            this.CutsceneActorFrameDuration.AlwaysFireValueChanged = false;
+            this.CutsceneActorFrameDuration.DisplayDigits = 1;
+            this.CutsceneActorFrameDuration.DoValueRollover = false;
+            this.CutsceneActorFrameDuration.Enabled = false;
+            this.CutsceneActorFrameDuration.IncrementMouseWheel = 1;
+            this.CutsceneActorFrameDuration.Location = new System.Drawing.Point(97, 209);
+            this.CutsceneActorFrameDuration.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneActorFrameDuration.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorFrameDuration.Name = "CutsceneActorFrameDuration";
+            this.CutsceneActorFrameDuration.ShiftMultiplier = 1;
+            this.CutsceneActorFrameDuration.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorFrameDuration.TabIndex = 91;
+            this.CutsceneActorFrameDuration.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorFrameDuration.ValueChanged += new System.EventHandler(this.CutsceneActorFrameDuration_Leave);
+            // 
+            // CutsceneActorZRot
+            // 
+            this.CutsceneActorZRot.AlwaysFireValueChanged = false;
+            this.CutsceneActorZRot.DisplayDigits = 1;
+            this.CutsceneActorZRot.DoValueRollover = false;
+            this.CutsceneActorZRot.Enabled = false;
+            this.CutsceneActorZRot.Increment = new decimal(new int[] {
+            182,
+            0,
+            0,
+            0});
+            this.CutsceneActorZRot.IncrementMouseWheel = 182;
+            this.CutsceneActorZRot.Location = new System.Drawing.Point(289, 249);
+            this.CutsceneActorZRot.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorZRot.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorZRot.Name = "CutsceneActorZRot";
+            this.CutsceneActorZRot.ShiftMultiplier = 1;
+            this.CutsceneActorZRot.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorZRot.TabIndex = 87;
+            this.CutsceneActorZRot.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorZRot.ValueChanged += new System.EventHandler(this.CutsceneActorZRot_ValueChanged);
+            this.CutsceneActorZRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CutsceneActorZRot_KeyDown);
+            // 
+            // CutsceneActorXRot
+            // 
+            this.CutsceneActorXRot.AlwaysFireValueChanged = false;
+            this.CutsceneActorXRot.DisplayDigits = 1;
+            this.CutsceneActorXRot.DoValueRollover = false;
+            this.CutsceneActorXRot.Enabled = false;
+            this.CutsceneActorXRot.Increment = new decimal(new int[] {
+            182,
+            0,
+            0,
+            0});
+            this.CutsceneActorXRot.IncrementMouseWheel = 182;
+            this.CutsceneActorXRot.Location = new System.Drawing.Point(289, 197);
+            this.CutsceneActorXRot.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorXRot.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorXRot.Name = "CutsceneActorXRot";
+            this.CutsceneActorXRot.ShiftMultiplier = 1;
+            this.CutsceneActorXRot.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorXRot.TabIndex = 85;
+            this.CutsceneActorXRot.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorXRot.ValueChanged += new System.EventHandler(this.CutsceneActorXRot_ValueChanged);
+            this.CutsceneActorXRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CutsceneActorXRot_KeyDown);
+            // 
+            // CutsceneActorYRot
+            // 
+            this.CutsceneActorYRot.AlwaysFireValueChanged = false;
+            this.CutsceneActorYRot.DisplayDigits = 1;
+            this.CutsceneActorYRot.DoValueRollover = false;
+            this.CutsceneActorYRot.Enabled = false;
+            this.CutsceneActorYRot.Increment = new decimal(new int[] {
+            182,
+            0,
+            0,
+            0});
+            this.CutsceneActorYRot.IncrementMouseWheel = 182;
+            this.CutsceneActorYRot.Location = new System.Drawing.Point(289, 223);
+            this.CutsceneActorYRot.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorYRot.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorYRot.Name = "CutsceneActorYRot";
+            this.CutsceneActorYRot.ShiftMultiplier = 1;
+            this.CutsceneActorYRot.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorYRot.TabIndex = 86;
+            this.CutsceneActorYRot.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorYRot.ValueChanged += new System.EventHandler(this.CutsceneActorYRot_ValueChanged);
+            this.CutsceneActorYRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CutsceneActorYRot_KeyDown);
+            // 
+            // CutsceneActorZEnd
+            // 
+            this.CutsceneActorZEnd.AlwaysFireValueChanged = false;
+            this.CutsceneActorZEnd.DisplayDigits = 1;
+            this.CutsceneActorZEnd.DoValueRollover = false;
+            this.CutsceneActorZEnd.Enabled = false;
+            this.CutsceneActorZEnd.IncrementMouseWheel = 1;
+            this.CutsceneActorZEnd.Location = new System.Drawing.Point(289, 171);
+            this.CutsceneActorZEnd.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorZEnd.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorZEnd.Name = "CutsceneActorZEnd";
+            this.CutsceneActorZEnd.ShiftMultiplier = 1;
+            this.CutsceneActorZEnd.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorZEnd.TabIndex = 74;
+            this.CutsceneActorZEnd.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorZEnd.ValueChanged += new System.EventHandler(this.CutsceneActorEnd_ValueChanged);
+            // 
+            // CutsceneActorXEnd
+            // 
+            this.CutsceneActorXEnd.AlwaysFireValueChanged = false;
+            this.CutsceneActorXEnd.DisplayDigits = 1;
+            this.CutsceneActorXEnd.DoValueRollover = false;
+            this.CutsceneActorXEnd.Enabled = false;
+            this.CutsceneActorXEnd.IncrementMouseWheel = 1;
+            this.CutsceneActorXEnd.Location = new System.Drawing.Point(289, 119);
+            this.CutsceneActorXEnd.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorXEnd.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorXEnd.Name = "CutsceneActorXEnd";
+            this.CutsceneActorXEnd.ShiftMultiplier = 1;
+            this.CutsceneActorXEnd.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorXEnd.TabIndex = 72;
+            this.CutsceneActorXEnd.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorXEnd.ValueChanged += new System.EventHandler(this.CutsceneActorEnd_ValueChanged);
+            // 
+            // CutsceneActorYEnd
+            // 
+            this.CutsceneActorYEnd.AlwaysFireValueChanged = false;
+            this.CutsceneActorYEnd.DisplayDigits = 1;
+            this.CutsceneActorYEnd.DoValueRollover = false;
+            this.CutsceneActorYEnd.Enabled = false;
+            this.CutsceneActorYEnd.IncrementMouseWheel = 1;
+            this.CutsceneActorYEnd.Location = new System.Drawing.Point(289, 145);
+            this.CutsceneActorYEnd.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorYEnd.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorYEnd.Name = "CutsceneActorYEnd";
+            this.CutsceneActorYEnd.ShiftMultiplier = 1;
+            this.CutsceneActorYEnd.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorYEnd.TabIndex = 73;
+            this.CutsceneActorYEnd.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorYEnd.ValueChanged += new System.EventHandler(this.CutsceneActorEnd_ValueChanged);
+            // 
             // CutsceneActorListBox
             // 
             this.CutsceneActorListBox.FormattingEnabled = true;
@@ -6601,6 +10455,93 @@ namespace SharpOcarina
             this.CutsceneActorListBox.TabIndex = 69;
             this.CutsceneActorListBox.Click += new System.EventHandler(this.CutsceneActorListBox_Click);
             this.CutsceneActorListBox.SelectedIndexChanged += new System.EventHandler(this.CutsceneActorListBox_SelectedIndexChanged);
+            // 
+            // CutsceneActorZStart
+            // 
+            this.CutsceneActorZStart.AlwaysFireValueChanged = false;
+            this.CutsceneActorZStart.DisplayDigits = 1;
+            this.CutsceneActorZStart.DoValueRollover = false;
+            this.CutsceneActorZStart.Enabled = false;
+            this.CutsceneActorZStart.IncrementMouseWheel = 1;
+            this.CutsceneActorZStart.Location = new System.Drawing.Point(289, 92);
+            this.CutsceneActorZStart.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorZStart.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorZStart.Name = "CutsceneActorZStart";
+            this.CutsceneActorZStart.ShiftMultiplier = 1;
+            this.CutsceneActorZStart.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorZStart.TabIndex = 68;
+            this.CutsceneActorZStart.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorZStart.ValueChanged += new System.EventHandler(this.CutsceneActorStart_ValueChanged);
+            // 
+            // CutsceneActorXStart
+            // 
+            this.CutsceneActorXStart.AlwaysFireValueChanged = false;
+            this.CutsceneActorXStart.DisplayDigits = 1;
+            this.CutsceneActorXStart.DoValueRollover = false;
+            this.CutsceneActorXStart.Enabled = false;
+            this.CutsceneActorXStart.IncrementMouseWheel = 1;
+            this.CutsceneActorXStart.Location = new System.Drawing.Point(289, 40);
+            this.CutsceneActorXStart.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorXStart.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorXStart.Name = "CutsceneActorXStart";
+            this.CutsceneActorXStart.ShiftMultiplier = 1;
+            this.CutsceneActorXStart.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorXStart.TabIndex = 66;
+            this.CutsceneActorXStart.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorXStart.ValueChanged += new System.EventHandler(this.CutsceneActorStart_ValueChanged);
+            // 
+            // CutsceneActorYStart
+            // 
+            this.CutsceneActorYStart.AlwaysFireValueChanged = false;
+            this.CutsceneActorYStart.DisplayDigits = 1;
+            this.CutsceneActorYStart.DoValueRollover = false;
+            this.CutsceneActorYStart.Enabled = false;
+            this.CutsceneActorYStart.IncrementMouseWheel = 1;
+            this.CutsceneActorYStart.Location = new System.Drawing.Point(289, 66);
+            this.CutsceneActorYStart.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CutsceneActorYStart.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneActorYStart.Name = "CutsceneActorYStart";
+            this.CutsceneActorYStart.ShiftMultiplier = 1;
+            this.CutsceneActorYStart.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorYStart.TabIndex = 67;
+            this.CutsceneActorYStart.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneActorYStart.ValueChanged += new System.EventHandler(this.CutsceneActorStart_ValueChanged);
             // 
             // label51
             // 
@@ -6691,6 +10632,138 @@ namespace SharpOcarina
             this.label54.TabIndex = 45;
             this.label54.Text = "Frames: ";
             // 
+            // MarkerStartFrame
+            // 
+            this.MarkerStartFrame.AllowHex = false;
+            this.MarkerStartFrame.Digits = 5;
+            this.MarkerStartFrame.Enabled = false;
+            this.MarkerStartFrame.Location = new System.Drawing.Point(301, 201);
+            this.MarkerStartFrame.MaxLength = 255;
+            this.MarkerStartFrame.Name = "MarkerStartFrame";
+            this.MarkerStartFrame.Size = new System.Drawing.Size(36, 20);
+            this.MarkerStartFrame.TabIndex = 44;
+            this.MarkerStartFrame.Text = "0";
+            this.MarkerStartFrame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MarkerStartFrame_KeyDown);
+            this.MarkerStartFrame.Leave += new System.EventHandler(this.MarkerStartFrame_Leave);
+            // 
+            // CutsceneTableEntry
+            // 
+            this.CutsceneTableEntry.AlwaysFireValueChanged = false;
+            this.CutsceneTableEntry.DisplayDigits = 1;
+            this.CutsceneTableEntry.DoValueRollover = false;
+            this.CutsceneTableEntry.IncrementMouseWheel = 1;
+            this.CutsceneTableEntry.Location = new System.Drawing.Point(80, 582);
+            this.CutsceneTableEntry.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneTableEntry.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneTableEntry.Name = "CutsceneTableEntry";
+            this.CutsceneTableEntry.ShiftMultiplier = 1;
+            this.CutsceneTableEntry.Size = new System.Drawing.Size(60, 20);
+            this.CutsceneTableEntry.TabIndex = 72;
+            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneTableEntry, "If -1, cutscene table is not updated, otherwise edits the respective row number i" +
+        "n the table");
+            this.CutsceneTableEntry.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.CutsceneTableEntry.ValueChanged += new System.EventHandler(this.CutsceneTableEntry_ValueChanged);
+            // 
+            // CutsceneFlag
+            // 
+            this.CutsceneFlag.AlwaysFireValueChanged = false;
+            this.CutsceneFlag.DisplayDigits = 1;
+            this.CutsceneFlag.DoValueRollover = false;
+            this.CutsceneFlag.Hexadecimal = true;
+            this.CutsceneFlag.IncrementMouseWheel = 1;
+            this.CutsceneFlag.Location = new System.Drawing.Point(345, 556);
+            this.CutsceneFlag.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.CutsceneFlag.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneFlag.Name = "CutsceneFlag";
+            this.CutsceneFlag.ShiftMultiplier = 1;
+            this.CutsceneFlag.Size = new System.Drawing.Size(60, 20);
+            this.CutsceneFlag.TabIndex = 70;
+            this.CutsceneFlag.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneFlag.ValueChanged += new System.EventHandler(this.CutsceneFlag_ValueChanged);
+            // 
+            // CutsceneSpawn
+            // 
+            this.CutsceneSpawn.AlwaysFireValueChanged = false;
+            this.CutsceneSpawn.DisplayDigits = 1;
+            this.CutsceneSpawn.DoValueRollover = false;
+            this.CutsceneSpawn.Hexadecimal = true;
+            this.CutsceneSpawn.IncrementMouseWheel = 1;
+            this.CutsceneSpawn.Location = new System.Drawing.Point(228, 556);
+            this.CutsceneSpawn.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.CutsceneSpawn.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSpawn.Name = "CutsceneSpawn";
+            this.CutsceneSpawn.ShiftMultiplier = 1;
+            this.CutsceneSpawn.Size = new System.Drawing.Size(60, 20);
+            this.CutsceneSpawn.TabIndex = 68;
+            this.CutsceneSpawn.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSpawn.Visible = false;
+            this.CutsceneSpawn.ValueChanged += new System.EventHandler(this.CutsceneSpawn_ValueChanged);
+            // 
+            // CutsceneEntrance
+            // 
+            this.CutsceneEntrance.AlwaysFireValueChanged = false;
+            this.CutsceneEntrance.DisplayDigits = 1;
+            this.CutsceneEntrance.DoValueRollover = false;
+            this.CutsceneEntrance.Hexadecimal = true;
+            this.CutsceneEntrance.IncrementMouseWheel = 1;
+            this.CutsceneEntrance.Location = new System.Drawing.Point(80, 556);
+            this.CutsceneEntrance.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneEntrance.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneEntrance.Name = "CutsceneEntrance";
+            this.CutsceneEntrance.ShiftMultiplier = 1;
+            this.CutsceneEntrance.Size = new System.Drawing.Size(60, 20);
+            this.CutsceneEntrance.TabIndex = 66;
+            this.CutsceneEntrance.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneEntrance.ValueChanged += new System.EventHandler(this.CutsceneEntrance_ValueChanged);
+            // 
             // tabAnimations
             // 
             this.tabAnimations.Controls.Add(this.RenderFunctionInherit);
@@ -6767,6 +10840,7 @@ namespace SharpOcarina
             // 
             // RenderFunctionGroupBoxFlag
             // 
+            this.RenderFunctionGroupBoxFlag.Controls.Add(this.RenderFunctionFlagFreezeAtEndCheckBox);
             this.RenderFunctionGroupBoxFlag.Controls.Add(this.RenderFunctionFlagFreezeCheckBox);
             this.RenderFunctionGroupBoxFlag.Controls.Add(this.RenderFunctionFlagPresetToolStrip);
             this.RenderFunctionGroupBoxFlag.Controls.Add(this.RenderFunctionFlagBitwiseLabel);
@@ -6778,7 +10852,7 @@ namespace SharpOcarina
             this.RenderFunctionGroupBoxFlag.Controls.Add(this.RenderFunctionFlagType);
             this.RenderFunctionGroupBoxFlag.Location = new System.Drawing.Point(13, 433);
             this.RenderFunctionGroupBoxFlag.Name = "RenderFunctionGroupBoxFlag";
-            this.RenderFunctionGroupBoxFlag.Size = new System.Drawing.Size(380, 111);
+            this.RenderFunctionGroupBoxFlag.Size = new System.Drawing.Size(380, 130);
             this.RenderFunctionGroupBoxFlag.TabIndex = 67;
             this.RenderFunctionGroupBoxFlag.TabStop = false;
             this.RenderFunctionGroupBoxFlag.Text = "Flag Setting";
@@ -6831,6 +10905,19 @@ namespace SharpOcarina
             this.RenderFunctionFlagBitwiseLabel.TabIndex = 72;
             this.RenderFunctionFlagBitwiseLabel.Text = "Mask:";
             // 
+            // RenderFunctionFlagBitwise
+            // 
+            this.RenderFunctionFlagBitwise.AllowHex = true;
+            this.RenderFunctionFlagBitwise.Digits = 8;
+            this.RenderFunctionFlagBitwise.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RenderFunctionFlagBitwise.Location = new System.Drawing.Point(213, 48);
+            this.RenderFunctionFlagBitwise.Name = "RenderFunctionFlagBitwise";
+            this.RenderFunctionFlagBitwise.Size = new System.Drawing.Size(64, 20);
+            this.RenderFunctionFlagBitwise.TabIndex = 71;
+            this.RenderFunctionFlagBitwise.Text = "00000000";
+            this.RenderFunctionFlagBitwise.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RenderFunctionFlagBitwise_KeyDown);
+            this.RenderFunctionFlagBitwise.Leave += new System.EventHandler(this.RenderFunctionFlagBitwise_Leave);
+            // 
             // RenderFunctionFlagReverseCheckbox
             // 
             this.RenderFunctionFlagReverseCheckbox.AutoSize = true;
@@ -6862,6 +10949,36 @@ namespace SharpOcarina
             this.label114.TabIndex = 68;
             this.label114.Text = "Type:";
             // 
+            // RenderFunctionFlagID
+            // 
+            this.RenderFunctionFlagID.AlwaysFireValueChanged = false;
+            this.RenderFunctionFlagID.DisplayDigits = 1;
+            this.RenderFunctionFlagID.DoValueRollover = false;
+            this.RenderFunctionFlagID.Enabled = false;
+            this.RenderFunctionFlagID.Hexadecimal = true;
+            this.RenderFunctionFlagID.IncrementMouseWheel = 1;
+            this.RenderFunctionFlagID.Location = new System.Drawing.Point(56, 49);
+            this.RenderFunctionFlagID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.RenderFunctionFlagID.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.RenderFunctionFlagID.Name = "RenderFunctionFlagID";
+            this.RenderFunctionFlagID.ShiftMultiplier = 1;
+            this.RenderFunctionFlagID.Size = new System.Drawing.Size(85, 20);
+            this.RenderFunctionFlagID.TabIndex = 42;
+            this.RenderFunctionFlagID.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.RenderFunctionFlagID.ValueChanged += new System.EventHandler(this.RenderFunctionFlagID_ValueChanged);
+            // 
             // RenderFunctionFlagType
             // 
             this.RenderFunctionFlagType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -6881,6 +10998,35 @@ namespace SharpOcarina
             this.label137.Size = new System.Drawing.Size(55, 13);
             this.label137.TabIndex = 66;
             this.label137.Text = "Segment: ";
+            // 
+            // RenderFunctionID
+            // 
+            this.RenderFunctionID.AlwaysFireValueChanged = false;
+            this.RenderFunctionID.DisplayDigits = 1;
+            this.RenderFunctionID.DoValueRollover = true;
+            this.RenderFunctionID.Hexadecimal = true;
+            this.RenderFunctionID.IncrementMouseWheel = 3;
+            this.RenderFunctionID.Location = new System.Drawing.Point(64, 22);
+            this.RenderFunctionID.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.RenderFunctionID.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.RenderFunctionID.Name = "RenderFunctionID";
+            this.RenderFunctionID.ShiftMultiplier = 1;
+            this.RenderFunctionID.Size = new System.Drawing.Size(55, 20);
+            this.RenderFunctionID.TabIndex = 65;
+            this.RenderFunctionID.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.RenderFunctionID.ValueChanged += new System.EventHandler(this.RenderFunctionID_ValueChanged);
             // 
             // RenderFunctionTabs
             // 
@@ -6939,6 +11085,64 @@ namespace SharpOcarina
             this.label106.TabIndex = 39;
             this.label106.Text = "Height:";
             // 
+            // FunctionTextureScrollHeight2
+            // 
+            this.FunctionTextureScrollHeight2.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollHeight2.DisplayDigits = 1;
+            this.FunctionTextureScrollHeight2.DoValueRollover = false;
+            this.FunctionTextureScrollHeight2.Enabled = false;
+            this.FunctionTextureScrollHeight2.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollHeight2.Location = new System.Drawing.Point(219, 130);
+            this.FunctionTextureScrollHeight2.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollHeight2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollHeight2.Name = "FunctionTextureScrollHeight2";
+            this.FunctionTextureScrollHeight2.ShiftMultiplier = 5;
+            this.FunctionTextureScrollHeight2.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollHeight2.TabIndex = 40;
+            this.FunctionTextureScrollHeight2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollHeight2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollHeight2_ValueChanged);
+            // 
+            // FunctionTextureScrollXVelocity
+            // 
+            this.FunctionTextureScrollXVelocity.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollXVelocity.DisplayDigits = 1;
+            this.FunctionTextureScrollXVelocity.DoValueRollover = false;
+            this.FunctionTextureScrollXVelocity.Enabled = false;
+            this.FunctionTextureScrollXVelocity.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollXVelocity.Location = new System.Drawing.Point(80, 23);
+            this.FunctionTextureScrollXVelocity.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollXVelocity.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.FunctionTextureScrollXVelocity.Name = "FunctionTextureScrollXVelocity";
+            this.FunctionTextureScrollXVelocity.ShiftMultiplier = 5;
+            this.FunctionTextureScrollXVelocity.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollXVelocity.TabIndex = 24;
+            this.FunctionTextureScrollXVelocity.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollXVelocity.ValueChanged += new System.EventHandler(this.FunctionTextureScrollXVelocity_ValueChanged);
+            // 
             // label107
             // 
             this.label107.AutoSize = true;
@@ -6948,6 +11152,44 @@ namespace SharpOcarina
             this.label107.Size = new System.Drawing.Size(38, 13);
             this.label107.TabIndex = 37;
             this.label107.Text = "Width:";
+            // 
+            // niceLine17
+            // 
+            this.niceLine17.Caption = "Main Texture";
+            this.niceLine17.Location = new System.Drawing.Point(6, 4);
+            this.niceLine17.Name = "niceLine17";
+            this.niceLine17.Size = new System.Drawing.Size(371, 15);
+            this.niceLine17.TabIndex = 25;
+            this.niceLine17.TabStop = false;
+            // 
+            // FunctionTextureScrollWidth2
+            // 
+            this.FunctionTextureScrollWidth2.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollWidth2.DisplayDigits = 1;
+            this.FunctionTextureScrollWidth2.DoValueRollover = false;
+            this.FunctionTextureScrollWidth2.Enabled = false;
+            this.FunctionTextureScrollWidth2.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollWidth2.Location = new System.Drawing.Point(219, 104);
+            this.FunctionTextureScrollWidth2.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollWidth2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollWidth2.Name = "FunctionTextureScrollWidth2";
+            this.FunctionTextureScrollWidth2.ShiftMultiplier = 5;
+            this.FunctionTextureScrollWidth2.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollWidth2.TabIndex = 38;
+            this.FunctionTextureScrollWidth2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollWidth2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollWidth2_ValueChanged);
             // 
             // label113
             // 
@@ -6969,6 +11211,64 @@ namespace SharpOcarina
             this.label108.TabIndex = 35;
             this.label108.Text = "Y Velocity:";
             // 
+            // FunctionTextureScrollYVelocity
+            // 
+            this.FunctionTextureScrollYVelocity.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollYVelocity.DisplayDigits = 1;
+            this.FunctionTextureScrollYVelocity.DoValueRollover = false;
+            this.FunctionTextureScrollYVelocity.Enabled = false;
+            this.FunctionTextureScrollYVelocity.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollYVelocity.Location = new System.Drawing.Point(80, 49);
+            this.FunctionTextureScrollYVelocity.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollYVelocity.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.FunctionTextureScrollYVelocity.Name = "FunctionTextureScrollYVelocity";
+            this.FunctionTextureScrollYVelocity.ShiftMultiplier = 5;
+            this.FunctionTextureScrollYVelocity.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollYVelocity.TabIndex = 27;
+            this.FunctionTextureScrollYVelocity.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollYVelocity.ValueChanged += new System.EventHandler(this.FunctionTextureScrollYVelocity_ValueChanged);
+            // 
+            // FunctionTextureScrollYVelocity2
+            // 
+            this.FunctionTextureScrollYVelocity2.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollYVelocity2.DisplayDigits = 1;
+            this.FunctionTextureScrollYVelocity2.DoValueRollover = false;
+            this.FunctionTextureScrollYVelocity2.Enabled = false;
+            this.FunctionTextureScrollYVelocity2.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollYVelocity2.Location = new System.Drawing.Point(81, 130);
+            this.FunctionTextureScrollYVelocity2.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollYVelocity2.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.FunctionTextureScrollYVelocity2.Name = "FunctionTextureScrollYVelocity2";
+            this.FunctionTextureScrollYVelocity2.ShiftMultiplier = 5;
+            this.FunctionTextureScrollYVelocity2.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollYVelocity2.TabIndex = 36;
+            this.FunctionTextureScrollYVelocity2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollYVelocity2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollYVelocity2_ValueChanged);
+            // 
             // label112
             // 
             this.label112.AutoSize = true;
@@ -6989,6 +11289,64 @@ namespace SharpOcarina
             this.label109.TabIndex = 33;
             this.label109.Text = "X Velocity:";
             // 
+            // FunctionTextureScrollWidth
+            // 
+            this.FunctionTextureScrollWidth.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollWidth.DisplayDigits = 1;
+            this.FunctionTextureScrollWidth.DoValueRollover = false;
+            this.FunctionTextureScrollWidth.Enabled = false;
+            this.FunctionTextureScrollWidth.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollWidth.Location = new System.Drawing.Point(218, 23);
+            this.FunctionTextureScrollWidth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollWidth.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollWidth.Name = "FunctionTextureScrollWidth";
+            this.FunctionTextureScrollWidth.ShiftMultiplier = 5;
+            this.FunctionTextureScrollWidth.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollWidth.TabIndex = 29;
+            this.FunctionTextureScrollWidth.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollWidth.ValueChanged += new System.EventHandler(this.FunctionTextureScrollWidth_ValueChanged);
+            // 
+            // FunctionTextureScrollXVelocity2
+            // 
+            this.FunctionTextureScrollXVelocity2.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollXVelocity2.DisplayDigits = 1;
+            this.FunctionTextureScrollXVelocity2.DoValueRollover = false;
+            this.FunctionTextureScrollXVelocity2.Enabled = false;
+            this.FunctionTextureScrollXVelocity2.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollXVelocity2.Location = new System.Drawing.Point(81, 104);
+            this.FunctionTextureScrollXVelocity2.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollXVelocity2.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
+            this.FunctionTextureScrollXVelocity2.Name = "FunctionTextureScrollXVelocity2";
+            this.FunctionTextureScrollXVelocity2.ShiftMultiplier = 5;
+            this.FunctionTextureScrollXVelocity2.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollXVelocity2.TabIndex = 34;
+            this.FunctionTextureScrollXVelocity2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollXVelocity2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollXVelocity2_ValueChanged);
+            // 
             // label111
             // 
             this.label111.AutoSize = true;
@@ -6998,6 +11356,44 @@ namespace SharpOcarina
             this.label111.Size = new System.Drawing.Size(38, 13);
             this.label111.TabIndex = 28;
             this.label111.Text = "Width:";
+            // 
+            // niceLine16
+            // 
+            this.niceLine16.Caption = "Secondary Texture";
+            this.niceLine16.Location = new System.Drawing.Point(3, 88);
+            this.niceLine16.Name = "niceLine16";
+            this.niceLine16.Size = new System.Drawing.Size(372, 15);
+            this.niceLine16.TabIndex = 22;
+            this.niceLine16.TabStop = false;
+            // 
+            // FunctionTextureScrollHeight
+            // 
+            this.FunctionTextureScrollHeight.AlwaysFireValueChanged = false;
+            this.FunctionTextureScrollHeight.DisplayDigits = 1;
+            this.FunctionTextureScrollHeight.DoValueRollover = false;
+            this.FunctionTextureScrollHeight.Enabled = false;
+            this.FunctionTextureScrollHeight.IncrementMouseWheel = 1;
+            this.FunctionTextureScrollHeight.Location = new System.Drawing.Point(218, 49);
+            this.FunctionTextureScrollHeight.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollHeight.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollHeight.Name = "FunctionTextureScrollHeight";
+            this.FunctionTextureScrollHeight.ShiftMultiplier = 5;
+            this.FunctionTextureScrollHeight.Size = new System.Drawing.Size(44, 20);
+            this.FunctionTextureScrollHeight.TabIndex = 31;
+            this.FunctionTextureScrollHeight.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionTextureScrollHeight.ValueChanged += new System.EventHandler(this.FunctionTextureScrollHeight_ValueChanged);
             // 
             // label110
             // 
@@ -7108,6 +11504,64 @@ namespace SharpOcarina
             this.FunctionColorBlendAdd.Text = "Add Color";
             this.FunctionColorBlendAdd.UseVisualStyleBackColor = true;
             this.FunctionColorBlendAdd.Click += new System.EventHandler(this.FunctionColorBlendAdd_Click);
+            // 
+            // FunctionColorBlendAlpha
+            // 
+            this.FunctionColorBlendAlpha.AlwaysFireValueChanged = false;
+            this.FunctionColorBlendAlpha.DisplayDigits = 1;
+            this.FunctionColorBlendAlpha.DoValueRollover = false;
+            this.FunctionColorBlendAlpha.Enabled = false;
+            this.FunctionColorBlendAlpha.IncrementMouseWheel = 1;
+            this.FunctionColorBlendAlpha.Location = new System.Drawing.Point(273, 88);
+            this.FunctionColorBlendAlpha.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionColorBlendAlpha.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionColorBlendAlpha.Name = "FunctionColorBlendAlpha";
+            this.FunctionColorBlendAlpha.ShiftMultiplier = 1;
+            this.FunctionColorBlendAlpha.Size = new System.Drawing.Size(44, 20);
+            this.FunctionColorBlendAlpha.TabIndex = 90;
+            this.FunctionColorBlendAlpha.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionColorBlendAlpha.ValueChanged += new System.EventHandler(this.FunctionColorBlendAlpha_ValueChanged);
+            // 
+            // FunctionColorBlendFrames
+            // 
+            this.FunctionColorBlendFrames.AlwaysFireValueChanged = false;
+            this.FunctionColorBlendFrames.DisplayDigits = 1;
+            this.FunctionColorBlendFrames.DoValueRollover = false;
+            this.FunctionColorBlendFrames.Enabled = false;
+            this.FunctionColorBlendFrames.IncrementMouseWheel = 1;
+            this.FunctionColorBlendFrames.Location = new System.Drawing.Point(296, 36);
+            this.FunctionColorBlendFrames.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.FunctionColorBlendFrames.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.FunctionColorBlendFrames.Name = "FunctionColorBlendFrames";
+            this.FunctionColorBlendFrames.ShiftMultiplier = 1;
+            this.FunctionColorBlendFrames.Size = new System.Drawing.Size(59, 20);
+            this.FunctionColorBlendFrames.TabIndex = 87;
+            this.FunctionColorBlendFrames.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.FunctionColorBlendFrames.ValueChanged += new System.EventHandler(this.FunctionColorBlendFrames_ValueChanged);
             // 
             // FunctionColorBlendList
             // 
@@ -7275,6 +11729,35 @@ namespace SharpOcarina
             this.FunctionTextureSwapAnimationAdd.Text = "Add Image";
             this.FunctionTextureSwapAnimationAdd.UseVisualStyleBackColor = true;
             this.FunctionTextureSwapAnimationAdd.Click += new System.EventHandler(this.FunctionTextureSwapAnimationAdd_Click);
+            // 
+            // FunctionTextureSwapAnimationDuration
+            // 
+            this.FunctionTextureSwapAnimationDuration.AlwaysFireValueChanged = false;
+            this.FunctionTextureSwapAnimationDuration.DisplayDigits = 1;
+            this.FunctionTextureSwapAnimationDuration.DoValueRollover = false;
+            this.FunctionTextureSwapAnimationDuration.Enabled = false;
+            this.FunctionTextureSwapAnimationDuration.IncrementMouseWheel = 1;
+            this.FunctionTextureSwapAnimationDuration.Location = new System.Drawing.Point(300, 36);
+            this.FunctionTextureSwapAnimationDuration.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.FunctionTextureSwapAnimationDuration.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.FunctionTextureSwapAnimationDuration.Name = "FunctionTextureSwapAnimationDuration";
+            this.FunctionTextureSwapAnimationDuration.ShiftMultiplier = 1;
+            this.FunctionTextureSwapAnimationDuration.Size = new System.Drawing.Size(59, 20);
+            this.FunctionTextureSwapAnimationDuration.TabIndex = 78;
+            this.FunctionTextureSwapAnimationDuration.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.FunctionTextureSwapAnimationDuration.ValueChanged += new System.EventHandler(this.FunctionTextureSwapAnimationDuration_ValueChanged);
             // 
             // FunctionTextureSwapAnimationList
             // 
@@ -7590,4454 +12073,18 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // ScenenumberTextbox
-            // 
-            this.ScenenumberTextbox.AlwaysFireValueChanged = false;
-            this.ScenenumberTextbox.DisplayDigits = 1;
-            this.ScenenumberTextbox.DoValueRollover = false;
-            this.ScenenumberTextbox.Hexadecimal = true;
-            this.ScenenumberTextbox.IncrementMouseWheel = 1;
-            this.ScenenumberTextbox.Location = new System.Drawing.Point(322, 58);
-            this.ScenenumberTextbox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.ScenenumberTextbox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ScenenumberTextbox.Name = "ScenenumberTextbox";
-            this.ScenenumberTextbox.ShiftMultiplier = 1;
-            this.ScenenumberTextbox.Size = new System.Drawing.Size(60, 20);
-            this.ScenenumberTextbox.TabIndex = 42;
-            this.EnvironmentControlTooltip.SetToolTip(this.ScenenumberTextbox, "High values will render the rom unusable (max 6D for debug ROM)");
-            this.ScenenumberTextbox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ScenenumberTextbox.ValueChanged += new System.EventHandler(this.ScenenumberTextbox_ValueChanged);
-            // 
-            // CameraUnk1
-            // 
-            this.CameraUnk1.AlwaysFireValueChanged = false;
-            this.CameraUnk1.DisplayDigits = 1;
-            this.CameraUnk1.DoValueRollover = false;
-            this.CameraUnk1.Enabled = false;
-            this.CameraUnk1.Hexadecimal = true;
-            this.CameraUnk1.IncrementMouseWheel = 1;
-            this.CameraUnk1.Location = new System.Drawing.Point(74, 110);
-            this.CameraUnk1.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk1.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1.Name = "CameraUnk1";
-            this.CameraUnk1.ShiftMultiplier = 1;
-            this.CameraUnk1.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk1.TabIndex = 42;
-            this.CameraUnk1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1.ValueChanged += new System.EventHandler(this.CameraUnk1_ValueChanged);
-            // 
-            // CameraUnk2
-            // 
-            this.CameraUnk2.AlwaysFireValueChanged = false;
-            this.CameraUnk2.DisplayDigits = 1;
-            this.CameraUnk2.DoValueRollover = false;
-            this.CameraUnk2.Enabled = false;
-            this.CameraUnk2.Hexadecimal = true;
-            this.CameraUnk2.IncrementMouseWheel = 1;
-            this.CameraUnk2.Location = new System.Drawing.Point(267, 112);
-            this.CameraUnk2.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk2.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk2.Name = "CameraUnk2";
-            this.CameraUnk2.ShiftMultiplier = 1;
-            this.CameraUnk2.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk2.TabIndex = 40;
-            this.CameraUnk2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk2.ValueChanged += new System.EventHandler(this.CameraUnk2_ValueChanged);
-            // 
-            // CameraFov
-            // 
-            this.CameraFov.AlwaysFireValueChanged = false;
-            this.CameraFov.DisplayDigits = 1;
-            this.CameraFov.DoValueRollover = false;
-            this.CameraFov.Enabled = false;
-            this.CameraFov.IncrementMouseWheel = 1;
-            this.CameraFov.Location = new System.Drawing.Point(267, 84);
-            this.CameraFov.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CameraFov.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CameraFov.Name = "CameraFov";
-            this.CameraFov.ShiftMultiplier = 1;
-            this.CameraFov.Size = new System.Drawing.Size(100, 20);
-            this.CameraFov.TabIndex = 20;
-            this.CameraFov.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraFov.ValueChanged += new System.EventHandler(this.CameraFov_ValueChanged);
-            // 
-            // CameraZRot
-            // 
-            this.CameraZRot.AlwaysFireValueChanged = false;
-            this.CameraZRot.DisplayDigits = 1;
-            this.CameraZRot.DoValueRollover = false;
-            this.CameraZRot.Enabled = false;
-            this.CameraZRot.Increment = new decimal(new int[] {
-            182,
-            0,
-            0,
-            0});
-            this.CameraZRot.IncrementMouseWheel = 182;
-            this.CameraZRot.Location = new System.Drawing.Point(267, 57);
-            this.CameraZRot.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CameraZRot.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CameraZRot.Name = "CameraZRot";
-            this.CameraZRot.ShiftMultiplier = 1;
-            this.CameraZRot.Size = new System.Drawing.Size(100, 20);
-            this.CameraZRot.TabIndex = 20;
-            this.CameraZRot.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraZRot.ValueChanged += new System.EventHandler(this.CameraZRot_ValueChanged);
-            // 
-            // CameraZPos
-            // 
-            this.CameraZPos.AlwaysFireValueChanged = false;
-            this.CameraZPos.DisplayDigits = 1;
-            this.CameraZPos.DoValueRollover = false;
-            this.CameraZPos.Enabled = false;
-            this.CameraZPos.IncrementMouseWheel = 1;
-            this.CameraZPos.Location = new System.Drawing.Point(74, 57);
-            this.CameraZPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CameraZPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CameraZPos.Name = "CameraZPos";
-            this.CameraZPos.ShiftMultiplier = 20;
-            this.CameraZPos.Size = new System.Drawing.Size(100, 20);
-            this.CameraZPos.TabIndex = 12;
-            this.CameraZPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraZPos.ValueChanged += new System.EventHandler(this.CameraZPos_ValueChanged);
-            // 
-            // CameraXRot
-            // 
-            this.CameraXRot.AlwaysFireValueChanged = false;
-            this.CameraXRot.DisplayDigits = 1;
-            this.CameraXRot.DoValueRollover = false;
-            this.CameraXRot.Enabled = false;
-            this.CameraXRot.Increment = new decimal(new int[] {
-            182,
-            0,
-            0,
-            0});
-            this.CameraXRot.IncrementMouseWheel = 182;
-            this.CameraXRot.Location = new System.Drawing.Point(267, 5);
-            this.CameraXRot.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CameraXRot.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CameraXRot.Name = "CameraXRot";
-            this.CameraXRot.ShiftMultiplier = 1;
-            this.CameraXRot.Size = new System.Drawing.Size(100, 20);
-            this.CameraXRot.TabIndex = 13;
-            this.CameraXRot.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraXRot.ValueChanged += new System.EventHandler(this.CameraXRot_ValueChanged);
-            // 
-            // CameraYPos
-            // 
-            this.CameraYPos.AlwaysFireValueChanged = false;
-            this.CameraYPos.DisplayDigits = 1;
-            this.CameraYPos.DoValueRollover = false;
-            this.CameraYPos.Enabled = false;
-            this.CameraYPos.IncrementMouseWheel = 1;
-            this.CameraYPos.Location = new System.Drawing.Point(74, 31);
-            this.CameraYPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CameraYPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CameraYPos.Name = "CameraYPos";
-            this.CameraYPos.ShiftMultiplier = 20;
-            this.CameraYPos.Size = new System.Drawing.Size(100, 20);
-            this.CameraYPos.TabIndex = 11;
-            this.CameraYPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraYPos.ValueChanged += new System.EventHandler(this.CameraYPos_ValueChanged);
-            // 
-            // CameraYRot
-            // 
-            this.CameraYRot.AlwaysFireValueChanged = false;
-            this.CameraYRot.DisplayDigits = 1;
-            this.CameraYRot.DoValueRollover = false;
-            this.CameraYRot.Enabled = false;
-            this.CameraYRot.Increment = new decimal(new int[] {
-            182,
-            0,
-            0,
-            0});
-            this.CameraYRot.IncrementMouseWheel = 182;
-            this.CameraYRot.Location = new System.Drawing.Point(267, 31);
-            this.CameraYRot.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CameraYRot.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CameraYRot.Name = "CameraYRot";
-            this.CameraYRot.ShiftMultiplier = 1;
-            this.CameraYRot.Size = new System.Drawing.Size(100, 20);
-            this.CameraYRot.TabIndex = 14;
-            this.CameraYRot.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraYRot.ValueChanged += new System.EventHandler(this.CameraYRot_ValueChanged);
-            // 
-            // CameraXPos
-            // 
-            this.CameraXPos.AlwaysFireValueChanged = false;
-            this.CameraXPos.DisplayDigits = 1;
-            this.CameraXPos.DoValueRollover = false;
-            this.CameraXPos.Enabled = false;
-            this.CameraXPos.IncrementMouseWheel = 1;
-            this.CameraXPos.Location = new System.Drawing.Point(74, 5);
-            this.CameraXPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CameraXPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CameraXPos.Name = "CameraXPos";
-            this.CameraXPos.ShiftMultiplier = 20;
-            this.CameraXPos.Size = new System.Drawing.Size(100, 20);
-            this.CameraXPos.TabIndex = 10;
-            this.CameraXPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraXPos.ValueChanged += new System.EventHandler(this.CameraXPos_ValueChanged);
-            // 
-            // CameraSelect
-            // 
-            this.CameraSelect.AlwaysFireValueChanged = false;
-            this.CameraSelect.DisplayDigits = 1;
-            this.CameraSelect.DoValueRollover = true;
-            this.CameraSelect.Hexadecimal = true;
-            this.CameraSelect.IncrementMouseWheel = 3;
-            this.CameraSelect.Location = new System.Drawing.Point(9, 22);
-            this.CameraSelect.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.CameraSelect.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.CameraSelect.Name = "CameraSelect";
-            this.CameraSelect.ShiftMultiplier = 1;
-            this.CameraSelect.Size = new System.Drawing.Size(65, 20);
-            this.CameraSelect.TabIndex = 7;
-            this.CameraSelect.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraSelect.ValueChanged += new System.EventHandler(this.CameraSelect_ValueChanged);
-            // 
-            // niceLine8
-            // 
-            this.niceLine8.Location = new System.Drawing.Point(9, 46);
-            this.niceLine8.Name = "niceLine8";
-            this.niceLine8.Size = new System.Drawing.Size(384, 15);
-            this.niceLine8.TabIndex = 20;
-            this.niceLine8.TabStop = false;
-            // 
-            // CameraUnk22
-            // 
-            this.CameraUnk22.AlwaysFireValueChanged = false;
-            this.CameraUnk22.DisplayDigits = 1;
-            this.CameraUnk22.DoValueRollover = false;
-            this.CameraUnk22.Enabled = false;
-            this.CameraUnk22.Hexadecimal = true;
-            this.CameraUnk22.IncrementMouseWheel = 1;
-            this.CameraUnk22.Location = new System.Drawing.Point(267, 135);
-            this.CameraUnk22.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk22.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk22.Name = "CameraUnk22";
-            this.CameraUnk22.ShiftMultiplier = 1;
-            this.CameraUnk22.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk22.TabIndex = 78;
-            this.CameraUnk22.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk22.ValueChanged += new System.EventHandler(this.CameraUnk22_ValueChanged);
-            // 
-            // CameraUnk1E
-            // 
-            this.CameraUnk1E.AlwaysFireValueChanged = false;
-            this.CameraUnk1E.DisplayDigits = 1;
-            this.CameraUnk1E.DoValueRollover = false;
-            this.CameraUnk1E.Enabled = false;
-            this.CameraUnk1E.Hexadecimal = true;
-            this.CameraUnk1E.IncrementMouseWheel = 1;
-            this.CameraUnk1E.Location = new System.Drawing.Point(267, 83);
-            this.CameraUnk1E.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk1E.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1E.Name = "CameraUnk1E";
-            this.CameraUnk1E.ShiftMultiplier = 1;
-            this.CameraUnk1E.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk1E.TabIndex = 74;
-            this.CameraUnk1E.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1E.ValueChanged += new System.EventHandler(this.CameraUnk1E_ValueChanged);
-            // 
-            // CameraUnk20
-            // 
-            this.CameraUnk20.AlwaysFireValueChanged = false;
-            this.CameraUnk20.DisplayDigits = 1;
-            this.CameraUnk20.DoValueRollover = false;
-            this.CameraUnk20.Enabled = false;
-            this.CameraUnk20.Hexadecimal = true;
-            this.CameraUnk20.IncrementMouseWheel = 1;
-            this.CameraUnk20.Location = new System.Drawing.Point(267, 109);
-            this.CameraUnk20.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk20.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk20.Name = "CameraUnk20";
-            this.CameraUnk20.ShiftMultiplier = 1;
-            this.CameraUnk20.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk20.TabIndex = 76;
-            this.CameraUnk20.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk20.ValueChanged += new System.EventHandler(this.CameraUnk20_ValueChanged);
-            // 
-            // CameraUnk1C
-            // 
-            this.CameraUnk1C.AlwaysFireValueChanged = false;
-            this.CameraUnk1C.DisplayDigits = 1;
-            this.CameraUnk1C.DoValueRollover = false;
-            this.CameraUnk1C.Enabled = false;
-            this.CameraUnk1C.Hexadecimal = true;
-            this.CameraUnk1C.IncrementMouseWheel = 1;
-            this.CameraUnk1C.Location = new System.Drawing.Point(267, 57);
-            this.CameraUnk1C.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk1C.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1C.Name = "CameraUnk1C";
-            this.CameraUnk1C.ShiftMultiplier = 1;
-            this.CameraUnk1C.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk1C.TabIndex = 20;
-            this.CameraUnk1C.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1C.ValueChanged += new System.EventHandler(this.CameraUnk1C_ValueChanged);
-            // 
-            // CameraUnk16
-            // 
-            this.CameraUnk16.AlwaysFireValueChanged = false;
-            this.CameraUnk16.DisplayDigits = 1;
-            this.CameraUnk16.DoValueRollover = false;
-            this.CameraUnk16.Enabled = false;
-            this.CameraUnk16.Hexadecimal = true;
-            this.CameraUnk16.IncrementMouseWheel = 1;
-            this.CameraUnk16.Location = new System.Drawing.Point(74, 57);
-            this.CameraUnk16.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk16.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk16.Name = "CameraUnk16";
-            this.CameraUnk16.ShiftMultiplier = 1;
-            this.CameraUnk16.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk16.TabIndex = 12;
-            this.CameraUnk16.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk16.ValueChanged += new System.EventHandler(this.CameraUnk16_ValueChanged);
-            // 
-            // CameraUnk18
-            // 
-            this.CameraUnk18.AlwaysFireValueChanged = false;
-            this.CameraUnk18.DisplayDigits = 1;
-            this.CameraUnk18.DoValueRollover = false;
-            this.CameraUnk18.Enabled = false;
-            this.CameraUnk18.Hexadecimal = true;
-            this.CameraUnk18.IncrementMouseWheel = 1;
-            this.CameraUnk18.Location = new System.Drawing.Point(267, 5);
-            this.CameraUnk18.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk18.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk18.Name = "CameraUnk18";
-            this.CameraUnk18.ShiftMultiplier = 1;
-            this.CameraUnk18.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk18.TabIndex = 13;
-            this.CameraUnk18.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk18.ValueChanged += new System.EventHandler(this.CameraUnk18_ValueChanged);
-            // 
-            // CameraUnk14
-            // 
-            this.CameraUnk14.AlwaysFireValueChanged = false;
-            this.CameraUnk14.DisplayDigits = 1;
-            this.CameraUnk14.DoValueRollover = false;
-            this.CameraUnk14.Enabled = false;
-            this.CameraUnk14.Hexadecimal = true;
-            this.CameraUnk14.IncrementMouseWheel = 1;
-            this.CameraUnk14.Location = new System.Drawing.Point(74, 31);
-            this.CameraUnk14.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk14.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk14.Name = "CameraUnk14";
-            this.CameraUnk14.ShiftMultiplier = 1;
-            this.CameraUnk14.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk14.TabIndex = 11;
-            this.CameraUnk14.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk14.ValueChanged += new System.EventHandler(this.CameraUnk14_ValueChanged);
-            // 
-            // CameraUnk1A
-            // 
-            this.CameraUnk1A.AlwaysFireValueChanged = false;
-            this.CameraUnk1A.DisplayDigits = 1;
-            this.CameraUnk1A.DoValueRollover = false;
-            this.CameraUnk1A.Enabled = false;
-            this.CameraUnk1A.Hexadecimal = true;
-            this.CameraUnk1A.IncrementMouseWheel = 1;
-            this.CameraUnk1A.Location = new System.Drawing.Point(267, 31);
-            this.CameraUnk1A.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk1A.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1A.Name = "CameraUnk1A";
-            this.CameraUnk1A.ShiftMultiplier = 1;
-            this.CameraUnk1A.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk1A.TabIndex = 14;
-            this.CameraUnk1A.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk1A.ValueChanged += new System.EventHandler(this.CameraUnk1A_ValueChanged);
-            // 
-            // CameraUnk12
-            // 
-            this.CameraUnk12.AlwaysFireValueChanged = false;
-            this.CameraUnk12.DisplayDigits = 1;
-            this.CameraUnk12.DoValueRollover = false;
-            this.CameraUnk12.Enabled = false;
-            this.CameraUnk12.Hexadecimal = true;
-            this.CameraUnk12.IncrementMouseWheel = 1;
-            this.CameraUnk12.Location = new System.Drawing.Point(74, 5);
-            this.CameraUnk12.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CameraUnk12.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk12.Name = "CameraUnk12";
-            this.CameraUnk12.ShiftMultiplier = 1;
-            this.CameraUnk12.Size = new System.Drawing.Size(100, 20);
-            this.CameraUnk12.TabIndex = 10;
-            this.CameraUnk12.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraUnk12.ValueChanged += new System.EventHandler(this.CameraUnk12_ValueChanged);
-            // 
-            // WaterboxRoom
-            // 
-            this.WaterboxRoom.AlwaysFireValueChanged = false;
-            this.WaterboxRoom.DisplayDigits = 1;
-            this.WaterboxRoom.DoValueRollover = false;
-            this.WaterboxRoom.Enabled = false;
-            this.WaterboxRoom.Hexadecimal = true;
-            this.WaterboxRoom.IncrementMouseWheel = 1;
-            this.WaterboxRoom.Location = new System.Drawing.Point(73, 83);
-            this.WaterboxRoom.Maximum = new decimal(new int[] {
-            63,
-            0,
-            0,
-            0});
-            this.WaterboxRoom.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxRoom.Name = "WaterboxRoom";
-            this.WaterboxRoom.ShiftMultiplier = 1;
-            this.WaterboxRoom.Size = new System.Drawing.Size(47, 20);
-            this.WaterboxRoom.TabIndex = 23;
-            this.EnvironmentControlTooltip.SetToolTip(this.WaterboxRoom, "3F = all rooms");
-            this.WaterboxRoom.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxRoom.ValueChanged += new System.EventHandler(this.WaterboxRoom_Leave);
-            // 
-            // WaterboxCam
-            // 
-            this.WaterboxCam.AlwaysFireValueChanged = false;
-            this.WaterboxCam.DisplayDigits = 1;
-            this.WaterboxCam.DoValueRollover = false;
-            this.WaterboxCam.Enabled = false;
-            this.WaterboxCam.Hexadecimal = true;
-            this.WaterboxCam.IncrementMouseWheel = 1;
-            this.WaterboxCam.Location = new System.Drawing.Point(267, 86);
-            this.WaterboxCam.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.WaterboxCam.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxCam.Name = "WaterboxCam";
-            this.WaterboxCam.ShiftMultiplier = 1;
-            this.WaterboxCam.Size = new System.Drawing.Size(47, 20);
-            this.WaterboxCam.TabIndex = 22;
-            this.WaterboxCam.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxCam.ValueChanged += new System.EventHandler(this.WaterboxCam_ValueChanged);
-            // 
-            // WaterboxEnv
-            // 
-            this.WaterboxEnv.AlwaysFireValueChanged = false;
-            this.WaterboxEnv.DisplayDigits = 1;
-            this.WaterboxEnv.DoValueRollover = false;
-            this.WaterboxEnv.Enabled = false;
-            this.WaterboxEnv.Hexadecimal = true;
-            this.WaterboxEnv.IncrementMouseWheel = 1;
-            this.WaterboxEnv.Location = new System.Drawing.Point(267, 57);
-            this.WaterboxEnv.Maximum = new decimal(new int[] {
-            31,
-            0,
-            0,
-            0});
-            this.WaterboxEnv.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxEnv.Name = "WaterboxEnv";
-            this.WaterboxEnv.ShiftMultiplier = 1;
-            this.WaterboxEnv.Size = new System.Drawing.Size(47, 20);
-            this.WaterboxEnv.TabIndex = 20;
-            this.WaterboxEnv.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxEnv.ValueChanged += new System.EventHandler(this.WaterboxEnv_ValueChanged);
-            // 
-            // WaterboxZPos
-            // 
-            this.WaterboxZPos.AlwaysFireValueChanged = false;
-            this.WaterboxZPos.DisplayDigits = 1;
-            this.WaterboxZPos.DoValueRollover = false;
-            this.WaterboxZPos.Enabled = false;
-            this.WaterboxZPos.IncrementMouseWheel = 1;
-            this.WaterboxZPos.Location = new System.Drawing.Point(74, 57);
-            this.WaterboxZPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.WaterboxZPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.WaterboxZPos.Name = "WaterboxZPos";
-            this.WaterboxZPos.ShiftMultiplier = 20;
-            this.WaterboxZPos.Size = new System.Drawing.Size(100, 20);
-            this.WaterboxZPos.TabIndex = 12;
-            this.WaterboxZPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxZPos.ValueChanged += new System.EventHandler(this.WaterboxTransformZ_ChangeValue);
-            // 
-            // WaterboxXSize
-            // 
-            this.WaterboxXSize.AlwaysFireValueChanged = false;
-            this.WaterboxXSize.DisplayDigits = 1;
-            this.WaterboxXSize.DoValueRollover = false;
-            this.WaterboxXSize.Enabled = false;
-            this.WaterboxXSize.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.WaterboxXSize.IncrementMouseWheel = 2;
-            this.WaterboxXSize.Location = new System.Drawing.Point(267, 5);
-            this.WaterboxXSize.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.WaterboxXSize.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.WaterboxXSize.Name = "WaterboxXSize";
-            this.WaterboxXSize.ShiftMultiplier = 10;
-            this.WaterboxXSize.Size = new System.Drawing.Size(100, 20);
-            this.WaterboxXSize.TabIndex = 13;
-            this.WaterboxXSize.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxXSize.ValueChanged += new System.EventHandler(this.WaterboxSizeX_ChangeValue);
-            // 
-            // WaterboxYPos
-            // 
-            this.WaterboxYPos.AlwaysFireValueChanged = false;
-            this.WaterboxYPos.DisplayDigits = 1;
-            this.WaterboxYPos.DoValueRollover = false;
-            this.WaterboxYPos.Enabled = false;
-            this.WaterboxYPos.IncrementMouseWheel = 1;
-            this.WaterboxYPos.Location = new System.Drawing.Point(74, 31);
-            this.WaterboxYPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.WaterboxYPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.WaterboxYPos.Name = "WaterboxYPos";
-            this.WaterboxYPos.ShiftMultiplier = 20;
-            this.WaterboxYPos.Size = new System.Drawing.Size(100, 20);
-            this.WaterboxYPos.TabIndex = 11;
-            this.WaterboxYPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxYPos.ValueChanged += new System.EventHandler(this.WaterboxTransformY_ChangeValue);
-            // 
-            // WaterboxYSize
-            // 
-            this.WaterboxYSize.AlwaysFireValueChanged = false;
-            this.WaterboxYSize.DisplayDigits = 1;
-            this.WaterboxYSize.DoValueRollover = false;
-            this.WaterboxYSize.Enabled = false;
-            this.WaterboxYSize.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.WaterboxYSize.IncrementMouseWheel = 2;
-            this.WaterboxYSize.Location = new System.Drawing.Point(267, 31);
-            this.WaterboxYSize.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.WaterboxYSize.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.WaterboxYSize.Name = "WaterboxYSize";
-            this.WaterboxYSize.ShiftMultiplier = 10;
-            this.WaterboxYSize.Size = new System.Drawing.Size(100, 20);
-            this.WaterboxYSize.TabIndex = 14;
-            this.WaterboxYSize.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxYSize.ValueChanged += new System.EventHandler(this.WaterboxSizeY_ChangeValue);
-            // 
-            // WaterboxXPos
-            // 
-            this.WaterboxXPos.AlwaysFireValueChanged = false;
-            this.WaterboxXPos.DisplayDigits = 1;
-            this.WaterboxXPos.DoValueRollover = false;
-            this.WaterboxXPos.Enabled = false;
-            this.WaterboxXPos.IncrementMouseWheel = 1;
-            this.WaterboxXPos.Location = new System.Drawing.Point(74, 5);
-            this.WaterboxXPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.WaterboxXPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.WaterboxXPos.Name = "WaterboxXPos";
-            this.WaterboxXPos.ShiftMultiplier = 20;
-            this.WaterboxXPos.Size = new System.Drawing.Size(100, 20);
-            this.WaterboxXPos.TabIndex = 10;
-            this.WaterboxXPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxXPos.ValueChanged += new System.EventHandler(this.WaterboxTransformX_ChangeValue);
-            // 
-            // WaterboxSelect
-            // 
-            this.WaterboxSelect.AlwaysFireValueChanged = false;
-            this.WaterboxSelect.DisplayDigits = 1;
-            this.WaterboxSelect.DoValueRollover = true;
-            this.WaterboxSelect.Hexadecimal = true;
-            this.WaterboxSelect.IncrementMouseWheel = 3;
-            this.WaterboxSelect.Location = new System.Drawing.Point(9, 22);
-            this.WaterboxSelect.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.WaterboxSelect.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.WaterboxSelect.Name = "WaterboxSelect";
-            this.WaterboxSelect.ShiftMultiplier = 1;
-            this.WaterboxSelect.Size = new System.Drawing.Size(65, 20);
-            this.WaterboxSelect.TabIndex = 7;
-            this.WaterboxSelect.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WaterboxSelect.ValueChanged += new System.EventHandler(this.WaterboxSelect_ValueChanged);
-            // 
-            // niceLine2
-            // 
-            this.niceLine2.Location = new System.Drawing.Point(9, 46);
-            this.niceLine2.Name = "niceLine2";
-            this.niceLine2.Size = new System.Drawing.Size(384, 15);
-            this.niceLine2.TabIndex = 20;
-            this.niceLine2.TabStop = false;
-            // 
-            // InjectoffsetTextbox
-            // 
-            this.InjectoffsetTextbox.AllowHex = true;
-            this.InjectoffsetTextbox.Digits = 8;
-            this.InjectoffsetTextbox.Location = new System.Drawing.Point(254, 31);
-            this.InjectoffsetTextbox.Name = "InjectoffsetTextbox";
-            this.InjectoffsetTextbox.Size = new System.Drawing.Size(98, 20);
-            this.InjectoffsetTextbox.TabIndex = 2;
-            this.InjectoffsetTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox3_KeyDown);
-            this.InjectoffsetTextbox.Leave += new System.EventHandler(this.InjectoffsetTextbox_Leave);
-            // 
-            // ScaleNumericbox
-            // 
-            this.ScaleNumericbox.AlwaysFireValueChanged = false;
-            this.ScaleNumericbox.DecimalPlaces = 2;
-            this.ScaleNumericbox.DisplayDigits = 1;
-            this.ScaleNumericbox.DoValueRollover = true;
-            this.ScaleNumericbox.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            131072});
-            this.ScaleNumericbox.IncrementMouseWheel = 3;
-            this.ScaleNumericbox.Location = new System.Drawing.Point(50, 32);
-            this.ScaleNumericbox.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            131072});
-            this.ScaleNumericbox.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            131072});
-            this.ScaleNumericbox.Name = "ScaleNumericbox";
-            this.ScaleNumericbox.ShiftMultiplier = 1;
-            this.ScaleNumericbox.Size = new System.Drawing.Size(98, 20);
-            this.ScaleNumericbox.TabIndex = 1;
-            this.ScaleNumericbox.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            131072});
-            this.ScaleNumericbox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
-            // TextureAnimHeight2
-            // 
-            this.TextureAnimHeight2.AlwaysFireValueChanged = false;
-            this.TextureAnimHeight2.DisplayDigits = 1;
-            this.TextureAnimHeight2.DoValueRollover = false;
-            this.TextureAnimHeight2.Enabled = false;
-            this.TextureAnimHeight2.IncrementMouseWheel = 1;
-            this.TextureAnimHeight2.Location = new System.Drawing.Point(221, 147);
-            this.TextureAnimHeight2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.TextureAnimHeight2.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimHeight2.Name = "TextureAnimHeight2";
-            this.TextureAnimHeight2.ShiftMultiplier = 1;
-            this.TextureAnimHeight2.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimHeight2.TabIndex = 40;
-            this.TextureAnimHeight2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimHeight2.ValueChanged += new System.EventHandler(this.TextureAnimHeight2_ValueChanged);
-            // 
-            // TextureAnimWidth2
-            // 
-            this.TextureAnimWidth2.AlwaysFireValueChanged = false;
-            this.TextureAnimWidth2.DisplayDigits = 1;
-            this.TextureAnimWidth2.DoValueRollover = false;
-            this.TextureAnimWidth2.Enabled = false;
-            this.TextureAnimWidth2.IncrementMouseWheel = 1;
-            this.TextureAnimWidth2.Location = new System.Drawing.Point(221, 121);
-            this.TextureAnimWidth2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.TextureAnimWidth2.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimWidth2.Name = "TextureAnimWidth2";
-            this.TextureAnimWidth2.ShiftMultiplier = 1;
-            this.TextureAnimWidth2.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimWidth2.TabIndex = 38;
-            this.TextureAnimWidth2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimWidth2.ValueChanged += new System.EventHandler(this.TextureAnimWidth2_ValueChanged);
-            // 
-            // TextureAnimYVelocity2
-            // 
-            this.TextureAnimYVelocity2.AlwaysFireValueChanged = false;
-            this.TextureAnimYVelocity2.DisplayDigits = 1;
-            this.TextureAnimYVelocity2.DoValueRollover = false;
-            this.TextureAnimYVelocity2.Enabled = false;
-            this.TextureAnimYVelocity2.IncrementMouseWheel = 1;
-            this.TextureAnimYVelocity2.Location = new System.Drawing.Point(83, 147);
-            this.TextureAnimYVelocity2.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.TextureAnimYVelocity2.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.TextureAnimYVelocity2.Name = "TextureAnimYVelocity2";
-            this.TextureAnimYVelocity2.ShiftMultiplier = 1;
-            this.TextureAnimYVelocity2.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimYVelocity2.TabIndex = 36;
-            this.TextureAnimYVelocity2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimYVelocity2.ValueChanged += new System.EventHandler(this.TextureAnimYVelocity2_ValueChanged);
-            // 
-            // TextureAnimXVelocity2
-            // 
-            this.TextureAnimXVelocity2.AlwaysFireValueChanged = false;
-            this.TextureAnimXVelocity2.DisplayDigits = 1;
-            this.TextureAnimXVelocity2.DoValueRollover = false;
-            this.TextureAnimXVelocity2.Enabled = false;
-            this.TextureAnimXVelocity2.IncrementMouseWheel = 1;
-            this.TextureAnimXVelocity2.Location = new System.Drawing.Point(83, 121);
-            this.TextureAnimXVelocity2.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.TextureAnimXVelocity2.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.TextureAnimXVelocity2.Name = "TextureAnimXVelocity2";
-            this.TextureAnimXVelocity2.ShiftMultiplier = 1;
-            this.TextureAnimXVelocity2.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimXVelocity2.TabIndex = 34;
-            this.TextureAnimXVelocity2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimXVelocity2.ValueChanged += new System.EventHandler(this.TextureAnimXVelocity2_ValueChanged);
-            // 
-            // niceLine14
-            // 
-            this.niceLine14.Location = new System.Drawing.Point(5, 105);
-            this.niceLine14.Name = "niceLine14";
-            this.niceLine14.Size = new System.Drawing.Size(384, 15);
-            this.niceLine14.TabIndex = 22;
-            this.niceLine14.TabStop = false;
-            // 
-            // TextureAnimHeight1
-            // 
-            this.TextureAnimHeight1.AlwaysFireValueChanged = false;
-            this.TextureAnimHeight1.DisplayDigits = 1;
-            this.TextureAnimHeight1.DoValueRollover = false;
-            this.TextureAnimHeight1.Enabled = false;
-            this.TextureAnimHeight1.IncrementMouseWheel = 1;
-            this.TextureAnimHeight1.Location = new System.Drawing.Point(221, 84);
-            this.TextureAnimHeight1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.TextureAnimHeight1.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimHeight1.Name = "TextureAnimHeight1";
-            this.TextureAnimHeight1.ShiftMultiplier = 1;
-            this.TextureAnimHeight1.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimHeight1.TabIndex = 31;
-            this.TextureAnimHeight1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimHeight1.ValueChanged += new System.EventHandler(this.TextureAnimHeight1_ValueChanged);
-            // 
-            // TextureAnimWidth1
-            // 
-            this.TextureAnimWidth1.AlwaysFireValueChanged = false;
-            this.TextureAnimWidth1.DisplayDigits = 1;
-            this.TextureAnimWidth1.DoValueRollover = false;
-            this.TextureAnimWidth1.Enabled = false;
-            this.TextureAnimWidth1.IncrementMouseWheel = 1;
-            this.TextureAnimWidth1.Location = new System.Drawing.Point(221, 58);
-            this.TextureAnimWidth1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.TextureAnimWidth1.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimWidth1.Name = "TextureAnimWidth1";
-            this.TextureAnimWidth1.ShiftMultiplier = 1;
-            this.TextureAnimWidth1.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimWidth1.TabIndex = 29;
-            this.TextureAnimWidth1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimWidth1.ValueChanged += new System.EventHandler(this.TextureAnimWidth1_ValueChanged);
-            // 
-            // TextureAnimYVelocity1
-            // 
-            this.TextureAnimYVelocity1.AlwaysFireValueChanged = false;
-            this.TextureAnimYVelocity1.DisplayDigits = 1;
-            this.TextureAnimYVelocity1.DoValueRollover = false;
-            this.TextureAnimYVelocity1.Enabled = false;
-            this.TextureAnimYVelocity1.IncrementMouseWheel = 1;
-            this.TextureAnimYVelocity1.Location = new System.Drawing.Point(83, 84);
-            this.TextureAnimYVelocity1.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.TextureAnimYVelocity1.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.TextureAnimYVelocity1.Name = "TextureAnimYVelocity1";
-            this.TextureAnimYVelocity1.ShiftMultiplier = 1;
-            this.TextureAnimYVelocity1.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimYVelocity1.TabIndex = 27;
-            this.TextureAnimYVelocity1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimYVelocity1.ValueChanged += new System.EventHandler(this.TextureAnimYVelocity1_ValueChanged);
-            // 
-            // TextureAnimXVelocity1
-            // 
-            this.TextureAnimXVelocity1.AlwaysFireValueChanged = false;
-            this.TextureAnimXVelocity1.DisplayDigits = 1;
-            this.TextureAnimXVelocity1.DoValueRollover = false;
-            this.TextureAnimXVelocity1.Enabled = false;
-            this.TextureAnimXVelocity1.IncrementMouseWheel = 1;
-            this.TextureAnimXVelocity1.Location = new System.Drawing.Point(83, 58);
-            this.TextureAnimXVelocity1.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.TextureAnimXVelocity1.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.TextureAnimXVelocity1.Name = "TextureAnimXVelocity1";
-            this.TextureAnimXVelocity1.ShiftMultiplier = 1;
-            this.TextureAnimXVelocity1.Size = new System.Drawing.Size(44, 20);
-            this.TextureAnimXVelocity1.TabIndex = 24;
-            this.TextureAnimXVelocity1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimXVelocity1.ValueChanged += new System.EventHandler(this.TextureAnimXVelocity1_ValueChanged);
-            // 
-            // TextureAnimSelect
-            // 
-            this.TextureAnimSelect.AlwaysFireValueChanged = false;
-            this.TextureAnimSelect.DisplayDigits = 1;
-            this.TextureAnimSelect.DoValueRollover = true;
-            this.TextureAnimSelect.Hexadecimal = true;
-            this.TextureAnimSelect.IncrementMouseWheel = 3;
-            this.TextureAnimSelect.Location = new System.Drawing.Point(6, 22);
-            this.TextureAnimSelect.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.TextureAnimSelect.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.TextureAnimSelect.Name = "TextureAnimSelect";
-            this.TextureAnimSelect.ShiftMultiplier = 1;
-            this.TextureAnimSelect.Size = new System.Drawing.Size(65, 20);
-            this.TextureAnimSelect.TabIndex = 22;
-            this.TextureAnimSelect.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TextureAnimSelect.ValueChanged += new System.EventHandler(this.TextureAnimSelect_ValueChanged);
-            // 
-            // niceLine13
-            // 
-            this.niceLine13.Location = new System.Drawing.Point(6, 46);
-            this.niceLine13.Name = "niceLine13";
-            this.niceLine13.Size = new System.Drawing.Size(384, 15);
-            this.niceLine13.TabIndex = 25;
-            this.niceLine13.TabStop = false;
-            // 
-            // AdditionalTextureList
-            // 
-            this.AdditionalTextureList.AlwaysFireValueChanged = false;
-            this.AdditionalTextureList.DisplayDigits = 1;
-            this.AdditionalTextureList.DoValueRollover = false;
-            this.AdditionalTextureList.IncrementMouseWheel = 3;
-            this.AdditionalTextureList.Location = new System.Drawing.Point(9, 22);
-            this.AdditionalTextureList.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.AdditionalTextureList.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalTextureList.Name = "AdditionalTextureList";
-            this.AdditionalTextureList.ShiftMultiplier = 1;
-            this.AdditionalTextureList.Size = new System.Drawing.Size(65, 20);
-            this.AdditionalTextureList.TabIndex = 7;
-            this.AdditionalTextureList.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalTextureList.ValueChanged += new System.EventHandler(this.AdditionalTextureList_ValueChanged);
-            // 
-            // GroupLODDIstance
-            // 
-            this.GroupLODDIstance.AlwaysFireValueChanged = false;
-            this.GroupLODDIstance.DisplayDigits = 1;
-            this.GroupLODDIstance.DoValueRollover = true;
-            this.GroupLODDIstance.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.GroupLODDIstance.IncrementMouseWheel = 3;
-            this.GroupLODDIstance.Location = new System.Drawing.Point(182, 240);
-            this.GroupLODDIstance.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.GroupLODDIstance.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.GroupLODDIstance.Name = "GroupLODDIstance";
-            this.GroupLODDIstance.ShiftMultiplier = 1;
-            this.GroupLODDIstance.Size = new System.Drawing.Size(80, 20);
-            this.GroupLODDIstance.TabIndex = 39;
-            this.GroupLODDIstance.Value = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.GroupLODDIstance.ValueChanged += new System.EventHandler(this.GroupLODDIstance_ValueChanged);
-            // 
-            // GroupLODGroup
-            // 
-            this.GroupLODGroup.AlwaysFireValueChanged = false;
-            this.GroupLODGroup.DisplayDigits = 1;
-            this.GroupLODGroup.DoValueRollover = false;
-            this.GroupLODGroup.Enabled = false;
-            this.GroupLODGroup.Hexadecimal = true;
-            this.GroupLODGroup.IncrementMouseWheel = 3;
-            this.GroupLODGroup.Location = new System.Drawing.Point(63, 240);
-            this.GroupLODGroup.Maximum = new decimal(new int[] {
-            256,
-            0,
-            0,
-            0});
-            this.GroupLODGroup.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.GroupLODGroup.Name = "GroupLODGroup";
-            this.GroupLODGroup.ShiftMultiplier = 1;
-            this.GroupLODGroup.Size = new System.Drawing.Size(58, 20);
-            this.GroupLODGroup.TabIndex = 37;
-            this.GroupLODGroup.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.GroupLODGroup.ValueChanged += new System.EventHandler(this.GroupLODGroup_ValueChanged);
-            // 
-            // GroupAnimatedBank
-            // 
-            this.GroupAnimatedBank.AlwaysFireValueChanged = false;
-            this.GroupAnimatedBank.DisplayDigits = 1;
-            this.GroupAnimatedBank.DoValueRollover = true;
-            this.GroupAnimatedBank.Enabled = false;
-            this.GroupAnimatedBank.Hexadecimal = true;
-            this.GroupAnimatedBank.IncrementMouseWheel = 3;
-            this.GroupAnimatedBank.Location = new System.Drawing.Point(85, 210);
-            this.GroupAnimatedBank.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.GroupAnimatedBank.Minimum = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.GroupAnimatedBank.Name = "GroupAnimatedBank";
-            this.GroupAnimatedBank.ShiftMultiplier = 1;
-            this.GroupAnimatedBank.Size = new System.Drawing.Size(58, 20);
-            this.GroupAnimatedBank.TabIndex = 33;
-            this.GroupAnimatedBank.Value = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.GroupAnimatedBank.ValueChanged += new System.EventHandler(this.GroupAnimatedBank_ValueChanged);
-            // 
-            // ShiftTNumeric
-            // 
-            this.ShiftTNumeric.AlwaysFireValueChanged = false;
-            this.ShiftTNumeric.DisplayDigits = 1;
-            this.ShiftTNumeric.DoValueRollover = true;
-            this.ShiftTNumeric.IncrementMouseWheel = 3;
-            this.ShiftTNumeric.Location = new System.Drawing.Point(220, 97);
-            this.ShiftTNumeric.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.ShiftTNumeric.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-            this.ShiftTNumeric.Name = "ShiftTNumeric";
-            this.ShiftTNumeric.ShiftMultiplier = 1;
-            this.ShiftTNumeric.Size = new System.Drawing.Size(80, 20);
-            this.ShiftTNumeric.TabIndex = 26;
-            this.ShiftTNumeric.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ShiftTNumeric.ValueChanged += new System.EventHandler(this.ShiftTNumeric_ValueChanged);
-            // 
-            // ShiftSNumeric
-            // 
-            this.ShiftSNumeric.AlwaysFireValueChanged = false;
-            this.ShiftSNumeric.DisplayDigits = 1;
-            this.ShiftSNumeric.DoValueRollover = true;
-            this.ShiftSNumeric.IncrementMouseWheel = 3;
-            this.ShiftSNumeric.Location = new System.Drawing.Point(122, 97);
-            this.ShiftSNumeric.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.ShiftSNumeric.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-            this.ShiftSNumeric.Name = "ShiftSNumeric";
-            this.ShiftSNumeric.ShiftMultiplier = 1;
-            this.ShiftSNumeric.Size = new System.Drawing.Size(80, 20);
-            this.ShiftSNumeric.TabIndex = 25;
-            this.ShiftSNumeric.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ShiftSNumeric.ValueChanged += new System.EventHandler(this.ShiftSNumeric_ValueChanged);
-            // 
-            // GroupMultitextureAlpha
-            // 
-            this.GroupMultitextureAlpha.AlwaysFireValueChanged = false;
-            this.GroupMultitextureAlpha.DisplayDigits = 1;
-            this.GroupMultitextureAlpha.DoValueRollover = true;
-            this.GroupMultitextureAlpha.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.GroupMultitextureAlpha.IncrementMouseWheel = 3;
-            this.GroupMultitextureAlpha.Location = new System.Drawing.Point(106, 180);
-            this.GroupMultitextureAlpha.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.GroupMultitextureAlpha.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.GroupMultitextureAlpha.Name = "GroupMultitextureAlpha";
-            this.GroupMultitextureAlpha.ShiftMultiplier = 1;
-            this.GroupMultitextureAlpha.Size = new System.Drawing.Size(80, 20);
-            this.GroupMultitextureAlpha.TabIndex = 23;
-            this.GroupMultitextureAlpha.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.GroupMultitextureAlpha.ValueChanged += new System.EventHandler(this.GroupMultitextureAlpha_ValueChanged);
-            // 
-            // numericUpDown6
-            // 
-            this.numericUpDown6.AlwaysFireValueChanged = false;
-            this.numericUpDown6.DisplayDigits = 1;
-            this.numericUpDown6.DoValueRollover = true;
-            this.numericUpDown6.IncrementMouseWheel = 3;
-            this.numericUpDown6.Location = new System.Drawing.Point(218, 152);
-            this.numericUpDown6.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numericUpDown6.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.ShiftMultiplier = 1;
-            this.numericUpDown6.Size = new System.Drawing.Size(80, 20);
-            this.numericUpDown6.TabIndex = 18;
-            this.numericUpDown6.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDown6.ValueChanged += new System.EventHandler(this.numericUpDown6_ValueChanged);
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.AlwaysFireValueChanged = false;
-            this.numericUpDown5.DisplayDigits = 1;
-            this.numericUpDown5.DoValueRollover = true;
-            this.numericUpDown5.IncrementMouseWheel = 3;
-            this.numericUpDown5.Location = new System.Drawing.Point(120, 152);
-            this.numericUpDown5.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numericUpDown5.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.ShiftMultiplier = 1;
-            this.numericUpDown5.Size = new System.Drawing.Size(80, 20);
-            this.numericUpDown5.TabIndex = 17;
-            this.numericUpDown5.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDown5.ValueChanged += new System.EventHandler(this.numericUpDown5_ValueChanged);
-            // 
-            // GroupPolygonType
-            // 
-            this.GroupPolygonType.AlwaysFireValueChanged = false;
-            this.GroupPolygonType.DisplayDigits = 1;
-            this.GroupPolygonType.DoValueRollover = true;
-            this.GroupPolygonType.IncrementMouseWheel = 3;
-            this.GroupPolygonType.Location = new System.Drawing.Point(96, 72);
-            this.GroupPolygonType.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.GroupPolygonType.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.GroupPolygonType.Name = "GroupPolygonType";
-            this.GroupPolygonType.ShiftMultiplier = 1;
-            this.GroupPolygonType.Size = new System.Drawing.Size(80, 20);
-            this.GroupPolygonType.TabIndex = 13;
-            this.GroupPolygonType.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.GroupPolygonType.ValueChanged += new System.EventHandler(this.GroupPolygonType_ValueChanged);
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.AlwaysFireValueChanged = false;
-            this.numericUpDown2.DisplayDigits = 1;
-            this.numericUpDown2.DoValueRollover = true;
-            this.numericUpDown2.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericUpDown2.IncrementMouseWheel = 3;
-            this.numericUpDown2.Location = new System.Drawing.Point(96, 19);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.ShiftMultiplier = 1;
-            this.numericUpDown2.Size = new System.Drawing.Size(80, 20);
-            this.numericUpDown2.TabIndex = 5;
-            this.numericUpDown2.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
-            // 
-            // RoomInjectionOffset
-            // 
-            this.RoomInjectionOffset.AllowHex = true;
-            this.RoomInjectionOffset.Digits = 8;
-            this.RoomInjectionOffset.Enabled = false;
-            this.RoomInjectionOffset.Location = new System.Drawing.Point(101, 155);
-            this.RoomInjectionOffset.Name = "RoomInjectionOffset";
-            this.RoomInjectionOffset.Size = new System.Drawing.Size(98, 20);
-            this.RoomInjectionOffset.TabIndex = 3;
-            this.RoomInjectionOffset.Visible = false;
-            this.RoomInjectionOffset.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RoomInjectionOffset_KeyDown);
-            this.RoomInjectionOffset.Leave += new System.EventHandler(this.RoomInjectionOffset_Leave);
-            // 
-            // niceLine15
-            // 
-            this.niceLine15.Location = new System.Drawing.Point(9, 48);
-            this.niceLine15.Name = "niceLine15";
-            this.niceLine15.Size = new System.Drawing.Size(384, 15);
-            this.niceLine15.TabIndex = 44;
-            this.niceLine15.TabStop = false;
-            // 
-            // PrerenderedList
-            // 
-            this.PrerenderedList.AlwaysFireValueChanged = false;
-            this.PrerenderedList.DisplayDigits = 1;
-            this.PrerenderedList.DoValueRollover = true;
-            this.PrerenderedList.IncrementMouseWheel = 3;
-            this.PrerenderedList.Location = new System.Drawing.Point(9, 22);
-            this.PrerenderedList.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.PrerenderedList.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.PrerenderedList.Name = "PrerenderedList";
-            this.PrerenderedList.ShiftMultiplier = 1;
-            this.PrerenderedList.Size = new System.Drawing.Size(65, 20);
-            this.PrerenderedList.TabIndex = 44;
-            this.PrerenderedList.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PrerenderedList.ValueChanged += new System.EventHandler(this.PrerenderedList_ValueChanged);
-            // 
-            // SceneHeaderCopyList
-            // 
-            this.SceneHeaderCopyList.AlwaysFireValueChanged = false;
-            this.SceneHeaderCopyList.DisplayDigits = 1;
-            this.SceneHeaderCopyList.DoValueRollover = false;
-            this.SceneHeaderCopyList.Enabled = false;
-            this.SceneHeaderCopyList.Hexadecimal = true;
-            this.SceneHeaderCopyList.IncrementMouseWheel = 1;
-            this.SceneHeaderCopyList.Location = new System.Drawing.Point(307, 61);
-            this.SceneHeaderCopyList.Maximum = new decimal(new int[] {
-            16777215,
-            0,
-            0,
-            0});
-            this.SceneHeaderCopyList.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.SceneHeaderCopyList.Name = "SceneHeaderCopyList";
-            this.SceneHeaderCopyList.ShiftMultiplier = 1;
-            this.SceneHeaderCopyList.Size = new System.Drawing.Size(80, 20);
-            this.SceneHeaderCopyList.TabIndex = 27;
-            this.SceneHeaderCopyList.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.SceneHeaderCopyList.ValueChanged += new System.EventHandler(this.SceneHeaderCopyList_ValueChanged);
-            // 
-            // SceneHeaderList
-            // 
-            this.SceneHeaderList.AlwaysFireValueChanged = false;
-            this.SceneHeaderList.DisplayDigits = 1;
-            this.SceneHeaderList.DoValueRollover = true;
-            this.SceneHeaderList.IncrementMouseWheel = 3;
-            this.SceneHeaderList.Location = new System.Drawing.Point(9, 22);
-            this.SceneHeaderList.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.SceneHeaderList.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.SceneHeaderList.Name = "SceneHeaderList";
-            this.SceneHeaderList.ShiftMultiplier = 1;
-            this.SceneHeaderList.Size = new System.Drawing.Size(65, 20);
-            this.SceneHeaderList.TabIndex = 7;
-            this.SceneHeaderList.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.SceneHeaderList.ValueChanged += new System.EventHandler(this.SceneHeaderList_ValueChanged);
-            // 
-            // niceLine9
-            // 
-            this.niceLine9.Location = new System.Drawing.Point(9, 46);
-            this.niceLine9.Name = "niceLine9";
-            this.niceLine9.Size = new System.Drawing.Size(384, 15);
-            this.niceLine9.TabIndex = 20;
-            this.niceLine9.TabStop = false;
-            // 
-            // EnvironmentDirectionBZ
-            // 
-            this.EnvironmentDirectionBZ.AlwaysFireValueChanged = false;
-            this.EnvironmentDirectionBZ.DisplayDigits = 2;
-            this.EnvironmentDirectionBZ.DoValueRollover = false;
-            this.EnvironmentDirectionBZ.Enabled = false;
-            this.EnvironmentDirectionBZ.Hexadecimal = true;
-            this.EnvironmentDirectionBZ.IncrementMouseWheel = 1;
-            this.EnvironmentDirectionBZ.Location = new System.Drawing.Point(304, 57);
-            this.EnvironmentDirectionBZ.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBZ.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBZ.Name = "EnvironmentDirectionBZ";
-            this.EnvironmentDirectionBZ.ShiftMultiplier = 20;
-            this.EnvironmentDirectionBZ.Size = new System.Drawing.Size(39, 20);
-            this.EnvironmentDirectionBZ.TabIndex = 30;
-            this.EnvironmentDirectionBZ.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBZ.ValueChanged += new System.EventHandler(this.EnvironmentDirectionBZ_ValueChanged);
-            // 
-            // EnvironmentDirectionBY
-            // 
-            this.EnvironmentDirectionBY.AlwaysFireValueChanged = false;
-            this.EnvironmentDirectionBY.DisplayDigits = 2;
-            this.EnvironmentDirectionBY.DoValueRollover = false;
-            this.EnvironmentDirectionBY.Enabled = false;
-            this.EnvironmentDirectionBY.Hexadecimal = true;
-            this.EnvironmentDirectionBY.IncrementMouseWheel = 1;
-            this.EnvironmentDirectionBY.Location = new System.Drawing.Point(266, 57);
-            this.EnvironmentDirectionBY.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBY.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBY.Name = "EnvironmentDirectionBY";
-            this.EnvironmentDirectionBY.ShiftMultiplier = 20;
-            this.EnvironmentDirectionBY.Size = new System.Drawing.Size(39, 20);
-            this.EnvironmentDirectionBY.TabIndex = 29;
-            this.EnvironmentDirectionBY.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBY.ValueChanged += new System.EventHandler(this.EnvironmentDirectionBY_ValueChanged);
-            // 
-            // EnvironmentDirectionAZ
-            // 
-            this.EnvironmentDirectionAZ.AlwaysFireValueChanged = false;
-            this.EnvironmentDirectionAZ.DisplayDigits = 2;
-            this.EnvironmentDirectionAZ.DoValueRollover = false;
-            this.EnvironmentDirectionAZ.Enabled = false;
-            this.EnvironmentDirectionAZ.Hexadecimal = true;
-            this.EnvironmentDirectionAZ.IncrementMouseWheel = 1;
-            this.EnvironmentDirectionAZ.Location = new System.Drawing.Point(304, 32);
-            this.EnvironmentDirectionAZ.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAZ.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAZ.Name = "EnvironmentDirectionAZ";
-            this.EnvironmentDirectionAZ.ShiftMultiplier = 20;
-            this.EnvironmentDirectionAZ.Size = new System.Drawing.Size(39, 20);
-            this.EnvironmentDirectionAZ.TabIndex = 28;
-            this.EnvironmentDirectionAZ.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAZ.ValueChanged += new System.EventHandler(this.EnvironmentDirectionAZ_ValueChanged);
-            // 
-            // EnvironmentDirectionAY
-            // 
-            this.EnvironmentDirectionAY.AlwaysFireValueChanged = false;
-            this.EnvironmentDirectionAY.DisplayDigits = 2;
-            this.EnvironmentDirectionAY.DoValueRollover = false;
-            this.EnvironmentDirectionAY.Enabled = false;
-            this.EnvironmentDirectionAY.Hexadecimal = true;
-            this.EnvironmentDirectionAY.IncrementMouseWheel = 1;
-            this.EnvironmentDirectionAY.Location = new System.Drawing.Point(266, 32);
-            this.EnvironmentDirectionAY.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAY.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAY.Name = "EnvironmentDirectionAY";
-            this.EnvironmentDirectionAY.ShiftMultiplier = 20;
-            this.EnvironmentDirectionAY.Size = new System.Drawing.Size(39, 20);
-            this.EnvironmentDirectionAY.TabIndex = 27;
-            this.EnvironmentDirectionAY.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAY.ValueChanged += new System.EventHandler(this.EnvironmentDirectionAY_ValueChanged);
-            // 
-            // EnvironmentDirectionBX
-            // 
-            this.EnvironmentDirectionBX.AlwaysFireValueChanged = false;
-            this.EnvironmentDirectionBX.DisplayDigits = 2;
-            this.EnvironmentDirectionBX.DoValueRollover = false;
-            this.EnvironmentDirectionBX.Enabled = false;
-            this.EnvironmentDirectionBX.Hexadecimal = true;
-            this.EnvironmentDirectionBX.IncrementMouseWheel = 1;
-            this.EnvironmentDirectionBX.Location = new System.Drawing.Point(228, 57);
-            this.EnvironmentDirectionBX.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBX.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBX.Name = "EnvironmentDirectionBX";
-            this.EnvironmentDirectionBX.ShiftMultiplier = 20;
-            this.EnvironmentDirectionBX.Size = new System.Drawing.Size(39, 20);
-            this.EnvironmentDirectionBX.TabIndex = 26;
-            this.EnvironmentDirectionBX.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionBX.ValueChanged += new System.EventHandler(this.EnvironmentDirectionB_ValueChanged);
-            // 
-            // EnvironmentDirectionAX
-            // 
-            this.EnvironmentDirectionAX.AlwaysFireValueChanged = false;
-            this.EnvironmentDirectionAX.DisplayDigits = 2;
-            this.EnvironmentDirectionAX.DoValueRollover = false;
-            this.EnvironmentDirectionAX.Enabled = false;
-            this.EnvironmentDirectionAX.Hexadecimal = true;
-            this.EnvironmentDirectionAX.IncrementMouseWheel = 1;
-            this.EnvironmentDirectionAX.Location = new System.Drawing.Point(227, 32);
-            this.EnvironmentDirectionAX.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAX.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAX.Name = "EnvironmentDirectionAX";
-            this.EnvironmentDirectionAX.ShiftMultiplier = 20;
-            this.EnvironmentDirectionAX.Size = new System.Drawing.Size(39, 20);
-            this.EnvironmentDirectionAX.TabIndex = 25;
-            this.EnvironmentDirectionAX.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentDirectionAX.ValueChanged += new System.EventHandler(this.EnvironmentDirectionA_ValueChanged);
-            // 
-            // DrawDistance
-            // 
-            this.DrawDistance.AlwaysFireValueChanged = false;
-            this.DrawDistance.DisplayDigits = 1;
-            this.DrawDistance.DoValueRollover = false;
-            this.DrawDistance.Enabled = false;
-            this.DrawDistance.Hexadecimal = true;
-            this.DrawDistance.IncrementMouseWheel = 1;
-            this.DrawDistance.Location = new System.Drawing.Point(287, 107);
-            this.DrawDistance.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.DrawDistance.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.DrawDistance.Name = "DrawDistance";
-            this.DrawDistance.ShiftMultiplier = 20;
-            this.DrawDistance.Size = new System.Drawing.Size(80, 20);
-            this.DrawDistance.TabIndex = 24;
-            this.EnvironmentControlTooltip.SetToolTip(this.DrawDistance, "Max value is 3200, which means 12800 units");
-            this.DrawDistance.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.DrawDistance.ValueChanged += new System.EventHandler(this.DrawDistance_Leave);
-            // 
-            // FogUnknown
-            // 
-            this.FogUnknown.AlwaysFireValueChanged = false;
-            this.FogUnknown.DisplayDigits = 1;
-            this.FogUnknown.DoValueRollover = false;
-            this.FogUnknown.Enabled = false;
-            this.FogUnknown.Hexadecimal = true;
-            this.FogUnknown.IncrementMouseWheel = 1;
-            this.FogUnknown.Location = new System.Drawing.Point(287, 82);
-            this.FogUnknown.Maximum = new decimal(new int[] {
-            63,
-            0,
-            0,
-            0});
-            this.FogUnknown.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FogUnknown.Name = "FogUnknown";
-            this.FogUnknown.ShiftMultiplier = 20;
-            this.FogUnknown.Size = new System.Drawing.Size(80, 20);
-            this.FogUnknown.TabIndex = 23;
-            this.EnvironmentControlTooltip.SetToolTip(this.FogUnknown, "The time it takes to switch into this environment");
-            this.FogUnknown.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FogUnknown.ValueChanged += new System.EventHandler(this.FogDistance_Leave);
-            // 
-            // FogDistance
-            // 
-            this.FogDistance.AlwaysFireValueChanged = false;
-            this.FogDistance.DisplayDigits = 1;
-            this.FogDistance.DoValueRollover = false;
-            this.FogDistance.Enabled = false;
-            this.FogDistance.Hexadecimal = true;
-            this.FogDistance.IncrementMouseWheel = 1;
-            this.FogDistance.Location = new System.Drawing.Point(85, 107);
-            this.FogDistance.Maximum = new decimal(new int[] {
-            1023,
-            0,
-            0,
-            0});
-            this.FogDistance.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FogDistance.Name = "FogDistance";
-            this.FogDistance.ShiftMultiplier = 20;
-            this.FogDistance.Size = new System.Drawing.Size(80, 20);
-            this.FogDistance.TabIndex = 22;
-            this.EnvironmentControlTooltip.SetToolTip(this.FogDistance, "Max value is 3E4, the lower the closer the fog is to the camera");
-            this.FogDistance.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FogDistance.ValueChanged += new System.EventHandler(this.FogDistance_Leave);
-            // 
-            // EnvironmentSelect
-            // 
-            this.EnvironmentSelect.AlwaysFireValueChanged = false;
-            this.EnvironmentSelect.DisplayDigits = 1;
-            this.EnvironmentSelect.DoValueRollover = true;
-            this.EnvironmentSelect.Hexadecimal = true;
-            this.EnvironmentSelect.IncrementMouseWheel = 3;
-            this.EnvironmentSelect.Location = new System.Drawing.Point(9, 22);
-            this.EnvironmentSelect.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.EnvironmentSelect.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.EnvironmentSelect.Name = "EnvironmentSelect";
-            this.EnvironmentSelect.ShiftMultiplier = 1;
-            this.EnvironmentSelect.Size = new System.Drawing.Size(65, 20);
-            this.EnvironmentSelect.TabIndex = 16;
-            this.EnvironmentSelect.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentSelect.ValueChanged += new System.EventHandler(this.EnvironmentSelect_ValueChanged);
-            // 
-            // niceLine3
-            // 
-            this.niceLine3.Location = new System.Drawing.Point(9, 45);
-            this.niceLine3.Name = "niceLine3";
-            this.niceLine3.Size = new System.Drawing.Size(381, 15);
-            this.niceLine3.TabIndex = 20;
-            this.niceLine3.TabStop = false;
-            // 
-            // AdditionalLightRadius
-            // 
-            this.AdditionalLightRadius.AlwaysFireValueChanged = false;
-            this.AdditionalLightRadius.DisplayDigits = 1;
-            this.AdditionalLightRadius.DoValueRollover = false;
-            this.AdditionalLightRadius.Enabled = false;
-            this.AdditionalLightRadius.IncrementMouseWheel = 1;
-            this.AdditionalLightRadius.Location = new System.Drawing.Point(261, 82);
-            this.AdditionalLightRadius.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.AdditionalLightRadius.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightRadius.Name = "AdditionalLightRadius";
-            this.AdditionalLightRadius.ShiftMultiplier = 10;
-            this.AdditionalLightRadius.Size = new System.Drawing.Size(100, 20);
-            this.AdditionalLightRadius.TabIndex = 18;
-            this.AdditionalLightRadius.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightRadius.ValueChanged += new System.EventHandler(this.AdditionalLightRadius_ValueChanged);
-            // 
-            // AdditionalLightZPos
-            // 
-            this.AdditionalLightZPos.AlwaysFireValueChanged = false;
-            this.AdditionalLightZPos.DisplayDigits = 1;
-            this.AdditionalLightZPos.DoValueRollover = false;
-            this.AdditionalLightZPos.Enabled = false;
-            this.AdditionalLightZPos.IncrementMouseWheel = 1;
-            this.AdditionalLightZPos.Location = new System.Drawing.Point(74, 84);
-            this.AdditionalLightZPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.AdditionalLightZPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.AdditionalLightZPos.Name = "AdditionalLightZPos";
-            this.AdditionalLightZPos.ShiftMultiplier = 20;
-            this.AdditionalLightZPos.Size = new System.Drawing.Size(100, 20);
-            this.AdditionalLightZPos.TabIndex = 12;
-            this.AdditionalLightZPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightZPos.ValueChanged += new System.EventHandler(this.AdditionalLightZPos_ValueChanged);
-            // 
-            // AdditionalLightNS
-            // 
-            this.AdditionalLightNS.AlwaysFireValueChanged = false;
-            this.AdditionalLightNS.DisplayDigits = 1;
-            this.AdditionalLightNS.DoValueRollover = false;
-            this.AdditionalLightNS.Enabled = false;
-            this.AdditionalLightNS.IncrementMouseWheel = 1;
-            this.AdditionalLightNS.Location = new System.Drawing.Point(261, 30);
-            this.AdditionalLightNS.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.AdditionalLightNS.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightNS.Name = "AdditionalLightNS";
-            this.AdditionalLightNS.ShiftMultiplier = 1;
-            this.AdditionalLightNS.Size = new System.Drawing.Size(100, 20);
-            this.AdditionalLightNS.TabIndex = 13;
-            this.AdditionalLightNS.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightNS.ValueChanged += new System.EventHandler(this.AdditionalLightNS_ValueChanged);
-            // 
-            // AdditionalLightYPos
-            // 
-            this.AdditionalLightYPos.AlwaysFireValueChanged = false;
-            this.AdditionalLightYPos.DisplayDigits = 1;
-            this.AdditionalLightYPos.DoValueRollover = false;
-            this.AdditionalLightYPos.Enabled = false;
-            this.AdditionalLightYPos.IncrementMouseWheel = 1;
-            this.AdditionalLightYPos.Location = new System.Drawing.Point(74, 58);
-            this.AdditionalLightYPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.AdditionalLightYPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.AdditionalLightYPos.Name = "AdditionalLightYPos";
-            this.AdditionalLightYPos.ShiftMultiplier = 20;
-            this.AdditionalLightYPos.Size = new System.Drawing.Size(100, 20);
-            this.AdditionalLightYPos.TabIndex = 11;
-            this.AdditionalLightYPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightYPos.ValueChanged += new System.EventHandler(this.AdditionalLightYPos_ValueChanged);
-            // 
-            // AdditionalLightEW
-            // 
-            this.AdditionalLightEW.AlwaysFireValueChanged = false;
-            this.AdditionalLightEW.DisplayDigits = 1;
-            this.AdditionalLightEW.DoValueRollover = false;
-            this.AdditionalLightEW.Enabled = false;
-            this.AdditionalLightEW.IncrementMouseWheel = 1;
-            this.AdditionalLightEW.Location = new System.Drawing.Point(261, 56);
-            this.AdditionalLightEW.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.AdditionalLightEW.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightEW.Name = "AdditionalLightEW";
-            this.AdditionalLightEW.ShiftMultiplier = 1;
-            this.AdditionalLightEW.Size = new System.Drawing.Size(100, 20);
-            this.AdditionalLightEW.TabIndex = 14;
-            this.AdditionalLightEW.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightEW.ValueChanged += new System.EventHandler(this.AdditionalLightEW_ValueChanged);
-            // 
-            // AdditionalLightXPos
-            // 
-            this.AdditionalLightXPos.AlwaysFireValueChanged = false;
-            this.AdditionalLightXPos.DisplayDigits = 1;
-            this.AdditionalLightXPos.DoValueRollover = false;
-            this.AdditionalLightXPos.Enabled = false;
-            this.AdditionalLightXPos.IncrementMouseWheel = 1;
-            this.AdditionalLightXPos.Location = new System.Drawing.Point(74, 32);
-            this.AdditionalLightXPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.AdditionalLightXPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.AdditionalLightXPos.Name = "AdditionalLightXPos";
-            this.AdditionalLightXPos.ShiftMultiplier = 20;
-            this.AdditionalLightXPos.Size = new System.Drawing.Size(100, 20);
-            this.AdditionalLightXPos.TabIndex = 10;
-            this.AdditionalLightXPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightXPos.ValueChanged += new System.EventHandler(this.AdditionalLightXPos_ValueChanged);
-            // 
-            // AdditionalLightSelect
-            // 
-            this.AdditionalLightSelect.AlwaysFireValueChanged = false;
-            this.AdditionalLightSelect.DisplayDigits = 1;
-            this.AdditionalLightSelect.DoValueRollover = true;
-            this.AdditionalLightSelect.IncrementMouseWheel = 3;
-            this.AdditionalLightSelect.Location = new System.Drawing.Point(9, 22);
-            this.AdditionalLightSelect.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightSelect.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.AdditionalLightSelect.Name = "AdditionalLightSelect";
-            this.AdditionalLightSelect.ShiftMultiplier = 1;
-            this.AdditionalLightSelect.Size = new System.Drawing.Size(65, 20);
-            this.AdditionalLightSelect.TabIndex = 7;
-            this.AdditionalLightSelect.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.AdditionalLightSelect.ValueChanged += new System.EventHandler(this.AdditionalLightSelect_ValueChanged);
-            // 
-            // niceLine5
-            // 
-            this.niceLine5.Location = new System.Drawing.Point(6, 42);
-            this.niceLine5.Name = "niceLine5";
-            this.niceLine5.Size = new System.Drawing.Size(384, 15);
-            this.niceLine5.TabIndex = 20;
-            this.niceLine5.TabStop = false;
-            // 
-            // WindStrength
-            // 
-            this.WindStrength.AlwaysFireValueChanged = false;
-            this.WindStrength.DisplayDigits = 2;
-            this.WindStrength.DoValueRollover = false;
-            this.WindStrength.Hexadecimal = true;
-            this.WindStrength.IncrementMouseWheel = 1;
-            this.WindStrength.Location = new System.Drawing.Point(257, 47);
-            this.WindStrength.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.WindStrength.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindStrength.Name = "WindStrength";
-            this.WindStrength.ShiftMultiplier = 4;
-            this.WindStrength.Size = new System.Drawing.Size(50, 20);
-            this.WindStrength.TabIndex = 53;
-            this.WindStrength.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindStrength.ValueChanged += new System.EventHandler(this.WindStrength_Leave);
-            // 
-            // WindSouth
-            // 
-            this.WindSouth.AlwaysFireValueChanged = false;
-            this.WindSouth.DisplayDigits = 2;
-            this.WindSouth.DoValueRollover = false;
-            this.WindSouth.Hexadecimal = true;
-            this.WindSouth.IncrementMouseWheel = 1;
-            this.WindSouth.Location = new System.Drawing.Point(257, 23);
-            this.WindSouth.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.WindSouth.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindSouth.Name = "WindSouth";
-            this.WindSouth.ShiftMultiplier = 4;
-            this.WindSouth.Size = new System.Drawing.Size(50, 20);
-            this.WindSouth.TabIndex = 52;
-            this.WindSouth.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindSouth.ValueChanged += new System.EventHandler(this.WindSouth_Leave);
-            // 
-            // WindVertical
-            // 
-            this.WindVertical.AlwaysFireValueChanged = false;
-            this.WindVertical.DisplayDigits = 2;
-            this.WindVertical.DoValueRollover = false;
-            this.WindVertical.Hexadecimal = true;
-            this.WindVertical.IncrementMouseWheel = 1;
-            this.WindVertical.Location = new System.Drawing.Point(83, 47);
-            this.WindVertical.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.WindVertical.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindVertical.Name = "WindVertical";
-            this.WindVertical.ShiftMultiplier = 4;
-            this.WindVertical.Size = new System.Drawing.Size(50, 20);
-            this.WindVertical.TabIndex = 51;
-            this.WindVertical.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindVertical.ValueChanged += new System.EventHandler(this.WindVertical_Leave);
-            // 
-            // WindWest
-            // 
-            this.WindWest.AlwaysFireValueChanged = false;
-            this.WindWest.DisplayDigits = 2;
-            this.WindWest.DoValueRollover = false;
-            this.WindWest.Hexadecimal = true;
-            this.WindWest.IncrementMouseWheel = 1;
-            this.WindWest.Location = new System.Drawing.Point(83, 23);
-            this.WindWest.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.WindWest.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindWest.Name = "WindWest";
-            this.WindWest.ShiftMultiplier = 4;
-            this.WindWest.Size = new System.Drawing.Size(50, 20);
-            this.WindWest.TabIndex = 50;
-            this.WindWest.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.WindWest.ValueChanged += new System.EventHandler(this.WindWest_Leave);
-            // 
-            // SoundEcho
-            // 
-            this.SoundEcho.AlwaysFireValueChanged = false;
-            this.SoundEcho.DisplayDigits = 2;
-            this.SoundEcho.DoValueRollover = false;
-            this.SoundEcho.Hexadecimal = true;
-            this.SoundEcho.IncrementMouseWheel = 1;
-            this.SoundEcho.Location = new System.Drawing.Point(85, 71);
-            this.SoundEcho.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.SoundEcho.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.SoundEcho.Name = "SoundEcho";
-            this.SoundEcho.ShiftMultiplier = 4;
-            this.SoundEcho.Size = new System.Drawing.Size(50, 20);
-            this.SoundEcho.TabIndex = 49;
-            this.SoundEcho.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.SoundEcho.ValueChanged += new System.EventHandler(this.SoundEcho_Leave);
-            // 
-            // TimeSpeed
-            // 
-            this.TimeSpeed.AlwaysFireValueChanged = false;
-            this.TimeSpeed.DisplayDigits = 2;
-            this.TimeSpeed.DoValueRollover = false;
-            this.TimeSpeed.Hexadecimal = true;
-            this.TimeSpeed.IncrementMouseWheel = 1;
-            this.TimeSpeed.Location = new System.Drawing.Point(85, 47);
-            this.TimeSpeed.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.TimeSpeed.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TimeSpeed.Name = "TimeSpeed";
-            this.TimeSpeed.ShiftMultiplier = 4;
-            this.TimeSpeed.Size = new System.Drawing.Size(50, 20);
-            this.TimeSpeed.TabIndex = 48;
-            this.TimeSpeed.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.TimeSpeed.ValueChanged += new System.EventHandler(this.TimeSpeed_Leave);
-            // 
-            // TimeMinute
-            // 
-            this.TimeMinute.AlwaysFireValueChanged = false;
-            this.TimeMinute.DisplayDigits = 1;
-            this.TimeMinute.DoValueRollover = false;
-            this.TimeMinute.Enabled = false;
-            this.TimeMinute.IncrementMouseWheel = 1;
-            this.TimeMinute.Location = new System.Drawing.Point(194, 22);
-            this.TimeMinute.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.TimeMinute.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TimeMinute.Name = "TimeMinute";
-            this.TimeMinute.ShiftMultiplier = 10;
-            this.TimeMinute.Size = new System.Drawing.Size(50, 20);
-            this.TimeMinute.TabIndex = 46;
-            this.TimeMinute.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TimeMinute.ValueChanged += new System.EventHandler(this.TimeMinute_ValueChanged);
-            // 
-            // TimeHour
-            // 
-            this.TimeHour.AlwaysFireValueChanged = false;
-            this.TimeHour.DisplayDigits = 1;
-            this.TimeHour.DoValueRollover = false;
-            this.TimeHour.Enabled = false;
-            this.TimeHour.IncrementMouseWheel = 1;
-            this.TimeHour.Location = new System.Drawing.Point(85, 22);
-            this.TimeHour.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.TimeHour.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TimeHour.Name = "TimeHour";
-            this.TimeHour.ShiftMultiplier = 4;
-            this.TimeHour.Size = new System.Drawing.Size(50, 20);
-            this.TimeHour.TabIndex = 44;
-            this.TimeHour.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TimeHour.ValueChanged += new System.EventHandler(this.TimeHour_ValueChanged);
-            // 
-            // ExitHeaderIndex
-            // 
-            this.ExitHeaderIndex.AlwaysFireValueChanged = false;
-            this.ExitHeaderIndex.DisplayDigits = 1;
-            this.ExitHeaderIndex.DoValueRollover = true;
-            this.ExitHeaderIndex.Hexadecimal = true;
-            this.ExitHeaderIndex.IncrementMouseWheel = 1;
-            this.ExitHeaderIndex.Location = new System.Drawing.Point(221, 9);
-            this.ExitHeaderIndex.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.ExitHeaderIndex.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.ExitHeaderIndex.Name = "ExitHeaderIndex";
-            this.ExitHeaderIndex.ShiftMultiplier = 1;
-            this.ExitHeaderIndex.Size = new System.Drawing.Size(40, 20);
-            this.ExitHeaderIndex.TabIndex = 112;
-            this.ExitHeaderIndex.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ExitHeaderIndex.ValueChanged += new System.EventHandler(this.ExitHeaderIndex_ValueChanged);
-            // 
-            // ExitSceneIndex
-            // 
-            this.ExitSceneIndex.AlwaysFireValueChanged = false;
-            this.ExitSceneIndex.DisplayDigits = 1;
-            this.ExitSceneIndex.DoValueRollover = true;
-            this.ExitSceneIndex.Hexadecimal = true;
-            this.ExitSceneIndex.IncrementMouseWheel = 1;
-            this.ExitSceneIndex.Location = new System.Drawing.Point(90, 9);
-            this.ExitSceneIndex.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.ExitSceneIndex.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.ExitSceneIndex.Name = "ExitSceneIndex";
-            this.ExitSceneIndex.ShiftMultiplier = 1;
-            this.ExitSceneIndex.Size = new System.Drawing.Size(40, 20);
-            this.ExitSceneIndex.TabIndex = 116;
-            this.ExitSceneIndex.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ExitSceneIndex.ValueChanged += new System.EventHandler(this.ExitSceneIndex_ValueChanged);
-            // 
-            // ExitSpawnIndex
-            // 
-            this.ExitSpawnIndex.AlwaysFireValueChanged = false;
-            this.ExitSpawnIndex.DisplayDigits = 1;
-            this.ExitSpawnIndex.DoValueRollover = true;
-            this.ExitSpawnIndex.Hexadecimal = true;
-            this.ExitSpawnIndex.IncrementMouseWheel = 1;
-            this.ExitSpawnIndex.Location = new System.Drawing.Point(90, 32);
-            this.ExitSpawnIndex.Maximum = new decimal(new int[] {
-            31,
-            0,
-            0,
-            0});
-            this.ExitSpawnIndex.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.ExitSpawnIndex.Name = "ExitSpawnIndex";
-            this.ExitSpawnIndex.ShiftMultiplier = 1;
-            this.ExitSpawnIndex.Size = new System.Drawing.Size(40, 20);
-            this.ExitSpawnIndex.TabIndex = 114;
-            this.ExitSpawnIndex.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ExitSpawnIndex.ValueChanged += new System.EventHandler(this.ExitSpawnIndex_ValueChanged);
-            // 
-            // ExitFadeOut
-            // 
-            this.ExitFadeOut.AlwaysFireValueChanged = false;
-            this.ExitFadeOut.DisplayDigits = 1;
-            this.ExitFadeOut.DoValueRollover = true;
-            this.ExitFadeOut.Hexadecimal = true;
-            this.ExitFadeOut.IncrementMouseWheel = 1;
-            this.ExitFadeOut.Location = new System.Drawing.Point(90, 78);
-            this.ExitFadeOut.Maximum = new decimal(new int[] {
-            63,
-            0,
-            0,
-            0});
-            this.ExitFadeOut.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.ExitFadeOut.Name = "ExitFadeOut";
-            this.ExitFadeOut.ShiftMultiplier = 1;
-            this.ExitFadeOut.Size = new System.Drawing.Size(40, 20);
-            this.ExitFadeOut.TabIndex = 110;
-            this.EnvironmentControlTooltip.SetToolTip(this.ExitFadeOut, resources.GetString("ExitFadeOut.ToolTip"));
-            this.ExitFadeOut.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ExitFadeOut.ValueChanged += new System.EventHandler(this.ExitFadeOut_ValueChanged);
-            // 
-            // ExitFadeIn
-            // 
-            this.ExitFadeIn.AlwaysFireValueChanged = false;
-            this.ExitFadeIn.DisplayDigits = 1;
-            this.ExitFadeIn.DoValueRollover = true;
-            this.ExitFadeIn.Hexadecimal = true;
-            this.ExitFadeIn.IncrementMouseWheel = 1;
-            this.ExitFadeIn.Location = new System.Drawing.Point(90, 55);
-            this.ExitFadeIn.Maximum = new decimal(new int[] {
-            63,
-            0,
-            0,
-            0});
-            this.ExitFadeIn.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.ExitFadeIn.Name = "ExitFadeIn";
-            this.ExitFadeIn.ShiftMultiplier = 1;
-            this.ExitFadeIn.Size = new System.Drawing.Size(40, 20);
-            this.ExitFadeIn.TabIndex = 107;
-            this.EnvironmentControlTooltip.SetToolTip(this.ExitFadeIn, resources.GetString("ExitFadeIn.ToolTip"));
-            this.ExitFadeIn.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ExitFadeIn.ValueChanged += new System.EventHandler(this.ExitFadeIn_ValueChanged);
-            // 
-            // niceLine12
-            // 
-            this.niceLine12.Location = new System.Drawing.Point(3, 261);
-            this.niceLine12.Name = "niceLine12";
-            this.niceLine12.Size = new System.Drawing.Size(385, 15);
-            this.niceLine12.TabIndex = 100;
-            this.niceLine12.TabStop = false;
-            // 
-            // PolytypeUnk2
-            // 
-            this.PolytypeUnk2.AlwaysFireValueChanged = false;
-            this.PolytypeUnk2.DisplayDigits = 1;
-            this.PolytypeUnk2.DoValueRollover = true;
-            this.PolytypeUnk2.Hexadecimal = true;
-            this.PolytypeUnk2.IncrementMouseWheel = 3;
-            this.PolytypeUnk2.Location = new System.Drawing.Point(169, 405);
-            this.PolytypeUnk2.Maximum = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            this.PolytypeUnk2.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.PolytypeUnk2.Name = "PolytypeUnk2";
-            this.PolytypeUnk2.ShiftMultiplier = 1;
-            this.PolytypeUnk2.Size = new System.Drawing.Size(40, 20);
-            this.PolytypeUnk2.TabIndex = 97;
-            this.EnvironmentControlTooltip.SetToolTip(this.PolytypeUnk2, "asd");
-            this.PolytypeUnk2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PolytypeUnk2.ValueChanged += new System.EventHandler(this.numericUpDownEx2_ValueChanged_1);
-            // 
-            // PolytypeUnk1
-            // 
-            this.PolytypeUnk1.AlwaysFireValueChanged = false;
-            this.PolytypeUnk1.DisplayDigits = 1;
-            this.PolytypeUnk1.DoValueRollover = true;
-            this.PolytypeUnk1.Hexadecimal = true;
-            this.PolytypeUnk1.IncrementMouseWheel = 3;
-            this.PolytypeUnk1.Location = new System.Drawing.Point(64, 405);
-            this.PolytypeUnk1.Maximum = new decimal(new int[] {
-            63,
-            0,
-            0,
-            0});
-            this.PolytypeUnk1.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.PolytypeUnk1.Name = "PolytypeUnk1";
-            this.PolytypeUnk1.ShiftMultiplier = 1;
-            this.PolytypeUnk1.Size = new System.Drawing.Size(40, 20);
-            this.PolytypeUnk1.TabIndex = 95;
-            this.EnvironmentControlTooltip.SetToolTip(this.PolytypeUnk1, "asd");
-            this.PolytypeUnk1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PolytypeUnk1.ValueChanged += new System.EventHandler(this.numericUpDownEx1_ValueChanged_1);
-            // 
-            // niceLine7
-            // 
-            this.niceLine7.Location = new System.Drawing.Point(6, 202);
-            this.niceLine7.Name = "niceLine7";
-            this.niceLine7.Size = new System.Drawing.Size(385, 15);
-            this.niceLine7.TabIndex = 90;
-            this.niceLine7.TabStop = false;
-            // 
-            // CameraAngleNumeric
-            // 
-            this.CameraAngleNumeric.AlwaysFireValueChanged = false;
-            this.CameraAngleNumeric.DisplayDigits = 1;
-            this.CameraAngleNumeric.DoValueRollover = true;
-            this.CameraAngleNumeric.Hexadecimal = true;
-            this.CameraAngleNumeric.IncrementMouseWheel = 1;
-            this.CameraAngleNumeric.Location = new System.Drawing.Point(324, 56);
-            this.CameraAngleNumeric.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.CameraAngleNumeric.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.CameraAngleNumeric.Name = "CameraAngleNumeric";
-            this.CameraAngleNumeric.ShiftMultiplier = 1;
-            this.CameraAngleNumeric.Size = new System.Drawing.Size(40, 20);
-            this.CameraAngleNumeric.TabIndex = 89;
-            this.EnvironmentControlTooltip.SetToolTip(this.CameraAngleNumeric, "Changes the camera ID when Link steps on it");
-            this.CameraAngleNumeric.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraAngleNumeric.ValueChanged += new System.EventHandler(this.CameraAngleNumeric_ValueChanged);
-            // 
-            // ExitNumber
-            // 
-            this.ExitNumber.AlwaysFireValueChanged = false;
-            this.ExitNumber.DisplayDigits = 1;
-            this.ExitNumber.DoValueRollover = true;
-            this.ExitNumber.Hexadecimal = true;
-            this.ExitNumber.IncrementMouseWheel = 1;
-            this.ExitNumber.Location = new System.Drawing.Point(89, 56);
-            this.ExitNumber.Maximum = new decimal(new int[] {
-            31,
-            0,
-            0,
-            0});
-            this.ExitNumber.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.ExitNumber.Name = "ExitNumber";
-            this.ExitNumber.ShiftMultiplier = 1;
-            this.ExitNumber.Size = new System.Drawing.Size(40, 20);
-            this.ExitNumber.TabIndex = 1;
-            this.EnvironmentControlTooltip.SetToolTip(this.ExitNumber, "Exit ID that will be triggered when Link steps or is slightly above of it.");
-            this.ExitNumber.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ExitNumber.ValueChanged += new System.EventHandler(this.numericUpDownEx10_ValueChanged);
-            // 
-            // TerrainType
-            // 
-            this.TerrainType.AlwaysFireValueChanged = false;
-            this.TerrainType.DisplayDigits = 1;
-            this.TerrainType.DoValueRollover = true;
-            this.TerrainType.Hexadecimal = true;
-            this.TerrainType.IncrementMouseWheel = 3;
-            this.TerrainType.Location = new System.Drawing.Point(89, 108);
-            this.TerrainType.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.TerrainType.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.TerrainType.Name = "TerrainType";
-            this.TerrainType.ShiftMultiplier = 1;
-            this.TerrainType.Size = new System.Drawing.Size(40, 20);
-            this.TerrainType.TabIndex = 32;
-            this.EnvironmentControlTooltip.SetToolTip(this.TerrainType, resources.GetString("TerrainType.ToolTip"));
-            this.TerrainType.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.TerrainType.ValueChanged += new System.EventHandler(this.numericUpDownEx8_ValueChanged);
-            // 
-            // GroundType
-            // 
-            this.GroundType.AlwaysFireValueChanged = false;
-            this.GroundType.DisplayDigits = 1;
-            this.GroundType.DoValueRollover = true;
-            this.GroundType.Hexadecimal = true;
-            this.GroundType.IncrementMouseWheel = 3;
-            this.GroundType.Location = new System.Drawing.Point(324, 108);
-            this.GroundType.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.GroundType.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.GroundType.Name = "GroundType";
-            this.GroundType.ShiftMultiplier = 1;
-            this.GroundType.Size = new System.Drawing.Size(40, 20);
-            this.GroundType.TabIndex = 80;
-            this.EnvironmentControlTooltip.SetToolTip(this.GroundType, resources.GetString("GroundType.ToolTip"));
-            this.GroundType.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.GroundType.ValueChanged += new System.EventHandler(this.numericUpDownEx9_ValueChanged);
-            // 
-            // EnvironmentType
-            // 
-            this.EnvironmentType.AlwaysFireValueChanged = false;
-            this.EnvironmentType.DisplayDigits = 1;
-            this.EnvironmentType.DoValueRollover = true;
-            this.EnvironmentType.Hexadecimal = true;
-            this.EnvironmentType.IncrementMouseWheel = 1;
-            this.EnvironmentType.Location = new System.Drawing.Point(324, 82);
-            this.EnvironmentType.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.EnvironmentType.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.EnvironmentType.Name = "EnvironmentType";
-            this.EnvironmentType.ShiftMultiplier = 1;
-            this.EnvironmentType.Size = new System.Drawing.Size(40, 20);
-            this.EnvironmentType.TabIndex = 26;
-            this.EnvironmentControlTooltip.SetToolTip(this.EnvironmentType, "0: Default, loads the first 4 environments\r\n1-7: Loads environments X to X+3, X b" +
-        "eing flag * 4\r\n8-F: Same as 0-7\r\nNote: Each one of the 4 environments is used fo" +
-        "r a different time of the day");
-            this.EnvironmentType.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EnvironmentType.ValueChanged += new System.EventHandler(this.numericUpDownEx7_ValueChanged);
-            // 
-            // EchoRange
-            // 
-            this.EchoRange.AlwaysFireValueChanged = false;
-            this.EchoRange.DisplayDigits = 1;
-            this.EchoRange.DoValueRollover = true;
-            this.EchoRange.Hexadecimal = true;
-            this.EchoRange.IncrementMouseWheel = 3;
-            this.EchoRange.Location = new System.Drawing.Point(89, 82);
-            this.EchoRange.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.EchoRange.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.EchoRange.Name = "EchoRange";
-            this.EchoRange.ShiftMultiplier = 1;
-            this.EchoRange.Size = new System.Drawing.Size(40, 20);
-            this.EchoRange.TabIndex = 24;
-            this.EnvironmentControlTooltip.SetToolTip(this.EchoRange, "Sound echo when Link steps on it\r\n0: Use map value\r\n1-F: Echo ranges");
-            this.EchoRange.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.EchoRange.ValueChanged += new System.EventHandler(this.numericUpDownEx3_ValueChanged);
-            // 
-            // niceLine4
-            // 
-            this.niceLine4.Location = new System.Drawing.Point(3, 35);
-            this.niceLine4.Name = "niceLine4";
-            this.niceLine4.Size = new System.Drawing.Size(385, 15);
-            this.niceLine4.TabIndex = 22;
-            this.niceLine4.TabStop = false;
-            // 
-            // PolygonRawdata
-            // 
-            this.PolygonRawdata.AllowHex = true;
-            this.PolygonRawdata.Digits = 16;
-            this.PolygonRawdata.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PolygonRawdata.Location = new System.Drawing.Point(89, 9);
-            this.PolygonRawdata.Name = "PolygonRawdata";
-            this.PolygonRawdata.Size = new System.Drawing.Size(275, 20);
-            this.PolygonRawdata.TabIndex = 0;
-            this.PolygonRawdata.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PolygonRawData_KeyDown);
-            this.PolygonRawdata.Leave += new System.EventHandler(this.PolygonRawdata_Leave);
-            // 
-            // niceLine10
-            // 
-            this.niceLine10.Location = new System.Drawing.Point(7, 339);
-            this.niceLine10.Name = "niceLine10";
-            this.niceLine10.Size = new System.Drawing.Size(385, 15);
-            this.niceLine10.TabIndex = 93;
-            this.niceLine10.TabStop = false;
-            // 
-            // niceLine11
-            // 
-            this.niceLine11.Location = new System.Drawing.Point(6, 384);
-            this.niceLine11.Name = "niceLine11";
-            this.niceLine11.Size = new System.Drawing.Size(385, 15);
-            this.niceLine11.TabIndex = 99;
-            this.niceLine11.TabStop = false;
-            // 
-            // niceLine1
-            // 
-            this.niceLine1.Location = new System.Drawing.Point(9, 46);
-            this.niceLine1.Name = "niceLine1";
-            this.niceLine1.Size = new System.Drawing.Size(382, 15);
-            this.niceLine1.TabIndex = 21;
-            this.niceLine1.TabStop = false;
-            // 
-            // PolygonSelect
-            // 
-            this.PolygonSelect.AlwaysFireValueChanged = false;
-            this.PolygonSelect.DisplayDigits = 1;
-            this.PolygonSelect.DoValueRollover = true;
-            this.PolygonSelect.Enabled = false;
-            this.PolygonSelect.IncrementMouseWheel = 3;
-            this.PolygonSelect.Location = new System.Drawing.Point(9, 22);
-            this.PolygonSelect.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.PolygonSelect.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.PolygonSelect.Name = "PolygonSelect";
-            this.PolygonSelect.ShiftMultiplier = 1;
-            this.PolygonSelect.Size = new System.Drawing.Size(65, 20);
-            this.PolygonSelect.TabIndex = 2;
-            this.PolygonSelect.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PolygonSelect.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
-            // 
-            // actorEditControl3
-            // 
-            this.actorEditControl3.ActorNumber = -1;
-            this.actorEditControl3.Enabled = false;
-            this.actorEditControl3.Location = new System.Drawing.Point(3, 328);
-            this.actorEditControl3.Name = "actorEditControl3";
-            this.actorEditControl3.Size = new System.Drawing.Size(402, 319);
-            this.actorEditControl3.TabIndex = 1;
-            // 
-            // actorEditControl2
-            // 
-            this.actorEditControl2.ActorNumber = -1;
-            this.actorEditControl2.Enabled = false;
-            this.actorEditControl2.Location = new System.Drawing.Point(3, 3);
-            this.actorEditControl2.Name = "actorEditControl2";
-            this.actorEditControl2.Size = new System.Drawing.Size(402, 319);
-            this.actorEditControl2.TabIndex = 0;
-            // 
-            // ActorCutsceneUnknown
-            // 
-            this.ActorCutsceneUnknown.AlwaysFireValueChanged = false;
-            this.ActorCutsceneUnknown.DisplayDigits = 1;
-            this.ActorCutsceneUnknown.DoValueRollover = false;
-            this.ActorCutsceneUnknown.Enabled = false;
-            this.ActorCutsceneUnknown.Hexadecimal = true;
-            this.ActorCutsceneUnknown.IncrementMouseWheel = 1;
-            this.ActorCutsceneUnknown.Location = new System.Drawing.Point(100, 141);
-            this.ActorCutsceneUnknown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.ActorCutsceneUnknown.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorCutsceneUnknown.Name = "ActorCutsceneUnknown";
-            this.ActorCutsceneUnknown.ShiftMultiplier = 20;
-            this.ActorCutsceneUnknown.Size = new System.Drawing.Size(53, 20);
-            this.ActorCutsceneUnknown.TabIndex = 51;
-            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneUnknown, "Value 0 causes bugs");
-            this.ActorCutsceneUnknown.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorCutsceneUnknown.ValueChanged += new System.EventHandler(this.ActorCutsceneUnknown_ValueChanged);
-            // 
-            // ActorCutsceneAdditionalActorCs
-            // 
-            this.ActorCutsceneAdditionalActorCs.AlwaysFireValueChanged = false;
-            this.ActorCutsceneAdditionalActorCs.DisplayDigits = 1;
-            this.ActorCutsceneAdditionalActorCs.DoValueRollover = false;
-            this.ActorCutsceneAdditionalActorCs.Enabled = false;
-            this.ActorCutsceneAdditionalActorCs.IncrementMouseWheel = 1;
-            this.ActorCutsceneAdditionalActorCs.Location = new System.Drawing.Point(100, 115);
-            this.ActorCutsceneAdditionalActorCs.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.ActorCutsceneAdditionalActorCs.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.ActorCutsceneAdditionalActorCs.Name = "ActorCutsceneAdditionalActorCs";
-            this.ActorCutsceneAdditionalActorCs.ShiftMultiplier = 20;
-            this.ActorCutsceneAdditionalActorCs.Size = new System.Drawing.Size(53, 20);
-            this.ActorCutsceneAdditionalActorCs.TabIndex = 22;
-            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneAdditionalActorCs, "Additional Actor Cutscene ID (needed for chests)");
-            this.ActorCutsceneAdditionalActorCs.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorCutsceneAdditionalActorCs.ValueChanged += new System.EventHandler(this.ActorCutsceneAdditionalActorCs_ValueChanged);
-            // 
-            // ActorCutsceneCsIndex
-            // 
-            this.ActorCutsceneCsIndex.AlwaysFireValueChanged = false;
-            this.ActorCutsceneCsIndex.DisplayDigits = 1;
-            this.ActorCutsceneCsIndex.DoValueRollover = false;
-            this.ActorCutsceneCsIndex.Enabled = false;
-            this.ActorCutsceneCsIndex.IncrementMouseWheel = 1;
-            this.ActorCutsceneCsIndex.Location = new System.Drawing.Point(100, 89);
-            this.ActorCutsceneCsIndex.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.ActorCutsceneCsIndex.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.ActorCutsceneCsIndex.Name = "ActorCutsceneCsIndex";
-            this.ActorCutsceneCsIndex.ShiftMultiplier = 20;
-            this.ActorCutsceneCsIndex.Size = new System.Drawing.Size(53, 20);
-            this.ActorCutsceneCsIndex.TabIndex = 12;
-            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneCsIndex, "As of now, SharpOcarina can only have 1 cutscene, so only ID 0 or NULL are possib" +
-        "le values");
-            this.ActorCutsceneCsIndex.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorCutsceneCsIndex.ValueChanged += new System.EventHandler(this.ActorCutsceneCsIndex_ValueChanged);
-            // 
-            // ActorCutsceneNumber
-            // 
-            this.ActorCutsceneNumber.AlwaysFireValueChanged = false;
-            this.ActorCutsceneNumber.DisplayDigits = 1;
-            this.ActorCutsceneNumber.DoValueRollover = true;
-            this.ActorCutsceneNumber.Hexadecimal = true;
-            this.ActorCutsceneNumber.IncrementMouseWheel = 3;
-            this.ActorCutsceneNumber.Location = new System.Drawing.Point(9, 22);
-            this.ActorCutsceneNumber.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.ActorCutsceneNumber.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ActorCutsceneNumber.Name = "ActorCutsceneNumber";
-            this.ActorCutsceneNumber.ShiftMultiplier = 1;
-            this.ActorCutsceneNumber.Size = new System.Drawing.Size(65, 20);
-            this.ActorCutsceneNumber.TabIndex = 7;
-            this.ActorCutsceneNumber.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorCutsceneNumber.ValueChanged += new System.EventHandler(this.ActorCutsceneNumber_ValueChanged);
-            // 
-            // niceLine18
-            // 
-            this.niceLine18.Location = new System.Drawing.Point(6, 42);
-            this.niceLine18.Name = "niceLine18";
-            this.niceLine18.Size = new System.Drawing.Size(384, 15);
-            this.niceLine18.TabIndex = 20;
-            this.niceLine18.TabStop = false;
-            // 
-            // ActorCutsceneLength
-            // 
-            this.ActorCutsceneLength.AlwaysFireValueChanged = false;
-            this.ActorCutsceneLength.DisplayDigits = 1;
-            this.ActorCutsceneLength.DoValueRollover = false;
-            this.ActorCutsceneLength.Enabled = false;
-            this.ActorCutsceneLength.IncrementMouseWheel = 1;
-            this.ActorCutsceneLength.Location = new System.Drawing.Point(100, 63);
-            this.ActorCutsceneLength.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.ActorCutsceneLength.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.ActorCutsceneLength.Name = "ActorCutsceneLength";
-            this.ActorCutsceneLength.ShiftMultiplier = 20;
-            this.ActorCutsceneLength.Size = new System.Drawing.Size(53, 20);
-            this.ActorCutsceneLength.TabIndex = 10;
-            this.EnvironmentControlTooltip.SetToolTip(this.ActorCutsceneLength, "Use 135 for Chest FFF6 cutscene");
-            this.ActorCutsceneLength.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorCutsceneLength.ValueChanged += new System.EventHandler(this.ActorCutsceneLength_ValueChanged);
-            // 
-            // PathwayZPos
-            // 
-            this.PathwayZPos.AlwaysFireValueChanged = false;
-            this.PathwayZPos.DisplayDigits = 1;
-            this.PathwayZPos.DoValueRollover = false;
-            this.PathwayZPos.Enabled = false;
-            this.PathwayZPos.IncrementMouseWheel = 1;
-            this.PathwayZPos.Location = new System.Drawing.Point(286, 139);
-            this.PathwayZPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.PathwayZPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.PathwayZPos.Name = "PathwayZPos";
-            this.PathwayZPos.ShiftMultiplier = 20;
-            this.PathwayZPos.Size = new System.Drawing.Size(84, 20);
-            this.PathwayZPos.TabIndex = 12;
-            this.PathwayZPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PathwayZPos.ValueChanged += new System.EventHandler(this.PathwayTransformZ_ValueChanged);
-            // 
-            // PathwayNumber
-            // 
-            this.PathwayNumber.AlwaysFireValueChanged = false;
-            this.PathwayNumber.DisplayDigits = 1;
-            this.PathwayNumber.DoValueRollover = true;
-            this.PathwayNumber.Hexadecimal = true;
-            this.PathwayNumber.IncrementMouseWheel = 3;
-            this.PathwayNumber.Location = new System.Drawing.Point(9, 22);
-            this.PathwayNumber.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.PathwayNumber.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.PathwayNumber.Name = "PathwayNumber";
-            this.PathwayNumber.ShiftMultiplier = 1;
-            this.PathwayNumber.Size = new System.Drawing.Size(65, 20);
-            this.PathwayNumber.TabIndex = 7;
-            this.PathwayNumber.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PathwayNumber.ValueChanged += new System.EventHandler(this.PathwayList_ValueChanged);
-            // 
-            // niceLine6
-            // 
-            this.niceLine6.Location = new System.Drawing.Point(6, 42);
-            this.niceLine6.Name = "niceLine6";
-            this.niceLine6.Size = new System.Drawing.Size(384, 15);
-            this.niceLine6.TabIndex = 20;
-            this.niceLine6.TabStop = false;
-            // 
-            // PathwayXPos
-            // 
-            this.PathwayXPos.AlwaysFireValueChanged = false;
-            this.PathwayXPos.DisplayDigits = 1;
-            this.PathwayXPos.DoValueRollover = false;
-            this.PathwayXPos.Enabled = false;
-            this.PathwayXPos.IncrementMouseWheel = 1;
-            this.PathwayXPos.Location = new System.Drawing.Point(286, 87);
-            this.PathwayXPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.PathwayXPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.PathwayXPos.Name = "PathwayXPos";
-            this.PathwayXPos.ShiftMultiplier = 20;
-            this.PathwayXPos.Size = new System.Drawing.Size(84, 20);
-            this.PathwayXPos.TabIndex = 10;
-            this.PathwayXPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PathwayXPos.ValueChanged += new System.EventHandler(this.PathwayTransformX_ValueChanged);
-            // 
-            // PathwayYPos
-            // 
-            this.PathwayYPos.AlwaysFireValueChanged = false;
-            this.PathwayYPos.DisplayDigits = 1;
-            this.PathwayYPos.DoValueRollover = false;
-            this.PathwayYPos.Enabled = false;
-            this.PathwayYPos.IncrementMouseWheel = 1;
-            this.PathwayYPos.Location = new System.Drawing.Point(286, 113);
-            this.PathwayYPos.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.PathwayYPos.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.PathwayYPos.Name = "PathwayYPos";
-            this.PathwayYPos.ShiftMultiplier = 20;
-            this.PathwayYPos.Size = new System.Drawing.Size(84, 20);
-            this.PathwayYPos.TabIndex = 11;
-            this.PathwayYPos.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.PathwayYPos.ValueChanged += new System.EventHandler(this.PathwayTransformY_ValueChanged);
-            // 
-            // actorEditControl1
-            // 
-            this.actorEditControl1.ActorNumber = -1;
-            this.actorEditControl1.Enabled = false;
-            this.actorEditControl1.Location = new System.Drawing.Point(3, 163);
-            this.actorEditControl1.Name = "actorEditControl1";
-            this.actorEditControl1.Size = new System.Drawing.Size(405, 319);
-            this.actorEditControl1.TabIndex = 3;
-            this.actorEditControl1.Load += new System.EventHandler(this.actorEditControl1_Load);
-            // 
-            // MarkerEndFrame
-            // 
-            this.MarkerEndFrame.AllowHex = false;
-            this.MarkerEndFrame.Digits = 5;
-            this.MarkerEndFrame.Enabled = false;
-            this.MarkerEndFrame.Location = new System.Drawing.Point(355, 201);
-            this.MarkerEndFrame.MaxLength = 255;
-            this.MarkerEndFrame.Name = "MarkerEndFrame";
-            this.MarkerEndFrame.Size = new System.Drawing.Size(37, 20);
-            this.MarkerEndFrame.TabIndex = 64;
-            this.MarkerEndFrame.Text = "0";
-            this.MarkerEndFrame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MarkerEndFrame_KeyDown);
-            this.MarkerEndFrame.Leave += new System.EventHandler(this.MarkerEndFrame_Leave);
-            // 
-            // CutsceneAbsolutePositionAngleView
-            // 
-            this.CutsceneAbsolutePositionAngleView.AlwaysFireValueChanged = false;
-            this.CutsceneAbsolutePositionAngleView.DecimalPlaces = 7;
-            this.CutsceneAbsolutePositionAngleView.DisplayDigits = 1;
-            this.CutsceneAbsolutePositionAngleView.DoValueRollover = false;
-            this.CutsceneAbsolutePositionAngleView.Enabled = false;
-            this.CutsceneAbsolutePositionAngleView.IncrementMouseWheel = 1;
-            this.CutsceneAbsolutePositionAngleView.Location = new System.Drawing.Point(98, 250);
-            this.CutsceneAbsolutePositionAngleView.Maximum = new decimal(new int[] {
-            179,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionAngleView.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionAngleView.Name = "CutsceneAbsolutePositionAngleView";
-            this.CutsceneAbsolutePositionAngleView.ShiftMultiplier = 10;
-            this.CutsceneAbsolutePositionAngleView.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneAbsolutePositionAngleView.TabIndex = 69;
-            this.CutsceneAbsolutePositionAngleView.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionAngleView.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionAngleView_ValueChanged);
-            // 
-            // CutscenePositionFrameDuration
-            // 
-            this.CutscenePositionFrameDuration.AlwaysFireValueChanged = false;
-            this.CutscenePositionFrameDuration.DisplayDigits = 1;
-            this.CutscenePositionFrameDuration.DoValueRollover = false;
-            this.CutscenePositionFrameDuration.Enabled = false;
-            this.CutscenePositionFrameDuration.IncrementMouseWheel = 1;
-            this.CutscenePositionFrameDuration.Location = new System.Drawing.Point(98, 198);
-            this.CutscenePositionFrameDuration.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CutscenePositionFrameDuration.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutscenePositionFrameDuration.Name = "CutscenePositionFrameDuration";
-            this.CutscenePositionFrameDuration.ShiftMultiplier = 20;
-            this.CutscenePositionFrameDuration.Size = new System.Drawing.Size(84, 20);
-            this.CutscenePositionFrameDuration.TabIndex = 67;
-            this.CutscenePositionFrameDuration.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutscenePositionFrameDuration.ValueChanged += new System.EventHandler(this.CutscenePositionFrameDuration_Leave);
-            // 
-            // CutsceneAbsolutePositionCameraRoll
-            // 
-            this.CutsceneAbsolutePositionCameraRoll.AlwaysFireValueChanged = false;
-            this.CutsceneAbsolutePositionCameraRoll.DisplayDigits = 1;
-            this.CutsceneAbsolutePositionCameraRoll.DoValueRollover = false;
-            this.CutsceneAbsolutePositionCameraRoll.Enabled = false;
-            this.CutsceneAbsolutePositionCameraRoll.IncrementMouseWheel = 1;
-            this.CutsceneAbsolutePositionCameraRoll.Location = new System.Drawing.Point(98, 224);
-            this.CutsceneAbsolutePositionCameraRoll.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionCameraRoll.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneAbsolutePositionCameraRoll.Name = "CutsceneAbsolutePositionCameraRoll";
-            this.CutsceneAbsolutePositionCameraRoll.ShiftMultiplier = 20;
-            this.CutsceneAbsolutePositionCameraRoll.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneAbsolutePositionCameraRoll.TabIndex = 68;
-            this.CutsceneAbsolutePositionCameraRoll.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionCameraRoll.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionCameraRoll_ValueChanged);
-            // 
-            // CutscenePositionZFocus
-            // 
-            this.CutscenePositionZFocus.AlwaysFireValueChanged = false;
-            this.CutscenePositionZFocus.DisplayDigits = 1;
-            this.CutscenePositionZFocus.DoValueRollover = false;
-            this.CutscenePositionZFocus.Enabled = false;
-            this.CutscenePositionZFocus.IncrementMouseWheel = 1;
-            this.CutscenePositionZFocus.Location = new System.Drawing.Point(289, 171);
-            this.CutscenePositionZFocus.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutscenePositionZFocus.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CutscenePositionZFocus.Name = "CutscenePositionZFocus";
-            this.CutscenePositionZFocus.ShiftMultiplier = 20;
-            this.CutscenePositionZFocus.Size = new System.Drawing.Size(84, 20);
-            this.CutscenePositionZFocus.TabIndex = 62;
-            this.CutscenePositionZFocus.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutscenePositionZFocus.ValueChanged += new System.EventHandler(this.CutscenePositionZFocus_ValueChanged);
-            // 
-            // CutscenePositionXFocus
-            // 
-            this.CutscenePositionXFocus.AlwaysFireValueChanged = false;
-            this.CutscenePositionXFocus.DisplayDigits = 1;
-            this.CutscenePositionXFocus.DoValueRollover = false;
-            this.CutscenePositionXFocus.Enabled = false;
-            this.CutscenePositionXFocus.IncrementMouseWheel = 1;
-            this.CutscenePositionXFocus.Location = new System.Drawing.Point(289, 119);
-            this.CutscenePositionXFocus.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutscenePositionXFocus.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CutscenePositionXFocus.Name = "CutscenePositionXFocus";
-            this.CutscenePositionXFocus.ShiftMultiplier = 20;
-            this.CutscenePositionXFocus.Size = new System.Drawing.Size(84, 20);
-            this.CutscenePositionXFocus.TabIndex = 59;
-            this.CutscenePositionXFocus.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutscenePositionXFocus.ValueChanged += new System.EventHandler(this.CutscenePositionXFocus_ValueChanged);
-            // 
-            // CutscenePositionYFocus
-            // 
-            this.CutscenePositionYFocus.AlwaysFireValueChanged = false;
-            this.CutscenePositionYFocus.DisplayDigits = 1;
-            this.CutscenePositionYFocus.DoValueRollover = false;
-            this.CutscenePositionYFocus.Enabled = false;
-            this.CutscenePositionYFocus.IncrementMouseWheel = 1;
-            this.CutscenePositionYFocus.Location = new System.Drawing.Point(289, 145);
-            this.CutscenePositionYFocus.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutscenePositionYFocus.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CutscenePositionYFocus.Name = "CutscenePositionYFocus";
-            this.CutscenePositionYFocus.ShiftMultiplier = 20;
-            this.CutscenePositionYFocus.Size = new System.Drawing.Size(84, 20);
-            this.CutscenePositionYFocus.TabIndex = 61;
-            this.CutscenePositionYFocus.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutscenePositionYFocus.ValueChanged += new System.EventHandler(this.CutscenePositionYFocus_ValueChanged);
-            // 
-            // CutsceneAbsolutePositionZ
-            // 
-            this.CutsceneAbsolutePositionZ.AlwaysFireValueChanged = false;
-            this.CutsceneAbsolutePositionZ.DisplayDigits = 1;
-            this.CutsceneAbsolutePositionZ.DoValueRollover = false;
-            this.CutsceneAbsolutePositionZ.Enabled = false;
-            this.CutsceneAbsolutePositionZ.IncrementMouseWheel = 1;
-            this.CutsceneAbsolutePositionZ.Location = new System.Drawing.Point(289, 92);
-            this.CutsceneAbsolutePositionZ.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionZ.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneAbsolutePositionZ.Name = "CutsceneAbsolutePositionZ";
-            this.CutsceneAbsolutePositionZ.ShiftMultiplier = 20;
-            this.CutsceneAbsolutePositionZ.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneAbsolutePositionZ.TabIndex = 53;
-            this.CutsceneAbsolutePositionZ.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionZ.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionZ_ValueChanged);
-            // 
-            // CutsceneAbsolutePositionX
-            // 
-            this.CutsceneAbsolutePositionX.AlwaysFireValueChanged = false;
-            this.CutsceneAbsolutePositionX.DisplayDigits = 1;
-            this.CutsceneAbsolutePositionX.DoValueRollover = false;
-            this.CutsceneAbsolutePositionX.Enabled = false;
-            this.CutsceneAbsolutePositionX.IncrementMouseWheel = 1;
-            this.CutsceneAbsolutePositionX.Location = new System.Drawing.Point(289, 40);
-            this.CutsceneAbsolutePositionX.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionX.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneAbsolutePositionX.Name = "CutsceneAbsolutePositionX";
-            this.CutsceneAbsolutePositionX.ShiftMultiplier = 20;
-            this.CutsceneAbsolutePositionX.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneAbsolutePositionX.TabIndex = 50;
-            this.CutsceneAbsolutePositionX.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionX.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionX_ChangeValue);
-            // 
-            // CutsceneAbsolutePositionY
-            // 
-            this.CutsceneAbsolutePositionY.AlwaysFireValueChanged = false;
-            this.CutsceneAbsolutePositionY.DisplayDigits = 1;
-            this.CutsceneAbsolutePositionY.DoValueRollover = false;
-            this.CutsceneAbsolutePositionY.Enabled = false;
-            this.CutsceneAbsolutePositionY.IncrementMouseWheel = 1;
-            this.CutsceneAbsolutePositionY.Location = new System.Drawing.Point(289, 66);
-            this.CutsceneAbsolutePositionY.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionY.Minimum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneAbsolutePositionY.Name = "CutsceneAbsolutePositionY";
-            this.CutsceneAbsolutePositionY.ShiftMultiplier = 20;
-            this.CutsceneAbsolutePositionY.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneAbsolutePositionY.TabIndex = 52;
-            this.CutsceneAbsolutePositionY.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneAbsolutePositionY.ValueChanged += new System.EventHandler(this.CutsceneAbsolutePositionY_ValueChanged);
-            // 
-            // CutsceneSetTimeHours
-            // 
-            this.CutsceneSetTimeHours.AlwaysFireValueChanged = false;
-            this.CutsceneSetTimeHours.DisplayDigits = 1;
-            this.CutsceneSetTimeHours.DoValueRollover = false;
-            this.CutsceneSetTimeHours.IncrementMouseWheel = 1;
-            this.CutsceneSetTimeHours.Location = new System.Drawing.Point(78, 12);
-            this.CutsceneSetTimeHours.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.CutsceneSetTimeHours.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneSetTimeHours.Name = "CutsceneSetTimeHours";
-            this.CutsceneSetTimeHours.ShiftMultiplier = 1;
-            this.CutsceneSetTimeHours.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneSetTimeHours.TabIndex = 64;
-            this.CutsceneSetTimeHours.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneSetTimeHours.ValueChanged += new System.EventHandler(this.CutsceneSetTimeHours_ValueChanged);
-            // 
-            // CutsceneSetTimeMinutes
-            // 
-            this.CutsceneSetTimeMinutes.AlwaysFireValueChanged = false;
-            this.CutsceneSetTimeMinutes.DisplayDigits = 1;
-            this.CutsceneSetTimeMinutes.DoValueRollover = false;
-            this.CutsceneSetTimeMinutes.IncrementMouseWheel = 1;
-            this.CutsceneSetTimeMinutes.Location = new System.Drawing.Point(78, 38);
-            this.CutsceneSetTimeMinutes.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.CutsceneSetTimeMinutes.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneSetTimeMinutes.Name = "CutsceneSetTimeMinutes";
-            this.CutsceneSetTimeMinutes.ShiftMultiplier = 1;
-            this.CutsceneSetTimeMinutes.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneSetTimeMinutes.TabIndex = 65;
-            this.CutsceneSetTimeMinutes.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneSetTimeMinutes.ValueChanged += new System.EventHandler(this.CutsceneSetTimeMinutes_ValueChanged);
-            // 
-            // CutsceneTextboxBottomMessageID
-            // 
-            this.CutsceneTextboxBottomMessageID.AllowHex = true;
-            this.CutsceneTextboxBottomMessageID.Digits = 4;
-            this.CutsceneTextboxBottomMessageID.Location = new System.Drawing.Point(283, 121);
-            this.CutsceneTextboxBottomMessageID.MaxLength = 255;
-            this.CutsceneTextboxBottomMessageID.Name = "CutsceneTextboxBottomMessageID";
-            this.CutsceneTextboxBottomMessageID.Size = new System.Drawing.Size(91, 20);
-            this.CutsceneTextboxBottomMessageID.TabIndex = 70;
-            this.CutsceneTextboxBottomMessageID.Text = "00";
-            this.CutsceneTextboxBottomMessageID.Leave += new System.EventHandler(this.CutsceneTextboxBottomMessageID_Leave);
-            // 
-            // CutsceneTextboxFrames
-            // 
-            this.CutsceneTextboxFrames.AlwaysFireValueChanged = false;
-            this.CutsceneTextboxFrames.DisplayDigits = 1;
-            this.CutsceneTextboxFrames.DoValueRollover = false;
-            this.CutsceneTextboxFrames.Enabled = false;
-            this.CutsceneTextboxFrames.IncrementMouseWheel = 1;
-            this.CutsceneTextboxFrames.Location = new System.Drawing.Point(92, 240);
-            this.CutsceneTextboxFrames.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CutsceneTextboxFrames.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneTextboxFrames.Name = "CutsceneTextboxFrames";
-            this.CutsceneTextboxFrames.ShiftMultiplier = 1;
-            this.CutsceneTextboxFrames.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneTextboxFrames.TabIndex = 69;
-            this.CutsceneTextboxFrames.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneTextboxFrames.ValueChanged += new System.EventHandler(this.CutsceneTextboxFrames_ValueChanged);
-            // 
-            // CutsceneTextboxTopMessageID
-            // 
-            this.CutsceneTextboxTopMessageID.AllowHex = true;
-            this.CutsceneTextboxTopMessageID.Digits = 4;
-            this.CutsceneTextboxTopMessageID.Location = new System.Drawing.Point(283, 93);
-            this.CutsceneTextboxTopMessageID.MaxLength = 255;
-            this.CutsceneTextboxTopMessageID.Name = "CutsceneTextboxTopMessageID";
-            this.CutsceneTextboxTopMessageID.Size = new System.Drawing.Size(91, 20);
-            this.CutsceneTextboxTopMessageID.TabIndex = 66;
-            this.CutsceneTextboxTopMessageID.Text = "00";
-            this.CutsceneTextboxTopMessageID.Leave += new System.EventHandler(this.CutsceneTextboxTopMessageID_Leave);
-            // 
-            // CutsceneTextboxMessageId
-            // 
-            this.CutsceneTextboxMessageId.AllowHex = true;
-            this.CutsceneTextboxMessageId.Digits = 4;
-            this.CutsceneTextboxMessageId.Location = new System.Drawing.Point(283, 65);
-            this.CutsceneTextboxMessageId.MaxLength = 255;
-            this.CutsceneTextboxMessageId.Name = "CutsceneTextboxMessageId";
-            this.CutsceneTextboxMessageId.Size = new System.Drawing.Size(91, 20);
-            this.CutsceneTextboxMessageId.TabIndex = 60;
-            this.CutsceneTextboxMessageId.Text = "00";
-            this.CutsceneTextboxMessageId.Leave += new System.EventHandler(this.CutsceneTextboxMessageId_Leave);
-            // 
-            // CutsceneActorFrameDuration
-            // 
-            this.CutsceneActorFrameDuration.AlwaysFireValueChanged = false;
-            this.CutsceneActorFrameDuration.DisplayDigits = 1;
-            this.CutsceneActorFrameDuration.DoValueRollover = false;
-            this.CutsceneActorFrameDuration.Enabled = false;
-            this.CutsceneActorFrameDuration.IncrementMouseWheel = 1;
-            this.CutsceneActorFrameDuration.Location = new System.Drawing.Point(97, 209);
-            this.CutsceneActorFrameDuration.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CutsceneActorFrameDuration.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorFrameDuration.Name = "CutsceneActorFrameDuration";
-            this.CutsceneActorFrameDuration.ShiftMultiplier = 1;
-            this.CutsceneActorFrameDuration.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorFrameDuration.TabIndex = 91;
-            this.CutsceneActorFrameDuration.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorFrameDuration.ValueChanged += new System.EventHandler(this.CutsceneActorFrameDuration_Leave);
-            // 
-            // CutsceneActorZRot
-            // 
-            this.CutsceneActorZRot.AlwaysFireValueChanged = false;
-            this.CutsceneActorZRot.DisplayDigits = 1;
-            this.CutsceneActorZRot.DoValueRollover = false;
-            this.CutsceneActorZRot.Enabled = false;
-            this.CutsceneActorZRot.Increment = new decimal(new int[] {
-            182,
-            0,
-            0,
-            0});
-            this.CutsceneActorZRot.IncrementMouseWheel = 182;
-            this.CutsceneActorZRot.Location = new System.Drawing.Point(289, 249);
-            this.CutsceneActorZRot.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorZRot.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorZRot.Name = "CutsceneActorZRot";
-            this.CutsceneActorZRot.ShiftMultiplier = 1;
-            this.CutsceneActorZRot.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorZRot.TabIndex = 87;
-            this.CutsceneActorZRot.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorZRot.ValueChanged += new System.EventHandler(this.CutsceneActorZRot_ValueChanged);
-            this.CutsceneActorZRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CutsceneActorZRot_KeyDown);
-            // 
-            // CutsceneActorXRot
-            // 
-            this.CutsceneActorXRot.AlwaysFireValueChanged = false;
-            this.CutsceneActorXRot.DisplayDigits = 1;
-            this.CutsceneActorXRot.DoValueRollover = false;
-            this.CutsceneActorXRot.Enabled = false;
-            this.CutsceneActorXRot.Increment = new decimal(new int[] {
-            182,
-            0,
-            0,
-            0});
-            this.CutsceneActorXRot.IncrementMouseWheel = 182;
-            this.CutsceneActorXRot.Location = new System.Drawing.Point(289, 197);
-            this.CutsceneActorXRot.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorXRot.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorXRot.Name = "CutsceneActorXRot";
-            this.CutsceneActorXRot.ShiftMultiplier = 1;
-            this.CutsceneActorXRot.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorXRot.TabIndex = 85;
-            this.CutsceneActorXRot.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorXRot.ValueChanged += new System.EventHandler(this.CutsceneActorXRot_ValueChanged);
-            this.CutsceneActorXRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CutsceneActorXRot_KeyDown);
-            // 
-            // CutsceneActorYRot
-            // 
-            this.CutsceneActorYRot.AlwaysFireValueChanged = false;
-            this.CutsceneActorYRot.DisplayDigits = 1;
-            this.CutsceneActorYRot.DoValueRollover = false;
-            this.CutsceneActorYRot.Enabled = false;
-            this.CutsceneActorYRot.Increment = new decimal(new int[] {
-            182,
-            0,
-            0,
-            0});
-            this.CutsceneActorYRot.IncrementMouseWheel = 182;
-            this.CutsceneActorYRot.Location = new System.Drawing.Point(289, 223);
-            this.CutsceneActorYRot.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorYRot.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorYRot.Name = "CutsceneActorYRot";
-            this.CutsceneActorYRot.ShiftMultiplier = 1;
-            this.CutsceneActorYRot.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorYRot.TabIndex = 86;
-            this.CutsceneActorYRot.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorYRot.ValueChanged += new System.EventHandler(this.CutsceneActorYRot_ValueChanged);
-            this.CutsceneActorYRot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CutsceneActorYRot_KeyDown);
-            // 
-            // CutsceneActorZEnd
-            // 
-            this.CutsceneActorZEnd.AlwaysFireValueChanged = false;
-            this.CutsceneActorZEnd.DisplayDigits = 1;
-            this.CutsceneActorZEnd.DoValueRollover = false;
-            this.CutsceneActorZEnd.Enabled = false;
-            this.CutsceneActorZEnd.IncrementMouseWheel = 1;
-            this.CutsceneActorZEnd.Location = new System.Drawing.Point(289, 171);
-            this.CutsceneActorZEnd.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorZEnd.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorZEnd.Name = "CutsceneActorZEnd";
-            this.CutsceneActorZEnd.ShiftMultiplier = 1;
-            this.CutsceneActorZEnd.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorZEnd.TabIndex = 74;
-            this.CutsceneActorZEnd.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorZEnd.ValueChanged += new System.EventHandler(this.CutsceneActorEnd_ValueChanged);
-            // 
-            // CutsceneActorXEnd
-            // 
-            this.CutsceneActorXEnd.AlwaysFireValueChanged = false;
-            this.CutsceneActorXEnd.DisplayDigits = 1;
-            this.CutsceneActorXEnd.DoValueRollover = false;
-            this.CutsceneActorXEnd.Enabled = false;
-            this.CutsceneActorXEnd.IncrementMouseWheel = 1;
-            this.CutsceneActorXEnd.Location = new System.Drawing.Point(289, 119);
-            this.CutsceneActorXEnd.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorXEnd.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorXEnd.Name = "CutsceneActorXEnd";
-            this.CutsceneActorXEnd.ShiftMultiplier = 1;
-            this.CutsceneActorXEnd.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorXEnd.TabIndex = 72;
-            this.CutsceneActorXEnd.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorXEnd.ValueChanged += new System.EventHandler(this.CutsceneActorEnd_ValueChanged);
-            // 
-            // CutsceneActorYEnd
-            // 
-            this.CutsceneActorYEnd.AlwaysFireValueChanged = false;
-            this.CutsceneActorYEnd.DisplayDigits = 1;
-            this.CutsceneActorYEnd.DoValueRollover = false;
-            this.CutsceneActorYEnd.Enabled = false;
-            this.CutsceneActorYEnd.IncrementMouseWheel = 1;
-            this.CutsceneActorYEnd.Location = new System.Drawing.Point(289, 145);
-            this.CutsceneActorYEnd.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorYEnd.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorYEnd.Name = "CutsceneActorYEnd";
-            this.CutsceneActorYEnd.ShiftMultiplier = 1;
-            this.CutsceneActorYEnd.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorYEnd.TabIndex = 73;
-            this.CutsceneActorYEnd.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorYEnd.ValueChanged += new System.EventHandler(this.CutsceneActorEnd_ValueChanged);
-            // 
-            // CutsceneActorZStart
-            // 
-            this.CutsceneActorZStart.AlwaysFireValueChanged = false;
-            this.CutsceneActorZStart.DisplayDigits = 1;
-            this.CutsceneActorZStart.DoValueRollover = false;
-            this.CutsceneActorZStart.Enabled = false;
-            this.CutsceneActorZStart.IncrementMouseWheel = 1;
-            this.CutsceneActorZStart.Location = new System.Drawing.Point(289, 92);
-            this.CutsceneActorZStart.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorZStart.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorZStart.Name = "CutsceneActorZStart";
-            this.CutsceneActorZStart.ShiftMultiplier = 1;
-            this.CutsceneActorZStart.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorZStart.TabIndex = 68;
-            this.CutsceneActorZStart.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorZStart.ValueChanged += new System.EventHandler(this.CutsceneActorStart_ValueChanged);
-            // 
-            // CutsceneActorXStart
-            // 
-            this.CutsceneActorXStart.AlwaysFireValueChanged = false;
-            this.CutsceneActorXStart.DisplayDigits = 1;
-            this.CutsceneActorXStart.DoValueRollover = false;
-            this.CutsceneActorXStart.Enabled = false;
-            this.CutsceneActorXStart.IncrementMouseWheel = 1;
-            this.CutsceneActorXStart.Location = new System.Drawing.Point(289, 40);
-            this.CutsceneActorXStart.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorXStart.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorXStart.Name = "CutsceneActorXStart";
-            this.CutsceneActorXStart.ShiftMultiplier = 1;
-            this.CutsceneActorXStart.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorXStart.TabIndex = 66;
-            this.CutsceneActorXStart.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorXStart.ValueChanged += new System.EventHandler(this.CutsceneActorStart_ValueChanged);
-            // 
-            // CutsceneActorYStart
-            // 
-            this.CutsceneActorYStart.AlwaysFireValueChanged = false;
-            this.CutsceneActorYStart.DisplayDigits = 1;
-            this.CutsceneActorYStart.DoValueRollover = false;
-            this.CutsceneActorYStart.Enabled = false;
-            this.CutsceneActorYStart.IncrementMouseWheel = 1;
-            this.CutsceneActorYStart.Location = new System.Drawing.Point(289, 66);
-            this.CutsceneActorYStart.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.CutsceneActorYStart.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneActorYStart.Name = "CutsceneActorYStart";
-            this.CutsceneActorYStart.ShiftMultiplier = 1;
-            this.CutsceneActorYStart.Size = new System.Drawing.Size(84, 20);
-            this.CutsceneActorYStart.TabIndex = 67;
-            this.CutsceneActorYStart.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneActorYStart.ValueChanged += new System.EventHandler(this.CutsceneActorStart_ValueChanged);
-            // 
-            // MarkerStartFrame
-            // 
-            this.MarkerStartFrame.AllowHex = false;
-            this.MarkerStartFrame.Digits = 5;
-            this.MarkerStartFrame.Enabled = false;
-            this.MarkerStartFrame.Location = new System.Drawing.Point(301, 201);
-            this.MarkerStartFrame.MaxLength = 255;
-            this.MarkerStartFrame.Name = "MarkerStartFrame";
-            this.MarkerStartFrame.Size = new System.Drawing.Size(36, 20);
-            this.MarkerStartFrame.TabIndex = 44;
-            this.MarkerStartFrame.Text = "0";
-            this.MarkerStartFrame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MarkerStartFrame_KeyDown);
-            this.MarkerStartFrame.Leave += new System.EventHandler(this.MarkerStartFrame_Leave);
-            // 
-            // CutsceneTableEntry
-            // 
-            this.CutsceneTableEntry.AlwaysFireValueChanged = false;
-            this.CutsceneTableEntry.DisplayDigits = 1;
-            this.CutsceneTableEntry.DoValueRollover = false;
-            this.CutsceneTableEntry.IncrementMouseWheel = 1;
-            this.CutsceneTableEntry.Location = new System.Drawing.Point(80, 582);
-            this.CutsceneTableEntry.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CutsceneTableEntry.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneTableEntry.Name = "CutsceneTableEntry";
-            this.CutsceneTableEntry.ShiftMultiplier = 1;
-            this.CutsceneTableEntry.Size = new System.Drawing.Size(60, 20);
-            this.CutsceneTableEntry.TabIndex = 72;
-            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneTableEntry, "If -1, cutscene table is not updated, otherwise edits the respective row number i" +
-        "n the table");
-            this.CutsceneTableEntry.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.CutsceneTableEntry.ValueChanged += new System.EventHandler(this.CutsceneTableEntry_ValueChanged);
-            // 
-            // CutsceneFlag
-            // 
-            this.CutsceneFlag.AlwaysFireValueChanged = false;
-            this.CutsceneFlag.DisplayDigits = 1;
-            this.CutsceneFlag.DoValueRollover = false;
-            this.CutsceneFlag.Hexadecimal = true;
-            this.CutsceneFlag.IncrementMouseWheel = 1;
-            this.CutsceneFlag.Location = new System.Drawing.Point(345, 556);
-            this.CutsceneFlag.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.CutsceneFlag.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneFlag.Name = "CutsceneFlag";
-            this.CutsceneFlag.ShiftMultiplier = 1;
-            this.CutsceneFlag.Size = new System.Drawing.Size(60, 20);
-            this.CutsceneFlag.TabIndex = 70;
-            this.CutsceneFlag.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneFlag.ValueChanged += new System.EventHandler(this.CutsceneFlag_ValueChanged);
-            // 
-            // CutsceneSpawn
-            // 
-            this.CutsceneSpawn.AlwaysFireValueChanged = false;
-            this.CutsceneSpawn.DisplayDigits = 1;
-            this.CutsceneSpawn.DoValueRollover = false;
-            this.CutsceneSpawn.Hexadecimal = true;
-            this.CutsceneSpawn.IncrementMouseWheel = 1;
-            this.CutsceneSpawn.Location = new System.Drawing.Point(228, 556);
-            this.CutsceneSpawn.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.CutsceneSpawn.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneSpawn.Name = "CutsceneSpawn";
-            this.CutsceneSpawn.ShiftMultiplier = 1;
-            this.CutsceneSpawn.Size = new System.Drawing.Size(60, 20);
-            this.CutsceneSpawn.TabIndex = 68;
-            this.CutsceneSpawn.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneSpawn.Visible = false;
-            this.CutsceneSpawn.ValueChanged += new System.EventHandler(this.CutsceneSpawn_ValueChanged);
-            // 
-            // CutsceneEntrance
-            // 
-            this.CutsceneEntrance.AlwaysFireValueChanged = false;
-            this.CutsceneEntrance.DisplayDigits = 1;
-            this.CutsceneEntrance.DoValueRollover = false;
-            this.CutsceneEntrance.Hexadecimal = true;
-            this.CutsceneEntrance.IncrementMouseWheel = 1;
-            this.CutsceneEntrance.Location = new System.Drawing.Point(80, 556);
-            this.CutsceneEntrance.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.CutsceneEntrance.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneEntrance.Name = "CutsceneEntrance";
-            this.CutsceneEntrance.ShiftMultiplier = 1;
-            this.CutsceneEntrance.Size = new System.Drawing.Size(60, 20);
-            this.CutsceneEntrance.TabIndex = 66;
-            this.CutsceneEntrance.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CutsceneEntrance.ValueChanged += new System.EventHandler(this.CutsceneEntrance_ValueChanged);
-            // 
-            // RenderFunctionFlagBitwise
-            // 
-            this.RenderFunctionFlagBitwise.AllowHex = true;
-            this.RenderFunctionFlagBitwise.Digits = 8;
-            this.RenderFunctionFlagBitwise.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RenderFunctionFlagBitwise.Location = new System.Drawing.Point(213, 48);
-            this.RenderFunctionFlagBitwise.Name = "RenderFunctionFlagBitwise";
-            this.RenderFunctionFlagBitwise.Size = new System.Drawing.Size(64, 20);
-            this.RenderFunctionFlagBitwise.TabIndex = 71;
-            this.RenderFunctionFlagBitwise.Text = "00000000";
-            this.RenderFunctionFlagBitwise.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RenderFunctionFlagBitwise_KeyDown);
-            this.RenderFunctionFlagBitwise.Leave += new System.EventHandler(this.RenderFunctionFlagBitwise_Leave);
-            // 
-            // RenderFunctionFlagID
-            // 
-            this.RenderFunctionFlagID.AlwaysFireValueChanged = false;
-            this.RenderFunctionFlagID.DisplayDigits = 1;
-            this.RenderFunctionFlagID.DoValueRollover = false;
-            this.RenderFunctionFlagID.Enabled = false;
-            this.RenderFunctionFlagID.Hexadecimal = true;
-            this.RenderFunctionFlagID.IncrementMouseWheel = 1;
-            this.RenderFunctionFlagID.Location = new System.Drawing.Point(56, 49);
-            this.RenderFunctionFlagID.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.RenderFunctionFlagID.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.RenderFunctionFlagID.Name = "RenderFunctionFlagID";
-            this.RenderFunctionFlagID.ShiftMultiplier = 1;
-            this.RenderFunctionFlagID.Size = new System.Drawing.Size(85, 20);
-            this.RenderFunctionFlagID.TabIndex = 42;
-            this.RenderFunctionFlagID.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.RenderFunctionFlagID.ValueChanged += new System.EventHandler(this.RenderFunctionFlagID_ValueChanged);
-            // 
-            // RenderFunctionID
-            // 
-            this.RenderFunctionID.AlwaysFireValueChanged = false;
-            this.RenderFunctionID.DisplayDigits = 1;
-            this.RenderFunctionID.DoValueRollover = true;
-            this.RenderFunctionID.Hexadecimal = true;
-            this.RenderFunctionID.IncrementMouseWheel = 3;
-            this.RenderFunctionID.Location = new System.Drawing.Point(64, 22);
-            this.RenderFunctionID.Maximum = new decimal(new int[] {
-            9,
-            0,
-            0,
-            0});
-            this.RenderFunctionID.Minimum = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.RenderFunctionID.Name = "RenderFunctionID";
-            this.RenderFunctionID.ShiftMultiplier = 1;
-            this.RenderFunctionID.Size = new System.Drawing.Size(55, 20);
-            this.RenderFunctionID.TabIndex = 65;
-            this.RenderFunctionID.Value = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.RenderFunctionID.ValueChanged += new System.EventHandler(this.RenderFunctionID_ValueChanged);
-            // 
-            // FunctionTextureScrollHeight2
-            // 
-            this.FunctionTextureScrollHeight2.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollHeight2.DisplayDigits = 1;
-            this.FunctionTextureScrollHeight2.DoValueRollover = false;
-            this.FunctionTextureScrollHeight2.Enabled = false;
-            this.FunctionTextureScrollHeight2.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollHeight2.Location = new System.Drawing.Point(219, 130);
-            this.FunctionTextureScrollHeight2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollHeight2.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollHeight2.Name = "FunctionTextureScrollHeight2";
-            this.FunctionTextureScrollHeight2.ShiftMultiplier = 5;
-            this.FunctionTextureScrollHeight2.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollHeight2.TabIndex = 40;
-            this.FunctionTextureScrollHeight2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollHeight2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollHeight2_ValueChanged);
-            // 
-            // FunctionTextureScrollXVelocity
-            // 
-            this.FunctionTextureScrollXVelocity.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollXVelocity.DisplayDigits = 1;
-            this.FunctionTextureScrollXVelocity.DoValueRollover = false;
-            this.FunctionTextureScrollXVelocity.Enabled = false;
-            this.FunctionTextureScrollXVelocity.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollXVelocity.Location = new System.Drawing.Point(80, 23);
-            this.FunctionTextureScrollXVelocity.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollXVelocity.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.FunctionTextureScrollXVelocity.Name = "FunctionTextureScrollXVelocity";
-            this.FunctionTextureScrollXVelocity.ShiftMultiplier = 5;
-            this.FunctionTextureScrollXVelocity.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollXVelocity.TabIndex = 24;
-            this.FunctionTextureScrollXVelocity.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollXVelocity.ValueChanged += new System.EventHandler(this.FunctionTextureScrollXVelocity_ValueChanged);
-            // 
-            // niceLine17
-            // 
-            this.niceLine17.Caption = "Main Texture";
-            this.niceLine17.Location = new System.Drawing.Point(6, 4);
-            this.niceLine17.Name = "niceLine17";
-            this.niceLine17.Size = new System.Drawing.Size(371, 15);
-            this.niceLine17.TabIndex = 25;
-            this.niceLine17.TabStop = false;
-            // 
-            // FunctionTextureScrollWidth2
-            // 
-            this.FunctionTextureScrollWidth2.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollWidth2.DisplayDigits = 1;
-            this.FunctionTextureScrollWidth2.DoValueRollover = false;
-            this.FunctionTextureScrollWidth2.Enabled = false;
-            this.FunctionTextureScrollWidth2.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollWidth2.Location = new System.Drawing.Point(219, 104);
-            this.FunctionTextureScrollWidth2.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollWidth2.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollWidth2.Name = "FunctionTextureScrollWidth2";
-            this.FunctionTextureScrollWidth2.ShiftMultiplier = 5;
-            this.FunctionTextureScrollWidth2.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollWidth2.TabIndex = 38;
-            this.FunctionTextureScrollWidth2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollWidth2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollWidth2_ValueChanged);
-            // 
-            // FunctionTextureScrollYVelocity
-            // 
-            this.FunctionTextureScrollYVelocity.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollYVelocity.DisplayDigits = 1;
-            this.FunctionTextureScrollYVelocity.DoValueRollover = false;
-            this.FunctionTextureScrollYVelocity.Enabled = false;
-            this.FunctionTextureScrollYVelocity.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollYVelocity.Location = new System.Drawing.Point(80, 49);
-            this.FunctionTextureScrollYVelocity.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollYVelocity.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.FunctionTextureScrollYVelocity.Name = "FunctionTextureScrollYVelocity";
-            this.FunctionTextureScrollYVelocity.ShiftMultiplier = 5;
-            this.FunctionTextureScrollYVelocity.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollYVelocity.TabIndex = 27;
-            this.FunctionTextureScrollYVelocity.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollYVelocity.ValueChanged += new System.EventHandler(this.FunctionTextureScrollYVelocity_ValueChanged);
-            // 
-            // FunctionTextureScrollYVelocity2
-            // 
-            this.FunctionTextureScrollYVelocity2.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollYVelocity2.DisplayDigits = 1;
-            this.FunctionTextureScrollYVelocity2.DoValueRollover = false;
-            this.FunctionTextureScrollYVelocity2.Enabled = false;
-            this.FunctionTextureScrollYVelocity2.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollYVelocity2.Location = new System.Drawing.Point(81, 130);
-            this.FunctionTextureScrollYVelocity2.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollYVelocity2.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.FunctionTextureScrollYVelocity2.Name = "FunctionTextureScrollYVelocity2";
-            this.FunctionTextureScrollYVelocity2.ShiftMultiplier = 5;
-            this.FunctionTextureScrollYVelocity2.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollYVelocity2.TabIndex = 36;
-            this.FunctionTextureScrollYVelocity2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollYVelocity2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollYVelocity2_ValueChanged);
-            // 
-            // FunctionTextureScrollWidth
-            // 
-            this.FunctionTextureScrollWidth.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollWidth.DisplayDigits = 1;
-            this.FunctionTextureScrollWidth.DoValueRollover = false;
-            this.FunctionTextureScrollWidth.Enabled = false;
-            this.FunctionTextureScrollWidth.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollWidth.Location = new System.Drawing.Point(218, 23);
-            this.FunctionTextureScrollWidth.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollWidth.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollWidth.Name = "FunctionTextureScrollWidth";
-            this.FunctionTextureScrollWidth.ShiftMultiplier = 5;
-            this.FunctionTextureScrollWidth.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollWidth.TabIndex = 29;
-            this.FunctionTextureScrollWidth.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollWidth.ValueChanged += new System.EventHandler(this.FunctionTextureScrollWidth_ValueChanged);
-            // 
-            // FunctionTextureScrollXVelocity2
-            // 
-            this.FunctionTextureScrollXVelocity2.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollXVelocity2.DisplayDigits = 1;
-            this.FunctionTextureScrollXVelocity2.DoValueRollover = false;
-            this.FunctionTextureScrollXVelocity2.Enabled = false;
-            this.FunctionTextureScrollXVelocity2.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollXVelocity2.Location = new System.Drawing.Point(81, 104);
-            this.FunctionTextureScrollXVelocity2.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollXVelocity2.Minimum = new decimal(new int[] {
-            128,
-            0,
-            0,
-            -2147483648});
-            this.FunctionTextureScrollXVelocity2.Name = "FunctionTextureScrollXVelocity2";
-            this.FunctionTextureScrollXVelocity2.ShiftMultiplier = 5;
-            this.FunctionTextureScrollXVelocity2.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollXVelocity2.TabIndex = 34;
-            this.FunctionTextureScrollXVelocity2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollXVelocity2.ValueChanged += new System.EventHandler(this.FunctionTextureScrollXVelocity2_ValueChanged);
-            // 
-            // niceLine16
-            // 
-            this.niceLine16.Caption = "Secondary Texture";
-            this.niceLine16.Location = new System.Drawing.Point(3, 88);
-            this.niceLine16.Name = "niceLine16";
-            this.niceLine16.Size = new System.Drawing.Size(372, 15);
-            this.niceLine16.TabIndex = 22;
-            this.niceLine16.TabStop = false;
-            // 
-            // FunctionTextureScrollHeight
-            // 
-            this.FunctionTextureScrollHeight.AlwaysFireValueChanged = false;
-            this.FunctionTextureScrollHeight.DisplayDigits = 1;
-            this.FunctionTextureScrollHeight.DoValueRollover = false;
-            this.FunctionTextureScrollHeight.Enabled = false;
-            this.FunctionTextureScrollHeight.IncrementMouseWheel = 1;
-            this.FunctionTextureScrollHeight.Location = new System.Drawing.Point(218, 49);
-            this.FunctionTextureScrollHeight.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollHeight.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollHeight.Name = "FunctionTextureScrollHeight";
-            this.FunctionTextureScrollHeight.ShiftMultiplier = 5;
-            this.FunctionTextureScrollHeight.Size = new System.Drawing.Size(44, 20);
-            this.FunctionTextureScrollHeight.TabIndex = 31;
-            this.FunctionTextureScrollHeight.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionTextureScrollHeight.ValueChanged += new System.EventHandler(this.FunctionTextureScrollHeight_ValueChanged);
-            // 
-            // FunctionColorBlendAlpha
-            // 
-            this.FunctionColorBlendAlpha.AlwaysFireValueChanged = false;
-            this.FunctionColorBlendAlpha.DisplayDigits = 1;
-            this.FunctionColorBlendAlpha.DoValueRollover = false;
-            this.FunctionColorBlendAlpha.Enabled = false;
-            this.FunctionColorBlendAlpha.IncrementMouseWheel = 1;
-            this.FunctionColorBlendAlpha.Location = new System.Drawing.Point(273, 88);
-            this.FunctionColorBlendAlpha.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.FunctionColorBlendAlpha.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionColorBlendAlpha.Name = "FunctionColorBlendAlpha";
-            this.FunctionColorBlendAlpha.ShiftMultiplier = 1;
-            this.FunctionColorBlendAlpha.Size = new System.Drawing.Size(44, 20);
-            this.FunctionColorBlendAlpha.TabIndex = 90;
-            this.FunctionColorBlendAlpha.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FunctionColorBlendAlpha.ValueChanged += new System.EventHandler(this.FunctionColorBlendAlpha_ValueChanged);
-            // 
-            // FunctionColorBlendFrames
-            // 
-            this.FunctionColorBlendFrames.AlwaysFireValueChanged = false;
-            this.FunctionColorBlendFrames.DisplayDigits = 1;
-            this.FunctionColorBlendFrames.DoValueRollover = false;
-            this.FunctionColorBlendFrames.Enabled = false;
-            this.FunctionColorBlendFrames.IncrementMouseWheel = 1;
-            this.FunctionColorBlendFrames.Location = new System.Drawing.Point(296, 36);
-            this.FunctionColorBlendFrames.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.FunctionColorBlendFrames.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.FunctionColorBlendFrames.Name = "FunctionColorBlendFrames";
-            this.FunctionColorBlendFrames.ShiftMultiplier = 1;
-            this.FunctionColorBlendFrames.Size = new System.Drawing.Size(59, 20);
-            this.FunctionColorBlendFrames.TabIndex = 87;
-            this.FunctionColorBlendFrames.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.FunctionColorBlendFrames.ValueChanged += new System.EventHandler(this.FunctionColorBlendFrames_ValueChanged);
-            // 
-            // FunctionTextureSwapAnimationDuration
-            // 
-            this.FunctionTextureSwapAnimationDuration.AlwaysFireValueChanged = false;
-            this.FunctionTextureSwapAnimationDuration.DisplayDigits = 1;
-            this.FunctionTextureSwapAnimationDuration.DoValueRollover = false;
-            this.FunctionTextureSwapAnimationDuration.Enabled = false;
-            this.FunctionTextureSwapAnimationDuration.IncrementMouseWheel = 1;
-            this.FunctionTextureSwapAnimationDuration.Location = new System.Drawing.Point(300, 36);
-            this.FunctionTextureSwapAnimationDuration.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.FunctionTextureSwapAnimationDuration.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.FunctionTextureSwapAnimationDuration.Name = "FunctionTextureSwapAnimationDuration";
-            this.FunctionTextureSwapAnimationDuration.ShiftMultiplier = 1;
-            this.FunctionTextureSwapAnimationDuration.Size = new System.Drawing.Size(59, 20);
-            this.FunctionTextureSwapAnimationDuration.TabIndex = 78;
-            this.FunctionTextureSwapAnimationDuration.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.FunctionTextureSwapAnimationDuration.ValueChanged += new System.EventHandler(this.FunctionTextureSwapAnimationDuration_ValueChanged);
+            // RenderFunctionFlagFreezeAtEndCheckBox
+            // 
+            this.RenderFunctionFlagFreezeAtEndCheckBox.AutoSize = true;
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Location = new System.Drawing.Point(147, 104);
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Name = "RenderFunctionFlagFreezeAtEndCheckBox";
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Size = new System.Drawing.Size(166, 17);
+            this.RenderFunctionFlagFreezeAtEndCheckBox.TabIndex = 75;
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Text = "Freeze if last frame is reached";
+            this.EnvironmentControlTooltip.SetToolTip(this.RenderFunctionFlagFreezeAtEndCheckBox, "The color frame will be frozen when reaching the end of the animation (Color Blen" +
+        "d only!)");
+            this.RenderFunctionFlagFreezeAtEndCheckBox.UseVisualStyleBackColor = true;
+            this.RenderFunctionFlagFreezeAtEndCheckBox.CheckedChanged += new System.EventHandler(this.RenderFunctionFlagFreezeAtEndCheckBox_CheckedChanged);
             // 
             // MainForm
             // 
@@ -12076,29 +12123,82 @@ namespace SharpOcarina
             this.tabControl1.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScenenumberTextbox)).EndInit();
             this.CamerasGroupBox.ResumeLayout(false);
             this.CameraPanel.ResumeLayout(false);
             this.CameraPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraFov)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraZRot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraZPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraXRot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraYPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraYRot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraXPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraSelect)).EndInit();
             this.CameraPanel2.ResumeLayout(false);
             this.CameraPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk22)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1E)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1C)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1A)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk12)).EndInit();
             this.WaterboxGroupBox.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxRoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxCam)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxEnv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxZPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxXSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxYPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxYSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxXPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterboxSelect)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScaleNumericbox)).EndInit();
             this.TextureAnimsGroupBox.ResumeLayout(false);
             this.TextureAnimsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimHeight2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimWidth2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimYVelocity2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimXVelocity2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimHeight1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimWidth1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimYVelocity1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimXVelocity1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimSelect)).EndInit();
             this.tabRooms.ResumeLayout(false);
             this.tabRooms.PerformLayout();
             this.AdditionalTexturesGroupBox.ResumeLayout(false);
             this.AdditionalTexturesGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalTextureList)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupLODDIstance)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupLODGroup)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupAnimatedBank)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ShiftTNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ShiftSNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupMultitextureAlpha)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupPolygonType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabSceneEnv.ResumeLayout(false);
             this.tabSceneEnv.PerformLayout();
             this.PrerenderedGroupBox.ResumeLayout(false);
             this.PrerenderedGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PrerenderedList)).EndInit();
             this.AlternateHeadersGroupBox.ResumeLayout(false);
             this.AlternateHeadersGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderCopyList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderList)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -12107,42 +12207,86 @@ namespace SharpOcarina
             this.groupBox5.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionAZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionAY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionAX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DrawDistance)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FogUnknown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FogDistance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LightingE)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FogColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LightingC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LightingA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentSelect)).EndInit();
             this.tabRoomEnv.ResumeLayout(false);
             this.tabRoomEnv.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightRadius)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightZPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightNS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightYPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightEW)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightXPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightSelect)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WindStrength)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindSouth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindVertical)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WindWest)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SoundEcho)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimeSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimeMinute)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimeHour)).EndInit();
             this.tabCollision.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.ExitGroupBox.ResumeLayout(false);
             this.ExitGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitHeaderIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitSceneIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitSpawnIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitFadeOut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitFadeIn)).EndInit();
             this.groupBoxCollisionPolytype.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk1)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraAngleNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitNumber)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TerrainType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GroundType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EchoRange)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PolygonSelect)).EndInit();
             this.tabTransitions.ResumeLayout(false);
             this.tabPathways.ResumeLayout(false);
             this.ActorCutsceneGroupBox.ResumeLayout(false);
             this.ActorCutsceneGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneUnknown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneAdditionalActorCs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneCsIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneLength)).EndInit();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.PathwayZPosStrip.ResumeLayout(false);
@@ -12151,6 +12295,10 @@ namespace SharpOcarina
             this.PathwayYPosStrip.PerformLayout();
             this.PathwayXPosStrip.ResumeLayout(false);
             this.PathwayXPosStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PathwayZPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PathwayNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PathwayXPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PathwayYPos)).EndInit();
             this.tabActors.ResumeLayout(false);
             this.tabActors.PerformLayout();
             this.ObjectTabMenu.ResumeLayout(false);
@@ -12163,144 +12311,6 @@ namespace SharpOcarina
             this.CutsceneTabs.ResumeLayout(false);
             this.CameraPositions.ResumeLayout(false);
             this.CameraPositions.PerformLayout();
-            this.SpecialExecution.ResumeLayout(false);
-            this.SpecialExecution.PerformLayout();
-            this.Textbox.ResumeLayout(false);
-            this.Textbox.PerformLayout();
-            this.TransitionEffect.ResumeLayout(false);
-            this.TransitionEffect.PerformLayout();
-            this.AsmExecution.ResumeLayout(false);
-            this.AsmExecution.PerformLayout();
-            this.ActorCommand.ResumeLayout(false);
-            this.ActorCommand.PerformLayout();
-            this.tabAnimations.ResumeLayout(false);
-            this.tabAnimations.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.RenderFunctionGroupBoxFlag.ResumeLayout(false);
-            this.RenderFunctionGroupBoxFlag.PerformLayout();
-            this.RenderFunctionFlagPresetToolStrip.ResumeLayout(false);
-            this.RenderFunctionFlagPresetToolStrip.PerformLayout();
-            this.RenderFunctionTabs.ResumeLayout(false);
-            this.tabTextureScroll.ResumeLayout(false);
-            this.tabTextureScroll.PerformLayout();
-            this.tabColorBlending.ResumeLayout(false);
-            this.tabColorBlending.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendColor)).EndInit();
-            this.tabTextureSwap.ResumeLayout(false);
-            this.tabTextureSwap.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox)).EndInit();
-            this.tabTextureSwapFrames.ResumeLayout(false);
-            this.tabTextureSwapFrames.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationPictureBox)).EndInit();
-            this.tabCameraEffect.ResumeLayout(false);
-            this.tabCameraEffect.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ScenenumberTextbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraFov)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraZRot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraZPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraXRot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraYPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraYRot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraXPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraSelect)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk22)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1E)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1C)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1A)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraUnk12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxRoom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxCam)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxEnv)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxZPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxXSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxYPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxYSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxXPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaterboxSelect)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ScaleNumericbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimHeight2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimWidth2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimYVelocity2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimXVelocity2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimHeight1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimWidth1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimYVelocity1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimXVelocity1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TextureAnimSelect)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalTextureList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupLODDIstance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupLODGroup)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupAnimatedBank)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftTNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ShiftSNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupMultitextureAlpha)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupPolygonType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PrerenderedList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderCopyList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionAZ)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionAY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionBX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentDirectionAX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DrawDistance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FogUnknown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FogDistance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentSelect)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightRadius)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightZPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightNS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightYPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightEW)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightXPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightSelect)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindStrength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindSouth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindVertical)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindWest)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SoundEcho)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TimeSpeed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TimeMinute)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TimeHour)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitHeaderIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitSceneIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitSpawnIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitFadeOut)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitFadeIn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraAngleNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitNumber)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TerrainType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroundType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EnvironmentType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EchoRange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PolygonSelect)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneUnknown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneAdditionalActorCs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneCsIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneNumber)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ActorCutsceneLength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PathwayZPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PathwayNumber)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PathwayXPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PathwayYPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionAngleView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutscenePositionFrameDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionCameraRoll)).EndInit();
@@ -12310,9 +12320,19 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneAbsolutePositionY)).EndInit();
+            this.SpecialExecution.ResumeLayout(false);
+            this.SpecialExecution.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetTimeHours)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetTimeMinutes)).EndInit();
+            this.Textbox.ResumeLayout(false);
+            this.Textbox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxFrames)).EndInit();
+            this.TransitionEffect.ResumeLayout(false);
+            this.TransitionEffect.PerformLayout();
+            this.AsmExecution.ResumeLayout(false);
+            this.AsmExecution.PerformLayout();
+            this.ActorCommand.ResumeLayout(false);
+            this.ActorCommand.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorFrameDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorZRot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorXRot)).EndInit();
@@ -12327,8 +12347,19 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneFlag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSpawn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneEntrance)).EndInit();
+            this.tabAnimations.ResumeLayout(false);
+            this.tabAnimations.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.RenderFunctionGroupBoxFlag.ResumeLayout(false);
+            this.RenderFunctionGroupBoxFlag.PerformLayout();
+            this.RenderFunctionFlagPresetToolStrip.ResumeLayout(false);
+            this.RenderFunctionFlagPresetToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderFunctionFlagID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RenderFunctionID)).EndInit();
+            this.RenderFunctionTabs.ResumeLayout(false);
+            this.tabTextureScroll.ResumeLayout(false);
+            this.tabTextureScroll.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollHeight2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollXVelocity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollWidth2)).EndInit();
@@ -12337,9 +12368,25 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollXVelocity2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollHeight)).EndInit();
+            this.tabColorBlending.ResumeLayout(false);
+            this.tabColorBlending.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendAlpha)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendFrames)).EndInit();
+            this.tabTextureSwap.ResumeLayout(false);
+            this.tabTextureSwap.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapPictureBox)).EndInit();
+            this.tabTextureSwapFrames.ResumeLayout(false);
+            this.tabTextureSwapFrames.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationDuration)).EndInit();
+            this.tabCameraEffect.ResumeLayout(false);
+            this.tabCameraEffect.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -13118,6 +13165,10 @@ namespace SharpOcarina
         private NumericUpDownEx PrerenderedList;
         private NumericUpDownEx RenderFunctionID;
         private NumericUpDownEx ActorCutsceneNumber;
+        private ToolStripMenuItem ShowSelectedGrouptoolStripMenuItem3;
+        private ToolStripMenuItem RenderPathwaystoolStripMenuItem3;
+        private ToolStripMenuItem MMTextureScrolltoolStripMenuItem3;
+        private CheckBox RenderFunctionFlagFreezeAtEndCheckBox;
     }
     }
 

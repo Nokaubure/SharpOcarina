@@ -377,7 +377,8 @@ namespace SharpOcarina
 
         private ulong SetPrimColorNew(uint ARGB, uint primlodfrac)
         {
-            return 0xFA00000000000000 | (primlodfrac << 32) | (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24));
+            //Console.WriteLine((0xFA00000000000000 | ((ulong)primlodfrac << 32) | (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24))).ToString("X16"));
+            return 0xFA00000000000000 | ((ulong)primlodfrac << 32) | (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24));
            // return Param(GBI.G_SETPRIMCOLOR, (uint)(((ARGB >> 16) & 0xFF) << 24 | ((ARGB >> 8) & 0xFF) << 16 | (ARGB & 0xFF) << 8 | (ARGB >> 24)));
         }
 
@@ -1445,6 +1446,7 @@ namespace SharpOcarina
 
 
                             //culling bounding box
+
 
                             Helpers.Append16(ref VertCull, (ushort)(System.Convert.ToInt16(MinCoordinate.X)));
                             Helpers.Append16(ref VertCull, (ushort)(System.Convert.ToInt16(MinCoordinate.Y)));

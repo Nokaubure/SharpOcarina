@@ -42,7 +42,7 @@ namespace SharpOcarina
             
 
             MF = new MainForm(args);
-            ApplicationTitle = MF.GetType().Namespace + " 1.57";
+            ApplicationTitle = "SharpOcarina 1.57";
             MF.Text = ApplicationTitle;
 
 

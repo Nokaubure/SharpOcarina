@@ -291,6 +291,8 @@ namespace SharpOcarina
                if (Material.ForcedFormat != "")
                {
                     ConvertTexture(Material.ForcedFormat, Material, Raw, UniqueColors);
+                    /*if (Material.ForcedFormat == "I4")
+                        HasAlpha = true;*/
                }
                else if (IsGrayscale == true && Material.ForceRGBA == false && HasAlpha == true)
                 {
