@@ -129,12 +129,13 @@
   <!-- These are the same flags that can be found -->
   <!-- above so you do not need to use these. -->
 
-  <Flag Key="#FLOORPROPERTY_VOID_SMALL" Value="1400000000000000"></Flag>
+  <Flag Key="#FLOORPROPERTY_VOID" Value="3000000000000000"></Flag>
+  <Flag Key="#FLOORPROPERTY_SMALL_VOID" Value="1400000000000000"></Flag>
   <Flag Key="#FLOORPROPERTY_HANG_LEDGE" Value="1800000000000000"></Flag>
   <Flag Key="#FLOORPROPERTY_STOP_AIR_MOMENTUM" Value="2000000000000000"></Flag>
   <Flag Key="#FLOORPROPERTY_NO_LEDGE_JUMP" Value="2400000000000000"></Flag>
   <Flag Key="#FLOORPROPERTY_DIVE" Value="2C00000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_VOID" Value="3000000000000000"></Flag>
+
 
   <Flag Key="#WALLPROPERTY_NO_LEDGE_GRAB" Value="0020000000000000"></Flag>
   <Flag Key="#WALLPROPERTY_LADDER" Value="0040000000000000"></Flag>

@@ -217,7 +217,7 @@ namespace SharpOcarina
 
         public MainForm(string[] args)
         {
-
+            Text = Program.ApplicationTitle;
             InitializeComponent();
 
             this.args = args;
@@ -2373,27 +2373,15 @@ namespace SharpOcarina
 
                 if (DL.ColorAnimation != 0)
                 {
-
-
                     ZTextureAnim targetfunction = TargetScene.SegmentFunctions[DL.ColorAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.blending && x.Preview);
 
                     if (targetfunction != null && targetfunction.ColorList.Count > 0)
                     {
 
-
                         int totalframes = 0;
-
                         int tempframe = 0;
-
-                        //Vector3 currentcolor = new Vector3();
-
-                        //Vector3 targetcolor = new Vector3();
-
                         Color currentcolorC = new Color();
-
                         Color targetcolorC = new Color();
-
-
 
                         foreach (ZTextureAnimColor col in targetfunction.ColorList)
                         {
@@ -2408,67 +2396,33 @@ namespace SharpOcarina
                             tempframe += targetfunction.ColorList[i].Duration;
                             if (currentframe < tempframe)
                             {
-                                //targetcolor = new Vector3(targetfunction.ColorList[i].C1C.R / 255f, targetfunction.ColorList[i].C1C.G / 255f, targetfunction.ColorList[i].C1C.B / 255f);
                                 targetcolorC = targetfunction.ColorList[i].C1C;
 
                                 if (targetfunction.ColorList.Count == 1)
                                 {
-                                    //currentcolor = targetcolor;
                                     currentcolorC = targetcolorC;
                                 }
                                 else
                                 {
                                     if (i == 0)
                                     {
-                                        //  currentcolor = new Vector3(targetfunction.ColorList[targetfunction.ColorList.Count - 1].C1C.R / 255f, targetfunction.ColorList[targetfunction.ColorList.Count - 1].C1C.G / 255f, targetfunction.ColorList[targetfunction.ColorList.Count - 1].C1C.B / 255f);
-                                        currentcolorC = targetfunction.ColorList[targetfunction.ColorList.Count - 1].C1C;
+                                       currentcolorC = targetfunction.ColorList[targetfunction.ColorList.Count - 1].C1C;
                                     }
                                     else
                                     {
-                                        //     currentcolor = new Vector3(targetfunction.ColorList[i - 1].C1C.R / 255f, targetfunction.ColorList[i-1].C1C.G / 255f, targetfunction.ColorList[i - 1].C1C.B / 255f);
-                                        currentcolorC = targetfunction.ColorList[i - 1].C1C;
+                                      currentcolorC = targetfunction.ColorList[i - 1].C1C;
                                     }
                                 }
                                 float lerpamount = 0f;
 
-                                //DebugConsole.WriteLine((currentframe % targetfunction.ColorList[i].Duration));
-
                                 if ((relativeframe) != 0) lerpamount = (1.0f / targetfunction.ColorList[i].Duration) * (relativeframe);
-
-                                //old formula
-                                //if ((currentframe % targetfunction.ColorList[i].Duration) != 0) lerpamount = (1.0f/ targetfunction.ColorList[i].Duration) * (currentframe % targetfunction.ColorList[i].Duration);
-
-
-                                // DebugConsole.WriteLine("currentframe " + currentframe + " asd " + (currentframe % targetfunction.ColorList[i].Duration +" i " + i + " lerp: " + lerpamount + " target duration " + targetfunction.ColorList[i].Duration));
-
 
                                 if (float.IsNaN(lerpamount))
                                 {
                                     lerpamount = 1f;
 
                                 }
-
-                                //Vector3 result = new Vector3();
-
-
-
-                                // result = Vector3.Lerp(currentcolor, targetcolor, lerpamount);
-
-
                                 Color resultC = Interpolate(currentcolorC, targetcolorC, lerpamount);
-
-
-                                //lerpamount = 0.5f;
-
-                                // if (float.IsNaN(result.X)) result.X = 0;
-                                //  if (float.IsNaN(result.Y)) result.Y = 0;
-                                // if (float.IsNaN(result.Z)) result.Z = 0;
-
-
-
-                                // DebugConsole.WriteLine("current " + currentcolor + "target " + targetcolor + "result " + result + "lerp amount " + lerpamount);
-
-                                // GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, result.X, result.Y, result.Z, 1f);
 
                                 GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, resultC.R / 255f, resultC.G / 255f, resultC.B / 255f, resultC.A / 255f);
 
@@ -2483,7 +2437,77 @@ namespace SharpOcarina
                     }
 
                 }
+                if (DL.TextureAnimation != 0)
+                {
+                    int totalframes = 0;
+                    int tempframe = 0;
 
+                    ZTextureAnim targetfunction = TargetScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe && x.Preview);
+
+                    if (targetfunction == null)
+                    {
+                        targetfunction = TargetScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texswap && x.Preview);
+                    }
+
+                    if (targetfunction != null)
+                    {
+
+                        int textureglid = -1;
+
+                        if (targetfunction.Type == ZTextureAnim.texframe)
+                        {
+                            foreach (ZTextureAnimImage img in targetfunction.TextureSwapList)
+                            {
+                                totalframes += img.Duration;
+                            }
+
+                            if (totalframes > 0)
+                            {
+                                int currentframe = globalframe % totalframes;
+
+                                for (int i = 0; i < targetfunction.TextureSwapList.Count; i++)
+                                {
+                                    tempframe += targetfunction.TextureSwapList[i].Duration;
+                                    if (currentframe <= tempframe)
+                                    {
+                                        string texture = targetfunction.TextureSwapList[i].Texture;
+                                        if (texture != "none")
+                                            textureglid = NormalHeader.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwapList[i].Texture).GLID;
+                                        break;
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            if (NormalHeader.AdditionalTextures.FindIndex(x => x.DisplayName == targetfunction.TextureSwap2) != -1)
+                                textureglid = NormalHeader.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwap2).GLID;
+
+                        }
+
+                        if (textureglid == -1) return;
+
+                        GL.ActiveTexture(TextureUnit.Texture0);
+                        GL.Disable(EnableCap.Texture2D);
+                        GL.BindTexture(TextureTarget.Texture2D, 0);
+
+                        GL.ActiveTexture(TextureUnit.Texture0);
+                        GL.Enable(EnableCap.Texture2D);
+                        GL.BindTexture(TextureTarget.Texture2D, textureglid);
+
+                        GL.ActiveTexture(TextureUnit.Texture0);
+                        GL.Disable(EnableCap.Texture2D);
+
+                       // GL.CallList(DL.GLID);
+
+                        //drawn = true;
+
+
+                    }
+
+
+                }
                 if (DL.Animation != 0)
                 {
                     ZTextureAnim TextureScroll = TargetScene.SegmentFunctions[DL.Animation - 8].Functions.Find(x => x.Type == ZTextureAnim.scroll && x.Preview);
@@ -2525,113 +2549,7 @@ namespace SharpOcarina
 
                     drawn = true;
                 }
-                else if (DL.TextureAnimation != 0)
-                {
-
-                    int totalframes = 0;
-
-                    int tempframe = 0;
-
-
-                    ZTextureAnim targetfunction = TargetScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe && x.Preview);
-
-                    if (targetfunction == null)
-                    {
-                        targetfunction = TargetScene.SegmentFunctions[DL.TextureAnimation - 8].Functions.Find(x => x.Type == ZTextureAnim.texswap && x.Preview);
-
-
-                    }
-
-                    if (targetfunction != null)
-                    {
-
-                        int textureglid = -1;
-
-                        if (targetfunction.Type == ZTextureAnim.texframe)
-                        {
-                            foreach (ZTextureAnimImage img in targetfunction.TextureSwapList)
-                            {
-                                totalframes += img.Duration;
-                            }
-
-                            if (totalframes > 0)
-
-                            {
-
-                                int currentframe = globalframe % totalframes;
-
-
-                                for (int i = 0; i < targetfunction.TextureSwapList.Count; i++)
-                                {
-                                    tempframe += targetfunction.TextureSwapList[i].Duration;
-                                    if (currentframe <= tempframe)
-                                    {
-                                        //textureglid = AdditionalTexturesGLID[CurrentScene.AdditionalTextures.FindIndex(x => x.DisplayName == targetfunction.TextureSwapList[i].Texture)].GLID;
-
-                                        //textureglid -= AdditionalTexturesGLID.Count;
-
-                                        textureglid = NormalHeader.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwapList[i].Texture).GLID;
-
-                                        // DebugConsole.WriteLine("Texture GLID" + textureglid);
-                                        // textureglid = i;
-                                        break;
-                                    }
-                                }
-
-                            }
-                        }
-                        else
-                        {
-                            if (NormalHeader.AdditionalTextures.FindIndex(x => x.DisplayName == targetfunction.TextureSwap2) != -1)
-                                textureglid = NormalHeader.AdditionalTextures.Find(x => x.DisplayName == targetfunction.TextureSwap2).GLID;
-
-                        }
-
-                        if (textureglid == -1) return;
-
-
-
-
-                        // textureglid = new Random().Next(AdditionalTexturesGLID.Count+1);
-
-
-                        GL.ActiveTexture(TextureUnit.Texture0);
-                        GL.Disable(EnableCap.Texture2D);
-                        GL.BindTexture(TextureTarget.Texture2D, 0);
-                        //    GL.ActiveTexture(TextureUnit.Texture1);
-                        //   GL.Disable(EnableCap.Texture2D);
-                        //  GL.BindTexture(TextureTarget.Texture2D, 0);
-
-                        // UcodeSimulator.CalculateTextureSize(textureglid);
-                        GL.ActiveTexture(TextureUnit.Texture0);
-                        GL.Enable(EnableCap.Texture2D);
-                        GL.BindTexture(TextureTarget.Texture2D, textureglid);
-
-                        /*
-
-                        GL.ActiveTexture(TextureUnit.Texture1);
-                        GL.Enable(EnableCap.Texture2D);
-                        GL.BindTexture(TextureTarget.Texture2D, 1);*/
-
-                        // GL.ActiveTexture(TextureUnit.Texture1);
-                        //  GL.Disable(EnableCap.Texture2D);
-
-
-                        GL.ActiveTexture(TextureUnit.Texture0);
-                        GL.Disable(EnableCap.Texture2D);
-
-
-                        GL.CallList(DL.GLID);
-
-                        //GL.BindTexture(TextureTarget.Texture2D, UcodeSimulator.NGraphics.Textures[0].GLID);
-
-                        drawn = true;
-
-
-                    }
-
-
-                }
+ 
                 if (!drawn)
                 {
                     GL.CallList(DL.GLID);
@@ -2983,7 +2901,7 @@ namespace SharpOcarina
                                         //DebugConsole.WriteLine(i + " i " + ii + " ii");
                                         selected = true;
                                         PathwayNumber.Value = i;
-                                        PathwayListBox.SelectedIndex = ii;
+                                        PathwayListBox.SelectedIndex = Clamp(ii,0,PathwayListBox.Items.Count-1);
                                         UpdateForm();
                                         actorpick = _Pathway_;
                                         break;
@@ -3198,7 +3116,7 @@ namespace SharpOcarina
                                 {
                                     selected = true;
                                     WaterboxSelect.Value = incr;
-                                    UpdateWaterboxData();
+                                    //UpdateWaterboxData();
                                     UpdateForm();
                                     actorpick = _Waterbox_;
                                     break;
@@ -3871,6 +3789,12 @@ namespace SharpOcarina
             {
                 GSet.ScaledNormals = new bool[GroupCount];
                 GSet.ScaledNormals.Fill(new bool[] { false });
+            }
+
+            if (GSet.TexPointerPlus1.Length != GroupCount)
+            {
+                GSet.TexPointerPlus1 = new bool[GroupCount];
+                GSet.TexPointerPlus1.Fill(new bool[] { false });
             }
 
             if (GSet.Custom.Length != GroupCount)
@@ -5962,7 +5886,7 @@ namespace SharpOcarina
                 comboBox1.SelectedIndex = ((ObjFile.Group)GroupList.SelectedItem).TileS;
                 comboBox2.SelectedIndex = ((ObjFile.Group)GroupList.SelectedItem).TileT;
                 GroupPolygonType.Value = ((ObjFile.Group)GroupList.SelectedItem).PolyType + 1;
-                checkBox3.Checked = ((ObjFile.Group)GroupList.SelectedItem).BackfaceCulling;
+                BackFaceCulling.Checked = ((ObjFile.Group)GroupList.SelectedItem).BackfaceCulling;
                 GroupAnimated.Checked = ((ObjFile.Group)GroupList.SelectedItem).Animated;
                 GroupMetallic.Checked = ((ObjFile.Group)GroupList.SelectedItem).Metallic;
                 GroupEnvColor.Checked = ((ObjFile.Group)GroupList.SelectedItem).EnvColor;
@@ -5982,6 +5906,7 @@ namespace SharpOcarina
                 GroupVertexNormals.Checked = ((ObjFile.Group)GroupList.SelectedItem).VertexNormals;
                 GroupCustom.Checked = ((ObjFile.Group)GroupList.SelectedItem).Custom;
                 GroupScaledNormals.Checked = ((ObjFile.Group)GroupList.SelectedItem).ScaledNormals;
+                GroupTexturePointer.Checked = ((ObjFile.Group)GroupList.SelectedItem).TexPointerPlus1;
 
                 //optimization
 
@@ -6004,7 +5929,7 @@ namespace SharpOcarina
                 comboBox2.SelectedIndex = 0;
                 pictureBox7.BackColor = Control.DefaultBackColor;
                 GroupPolygonType.Value = 0;
-                checkBox3.Checked = false;
+                BackFaceCulling.Checked = false;
             }
         }
 
@@ -7159,6 +7084,9 @@ namespace SharpOcarina
                     if (CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
                         CurrentScene.Rooms[i].GroupSettings.MultiTexMaterialName = Enumerable.Repeat("", CurrentScene.Rooms[i].GroupSettings.TileS.Length).ToArray();
 
+                    if (CurrentScene.Rooms[i].GroupSettings.TexPointerPlus1.Length < CurrentScene.Rooms[i].GroupSettings.TileS.Length)
+                        CurrentScene.Rooms[i].GroupSettings.TexPointerPlus1 = new bool[CurrentScene.Rooms[i].GroupSettings.TileS.Length];
+
                     //TODO fix old scenes
                     if (CurrentScene.version <= 0x1530)
                     {
@@ -7311,7 +7239,7 @@ namespace SharpOcarina
                 CurrentScene.Rooms[i].TrueGroups[j].AlphaMask = CurrentScene.Rooms[i].GroupSettings.AlphaMask[j];
                 CurrentScene.Rooms[i].TrueGroups[j].Custom = CurrentScene.Rooms[i].GroupSettings.Custom[j];
                 CurrentScene.Rooms[i].TrueGroups[j].ScaledNormals = CurrentScene.Rooms[i].GroupSettings.ScaledNormals[j];
-
+                CurrentScene.Rooms[i].TrueGroups[j].TexPointerPlus1 = CurrentScene.Rooms[i].GroupSettings.TexPointerPlus1[j];
             }
         }
 
@@ -7610,11 +7538,11 @@ namespace SharpOcarina
             }
         }
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        private void BackFaceCulling_CheckedChanged(object sender, EventArgs e)
         {
             if (GroupList.SelectedItem != null)
             {
-                ((ObjFile.Group)GroupList.SelectedItem).BackfaceCulling = checkBox3.Checked;
+                ((ObjFile.Group)GroupList.SelectedItem).BackfaceCulling = BackFaceCulling.Checked;
 
                 int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
                 CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.BackfaceCulling[Index] = ((ObjFile.Group)GroupList.SelectedItem).BackfaceCulling;
@@ -12441,7 +12369,7 @@ namespace SharpOcarina
                     for (int j = 0; j < Room.TrueGroups.Count; j++)
                     {
                         if (Room.TrueGroups[j].Name.ToLower().Contains("#nomesh")) continue;
-                        NDisplayList DList = new NDisplayList(CurrentScene.Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, UnusedCommandCheckBox.Checked, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].AnimationBank, bank);
+                        NDisplayList DList = new NDisplayList(CurrentScene.Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, UnusedCommandCheckBox.Checked, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].TexPointerPlus1, Room.TrueGroups[j].AnimationBank, bank);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (uint)Data.Count, CurrentScene.SceneSettings, CurrentScene.AdditionalTextures);
                         InjectMessages.Add("Group " + Room.TrueGroups[j].Name + " Offset " + (Data.Count + DList.Vertoffset).ToString("X8"));
                         Data.AddRange(DList.Data);
@@ -12683,6 +12611,20 @@ namespace SharpOcarina
 
                 }
             }
+            foreach(ZSegmentFunction seg in NormalHeader.SegmentFunctions)
+            {
+                foreach(ZTextureAnim func in seg.Functions)
+                {
+                    if (func.Type == ZTextureAnim.texframe || func.Type == ZTextureAnim.texswap)
+                    {
+                        foreach(ZTextureAnimImage z in func.TextureSwapList)
+                        {
+                            if (z.Texture == removedtexname) z.Texture = "none";
+                        }
+                    }
+                }
+            }
+
 
             UpdateGroupSelect();
             CurrentScene.AdditionalTextures.RemoveAt((int)AdditionalTextureList.Value - 1);
@@ -15464,6 +15406,7 @@ namespace SharpOcarina
                 EnvironmentControlTooltip.SetToolTip(Z64RomPlay, "Inject and launch the ROM");
                 LaunchRomToolStripMenuItem.Visible = true;
                 cutsceneTableEditorToolStripMenuItem.Text = "Cutscene Table Editor (OoT)";
+                addLinkAnimationsz64romToolStripMenuItem.Visible = false;
 
 
                 ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
@@ -15515,7 +15458,7 @@ namespace SharpOcarina
                 EnvironmentControlTooltip.SetToolTip(Z64RomPlay, "Store scene, build and launch z64rom + warp to scene");
                 LaunchRomToolStripMenuItem.Visible = true;
                 cutsceneTableEditorToolStripMenuItem.Text = "Remove Cutscene Table (z64rom)";
-
+                addLinkAnimationsz64romToolStripMenuItem.Visible = true;
                 UpdateSceneRender(rom64.getPath() + "\\", true);
 
                 actorEditControl1.cacheId = 0xFEFE;
@@ -19077,6 +19020,150 @@ namespace SharpOcarina
             CurrentScene.SegmentFunctions[(int)(RenderFunctionID.Value - 8)].Functions[RenderFunctionSelect.SelectedIndex].FreezeAtEnd = RenderFunctionFlagFreezeAtEndCheckBox.Checked;
 
             UpdateRenderFunctionEdit();
+        }
+
+        private void TexPointerCheckBox(object sender, EventArgs e)
+        {
+            if (GroupList.SelectedItem != null)
+            {
+                ((ObjFile.Group)GroupList.SelectedItem).TexPointerPlus1 = GroupTexturePointer.Checked;
+
+                int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
+                CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TexPointerPlus1[Index] = ((ObjFile.Group)GroupList.SelectedItem).TexPointerPlus1;
+
+                UpdateGroupSelect(n64refresh);
+            }
+        }
+
+        private void addLinkAnimationsz64romToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = rom64.getPath() + Path.DirectorySeparatorChar + @"src\system\link_animation\";
+            string headerfile = "#include <uLib.h>\n\n";
+            string dmatoml = "[0x20]\r\n\tfile = \"src/NewLinkAnims.bin\"\r\n\tcompress = false";
+            int filesizestack = 0;
+            List<byte> FullData = new List<byte>();
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                MessageBox.Show("Usage: With objex2 plugin, export your animation BINs inside " + path + " with the following name: XX-Name.bin where XX is the number of frames the animation has.", "Usage", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            DirectoryInfo sourcedir = new DirectoryInfo(path);
+            FileInfo[] files = sourcedir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                if (!file.Name.Contains("-"))
+                {
+                    MessageBox.Show("Error in file " + file + "\nUsage: With objex2 plugin, export your animation BINs inside " + path + " with the following name: XX-Name.bin where XX is the number of frames the animation has.", "Usage", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                string[] split = file.Name.Split('-');
+                int frames = 0;
+                if (!Int32.TryParse(split[0], out frames))
+                {
+                    MessageBox.Show("Error in file " + file + "\nUsage: With objex2 plugin, export your animation BINs inside " + path + " with the following name: XX-Name.bin where XX is the number of frames the animation has.", "Usage", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                int size = (int)file.Length;
+                headerfile += "LinkAnimationHeader gPlayerAnim_" + file.Name.Substring(file.Name.IndexOf('-')+1).Replace(".bin","") +  
+                              " = { { " + frames + " }, (void*)0x17" + filesizestack.ToString("X6") + " }; \n";
+                
+                FullData.AddRange(File.ReadAllBytes(file.FullName));
+                Helpers.AddPadding(ref FullData,0x10);
+                filesizestack = FullData.Count;
+
+
+            }
+            string newanimheaderpath = rom64.getPath() +  @"\src\system\kaleido\0x01-Player\NewAnimHeader.h";
+            string newlinkanimspath = rom64.getPath() +  @"\src\NewLinkAnims.bin";
+            File.WriteAllText(newanimheaderpath, headerfile);
+            File.WriteAllBytes(newlinkanimspath,FullData.ToArray());
+
+            string libcodepatch = rom64.getPath() + @"\src\lib_code\!std\dma\AnimationContext_SetLoadFrame.c";
+            File.Delete(libcodepatch);
+
+
+            string playerpath = rom64.getPath() + @"\src\system\kaleido\0x01-Player\Player.c";
+            string[] lines = File.ReadAllLines(playerpath);
+            bool includeexists = false;
+            for (int i = 0; i < 30 && i < lines.Length; i++)
+            {
+
+                if (lines[i].Contains("#include \"NewAnimHeader.h\""))
+                {
+                    includeexists = true;
+                    break;
+                }
+            }
+
+            if (!includeexists)
+            {
+                Helpers.ReplaceLine("#include \"Player.h\"", "#include \"Player.h\"\n#include \"NewAnimHeader.h\"", playerpath);
+            }
+
+            string newfile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\NewLinkAnims.c");
+            string oldfile = rom64.getPath() + @"\src\lib_user\library\NewLinkAnims.c";
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (File.Exists(oldfile))
+                    File.Delete(oldfile);
+                File.Copy(newfile, oldfile);
+            }
+
+
+            string dmapath = rom64.getPath() + @"\dma.toml";
+
+            if (!File.Exists(dmapath))
+            {
+                File.WriteAllText(dmapath, dmatoml);
+            }
+            else
+            {
+                
+                TomlTable toml = rom64.parseToml(dmapath);
+                bool animExists = false;
+                int maxKey = 0x1F;
+
+                foreach (var key in toml.Keys)
+                {
+                    if (toml[key] is TomlTable section && section["file"]?.ToString() == "src/NewLinkAnims.bin")
+                    {
+                        animExists = true;
+                    }
+                    if (int.TryParse(key.Replace("0x", ""), NumberStyles.HexNumber, null, out int numericKey))
+                    {
+                        maxKey = Math.Max(maxKey, numericKey);
+                    }
+                }
+
+                if (!animExists)
+                {
+                    TomlTable newSection = new TomlTable
+                    {
+                        ["file"] = "src/NewLinkAnims.bin",
+                        ["compress"] = false
+                    };
+                    maxKey++;
+                    string newKey = $"0x{maxKey:X}";
+                    toml[newKey] = newSection;
+
+                    using (StreamWriter writer = new StreamWriter(dmapath))
+                    {
+                        toml.WriteTo(writer);
+                    }
+
+                    if (maxKey != 0x20)
+                    {
+                        Helpers.ReplaceLine("#define NEWLINKANIMS_DMAID", "#define NEWLINKANIMS_DMAID 0x" + maxKey.ToString("X2"), oldfile);
+                    }
+                }
+
+            }
+
+            MessageBox.Show("Success!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

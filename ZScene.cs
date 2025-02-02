@@ -109,6 +109,7 @@ namespace SharpOcarina
                 public bool[] Custom = new bool[1];
                 public ulong[,] CustomDL = new ulong[1,4];
                 public bool[] ScaledNormals = new bool[1];
+                public bool[] TexPointerPlus1 = new bool[1];
                 public bool[] Vibrant = new bool[1];
 
                 [XmlIgnore]
@@ -158,6 +159,7 @@ namespace SharpOcarina
                 CustomDL[indexA, 2] = B.CustomDL[index, 2];
                 CustomDL[indexA, 3] = B.CustomDL[index, 3];
                 ScaledNormals[indexA] = B.ScaledNormals[index];
+                TexPointerPlus1[indexA] = B.TexPointerPlus1[index];
                 }
             }
 
@@ -452,6 +454,7 @@ namespace SharpOcarina
             NewRoom.GroupSettings.Custom = new bool[groupcount];
             NewRoom.GroupSettings.CustomDL = new ulong[groupcount,4];
             NewRoom.GroupSettings.ScaledNormals = new bool[groupcount];
+            NewRoom.GroupSettings.TexPointerPlus1 = new bool[groupcount];
 
             for (int i = 0; i < groupcount; i++)
             {
@@ -485,6 +488,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.RenderLast[i] = false;
                 NewRoom.GroupSettings.VertexNormals[i] = false;
                 NewRoom.GroupSettings.ScaledNormals[i] = false;
+                NewRoom.GroupSettings.TexPointerPlus1[i] = false;
                 NewRoom.GroupSettings.Custom[i] = false;
                 NewRoom.GroupSettings.CustomDL[i, 0] = 0;
                 NewRoom.GroupSettings.CustomDL[i, 1] = 0;
@@ -688,6 +692,11 @@ namespace SharpOcarina
             {
                 NewRoom.GroupSettings.ScaledNormals[i] = true;
                 group.ScaledNormals = true;
+            }
+            if (group.Name.ToLower().Contains("#texpointerplus1"))
+            {
+                NewRoom.GroupSettings.TexPointerPlus1[i] = true;
+                group.TexPointerPlus1 = true;
             }
             if (group.Name.ToLower().Contains("#lodgroup"))
             {
@@ -3201,7 +3210,7 @@ namespace SharpOcarina
                                 MessageBox.Show("Animation segment " + Room.TrueGroups[j].AnimationBank + " is empty...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
-                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].AnimationBank, 3);
+                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].TexPointerPlus1, Room.TrueGroups[j].AnimationBank, 3);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (!Prerendered) ? (uint)Room.RoomData.Count : (uint)(Room.RoomData.Count + DListData.Count), SceneSettings, AdditionalTextures);
                         if (DList.Data != null)
                         {

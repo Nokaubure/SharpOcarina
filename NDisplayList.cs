@@ -42,7 +42,7 @@ namespace SharpOcarina
         public bool RenderLast;
         public bool PointLight;
         public bool ScaledNormals;
-
+        public bool TexPointerPlus1;
 
         public short blackvertexypos;
 
@@ -117,7 +117,7 @@ namespace SharpOcarina
             Animated = false;
         }
 
-        public NDisplayList(float _Scale, uint _TintAlpha, uint _MultitextureAlpha, float _TexScale, bool outdoorLight, bool _Culling, bool _Animated, bool _Metallic, bool _Decal, bool _Pixelated, bool _Billboard, bool _TwoAxisBillboard, bool _IgnoreFog, bool _SmoothRGBAEdges, bool _EnvColor, bool _AlphaMask, bool _renderLast, bool _vertexNormals, bool _PointLight, bool _scaledNormals, int _AnimationBank,  int _bank = 0x03)
+        public NDisplayList(float _Scale, uint _TintAlpha, uint _MultitextureAlpha, float _TexScale, bool outdoorLight, bool _Culling, bool _Animated, bool _Metallic, bool _Decal, bool _Pixelated, bool _Billboard, bool _TwoAxisBillboard, bool _IgnoreFog, bool _SmoothRGBAEdges, bool _EnvColor, bool _AlphaMask, bool _renderLast, bool _vertexNormals, bool _PointLight, bool _scaledNormals, bool _texPointerPlus1, int _AnimationBank,  int _bank = 0x03)
         {
             Scale = _Scale;
             TintAlpha = _TintAlpha;
@@ -141,6 +141,7 @@ namespace SharpOcarina
             VertexNormals = _vertexNormals;
             PointLight = _PointLight;
             ScaledNormals = _scaledNormals;
+            TexPointerPlus1 = _texPointerPlus1;
         }
 
         #endregion
@@ -527,6 +528,8 @@ namespace SharpOcarina
 
             MatList.AddRange(AdditionalTextures);
 
+            int TexturePointerBank = (TexPointerPlus1 && AnimationBank < 0xF) ? AnimationBank + 1 : AnimationBank;
+
 
             foreach (ObjFile.Triangle Tri2 in Group.Triangles)
             {
@@ -603,23 +606,22 @@ namespace SharpOcarina
                     {
                         //DebugConsole.WriteLine("animated: " + Mat.Name);
                         try {
-                            if (MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasPointer())
+                            if (MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].HasPointer())
                             {
-                                int search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap);
+                                int search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap);
                                 if (search != -1)
                                 {
-                                    if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap).Name == Mat.Name)
+                                    if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap).Name == Mat.Name)
                                     {
                                         Surf.Triangles.Add(Tri);
                                     }
                                 }
-
                                 else
                                 {
-                                    search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
+                                    search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
                                     if (search != -1)
                                     {
-                                        if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture).Name == Mat.Name)
+                                        if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture).Name == Mat.Name)
                                         {
                                             Surf.Triangles.Add(Tri);
                                         }
@@ -877,14 +879,14 @@ namespace SharpOcarina
 
                     if (AnimationType == "Texture" && targetmat.map_Kd != null && targetmat.map_Kd.ToLower().Contains("#special"))
                     {
-                        Bank = AnimationBank;
+                        Bank = TexturePointerBank;
                         ThisTexture.TexOffset = 0;
                     }
                     else if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask)
                     {
-                        if (MainForm.CurrentScene.SegmentFunctions[AnimationBank-8].HasPointer())
+                        if (MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].HasPointer())
                         {
-                            Bank = AnimationBank;
+                            Bank = TexturePointerBank;
                             ThisTexture.TexOffset = 0;
                         }
                     }

@@ -164,6 +164,7 @@ namespace SharpOcarina
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addLinkAnimationsz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.SetTitlecard = new System.Windows.Forms.Button();
@@ -290,6 +291,7 @@ namespace SharpOcarina
             this.AddMultipleRooms = new System.Windows.Forms.Button();
             this.ContinualInject = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.GroupTexturePointer = new System.Windows.Forms.CheckBox();
             this.GroupScaledNormals = new System.Windows.Forms.CheckBox();
             this.GroupCustomizeButton = new System.Windows.Forms.Button();
             this.GroupCustom = new System.Windows.Forms.CheckBox();
@@ -322,7 +324,7 @@ namespace SharpOcarina
             this.numericUpDown5 = new SharpOcarina.NumericUpDownEx();
             this.label30 = new System.Windows.Forms.Label();
             this.MultiTextureComboBox = new System.Windows.Forms.ComboBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.BackFaceCulling = new System.Windows.Forms.CheckBox();
             this.GroupPolygonType = new SharpOcarina.NumericUpDownEx();
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
@@ -718,6 +720,7 @@ namespace SharpOcarina
             this.RenderFunctionWarningLabel = new System.Windows.Forms.Label();
             this.RenderFunctionPreview = new System.Windows.Forms.Button();
             this.RenderFunctionGroupBoxFlag = new System.Windows.Forms.GroupBox();
+            this.RenderFunctionFlagFreezeAtEndCheckBox = new System.Windows.Forms.CheckBox();
             this.RenderFunctionFlagFreezeCheckBox = new System.Windows.Forms.CheckBox();
             this.RenderFunctionFlagPresetToolStrip = new System.Windows.Forms.ToolStrip();
             this.RenderFunctionFlagPresetButton = new System.Windows.Forms.ToolStripDropDownButton();
@@ -806,7 +809,6 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.RenderFunctionFlagFreezeAtEndCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1994,7 +1996,8 @@ namespace SharpOcarina
             this.ZobjCopyToolMenuItem3,
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
-            this.replaceSceneTitleCardTextureToolStripMenuItem});
+            this.replaceSceneTitleCardTextureToolStripMenuItem,
+            this.addLinkAnimationsz64romToolStripMenuItem});
             this.nokaToolStripMenuItem.Name = "nokaToolStripMenuItem";
             this.nokaToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.nokaToolStripMenuItem.Text = "Tools";
@@ -2164,6 +2167,14 @@ namespace SharpOcarina
             this.replaceSceneTitleCardTextureToolStripMenuItem.Text = "Replace scene title card texture (OoT)";
             this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
+            // 
+            // addLinkAnimationsz64romToolStripMenuItem
+            // 
+            this.addLinkAnimationsz64romToolStripMenuItem.Name = "addLinkAnimationsz64romToolStripMenuItem";
+            this.addLinkAnimationsz64romToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.addLinkAnimationsz64romToolStripMenuItem.Text = "Add Link Animations (z64rom)";
+            this.addLinkAnimationsz64romToolStripMenuItem.Visible = false;
+            this.addLinkAnimationsz64romToolStripMenuItem.Click += new System.EventHandler(this.addLinkAnimationsz64romToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -2794,17 +2805,17 @@ namespace SharpOcarina
             // 
             this.CameraSelect.AlwaysFireValueChanged = false;
             this.CameraSelect.DisplayDigits = 1;
-            this.CameraSelect.DoValueRollover = true;
+            this.CameraSelect.DoValueRollover = false;
             this.CameraSelect.Hexadecimal = true;
             this.CameraSelect.IncrementMouseWheel = 3;
             this.CameraSelect.Location = new System.Drawing.Point(9, 22);
             this.CameraSelect.Maximum = new decimal(new int[] {
-            99,
+            100,
             0,
             0,
             0});
             this.CameraSelect.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -3695,17 +3706,17 @@ namespace SharpOcarina
             // 
             this.WaterboxSelect.AlwaysFireValueChanged = false;
             this.WaterboxSelect.DisplayDigits = 1;
-            this.WaterboxSelect.DoValueRollover = true;
+            this.WaterboxSelect.DoValueRollover = false;
             this.WaterboxSelect.Hexadecimal = true;
             this.WaterboxSelect.IncrementMouseWheel = 3;
             this.WaterboxSelect.Location = new System.Drawing.Point(9, 22);
             this.WaterboxSelect.Maximum = new decimal(new int[] {
-            99,
+            100,
             0,
             0,
             0});
             this.WaterboxSelect.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -4212,17 +4223,17 @@ namespace SharpOcarina
             // 
             this.TextureAnimSelect.AlwaysFireValueChanged = false;
             this.TextureAnimSelect.DisplayDigits = 1;
-            this.TextureAnimSelect.DoValueRollover = true;
+            this.TextureAnimSelect.DoValueRollover = false;
             this.TextureAnimSelect.Hexadecimal = true;
             this.TextureAnimSelect.IncrementMouseWheel = 3;
             this.TextureAnimSelect.Location = new System.Drawing.Point(6, 22);
             this.TextureAnimSelect.Maximum = new decimal(new int[] {
-            99,
+            100,
             0,
             0,
             0});
             this.TextureAnimSelect.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -4375,6 +4386,7 @@ namespace SharpOcarina
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.GroupTexturePointer);
             this.groupBox1.Controls.Add(this.GroupScaledNormals);
             this.groupBox1.Controls.Add(this.GroupCustomizeButton);
             this.groupBox1.Controls.Add(this.GroupCustom);
@@ -4407,7 +4419,7 @@ namespace SharpOcarina
             this.groupBox1.Controls.Add(this.numericUpDown5);
             this.groupBox1.Controls.Add(this.label30);
             this.groupBox1.Controls.Add(this.MultiTextureComboBox);
-            this.groupBox1.Controls.Add(this.checkBox3);
+            this.groupBox1.Controls.Add(this.BackFaceCulling);
             this.groupBox1.Controls.Add(this.GroupPolygonType);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.pictureBox7);
@@ -4425,6 +4437,19 @@ namespace SharpOcarina
             this.groupBox1.TabStop = false;
             this.groupBox1.Tag = "a";
             this.groupBox1.Text = "Group Settings";
+            // 
+            // GroupTexturePointer
+            // 
+            this.GroupTexturePointer.AutoSize = true;
+            this.GroupTexturePointer.Location = new System.Drawing.Point(149, 211);
+            this.GroupTexturePointer.Name = "GroupTexturePointer";
+            this.GroupTexturePointer.Size = new System.Drawing.Size(108, 17);
+            this.GroupTexturePointer.TabIndex = 46;
+            this.GroupTexturePointer.Text = "Tex Pointer At +1";
+            this.EnvironmentControlTooltip.SetToolTip(this.GroupTexturePointer, "Check this if you want to have texture pointers and texture scrolling at once. Yo" +
+        "u must setup the texture pointer one segment higher than the selected one");
+            this.GroupTexturePointer.UseVisualStyleBackColor = true;
+            this.GroupTexturePointer.CheckedChanged += new System.EventHandler(this.TexPointerCheckBox);
             // 
             // GroupScaledNormals
             // 
@@ -4489,7 +4514,7 @@ namespace SharpOcarina
             // GroupEnvColor
             // 
             this.GroupEnvColor.AutoSize = true;
-            this.GroupEnvColor.Location = new System.Drawing.Point(151, 211);
+            this.GroupEnvColor.Location = new System.Drawing.Point(232, 211);
             this.GroupEnvColor.Name = "GroupEnvColor";
             this.GroupEnvColor.Size = new System.Drawing.Size(76, 17);
             this.GroupEnvColor.TabIndex = 41;
@@ -4927,18 +4952,18 @@ namespace SharpOcarina
             this.MultiTextureComboBox.DropDown += new System.EventHandler(this.AdjustWidthMaterials_DropDown);
             this.MultiTextureComboBox.SelectionChangeCommitted += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
-            // checkBox3
+            // BackFaceCulling
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(194, 73);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(106, 17);
-            this.checkBox3.TabIndex = 14;
-            this.checkBox3.Text = "Backface Culling";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            this.BackFaceCulling.AutoSize = true;
+            this.BackFaceCulling.Checked = true;
+            this.BackFaceCulling.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BackFaceCulling.Location = new System.Drawing.Point(194, 73);
+            this.BackFaceCulling.Name = "BackFaceCulling";
+            this.BackFaceCulling.Size = new System.Drawing.Size(106, 17);
+            this.BackFaceCulling.TabIndex = 14;
+            this.BackFaceCulling.Text = "Backface Culling";
+            this.BackFaceCulling.UseVisualStyleBackColor = true;
+            this.BackFaceCulling.CheckedChanged += new System.EventHandler(this.BackFaceCulling_CheckedChanged);
             // 
             // GroupPolygonType
             // 
@@ -6042,17 +6067,17 @@ namespace SharpOcarina
             // 
             this.EnvironmentSelect.AlwaysFireValueChanged = false;
             this.EnvironmentSelect.DisplayDigits = 1;
-            this.EnvironmentSelect.DoValueRollover = true;
+            this.EnvironmentSelect.DoValueRollover = false;
             this.EnvironmentSelect.Hexadecimal = true;
             this.EnvironmentSelect.IncrementMouseWheel = 3;
             this.EnvironmentSelect.Location = new System.Drawing.Point(9, 22);
             this.EnvironmentSelect.Maximum = new decimal(new int[] {
-            99,
+            100,
             0,
             0,
             0});
             this.EnvironmentSelect.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -6429,16 +6454,16 @@ namespace SharpOcarina
             // 
             this.AdditionalLightSelect.AlwaysFireValueChanged = false;
             this.AdditionalLightSelect.DisplayDigits = 1;
-            this.AdditionalLightSelect.DoValueRollover = true;
+            this.AdditionalLightSelect.DoValueRollover = false;
             this.AdditionalLightSelect.IncrementMouseWheel = 3;
             this.AdditionalLightSelect.Location = new System.Drawing.Point(9, 22);
             this.AdditionalLightSelect.Maximum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
             this.AdditionalLightSelect.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -8142,17 +8167,17 @@ namespace SharpOcarina
             // 
             this.PolygonSelect.AlwaysFireValueChanged = false;
             this.PolygonSelect.DisplayDigits = 1;
-            this.PolygonSelect.DoValueRollover = true;
+            this.PolygonSelect.DoValueRollover = false;
             this.PolygonSelect.Enabled = false;
             this.PolygonSelect.IncrementMouseWheel = 3;
             this.PolygonSelect.Location = new System.Drawing.Point(9, 22);
             this.PolygonSelect.Maximum = new decimal(new int[] {
-            99,
+            100,
             0,
             0,
             0});
             this.PolygonSelect.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -8462,17 +8487,17 @@ namespace SharpOcarina
             // 
             this.ActorCutsceneNumber.AlwaysFireValueChanged = false;
             this.ActorCutsceneNumber.DisplayDigits = 1;
-            this.ActorCutsceneNumber.DoValueRollover = true;
+            this.ActorCutsceneNumber.DoValueRollover = false;
             this.ActorCutsceneNumber.Hexadecimal = true;
             this.ActorCutsceneNumber.IncrementMouseWheel = 3;
             this.ActorCutsceneNumber.Location = new System.Drawing.Point(9, 22);
             this.ActorCutsceneNumber.Maximum = new decimal(new int[] {
-            99,
+            100,
             0,
             0,
             0});
             this.ActorCutsceneNumber.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -8815,17 +8840,17 @@ namespace SharpOcarina
             // 
             this.PathwayNumber.AlwaysFireValueChanged = false;
             this.PathwayNumber.DisplayDigits = 1;
-            this.PathwayNumber.DoValueRollover = true;
+            this.PathwayNumber.DoValueRollover = false;
             this.PathwayNumber.Hexadecimal = true;
             this.PathwayNumber.IncrementMouseWheel = 3;
             this.PathwayNumber.Location = new System.Drawing.Point(9, 22);
             this.PathwayNumber.Maximum = new decimal(new int[] {
-            99,
+            100,
             0,
             0,
             0});
             this.PathwayNumber.Minimum = new decimal(new int[] {
-            1,
+            0,
             0,
             0,
             0});
@@ -10857,6 +10882,19 @@ namespace SharpOcarina
             this.RenderFunctionGroupBoxFlag.TabStop = false;
             this.RenderFunctionGroupBoxFlag.Text = "Flag Setting";
             // 
+            // RenderFunctionFlagFreezeAtEndCheckBox
+            // 
+            this.RenderFunctionFlagFreezeAtEndCheckBox.AutoSize = true;
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Location = new System.Drawing.Point(147, 104);
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Name = "RenderFunctionFlagFreezeAtEndCheckBox";
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Size = new System.Drawing.Size(166, 17);
+            this.RenderFunctionFlagFreezeAtEndCheckBox.TabIndex = 75;
+            this.RenderFunctionFlagFreezeAtEndCheckBox.Text = "Freeze if last frame is reached";
+            this.EnvironmentControlTooltip.SetToolTip(this.RenderFunctionFlagFreezeAtEndCheckBox, "The color frame will be frozen when reaching the end of the animation (Color Blen" +
+        "d only!)");
+            this.RenderFunctionFlagFreezeAtEndCheckBox.UseVisualStyleBackColor = true;
+            this.RenderFunctionFlagFreezeAtEndCheckBox.CheckedChanged += new System.EventHandler(this.RenderFunctionFlagFreezeAtEndCheckBox_CheckedChanged);
+            // 
             // RenderFunctionFlagFreezeCheckBox
             // 
             this.RenderFunctionFlagFreezeCheckBox.AutoSize = true;
@@ -12073,19 +12111,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // RenderFunctionFlagFreezeAtEndCheckBox
-            // 
-            this.RenderFunctionFlagFreezeAtEndCheckBox.AutoSize = true;
-            this.RenderFunctionFlagFreezeAtEndCheckBox.Location = new System.Drawing.Point(147, 104);
-            this.RenderFunctionFlagFreezeAtEndCheckBox.Name = "RenderFunctionFlagFreezeAtEndCheckBox";
-            this.RenderFunctionFlagFreezeAtEndCheckBox.Size = new System.Drawing.Size(166, 17);
-            this.RenderFunctionFlagFreezeAtEndCheckBox.TabIndex = 75;
-            this.RenderFunctionFlagFreezeAtEndCheckBox.Text = "Freeze if last frame is reached";
-            this.EnvironmentControlTooltip.SetToolTip(this.RenderFunctionFlagFreezeAtEndCheckBox, "The color frame will be frozen when reaching the end of the animation (Color Blen" +
-        "d only!)");
-            this.RenderFunctionFlagFreezeAtEndCheckBox.UseVisualStyleBackColor = true;
-            this.RenderFunctionFlagFreezeAtEndCheckBox.CheckedChanged += new System.EventHandler(this.RenderFunctionFlagFreezeAtEndCheckBox_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12500,7 +12525,7 @@ namespace SharpOcarina
         private System.Windows.Forms.Button AddexitButton;
         private System.Windows.Forms.Button DeleteexitButton;
         private System.Windows.Forms.ToolStripMenuItem showReadmeToolStripMenuItem;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox BackFaceCulling;
         private NumericUpDownEx ExitNumber;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox HookshotableCheckbox;
@@ -13169,6 +13194,8 @@ namespace SharpOcarina
         private ToolStripMenuItem RenderPathwaystoolStripMenuItem3;
         private ToolStripMenuItem MMTextureScrolltoolStripMenuItem3;
         private CheckBox RenderFunctionFlagFreezeAtEndCheckBox;
+        private CheckBox GroupTexturePointer;
+        private ToolStripMenuItem addLinkAnimationsz64romToolStripMenuItem;
     }
     }
 

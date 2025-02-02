@@ -274,6 +274,8 @@ namespace SharpOcarina
             public ulong[] CustomDL = new ulong[4];
             [XmlIgnore]
             public bool ScaledNormals = false;
+            [XmlIgnore]
+            public bool TexPointerPlus1 = false;
 
             private List<Triangle> _Tris = new List<Triangle>();
             

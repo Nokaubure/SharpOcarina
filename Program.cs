@@ -15,8 +15,8 @@ namespace SharpOcarina
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        public static string ApplicationTitle;
-        public static int ApplicationVersion = 0x1570;
+        public static string ApplicationTitle = "SharpOcarina 1.58";
+        public static int ApplicationVersion = 0x1580;
 
         public static MainForm MF;
         public static bool QuitProgram = false;
@@ -42,8 +42,6 @@ namespace SharpOcarina
             
 
             MF = new MainForm(args);
-            ApplicationTitle = "SharpOcarina 1.57";
-            MF.Text = ApplicationTitle;
 
 
 
@@ -62,7 +60,7 @@ namespace SharpOcarina
 #if DEBUG
             ConsoleWindow.CreateConsole();
 #else
-            ApplicationTitle = MF.GetType().Namespace + GetVerString(ApplicationVersion);
+           // ApplicationTitle = MF.GetType().Namespace + GetVerString(ApplicationVersion);
 #endif
             // MF.GetType().Namespace + " 1.3";
             

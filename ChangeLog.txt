@@ -1,4 +1,22 @@
 ﻿///CHANGELOG///
+
+--------------
+---1.58
+--------------
+
+- Added "Tex Pointer +1" checkbox in group settings, this lets you set a texture swap animation at 1 segment higher than the selected one.
+
+- Added "Add New Link Animations" in tools tab (only visible in z64rom mode). This is a solution to a feature that was never implemented in z64rom, click if you want to add new link animations.
+
+- Fixed an issue where it was hard to interact with any waterbox,camera or pathway after the 2nd added one since last update
+
+- Fixed an issue where an error would sometimes show up when selecting pathways via mouse click
+
+- Fixed an issue where a crash would occur when deleting additional textures that were assigned to an animation. 
+
+- Fixed an issue where the application version appeared as v21.7
+
+
 --------------
 ---1.57
 --------------
