@@ -118,33 +118,29 @@ namespace SharpOcarina
 
         ObjFile.Material DummyMaterial = new ObjFile.Material();
 
-        public static bool flaglog_visible = false;
-
-        public static bool filetoC_visible = false;
-
-        public static bool zobjcopy_visible = false;
-
         public static CustomCombiner customcombiner;
 
+        public static bool flaglog_visible = false;
+        public static bool filetoC_visible = false;
+        public static bool zobjcopy_visible = false;
         public static bool customcombiner_visible = false;
-
         public static bool entrancetable_visible = false;
-
         public static bool cutscenetable_visible = false;
-
         public static bool savefileeditor_visible = false;
-
         public static bool subscreenmapeditor_visible = false;
-
         public static bool titlecardeditor_visible = false;
-
         public static bool restrictionflag_visible = false;
-
         public static bool droptableeditor_visible = false;
+        public static bool autohooker_visible = false;
 
         public static bool n64preview = false;
 
+        public static List<List<NTexture>> PreviewTextureCache;
+        //public static List<List<byte>> PreviewTextureCacheData;
+
         public static bool DatabaseAutoSet = false;
+
+        public static bool DatabaseDebugNames = false;
 
         public static ActorDatabase actordatabase;
 
@@ -164,6 +160,8 @@ namespace SharpOcarina
         public static int EasterEggPhase = 0;
         public static int EasterEggCounter = 0;
         public static bool n64refresh = false;
+        public static int RefreshGroup = 0;
+        public static int RefreshRoom = -1;
         public bool nocheckevent = false;
         public bool noupdatetextureanim = false;
 
@@ -7483,7 +7481,7 @@ namespace SharpOcarina
             if (!settings.RenderSelectedGroup) selectedtimer = 90;
         }
 
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        private void GroupAlpha_ValueChanged(object sender, EventArgs e)
         {
             if (GroupList.SelectedItem != null)
             {
@@ -7494,6 +7492,8 @@ namespace SharpOcarina
                 if (CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha.Count() > Index)
                     CurrentScene.Rooms[RoomList.SelectedIndex].GroupSettings.TintAlpha[Index] = ((ObjFile.Group)GroupList.SelectedItem).TintAlpha;
 
+                RefreshRoom = RoomList.SelectedIndex;
+                RefreshGroup = Index;
                 UpdateGroupSelect(n64refresh);
             }
         }
@@ -7608,7 +7608,7 @@ namespace SharpOcarina
 
         private void UpdateObjectEdit()
         {
-            if (RoomList.SelectedIndex == -1) { RoomObjectListBox.DataSource = null; return; }
+            if (RoomList.SelectedIndex == -1 || RoomList.SelectedIndex > CurrentScene.Rooms.Count-1 || CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects == null) { RoomObjectListBox.DataSource = null; return; }
 
             RoomObjectListBox.DataSource = CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects;
             RoomObjectListBox.DisplayMember = "ValueHex";
@@ -12043,8 +12043,6 @@ namespace SharpOcarina
 
             if (customcombiner != null) customcombiner.Close();
 
-            savechanges = true;
-
             if (!File.Exists(CurrentScene.Rooms[RoomList.SelectedIndex].ModelFilename) && Control.ModifierKeys != Keys.Shift)
             {
                 MessageBox.Show("Room file no longer exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -12055,6 +12053,14 @@ namespace SharpOcarina
                 MessageBox.Show("Collision file no longer exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (RoomList.Items.Count == 0)
+            {
+                MessageBox.Show("There's no rooms, reload can't be performed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            savechanges = true;
 
 
             if (((ModifierKeys & Keys.Shift) != 0))
@@ -15407,6 +15413,7 @@ namespace SharpOcarina
                 LaunchRomToolStripMenuItem.Visible = true;
                 cutsceneTableEditorToolStripMenuItem.Text = "Cutscene Table Editor (OoT)";
                 addLinkAnimationsz64romToolStripMenuItem.Visible = false;
+                AutoHookerMenuItem.Visible = false;
 
 
                 ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
@@ -15453,12 +15460,14 @@ namespace SharpOcarina
                 RefreshActorCache();
                 RefreshObjectCache();
                 RefreshRecetMenuItems(ref OpenGlobalROM, "GlobalFile", filename);
+                RefreshBGMCache();
                 GlobalRomRefresh.Visible = true;
                 Z64RomPlay.Visible = true;
                 EnvironmentControlTooltip.SetToolTip(Z64RomPlay, "Store scene, build and launch z64rom + warp to scene");
                 LaunchRomToolStripMenuItem.Visible = true;
                 cutsceneTableEditorToolStripMenuItem.Text = "Remove Cutscene Table (z64rom)";
                 addLinkAnimationsz64romToolStripMenuItem.Visible = true;
+                AutoHookerMenuItem.Visible = true;
                 UpdateSceneRender(rom64.getPath() + "\\", true);
 
                 actorEditControl1.cacheId = 0xFEFE;
@@ -15469,6 +15478,82 @@ namespace SharpOcarina
                 actorEditControl3.UpdateActorEdit();
                 UpdateForm();
             }
+        }
+
+        public void RefreshBGMCache()
+        {
+            string gameprefix = (!settings.MajorasMask) ? "OOT/" : "MM/";
+
+            
+
+            SongComboBox.Items.Clear();
+            SongComboBox.Items.AddRange(XMLreader.getXMLItems(gameprefix + "SongNames", "Song"));
+
+            if (rom64.isSet())
+            {
+                List<String> objects = rom64.getList("rom\\sound\\sequence\\");
+                bool added = false;
+
+                foreach (var str in objects)
+                {
+                    var basename = Path.GetFileNameWithoutExtension(str);
+
+                    if (!basename.StartsWith("0x"))
+                        continue;
+
+                    var indexname = basename.SubstringTill(0, '-').Replace("0x","");
+
+                    if (!ushort.TryParse(indexname, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ushort index))
+                        continue;
+
+                    if (index == 0) continue;
+
+                    basename = basename.Substring(basename.IndexOf("-") + 1);
+
+                   for (int i = 0; i < SongComboBox.Items.Count; i++)
+                   {
+                       if (Convert.ToInt32((SongComboBox.Items[i] as SongItem).Value) == index)
+                       {
+                            SongComboBox.Items.RemoveAt(i);
+                            break;
+                       }
+                   }
+
+                   
+                    SongComboBox.Items.Add(new SongItem { Text = index.ToString("X2") + " - " + basename, Value = index });
+
+                    added = true;
+                }
+                if (added)
+                {
+
+                    List<SongItem> SortedList = new List<SongItem>();
+                    for (int i = 0; i < SongComboBox.Items.Count; i++)
+                    {
+                        SortedList.Add((SongComboBox.Items[i] as SongItem));
+                    }
+                    SortedList.Sort((x, y) => (Convert.ToInt32(x.Value)).CompareTo(Convert.ToInt32(y.Value)));
+                    SongComboBox.Items.Clear();
+                    SongComboBox.Items.AddRange(SortedList.ToArray());
+                }
+            }
+
+            //Failsafe
+
+            bool found = false;
+
+            for (int i = 0; i < SongComboBox.Items.Count; i++)
+            {
+                byte val = Convert.ToByte((SongComboBox.Items[i] as SongItem).Value);
+                if (val == CurrentScene.Music)
+                {
+                    SongComboBox.SelectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) SongComboBox.SelectedIndex = 0;
+
         }
 
         public void RefreshExitCache()
@@ -15905,6 +15990,7 @@ namespace SharpOcarina
             RefreshExitLabels();
             RefreshActorCache();
             RefreshObjectCache();
+            RefreshBGMCache();
             UpdateForm();
         }
 
@@ -18735,6 +18821,7 @@ namespace SharpOcarina
                 foreach (String str in actors)
                 {
                     string basename = "";
+                    string debugname = "";
                     string notes = "";
                     ushort index = 0;
 
@@ -18761,6 +18848,8 @@ namespace SharpOcarina
                         var_arr = toml["Variables"].AsArray;
                         if (toml.HasKey("Name"))
                             basename = toml["Name"].AsString;
+                        if (toml.HasKey("DebugName"))
+                            basename = toml["DebugName"].AsString;
                         if (toml.HasKey("Notes"))
                             notes = toml["Notes"].AsString;
                         if (toml.HasKey("Category"))
@@ -18815,7 +18904,7 @@ namespace SharpOcarina
                         }
                     }
 
-                    Database.Add(new DatabaseActor(index, variables, basename, notes, cat, true));
+                    Database.Add(new DatabaseActor(index, variables, basename, debugname, notes, cat, true));
                 }
             }
 
@@ -18843,7 +18932,7 @@ namespace SharpOcarina
                      (MainForm.CurrentScene.SpecialObject == 0x0002 && nodeAtt["Object"] != null && (ushort)Convert.ToInt16(nodeAtt["Object"].Value.Split(',')[0].Trim(), 16) == 0x0003)) warning = "\n WARNING! Change special object setting before using this actor!";
 
 
-                Database.Add(new DatabaseActor((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16), values, nodeAtt["Name"].Value, xmlactor.notes + warning, xmlactor.category, false));
+                Database.Add(new DatabaseActor((ushort)Convert.ToInt16(nodeAtt["Key"].Value, 16), values, nodeAtt["Name"].Value, nodeAtt["DebugName"] != null ? nodeAtt["DebugName"].Value : "",  xmlactor.notes + warning, xmlactor.category, false));
             }
 
             Database = Database.OrderBy(x => x.Value).ToList();
@@ -19164,6 +19253,19 @@ namespace SharpOcarina
             MessageBox.Show("Success!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
 
+        }
+
+        private void AutoHookerMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!autohooker_visible)
+            {
+
+                AutoHookerForm autohooker = new AutoHookerForm(this);
+                autohooker.Show();
+                autohooker_visible = true;
+
+
+            }
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

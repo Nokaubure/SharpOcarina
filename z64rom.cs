@@ -41,7 +41,7 @@ public class rom64 {
         return pathRomDir;
     }
 
-    static public List<String> getList(string path) {
+    static public List<String> getList(string path, bool checksrc = true) {
         List<String> fileList = new List<String>();
         string fullpath = pathRomDir + "\\" + path;
 
@@ -51,7 +51,7 @@ public class rom64 {
         }
 
         //lets also search in rom directory
-        if (path.Contains("src\\"))
+        if (path.Contains("src\\") && checksrc)
         {
                 fullpath = fullpath.Replace("\\src\\", "\\rom\\");
                 foreach (string f in Directory.GetDirectories(fullpath))
@@ -106,7 +106,7 @@ public class rom64 {
     }
 
     static public bool getNameAndIndex(string input, ref string name, ref ushort index) {
-        var basename = Path.GetFileNameWithoutExtension(input + ".exe");
+        var basename = Path.GetFileNameWithoutExtension(input);
 
         if (!basename.StartsWith("0x"))
             return false;

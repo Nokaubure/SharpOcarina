@@ -26,4 +26,6 @@
   <Preset Type="0009" Value="00A4" Bitwise="00000010">Shadow Medallion Obtained</Preset>
   <Preset Type="0009" Value="00A4" Bitwise="00000008">Spirit Medallion Obtained</Preset>
   <Preset Type="0009" Value="00A4" Bitwise="00001000">Zelda's Lullaby Obtained</Preset>
+  <Preset Type="000A" Value="11D30" Bitwise="00040000">Cutscene Misc Action 0008 has been active for 1 frame</Preset>
+  <Preset Type="000A" Value="11D30" Bitwise="00000005">Cutscene Misc Action 000D has been active for 1 frame</Preset>
 </Table>

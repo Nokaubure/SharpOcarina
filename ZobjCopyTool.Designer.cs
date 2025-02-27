@@ -59,12 +59,14 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.AutomaticallyUpdateLDCheckbox = new System.Windows.Forms.CheckBox();
             this.UnderscoreCheckBox = new System.Windows.Forms.CheckBox();
+            this.MoveAllButton = new System.Windows.Forms.Button();
             this.TargetBankNumeric = new SharpOcarina.NumericUpDownEx();
             this.SourceBankNumeric = new SharpOcarina.NumericUpDownEx();
             this.SourceTextureHeight = new SharpOcarina.NumericUpDownEx();
             this.SourceTextureWidth = new SharpOcarina.NumericUpDownEx();
             this.AlsoUpdateHfileCheckbox = new System.Windows.Forms.CheckBox();
             this.DontReloadTargetCheckbox = new System.Windows.Forms.CheckBox();
+            this.z64ootlabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TargetBankNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceBankNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SourceTextureHeight)).BeginInit();
@@ -175,11 +177,12 @@
             // MoveButton
             // 
             this.MoveButton.Enabled = false;
-            this.MoveButton.Location = new System.Drawing.Point(308, 389);
+            this.MoveButton.Location = new System.Drawing.Point(303, 388);
             this.MoveButton.Name = "MoveButton";
-            this.MoveButton.Size = new System.Drawing.Size(65, 23);
+            this.MoveButton.Size = new System.Drawing.Size(76, 23);
             this.MoveButton.TabIndex = 10;
-            this.MoveButton.Text = "Copy >>";
+            this.MoveButton.Text = "Copy Sel >";
+            this.toolTip1.SetToolTip(this.MoveButton, "Copy selected item");
             this.MoveButton.UseVisualStyleBackColor = true;
             this.MoveButton.Click += new System.EventHandler(this.MoveButton_Click);
             // 
@@ -258,7 +261,7 @@
             // 
             this.SearchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.SearchLabel.AutoSize = true;
-            this.SearchLabel.Location = new System.Drawing.Point(193, 198);
+            this.SearchLabel.Location = new System.Drawing.Point(191, 188);
             this.SearchLabel.Name = "SearchLabel";
             this.SearchLabel.Size = new System.Drawing.Size(292, 13);
             this.SearchLabel.TabIndex = 20;
@@ -348,6 +351,18 @@
             this.toolTip1.SetToolTip(this.UnderscoreCheckBox, "Recommended if you\'re editing a vanilla object such as gameplay keep, uncheck if " +
         "its custom");
             this.UnderscoreCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // MoveAllButton
+            // 
+            this.MoveAllButton.Enabled = false;
+            this.MoveAllButton.Location = new System.Drawing.Point(303, 417);
+            this.MoveAllButton.Name = "MoveAllButton";
+            this.MoveAllButton.Size = new System.Drawing.Size(76, 23);
+            this.MoveAllButton.TabIndex = 37;
+            this.MoveAllButton.Text = "Copy All >";
+            this.toolTip1.SetToolTip(this.MoveAllButton, "Copy all items (more accuracy)");
+            this.MoveAllButton.UseVisualStyleBackColor = true;
+            this.MoveAllButton.Click += new System.EventHandler(this.MoveAllButton_Click);
             // 
             // TargetBankNumeric
             // 
@@ -488,11 +503,25 @@
             this.DontReloadTargetCheckbox.Text = "Don\'t reload target list on next search";
             this.DontReloadTargetCheckbox.UseVisualStyleBackColor = true;
             // 
+            // z64ootlabel
+            // 
+            this.z64ootlabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.z64ootlabel.AutoSize = true;
+            this.z64ootlabel.Location = new System.Drawing.Point(116, 9);
+            this.z64ootlabel.Name = "z64ootlabel";
+            this.z64ootlabel.Size = new System.Drawing.Size(436, 13);
+            this.z64ootlabel.TabIndex = 38;
+            this.z64ootlabel.Text = "Tip: place z64oot folder inside z64rom folder for automatic offset detection of v" +
+    "anilla objects";
+            this.z64ootlabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ZobjCopyToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(689, 647);
+            this.Controls.Add(this.z64ootlabel);
+            this.Controls.Add(this.MoveAllButton);
             this.Controls.Add(this.UnderscoreCheckBox);
             this.Controls.Add(this.AutomaticallyUpdateLDCheckbox);
             this.Controls.Add(this.DontReloadTargetCheckbox);
@@ -577,5 +606,7 @@
         private System.Windows.Forms.CheckBox DontReloadTargetCheckbox;
         private System.Windows.Forms.CheckBox AutomaticallyUpdateLDCheckbox;
         private System.Windows.Forms.CheckBox UnderscoreCheckBox;
+        private System.Windows.Forms.Button MoveAllButton;
+        private System.Windows.Forms.Label z64ootlabel;
     }
 }

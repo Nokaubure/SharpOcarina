@@ -1,6 +1,29 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.59
+--------------
+
+- Actor database can now display debug names
+
+- Documented more cutscene misc actions, added stop music command, added flag presets in texture animations
+
+- Custom music will now appear in the scene tab in z64rom mode
+
+- Slightly improved performance when previewing scenes, specially with a high amount of instances (actors/cameras/cutscenes etc)
+
+- Changes in zobj copy tool:
+	- [TODO] Added a copy all button. This will append the source zobj to the target zobj, updating all offsets. (more accurate than 1 by 1)
+	- If a z64oot decomp folder is detected inside the z64rom folder, it will automatically pick .xmls from the decomp
+	- Automatic .ld/.xml detection now also works with objects inside .vanilla folder
+
+- [TODO] Updated Objex2 plugin to 2.61 (update it manually by importing BlenderScripts\io_export_objex2.zip)
+	- Exported Link anim bins will have the frame count at the beginning of the filename, this is to have their name ready for the new link anims feature of SO
+	- Fixed an issue when converting materials from Fast64
+
+- Fixed an error that would sometimes appear when reloading rooms
+
+--------------
 ---1.58
 --------------
 

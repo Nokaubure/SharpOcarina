@@ -4,7 +4,7 @@
   <Marker Key="0003" Tab="6" Actor="Misc" Type="Special">Misc actions</Marker>
   <Marker Key="0004" Tab="6" Actor="Environment" Type="Special">Change Environment</Marker>
   <Marker Key="0005" Tab="0">Camera Relative Position</Marker>
-  <Marker Key="0009" Tab="2">(placeholder) Unknown</Marker>
+  <Marker Key="0009" Tab="2">(placeholder) Unknown, rumble?</Marker>
   <Marker Key="000A" Tab="6" Actor="Link" Type="Actor">Link actions</Marker>
   <Marker Key="0012" Tab="6" Actor="Zelda_Child" Type="Actor">Child Zelda actions (Slot 1)</Marker>
   <Marker Key="0013" Tab="3">Textbox</Marker>
@@ -26,6 +26,7 @@
   <Marker Key="0052" Tab="6" Actor="KoumeKotake" Type="Actor">Kotake actions (Slot 4)</Marker> <!-- 00CC 0001 Kotake -->
   <Marker Key="0055" Tab="6" Actor="Zelda" Type="Actor">Adult Zelda actions (Slot 7)</Marker>
   <Marker Key="0056" Tab="6" Actor="Music" Type="Special">Change Music</Marker>
+  <Marker Key="0057" Tab="2">Stop Music</Marker>
   <Marker Key="007C" Tab="6" Actor="FadeMusic" Type="Special">Fade Music</Marker>
   <Marker Key="008C" Tab="1">Set Time</Marker>
   <Marker Key="03E8" Tab="5">ASM execution</Marker>
@@ -46,7 +47,6 @@
   <Marker Key="0058" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 7)</Marker>
   <Marker Key="0059" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 8)</Marker>
   <Marker Key="008F" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 10)</Marker>
-  <Marker Key="0057" Tab="6" Actor="Placeholder" Type="Actor">Nothing</Marker>
   <Marker Key="005B" Tab="6" Actor="Placeholder" Type="Actor">Nothing</Marker>
   <Marker Key="005C" Tab="6" Actor="Placeholder" Type="Actor">Nothing</Marker>
   <Marker Key="005F" Tab="6" Actor="Placeholder" Type="Actor">Nothing</Marker>

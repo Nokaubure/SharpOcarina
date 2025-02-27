@@ -38,13 +38,14 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.CategoriesButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.AutoSetCheckbox = new System.Windows.Forms.CheckBox();
+            this.DebugNamesCheckbox = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // SetActorButton
             // 
             this.SetActorButton.Enabled = false;
-            this.SetActorButton.Location = new System.Drawing.Point(49, 617);
+            this.SetActorButton.Location = new System.Drawing.Point(49, 629);
             this.SetActorButton.Name = "SetActorButton";
             this.SetActorButton.Size = new System.Drawing.Size(75, 23);
             this.SetActorButton.TabIndex = 0;
@@ -54,7 +55,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(220, 617);
+            this.CancelButton.Location = new System.Drawing.Point(220, 629);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 1;
@@ -101,7 +102,7 @@
             // 
             // NotesTextBox
             // 
-            this.NotesTextBox.Location = new System.Drawing.Point(12, 428);
+            this.NotesTextBox.Location = new System.Drawing.Point(12, 417);
             this.NotesTextBox.Name = "NotesTextBox";
             this.NotesTextBox.ReadOnly = true;
             this.NotesTextBox.Size = new System.Drawing.Size(333, 183);
@@ -137,7 +138,7 @@
             // AutoSetCheckbox
             // 
             this.AutoSetCheckbox.AutoSize = true;
-            this.AutoSetCheckbox.Location = new System.Drawing.Point(130, 621);
+            this.AutoSetCheckbox.Location = new System.Drawing.Point(49, 606);
             this.AutoSetCheckbox.Name = "AutoSetCheckbox";
             this.AutoSetCheckbox.Size = new System.Drawing.Size(90, 17);
             this.AutoSetCheckbox.TabIndex = 8;
@@ -145,11 +146,23 @@
             this.AutoSetCheckbox.UseVisualStyleBackColor = true;
             this.AutoSetCheckbox.CheckedChanged += new System.EventHandler(this.AutoSetCheckbox_CheckedChanged);
             // 
+            // DebugNamesCheckbox
+            // 
+            this.DebugNamesCheckbox.AutoSize = true;
+            this.DebugNamesCheckbox.Location = new System.Drawing.Point(175, 606);
+            this.DebugNamesCheckbox.Name = "DebugNamesCheckbox";
+            this.DebugNamesCheckbox.Size = new System.Drawing.Size(120, 17);
+            this.DebugNamesCheckbox.TabIndex = 9;
+            this.DebugNamesCheckbox.Text = "Show debug names";
+            this.DebugNamesCheckbox.UseVisualStyleBackColor = true;
+            this.DebugNamesCheckbox.CheckedChanged += new System.EventHandler(this.DebugNamesCheckbox_CheckedChanged);
+            // 
             // ActorDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(357, 652);
+            this.ClientSize = new System.Drawing.Size(357, 664);
+            this.Controls.Add(this.DebugNamesCheckbox);
             this.Controls.Add(this.AutoSetCheckbox);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.NotesTextBox);
@@ -182,5 +195,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton CategoriesButton;
         private System.Windows.Forms.CheckBox AutoSetCheckbox;
+        private System.Windows.Forms.CheckBox DebugNamesCheckbox;
     }
 }

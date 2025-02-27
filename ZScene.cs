@@ -1846,6 +1846,7 @@ namespace SharpOcarina
                     if (cloneid > 0) { MainForm.NormalHeader.ConvertPreview(ConsecutiveRoomInject, ForceRGBATextures); return; }
                     else ConvertScene(ConsecutiveRoomInject, ForceRGBATextures, this, game);
                 }
+                else return;
             }
 
             // Alright, convert the scene
@@ -2284,7 +2285,11 @@ namespace SharpOcarina
             UcodeSimulator.currentfilename = "";
 
             GL.PopAttrib();
-        }
+
+            MainForm.RefreshGroup = 0;
+            MainForm.RefreshRoom = -1;
+            //MainForm.SingleDListRefresh = null;
+    }
 
         #endregion
 
@@ -2298,19 +2303,22 @@ namespace SharpOcarina
                 MessageBox.Show("There's no collision file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-#if DEBUG
+
             DebugConsole.WriteLine("converting header with cloneid : " + cloneid);
-#endif
-            textureoffsets.Clear();
-            paletteoffsets.Clear();
+
+            //if (!PartialRefresh())
+            //{
+                textureoffsets.Clear();
+                paletteoffsets.Clear();
+            //}
 
 
             /* Create new scene file if its the main header */
             if (cloneid == 0) SceneData = new List<byte>();
             else SceneData = MainHeader.SceneData;
-#if DEBUG
+
             DebugConsole.WriteLine("scene count" + SceneData.Count.ToString("X"));
-#endif
+
 
             /* Write scene header */
 
@@ -2424,7 +2432,7 @@ namespace SharpOcarina
             Helpers.Append64(ref SceneData, 0x1400000000000000);                        /* End marker */
 
             //empty space
-            for(int i = 0; i < MainForm.settings.EmptySpace; i++)
+            for (int i = 0; i < MainForm.settings.EmptySpace; i++)
             {
                 SceneData.Add(0);
             }
@@ -2433,268 +2441,278 @@ namespace SharpOcarina
 
             int endofsceneheader = SceneData.Count;
 
-            if (cloneid == 0)
-            {
-                for (int i = 0; i < Rooms.Count; i++) Helpers.Append64(ref SceneData, 0x0000000000000000);
-            }
 
-            //alternate scene header list
-            if (SceneHeaders.Count > 0)
+            if (!MainForm.n64preview)
             {
-                Helpers.Overwrite32(ref SceneData, CmdAlternateSceneHeader + 4, (uint)(0x02000000 | SceneData.Count));
-                foreach (ZSceneHeader SceneHeader in SceneHeaders)
+
+                
+
+                if (cloneid == 0)
                 {
-                    SceneHeader._InjectOffset = SceneData.Count;
-                    Helpers.Append32(ref SceneData, 0x00000000); //placeholder
+                    for (int i = 0; i < Rooms.Count; i++) Helpers.Append64(ref SceneData, 0x0000000000000000);
                 }
-            }
-            AddPadding(ref SceneData, 8);
 
-            if (Transitions.Count > 0)
-            {
-                /* ... transition list ... */
-                Helpers.Overwrite32(ref SceneData, CmdTransitionsOffset, (uint)(0x0E000000 | (Transitions.Count << 16)));
-                Helpers.Overwrite32(ref SceneData, CmdTransitionsOffset + 4, (uint)(0x02000000 | SceneData.Count));
-                foreach (ZActor Trans in Transitions)
+                //alternate scene header list
+                if (SceneHeaders.Count > 0)
                 {
+                    Helpers.Overwrite32(ref SceneData, CmdAlternateSceneHeader + 4, (uint)(0x02000000 | SceneData.Count));
+                    foreach (ZSceneHeader SceneHeader in SceneHeaders)
+                    {
+                        SceneHeader._InjectOffset = SceneData.Count;
+                        Helpers.Append32(ref SceneData, 0x00000000); //placeholder
+                    }
+                }
+                AddPadding(ref SceneData, 8);
 
-                    SceneData.Add(Trans.FrontSwitchTo);
-                    SceneData.Add(Trans.FrontCamera);
-                    SceneData.Add(Trans.BackSwitchTo);
-                    SceneData.Add(Trans.BackCamera);
-                    Helpers.Append16(ref SceneData, Trans.Number);
-                    Helpers.Append16(ref SceneData, (ushort)Trans.XPos);
-                    Helpers.Append16(ref SceneData, (ushort)Trans.YPos);
-                    Helpers.Append16(ref SceneData, (ushort)Trans.ZPos);
+                if (Transitions.Count > 0)
+                {
+                    /* ... transition list ... */
+                    Helpers.Overwrite32(ref SceneData, CmdTransitionsOffset, (uint)(0x0E000000 | (Transitions.Count << 16)));
+                    Helpers.Overwrite32(ref SceneData, CmdTransitionsOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                    foreach (ZActor Trans in Transitions)
+                    {
+
+                        SceneData.Add(Trans.FrontSwitchTo);
+                        SceneData.Add(Trans.FrontCamera);
+                        SceneData.Add(Trans.BackSwitchTo);
+                        SceneData.Add(Trans.BackCamera);
+                        Helpers.Append16(ref SceneData, Trans.Number);
+                        Helpers.Append16(ref SceneData, (ushort)Trans.XPos);
+                        Helpers.Append16(ref SceneData, (ushort)Trans.YPos);
+                        Helpers.Append16(ref SceneData, (ushort)Trans.ZPos);
+                        if (Game == "OOT")
+                            Helpers.Append16(ref SceneData, (ushort)Trans.YRot);
+                        else
+                        {
+                            short Yrot = (short)Math.Round(Trans.YRot / 182.0444f);
+                            if (Yrot < 0) Yrot += 360;
+                            Helpers.Append16(ref SceneData, (ushort)(0 | (Yrot << 7))); //0x1B command here in some future
+                        }
+                        Helpers.Append16(ref SceneData, Trans.Variable);
+                    }
+                    AddPadding(ref SceneData, 8);
+                }
+
+                /* ... exit list ... */
+                if (!MainForm.settings.EnableNewExitFormat && ExitList.Count > 0)
+                {
+                    Helpers.Overwrite32(ref SceneData, CmdExitListOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                    foreach (ZUShort Exit in ExitList)
+                    {
+                        Helpers.Append16(ref SceneData, Exit.Value);
+                    }
+                    AddPadding(ref SceneData, 8);
+                }
+                else if (MainForm.settings.EnableNewExitFormat && ExitListV2.Count > 0)
+                {
+                    Helpers.Overwrite32(ref SceneData, CmdExitListOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                    foreach (ZExit Exit in ExitListV2)
+                    {
+                        Helpers.Append32(ref SceneData, Exit.Raw + (uint)0x80000000);
+                    }
+                    AddPadding(ref SceneData, 8);
+                }
+
+                /* ... spawn point list ... */
+                Helpers.Overwrite32(ref SceneData, CmdSpawnPointOffset, (uint)(0x00000000 | (SpawnPoints.Count << 16)));
+                Helpers.Overwrite32(ref SceneData, CmdSpawnPointOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                foreach (ZActor Spawn in SpawnPoints)
+                {
+                    Helpers.Append16(ref SceneData, Spawn.Number);
+                    Helpers.Append16(ref SceneData, (ushort)Spawn.XPos);
+                    Helpers.Append16(ref SceneData, (ushort)Spawn.YPos);
+                    Helpers.Append16(ref SceneData, (ushort)Spawn.ZPos);
+                    Helpers.Append16(ref SceneData, (ushort)Spawn.XRot);
                     if (Game == "OOT")
-                        Helpers.Append16(ref SceneData, (ushort)Trans.YRot);
+                        Helpers.Append16(ref SceneData, (ushort)Spawn.YRot);
                     else
                     {
-                        short Yrot = (short)Math.Round(Trans.YRot / 182.0444f);
+                        short Yrot = (short)Math.Round(Spawn.YRot / 182.0444f);
                         if (Yrot < 0) Yrot += 360;
                         Helpers.Append16(ref SceneData, (ushort)(0 | (Yrot << 7))); //0x1B command here in some future
                     }
-                    Helpers.Append16(ref SceneData, Trans.Variable);
+                    Helpers.Append16(ref SceneData, (ushort)Spawn.ZRot);
+                    Helpers.Append16(ref SceneData, Spawn.Variable);
                 }
                 AddPadding(ref SceneData, 8);
-            }
 
-            /* ... exit list ... */
-            if (!MainForm.settings.EnableNewExitFormat && ExitList.Count > 0)
-            {
-                Helpers.Overwrite32(ref SceneData, CmdExitListOffset + 4, (uint)(0x02000000 | SceneData.Count));
-                foreach (ZUShort Exit in ExitList)
+                /* ... environments ... */
+                Helpers.Overwrite32(ref SceneData, CmdEnvironmentsOffset, (uint)(0x0F000000 | (Environments.Count << 16)));
+                Helpers.Overwrite32(ref SceneData, CmdEnvironmentsOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                foreach (ZEnvironment Env in Environments)
                 {
-                    Helpers.Append16(ref SceneData, Exit.Value);
+                    Helpers.Append48(ref SceneData, (ulong)(Env.C1C.ToArgb() & 0xFFFFFF));
+                    Helpers.Append48(ref SceneData, (ulong)(Env.C2C.ToArgb() & 0xFFFFFF));
+                    Helpers.Append48(ref SceneData, (ulong)(Env.C3C.ToArgb() & 0xFFFFFF));
+                    Helpers.Append48(ref SceneData, (ulong)(Env.C4C.ToArgb() & 0xFFFFFF));
+                    Helpers.Append48(ref SceneData, (ulong)(Env.C5C.ToArgb() & 0xFFFFFF));
+                    Helpers.Append48(ref SceneData, (ulong)(Env.FogColorC.ToArgb() & 0xFFFFFF));
+                    Helpers.Append16(ref SceneData, (ushort)(Env.FogDistance | (Env.FogUnknown << 10)));
+                    Helpers.Append16(ref SceneData, Env.DrawDistance);
+
+                    // DebugConsole.WriteLine((Env.FogDistance | (Env.FogUnknown << 10)).ToString("X4"));
                 }
                 AddPadding(ref SceneData, 8);
-            }
-            else if (MainForm.settings.EnableNewExitFormat && ExitListV2.Count > 0)
-            {
-                Helpers.Overwrite32(ref SceneData, CmdExitListOffset + 4, (uint)(0x02000000 | SceneData.Count));
-                foreach (ZExit Exit in ExitListV2)
-                {
-                    Helpers.Append32(ref SceneData, Exit.Raw + (uint)0x80000000);
-                }
-                AddPadding(ref SceneData, 8);
-            }
-
-            /* ... spawn point list ... */
-            Helpers.Overwrite32(ref SceneData, CmdSpawnPointOffset, (uint)(0x00000000 | (SpawnPoints.Count << 16)));
-            Helpers.Overwrite32(ref SceneData, CmdSpawnPointOffset + 4, (uint)(0x02000000 | SceneData.Count));
-            foreach (ZActor Spawn in SpawnPoints)
-            {
-                Helpers.Append16(ref SceneData, Spawn.Number);
-                Helpers.Append16(ref SceneData, (ushort)Spawn.XPos);
-                Helpers.Append16(ref SceneData, (ushort)Spawn.YPos);
-                Helpers.Append16(ref SceneData, (ushort)Spawn.ZPos);
-                Helpers.Append16(ref SceneData, (ushort)Spawn.XRot);
-                if (Game == "OOT")
-                    Helpers.Append16(ref SceneData, (ushort)Spawn.YRot);
-                else
-                {
-                    short Yrot = (short)Math.Round(Spawn.YRot / 182.0444f);
-                    if (Yrot < 0) Yrot += 360;
-                    Helpers.Append16(ref SceneData, (ushort)(0 | (Yrot << 7))); //0x1B command here in some future
-                }
-                Helpers.Append16(ref SceneData, (ushort)Spawn.ZRot);
-                Helpers.Append16(ref SceneData, Spawn.Variable);
-            }
-            AddPadding(ref SceneData, 8);
-
-            /* ... environments ... */
-            Helpers.Overwrite32(ref SceneData, CmdEnvironmentsOffset, (uint)(0x0F000000 | (Environments.Count << 16)));
-            Helpers.Overwrite32(ref SceneData, CmdEnvironmentsOffset + 4, (uint)(0x02000000 | SceneData.Count));
-            foreach (ZEnvironment Env in Environments)
-            {
-                Helpers.Append48(ref SceneData, (ulong)(Env.C1C.ToArgb() & 0xFFFFFF));
-                Helpers.Append48(ref SceneData, (ulong)(Env.C2C.ToArgb() & 0xFFFFFF));
-                Helpers.Append48(ref SceneData, (ulong)(Env.C3C.ToArgb() & 0xFFFFFF));
-                Helpers.Append48(ref SceneData, (ulong)(Env.C4C.ToArgb() & 0xFFFFFF));
-                Helpers.Append48(ref SceneData, (ulong)(Env.C5C.ToArgb() & 0xFFFFFF));
-                Helpers.Append48(ref SceneData, (ulong)(Env.FogColorC.ToArgb() & 0xFFFFFF));
-                Helpers.Append16(ref SceneData, (ushort) (Env.FogDistance | (Env.FogUnknown << 10)));
-                Helpers.Append16(ref SceneData, Env.DrawDistance);
-
-               // DebugConsole.WriteLine((Env.FogDistance | (Env.FogUnknown << 10)).ToString("X4"));
-            }
-            AddPadding(ref SceneData, 8);
 
 
-            /* ... Pathways ... */
-            if (Pathways.Count > 0)
-            {
-
-                //Helpers.Overwrite32(ref SceneData, CmdPathwayOffset, (uint)(0x0D000000 | (Pathways.Count << 16)));
-                Helpers.Overwrite32(ref SceneData, CmdPathwayOffset + 4, (uint)(0x02000000 | SceneData.Count));
-                int pointoffset = -1;
-                int incr = 0, incr2 = 0;
-
-                foreach (ZPathway Path in Pathways)
+                /* ... Pathways ... */
+                if (Pathways.Count > 0)
                 {
 
-                    Helpers.Append32(ref SceneData, (uint)(0x00000000 | (uint)Path.Points.Count << 24));
-                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | (uint)SceneData.Count + 4 + ((Pathways.Count - 1 - incr2) * 8) + (incr * 6)));
-                    incr += Path.Points.Count;
-                    incr2++;
-                }
-                foreach (ZPathway Path in Pathways)
-                {
-                    foreach (Vector3 point in Path.Points)
+                    //Helpers.Overwrite32(ref SceneData, CmdPathwayOffset, (uint)(0x0D000000 | (Pathways.Count << 16)));
+                    Helpers.Overwrite32(ref SceneData, CmdPathwayOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                    int pointoffset = -1;
+                    int incr = 0, incr2 = 0;
+
+                    foreach (ZPathway Path in Pathways)
                     {
-                        Helpers.Append16(ref SceneData, (ushort)point.X);
-                        Helpers.Append16(ref SceneData, (ushort)point.Y);
-                        Helpers.Append16(ref SceneData, (ushort)point.Z);
+
+                        Helpers.Append32(ref SceneData, (uint)(0x00000000 | (uint)Path.Points.Count << 24));
+                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | (uint)SceneData.Count + 4 + ((Pathways.Count - 1 - incr2) * 8) + (incr * 6)));
+                        incr += Path.Points.Count;
+                        incr2++;
                     }
-                }
-                AddPadding(ref SceneData, 8);
-            }
-
-            /* ... entrance list ... */
-            if (cloneid == 0)
-            {
-                Helpers.Overwrite32(ref SceneData, CmdEntranceListOffset + 4, (uint)(0x02000000 | SceneData.Count));
-                EntranceOffset = SceneData.Count;
-                ushort entrancenum = 0;
-                foreach (ZActor Spawn in SpawnPoints)
-                {
-                    Vector3 pos = new Vector3(Spawn.XPos, Spawn.YPos + 1, Spawn.ZPos);
-                    float dist = 999999;
-                    ushort roomid = 0;
-
-                    if (Spawn.SpawnRoom != 0xFF)
+                    foreach (ZPathway Path in Pathways)
                     {
-                        roomid = Spawn.SpawnRoom;
-                    }
-                    else
-                    {
-
-                        ushort roomcount = 0;
-                        foreach (ZRoom Room in MainForm.CurrentScene.Rooms)
+                        foreach (Vector3 point in Path.Points)
                         {
-                            foreach (ObjFile.Group Group in Room.TrueGroups)
-                            {
-                                if (Group.Name.ToLower().Contains("#nocollision")) continue;
-
-                                foreach (ObjFile.Triangle Tri in Group.Triangles)
-                                {
-                                    Vector3 collision = ObjFile.RayCollision(
-                                        Room.ObjModel.Vertices[Tri.VertIndex[0]],
-                                        Room.ObjModel.Vertices[Tri.VertIndex[1]],
-                                        Room.ObjModel.Vertices[Tri.VertIndex[2]],
-                                        pos,
-                                        new Vector3(pos.X, pos.Y - 30000, pos.Z),
-                                        MainForm.CurrentScene.Scale);
-                                    if (collision != new Vector3(-1, -1, -1) && dist > MainForm.Distance3D(pos, collision))
-                                    {
-                                        dist = MainForm.Distance3D(pos, collision);
-                                        roomid = roomcount;
-                                    }
-                                }
-                            }
-                            roomcount++;
+                            Helpers.Append16(ref SceneData, (ushort)point.X);
+                            Helpers.Append16(ref SceneData, (ushort)point.Y);
+                            Helpers.Append16(ref SceneData, (ushort)point.Z);
                         }
                     }
-                    Helpers.Append16(ref SceneData, (ushort)(0x0000 | (entrancenum << 8) | roomid));
-                    entrancenum++;
+                    AddPadding(ref SceneData, 8);
                 }
-                AddPadding(ref SceneData, 8);
-            }
 
-            /* ... Cutscene ... */
-            
-            if (Cutscene.Count > 0)
-            {
-                Helpers.Overwrite32(ref SceneData, CmdCutsceneOffset + 4, (uint)(0x02000000 | SceneData.Count));
-
-                if (Game == "OOT")
+                /* ... entrance list ... */
+                if (cloneid == 0)
                 {
-                    if (MainForm.settings.printoffsets) MainForm.InjectMessages.Add("Cutscene offset: " + ((uint)(0x02000000 | SceneData.Count)).ToString("X8"));
-                    cachecutsceneoffset = (uint)(0x02000000 | SceneData.Count);
+                    Helpers.Overwrite32(ref SceneData, CmdEntranceListOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                    EntranceOffset = SceneData.Count;
+                    ushort entrancenum = 0;
+                    foreach (ZActor Spawn in SpawnPoints)
+                    {
+                        Vector3 pos = new Vector3(Spawn.XPos, Spawn.YPos + 1, Spawn.ZPos);
+                        float dist = 999999;
+                        ushort roomid = 0;
+
+                        if (Spawn.SpawnRoom != 0xFF)
+                        {
+                            roomid = Spawn.SpawnRoom;
+                        }
+                        else
+                        {
+
+                            ushort roomcount = 0;
+                            foreach (ZRoom Room in MainForm.CurrentScene.Rooms)
+                            {
+                                foreach (ObjFile.Group Group in Room.TrueGroups)
+                                {
+                                    if (Group.Name.ToLower().Contains("#nocollision")) continue;
+
+                                    foreach (ObjFile.Triangle Tri in Group.Triangles)
+                                    {
+                                        Vector3 collision = ObjFile.RayCollision(
+                                            Room.ObjModel.Vertices[Tri.VertIndex[0]],
+                                            Room.ObjModel.Vertices[Tri.VertIndex[1]],
+                                            Room.ObjModel.Vertices[Tri.VertIndex[2]],
+                                            pos,
+                                            new Vector3(pos.X, pos.Y - 30000, pos.Z),
+                                            MainForm.CurrentScene.Scale);
+                                        if (collision != new Vector3(-1, -1, -1) && dist > MainForm.Distance3D(pos, collision))
+                                        {
+                                            dist = MainForm.Distance3D(pos, collision);
+                                            roomid = roomcount;
+                                        }
+                                    }
+                                }
+                                roomcount++;
+                            }
+                        }
+                        Helpers.Append16(ref SceneData, (ushort)(0x0000 | (entrancenum << 8) | roomid));
+                        entrancenum++;
+                    }
+                    AddPadding(ref SceneData, 8);
                 }
 
-                else if (Game == "MM")
+                /* ... Cutscene ... */
+
+                if (Cutscene.Count > 0)
                 {
-                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | (SceneData.Count + 8)));
-                    Helpers.Append32(ref SceneData, (uint)(0x00000000 | (CutsceneEntrance << 16) | (CutsceneEntranceNum << 8) | (CutsceneFlag)));
-                    if (MainForm.settings.printoffsets) MainForm.InjectMessages.Add("Cutscene offset: " + ((uint)(0x02000000 | SceneData.Count)).ToString("X8"));
-                    cachecutsceneoffset = (uint)(0x02000000 | SceneData.Count);
+                    Helpers.Overwrite32(ref SceneData, CmdCutsceneOffset + 4, (uint)(0x02000000 | SceneData.Count));
 
-                    //Helpers.Overwrite32(ref SceneData, CmdCutsceneOffset - 8 + 4, (uint)(0x02000000 | SceneData.Count));
+                    if (Game == "OOT")
+                    {
+                        if (MainForm.settings.printoffsets) MainForm.InjectMessages.Add("Cutscene offset: " + ((uint)(0x02000000 | SceneData.Count)).ToString("X8"));
+                        cachecutsceneoffset = (uint)(0x02000000 | SceneData.Count);
+                    }
+
+                    else if (Game == "MM")
+                    {
+                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | (SceneData.Count + 8)));
+                        Helpers.Append32(ref SceneData, (uint)(0x00000000 | (CutsceneEntrance << 16) | (CutsceneEntranceNum << 8) | (CutsceneFlag)));
+                        if (MainForm.settings.printoffsets) MainForm.InjectMessages.Add("Cutscene offset: " + ((uint)(0x02000000 | SceneData.Count)).ToString("X8"));
+                        cachecutsceneoffset = (uint)(0x02000000 | SceneData.Count);
+
+                        //Helpers.Overwrite32(ref SceneData, CmdCutsceneOffset - 8 + 4, (uint)(0x02000000 | SceneData.Count));
+                    }
+
+                    GenerateCutsceneData(SceneData, Game);
+
+
                 }
 
-                GenerateCutsceneData(SceneData, Game);
-
-               
-            }
-
-            if (Game == "MM")
-            {
-                Helpers.Overwrite32(ref SceneData, MMCmdCameraOffset + 4, (uint)(0x02000000 | SceneData.Count));
-
-
-                foreach (ZActorCutscene ActorCutscene in ActorCutscenes)
+                if (Game == "MM")
                 {
-                    Helpers.Append16(ref SceneData, ActorCutscene.Unk);
-                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.Length);
-                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.CamID);
-                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.CsID);
-                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.ActorCsID);
-                    SceneData.Add(ActorCutscene.Sound);
-                    SceneData.Add((byte)(ActorCutscene.CamID == 0xFFF6 ? 0x01 : 0xFF));
-                    Helpers.Append16(ref SceneData, (ushort)ActorCutscene.HUDFade);
-                    SceneData.Add(ActorCutscene.ReturnCamType);
-                    SceneData.Add(ActorCutscene.Letterbox);
+                    Helpers.Overwrite32(ref SceneData, MMCmdCameraOffset + 4, (uint)(0x02000000 | SceneData.Count));
+
+
+                    foreach (ZActorCutscene ActorCutscene in ActorCutscenes)
+                    {
+                        Helpers.Append16(ref SceneData, ActorCutscene.Unk);
+                        Helpers.Append16(ref SceneData, (ushort)ActorCutscene.Length);
+                        Helpers.Append16(ref SceneData, (ushort)ActorCutscene.CamID);
+                        Helpers.Append16(ref SceneData, (ushort)ActorCutscene.CsID);
+                        Helpers.Append16(ref SceneData, (ushort)ActorCutscene.ActorCsID);
+                        SceneData.Add(ActorCutscene.Sound);
+                        SceneData.Add((byte)(ActorCutscene.CamID == 0xFFF6 ? 0x01 : 0xFF));
+                        Helpers.Append16(ref SceneData, (ushort)ActorCutscene.HUDFade);
+                        SceneData.Add(ActorCutscene.ReturnCamType);
+                        SceneData.Add(ActorCutscene.Letterbox);
+                    }
+
+
+                    AddPadding(ref SceneData, 8);
+
+
+                    Helpers.Overwrite32(ref SceneData, MMCmdMinimapOffset + 4, (uint)(0x02000000 | SceneData.Count));
+                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | SceneData.Count + 8));
+                    Helpers.Append32(ref SceneData, 0xFFFF0000);
+                    Helpers.Append32(ref SceneData, 0x00000000);
+                    Helpers.Append16(ref SceneData, 0x0000);
+                    AddPadding(ref SceneData, 8);
+
+
                 }
 
-                
-                AddPadding(ref SceneData, 8);
-                
+                if (cloneid == 0)
+                {
+                    /* ... collision */
+                    WriteSceneCollision(SceneData, 0x02, false, Game);
+                }
 
-                Helpers.Overwrite32(ref SceneData, MMCmdMinimapOffset + 4, (uint)(0x02000000 | SceneData.Count));
-                Helpers.Append32(ref SceneData, (uint)(0x02000000 | SceneData.Count + 8));
-                Helpers.Append32(ref SceneData, 0xFFFF0000);
-                Helpers.Append32(ref SceneData, 0x00000000);
-                Helpers.Append16(ref SceneData, 0x0000);
-                AddPadding(ref SceneData, 8);
 
+                AddPadding(ref SceneData, 0x10);
 
             }
-
-            if (cloneid == 0)
-            {
-                /* ... collision */
-                WriteSceneCollision(SceneData, 0x02, false, Game);
-            }
-
-
-            AddPadding(ref SceneData, 0x10);
 
 
 
             /* Process rooms... */
             for (int i = 0; i < _Rooms.Count; i++)
             {
+
+                
 
                 /* Get current room from list */
                 ZRoom Room = _Rooms[i];
@@ -2714,6 +2732,14 @@ namespace SharpOcarina
 
                 /* Create room header */
                 WriteRoomHeader(Room, MainHeader);
+
+                if (cloneid == 0) // && !PartialRefresh
+                    GenerateTextures(Room, SceneData, Textures);
+
+               
+
+                if (!MainForm.n64preview)
+                {
 
                 /* Write objects */
                 if ((Room.ZObjects.Count + this.ZObjects.Count) != 0)
@@ -2808,279 +2834,279 @@ namespace SharpOcarina
                     AddPadding(ref Room.RoomData, 8);
                 }
 
-                if (cloneid == 0)
-                    GenerateTextures(Room, SceneData, Textures);
 
-                // OOT texture anims
+                    // OOT texture anims
 
-                if (Game == "OOT" && MainForm.settings.command1AOoT && SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1 && !(cloneid > 0 && inherittextureanims))
-                {
-                    if (cloneid == 0) MainHeaderTextureAnimOffset = (uint)(0x02000000 | SceneData.Count);
-
-                    Helpers.Overwrite32(ref SceneData, MMCmdTextureAnimOffset + 4, (uint)(0x02000000 | SceneData.Count));
-
-                    List<uint> updateoffsets = new List<uint>();
-
-                    int incr = 0, incr2 = 0, segmentid = 0;
-
-                    int lastbyteoffset = 0;
-
-                    foreach (ZSegmentFunction Segment in SegmentFunctions)
+                    if (Game == "OOT" && MainForm.settings.command1AOoT && SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1 && !(cloneid > 0 && inherittextureanims))
                     {
-                        incr2 = 0;
+                        if (cloneid == 0) MainHeaderTextureAnimOffset = (uint)(0x02000000 | SceneData.Count);
 
-                        if (Segment.Functions.Count == 0) { segmentid++; continue; }
+                        Helpers.Overwrite32(ref SceneData, MMCmdTextureAnimOffset + 4, (uint)(0x02000000 | SceneData.Count));
 
-                        foreach (ZTextureAnim TextureAnim in Segment.Functions)
+                        List<uint> updateoffsets = new List<uint>();
+
+                        int incr = 0, incr2 = 0, segmentid = 0;
+
+                        int lastbyteoffset = 0;
+
+                        foreach (ZSegmentFunction Segment in SegmentFunctions)
                         {
+                            incr2 = 0;
 
-                            if (TextureAnim.Type == ZTextureAnim.scroll)
+                            if (Segment.Functions.Count == 0) { segmentid++; continue; }
+
+                            foreach (ZTextureAnim TextureAnim in Segment.Functions)
                             {
-                                if (TextureAnim.FlagType == 0xFF && TextureAnim.XVelocity2 == 0 && TextureAnim.YVelocity2 == 0)
+
+                                if (TextureAnim.Type == ZTextureAnim.scroll)
                                 {
-                                    TextureAnim.TempType = 0x00; // single layer no flag
-                                }
-                                else if (TextureAnim.FlagType == 0xFF)
-                                {
-                                    TextureAnim.TempType = 0x01; // double layer no flag
-                                }
-                                else
-                                {
-                                    TextureAnim.TempType = 0x08; // double layer with flag
-                                }
-                            }
-                            else if (TextureAnim.Type == ZTextureAnim.texswap)
-                            {
-                                TextureAnim.TempType = 0x07; // pointer changes based on flag
-                            }
-                            else if (TextureAnim.Type == ZTextureAnim.texframe)
-                            {
-                                bool sameframeduration = false;
-                                int firstduration = 0;
-
-                                if (TextureAnim.TextureSwapList.Count == 0)
-                                {
-                                    //TextureAnim.Type = 0xFF; // invalid
-                                    continue;
-                                }
-                                else
-                                {
-                                    firstduration = TextureAnim.TextureSwapList[0].Duration;
-                                    sameframeduration = TextureAnim.TextureSwapList.FindIndex(x => x.Duration != firstduration) == -1;
-                                }
-
-
-                                if (sameframeduration && TextureAnim.FlagType == 0xFF)
-                                {
-                                    TextureAnim.TempType = 0x0B; // frame 1 pointer list no flag
-                                }
-                                else if (sameframeduration && TextureAnim.FlagType != 0xFF)
-                                {
-                                    TextureAnim.TempType = 0x0C; // frame 1 pointer list with flag 
-                                }
-                                else if (!sameframeduration && TextureAnim.FlagType == 0xFF)
-                                {
-                                    TextureAnim.TempType = 0x0D; // frame variable pointer list no flag 
-                                }
-                                else if (!sameframeduration && TextureAnim.FlagType != 0xFF)
-                                {
-                                    TextureAnim.TempType = 0x0E; // frame variable pointer list with flag 
-                                }
-                            }
-                            else if (TextureAnim.Type == ZTextureAnim.blending)
-                            {
-                                if (TextureAnim.FlagType == 0xFF)
-                                {
-                                    TextureAnim.TempType = 0x09; // color blend no flag
-                                }
-                                else
-                                {
-                                    TextureAnim.TempType = 0x0A; // color blend flag
-                                }
-                            }
-                            else if (TextureAnim.Type == ZTextureAnim.camera)
-                            {
-                                TextureAnim.TempType = 0x0F;
-                            }
-                            else if (TextureAnim.Type == ZTextureAnim.condition)
-                            {
-                                TextureAnim.TempType = 0x10;
-                            }
-
-                            lastbyteoffset = SceneData.Count;
-                            Helpers.Append32(ref SceneData, (uint)((uint)(0x00000000 | (uint)(segmentid + 1) << 24) | TextureAnim.TempType << 0));
-                            updateoffsets.Add((uint)SceneData.Count);
-                            Helpers.Append32(ref SceneData, (uint)(0x02000000));
-                            // incr += 8;
-                            incr2++;
-                        }
-
-
-
-                        segmentid++;
-                    }
-
-                    SceneData[lastbyteoffset] = (byte)-SceneData[lastbyteoffset];
-                    incr2 = 0;
-
-                    foreach (ZSegmentFunction Segment in SegmentFunctions)
-                    {
-                        if (Segment.Functions.Count == 0) { segmentid++; continue; }
-
-                        foreach (ZTextureAnim TextureAnim in Segment.Functions)
-                        {
-                            if (incr2 >= updateoffsets.Count) continue;
-
-                            Helpers.Overwrite32(ref SceneData, (int)updateoffsets[incr2], (uint)(0x02000000 | SceneData.Count));
-
-                            if (TextureAnim.TempType == 0x00 || TextureAnim.TempType == 0x01 || TextureAnim.TempType == 0x08)
-                            {
-                                Helpers.Append32(ref SceneData, (uint)((uint)TextureAnim.Height1 | (byte)TextureAnim.XVelocity1 << 24 | (byte)TextureAnim.YVelocity1 << 16 | (uint)TextureAnim.Width1 << 8));
-
-                                if (TextureAnim.TempType > 0) Helpers.Append32(ref SceneData, (uint)((uint)TextureAnim.Height2 | (byte)TextureAnim.XVelocity2 << 24 | (byte)TextureAnim.YVelocity2 << 16 | (uint)TextureAnim.Width2 << 8));
-
-
-                            }
-
-                            if (TextureAnim.TempType == 0x07)
-                            {
-                                if (TextureAnim.TextureSwap != null && TextureAnim.TextureSwap2 != null)
-                                {
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == TextureAnim.TextureSwap).TexOffset)); // TODO flag not set
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == TextureAnim.TextureSwap2).TexOffset)); // TODO flag set
-                                }
-                                else
-                                {
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000));
-                                    Helpers.Append32(ref SceneData, (uint)(0x02000000));
-                                }
-                            }
-
-
-                            if (TextureAnim.TempType == 0x08 || TextureAnim.TempType == 0x07 || TextureAnim.TempType == 0x0C || TextureAnim.TempType == 0x0E || TextureAnim.TempType == 0x0A || TextureAnim.TempType == 0x0F || TextureAnim.TempType == 0x10) // flag stuff
-                            {
-                                Helpers.Append32(ref SceneData, TextureAnim.FlagValue);
-                                Helpers.Append32(ref SceneData, TextureAnim.FlagBitwise);
-                                SceneData.Add(TextureAnim.FlagType);
-                                if (TextureAnim.FlagReverse)
-                                    SceneData.Add(0);
-                                else
-                                {
-                                    if (TextureAnim.FlagType == 0x00 || TextureAnim.FlagType == 0x01 || TextureAnim.FlagType == 0x04 || TextureAnim.FlagType == 0x05)
-                                        SceneData.Add((byte)(TextureAnim.FlagValue < 0x20 ? (1 << (byte)TextureAnim.FlagValue) : (1 << (byte)TextureAnim.FlagValue - 0x20)));
+                                    if (TextureAnim.FlagType == 0xFF && TextureAnim.XVelocity2 == 0 && TextureAnim.YVelocity2 == 0)
+                                    {
+                                        TextureAnim.TempType = 0x00; // single layer no flag
+                                    }
+                                    else if (TextureAnim.FlagType == 0xFF)
+                                    {
+                                        TextureAnim.TempType = 0x01; // double layer no flag
+                                    }
                                     else
                                     {
-                                        SceneData.Add(1); // could give issues with other types
+                                        TextureAnim.TempType = 0x08; // double layer with flag
                                     }
                                 }
-                                Helpers.Append16(ref SceneData, 0);
-                                Helpers.Append16(ref SceneData, (ushort)(0 | (TextureAnim.Freeze ? 1 : 0) | (TextureAnim.FreezeAtEnd ? 2 : 0)));
-                                Helpers.Append16(ref SceneData, 0);
-                            }
-
-
-
-                            if (TextureAnim.TempType == 0x0B || TextureAnim.TempType == 0x0C)
-                            {
-                                int totalframes = TextureAnim.TextureSwapList[0].Duration * TextureAnim.TextureSwapList.Count;
-
-                                Helpers.Append16(ref SceneData, (ushort)totalframes);
-                                Helpers.Append16(ref SceneData, 0);
-                                Helpers.Append16(ref SceneData, TextureAnim.TextureSwapList[0].Duration);
-                                Helpers.Append16(ref SceneData, 0);
-
-                                foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
+                                else if (TextureAnim.Type == ZTextureAnim.texswap)
                                 {
-                                    if (Textures.FindIndex(x => Path.GetFileName(x.Name) == tex.Texture) != -1)
-                                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == tex.Texture).TexOffset));
+                                    TextureAnim.TempType = 0x07; // pointer changes based on flag
+                                }
+                                else if (TextureAnim.Type == ZTextureAnim.texframe)
+                                {
+                                    bool sameframeduration = false;
+                                    int firstduration = 0;
+
+                                    if (TextureAnim.TextureSwapList.Count == 0)
+                                    {
+                                        //TextureAnim.Type = 0xFF; // invalid
+                                        continue;
+                                    }
                                     else
-                                        MessageBox.Show("Texture " + tex.Texture + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    {
+                                        firstduration = TextureAnim.TextureSwapList[0].Duration;
+                                        sameframeduration = TextureAnim.TextureSwapList.FindIndex(x => x.Duration != firstduration) == -1;
+                                    }
+
+
+                                    if (sameframeduration && TextureAnim.FlagType == 0xFF)
+                                    {
+                                        TextureAnim.TempType = 0x0B; // frame 1 pointer list no flag
+                                    }
+                                    else if (sameframeduration && TextureAnim.FlagType != 0xFF)
+                                    {
+                                        TextureAnim.TempType = 0x0C; // frame 1 pointer list with flag 
+                                    }
+                                    else if (!sameframeduration && TextureAnim.FlagType == 0xFF)
+                                    {
+                                        TextureAnim.TempType = 0x0D; // frame variable pointer list no flag 
+                                    }
+                                    else if (!sameframeduration && TextureAnim.FlagType != 0xFF)
+                                    {
+                                        TextureAnim.TempType = 0x0E; // frame variable pointer list with flag 
+                                    }
+                                }
+                                else if (TextureAnim.Type == ZTextureAnim.blending)
+                                {
+                                    if (TextureAnim.FlagType == 0xFF)
+                                    {
+                                        TextureAnim.TempType = 0x09; // color blend no flag
+                                    }
+                                    else
+                                    {
+                                        TextureAnim.TempType = 0x0A; // color blend flag
+                                    }
+                                }
+                                else if (TextureAnim.Type == ZTextureAnim.camera)
+                                {
+                                    TextureAnim.TempType = 0x0F;
+                                }
+                                else if (TextureAnim.Type == ZTextureAnim.condition)
+                                {
+                                    TextureAnim.TempType = 0x10;
                                 }
 
+                                lastbyteoffset = SceneData.Count;
+                                Helpers.Append32(ref SceneData, (uint)((uint)(0x00000000 | (uint)(segmentid + 1) << 24) | TextureAnim.TempType << 0));
+                                updateoffsets.Add((uint)SceneData.Count);
+                                Helpers.Append32(ref SceneData, (uint)(0x02000000));
+                                // incr += 8;
+                                incr2++;
                             }
 
-                            if (TextureAnim.TempType == 0x0D || TextureAnim.TempType == 0x0E)
-                            {
 
-                                Helpers.Append16(ref SceneData, 0);
-                                Helpers.Append16(ref SceneData, 0);
-                                Helpers.Append16(ref SceneData, (ushort)(TextureAnim.TextureSwapList.Count+1));
-                                ushort LoopPoint = 0;
-                                for(int t = 0; t < TextureAnim.TextureSwapList.Count; t++)
+
+                            segmentid++;
+                        }
+
+                        SceneData[lastbyteoffset] = (byte)-SceneData[lastbyteoffset];
+                        incr2 = 0;
+
+                        foreach (ZSegmentFunction Segment in SegmentFunctions)
+                        {
+                            if (Segment.Functions.Count == 0) { segmentid++; continue; }
+
+                            foreach (ZTextureAnim TextureAnim in Segment.Functions)
+                            {
+                                if (incr2 >= updateoffsets.Count) continue;
+
+                                Helpers.Overwrite32(ref SceneData, (int)updateoffsets[incr2], (uint)(0x02000000 | SceneData.Count));
+
+                                if (TextureAnim.TempType == 0x00 || TextureAnim.TempType == 0x01 || TextureAnim.TempType == 0x08)
                                 {
+                                    Helpers.Append32(ref SceneData, (uint)((uint)TextureAnim.Height1 | (byte)TextureAnim.XVelocity1 << 24 | (byte)TextureAnim.YVelocity1 << 16 | (uint)TextureAnim.Width1 << 8));
+
+                                    if (TextureAnim.TempType > 0) Helpers.Append32(ref SceneData, (uint)((uint)TextureAnim.Height2 | (byte)TextureAnim.XVelocity2 << 24 | (byte)TextureAnim.YVelocity2 << 16 | (uint)TextureAnim.Width2 << 8));
+
+
+                                }
+
+                                if (TextureAnim.TempType == 0x07)
+                                {
+                                    if (TextureAnim.TextureSwap != null && TextureAnim.TextureSwap2 != null)
+                                    {
+                                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == TextureAnim.TextureSwap).TexOffset)); // TODO flag not set
+                                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == TextureAnim.TextureSwap2).TexOffset)); // TODO flag set
+                                    }
+                                    else
+                                    {
+                                        Helpers.Append32(ref SceneData, (uint)(0x02000000));
+                                        Helpers.Append32(ref SceneData, (uint)(0x02000000));
+                                    }
+                                }
+
+
+                                if (TextureAnim.TempType == 0x08 || TextureAnim.TempType == 0x07 || TextureAnim.TempType == 0x0C || TextureAnim.TempType == 0x0E || TextureAnim.TempType == 0x0A || TextureAnim.TempType == 0x0F || TextureAnim.TempType == 0x10) // flag stuff
+                                {
+                                    Helpers.Append32(ref SceneData, TextureAnim.FlagValue);
+                                    Helpers.Append32(ref SceneData, TextureAnim.FlagBitwise);
+                                    SceneData.Add(TextureAnim.FlagType);
+                                    if (TextureAnim.FlagReverse)
+                                        SceneData.Add(0);
+                                    else
+                                    {
+                                        if (TextureAnim.FlagType == 0x00 || TextureAnim.FlagType == 0x01 || TextureAnim.FlagType == 0x04 || TextureAnim.FlagType == 0x05)
+                                            SceneData.Add((byte)(TextureAnim.FlagValue < 0x20 ? (1 << (byte)TextureAnim.FlagValue) : (1 << (byte)TextureAnim.FlagValue - 0x20)));
+                                        else
+                                        {
+                                            SceneData.Add(1); // could give issues with other types
+                                        }
+                                    }
+                                    Helpers.Append16(ref SceneData, 0);
+                                    Helpers.Append16(ref SceneData, (ushort)(0 | (TextureAnim.Freeze ? 1 : 0) | (TextureAnim.FreezeAtEnd ? 2 : 0)));
+                                    Helpers.Append16(ref SceneData, 0);
+                                }
+
+
+
+                                if (TextureAnim.TempType == 0x0B || TextureAnim.TempType == 0x0C)
+                                {
+                                    int totalframes = TextureAnim.TextureSwapList[0].Duration * TextureAnim.TextureSwapList.Count;
+
+                                    Helpers.Append16(ref SceneData, (ushort)totalframes);
+                                    Helpers.Append16(ref SceneData, 0);
+                                    Helpers.Append16(ref SceneData, TextureAnim.TextureSwapList[0].Duration);
+                                    Helpers.Append16(ref SceneData, 0);
+
+                                    foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
+                                    {
+                                        if (Textures.FindIndex(x => Path.GetFileName(x.Name) == tex.Texture) != -1)
+                                            Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == tex.Texture).TexOffset));
+                                        else
+                                            MessageBox.Show("Texture " + tex.Texture + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+
+                                }
+
+                                if (TextureAnim.TempType == 0x0D || TextureAnim.TempType == 0x0E)
+                                {
+
+                                    Helpers.Append16(ref SceneData, 0);
+                                    Helpers.Append16(ref SceneData, 0);
+                                    Helpers.Append16(ref SceneData, (ushort)(TextureAnim.TextureSwapList.Count + 1));
+                                    ushort LoopPoint = 0;
+                                    for (int t = 0; t < TextureAnim.TextureSwapList.Count; t++)
+                                    {
+                                        Helpers.Append16(ref SceneData, LoopPoint);
+                                        LoopPoint += TextureAnim.TextureSwapList[t].Duration;
+                                    }
+
                                     Helpers.Append16(ref SceneData, LoopPoint);
-                                    LoopPoint += TextureAnim.TextureSwapList[t].Duration;
+
+                                    if (TextureAnim.TextureSwapList.Count % 2 != 0)
+                                        Helpers.Append16(ref SceneData, 0);
+
+
+
+                                    foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
+                                    {
+                                        if (Textures.FindIndex(x => Path.GetFileName(x.Name) == tex.Texture) != -1)
+                                            Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == tex.Texture).TexOffset));
+                                        else
+                                            MessageBox.Show("Texture " + tex.Texture + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+
                                 }
 
-                                Helpers.Append16(ref SceneData, LoopPoint);
-
-                                if (TextureAnim.TextureSwapList.Count % 2 != 0)
-                                    Helpers.Append16(ref SceneData, 0);
-
-                                
-
-                                foreach (ZTextureAnimImage tex in TextureAnim.TextureSwapList)
+                                if (TextureAnim.TempType == 0x09 || TextureAnim.TempType == 0x0A)
                                 {
-                                    if (Textures.FindIndex(x => Path.GetFileName(x.Name) == tex.Texture) != -1)
-                                        Helpers.Append32(ref SceneData, (uint)(0x02000000 | Textures.Find(x => Path.GetFileName(x.Name) == tex.Texture).TexOffset));
-                                    else
-                                        MessageBox.Show("Texture " + tex.Texture + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    SceneData.Add(1); // interpolate prim color
+                                    SceneData.Add(0);
+
+                                    ushort duration = 0;
+
+                                    foreach (ZTextureAnimColor color in TextureAnim.ColorList)
+                                    {
+                                        duration += color.Duration;
+                                    }
+
+
+                                    Helpers.Append16(ref SceneData, duration);
+
+                                    int cnt = 0;
+                                    foreach (ZTextureAnimColor color in TextureAnim.ColorList)
+                                    {
+                                        cnt++;
+                                        // DebugConsole.WriteLine(" a " + (color.C1C.ToArgb() << 8).ToString("X8"));
+
+                                        Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
+                                        Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
+                                        Helpers.Append16(ref SceneData, 0);
+                                        Helpers.Append16(ref SceneData, color.Duration);
+                                    }
+                                    Helpers.Append32(ref SceneData, 0);
+                                    Helpers.Append32(ref SceneData, 0);
+                                    Helpers.Append32(ref SceneData, 0);
+
                                 }
 
+                                if (TextureAnim.TempType == 0x0F)
+                                {
+                                    SceneData.Add(TextureAnim.CameraEffect);
+                                    SceneData.Add(0);
+                                    Helpers.Append16(ref SceneData, 0); //padding
+                                }
+
+                                AddPadding(ref SceneData, 4);
+
+                                incr2++;
                             }
 
-                            if (TextureAnim.TempType == 0x09 || TextureAnim.TempType == 0x0A)
-                            {
-                                SceneData.Add(1); // interpolate prim color
-                                SceneData.Add(0);
 
-                                ushort duration = 0;
-
-                                foreach (ZTextureAnimColor color in TextureAnim.ColorList)
-                                {
-                                    duration += color.Duration;
-                                }
-
-
-                                Helpers.Append16(ref SceneData, duration);
-
-                                int cnt = 0;
-                                foreach (ZTextureAnimColor color in TextureAnim.ColorList)
-                                {
-                                    cnt++;
-                                    // DebugConsole.WriteLine(" a " + (color.C1C.ToArgb() << 8).ToString("X8"));
-
-                                    Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
-                                    Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
-                                    Helpers.Append16(ref SceneData, 0);
-                                    Helpers.Append16(ref SceneData, color.Duration);
-                                }
-                                Helpers.Append32(ref SceneData, 0);
-                                Helpers.Append32(ref SceneData, 0);
-                                Helpers.Append32(ref SceneData, 0);
-
-                            }
-
-                            if (TextureAnim.TempType == 0x0F)
-                            {
-                                SceneData.Add(TextureAnim.CameraEffect);
-                                SceneData.Add(0);
-                                Helpers.Append16(ref SceneData, 0); //padding
-                            }
-
-                            AddPadding(ref SceneData, 4);
-
-                            incr2++;
                         }
 
 
+
+
+
+                        AddPadding(ref SceneData, 8);
+
                     }
-
-
-
-
-
-                    AddPadding(ref SceneData, 8);
 
                 }
 
@@ -3166,7 +3192,7 @@ namespace SharpOcarina
 
 
 
-                        if (Game == "MM")
+                        if (Game == "MM" && !MainForm.n64preview)
                         {
                             if (TextureAnims.Count > 0)
                             {
@@ -3239,6 +3265,7 @@ namespace SharpOcarina
                         Room.DLists.Add(DList);
                     }
                    
+                    if (!MainForm.n64preview)
                     foreach(LODgroup group in Room.LODgroups)
                     {
                      //   DebugConsole.WriteLine("lod group offset: " + Room.RoomData.Count.ToString("X8"));
@@ -3508,7 +3535,7 @@ namespace SharpOcarina
             }
 
             /* Fix scene header; map list ... */
-            if (cloneid == 0)
+            if (cloneid == 0 && !MainForm.n64preview)
             {
                 Helpers.Overwrite32(ref SceneData, CmdMapListOffset, (uint)(0x04000000 | (_Rooms.Count << 16)));
                 Helpers.Overwrite32(ref SceneData, CmdMapListOffset + 4, (uint)(0x02000000 | endofsceneheader));
@@ -3517,7 +3544,10 @@ namespace SharpOcarina
 
             if (_Rooms.Count < 1) return;
 
-            AddPadding(ref SceneData, 0x10);
+            if (!MainForm.n64preview)
+            {
+
+                AddPadding(ref SceneData, 0x10);
             AddPadding(ref SceneData, 8);
 
             int RoomInjectOffset = MainHeader._Rooms[0].InjectOffset;
@@ -3526,18 +3556,20 @@ namespace SharpOcarina
             foreach (ZRoom Room in MainHeader._Rooms)
             {
                 Room.FullDataLength = Room.RoomData.ToArray().Length;
-#if DEBUG
+
                 DebugConsole.WriteLine("inject offset: " + RoomInjectOffset.ToString("X"));
                 DebugConsole.WriteLine("full data length: " + Room.FullDataLength.ToString("X"));
-#endif
-                Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + counter, (uint)RoomInjectOffset);
-                Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + 4 + counter, (uint)(RoomInjectOffset + Room.FullDataLength));
-                RoomInjectOffset += Room.FullDataLength;
-                counter += 8;
-            }
-            
 
-            
+                    Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + counter, (uint)RoomInjectOffset);
+                    Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + 4 + counter, (uint)(RoomInjectOffset + Room.FullDataLength));
+                    RoomInjectOffset += Room.FullDataLength;
+                    counter += 8;
+                
+            }
+            }
+
+
+
             // AddPadding(ref SceneData, 8);
 
         }
@@ -3688,9 +3720,9 @@ namespace SharpOcarina
                     if (textureoffsets.ContainsKey(filename))
                     {
                         Texture.TexOffset = (uint)textureoffsets[filename];
-#if DEBUG
+
                         DebugConsole.WriteLine("Matching texture: " + filename + " " + String.Format("" + (uint)textureoffsets[filename], 'X'));
-#endif
+
                     }
                     else
                     {
@@ -3698,9 +3730,9 @@ namespace SharpOcarina
                         Texture.TexOffset = ((uint)Data.Count);
 
                         textureoffsets.Add(filename, Data.Count);
-#if DEBUG
+
                         DebugConsole.WriteLine("Writting texture offset: " + filename + " " + String.Format("" + Data.Count, 'X'));
-#endif
+
                         /* Write converted data to room file */
                         Data.AddRange(Texture.Data);
 
@@ -3710,9 +3742,9 @@ namespace SharpOcarina
 
                     /* See if we've got a CI-format texture... */
                     int Format = ((Texture.Type & 0xE0) >> 5);
-#if DEBUG
+
                     DebugConsole.WriteLine("Texture format N64: " + Format.ToString("X2"));
-#endif
+
                     if (Format == GBI.G_IM_FMT_CI)
                     {
                         Texture.PalOffset = 0;
@@ -3733,9 +3765,9 @@ namespace SharpOcarina
                             Texture.PalOffset = ((uint)Data.Count);
 
                             paletteoffsets.Add(Texture.Palette, Data.Count);
-#if DEBUG
+
                             DebugConsole.WriteLine("Writting palette offset: " + String.Format("" + Data.Count, 'X'));
-#endif
+
                             /* Write palette data to room file */
                             Data.AddRange(Texture.Palette);
                         }
@@ -4630,33 +4662,43 @@ namespace SharpOcarina
             }
         }
 
+        private bool PartialRefresh()
+        {
+            return (MainForm.n64preview && MainForm.RefreshRoom != -1);
+        }
+
         private void FixRoomHeader(ZRoom Room)
         {
             /* Fix room header commands; mesh header... */
             if (CmdMeshHeaderOffset != -1 && cloneid == 0)
                 Helpers.Overwrite32(ref Room.RoomData, CmdMeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset)); /* Mesh header */
 
-            /* ...object list... */
-            if ((Room.ZObjects.Count + this.ZObjects.Count) != 0 && CmdObjectOffset != -1)
+            if (!MainForm.n64preview)
             {
-                Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset, (uint)(0x0B000000 | ((Room.ZObjects.Count + this.ZObjects.Count) << 16))); /* Objects */
-                Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset + 4, (uint)(0x03000000 | ObjectOffset));
-            }
 
-            /* ...actor list */
-            if (Room.ZActors.Count != 0 && CmdActorOffset != -1)
-            {
-                Helpers.Overwrite32(ref Room.RoomData, CmdActorOffset, (uint)(0x01000000 | (Room.ZActors.Count << 16))); /* Actors */
-                Helpers.Overwrite32(ref Room.RoomData, CmdActorOffset + 4, (uint)(0x03000000 | ActorOffset));
-            }
+                /* ...object list... */
+                if ((Room.ZObjects.Count + this.ZObjects.Count) != 0 && CmdObjectOffset != -1)
+                {
+                    Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset, (uint)(0x0B000000 | ((Room.ZObjects.Count + this.ZObjects.Count) << 16))); /* Objects */
+                    Helpers.Overwrite32(ref Room.RoomData, CmdObjectOffset + 4, (uint)(0x03000000 | ObjectOffset));
+                }
 
-            /* ...extralights list */
-            List<ZAdditionalLight> tempAdditionalLights = new List<ZAdditionalLight>();
-            tempAdditionalLights.AddRange(Room.AdditionalLights.FindAll(x => x.ColorC != Color.Black || x.Radius != 0 || !x.PointLight));
-            if (tempAdditionalLights.Count != 0 && CmdExtraLightOffset != -1)
-            {
-                Helpers.Overwrite32(ref Room.RoomData, CmdExtraLightOffset, (uint)(0x0C000000 | (tempAdditionalLights.Count << 16))); /* additional lights */
-                Helpers.Overwrite32(ref Room.RoomData, CmdExtraLightOffset + 4, (uint)(0x03000000 | ExtraLightOffset));
+                /* ...actor list */
+                if (Room.ZActors.Count != 0 && CmdActorOffset != -1)
+                {
+                    Helpers.Overwrite32(ref Room.RoomData, CmdActorOffset, (uint)(0x01000000 | (Room.ZActors.Count << 16))); /* Actors */
+                    Helpers.Overwrite32(ref Room.RoomData, CmdActorOffset + 4, (uint)(0x03000000 | ActorOffset));
+                }
+
+                /* ...extralights list */
+                List<ZAdditionalLight> tempAdditionalLights = new List<ZAdditionalLight>();
+                tempAdditionalLights.AddRange(Room.AdditionalLights.FindAll(x => x.ColorC != Color.Black || x.Radius != 0 || !x.PointLight));
+                if (tempAdditionalLights.Count != 0 && CmdExtraLightOffset != -1)
+                {
+                    Helpers.Overwrite32(ref Room.RoomData, CmdExtraLightOffset, (uint)(0x0C000000 | (tempAdditionalLights.Count << 16))); /* additional lights */
+                    Helpers.Overwrite32(ref Room.RoomData, CmdExtraLightOffset + 4, (uint)(0x03000000 | ExtraLightOffset));
+                }
+
             }
 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,8 @@ namespace SharpOcarina
 
             AutoSetCheckbox.Checked = MainForm.DatabaseAutoSet;
 
+            DebugNamesCheckbox.Checked = MainForm.DatabaseDebugNames;
+
             if (initialvalue == 0xFFFF) firsttime = 3;
 
             foreach(string category in actor_categories)
@@ -79,8 +82,8 @@ namespace SharpOcarina
                 string specialfilter = "";
                 if (filter.Contains("#")) specialfilter = filter.Replace("#", "");
 
-                ActorView.Nodes.Add(new ActorNode(actor.Value, 0x0000, actor.Value.ToString("X4") + " - " + actor.Name, actor.Notes));
-                if (filter == "" || actor.Name.Contains(filter, StringComparison.OrdinalIgnoreCase) || (specialfilter != "" && specialfilter != "Custom Actor" && actor.Category == Array.IndexOf(actor_categories, specialfilter)) || (specialfilter == "Custom Actor" && actor.IsCustom))
+                ActorView.Nodes.Add(new ActorNode(actor.Value, 0x0000, actor.Value.ToString("X4") + " - " + (MainForm.DatabaseDebugNames && actor.DebugName != "" ? actor.DebugName : actor.Name), actor.Notes));
+                if (filter == "" || actor.Name.Contains(filter, StringComparison.OrdinalIgnoreCase) || (MainForm.DatabaseDebugNames && actor.DebugName.Contains(filter, StringComparison.OrdinalIgnoreCase)) || (specialfilter != "" && specialfilter != "Custom Actor" && actor.Category == Array.IndexOf(actor_categories, specialfilter)) || (specialfilter == "Custom Actor" && actor.IsCustom))
                     show = true;
 
                 if (firsttime == 0 && actor.Value == initialvalue) {ActorView.SelectedNode = ActorView.Nodes[ActorView.Nodes.Count - 1]; firsttime++; ActorView.Focus(); }
@@ -188,6 +191,12 @@ namespace SharpOcarina
             }
         }
 
+        private void DebugNamesCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            MainForm.DatabaseDebugNames = DebugNamesCheckbox.Checked;
+            UpdateWindow();
+        }
+
         private void SearchCategory(object sender, EventArgs e)
         {
             FilterTextBox.Text = "#" + ((ToolStripMenuItem)sender).Text;
@@ -212,19 +221,24 @@ namespace SharpOcarina
         public Dictionary<ushort, string> Variables;
         public string Notes;
         public string Name;
+        public string DebugName;
         public ushort Value;
         public byte Category;
         public bool IsCustom;
-        public DatabaseActor(ushort _Value, Dictionary<ushort, string> _Variables, string _Name, string _Notes, byte _Category, bool _isCustom)
+        public DatabaseActor(ushort _Value, Dictionary<ushort, string> _Variables, string _Name, string _DebugName, string _Notes, byte _Category, bool _isCustom)
         {
             Value = _Value;
             Variables = _Variables;
             Notes = _Notes;
             Name = _Name;
+            DebugName = _DebugName;
             Category = _Category;
             IsCustom = _isCustom;
         }
-
+        public override string ToString()
+        {
+            return $"{Value.ToString("X4")} - {Name} / {DebugName}";
+        }
     }
 
     public static class StringExtensions

@@ -809,6 +809,7 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.AutoHookerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1997,7 +1998,8 @@ namespace SharpOcarina
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
             this.replaceSceneTitleCardTextureToolStripMenuItem,
-            this.addLinkAnimationsz64romToolStripMenuItem});
+            this.addLinkAnimationsz64romToolStripMenuItem,
+            this.AutoHookerMenuItem});
             this.nokaToolStripMenuItem.Name = "nokaToolStripMenuItem";
             this.nokaToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.nokaToolStripMenuItem.Text = "Tools";
@@ -2172,7 +2174,7 @@ namespace SharpOcarina
             // 
             this.addLinkAnimationsz64romToolStripMenuItem.Name = "addLinkAnimationsz64romToolStripMenuItem";
             this.addLinkAnimationsz64romToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
-            this.addLinkAnimationsz64romToolStripMenuItem.Text = "Add Link Animations (z64rom)";
+            this.addLinkAnimationsz64romToolStripMenuItem.Text = "Add New Link Animations (z64rom)";
             this.addLinkAnimationsz64romToolStripMenuItem.Visible = false;
             this.addLinkAnimationsz64romToolStripMenuItem.Click += new System.EventHandler(this.addLinkAnimationsz64romToolStripMenuItem_Click);
             // 
@@ -5098,7 +5100,7 @@ namespace SharpOcarina
             0,
             0,
             0});
-            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.GroupAlpha_ValueChanged);
             // 
             // label5
             // 
@@ -12111,6 +12113,14 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // AutoHookerMenuItem
+            // 
+            this.AutoHookerMenuItem.Name = "AutoHookerMenuItem";
+            this.AutoHookerMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.AutoHookerMenuItem.Text = "Auto-hooker (z64rom)";
+            this.AutoHookerMenuItem.Visible = false;
+            this.AutoHookerMenuItem.Click += new System.EventHandler(this.AutoHookerMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13196,6 +13206,7 @@ namespace SharpOcarina
         private CheckBox RenderFunctionFlagFreezeAtEndCheckBox;
         private CheckBox GroupTexturePointer;
         private ToolStripMenuItem addLinkAnimationsz64romToolStripMenuItem;
+        private ToolStripMenuItem AutoHookerMenuItem;
     }
     }
 

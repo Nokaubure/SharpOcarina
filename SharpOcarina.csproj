@@ -121,6 +121,12 @@
     <Compile Include="FileToC.Designer.cs">
       <DependentUpon>FileToC.cs</DependentUpon>
     </Compile>
+    <Compile Include="AutoHooker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoHooker.Designer.cs">
+      <DependentUpon>AutoHooker.cs</DependentUpon>
+    </Compile>
     <Compile Include="ZobjCopyTool.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -328,6 +334,9 @@
     </Compile>
     <EmbeddedResource Include="FileToC.resx">
       <DependentUpon>FileToC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AutoHooker.resx">
+      <DependentUpon>AutoHooker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ZobjCopyTool.resx">
       <DependentUpon>ZobjCopyTool.cs</DependentUpon>

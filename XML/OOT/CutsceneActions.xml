@@ -89,21 +89,38 @@
   <FadeMusic Key="0004">Music Fade Out</FadeMusic>
 
   <Misc Key="0001">Starts raining</Misc>
-  <Misc Key="0010">Starts Earthquake</Misc>
-  <Misc Key="0011">Stops Earthquake</Misc>
+  <Misc Key="0002">Starts thunderstorm</Misc>
+  <Misc Key="0003">Flags_SetEnv 0</Misc>
+  <Misc Key="0006">Slowly decrease fog value</Misc>
+  <Misc Key="0007">Changes skybox?</Misc>
+  <Misc Key="0008">roomCtx.unk_74[0] +4 per frame, till 128 (check Texture Animation flag presets)</Misc>
+  <Misc Key="0009">Starts snowing?</Misc>
+  <Misc Key="000A">Flags_SetEnv 1</Misc>
   <Misc Key="000B">Deku Tree Dies</Misc>
   <Misc Key="000C">Cutscene ends instantly</Misc>
+  <Misc Key="000D">Plays triforce sound, roomCtx.unk_74[1] +5 per frame, till 255 (check Texture Animation flag presets)</Misc>
+  <Misc Key="000E">Sets viewpoint to locked (?)</Misc>
   <Misc Key="000F">Makes the scene title card appear (unafected by frame duration)</Misc>
-  <Misc Key="0013">Increases windmill sails and mechanism speed (actors 0102 and 0123)</Misc>
-  <Misc Key="0014">Drains the well water (actor 0104) in kakariko and stores a global flag somewhere (child link only)</Misc>
-  <Misc Key="0015">Lake Hylia water raises</Misc>
+  <Misc Key="0010">Starts Earthquake</Misc>
+  <Misc Key="0011">Stops Earthquake</Misc>
+  <Misc Key="0012">Stops Rain</Misc>
+  <Misc Key="0013">Sets global flag 0x65 (Increases windmill sails and mechanism speed (actors 0102 and 0123))</Misc>
+  <Misc Key="0014">Sets global flag 0x67 (Drains the well water (actor 0104) in kakariko)</Misc>
+  <Misc Key="0015">Sets global flag 0x69 (Lake Hylia water raises)</Misc>
   <Misc Key="0016">Black and white screen effect</Misc>
   <Misc Key="0017">Sepia screen effect</Misc>
   <Misc Key="0018">Unloads room mesh</Misc>
+  <Misc Key="0019">Advances time till 7 pm</Misc>
+  <Misc Key="001A">Unknown (related to time)</Misc>
+  <Misc Key="001B">Slightly changes ambient and light color?</Misc>
   <Misc Key="001C">Cutscene never ends</Misc>
-  <Misc Key="001E">Fades in logo</Misc>
-  <Misc Key="001F">Fades out logo</Misc>
-  <Misc Key="0023">Link freezes permanently</Misc>
+  <Misc Key="001D">Reverts action 1C</Misc>
+  <Misc Key="001E">Fades in logo (Flags_SetEnv 3)</Misc>
+  <Misc Key="001F">Fades out logo (Flags_SetEnv 4)</Misc>
+  <Misc Key="0020">Starts a sandstorm</Misc>
+  <Misc Key="0021">Sun Song effect</Misc>
+  <Misc Key="0022">If its day, it stops the time? else goes back in time</Misc>
+  <Misc Key="0023">Plays long scarecrow song, sets current frame to startframe of the command</Misc>
   
   <Placeholder Key="0000">???</Placeholder>
 
