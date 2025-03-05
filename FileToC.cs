@@ -78,8 +78,11 @@ namespace SharpOcarina
             SizeLabel.Text = "Size: " + Data.Count + " bytes";
         }
 
+
+
         private void GenerateTexture()
         {
+            
             ObjFile.Material Mat = new ObjFile.Material();
             Mat.ForcedFormat = ImageFormatComboBox.Text;
             Mat.TexImage = new Bitmap(SourceFilename.Text);
@@ -94,6 +97,7 @@ namespace SharpOcarina
             Result.Fill(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF });
             switch (ImageFormatComboBox.Text)
             {
+                default:
                 case "RGBA16":
                 {
                     uint linesize = (uint) (Texture.Width / 4);
@@ -139,13 +143,7 @@ namespace SharpOcarina
             }
             
             TextureBox.Image = ResizeImage(ArrayToBitmap(Result, Texture.Width, Texture.Height), Texture.Width*2, Texture.Height*2);
-            
-            /*
-            
-            using (var ms = new MemoryStream(Result))
-            {
-                TextureBox.Image = Image.FromStream(ms);
-            }*/
+
         }
 
         private Image ResizeImage(Image image, int width, int height)
@@ -188,34 +186,14 @@ namespace SharpOcarina
             if (ConvertedData.Count != 0) TargetData = ConvertedData;
             else TargetData = Data;
 
-            Helpers.AddPadding(ref TargetData, 4);
+            string output = Helpers.DataToC(TargetData, Path.GetFileNameWithoutExtension(SourceFilename.Text));
 
-            string output = "u32 " + Path.GetFileNameWithoutExtension(SourceFilename.Text) + "[] = {\n";
-
-            int column = 0;
-
-            for (int i = 0; i < TargetData.Count - 1; i += 4)
-            {
-
-                output += "0x" + Helpers.Read32(TargetData, i).ToString("X8") + ", ";
-                column++;
-                if (column == 4)
-                {
-                    output += "\n";
-                    column = 0;
-                }
-            }
-            
-
-            if (!output.Contains(","))
+            if (output == "")
             {
                 MessageBox.Show("File too small", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                output = output.Substring(0, output.LastIndexOf(","));
-                output += "\n};";
-
                 Clipboard.SetText(output);
 
                 MessageBox.Show("C u32 array copied to the clipboard! You can paste it in your file. Size:" + TargetData.Count, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);

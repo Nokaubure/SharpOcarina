@@ -6,10 +6,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
+using Ionic.Zip;
 
 namespace SharpOcarina
 {
@@ -23,6 +25,9 @@ namespace SharpOcarina
         public List<string> LibCodeFileList = new List<string>();
         public List<FunctionHook> VanillaFunctions = new List<FunctionHook>();
         public List<HookActor> VanillaActors = new List<HookActor>();
+        public List<CustomActorz64rom> z64romactors = new List<CustomActorz64rom>();
+        string website = "https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/";
+        public WebClient client;
         public bool descending;
         public MainForm mainform;
         public AutoHookerForm(MainForm mainform)
@@ -32,6 +37,9 @@ namespace SharpOcarina
             HookGrid.AutoGenerateColumns = false;
 
             string linker = rom64.getPath() + "\\include\\z64hdr\\oot_mq_debug\\sym_src.ld";
+            string functionsh = rom64.getPath() + "\\include\\z64hdr\\include\\functions.h";
+
+            client = new WebClient();
 
             if (!File.Exists(linker))
             {
@@ -43,12 +51,27 @@ namespace SharpOcarina
 
             if (!Directory.Exists(rom64.getPath() + "\\z64oot\\src\\"))
             {
-                MessageBox.Show("Directory " + rom64.getPath() + "\\z64oot\\src\\" + " doesn't exists! download z64oot decomp project from github and place it in that path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                this.Close();
-                return;
+                //MessageBox.Show("Directory " + rom64.getPath() + "\\z64oot\\src\\" + " doesn't exists! download z64oot decomp project from github and place it in that path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                string z64ootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\z64oot_optimized.zip");
+                if (MessageBox.Show("z64oot decomp folder not present in the project, download it? (this is only required once)", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                    client.DownloadFile(website + "z64oot_optimized.zip", z64ootPath);
+
+                    using (var zip = ZipFile.Read(z64ootPath))
+                        zip.ExtractAll(rom64.getPath(), ExtractExistingFileAction.Throw);
+                    
+                }
+                else
+                {
+                    this.Close();
+                    return;
+                }
             }
 
             string[] lines = File.ReadAllLines(linker);
+           // string functionstext = File.ReadAllText(functionsh);
 
             string fileName = "";
             string decompPath = rom64.getPath() + "\\z64oot\\src\\";
@@ -65,8 +88,9 @@ namespace SharpOcarina
                 {
                     if (File.Exists(fileName) && line.Contains('=') && line.Contains("0x"))
                     {
-                        string str = line.SubstringTill(0, '='); //TODO check
-                        VanillaFunctions.Add(new FunctionHook(str.Trim(),fileName,false));
+                        string str = line.SubstringTill(0, '=').Trim(); //TODO check
+                        //if (functionstext.Contains(str))
+                            VanillaFunctions.Add(new FunctionHook(str.Trim(),fileName,false));
                     }
                 }
 
@@ -77,6 +101,20 @@ namespace SharpOcarina
             RefreshLibUser();
 
             RefreshVanillaActorList();
+
+            List<String> actors = rom64.getList("src\\actor\\");
+
+            foreach (String str in actors)
+            {
+                string basename = "";
+                ushort index = 0;
+                int version = -1;
+
+                if (!rom64.getNameAndIndex(str, ref basename, ref index))
+                    continue;
+                z64romactors.Add(new CustomActorz64rom(index, basename, -1));
+
+            }
 
             HookGrid.DataSource = FunctionHooks;
 
@@ -106,7 +144,7 @@ namespace SharpOcarina
             string lib_userpath = "src\\lib_user";
             string lib_codepath = "rom\\lib_code\\!std";
 
-
+            FunctionHooks.Clear();
 
             List<string> lib_userdirs = rom64.getList(lib_userpath, false);
             List<string> lib_codedirs = rom64.getList(lib_codepath, false);
@@ -134,11 +172,12 @@ namespace SharpOcarina
                                 }
                                 if (inMultiLineComment)
                                 {
-                                    if (line.EndsWith("*/"))
+                                    if (line.Contains("*/"))
                                     {
                                         inMultiLineComment = false;
+                                        line = line.SubstringTill(0, "*/");
                                     }
-                                    continue;
+                                    else continue;
                                 }
                                 if (line.StartsWith("//"))
                                 {
@@ -168,7 +207,6 @@ namespace SharpOcarina
             {
                 HookListBox.Items.Add((hook.isLibCode ? "[C] " : "[U] ") + hook.Name + " - " + Path.GetFileName(hook.FileName));
             }*/
-
             HookGrid.Refresh();
         }
 
@@ -177,7 +215,7 @@ namespace SharpOcarina
 
             XmlDocument doc = new XmlDocument();
             var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/OOT/ActorNames.xml");
-            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite);
+            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
 
@@ -194,6 +232,7 @@ namespace SharpOcarina
 
             }
             VanillaActorList.DataSource = VanillaActors;
+            fs.Close();
         }
 
         private void UpdateForm()
@@ -214,13 +253,27 @@ namespace SharpOcarina
 
         private void HookButton_Click(object sender, EventArgs e)
         {
-            
             if (FunctionNameTextbox.Text == "") return;
-            int index = FunctionHooks.FindIndex(x => x.Name.ToLower() == FunctionNameTextbox.Text.ToLower());
+            string file = HookFunction(FunctionNameTextbox.Text,true);
+            if (file != "")
+                if (MessageBox.Show("Done! open file containing the hook?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    OpenFile(file);
+                }
+
+            RefreshLibUser();
+        }
+
+        private string HookFunction(string functionname, bool warning = false)
+        {
+
+            
+            int index = FunctionHooks.FindIndex(x => x.Name == functionname);
             if (index != -1)
             {
-                MessageBox.Show("This function is already hooked in file: " + FunctionHooks[index].Name, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                if (warning) MessageBox.Show("This function is already hooked in file: " + FunctionHooks[index].Name, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                DebugConsole.WriteLine("Function " + functionname + " is already hooked!");
+                return "";
             }
             else
             {
@@ -228,24 +281,18 @@ namespace SharpOcarina
 
                 string srcpath = basepath + "z64oot\\src\\";
 
-                /*
-                List<string> FileList = new List<string>();
 
-                foreach (string f in Directory.GetDirectories(srcpath))
-                {
-                    FileList.Add(f);
-                }*/
-
-                int index2 = VanillaFunctions.FindIndex(x => x.Name.ToLower() == FunctionNameTextbox.Text.ToLower());
+                int index2 = VanillaFunctions.FindIndex(x => x.Name == functionname);
                 if (index2 == -1)
                 {
-                    MessageBox.Show("This function doesn't exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                    if (warning) MessageBox.Show("This function doesn't exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    DebugConsole.WriteLine("Function " + functionname + " doesn't exists!");
+                    return "";
                 }
                 List<CFile> Files = new List<CFile>();
                 CFile vanillafile = new CFile();
                 vanillafile.FileName = VanillaFunctions[index2].FileName;
-                vanillafile.includes.Add(new CData("<uLib.h>", "#include <uLib.h>"));
+                vanillafile.includes.Add(new CData("uLib.h", "#include <uLib.h>"));
                 Files.Add(vanillafile);
 
                 CFile targetfile = new CFile();
@@ -256,7 +303,7 @@ namespace SharpOcarina
                 }
                 else if (FileNameFunctionRadioButton.Checked)
                 {
-                    targetfile.FileName = basepath + "src\\lib_user\\library\\" + FunctionNameTextbox.Text + ".c";
+                    targetfile.FileName = basepath + "src\\lib_user\\library\\" + functionname + ".c";
                 }
                 else
                 {
@@ -266,31 +313,40 @@ namespace SharpOcarina
                 {
                     using (File.Create(targetfile.FileName)) ;
                 }
-                
-                Files.Add(targetfile);
 
+                Files.Add(targetfile);
+                bool inMultiLineComment = false;
+                bool inStruct = false;
+                bool inVariable = false;
+                bool inFunction = false;
+                int block = 0;
                 foreach (CFile file in Files)
                 {
                     string[] lines = File.ReadAllLines(file.FileName);
-                    bool inMultiLineComment = false;
-                    bool inStruct = false;
-                    bool inVariable = false;
-                    bool inFunction = false;
-                    int block = 0;
+                    inMultiLineComment = false;
+                    inStruct = false;
+                    inVariable = false;
+                    inFunction = false;
+                    block = 0;
+                    int cline = 1;
+                    List<string> references = new List<string>();
                     foreach (string rawline in lines)
                     {
+                        if (warning) DebugConsole.WriteLine($"{cline} - inVariable: {inVariable}, inFunction: {inFunction}, inStruct: {inStruct} ,inMultiLineComment: {inMultiLineComment}, block {block}");
+                        cline++;
                         string line = rawline.Trim();
                         if (line.StartsWith("/*"))
                         {
                             inMultiLineComment = true;
                         }
-                        if (inMultiLineComment && !inStruct && !inVariable && !inFunction)
+                        if (inMultiLineComment)
                         {
-                            if (line.EndsWith("*/"))
+                            if (line.Contains("*/"))
                             {
                                 inMultiLineComment = false;
+                                line = line.SubstringTill(0, "*/");
                             }
-                            continue;
+                            else continue;
                         }
                         if (line.StartsWith("//"))
                         {
@@ -334,13 +390,34 @@ namespace SharpOcarina
 
                         if (inFunction)
                         {
+                            int prevblock = block;
                             file.functions[file.functions.Count - 1].line += "\n" + rawline;
                             if (inMultiLineComment)
                             {
                                 continue;
                             }
+                            //lets find the references
+                            if (line.Contains("("))
+                            {
+                                string testline = line.Replace(")", ") ");
+                                string[] testsplit = testline.Split(' ');
+                                foreach (string split in testsplit)
+                                {
+                                    if (split.Contains("("))
+                                    {
+                                        string reference = split.SubstringTill(0, '(');
+                                        if (VanillaFunctions.FindIndex(x => x.Name == reference) != -1)
+                                        {
+                                            references.Add(reference);
+                                        }
+
+                                    }
+                                }
+                            }
+
+
                             block += line.Count(x => x == '{') - line.Count(x => x == '}');
-                            if (block == 0)
+                            if (block == 0 && prevblock != 0)
                             {
                                 inFunction = false;
                             }
@@ -349,8 +426,9 @@ namespace SharpOcarina
 
                         if (line.Contains("#include"))
                         {
-                            string include = line.Substring(line.IndexOf('"') + 1, line.LastIndexOf('"') - (line.IndexOf('"') + 1));
-                            file.includes.Add(new CData(include,rawline));
+                            string include = line.Contains('"') ? line.Substring(line.IndexOf('"') + 1, line.LastIndexOf('"') - (line.IndexOf('"') + 1))
+                            : line.Substring(line.IndexOf('<') + 1, line.LastIndexOf('>') - (line.IndexOf('<') + 1));
+                            file.includes.Add(new CData(include, rawline));
                         }
                         else if (line.Contains("#define"))
                         {
@@ -360,57 +438,85 @@ namespace SharpOcarina
                         else if (line.Contains("typedef"))
                         {
                             inStruct = true;
-                            file.structs.Add(new CData("",rawline));
+                            file.structs.Add(new CData("", rawline));
                         }
-                        else if (line.Contains(");"))
+                        else if (line.Contains(");") && line.SubstringTill(0,'(').Contains(" "))
                         {
-                            string predeclaration = line.Substring(line.IndexOf(' ') + 1, line.IndexOf('('));
+                            string predeclaration = line.Substring(line.IndexOf(' ') + 1, line.IndexOf('(') - line.IndexOf(' ') - 1);
                             file.predeclarations.Add(new CData(predeclaration, rawline));
                         }
                         else if (line.Contains("="))
                         {
-                            if (!line.Contains("};")) inVariable = true;
-                            string variable = line.Substring(line.IndexOf(' ') + 1).Split(' ')[1];
+                            if (!line.Contains("};") && !line.EndsWith(";")) inVariable = true;
+                            string variable = line.SubstringTill(line.IndexOf(' ') + 1, '=').Trim();
+                            while (variable.Contains(' '))
+                                variable = variable.Substring(variable.IndexOf(' ') + 1).Trim();
+                            //string variable = line.Substring(line.IndexOf(' ') + 1).Split(' ')[1];
                             file.variables.Add(new CData(variable, rawline));
                         }
-                        else if (line.Contains("{") && line.Contains("("))
+                        else if ((line.Contains("{") || line.EndsWith(",")) && line.Contains("("))
                         {
                             inFunction = true;
-                            string function = line.SubstringTill(line.IndexOf(' ') + 1,'(');
+                            string function = line.SubstringTill(line.IndexOf(' ') + 1, '(');
+                            while (function.Contains(' '))
+                                function = function.Substring(function.IndexOf(' ') + 1).Trim();
                             file.functions.Add(new CData(function, rawline));
-                            block = 1;
+                            block = line.Contains("{") ? 1 : 0;
+                        }
+                    }
+                    foreach (string reference in references)
+                    {
+                        CData targetfunc = file.functions.Find(x => x.name == reference);
+                        CData predeclaration = file.predeclarations.Find(x => x.name == reference);
+                        //TODO check if predeclaration exists in other files?
+                        if (predeclaration == null && targetfunc != null)
+                        {
+                            file.predeclarations.Add(new CData(reference, targetfunc.line.SubstringTill(0, ')') + ");"));
                         }
                     }
                 }
                 vanillafile = Files[0];
                 targetfile = Files[1];
-                string output = "";
+                string output = File.ReadAllText(targetfile.FileName);
                 List<CData>[] sourcelists = { vanillafile.includes, vanillafile.defines, vanillafile.predeclarations, vanillafile.structs, vanillafile.variables, vanillafile.functions };
                 List<CData>[] targetlists = { targetfile.includes, targetfile.defines, targetfile.predeclarations, targetfile.structs, targetfile.variables, targetfile.functions };
-
+                bool hookset = false;
                 for (int i = 0; i < sourcelists.Length; i++)
                 {
                     foreach (CData include in sourcelists[i])
                     {
-                        if (i != 5 || (i == 5 && include.name.ToLower() == FunctionNameTextbox.Text.ToLower()))
+                        if (i != 5 || (i == 5 && include.name == functionname))
                             if (targetlists[i].FindIndex(x => x.name == include.name) == -1)
                             {
                                 if (i == 5)
+                                {
                                     output += "Asm_VanillaHook(" + include.name + ");\n";
+                                    hookset = true;
+                                }
                                 output += include.line + "\n";
                             }
                     }
                     output += "\n";
                 }
 
-                File.WriteAllText(targetfile.FileName,output);
-
-                RefreshLibUser();
-
-                if (MessageBox.Show("Done! open file containing the hook?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                if (!hookset)
                 {
-                    OpenFile(targetfile.FileName);
+#if !DEBUG
+
+                    MessageBox.Show("An error occured and the hook has not been set! " + functionname, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+                    DebugConsole.WriteLine(functionname + $" has NOT been set! inVariable: {inVariable}, inFunction: {inFunction}, inStruct: {inStruct} ,inMultiLineComment: {inMultiLineComment}, block {block}");
                 }
+                else
+                {
+                    DebugConsole.WriteLine(functionname + " +");
+                    File.WriteAllText(targetfile.FileName, output);
+                    return targetfile.FileName;
+                }
+                return "";
+
+                
+
 
             }
         }
@@ -466,7 +572,216 @@ namespace SharpOcarina
 
         private void ExtraVanillaActorGoButton_Click(object sender, EventArgs e)
         {
+            
 
+            if (VanillaActorList.SelectedIndex != -1)
+            {
+                HookActor target = (VanillaActorList.SelectedItem as HookActor);
+                if (z64romactors.FindIndex(x => x.ID == target.Value) == -1)
+                {
+                    string z64ootpath = rom64.getPath() + "\\z64oot\\src\\overlays\\actors\\ovl_" + target.DebugName;
+                    string foldername = Regex.Replace(target.Name, "[^a-zA-Z0-9]", "");
+                    string newpath = rom64.getPath() + "\\src\\actor\\" + ConvertToValidDirectoryName("0x" + target.Value.ToString("X4") + "-" + foldername);
+
+                    if (!Directory.Exists(z64ootpath))
+                    {
+                        MessageBox.Show(z64ootpath + " doesn't exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(newpath);
+                        DirectoryInfo dirinfo = new DirectoryInfo(z64ootpath);
+
+                        FileInfo[] files = dirinfo.GetFiles();
+                        foreach (FileInfo file in files)
+                        {
+                            string tempPath = Path.Combine(newpath, file.Name);
+                            file.CopyTo(tempPath, false);
+                        }
+
+                        string[] newfiles = Directory.GetFiles(newpath);
+
+                        foreach (string file in newfiles)
+                        {
+                            if (Path.GetExtension(file) != ".c" && Path.GetExtension(file) != ".h")
+                                continue;
+                            List<CData> includes = new List<CData>();
+
+                            string[] lines = File.ReadAllLines(file);
+                            string text = File.ReadAllText(file);
+                            bool inMultiLineComment = false;
+
+                            foreach (string rawline in lines)
+                            {
+                                string line = rawline.Trim();
+                                if (line.StartsWith("/*"))
+                                {
+                                    inMultiLineComment = true;
+                                }
+                                if (inMultiLineComment)
+                                {
+                                    if (line.Contains("*/"))
+                                    {
+                                        inMultiLineComment = false;
+                                        line = line.SubstringTill(0, "*/");
+                                    }
+                                    else continue;
+                                }
+                                if (line.StartsWith("//"))
+                                {
+                                    continue;
+                                }
+                                if (line.Contains("//"))
+                                    line = line.SubstringTill(0, "//");
+
+                                if (line.Contains("#include") && line.Contains("assets/overlays/"))
+                                {
+                                    string include = line.Contains('"') ? line.Substring(line.IndexOf('"') + 1, line.LastIndexOf('"') - (line.IndexOf('"') + 1))
+                                                                        : line.Substring(line.IndexOf('<') + 1, line.LastIndexOf('>') - (line.IndexOf('<') + 1));
+                                    includes.Add(new CData(include, rawline));
+                                }
+                                
+                            }
+                            if (includes.Count > 0)
+                            {
+                                bool exists = false;
+                                string assets_overlaysPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\z64oot_assets_overlays.zip");
+                                if (!Directory.Exists(rom64.getPath() + "\\z64oot\\assets\\overlays\\"))
+                                {
+                                    if (MessageBox.Show("This actor contains C assets, SharpOcarina needs to download them (this is only required once), continue?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                                    {
+                                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                                        client.DownloadFile(website + "z64oot_assets_overlays.zip", assets_overlaysPath);
+
+                                        using (var zip = ZipFile.Read(assets_overlaysPath))
+                                            zip.ExtractAll(rom64.getPath() + "\\z64oot\\", ExtractExistingFileAction.Throw);
+                                        exists = true;
+                                    }
+
+                                }
+                                else
+                                {
+                                    exists = true;
+                                }
+                                if (exists)
+                                {
+                                    foreach (CData include in includes)
+                                    {
+                                        string includepath = include.line.Replace("#include", "").Replace("\"", "").Trim();
+                                        string assetpath = Path.GetDirectoryName(rom64.getPath() + "\\z64oot\\" + includepath);
+                                        DirectoryInfo assetdirinfo = new DirectoryInfo(assetpath);
+
+                                        FileInfo[] assetfiles = assetdirinfo.GetFiles();
+                                        foreach (FileInfo assetfile in assetfiles)
+                                        {
+                                            if (!File.Exists(Path.Combine(newpath, assetfile.Name)))
+                                            {
+                                                string tempPath = Path.Combine(newpath, assetfile.Name);
+                                                assetfile.CopyTo(tempPath, false);
+
+                                                if (Path.GetExtension(tempPath) == ".c" || Path.GetExtension(tempPath) == ".h")
+                                                {
+                                                    string assettext = File.ReadAllText(tempPath);
+                                                    assettext = assettext.Replace("assets/overlays/ovl_" + target.DebugName + "/", "")
+                                                        .Replace("#include \"ultra64.h\"", "#include <uLib.h>")
+                                                        .Replace("#include \"z64.h\"", "")
+                                                        .Replace(".inc.c", ".inc");
+                                                    File.WriteAllText(tempPath,assettext);
+                                                }
+                                                if (Path.GetExtension(tempPath) == ".png" && !File.Exists(tempPath.Replace(".png",".inc")))
+                                                {
+                                                    string[] splits = tempPath.Split('.');
+                                                    List<byte> imagedata = Helpers.ConvertImageToData(tempPath, splits[splits.Length - 2].ToUpper());
+                                                    Helpers.AddPadding(ref imagedata, 8);
+
+                                                    string output = "";
+
+                                                    int column = 0;
+
+                                                    for (int i = 0; i < imagedata.Count - 1; i += 8)
+                                                    {
+
+                                                        output += "0x" + Helpers.Read32(imagedata, i).ToString("X8") + Helpers.Read32(imagedata, i+4).ToString("X8") + ", ";
+                                                        column++;
+                                                        if (column == 4)
+                                                        {
+                                                            output += "\n";
+                                                            column = 0;
+                                                        }
+                                                    }
+                                                    File.WriteAllText(tempPath.Replace(".png", ".inc"), output);
+                                                }
+                                                
+
+                                            }
+                                        }
+
+                                        text = text.Replace(include.line, "#include \"" + Path.GetFileName(includepath) + "\"").Replace(".inc.c", ".inc");
+                                    }
+                                }
+
+                                File.WriteAllText(file,text);
+                                    
+                            }
+                        }
+                        z64romactors.Add(new CustomActorz64rom(target.Value, target.Name, -1));
+
+                        /*
+                        if (File.Exists(newpath + "\\z_" + target.DebugName + ".c"))
+                        {
+                            if (MessageBox.Show("Done! created directory in " + newpath + "\nOpen .c file?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                            {
+                                Process.Start(newpath + "\\z_" + target.DebugName + ".c");
+                            }
+                        }
+                        else
+                        {*/
+                        if (MessageBox.Show("Done! created directory in " + newpath + "\nOpen directory in explorer?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        {
+                            Process.Start(newpath);
+                        }
+                        //}
+
+
+                        
+
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("An actor with the same ID already exists in this project!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+            }
+
+        }
+
+        private string ConvertToValidDirectoryName(string input)
+        {
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            return new string(input.Where(c => !invalidChars.Contains(c)).ToArray());
+        }
+
+        private void VanillaActorSort_CheckedChanged(object sender, EventArgs e)
+        {
+            if (VanillaActorSort.Checked)
+                VanillaActors = VanillaActors.OrderBy(x => x.Name).ToList();
+            else
+                VanillaActors = VanillaActors.OrderBy(x => x.Value).ToList();
+
+            VanillaActorList.DataSource = VanillaActors;
+            //VanillaActorList.Refresh();
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            foreach(FunctionHook func in VanillaFunctions)
+            {
+                HookFunction(func.Name);
+            }
         }
 
 

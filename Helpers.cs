@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace SharpOcarina
 {
@@ -188,7 +190,57 @@ namespace SharpOcarina
             }
             return false;
         }
-    
+
+        public static List<byte> ConvertImageToData(string image, string format)
+        {
+            ObjFile.Material Mat = new ObjFile.Material();
+            Mat.ForcedFormat = format;
+            Mat.TexImage = new Bitmap(image);
+            Mat.Name = Path.GetFileNameWithoutExtension(image);
+            Mat.Width = Mat.TexImage.Width;
+            Mat.Height = Mat.TexImage.Height;
+            NTexture Texture = new NTexture();
+            Texture.Convert(Mat);
+            return Texture.Data.ToList();
+        }
+
+        public static string DataToC(List<byte> TargetData, string ArrayName)
+        {
+            
+            Helpers.AddPadding(ref TargetData, 4);
+
+            string output = "u32 " + Path.GetFileNameWithoutExtension(ArrayName) + "[] = {\n";
+
+            int column = 0;
+
+            for (int i = 0; i < TargetData.Count - 1; i += 4)
+            {
+
+                output += "0x" + Helpers.Read32(TargetData, i).ToString("X8") + ", ";
+                column++;
+                if (column == 4)
+                {
+                    output += "\n";
+                    column = 0;
+                }
+            }
+
+
+            if (!output.Contains(","))
+            {
+                return "";
+            }
+            else
+            {
+                output = output.Substring(0, output.LastIndexOf(","));
+                output += "\n};";
+
+                return output;
+
+            }
+
+        }
+
         public static void SelectAdd<T>(System.Windows.Forms.NumericUpDown cur, List<T> list)
         {
             cur.Maximum = list.Count - 1;

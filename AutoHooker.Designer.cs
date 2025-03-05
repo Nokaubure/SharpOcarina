@@ -49,14 +49,18 @@
             this.CustomFileName = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Hooks = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.Extra = new System.Windows.Forms.TabPage();
+            this.VanillaActorSort = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.ExtraConsole = new System.Windows.Forms.TextBox();
+            this.ExtraVanillaActorGoButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.VanillaActorList = new System.Windows.Forms.ListBox();
             this.ExtraGoButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.VanillaActorList = new System.Windows.Forms.ListBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.ExtraVanillaActorGoButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HookGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -150,7 +154,7 @@
             // 
             // OpenFileButton
             // 
-            this.OpenFileButton.Location = new System.Drawing.Point(206, 467);
+            this.OpenFileButton.Location = new System.Drawing.Point(211, 467);
             this.OpenFileButton.Name = "OpenFileButton";
             this.OpenFileButton.Size = new System.Drawing.Size(83, 23);
             this.OpenFileButton.TabIndex = 17;
@@ -223,6 +227,7 @@
             // 
             // Hooks
             // 
+            this.Hooks.Controls.Add(this.button2);
             this.Hooks.Controls.Add(this.CustomFileName);
             this.Hooks.Controls.Add(this.FunctionNameTextbox);
             this.Hooks.Controls.Add(this.HookGrid);
@@ -239,8 +244,22 @@
             this.Hooks.Text = "Hooks";
             this.Hooks.UseVisualStyleBackColor = true;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(607, 467);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(83, 23);
+            this.button2.TabIndex = 20;
+            this.button2.Text = "Test";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Extra
             // 
+            this.Extra.Controls.Add(this.VanillaActorSort);
+            this.Extra.Controls.Add(this.button1);
+            this.Extra.Controls.Add(this.ExtraConsole);
             this.Extra.Controls.Add(this.ExtraVanillaActorGoButton);
             this.Extra.Controls.Add(this.label4);
             this.Extra.Controls.Add(this.VanillaActorList);
@@ -253,16 +272,76 @@
             this.Extra.Padding = new System.Windows.Forms.Padding(3);
             this.Extra.Size = new System.Drawing.Size(731, 512);
             this.Extra.TabIndex = 1;
-            this.Extra.Text = "Extra";
+            this.Extra.Text = "Actors&Extra";
             this.Extra.UseVisualStyleBackColor = true;
+            // 
+            // VanillaActorSort
+            // 
+            this.VanillaActorSort.AutoSize = true;
+            this.VanillaActorSort.Location = new System.Drawing.Point(8, 395);
+            this.VanillaActorSort.Name = "VanillaActorSort";
+            this.VanillaActorSort.Size = new System.Drawing.Size(88, 17);
+            this.VanillaActorSort.TabIndex = 23;
+            this.VanillaActorSort.Text = "Sort by name";
+            this.VanillaActorSort.UseVisualStyleBackColor = true;
+            this.VanillaActorSort.CheckedChanged += new System.EventHandler(this.VanillaActorSort_CheckedChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(193, 96);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(83, 23);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "Hook/Copy";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // ExtraConsole
+            // 
+            this.ExtraConsole.BackColor = System.Drawing.SystemColors.MenuText;
+            this.ExtraConsole.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExtraConsole.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ExtraConsole.Location = new System.Drawing.Point(404, 57);
+            this.ExtraConsole.Multiline = true;
+            this.ExtraConsole.Name = "ExtraConsole";
+            this.ExtraConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.ExtraConsole.Size = new System.Drawing.Size(321, 408);
+            this.ExtraConsole.TabIndex = 21;
+            // 
+            // ExtraVanillaActorGoButton
+            // 
+            this.ExtraVanillaActorGoButton.Location = new System.Drawing.Point(129, 410);
+            this.ExtraVanillaActorGoButton.Name = "ExtraVanillaActorGoButton";
+            this.ExtraVanillaActorGoButton.Size = new System.Drawing.Size(83, 23);
+            this.ExtraVanillaActorGoButton.TabIndex = 20;
+            this.ExtraVanillaActorGoButton.Text = "Copy";
+            this.ExtraVanillaActorGoButton.UseVisualStyleBackColor = true;
+            this.ExtraVanillaActorGoButton.Click += new System.EventHandler(this.ExtraVanillaActorGoButton_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 164);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(333, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Copy actor to z64rom source folder (takes care of external assets too)";
+            // 
+            // VanillaActorList
+            // 
+            this.VanillaActorList.FormattingEnabled = true;
+            this.VanillaActorList.HorizontalScrollbar = true;
+            this.VanillaActorList.Location = new System.Drawing.Point(6, 190);
+            this.VanillaActorList.Name = "VanillaActorList";
+            this.VanillaActorList.Size = new System.Drawing.Size(332, 199);
+            this.VanillaActorList.TabIndex = 18;
             // 
             // ExtraGoButton
             // 
-            this.ExtraGoButton.Location = new System.Drawing.Point(123, 96);
+            this.ExtraGoButton.Location = new System.Drawing.Point(61, 96);
             this.ExtraGoButton.Name = "ExtraGoButton";
             this.ExtraGoButton.Size = new System.Drawing.Size(83, 23);
             this.ExtraGoButton.TabIndex = 17;
-            this.ExtraGoButton.Text = "Go!";
+            this.ExtraGoButton.Text = "View";
             this.ExtraGoButton.UseVisualStyleBackColor = true;
             this.ExtraGoButton.Click += new System.EventHandler(this.ExtraGoButton_Click);
             // 
@@ -292,34 +371,6 @@
             this.label2.TabIndex = 15;
             this.label2.Text = "Function/Structure Name:";
             // 
-            // VanillaActorList
-            // 
-            this.VanillaActorList.FormattingEnabled = true;
-            this.VanillaActorList.HorizontalScrollbar = true;
-            this.VanillaActorList.Location = new System.Drawing.Point(8, 174);
-            this.VanillaActorList.Name = "VanillaActorList";
-            this.VanillaActorList.Size = new System.Drawing.Size(332, 199);
-            this.VanillaActorList.TabIndex = 18;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 148);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(183, 13);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Move actor to z64rom source folder...";
-            // 
-            // ExtraVanillaActorGoButton
-            // 
-            this.ExtraVanillaActorGoButton.Location = new System.Drawing.Point(116, 394);
-            this.ExtraVanillaActorGoButton.Name = "ExtraVanillaActorGoButton";
-            this.ExtraVanillaActorGoButton.Size = new System.Drawing.Size(83, 23);
-            this.ExtraVanillaActorGoButton.TabIndex = 20;
-            this.ExtraVanillaActorGoButton.Text = "Go!";
-            this.ExtraVanillaActorGoButton.UseVisualStyleBackColor = true;
-            this.ExtraVanillaActorGoButton.Click += new System.EventHandler(this.ExtraVanillaActorGoButton_Click);
-            // 
             // AutoHookerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -328,7 +379,7 @@
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AutoHookerForm";
-            this.Text = "Auto Hooker";
+            this.Text = "Auto-Hooker&Actors";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AutoHookerForm_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -370,5 +421,9 @@
         private System.Windows.Forms.Button ExtraVanillaActorGoButton;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox VanillaActorList;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox ExtraConsole;
+        private System.Windows.Forms.CheckBox VanillaActorSort;
+        private System.Windows.Forms.Button button2;
     }
 }

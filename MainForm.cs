@@ -13767,12 +13767,22 @@ namespace SharpOcarina
                         MessageBox.Show("File is in use... try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
                     {
-                        String pdetail = @"/k ndec\ndec.exe " + "\"" + openFileDialog1.FileName + "\" " + "\"" + saveFileDialog1.FileName + "\"";
-
+                        String pdetail = @"/k ndec\z64decompress.exe " + "\"" + openFileDialog1.FileName + "\" " + "\"" + saveFileDialog1.FileName + "\"";
                         ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
                         pcmd.Arguments = pdetail;
                         Process cmd = Process.Start(pcmd);
                         cmd.WaitForExit();
+                        FileInfo info = File.Exists(saveFileDialog1.FileName) ? new FileInfo(saveFileDialog1.FileName) : null;
+                        if (info == null || info.Length < 1000)
+                        {
+                            MessageBox.Show("z64decompress failed, trying with ndec...", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            pdetail = @"/k ndec\ndec.exe " + "\"" + openFileDialog1.FileName + "\" " + "\"" + saveFileDialog1.FileName + "\"";
+                            pcmd = new ProcessStartInfo("cmd.exe");
+                            pcmd.Arguments = pdetail;
+                            cmd = Process.Start(pcmd);
+                            cmd.WaitForExit();
+                        }
 
                     }
                 }
@@ -19261,7 +19271,7 @@ namespace SharpOcarina
             {
 
                 AutoHookerForm autohooker = new AutoHookerForm(this);
-                autohooker.Show();
+                if (!autohooker.IsDisposed) autohooker.Show();
                 autohooker_visible = true;
 
 

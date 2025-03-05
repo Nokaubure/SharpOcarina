@@ -1690,6 +1690,9 @@
     </Content>
     <None Include="Resources\play.bmp" />
     <None Include="Resources\play.png" />
+    <Content Include="ndec\z64decompress.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML\OOT\ItemDrops.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
