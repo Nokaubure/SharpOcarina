@@ -28,34 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.DownloadLabel = new System.Windows.Forms.Label();
+            this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
-            // label1
+            // DownloadLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label1.Location = new System.Drawing.Point(0, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(275, 18);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Downloading and installing, please wait...";
-            this.label1.UseWaitCursor = true;
-            this.label1.Visible = false;
+            this.DownloadLabel.AutoSize = true;
+            this.DownloadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.DownloadLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.DownloadLabel.Location = new System.Drawing.Point(9, 38);
+            this.DownloadLabel.Name = "DownloadLabel";
+            this.DownloadLabel.Size = new System.Drawing.Size(88, 13);
+            this.DownloadLabel.TabIndex = 0;
+            this.DownloadLabel.Text = "Downloading X...";
+            this.DownloadLabel.UseWaitCursor = true;
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Location = new System.Drawing.Point(12, 12);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(496, 23);
+            this.ProgressBar.TabIndex = 1;
             // 
             // PleaseWait
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 68);
+            this.ClientSize = new System.Drawing.Size(520, 68);
             this.ControlBox = false;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ProgressBar);
+            this.Controls.Add(this.DownloadLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "PleaseWait";
             this.Text = "Please wait...";
             this.TopMost = true;
             this.UseWaitCursor = true;
+            this.Shown += new System.EventHandler(this.PleaseWait_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -63,6 +72,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label DownloadLabel;
+        private System.Windows.Forms.ProgressBar ProgressBar;
     }
 }

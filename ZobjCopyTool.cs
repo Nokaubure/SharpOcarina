@@ -24,6 +24,7 @@ namespace SharpOcarina
         int SourceBank = 6;
         int TargetBank = 6;
         string LastTargetFilename = "";
+        bool movepressed = false;
         List<uint> OffsetList = new List<uint>();
         
         string[] typenames = { "Unk", "Anim", "DList", "Col", "Tex", "Skel", "PlAnim", "Mat", "Limb" };
@@ -84,7 +85,7 @@ namespace SharpOcarina
 
             MoveButton.Enabled = (SourceElements.Count > 0 && !SourceElements[SourceListBox.SelectedIndex].moved && TargetElements.FindIndex(x => x.name == SourceElements[SourceListBox.SelectedIndex].name) == -1);
 
-            MoveAllButton.Enabled = (SourceElements.Count > 0); //TODO check if move has been pressed
+            MoveAllButton.Enabled = (SourceElements.Count > 0 && !movepressed); //TODO check if move has been pressed
 
             SourceOffset.Enabled = (SourceZobj.Count > 0);
 
@@ -590,6 +591,11 @@ namespace SharpOcarina
                         Dictionary<uint, uint> movedOffsets = new Dictionary<uint, uint>();
                         while (1 == 1)
                         {
+                            if (i >= SourceZobj.Count)
+                            {
+                                MessageBox.Show("Couldn't find the end of a display list, this shouldn't happen! If you continue, a corrupted zobj will be generated", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
                             byte opcode = SourceZobj[i];
                             if (new byte[] { 0x01, 0x04, 0xDA, 0xDC, 0xFD, 0xFE, 0xFF }.Contains(opcode))
                             {
@@ -603,7 +609,7 @@ namespace SharpOcarina
                                         OffsetList.Add((uint)(i + 4));
                                     }
                                     // DebugConsole.WriteLine("Jumping to " + fulloffset.ToString("X8"));
-                                    MoveChildElement(fulloffset, i, ref movedOffsets, ref startoffset, ref endoffset);
+                                    if (!useOffsetList) MoveChildElement(fulloffset, i, ref movedOffsets, ref startoffset, ref endoffset);
 
                                 }
                             }
@@ -625,8 +631,8 @@ namespace SharpOcarina
                                         DEreturn = true;
                                         DEoffset = i;
                                     }
-                                    bool jump = MoveChildElement(fulloffset, i, ref movedOffsets, ref startoffset, ref endoffset);
-                                    //i = (int)offset; // TODO remove
+                                    if (!useOffsetList) MoveChildElement(fulloffset, i, ref movedOffsets, ref startoffset, ref endoffset);
+                                    
 
                                     //jump is within the object
                                     if (SourceElements.FindIndex(x => x.offset == fulloffset) == -1)
@@ -773,10 +779,7 @@ namespace SharpOcarina
                         for (int i = 0; i < limbnumber; i++)
                         {
 
-                            if (useOffsetList)
-                            {
-                                OffsetList.Add((uint)(limbindexoffset + (i * 4)));
-                            }
+
                             //offsetsToChange.Add((uint) (limbindexoffset + (i*4)));
                             movedOffsets.Add((uint) (limbindexoffset + (i * 4) -4),9);
                             uint limboffset = Helpers.Read24(SourceZobj, (int)(limbindexoffset + (i * 4) + 1));
@@ -788,11 +791,16 @@ namespace SharpOcarina
                             
                             byte limbbank = SourceZobj[(int)limboffset+8];
                             uint fulloffset = Helpers.Read32(SourceZobj, (int) (limboffset + 8));
+                            if (useOffsetList)
+                            {
+                                OffsetList.Add((uint)(limbindexoffset + (i * 4)));
+                                if (fulloffset != 0) OffsetList.Add((uint)(limboffset + 8));
+                            }
                             if (limbbank == SourceBank)
                             {
                                 //offsetsToChange.Add((uint)(limboffset + 8));
                                 uint temp = 0;
-                                MoveChildElement(fulloffset, (int)(limboffset + 4), ref movedOffsets, ref temp, ref temp);
+                                if (!useOffsetList) MoveChildElement(fulloffset, (int)(limboffset + 4), ref movedOffsets, ref temp, ref temp);
                             }
                             else
                             {
@@ -883,7 +891,7 @@ namespace SharpOcarina
 
                         if (useOffsetList)
                         {
-                            OffsetList.Add((uint)(animrotvaloffset));
+                            OffsetList.Add((uint)(animoffset + 4));
                             break;
                         }
 
@@ -937,8 +945,8 @@ namespace SharpOcarina
 
                         if (useOffsetList)
                         {
-                            OffsetList.Add((uint)(animrotvaloffset));
-                            OffsetList.Add((uint)(animrotindexoffset));
+                            OffsetList.Add((uint)(animoffset + 4));
+                            OffsetList.Add((uint)(animoffset + 8));
                             break;
                         }
 
@@ -1122,6 +1130,7 @@ namespace SharpOcarina
                     MessageBox.Show("The source file has been modified! reloading it", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 UpdateListbox(SourceZobj, ref SourceElements, ref SourceListBox, SourceOffsetFilename.Text);
+                movepressed = false;
                 //if (TargetFilename.Text == "") TargetZobj = new List<byte>();
             }
             if (TargetZobj.Count > 0)
@@ -1509,7 +1518,7 @@ namespace SharpOcarina
 
         private void MoveAllButton_Click(object sender, EventArgs e)
         {
-            TargetZobj.AddRange(new byte[0x10].ToList());
+            //TargetZobj.AddRange(new byte[0x10].ToList()); 
             OffsetList = new List<uint>();
             uint endoffset = (uint)TargetZobj.Count;
             foreach (ZobjElement element in SourceElements)
@@ -1537,7 +1546,7 @@ namespace SharpOcarina
 
             RefreshListbox(SourceListBox, SourceElements);
             RefreshListbox(TargetListBox, TargetElements);
-
+            movepressed = true;
             UpdateForm();
         }
     }

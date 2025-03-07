@@ -4593,7 +4593,7 @@ namespace SharpOcarina
     
                 if (PathwayListBox.Items.Count > 0)
                 {
-                    PathwayListBox.SelectedIndex = Helpers.Clamp<int>(prevsel, 0, CurrentScene.Pathways[(int)PathwayNumber.Value].Points.Count - 1);
+                    PathwayListBox.SelectedIndex = Clamp(prevsel, 0, CurrentScene.Pathways[(int)PathwayNumber.Value].Points.Count - 1);
 
                     PathwayXPos.Value = (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].X;
                     PathwayYPos.Value = (decimal)CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Y;
@@ -6188,7 +6188,7 @@ namespace SharpOcarina
             {
                 settings.firsttime = false;
                 IO.Export<Settings>(settings, "Settings.xml");
-                showControlsToolStripMenuItem_Click(new object(), new EventArgs());
+                ShowControls(true);
             }
 
         }
@@ -8110,15 +8110,11 @@ namespace SharpOcarina
                 {
                     ExitList.Items.Add(point.ValueHex);
                 }
-                if (prevsel == -1 && ExitList.Items.Count > 0) prevsel = 0;
-                if (prevsel >= ExitList.Items.Count && ExitList.Items.Count > 0) ExitList.SelectedIndex = prevsel - 1;
-                else if (prevsel >= ExitList.Items.Count) ExitList.SelectedIndex = -1;
-                else ExitList.SelectedIndex = prevsel;
+                ExitList.SelectedIndex = Clamp(prevsel, ExitList.Items.Count > 0 ? 0 : -1, ExitList.Items.Count - 1);
 
                 if (ExitList.Items.Count > 0) DeleteexitButton.Enabled = true;
                 else DeleteexitButton.Enabled = false;
             }
-
             if (settings.EnableNewExitFormat && CurrentScene.ExitListV2.Count != 0)
             {
                 int prevsel = ExitList.SelectedIndex;
@@ -8131,9 +8127,7 @@ namespace SharpOcarina
                     ExitList.Items.Add(id.ToString("X2") + ": " + point.Raw.ToString("X8"));
                     id++;
                 }
-                if (prevsel >= ExitList.Items.Count && ExitList.Items.Count > 0) ExitList.SelectedIndex = prevsel - 1;
-                else if (prevsel >= ExitList.Items.Count) ExitList.SelectedIndex = -1;
-                else ExitList.SelectedIndex = prevsel;
+                ExitList.SelectedIndex = Clamp(prevsel, 0, CurrentScene.ExitListV2.Count - 1);
 
                 ExitFadeIn.Value = CurrentScene.ExitListV2[ExitList.SelectedIndex].FadeIn;
                 ExitFadeOut.Value = CurrentScene.ExitListV2[ExitList.SelectedIndex].FadeOut;
@@ -10070,23 +10064,28 @@ namespace SharpOcarina
         private void showControlsToolStripMenuItem_Click(object sender, EventArgs e)
         {
            
-            int layout = Program.KeyboardLayout == "AZERTY" ? 1 : (Program.KeyboardLayout == "DVORAK" ? 2 : 0); 
-               MessageBox.Show(
-            "Camera view: " + Environment.NewLine +
-            "- Left click (hold): Rotate the camera " + Environment.NewLine +
-            "- " + (new[]{ "WASD", "ZQSD", ",AOE" })[layout] + " keys: Move the camera to the sides and front" + Environment.NewLine +
-            "- " + (new[]{ "QE", "AE", "'." })[layout] + " keys: Move the camera up and down" + Environment.NewLine +
-            "-    +Shift (hold): Move slower" + Environment.NewLine +
-            "-    +Space (hold): Move faster" + Environment.NewLine +
-            "- F key: Focuses the camera on the active actor" + Environment.NewLine +
-            "- Right click: Select instances" + Environment.NewLine +
-            "- Middle click (hold) inside the instance: Move the instance in 2D axis" + Environment.NewLine +
-            "-    +Shift (hold): Move the instance in a depth axis" + Environment.NewLine + Environment.NewLine +
-            "Instances: " + Environment.NewLine +
-            "- Shift (hold) while increasing/decreasing position or waterbox size: Increases it by 20 units" + Environment.NewLine +
-            " - " + (new[] { "Z/X", "W/X", ";Q" })[layout] + " while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
-            " - Mouse wheel after selecting a waterbox: Increase/decrease waterbox size"
-            , "Controls", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ShowControls(false);
+        }
+
+        private void ShowControls(bool firsttime)
+        {
+            int layout = Program.KeyboardLayout == "AZERTY" ? 1 : (Program.KeyboardLayout == "DVORAK" ? 2 : 0);
+            MessageBox.Show( ((firsttime) ? "You can check this window at any time in Help tab!" + Environment.NewLine + Environment.NewLine : "") +
+         "Camera view: " + Environment.NewLine +
+         "- Left click (hold): Rotate the camera " + Environment.NewLine +
+         "- " + (new[] { "WASD", "ZQSD", ",AOE" })[layout] + " keys: Move the camera to the sides and front" + Environment.NewLine +
+         "- " + (new[] { "QE", "AE", "'." })[layout] + " keys: Move the camera up and down" + Environment.NewLine +
+         "-    +Shift (hold): Move slower" + Environment.NewLine +
+         "-    +Space (hold): Move faster" + Environment.NewLine +
+         "- F key: Focuses the camera on the active actor" + Environment.NewLine +
+         "- Right click: Select instances" + Environment.NewLine +
+         "- Middle click (hold) inside the instance: Move the instance in 2D axis" + Environment.NewLine +
+         "-    +Shift (hold): Move the instance in a depth axis" + Environment.NewLine + Environment.NewLine +
+         "Instances: " + Environment.NewLine +
+         "- Shift (hold) while increasing/decreasing position or waterbox size: Increases it by 20 units" + Environment.NewLine +
+         " - " + (new[] { "Z/X", "W/X", ";Q" })[layout] + " while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
+         " - Mouse wheel after selecting a waterbox: Increase/decrease waterbox size"
+         , "Controls", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
@@ -18457,6 +18456,11 @@ namespace SharpOcarina
 
         private void buildAndLaunchZ64romToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            BuildZ64rom(true);
+        }
+
+        private void BuildZ64rom(bool launch = false)
+        {
             if (rom64.isSet())
             {
                 String pdetail = @"/c """ + rom64.getPath() + "\\z64rom.exe\" --no-wait";
@@ -18466,7 +18470,7 @@ namespace SharpOcarina
                 Process cmd = Process.Start(pcmd);
                 cmd.WaitForExit();
 
-                LaunchRom(rom64.getPath() + "\\build-dev.z64");
+                if (launch) LaunchRom(rom64.getPath() + "\\build-dev.z64");
             }
         }
 
@@ -18641,50 +18645,23 @@ namespace SharpOcarina
                         TrimRom(path + "\\BaseDebugRom.z64");
                     }
 
-                    PleaseWait pleasewait = new PleaseWait();
-                    pleasewait.Shown += (s, b) => {
-                        // 
-                    };
-                    pleasewait.Show();
 
-                    using (var client = new WebClient())
+
+
+                    PleaseWait pleasewait = new PleaseWait("https://github.com/z64utils/z64rom/releases/latest/download/z64rom.zip", path + "z64rom.zip", path, true);
+                    pleasewait.ShowDialog();
+
+                    string binutilsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\/mips64-binutils-win32.zip");
+                    if (!File.Exists(binutilsPath))
                     {
-                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                        client.DownloadFile("https://github.com/z64utils/z64rom/releases/latest/download/z64rom.zip", path + "z64rom.zip");
-
-                        using (var zip = ZipFile.Read(path + "z64rom.zip"))
-                            zip.ExtractAll(path, ExtractExistingFileAction.Throw);
-
+                        pleasewait = new PleaseWait("https://github.com/z64tools/z64rom/releases/download/binutils/mips64-binutils-win32.zip", binutilsPath);
+                        pleasewait.ShowDialog();
                     }
+                    
+                    File.Copy(binutilsPath, path + "tools\\mips64-binutils-win32.zip");
 
-                    using (var client = new WebClient())
-                    {
-                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                        client.DownloadFile("https://github.com/z64tools/z64rom/releases/download/binutils/mips64-binutils-win32.zip", path + "tools\\mips64-binutils-win32.zip");
-
-                        /*
-                        using (var zip = ZipFile.Read(path + "tools\\mips64-binutils-win32.zip"))
-                            zip.ExtractAll(path + "tools\\", ExtractExistingFileAction.Throw);*/
-
-                    }
-
-                    using (var client = new WebClient())
-                    {
-                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                        client.DownloadFile("https://github.com/z64tools/z64hdr/archive/refs/heads/main.zip", path + "include\\z64hdr.zip");
-                        /*
-                        using (var zip = ZipFile.Read(path + "include\\z64hdr.zip"))
-                            zip.ExtractAll(path + "include\\", ExtractExistingFileAction.Throw);*/
-
-                    }
-
-
-
-
-
-
-
-
+                    pleasewait = new PleaseWait("https://github.com/z64tools/z64hdr/archive/refs/heads/main.zip", path + "include\\z64hdr.zip");
+                    pleasewait.ShowDialog();
 
                     String pdetail = @"/c """ + path + "\\z64rom.exe\" --auto-install --no-wait";
                     ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
@@ -18693,9 +18670,6 @@ namespace SharpOcarina
                     Process cmd = Process.Start(pcmd);
                     cmd.WaitForExit();
 
-
-
-                    pleasewait.Close();
 
                     //creates binary data
                     string binarydata = path + "\\tools\\sharpocarina\\binarydata";
@@ -19269,10 +19243,25 @@ namespace SharpOcarina
         {
             if (!autohooker_visible)
             {
+                string path = rom64.getPath() + "\\rom\\lib_code\\!std";
+                if (!Directory.Exists(path))
+                {
+                    BuildZ64rom(false);
+                }
+                
 
                 AutoHookerForm autohooker = new AutoHookerForm(this);
-                if (!autohooker.IsDisposed) autohooker.Show();
-                autohooker_visible = true;
+                if (!autohooker.IsDisposed)
+                {
+                    autohooker.Show();
+                    autohooker_visible = true;
+                }
+
+                
+
+
+
+
 
 
             }

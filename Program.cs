@@ -15,8 +15,8 @@ namespace SharpOcarina
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        public static string ApplicationTitle = "SharpOcarina 1.58";
-        public static int ApplicationVersion = 0x1580;
+        public static string ApplicationTitle = "SharpOcarina 1.59";
+        public static int ApplicationVersion = 0x1590;
 
         public static MainForm MF;
         public static bool QuitProgram = false;

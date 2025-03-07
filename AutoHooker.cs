@@ -26,6 +26,7 @@ namespace SharpOcarina
         public List<FunctionHook> VanillaFunctions = new List<FunctionHook>();
         public List<HookActor> VanillaActors = new List<HookActor>();
         public List<CustomActorz64rom> z64romactors = new List<CustomActorz64rom>();
+        public BindingSource bindingSource = new BindingSource();
         string website = "https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/";
         public WebClient client;
         public bool descending;
@@ -54,19 +55,24 @@ namespace SharpOcarina
                 //MessageBox.Show("Directory " + rom64.getPath() + "\\z64oot\\src\\" + " doesn't exists! download z64oot decomp project from github and place it in that path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                 string z64ootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\z64oot_optimized.zip");
-                if (MessageBox.Show("z64oot decomp folder not present in the project, download it? (this is only required once)", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                if (!File.Exists(z64ootPath))
                 {
-                    System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                    client.DownloadFile(website + "z64oot_optimized.zip", z64ootPath);
+                    if (MessageBox.Show("z64oot decomp folder not present in the project, download it? (this is only required once)", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        PleaseWait pleasewait = new PleaseWait(website + "z64oot_optimized.zip", z64ootPath, rom64.getPath(), false);
+                        pleasewait.ShowDialog();
 
-                    using (var zip = ZipFile.Read(z64ootPath))
-                        zip.ExtractAll(rom64.getPath(), ExtractExistingFileAction.Throw);
-                    
+                    }
+                    else
+                    {
+                        this.Close();
+                        return;
+                    }
                 }
                 else
                 {
-                    this.Close();
-                    return;
+                    PleaseWait pleasewait = new PleaseWait("", z64ootPath, rom64.getPath(), false);
+                    pleasewait.ShowDialog();
                 }
             }
 
@@ -231,7 +237,8 @@ namespace SharpOcarina
                 }
 
             }
-            VanillaActorList.DataSource = VanillaActors;
+            bindingSource.DataSource = new BindingList<HookActor>(VanillaActors);
+            VanillaActorList.DataSource = bindingSource;
             fs.Close();
         }
 
@@ -649,13 +656,19 @@ namespace SharpOcarina
                                 string assets_overlaysPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\z64oot_assets_overlays.zip");
                                 if (!Directory.Exists(rom64.getPath() + "\\z64oot\\assets\\overlays\\"))
                                 {
-                                    if (MessageBox.Show("This actor contains C assets, SharpOcarina needs to download them (this is only required once), continue?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                                    if (!File.Exists(assets_overlaysPath))
                                     {
-                                        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                                        client.DownloadFile(website + "z64oot_assets_overlays.zip", assets_overlaysPath);
-
-                                        using (var zip = ZipFile.Read(assets_overlaysPath))
-                                            zip.ExtractAll(rom64.getPath() + "\\z64oot\\", ExtractExistingFileAction.Throw);
+                                        if (MessageBox.Show("This actor contains C assets, SharpOcarina needs to download them (this is only required once), continue?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                                        {
+                                            PleaseWait pleasewait = new PleaseWait(website + "z64oot_assets_overlays.zip", assets_overlaysPath, rom64.getPath() + "\\z64oot\\", false);
+                                            pleasewait.ShowDialog();
+                                            exists = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        PleaseWait pleasewait = new PleaseWait("", assets_overlaysPath, rom64.getPath() + "\\z64oot\\", false);
+                                        pleasewait.ShowDialog();
                                         exists = true;
                                     }
 
@@ -767,12 +780,12 @@ namespace SharpOcarina
         private void VanillaActorSort_CheckedChanged(object sender, EventArgs e)
         {
             if (VanillaActorSort.Checked)
-                VanillaActors = VanillaActors.OrderBy(x => x.Name).ToList();
+                bindingSource.DataSource = new BindingList<HookActor>(VanillaActors.OrderBy(x => x.Name).ToList());
             else
-                VanillaActors = VanillaActors.OrderBy(x => x.Value).ToList();
+                bindingSource.DataSource = new BindingList<HookActor>(VanillaActors.OrderBy(x => x.Value).ToList());
 
-            VanillaActorList.DataSource = VanillaActors;
-            //VanillaActorList.Refresh();
+            // Refresh the ListBox
+            VanillaActorList.Refresh();
 
         }
 
@@ -783,6 +796,27 @@ namespace SharpOcarina
                 HookFunction(func.Name);
             }
         }
+
+        private void VanillaActorListFilter_TextChanged(object sender, EventArgs e)
+        {
+            string filterText = VanillaActorListFilter.Text.ToLower();
+            if (string.IsNullOrWhiteSpace(filterText))
+            {
+                bindingSource.DataSource = new BindingList<HookActor>(VanillaActors);
+            }
+            else
+            {
+            bindingSource.DataSource = new BindingList<HookActor>(
+                VanillaActors.Where(item =>
+                    item.Value.ToString("X4").Contains(filterText) ||
+                    item.Name.ToLower().Contains(filterText) ||
+                    item.DebugName.ToLower().Contains(filterText)
+                ).ToList()
+            );
+            }
+        }
+
+
 
 
         /*

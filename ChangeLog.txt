@@ -9,6 +9,10 @@
 	- Move an actor from decomp to z64rom in a single click, this will also take care of the png images
 	- Downloads z64oot folder if its not found
 
+- Download bars will appear when any download occurs, minus for SO updates
+
+- Binutils is now stored locally after download, making z64rom installation faster after the first time
+
 - Actor database can now display debug names
 
 - Documented more cutscene misc actions, added stop music command, added flag presets in texture animations
@@ -20,7 +24,7 @@
 - Added z64decompress as rom decompressor
 
 - Changes in zobj copy tool:
-	- [TODO] Added a copy all button. This will append the source zobj to the target zobj, updating all offsets. (more accurate than 1 by 1)
+	- Added a copy all button. This will append the source zobj to the target zobj, updating all offsets. (more accurate than 1 by 1)
 	- If a z64oot decomp folder is detected inside the z64rom folder, it will automatically pick .xmls from the decomp
 	- Automatic .ld/.xml detection now also works with objects inside .vanilla folder
 
@@ -28,7 +32,8 @@
 	- Exported Link anim bins will have the frame count at the beginning of the filename, this is to have their name ready for the new link anims feature of SO
 	- Fixed an issue when converting materials from Fast64
 
-- Fixed an error that would sometimes appear when reloading rooms
+- Fixed an error that would sometimes appear when reloading rooms, adding pathways or exits
+
 
 --------------
 ---1.58

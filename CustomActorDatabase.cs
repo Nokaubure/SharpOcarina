@@ -311,15 +311,11 @@ namespace SharpOcarina
                     Directory.CreateDirectory(temppath);
                 }
 
-                using (client)
-                {
-                    System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                    client.DownloadFile(website + "master/CustomActors/" + node.Actor.FolderName + "/data.zip", tempw + "data.zip");
+          
+                PleaseWait pleasewait = new PleaseWait(website + "master/CustomActors/" + node.Actor.FolderName + "/data.zip", tempw + "data.zip", temppath, false);
+                pleasewait.ShowDialog();
 
-                    using (var zip = ZipFile.Read(tempw + "data.zip"))
-                        zip.ExtractAll(temppath, ExtractExistingFileAction.Throw);
-
-                }
+                
                 /*
                 using (var zip = ZipFile.Read(path + "CustomActors\\" + node.Actor.FolderName + "\\data.zip"))
                     zip.ExtractAll(temppath, ExtractExistingFileAction.Throw);*/
