@@ -29,6 +29,8 @@ namespace NImage
             {
                 for (int i = 0; i < Width; i++)
                 {
+                    if (SourceOffset + 1 >= Source.Length) break;
+
                     UInt16 Raw = (UInt16)((Source[SourceOffset] << 8) | Source[SourceOffset + 1]);
                     Target[TargetOffset] = (byte)((Raw & 0xF800) >> 8);
                     Target[TargetOffset + 1] = (byte)(((Raw & 0x07C0) << 5) >> 8);
@@ -39,7 +41,7 @@ namespace NImage
                     SourceOffset += 2;
                     TargetOffset += 4;
 
-                    if (SourceOffset >= Source.Length) break;
+                    
                 }
                 SourceOffset += LineSize * 4 - Width;
             }

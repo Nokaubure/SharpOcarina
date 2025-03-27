@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -11,6 +14,7 @@ namespace SharpOcarina
 {
     public static class Helpers
     {
+        public static List<string> ValidImageTypes = new List<string>(new string[] { ".bmp", ".gif", ".jpg", ".jpeg", ".png", ".tiff", ".tif"});
         public static uint ShiftL(uint v, int s, int w)
         {
             return (uint)(((uint)v & (((uint)0x01 << w) - 1)) << s);
@@ -201,6 +205,21 @@ namespace SharpOcarina
             Mat.Height = Mat.TexImage.Height;
             NTexture Texture = new NTexture();
             Texture.Convert(Mat);
+            Mat.TexImage.Dispose();
+            return Texture.Data.ToList();
+        }
+
+        public static List<byte> ConvertImageToData(Bitmap image, string format)
+        {
+            ObjFile.Material Mat = new ObjFile.Material();
+            Mat.ForcedFormat = format;
+            Mat.TexImage = image;
+            Mat.Name = Path.GetFileNameWithoutExtension("split" + format);
+            Mat.Width = Mat.TexImage.Width;
+            Mat.Height = Mat.TexImage.Height;
+            NTexture Texture = new NTexture();
+            Texture.Convert(Mat);
+            Mat.TexImage.Dispose();
             return Texture.Data.ToList();
         }
 
@@ -209,7 +228,7 @@ namespace SharpOcarina
             
             Helpers.AddPadding(ref TargetData, 4);
 
-            string output = "u32 " + Path.GetFileNameWithoutExtension(ArrayName) + "[] = {\n";
+            string output =  "u32 " + Path.GetFileNameWithoutExtension(ArrayName) + "[] = {\n";
 
             int column = 0;
 
@@ -239,6 +258,103 @@ namespace SharpOcarina
 
             }
 
+        }
+
+        public static string DataToC64(List<byte> TargetData, string ArrayName)
+        {
+
+            Helpers.AddPadding(ref TargetData, 8);
+
+            string output = "u64 " + (ArrayName) + "[] = {\n";
+
+            int column = 0;
+
+            for (int i = 0; i < TargetData.Count - 1; i += 8)
+            {
+
+                output += "0x" + Helpers.Read32(TargetData, i).ToString("X8") + Helpers.Read32(TargetData, i + 4).ToString("X8") + ", ";
+                column++;
+                if (column == 4)
+                {
+                    output += "\n";
+                    column = 0;
+                }
+            }
+
+
+            if (!output.Contains(","))
+            {
+                return "";
+            }
+            else
+            {
+                output = output.Substring(0, output.LastIndexOf(","));
+                output += "\n};\n";
+
+                return output;
+
+            }
+
+        }
+
+        public static List<Bitmap> SplitImage(Bitmap source, int splitWidth, int splitHeight)
+        {
+            List<Bitmap> imageParts = new List<Bitmap>();
+
+            int cols = source.Width / splitWidth;
+            int rows = source.Height / splitHeight;
+
+            for (int y = 0; y < rows; y++)
+            {
+                for (int x = 0; x < cols; x++)
+                {
+                    // Create a new bitmap with the same pixel format
+                    Bitmap part = new Bitmap(splitWidth, splitHeight, PixelFormat.Format32bppArgb);
+
+                    // Lock bits for direct access
+                    Rectangle rect = new Rectangle(x * splitWidth, y * splitHeight, splitWidth, splitHeight);
+
+                    // Lock the source bitmap for reading
+                    BitmapData sourceData = source.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                    BitmapData targetData = part.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+                    // Calculate the number of bytes per row
+                    int bytesPerPixel = Image.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8;
+                    int sourceStride = sourceData.Stride;
+                    int targetStride = targetData.Stride;
+
+                    // Allocate memory for a single row
+                    byte[] rowBuffer = new byte[rect.Width * bytesPerPixel];
+
+                    // Copy each row separately
+                    for (int row = 0; row < rect.Height; row++)
+                    {
+                        // Read from source
+                        IntPtr sourcePtr = sourceData.Scan0 + (row * sourceStride);
+                        Marshal.Copy(sourcePtr, rowBuffer, 0, rowBuffer.Length);
+
+                        // Write to target
+                        IntPtr targetPtr = targetData.Scan0 + (row * targetStride);
+                        Marshal.Copy(rowBuffer, 0, targetPtr, rowBuffer.Length);
+                    }
+
+                    // Unlock the bitmaps
+                    source.UnlockBits(sourceData);
+                    part.UnlockBits(targetData);
+
+                    imageParts.Add(part);
+                }
+            }
+
+            return imageParts;
+        }
+
+        public static Bitmap NewBitmap(string filename)
+        {
+            using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                return new Bitmap(fs);
+            }
         }
 
         public static void SelectAdd<T>(System.Windows.Forms.NumericUpDown cur, List<T> list)

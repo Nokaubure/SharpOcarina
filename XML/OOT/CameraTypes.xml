@@ -30,7 +30,7 @@
   <Camera Key="1B">Fixed camera, position updates towards east/west of the camera when link moves</Camera>
   <Camera Key="1C">Fixed camera, door transition, black bars, transitions when player moves</Camera>
   <Camera Key="1D">CRASH</Camera>
-  <Camera Key="1E">???, keeps zooming to link until it glitches</Camera>
+  <Camera Key="1E">Crawlspace camera</Camera>
   <Camera Key="1F">Fixed camera, no rotation, instant transition, resets with camera type 00</Camera>
   <Camera Key="20">Fixed camera, no rotation, instant transition, disables the rest of the cameras once triggered</Camera>
   <Camera Key="21">Camera position and rotation freezes until another camera type is triggered</Camera>

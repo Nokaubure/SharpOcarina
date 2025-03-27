@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -15,8 +16,8 @@ namespace SharpOcarina
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        public static string ApplicationTitle = "SharpOcarina 1.59";
-        public static int ApplicationVersion = 0x1590;
+        public static string ApplicationTitle = "SharpOcarina 1.60";
+        public static int ApplicationVersion = 0x1600;
 
         public static MainForm MF;
         public static bool QuitProgram = false;
@@ -26,6 +27,33 @@ namespace SharpOcarina
         [STAThread]
         static void Main(string[] args)
         {
+            bool z64romtasks = false;
+            string toml = "";
+            if (args.Length > 0)
+            {
+                foreach (string arg in args)
+                {
+                    if (arg.ToLower() == "--z64romtasks") z64romtasks = true;
+                    else
+                    if (Path.GetExtension(arg).ToLower() == ".toml")
+                    {
+                        toml = arg;
+                    }
+                }
+            }
+            if(z64romtasks && toml != "")
+            {
+                if (!File.Exists(toml))
+                {
+                    MessageBox.Show("z64project.toml not found","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    return;
+                }
+                FaroresPlugin.AddLinkAnimations(Path.GetDirectoryName(toml), true);
+                FaroresPlugin.ConvertAllIncPngFiles(Path.GetDirectoryName(toml));
+                FaroresPlugin.CustomDMAEntries(Path.GetDirectoryName(toml), true);
+                return;
+            }
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

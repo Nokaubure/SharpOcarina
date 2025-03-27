@@ -61,6 +61,7 @@ namespace SharpOcarina
             this.AdvancedTextureAnimationsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnableNexExitFormatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.SOBuildOperationsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.majorasMaskModeexperimentalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.IgnoreMajorasMaskDaySystem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,16 +85,17 @@ namespace SharpOcarina
             this.ResetGroupSettingsReloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MMTextureScrolltoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.consecutiveRoomInjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoaddGroupsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dListCullingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.consecutiveRoomInjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckEmptyOffsetItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printOffsetsOnInjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateCRCMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CheckEmptyOffsetItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ZmapOffsetNames = new System.Windows.Forms.ToolStripMenuItem();
-            this.noDummyPointsInCutsceneCamerasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dListCullingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.triplicateCollisionBoundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ZmapOffsetNames = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoFixErrorsStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.DegreesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,7 +166,10 @@ namespace SharpOcarina
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoHookerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addLinkAnimationsz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.SetTitlecard = new System.Windows.Forms.Button();
@@ -172,18 +177,22 @@ namespace SharpOcarina
             this.AutoInjectOffsetCheckBox = new System.Windows.Forms.CheckBox();
             this.ScenenumberTextbox = new SharpOcarina.NumericUpDownEx();
             this.CamerasGroupBox = new System.Windows.Forms.GroupBox();
+            this.DeleteCameraButton = new System.Windows.Forms.Button();
+            this.AddCameraButton = new System.Windows.Forms.Button();
+            this.CameraSelect = new SharpOcarina.NumericUpDownEx();
+            this.niceLine8 = new SharpOcarina.NiceLine();
             this.CameraPanel = new System.Windows.Forms.Panel();
             this.CameraPage2 = new System.Windows.Forms.Button();
             this.CameraCopyViewport = new System.Windows.Forms.Button();
             this.CameraView = new System.Windows.Forms.Button();
-            this.label104 = new System.Windows.Forms.Label();
+            this.CameraBackgroundLabel = new System.Windows.Forms.Label();
             this.CameraUnk1 = new SharpOcarina.NumericUpDownEx();
-            this.label103 = new System.Windows.Forms.Label();
+            this.CameraUnkLabel = new System.Windows.Forms.Label();
             this.CameraUnk2 = new SharpOcarina.NumericUpDownEx();
-            this.label78 = new System.Windows.Forms.Label();
+            this.CameraFovLabel = new System.Windows.Forms.Label();
             this.CameraFov = new SharpOcarina.NumericUpDownEx();
             this.CameraType = new System.Windows.Forms.ComboBox();
-            this.label77 = new System.Windows.Forms.Label();
+            this.CameraZRotLabel = new System.Windows.Forms.Label();
             this.CameraZRot = new SharpOcarina.NumericUpDownEx();
             this.label71 = new System.Windows.Forms.Label();
             this.label72 = new System.Windows.Forms.Label();
@@ -191,16 +200,13 @@ namespace SharpOcarina
             this.label73 = new System.Windows.Forms.Label();
             this.label74 = new System.Windows.Forms.Label();
             this.CameraXRot = new SharpOcarina.NumericUpDownEx();
-            this.label75 = new System.Windows.Forms.Label();
+            this.CameraYRotLabel = new System.Windows.Forms.Label();
             this.CameraYPos = new SharpOcarina.NumericUpDownEx();
             this.CameraYRot = new SharpOcarina.NumericUpDownEx();
-            this.label76 = new System.Windows.Forms.Label();
+            this.CameraXRotLabel = new System.Windows.Forms.Label();
             this.CameraXPos = new SharpOcarina.NumericUpDownEx();
-            this.DeleteCameraButton = new System.Windows.Forms.Button();
-            this.AddCameraButton = new System.Windows.Forms.Button();
-            this.CameraSelect = new SharpOcarina.NumericUpDownEx();
-            this.niceLine8 = new SharpOcarina.NiceLine();
             this.CameraPanel2 = new System.Windows.Forms.Panel();
+            this.CameraMoveAllPoints = new System.Windows.Forms.Button();
             this.label121 = new System.Windows.Forms.Label();
             this.CameraUnk22 = new SharpOcarina.NumericUpDownEx();
             this.CameraUnk1E = new SharpOcarina.NumericUpDownEx();
@@ -809,12 +815,15 @@ namespace SharpOcarina
             this.RoomSelector = new SharpOcarina.NumericUpDownEx();
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.AutoHookerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScenenumberTextbox)).BeginInit();
             this.CamerasGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CameraSelect)).BeginInit();
             this.CameraPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk2)).BeginInit();
@@ -825,7 +834,6 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CameraYPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraYRot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraXPos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraSelect)).BeginInit();
             this.CameraPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1E)).BeginInit();
@@ -1028,6 +1036,8 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
             this.SuspendLayout();
             // 
             // glControl1
@@ -1246,6 +1256,7 @@ namespace SharpOcarina
             this.AdvancedTextureAnimationsMenuItem,
             this.EnableNexExitFormatMenuItem,
             this.AutoReload,
+            this.SOBuildOperationsMenuItem,
             this.toolStripSeparator3,
             this.majorasMaskModeexperimentalToolStripMenuItem,
             this.IgnoreMajorasMaskDaySystem,
@@ -1269,16 +1280,17 @@ namespace SharpOcarina
             this.ResetGroupSettingsReloadMenuItem,
             this.MMTextureScrolltoolStripMenuItem3,
             this.toolStripSeparator1,
-            this.consecutiveRoomInjectionToolStripMenuItem,
             this.AutoaddGroupsMenuItem,
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem,
+            this.dListCullingMenuItem,
+            this.toolStripSeparator9,
+            this.consecutiveRoomInjectionToolStripMenuItem,
+            this.CheckEmptyOffsetItem,
             this.printOffsetsOnInjectToolStripMenuItem,
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem,
             this.updateCRCMenuItem,
-            this.CheckEmptyOffsetItem,
-            this.ZmapOffsetNames,
-            this.noDummyPointsInCutsceneCamerasToolStripMenuItem,
-            this.dListCullingMenuItem,
             this.triplicateCollisionBoundsToolStripMenuItem,
+            this.ZmapOffsetNames,
             this.AutoFixErrorsStripMenuItem3,
             this.toolStripSeparator5,
             this.DegreesMenuItem,
@@ -1294,20 +1306,20 @@ namespace SharpOcarina
             // saveOptionsToolStripMenuItem
             // 
             this.saveOptionsToolStripMenuItem.Name = "saveOptionsToolStripMenuItem";
-            this.saveOptionsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.saveOptionsToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.saveOptionsToolStripMenuItem.Text = "Save Options";
             this.saveOptionsToolStripMenuItem.Click += new System.EventHandler(this.saveOptionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(308, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(324, 6);
             // 
             // AdvancedTextureAnimationsMenuItem
             // 
             this.AdvancedTextureAnimationsMenuItem.CheckOnClick = true;
             this.AdvancedTextureAnimationsMenuItem.Name = "AdvancedTextureAnimationsMenuItem";
-            this.AdvancedTextureAnimationsMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.AdvancedTextureAnimationsMenuItem.Size = new System.Drawing.Size(327, 22);
             this.AdvancedTextureAnimationsMenuItem.Text = "Enable advanced texture animations";
             this.AdvancedTextureAnimationsMenuItem.Click += new System.EventHandler(this.AdvancedTextureAnimationsMenuItem_Click);
             // 
@@ -1315,7 +1327,7 @@ namespace SharpOcarina
             // 
             this.EnableNexExitFormatMenuItem.CheckOnClick = true;
             this.EnableNexExitFormatMenuItem.Name = "EnableNexExitFormatMenuItem";
-            this.EnableNexExitFormatMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.EnableNexExitFormatMenuItem.Size = new System.Drawing.Size(327, 22);
             this.EnableNexExitFormatMenuItem.Text = "Enable new exit format (z64rom)";
             this.EnableNexExitFormatMenuItem.Click += new System.EventHandler(this.EnableNexExitFormatMenuItem_Click);
             // 
@@ -1323,21 +1335,29 @@ namespace SharpOcarina
             // 
             this.AutoReload.CheckOnClick = true;
             this.AutoReload.Name = "AutoReload";
-            this.AutoReload.Size = new System.Drawing.Size(311, 22);
+            this.AutoReload.Size = new System.Drawing.Size(327, 22);
             this.AutoReload.Text = "Auto Reload";
             this.AutoReload.Click += new System.EventHandler(this.AutoReload_Click);
+            // 
+            // SOBuildOperationsMenuItem
+            // 
+            this.SOBuildOperationsMenuItem.CheckOnClick = true;
+            this.SOBuildOperationsMenuItem.Name = "SOBuildOperationsMenuItem";
+            this.SOBuildOperationsMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.SOBuildOperationsMenuItem.Text = "Run SO additional tasks when building (z64rom)";
+            this.SOBuildOperationsMenuItem.Click += new System.EventHandler(this.SOBuildOperationsMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(308, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(324, 6);
             // 
             // majorasMaskModeexperimentalToolStripMenuItem
             // 
             this.majorasMaskModeexperimentalToolStripMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.majorasMaskModeexperimentalToolStripMenuItem.CheckOnClick = true;
             this.majorasMaskModeexperimentalToolStripMenuItem.Name = "majorasMaskModeexperimentalToolStripMenuItem";
-            this.majorasMaskModeexperimentalToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.majorasMaskModeexperimentalToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.majorasMaskModeexperimentalToolStripMenuItem.Text = "Majora\'s Mask mode";
             this.majorasMaskModeexperimentalToolStripMenuItem.Click += new System.EventHandler(this.majorasMaskModeexperimentalToolStripMenuItem_Click);
             // 
@@ -1346,20 +1366,20 @@ namespace SharpOcarina
             this.IgnoreMajorasMaskDaySystem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.IgnoreMajorasMaskDaySystem.CheckOnClick = true;
             this.IgnoreMajorasMaskDaySystem.Name = "IgnoreMajorasMaskDaySystem";
-            this.IgnoreMajorasMaskDaySystem.Size = new System.Drawing.Size(311, 22);
+            this.IgnoreMajorasMaskDaySystem.Size = new System.Drawing.Size(327, 22);
             this.IgnoreMajorasMaskDaySystem.Text = "Ignore Majora\'s Mask day system";
             this.IgnoreMajorasMaskDaySystem.Click += new System.EventHandler(this.IgnoreMajorasMaskDaySystem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(308, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(324, 6);
             // 
             // showCollisionModelToolStripMenuItem
             // 
             this.showCollisionModelToolStripMenuItem.CheckOnClick = true;
             this.showCollisionModelToolStripMenuItem.Name = "showCollisionModelToolStripMenuItem";
-            this.showCollisionModelToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.showCollisionModelToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.showCollisionModelToolStripMenuItem.Text = "Show &Collision Model";
             this.showCollisionModelToolStripMenuItem.Click += new System.EventHandler(this.showCollisionModelToolStripMenuItem_Click);
             // 
@@ -1367,7 +1387,7 @@ namespace SharpOcarina
             // 
             this.showRoomModelsToolStripMenuItem.CheckOnClick = true;
             this.showRoomModelsToolStripMenuItem.Name = "showRoomModelsToolStripMenuItem";
-            this.showRoomModelsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.showRoomModelsToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.showRoomModelsToolStripMenuItem.Text = "Show &Room Models";
             this.showRoomModelsToolStripMenuItem.Click += new System.EventHandler(this.showRoomModelsToolStripMenuItem_Click);
             // 
@@ -1375,7 +1395,7 @@ namespace SharpOcarina
             // 
             this.DisplayAxisMenuItem.CheckOnClick = true;
             this.DisplayAxisMenuItem.Name = "DisplayAxisMenuItem";
-            this.DisplayAxisMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.DisplayAxisMenuItem.Size = new System.Drawing.Size(327, 22);
             this.DisplayAxisMenuItem.Text = "Show Selected Instance Axis";
             this.DisplayAxisMenuItem.Click += new System.EventHandler(this.DisplayAxisMenuItem_Click);
             // 
@@ -1383,7 +1403,7 @@ namespace SharpOcarina
             // 
             this.ShowSelectedGrouptoolStripMenuItem3.CheckOnClick = true;
             this.ShowSelectedGrouptoolStripMenuItem3.Name = "ShowSelectedGrouptoolStripMenuItem3";
-            this.ShowSelectedGrouptoolStripMenuItem3.Size = new System.Drawing.Size(311, 22);
+            this.ShowSelectedGrouptoolStripMenuItem3.Size = new System.Drawing.Size(327, 22);
             this.ShowSelectedGrouptoolStripMenuItem3.Text = "Show Selected Group Highlight";
             this.ShowSelectedGrouptoolStripMenuItem3.Click += new System.EventHandler(this.ShowSelectedGrouptoolStripMenuItem3_Click);
             // 
@@ -1391,7 +1411,7 @@ namespace SharpOcarina
             // 
             this.ColorBlindMenuItem.CheckOnClick = true;
             this.ColorBlindMenuItem.Name = "ColorBlindMenuItem";
-            this.ColorBlindMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.ColorBlindMenuItem.Size = new System.Drawing.Size(327, 22);
             this.ColorBlindMenuItem.Text = "Color Blind Axis";
             this.ColorBlindMenuItem.Click += new System.EventHandler(this.ColorBlindMenuItem_Click);
             // 
@@ -1399,7 +1419,7 @@ namespace SharpOcarina
             // 
             this.applyEnvironmentLightingToolStripMenuItem.CheckOnClick = true;
             this.applyEnvironmentLightingToolStripMenuItem.Name = "applyEnvironmentLightingToolStripMenuItem";
-            this.applyEnvironmentLightingToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.applyEnvironmentLightingToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.applyEnvironmentLightingToolStripMenuItem.Text = "&Apply Environment Lighting";
             this.applyEnvironmentLightingToolStripMenuItem.ToolTipText = "Only with simulate N64 graphics disabled";
             this.applyEnvironmentLightingToolStripMenuItem.Visible = false;
@@ -1409,7 +1429,7 @@ namespace SharpOcarina
             // 
             this.RenderActorstoolStrip.CheckOnClick = true;
             this.RenderActorstoolStrip.Name = "RenderActorstoolStrip";
-            this.RenderActorstoolStrip.Size = new System.Drawing.Size(311, 22);
+            this.RenderActorstoolStrip.Size = new System.Drawing.Size(327, 22);
             this.RenderActorstoolStrip.Text = "Render Actors (most of them)";
             this.RenderActorstoolStrip.Click += new System.EventHandler(this.renderActorslMenuItem_Click);
             // 
@@ -1417,7 +1437,7 @@ namespace SharpOcarina
             // 
             this.RenderChildLinkMenuItem.CheckOnClick = true;
             this.RenderChildLinkMenuItem.Name = "RenderChildLinkMenuItem";
-            this.RenderChildLinkMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.RenderChildLinkMenuItem.Size = new System.Drawing.Size(327, 22);
             this.RenderChildLinkMenuItem.Text = "Render Child Link instead of Adult";
             this.RenderChildLinkMenuItem.Click += new System.EventHandler(this.RenderChildLinkMenuItem_Click);
             // 
@@ -1425,7 +1445,7 @@ namespace SharpOcarina
             // 
             this.forceRGBATexturesToolStripMenuItem.CheckOnClick = true;
             this.forceRGBATexturesToolStripMenuItem.Name = "forceRGBATexturesToolStripMenuItem";
-            this.forceRGBATexturesToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.forceRGBATexturesToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.forceRGBATexturesToolStripMenuItem.Text = "&Force RGBA Textures";
             this.forceRGBATexturesToolStripMenuItem.Click += new System.EventHandler(this.forceRGBATexturesToolStripMenuItem_Click);
             // 
@@ -1433,7 +1453,7 @@ namespace SharpOcarina
             // 
             this.dontConvertMultitextureToRGBAToolStripMenuItem.CheckOnClick = true;
             this.dontConvertMultitextureToRGBAToolStripMenuItem.Name = "dontConvertMultitextureToRGBAToolStripMenuItem";
-            this.dontConvertMultitextureToRGBAToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.dontConvertMultitextureToRGBAToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.dontConvertMultitextureToRGBAToolStripMenuItem.Text = "Don\'t convert multitextures to RGBA";
             this.dontConvertMultitextureToRGBAToolStripMenuItem.Click += new System.EventHandler(this.dontConvertMultitextureToRGBAToolStripMenuItem_Click);
             // 
@@ -1441,7 +1461,7 @@ namespace SharpOcarina
             // 
             this.DisableRGBA32ToolStrip.CheckOnClick = true;
             this.DisableRGBA32ToolStrip.Name = "DisableRGBA32ToolStrip";
-            this.DisableRGBA32ToolStrip.Size = new System.Drawing.Size(311, 22);
+            this.DisableRGBA32ToolStrip.Size = new System.Drawing.Size(327, 22);
             this.DisableRGBA32ToolStrip.Text = "Disable RGBA32 detection";
             this.DisableRGBA32ToolStrip.Click += new System.EventHandler(this.DisableRGBA32ToolStrip_Click);
             // 
@@ -1449,7 +1469,7 @@ namespace SharpOcarina
             // 
             this.RenderSelectedCutsceneCommandsMenuItem.CheckOnClick = true;
             this.RenderSelectedCutsceneCommandsMenuItem.Name = "RenderSelectedCutsceneCommandsMenuItem";
-            this.RenderSelectedCutsceneCommandsMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.RenderSelectedCutsceneCommandsMenuItem.Size = new System.Drawing.Size(327, 22);
             this.RenderSelectedCutsceneCommandsMenuItem.Text = "Only render selected cutscene commands";
             this.RenderSelectedCutsceneCommandsMenuItem.Click += new System.EventHandler(this.RenderSelectedCutsceneCommandsMenuItem_Click);
             // 
@@ -1457,7 +1477,7 @@ namespace SharpOcarina
             // 
             this.RenderWaterboxesMenuItem.CheckOnClick = true;
             this.RenderWaterboxesMenuItem.Name = "RenderWaterboxesMenuItem";
-            this.RenderWaterboxesMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.RenderWaterboxesMenuItem.Size = new System.Drawing.Size(327, 22);
             this.RenderWaterboxesMenuItem.Text = "Only render waterboxes in general tab";
             this.RenderWaterboxesMenuItem.Click += new System.EventHandler(this.RenderWaterboxesMenuItem_Click);
             // 
@@ -1465,7 +1485,7 @@ namespace SharpOcarina
             // 
             this.RenderPathwaystoolStripMenuItem3.CheckOnClick = true;
             this.RenderPathwaystoolStripMenuItem3.Name = "RenderPathwaystoolStripMenuItem3";
-            this.RenderPathwaystoolStripMenuItem3.Size = new System.Drawing.Size(311, 22);
+            this.RenderPathwaystoolStripMenuItem3.Size = new System.Drawing.Size(327, 22);
             this.RenderPathwaystoolStripMenuItem3.Text = "Only render pathways in pathway tab";
             this.RenderPathwaystoolStripMenuItem3.Click += new System.EventHandler(this.RenderPathwaystoolStripMenuItem3_Click);
             // 
@@ -1473,7 +1493,7 @@ namespace SharpOcarina
             // 
             this.DisableTextureWarningsMenuItem.CheckOnClick = true;
             this.DisableTextureWarningsMenuItem.Name = "DisableTextureWarningsMenuItem";
-            this.DisableTextureWarningsMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.DisableTextureWarningsMenuItem.Size = new System.Drawing.Size(327, 22);
             this.DisableTextureWarningsMenuItem.Text = "Disable texture warnings";
             this.DisableTextureWarningsMenuItem.Click += new System.EventHandler(this.DisableTextureWarningsMenuItem_Click);
             // 
@@ -1481,7 +1501,7 @@ namespace SharpOcarina
             // 
             this.DisableCutscenePreviewBlackBarsMenuItem.CheckOnClick = true;
             this.DisableCutscenePreviewBlackBarsMenuItem.Name = "DisableCutscenePreviewBlackBarsMenuItem";
-            this.DisableCutscenePreviewBlackBarsMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.DisableCutscenePreviewBlackBarsMenuItem.Size = new System.Drawing.Size(327, 22);
             this.DisableCutscenePreviewBlackBarsMenuItem.Text = "Disable cutscene preview black bars";
             this.DisableCutscenePreviewBlackBarsMenuItem.Click += new System.EventHandler(this.DisableCutscenePreviewBlackBarsMenuItem_Click);
             // 
@@ -1489,7 +1509,7 @@ namespace SharpOcarina
             // 
             this.ResetGroupSettingsReloadMenuItem.CheckOnClick = true;
             this.ResetGroupSettingsReloadMenuItem.Name = "ResetGroupSettingsReloadMenuItem";
-            this.ResetGroupSettingsReloadMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.ResetGroupSettingsReloadMenuItem.Size = new System.Drawing.Size(327, 22);
             this.ResetGroupSettingsReloadMenuItem.Text = "Reset group settings on reload";
             this.ResetGroupSettingsReloadMenuItem.Click += new System.EventHandler(this.ResetGroupSettingsReloadMenuItem_Click);
             // 
@@ -1497,38 +1517,72 @@ namespace SharpOcarina
             // 
             this.MMTextureScrolltoolStripMenuItem3.CheckOnClick = true;
             this.MMTextureScrolltoolStripMenuItem3.Name = "MMTextureScrolltoolStripMenuItem3";
-            this.MMTextureScrolltoolStripMenuItem3.Size = new System.Drawing.Size(311, 22);
+            this.MMTextureScrolltoolStripMenuItem3.Size = new System.Drawing.Size(327, 22);
             this.MMTextureScrolltoolStripMenuItem3.Text = "Use Majora\'s Mask texture scroll direction";
             this.MMTextureScrolltoolStripMenuItem3.Click += new System.EventHandler(this.MMTextureScrolltoolStripMenuItem3_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(308, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(324, 6);
+            // 
+            // AutoaddGroupsMenuItem
+            // 
+            this.AutoaddGroupsMenuItem.CheckOnClick = true;
+            this.AutoaddGroupsMenuItem.Name = "AutoaddGroupsMenuItem";
+            this.AutoaddGroupsMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.AutoaddGroupsMenuItem.Text = "Add required actor objects when exporting";
+            this.AutoaddGroupsMenuItem.Click += new System.EventHandler(this.AutoaddGroupsClick);
+            // 
+            // noDummyPointsInCutsceneCamerasToolStripMenuItem
+            // 
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.CheckOnClick = true;
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Name = "noDummyPointsInCutsceneCamerasToolStripMenuItem";
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Text = "No dummy points in cutscene cameras";
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.ToolTipText = "Dummy points are needed for more accurate cutscene cameras, not advisable to disa" +
+    "ble this";
+            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Click += new System.EventHandler(this.noDummyPointsInCutsceneCamerasToolStripMenuItem_Click);
+            // 
+            // dListCullingMenuItem
+            // 
+            this.dListCullingMenuItem.CheckOnClick = true;
+            this.dListCullingMenuItem.Name = "dListCullingMenuItem";
+            this.dListCullingMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.dListCullingMenuItem.Text = "Write DList culling command";
+            this.dListCullingMenuItem.ToolTipText = "Writes a culling command on each dlist that improves ingame performance";
+            this.dListCullingMenuItem.Click += new System.EventHandler(this.dListCullingMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(324, 6);
             // 
             // consecutiveRoomInjectionToolStripMenuItem
             // 
             this.consecutiveRoomInjectionToolStripMenuItem.CheckOnClick = true;
             this.consecutiveRoomInjectionToolStripMenuItem.Enabled = false;
             this.consecutiveRoomInjectionToolStripMenuItem.Name = "consecutiveRoomInjectionToolStripMenuItem";
-            this.consecutiveRoomInjectionToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.consecutiveRoomInjectionToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.consecutiveRoomInjectionToolStripMenuItem.Text = "&Consecutive Room Injection";
             this.consecutiveRoomInjectionToolStripMenuItem.Visible = false;
             this.consecutiveRoomInjectionToolStripMenuItem.Click += new System.EventHandler(this.consecutiveRoomInjectionToolStripMenuItem_Click);
             // 
-            // AutoaddGroupsMenuItem
+            // CheckEmptyOffsetItem
             // 
-            this.AutoaddGroupsMenuItem.CheckOnClick = true;
-            this.AutoaddGroupsMenuItem.Name = "AutoaddGroupsMenuItem";
-            this.AutoaddGroupsMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.AutoaddGroupsMenuItem.Text = "Add required actor objects on save";
-            this.AutoaddGroupsMenuItem.Click += new System.EventHandler(this.AutoaddGroupsClick);
+            this.CheckEmptyOffsetItem.CheckOnClick = true;
+            this.CheckEmptyOffsetItem.Enabled = false;
+            this.CheckEmptyOffsetItem.Name = "CheckEmptyOffsetItem";
+            this.CheckEmptyOffsetItem.Size = new System.Drawing.Size(327, 22);
+            this.CheckEmptyOffsetItem.Text = "Check if offset is empty before inject";
+            this.CheckEmptyOffsetItem.Visible = false;
+            this.CheckEmptyOffsetItem.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // printOffsetsOnInjectToolStripMenuItem
             // 
             this.printOffsetsOnInjectToolStripMenuItem.CheckOnClick = true;
             this.printOffsetsOnInjectToolStripMenuItem.Name = "printOffsetsOnInjectToolStripMenuItem";
-            this.printOffsetsOnInjectToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.printOffsetsOnInjectToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.printOffsetsOnInjectToolStripMenuItem.Text = "Print Offsets on Inject";
             this.printOffsetsOnInjectToolStripMenuItem.Click += new System.EventHandler(this.printOffsetsOnInjectToolStripMenuItem_Click);
             // 
@@ -1536,7 +1590,7 @@ namespace SharpOcarina
             // 
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem.CheckOnClick = true;
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem.Name = "AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem";
-            this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem.Text = "Always generate custom DMA table on inject";
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem.Click += new System.EventHandler(this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem_Click);
             // 
@@ -1544,59 +1598,32 @@ namespace SharpOcarina
             // 
             this.updateCRCMenuItem.CheckOnClick = true;
             this.updateCRCMenuItem.Name = "updateCRCMenuItem";
-            this.updateCRCMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.updateCRCMenuItem.Size = new System.Drawing.Size(327, 22);
             this.updateCRCMenuItem.Text = "Update CRC on room inject";
             this.updateCRCMenuItem.Click += new System.EventHandler(this.updateCRCMenuItem_Click);
-            // 
-            // CheckEmptyOffsetItem
-            // 
-            this.CheckEmptyOffsetItem.CheckOnClick = true;
-            this.CheckEmptyOffsetItem.Enabled = false;
-            this.CheckEmptyOffsetItem.Name = "CheckEmptyOffsetItem";
-            this.CheckEmptyOffsetItem.Size = new System.Drawing.Size(311, 22);
-            this.CheckEmptyOffsetItem.Text = "Check if offset is empty before inject";
-            this.CheckEmptyOffsetItem.Visible = false;
-            this.CheckEmptyOffsetItem.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
-            // 
-            // ZmapOffsetNames
-            // 
-            this.ZmapOffsetNames.CheckOnClick = true;
-            this.ZmapOffsetNames.Name = "ZmapOffsetNames";
-            this.ZmapOffsetNames.Size = new System.Drawing.Size(311, 22);
-            this.ZmapOffsetNames.Text = "Change binary zmap names to their offsets";
-            this.ZmapOffsetNames.Visible = false;
-            this.ZmapOffsetNames.Click += new System.EventHandler(this.changeBinaryZmapNamesToTheirOffsetsToolStripMenuItem_Click);
-            // 
-            // noDummyPointsInCutsceneCamerasToolStripMenuItem
-            // 
-            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.CheckOnClick = true;
-            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Name = "noDummyPointsInCutsceneCamerasToolStripMenuItem";
-            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Text = "No dummy points in cutscene cameras";
-            this.noDummyPointsInCutsceneCamerasToolStripMenuItem.Click += new System.EventHandler(this.noDummyPointsInCutsceneCamerasToolStripMenuItem_Click);
-            // 
-            // dListCullingMenuItem
-            // 
-            this.dListCullingMenuItem.CheckOnClick = true;
-            this.dListCullingMenuItem.Name = "dListCullingMenuItem";
-            this.dListCullingMenuItem.Size = new System.Drawing.Size(311, 22);
-            this.dListCullingMenuItem.Text = "Write DList culling command";
-            this.dListCullingMenuItem.ToolTipText = "Writes a culling command on each dlist that improves ingame performance";
-            this.dListCullingMenuItem.Click += new System.EventHandler(this.dListCullingMenuItem_Click);
             // 
             // triplicateCollisionBoundsToolStripMenuItem
             // 
             this.triplicateCollisionBoundsToolStripMenuItem.CheckOnClick = true;
             this.triplicateCollisionBoundsToolStripMenuItem.Name = "triplicateCollisionBoundsToolStripMenuItem";
-            this.triplicateCollisionBoundsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.triplicateCollisionBoundsToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.triplicateCollisionBoundsToolStripMenuItem.Text = "Triplicate Collision Bounds";
             this.triplicateCollisionBoundsToolStripMenuItem.Click += new System.EventHandler(this.triplicateCollisionBoundsToolStripMenuItem_Click);
+            // 
+            // ZmapOffsetNames
+            // 
+            this.ZmapOffsetNames.CheckOnClick = true;
+            this.ZmapOffsetNames.Name = "ZmapOffsetNames";
+            this.ZmapOffsetNames.Size = new System.Drawing.Size(327, 22);
+            this.ZmapOffsetNames.Text = "Change binary zmap names to their offsets";
+            this.ZmapOffsetNames.Visible = false;
+            this.ZmapOffsetNames.Click += new System.EventHandler(this.changeBinaryZmapNamesToTheirOffsetsToolStripMenuItem_Click);
             // 
             // AutoFixErrorsStripMenuItem3
             // 
             this.AutoFixErrorsStripMenuItem3.CheckOnClick = true;
             this.AutoFixErrorsStripMenuItem3.Name = "AutoFixErrorsStripMenuItem3";
-            this.AutoFixErrorsStripMenuItem3.Size = new System.Drawing.Size(311, 22);
+            this.AutoFixErrorsStripMenuItem3.Size = new System.Drawing.Size(327, 22);
             this.AutoFixErrorsStripMenuItem3.Text = "Auto Fix Common Errors on Inject";
             this.AutoFixErrorsStripMenuItem3.ToolTipText = "Fixes some errors on inject that would crash ingame otherwise";
             this.AutoFixErrorsStripMenuItem3.Click += new System.EventHandler(this.AutoFixErrorsStripMenuItem3_Click);
@@ -1604,13 +1631,13 @@ namespace SharpOcarina
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(308, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(324, 6);
             // 
             // DegreesMenuItem
             // 
             this.DegreesMenuItem.CheckOnClick = true;
             this.DegreesMenuItem.Name = "DegreesMenuItem";
-            this.DegreesMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.DegreesMenuItem.Size = new System.Drawing.Size(327, 22);
             this.DegreesMenuItem.Text = "Multiply degrees by 182.04~";
             this.DegreesMenuItem.Click += new System.EventHandler(this.DegreesMenuItemClick);
             // 
@@ -1618,7 +1645,7 @@ namespace SharpOcarina
             // 
             this.disableWaterboxMouseMovementToolStripMenuItem.CheckOnClick = true;
             this.disableWaterboxMouseMovementToolStripMenuItem.Name = "disableWaterboxMouseMovementToolStripMenuItem";
-            this.disableWaterboxMouseMovementToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.disableWaterboxMouseMovementToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.disableWaterboxMouseMovementToolStripMenuItem.Text = "Disable waterbox mouse movement";
             this.disableWaterboxMouseMovementToolStripMenuItem.Click += new System.EventHandler(this.disableWaterboxMouseMovementToolStripMenuItem_Click);
             // 
@@ -1626,7 +1653,7 @@ namespace SharpOcarina
             // 
             this.showRotationValuesAsHexadecimalToolStripMenuItem.CheckOnClick = true;
             this.showRotationValuesAsHexadecimalToolStripMenuItem.Name = "showRotationValuesAsHexadecimalToolStripMenuItem";
-            this.showRotationValuesAsHexadecimalToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.showRotationValuesAsHexadecimalToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.showRotationValuesAsHexadecimalToolStripMenuItem.Text = "Show rotation values as hexadecimal";
             this.showRotationValuesAsHexadecimalToolStripMenuItem.Click += new System.EventHandler(this.showRotationValuesAsHexadecimalToolStripMenuItem_Click);
             // 
@@ -1634,7 +1661,7 @@ namespace SharpOcarina
             // 
             this.autosaveSceneXmlToolStripMenuItem.CheckOnClick = true;
             this.autosaveSceneXmlToolStripMenuItem.Name = "autosaveSceneXmlToolStripMenuItem";
-            this.autosaveSceneXmlToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.autosaveSceneXmlToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.autosaveSceneXmlToolStripMenuItem.Text = "Enable autosave.xml";
             this.autosaveSceneXmlToolStripMenuItem.Click += new System.EventHandler(this.autosaveSceneXmlToolStripMenuItem_Click);
             // 
@@ -1643,7 +1670,7 @@ namespace SharpOcarina
             this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.CheckOnClick = true;
             this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.Enabled = false;
             this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.Name = "dIsplayUndocumentedCutsceneVarsToolStripMenuItem";
-            this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.Text = "DIsplay undocumented Cutscene Vars";
             this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.Visible = false;
             this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem.Click += new System.EventHandler(this.dIsplayUndocumentedCutsceneVarsToolStripMenuItem_Click);
@@ -1653,7 +1680,7 @@ namespace SharpOcarina
             this.sharpPixelatedTexturesToolStripMenuItem.CheckOnClick = true;
             this.sharpPixelatedTexturesToolStripMenuItem.Enabled = false;
             this.sharpPixelatedTexturesToolStripMenuItem.Name = "sharpPixelatedTexturesToolStripMenuItem";
-            this.sharpPixelatedTexturesToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.sharpPixelatedTexturesToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.sharpPixelatedTexturesToolStripMenuItem.Text = "Sharp (Pixelated) Textures";
             this.sharpPixelatedTexturesToolStripMenuItem.Visible = false;
             this.sharpPixelatedTexturesToolStripMenuItem.Click += new System.EventHandler(this.sharpPixelatedTexturesToolStripMenuItem_Click);
@@ -1998,8 +2025,11 @@ namespace SharpOcarina
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
             this.replaceSceneTitleCardTextureToolStripMenuItem,
+            this.AutoHookerMenuItem,
+            this.toolStripSeparator10,
             this.addLinkAnimationsz64romToolStripMenuItem,
-            this.AutoHookerMenuItem});
+            this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem,
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem});
             this.nokaToolStripMenuItem.Name = "nokaToolStripMenuItem";
             this.nokaToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.nokaToolStripMenuItem.Text = "Tools";
@@ -2170,6 +2200,14 @@ namespace SharpOcarina
             this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
             // 
+            // AutoHookerMenuItem
+            // 
+            this.AutoHookerMenuItem.Name = "AutoHookerMenuItem";
+            this.AutoHookerMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.AutoHookerMenuItem.Text = "Auto-hooker (z64rom)";
+            this.AutoHookerMenuItem.Visible = false;
+            this.AutoHookerMenuItem.Click += new System.EventHandler(this.AutoHookerMenuItem_Click);
+            // 
             // addLinkAnimationsz64romToolStripMenuItem
             // 
             this.addLinkAnimationsz64romToolStripMenuItem.Name = "addLinkAnimationsz64romToolStripMenuItem";
@@ -2177,6 +2215,22 @@ namespace SharpOcarina
             this.addLinkAnimationsz64romToolStripMenuItem.Text = "Add New Link Animations (z64rom)";
             this.addLinkAnimationsz64romToolStripMenuItem.Visible = false;
             this.addLinkAnimationsz64romToolStripMenuItem.Click += new System.EventHandler(this.addLinkAnimationsz64romToolStripMenuItem_Click);
+            // 
+            // convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem
+            // 
+            this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Name = "convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem";
+            this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Text = "Convert all .format.png files to .inc (z64rom)";
+            this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Visible = false;
+            this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Click += new System.EventHandler(this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem_Click);
+            // 
+            // createDMAFilesFromFoldersz64romToolStripMenuItem
+            // 
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem.Name = "createDMAFilesFromFoldersz64romToolStripMenuItem";
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem.Text = "Create DMA files from folders (z64rom)";
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = false;
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem.Click += new System.EventHandler(this.createDMAFilesFromFoldersz64romToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -2313,11 +2367,11 @@ namespace SharpOcarina
             // 
             // CamerasGroupBox
             // 
-            this.CamerasGroupBox.Controls.Add(this.CameraPanel);
             this.CamerasGroupBox.Controls.Add(this.DeleteCameraButton);
             this.CamerasGroupBox.Controls.Add(this.AddCameraButton);
             this.CamerasGroupBox.Controls.Add(this.CameraSelect);
             this.CamerasGroupBox.Controls.Add(this.niceLine8);
+            this.CamerasGroupBox.Controls.Add(this.CameraPanel);
             this.CamerasGroupBox.Controls.Add(this.CameraPanel2);
             this.CamerasGroupBox.Location = new System.Drawing.Point(6, 397);
             this.CamerasGroupBox.Name = "CamerasGroupBox";
@@ -2326,19 +2380,79 @@ namespace SharpOcarina
             this.CamerasGroupBox.TabStop = false;
             this.CamerasGroupBox.Text = "Cameras";
             // 
+            // DeleteCameraButton
+            // 
+            this.DeleteCameraButton.Location = new System.Drawing.Point(250, 19);
+            this.DeleteCameraButton.Name = "DeleteCameraButton";
+            this.DeleteCameraButton.Size = new System.Drawing.Size(120, 23);
+            this.DeleteCameraButton.TabIndex = 9;
+            this.DeleteCameraButton.Text = "Delete Camera";
+            this.DeleteCameraButton.UseVisualStyleBackColor = true;
+            this.DeleteCameraButton.Click += new System.EventHandler(this.DeleteCameraButton_Click);
+            // 
+            // AddCameraButton
+            // 
+            this.AddCameraButton.BackColor = System.Drawing.Color.Transparent;
+            this.AddCameraButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.AddCameraButton.Location = new System.Drawing.Point(124, 19);
+            this.AddCameraButton.Name = "AddCameraButton";
+            this.AddCameraButton.Size = new System.Drawing.Size(120, 23);
+            this.AddCameraButton.TabIndex = 8;
+            this.AddCameraButton.Text = "Add Camera";
+            this.EnvironmentControlTooltip.SetToolTip(this.AddCameraButton, "Hold SHIFT to add in front of camera");
+            this.AddCameraButton.UseVisualStyleBackColor = false;
+            this.AddCameraButton.Click += new System.EventHandler(this.AddCameraButton_Click);
+            // 
+            // CameraSelect
+            // 
+            this.CameraSelect.AlwaysFireValueChanged = false;
+            this.CameraSelect.DisplayDigits = 1;
+            this.CameraSelect.DoValueRollover = false;
+            this.CameraSelect.Hexadecimal = true;
+            this.CameraSelect.IncrementMouseWheel = 3;
+            this.CameraSelect.Location = new System.Drawing.Point(9, 22);
+            this.CameraSelect.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.CameraSelect.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraSelect.Name = "CameraSelect";
+            this.CameraSelect.ShiftMultiplier = 1;
+            this.CameraSelect.Size = new System.Drawing.Size(65, 20);
+            this.CameraSelect.TabIndex = 7;
+            this.CameraSelect.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CameraSelect.ValueChanged += new System.EventHandler(this.CameraSelect_ValueChanged);
+            // 
+            // niceLine8
+            // 
+            this.niceLine8.Location = new System.Drawing.Point(9, 46);
+            this.niceLine8.Name = "niceLine8";
+            this.niceLine8.Size = new System.Drawing.Size(384, 15);
+            this.niceLine8.TabIndex = 20;
+            this.niceLine8.TabStop = false;
+            // 
             // CameraPanel
             // 
             this.CameraPanel.Controls.Add(this.CameraPage2);
             this.CameraPanel.Controls.Add(this.CameraCopyViewport);
             this.CameraPanel.Controls.Add(this.CameraView);
-            this.CameraPanel.Controls.Add(this.label104);
+            this.CameraPanel.Controls.Add(this.CameraBackgroundLabel);
             this.CameraPanel.Controls.Add(this.CameraUnk1);
-            this.CameraPanel.Controls.Add(this.label103);
+            this.CameraPanel.Controls.Add(this.CameraUnkLabel);
             this.CameraPanel.Controls.Add(this.CameraUnk2);
-            this.CameraPanel.Controls.Add(this.label78);
+            this.CameraPanel.Controls.Add(this.CameraFovLabel);
             this.CameraPanel.Controls.Add(this.CameraFov);
             this.CameraPanel.Controls.Add(this.CameraType);
-            this.CameraPanel.Controls.Add(this.label77);
+            this.CameraPanel.Controls.Add(this.CameraZRotLabel);
             this.CameraPanel.Controls.Add(this.CameraZRot);
             this.CameraPanel.Controls.Add(this.label71);
             this.CameraPanel.Controls.Add(this.label72);
@@ -2346,10 +2460,10 @@ namespace SharpOcarina
             this.CameraPanel.Controls.Add(this.label73);
             this.CameraPanel.Controls.Add(this.label74);
             this.CameraPanel.Controls.Add(this.CameraXRot);
-            this.CameraPanel.Controls.Add(this.label75);
+            this.CameraPanel.Controls.Add(this.CameraYRotLabel);
             this.CameraPanel.Controls.Add(this.CameraYPos);
             this.CameraPanel.Controls.Add(this.CameraYRot);
-            this.CameraPanel.Controls.Add(this.label76);
+            this.CameraPanel.Controls.Add(this.CameraXRotLabel);
             this.CameraPanel.Controls.Add(this.CameraXPos);
             this.CameraPanel.Location = new System.Drawing.Point(3, 58);
             this.CameraPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -2391,15 +2505,15 @@ namespace SharpOcarina
             this.CameraView.UseVisualStyleBackColor = true;
             this.CameraView.Click += new System.EventHandler(this.CameraView_Click);
             // 
-            // label104
+            // CameraBackgroundLabel
             // 
-            this.label104.AutoSize = true;
-            this.label104.Enabled = false;
-            this.label104.Location = new System.Drawing.Point(3, 112);
-            this.label104.Name = "label104";
-            this.label104.Size = new System.Drawing.Size(68, 13);
-            this.label104.TabIndex = 43;
-            this.label104.Text = "Background:";
+            this.CameraBackgroundLabel.AutoSize = true;
+            this.CameraBackgroundLabel.Enabled = false;
+            this.CameraBackgroundLabel.Location = new System.Drawing.Point(3, 112);
+            this.CameraBackgroundLabel.Name = "CameraBackgroundLabel";
+            this.CameraBackgroundLabel.Size = new System.Drawing.Size(68, 13);
+            this.CameraBackgroundLabel.TabIndex = 43;
+            this.CameraBackgroundLabel.Text = "Background:";
             // 
             // CameraUnk1
             // 
@@ -2407,19 +2521,18 @@ namespace SharpOcarina
             this.CameraUnk1.DisplayDigits = 1;
             this.CameraUnk1.DoValueRollover = false;
             this.CameraUnk1.Enabled = false;
-            this.CameraUnk1.Hexadecimal = true;
             this.CameraUnk1.IncrementMouseWheel = 1;
             this.CameraUnk1.Location = new System.Drawing.Point(74, 110);
             this.CameraUnk1.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk1.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk1.Name = "CameraUnk1";
             this.CameraUnk1.ShiftMultiplier = 1;
             this.CameraUnk1.Size = new System.Drawing.Size(100, 20);
@@ -2431,15 +2544,15 @@ namespace SharpOcarina
             0});
             this.CameraUnk1.ValueChanged += new System.EventHandler(this.CameraUnk1_ValueChanged);
             // 
-            // label103
+            // CameraUnkLabel
             // 
-            this.label103.AutoSize = true;
-            this.label103.Enabled = false;
-            this.label103.Location = new System.Drawing.Point(196, 114);
-            this.label103.Name = "label103";
-            this.label103.Size = new System.Drawing.Size(30, 13);
-            this.label103.TabIndex = 41;
-            this.label103.Text = "Unk:";
+            this.CameraUnkLabel.AutoSize = true;
+            this.CameraUnkLabel.Enabled = false;
+            this.CameraUnkLabel.Location = new System.Drawing.Point(196, 114);
+            this.CameraUnkLabel.Name = "CameraUnkLabel";
+            this.CameraUnkLabel.Size = new System.Drawing.Size(30, 13);
+            this.CameraUnkLabel.TabIndex = 41;
+            this.CameraUnkLabel.Text = "Unk:";
             // 
             // CameraUnk2
             // 
@@ -2447,19 +2560,18 @@ namespace SharpOcarina
             this.CameraUnk2.DisplayDigits = 1;
             this.CameraUnk2.DoValueRollover = false;
             this.CameraUnk2.Enabled = false;
-            this.CameraUnk2.Hexadecimal = true;
             this.CameraUnk2.IncrementMouseWheel = 1;
             this.CameraUnk2.Location = new System.Drawing.Point(267, 112);
             this.CameraUnk2.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk2.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk2.Name = "CameraUnk2";
             this.CameraUnk2.ShiftMultiplier = 1;
             this.CameraUnk2.Size = new System.Drawing.Size(100, 20);
@@ -2471,15 +2583,15 @@ namespace SharpOcarina
             0});
             this.CameraUnk2.ValueChanged += new System.EventHandler(this.CameraUnk2_ValueChanged);
             // 
-            // label78
+            // CameraFovLabel
             // 
-            this.label78.AutoSize = true;
-            this.label78.Enabled = false;
-            this.label78.Location = new System.Drawing.Point(196, 86);
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(31, 13);
-            this.label78.TabIndex = 21;
-            this.label78.Text = "FOV:";
+            this.CameraFovLabel.AutoSize = true;
+            this.CameraFovLabel.Enabled = false;
+            this.CameraFovLabel.Location = new System.Drawing.Point(196, 86);
+            this.CameraFovLabel.Name = "CameraFovLabel";
+            this.CameraFovLabel.Size = new System.Drawing.Size(31, 13);
+            this.CameraFovLabel.TabIndex = 21;
+            this.CameraFovLabel.Text = "FOV:";
             // 
             // CameraFov
             // 
@@ -2521,15 +2633,15 @@ namespace SharpOcarina
             this.CameraType.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
             this.CameraType.SelectionChangeCommitted += new System.EventHandler(this.CameraType_SelectionChangeCommitted);
             // 
-            // label77
+            // CameraZRotLabel
             // 
-            this.label77.AutoSize = true;
-            this.label77.Enabled = false;
-            this.label77.Location = new System.Drawing.Point(196, 59);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(60, 13);
-            this.label77.TabIndex = 21;
-            this.label77.Text = "Z Rotation:";
+            this.CameraZRotLabel.AutoSize = true;
+            this.CameraZRotLabel.Enabled = false;
+            this.CameraZRotLabel.Location = new System.Drawing.Point(196, 59);
+            this.CameraZRotLabel.Name = "CameraZRotLabel";
+            this.CameraZRotLabel.Size = new System.Drawing.Size(60, 13);
+            this.CameraZRotLabel.TabIndex = 21;
+            this.CameraZRotLabel.Text = "Z Rotation:";
             // 
             // CameraZRot
             // 
@@ -2668,15 +2780,15 @@ namespace SharpOcarina
             0});
             this.CameraXRot.ValueChanged += new System.EventHandler(this.CameraXRot_ValueChanged);
             // 
-            // label75
+            // CameraYRotLabel
             // 
-            this.label75.AutoSize = true;
-            this.label75.Enabled = false;
-            this.label75.Location = new System.Drawing.Point(196, 33);
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(60, 13);
-            this.label75.TabIndex = 17;
-            this.label75.Text = "Y Rotation:";
+            this.CameraYRotLabel.AutoSize = true;
+            this.CameraYRotLabel.Enabled = false;
+            this.CameraYRotLabel.Location = new System.Drawing.Point(196, 33);
+            this.CameraYRotLabel.Name = "CameraYRotLabel";
+            this.CameraYRotLabel.Size = new System.Drawing.Size(60, 13);
+            this.CameraYRotLabel.TabIndex = 17;
+            this.CameraYRotLabel.Text = "Y Rotation:";
             // 
             // CameraYPos
             // 
@@ -2741,15 +2853,15 @@ namespace SharpOcarina
             0});
             this.CameraYRot.ValueChanged += new System.EventHandler(this.CameraYRot_ValueChanged);
             // 
-            // label76
+            // CameraXRotLabel
             // 
-            this.label76.AutoSize = true;
-            this.label76.Enabled = false;
-            this.label76.Location = new System.Drawing.Point(196, 7);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(60, 13);
-            this.label76.TabIndex = 13;
-            this.label76.Text = "X Rotation:";
+            this.CameraXRotLabel.AutoSize = true;
+            this.CameraXRotLabel.Enabled = false;
+            this.CameraXRotLabel.Location = new System.Drawing.Point(196, 7);
+            this.CameraXRotLabel.Name = "CameraXRotLabel";
+            this.CameraXRotLabel.Size = new System.Drawing.Size(60, 13);
+            this.CameraXRotLabel.TabIndex = 13;
+            this.CameraXRotLabel.Text = "X Rotation:";
             // 
             // CameraXPos
             // 
@@ -2780,68 +2892,9 @@ namespace SharpOcarina
             0});
             this.CameraXPos.ValueChanged += new System.EventHandler(this.CameraXPos_ValueChanged);
             // 
-            // DeleteCameraButton
-            // 
-            this.DeleteCameraButton.Location = new System.Drawing.Point(250, 19);
-            this.DeleteCameraButton.Name = "DeleteCameraButton";
-            this.DeleteCameraButton.Size = new System.Drawing.Size(120, 23);
-            this.DeleteCameraButton.TabIndex = 9;
-            this.DeleteCameraButton.Text = "Delete Camera";
-            this.DeleteCameraButton.UseVisualStyleBackColor = true;
-            this.DeleteCameraButton.Click += new System.EventHandler(this.DeleteCameraButton_Click);
-            // 
-            // AddCameraButton
-            // 
-            this.AddCameraButton.BackColor = System.Drawing.Color.Transparent;
-            this.AddCameraButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.AddCameraButton.Location = new System.Drawing.Point(124, 19);
-            this.AddCameraButton.Name = "AddCameraButton";
-            this.AddCameraButton.Size = new System.Drawing.Size(120, 23);
-            this.AddCameraButton.TabIndex = 8;
-            this.AddCameraButton.Text = "Add Camera";
-            this.EnvironmentControlTooltip.SetToolTip(this.AddCameraButton, "Hold SHIFT to add in front of camera");
-            this.AddCameraButton.UseVisualStyleBackColor = false;
-            this.AddCameraButton.Click += new System.EventHandler(this.AddCameraButton_Click);
-            // 
-            // CameraSelect
-            // 
-            this.CameraSelect.AlwaysFireValueChanged = false;
-            this.CameraSelect.DisplayDigits = 1;
-            this.CameraSelect.DoValueRollover = false;
-            this.CameraSelect.Hexadecimal = true;
-            this.CameraSelect.IncrementMouseWheel = 3;
-            this.CameraSelect.Location = new System.Drawing.Point(9, 22);
-            this.CameraSelect.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.CameraSelect.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraSelect.Name = "CameraSelect";
-            this.CameraSelect.ShiftMultiplier = 1;
-            this.CameraSelect.Size = new System.Drawing.Size(65, 20);
-            this.CameraSelect.TabIndex = 7;
-            this.CameraSelect.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.CameraSelect.ValueChanged += new System.EventHandler(this.CameraSelect_ValueChanged);
-            // 
-            // niceLine8
-            // 
-            this.niceLine8.Location = new System.Drawing.Point(9, 46);
-            this.niceLine8.Name = "niceLine8";
-            this.niceLine8.Size = new System.Drawing.Size(384, 15);
-            this.niceLine8.TabIndex = 20;
-            this.niceLine8.TabStop = false;
-            // 
             // CameraPanel2
             // 
+            this.CameraPanel2.Controls.Add(this.CameraMoveAllPoints);
             this.CameraPanel2.Controls.Add(this.label121);
             this.CameraPanel2.Controls.Add(this.CameraUnk22);
             this.CameraPanel2.Controls.Add(this.CameraUnk1E);
@@ -2868,15 +2921,25 @@ namespace SharpOcarina
             this.CameraPanel2.TabIndex = 74;
             this.CameraPanel2.Visible = false;
             // 
+            // CameraMoveAllPoints
+            // 
+            this.CameraMoveAllPoints.Location = new System.Drawing.Point(18, 102);
+            this.CameraMoveAllPoints.Name = "CameraMoveAllPoints";
+            this.CameraMoveAllPoints.Size = new System.Drawing.Size(147, 23);
+            this.CameraMoveAllPoints.TabIndex = 80;
+            this.CameraMoveAllPoints.Text = "Move all points near point 1";
+            this.CameraMoveAllPoints.UseVisualStyleBackColor = true;
+            this.CameraMoveAllPoints.Click += new System.EventHandler(this.CameraMoveAllPoints_Click);
+            // 
             // label121
             // 
             this.label121.AutoSize = true;
             this.label121.Enabled = false;
-            this.label121.Location = new System.Drawing.Point(196, 137);
+            this.label121.Location = new System.Drawing.Point(218, 138);
             this.label121.Name = "label121";
-            this.label121.Size = new System.Drawing.Size(56, 13);
+            this.label121.Size = new System.Drawing.Size(23, 13);
             this.label121.TabIndex = 79;
-            this.label121.Text = "Unk 0x22:";
+            this.label121.Text = "Z6:";
             // 
             // CameraUnk22
             // 
@@ -2884,19 +2947,18 @@ namespace SharpOcarina
             this.CameraUnk22.DisplayDigits = 1;
             this.CameraUnk22.DoValueRollover = false;
             this.CameraUnk22.Enabled = false;
-            this.CameraUnk22.Hexadecimal = true;
             this.CameraUnk22.IncrementMouseWheel = 1;
             this.CameraUnk22.Location = new System.Drawing.Point(267, 135);
             this.CameraUnk22.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk22.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk22.Name = "CameraUnk22";
             this.CameraUnk22.ShiftMultiplier = 1;
             this.CameraUnk22.Size = new System.Drawing.Size(100, 20);
@@ -2914,19 +2976,18 @@ namespace SharpOcarina
             this.CameraUnk1E.DisplayDigits = 1;
             this.CameraUnk1E.DoValueRollover = false;
             this.CameraUnk1E.Enabled = false;
-            this.CameraUnk1E.Hexadecimal = true;
             this.CameraUnk1E.IncrementMouseWheel = 1;
             this.CameraUnk1E.Location = new System.Drawing.Point(267, 83);
             this.CameraUnk1E.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk1E.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk1E.Name = "CameraUnk1E";
             this.CameraUnk1E.ShiftMultiplier = 1;
             this.CameraUnk1E.Size = new System.Drawing.Size(100, 20);
@@ -2942,11 +3003,11 @@ namespace SharpOcarina
             // 
             this.label122.AutoSize = true;
             this.label122.Enabled = false;
-            this.label122.Location = new System.Drawing.Point(196, 111);
+            this.label122.Location = new System.Drawing.Point(218, 112);
             this.label122.Name = "label122";
-            this.label122.Size = new System.Drawing.Size(56, 13);
+            this.label122.Size = new System.Drawing.Size(23, 13);
             this.label122.TabIndex = 77;
-            this.label122.Text = "Unk 0x20:";
+            this.label122.Text = "Y6:";
             // 
             // CameraUnk20
             // 
@@ -2954,19 +3015,18 @@ namespace SharpOcarina
             this.CameraUnk20.DisplayDigits = 1;
             this.CameraUnk20.DoValueRollover = false;
             this.CameraUnk20.Enabled = false;
-            this.CameraUnk20.Hexadecimal = true;
             this.CameraUnk20.IncrementMouseWheel = 1;
             this.CameraUnk20.Location = new System.Drawing.Point(267, 109);
             this.CameraUnk20.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk20.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk20.Name = "CameraUnk20";
             this.CameraUnk20.ShiftMultiplier = 1;
             this.CameraUnk20.Size = new System.Drawing.Size(100, 20);
@@ -2982,11 +3042,11 @@ namespace SharpOcarina
             // 
             this.label123.AutoSize = true;
             this.label123.Enabled = false;
-            this.label123.Location = new System.Drawing.Point(196, 85);
+            this.label123.Location = new System.Drawing.Point(218, 86);
             this.label123.Name = "label123";
-            this.label123.Size = new System.Drawing.Size(57, 13);
+            this.label123.Size = new System.Drawing.Size(23, 13);
             this.label123.TabIndex = 75;
-            this.label123.Text = "Unk 0x1E:";
+            this.label123.Text = "X6:";
             // 
             // CameraPage1
             // 
@@ -3003,11 +3063,11 @@ namespace SharpOcarina
             // 
             this.label124.AutoSize = true;
             this.label124.Enabled = false;
-            this.label124.Location = new System.Drawing.Point(196, 59);
+            this.label124.Location = new System.Drawing.Point(218, 60);
             this.label124.Name = "label124";
-            this.label124.Size = new System.Drawing.Size(57, 13);
+            this.label124.Size = new System.Drawing.Size(23, 13);
             this.label124.TabIndex = 21;
-            this.label124.Text = "Unk 0x1C:";
+            this.label124.Text = "Z5:";
             // 
             // CameraUnk1C
             // 
@@ -3015,19 +3075,18 @@ namespace SharpOcarina
             this.CameraUnk1C.DisplayDigits = 1;
             this.CameraUnk1C.DoValueRollover = false;
             this.CameraUnk1C.Enabled = false;
-            this.CameraUnk1C.Hexadecimal = true;
             this.CameraUnk1C.IncrementMouseWheel = 1;
             this.CameraUnk1C.Location = new System.Drawing.Point(267, 57);
             this.CameraUnk1C.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk1C.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk1C.Name = "CameraUnk1C";
             this.CameraUnk1C.ShiftMultiplier = 1;
             this.CameraUnk1C.Size = new System.Drawing.Size(100, 20);
@@ -3043,11 +3102,11 @@ namespace SharpOcarina
             // 
             this.label126.AutoSize = true;
             this.label126.Enabled = false;
-            this.label126.Location = new System.Drawing.Point(3, 7);
+            this.label126.Location = new System.Drawing.Point(27, 7);
             this.label126.Name = "label126";
-            this.label126.Size = new System.Drawing.Size(56, 13);
+            this.label126.Size = new System.Drawing.Size(23, 13);
             this.label126.TabIndex = 7;
-            this.label126.Text = "Unk 0x12:";
+            this.label126.Text = "X4:";
             // 
             // CameraUnk16
             // 
@@ -3055,19 +3114,18 @@ namespace SharpOcarina
             this.CameraUnk16.DisplayDigits = 1;
             this.CameraUnk16.DoValueRollover = false;
             this.CameraUnk16.Enabled = false;
-            this.CameraUnk16.Hexadecimal = true;
             this.CameraUnk16.IncrementMouseWheel = 1;
             this.CameraUnk16.Location = new System.Drawing.Point(74, 57);
             this.CameraUnk16.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk16.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk16.Name = "CameraUnk16";
             this.CameraUnk16.ShiftMultiplier = 1;
             this.CameraUnk16.Size = new System.Drawing.Size(100, 20);
@@ -3083,21 +3141,21 @@ namespace SharpOcarina
             // 
             this.label127.AutoSize = true;
             this.label127.Enabled = false;
-            this.label127.Location = new System.Drawing.Point(3, 59);
+            this.label127.Location = new System.Drawing.Point(27, 59);
             this.label127.Name = "label127";
-            this.label127.Size = new System.Drawing.Size(56, 13);
+            this.label127.Size = new System.Drawing.Size(23, 13);
             this.label127.TabIndex = 11;
-            this.label127.Text = "Unk 0x16:";
+            this.label127.Text = "Z4:";
             // 
             // label128
             // 
             this.label128.AutoSize = true;
             this.label128.Enabled = false;
-            this.label128.Location = new System.Drawing.Point(3, 33);
+            this.label128.Location = new System.Drawing.Point(27, 33);
             this.label128.Name = "label128";
-            this.label128.Size = new System.Drawing.Size(56, 13);
+            this.label128.Size = new System.Drawing.Size(23, 13);
             this.label128.TabIndex = 9;
-            this.label128.Text = "Unk 0x14:";
+            this.label128.Text = "Y4:";
             // 
             // CameraUnk18
             // 
@@ -3105,19 +3163,18 @@ namespace SharpOcarina
             this.CameraUnk18.DisplayDigits = 1;
             this.CameraUnk18.DoValueRollover = false;
             this.CameraUnk18.Enabled = false;
-            this.CameraUnk18.Hexadecimal = true;
             this.CameraUnk18.IncrementMouseWheel = 1;
             this.CameraUnk18.Location = new System.Drawing.Point(267, 5);
             this.CameraUnk18.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk18.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk18.Name = "CameraUnk18";
             this.CameraUnk18.ShiftMultiplier = 1;
             this.CameraUnk18.Size = new System.Drawing.Size(100, 20);
@@ -3133,11 +3190,11 @@ namespace SharpOcarina
             // 
             this.label129.AutoSize = true;
             this.label129.Enabled = false;
-            this.label129.Location = new System.Drawing.Point(196, 33);
+            this.label129.Location = new System.Drawing.Point(218, 34);
             this.label129.Name = "label129";
-            this.label129.Size = new System.Drawing.Size(57, 13);
+            this.label129.Size = new System.Drawing.Size(23, 13);
             this.label129.TabIndex = 17;
-            this.label129.Text = "Unk 0x1A:";
+            this.label129.Text = "Y5:";
             // 
             // CameraUnk14
             // 
@@ -3145,19 +3202,18 @@ namespace SharpOcarina
             this.CameraUnk14.DisplayDigits = 1;
             this.CameraUnk14.DoValueRollover = false;
             this.CameraUnk14.Enabled = false;
-            this.CameraUnk14.Hexadecimal = true;
             this.CameraUnk14.IncrementMouseWheel = 1;
             this.CameraUnk14.Location = new System.Drawing.Point(74, 31);
             this.CameraUnk14.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk14.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk14.Name = "CameraUnk14";
             this.CameraUnk14.ShiftMultiplier = 1;
             this.CameraUnk14.Size = new System.Drawing.Size(100, 20);
@@ -3175,19 +3231,18 @@ namespace SharpOcarina
             this.CameraUnk1A.DisplayDigits = 1;
             this.CameraUnk1A.DoValueRollover = false;
             this.CameraUnk1A.Enabled = false;
-            this.CameraUnk1A.Hexadecimal = true;
             this.CameraUnk1A.IncrementMouseWheel = 1;
             this.CameraUnk1A.Location = new System.Drawing.Point(267, 31);
             this.CameraUnk1A.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk1A.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk1A.Name = "CameraUnk1A";
             this.CameraUnk1A.ShiftMultiplier = 1;
             this.CameraUnk1A.Size = new System.Drawing.Size(100, 20);
@@ -3203,11 +3258,11 @@ namespace SharpOcarina
             // 
             this.label130.AutoSize = true;
             this.label130.Enabled = false;
-            this.label130.Location = new System.Drawing.Point(196, 7);
+            this.label130.Location = new System.Drawing.Point(218, 8);
             this.label130.Name = "label130";
-            this.label130.Size = new System.Drawing.Size(56, 13);
+            this.label130.Size = new System.Drawing.Size(23, 13);
             this.label130.TabIndex = 13;
-            this.label130.Text = "Unk 0x18:";
+            this.label130.Text = "X5:";
             // 
             // CameraUnk12
             // 
@@ -3215,19 +3270,18 @@ namespace SharpOcarina
             this.CameraUnk12.DisplayDigits = 1;
             this.CameraUnk12.DoValueRollover = false;
             this.CameraUnk12.Enabled = false;
-            this.CameraUnk12.Hexadecimal = true;
             this.CameraUnk12.IncrementMouseWheel = 1;
             this.CameraUnk12.Location = new System.Drawing.Point(74, 5);
             this.CameraUnk12.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
             this.CameraUnk12.Minimum = new decimal(new int[] {
+            32768,
             0,
             0,
-            0,
-            0});
+            -2147483648});
             this.CameraUnk12.Name = "CameraUnk12";
             this.CameraUnk12.ShiftMultiplier = 1;
             this.CameraUnk12.Size = new System.Drawing.Size(100, 20);
@@ -12113,13 +12167,10 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // AutoHookerMenuItem
+            // toolStripSeparator10
             // 
-            this.AutoHookerMenuItem.Name = "AutoHookerMenuItem";
-            this.AutoHookerMenuItem.Size = new System.Drawing.Size(314, 22);
-            this.AutoHookerMenuItem.Text = "Auto-hooker (z64rom)";
-            this.AutoHookerMenuItem.Visible = false;
-            this.AutoHookerMenuItem.Click += new System.EventHandler(this.AutoHookerMenuItem_Click);
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(311, 6);
             // 
             // MainForm
             // 
@@ -12160,6 +12211,7 @@ namespace SharpOcarina
             this.tabGeneral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScenenumberTextbox)).EndInit();
             this.CamerasGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.CameraSelect)).EndInit();
             this.CameraPanel.ResumeLayout(false);
             this.CameraPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk1)).EndInit();
@@ -12171,7 +12223,6 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CameraYPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraYRot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CameraXPos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CameraSelect)).EndInit();
             this.CameraPanel2.ResumeLayout(false);
             this.CameraPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraUnk22)).EndInit();
@@ -12422,6 +12473,8 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12764,10 +12817,10 @@ namespace SharpOcarina
         private ToolStripMenuItem majorasMaskModeexperimentalToolStripMenuItem;
         private GroupBox CamerasGroupBox;
         private Panel CameraPanel;
-        private Label label78;
+        private Label CameraFovLabel;
         private NumericUpDownEx CameraFov;
         public ComboBox CameraType;
-        private Label label77;
+        private Label CameraZRotLabel;
         private NumericUpDownEx CameraZRot;
         private Label label71;
         private Label label72;
@@ -12775,10 +12828,10 @@ namespace SharpOcarina
         private Label label73;
         private Label label74;
         private NumericUpDownEx CameraXRot;
-        private Label label75;
+        private Label CameraYRotLabel;
         private NumericUpDownEx CameraYPos;
         private NumericUpDownEx CameraYRot;
-        private Label label76;
+        private Label CameraXRotLabel;
         private NumericUpDownEx CameraXPos;
         private Button DeleteCameraButton;
         private Button AddCameraButton;
@@ -12962,9 +13015,9 @@ namespace SharpOcarina
         private CheckBox GroupRenderLast;
         private ToolStripMenuItem IgnoreMajorasMaskDaySystem;
         private CheckBox GroupEnvColor;
-        private Label label104;
+        private Label CameraBackgroundLabel;
         private NumericUpDownEx CameraUnk1;
-        private Label label103;
+        private Label CameraUnkLabel;
         private NumericUpDownEx CameraUnk2;
         private ToolStripMenuItem RenderWaterboxesMenuItem;
         private ToolStripMenuItem dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem;
@@ -13207,6 +13260,14 @@ namespace SharpOcarina
         private CheckBox GroupTexturePointer;
         private ToolStripMenuItem addLinkAnimationsz64romToolStripMenuItem;
         private ToolStripMenuItem AutoHookerMenuItem;
+        private ToolStripSeparator toolStripSeparator9;
+        private ToolStripMenuItem convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem;
+        private ToolStripMenuItem createDMAFilesFromFoldersz64romToolStripMenuItem;
+        private Button CameraMoveAllPoints;
+        private ToolStripMenuItem SOBuildOperationsMenuItem;
+        private ToolStripSeparator toolStripSeparator10;
+        private BindingSource bindingSource1;
+        private BindingSource bindingSource2;
     }
     }
 

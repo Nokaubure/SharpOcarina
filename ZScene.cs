@@ -4470,30 +4470,62 @@ namespace SharpOcarina
                 foreach (ZCamera camera in Cameras)
                 {
 
-                    Helpers.Append16(ref Data, (ushort)camera.XPos);
-                    Helpers.Append16(ref Data, (ushort)camera.YPos);
-                    Helpers.Append16(ref Data, (ushort)camera.ZPos);
-                    Helpers.Append16(ref Data, (ushort)camera.XRot);
-                    Helpers.Append16(ref Data, (ushort)camera.YRot);
-                    Helpers.Append16(ref Data, (ushort)camera.ZRot);
-                    Helpers.Append16(ref Data, (ushort)camera.Fov); //fov
-
-                    //type 0x1E
-
-                    Helpers.Append16(ref Data, (ushort)camera.Unk1);
-                    Helpers.Append16(ref Data, (ushort)camera.Unk2);
-
-                    if (camera.Type == 0x1E)
+                    if (camera.Type == 0x1E && Game == "OOT")
                     {
-                        Helpers.Append16(ref Data, (ushort)camera.Unk12);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk14);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk16);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk18);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk1A);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk1C);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk1E);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk20);
-                        Helpers.Append16(ref Data, (ushort)camera.Unk22);
+                        if (MainForm.settings.SixPointCrawlSpace)
+                        {
+                            Helpers.Append16(ref Data, (ushort)camera.XPos);
+                            Helpers.Append16(ref Data, (ushort)camera.YPos);
+                            Helpers.Append16(ref Data, (ushort)camera.ZPos);
+                            Helpers.Append16(ref Data, (ushort)camera.XRot);
+                            Helpers.Append16(ref Data, (ushort)camera.YRot);
+                            Helpers.Append16(ref Data, (ushort)camera.ZRot);
+                            Helpers.Append16(ref Data, (ushort)camera.Fov);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk1);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk2);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk12);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk14);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk16);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk18);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk1A);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk1C);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk1E);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk20);
+                            Helpers.Append16(ref Data, (ushort)camera.Unk22);
+                        }
+                        else
+                        {
+                            Helpers.Append16(ref Data, (ushort)camera.XPos);
+                            Helpers.Append16(ref Data, (ushort)camera.YPos);
+                            Helpers.Append16(ref Data, (ushort)camera.ZPos);
+                            Helpers.Append16(ref Data, (ushort)camera.XPos);
+                            Helpers.Append16(ref Data, (ushort)camera.YPos);
+                            Helpers.Append16(ref Data, (ushort)camera.ZPos);
+                            Helpers.Append16(ref Data, (ushort)camera.XPos);
+                            Helpers.Append16(ref Data, (ushort)camera.YPos);
+                            Helpers.Append16(ref Data, (ushort)camera.ZPos);
+                            Helpers.Append16(ref Data, (ushort)camera.XRot);
+                            Helpers.Append16(ref Data, (ushort)camera.YRot);
+                            Helpers.Append16(ref Data, (ushort)camera.ZRot);
+                            Helpers.Append16(ref Data, (ushort)camera.XRot);
+                            Helpers.Append16(ref Data, (ushort)camera.YRot);
+                            Helpers.Append16(ref Data, (ushort)camera.ZRot);
+                            Helpers.Append16(ref Data, (ushort)camera.XRot);
+                            Helpers.Append16(ref Data, (ushort)camera.YRot);
+                            Helpers.Append16(ref Data, (ushort)camera.ZRot);
+                        }
+                    }
+                    else
+                    {
+                        Helpers.Append16(ref Data, (ushort)camera.XPos);
+                        Helpers.Append16(ref Data, (ushort)camera.YPos);
+                        Helpers.Append16(ref Data, (ushort)camera.ZPos);
+                        Helpers.Append16(ref Data, (ushort)camera.XRot);
+                        Helpers.Append16(ref Data, (ushort)camera.YRot);
+                        Helpers.Append16(ref Data, (ushort)camera.ZRot);
+                        Helpers.Append16(ref Data, (ushort)camera.Fov);
+                        Helpers.Append16(ref Data, (ushort)camera.Unk1);
+                        Helpers.Append16(ref Data, (ushort)camera.Unk2);
                     }
 
                     

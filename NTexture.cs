@@ -199,6 +199,8 @@ namespace SharpOcarina
         private ushort ToRGBA5551(byte R, byte G, byte B, byte A)
         {
             return (ushort)((((R) << 8) & 0xF800) | (((G) << 3) & 0x7C0) | (((B) >> 2) & 0x3E) | (((A) >> 7) & 0x1));
+
+
         }
 
         /// <summary>
@@ -425,7 +427,7 @@ namespace SharpOcarina
                 Size = GBI.G_IM_SIZ_16b;
 
                 /* Generate texture buffer */
-                Data = new byte[Material.Width * Material.Height * 2];
+                Data = new byte[Material.Width * Material.Height * 2 ];
                 Palette = null;
 
                 /* Loop through pixels, convert to RGBA5551, write to texture buffer */
@@ -466,7 +468,7 @@ namespace SharpOcarina
                 Palette = null;
 
                 /* Loop through pixels, convert to IA 4-bit, write to texture buffer */
-                for (int i = 0, j = 0; i < Raw.Length; i += 8, j++)
+                for (int i = 0, j = 0; i+7 < Raw.Length; i += 8, j++)
                 {
 
                     byte a1 = (byte)((Raw[i + 3] > 127) ? 1 : 0);
@@ -525,7 +527,7 @@ namespace SharpOcarina
                 Palette = null;
 
                 /* Loop through pixels, convert to I 4-bit, write to texture buffer */
-                for (int i = 0, j = 0; i < Raw.Length; i += 8, j++)
+                for (int i = 0, j = 0; i < Raw.Length && j < Data.Length; i += 8, j++)
                 {
                     Data[j] = (byte)(((Raw[i] / 16) << 4) | ((Raw[i + 4] / 16) & 0xF));
                 }

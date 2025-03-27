@@ -127,6 +127,7 @@
     <Compile Include="AutoHooker.Designer.cs">
       <DependentUpon>AutoHooker.cs</DependentUpon>
     </Compile>
+    <Compile Include="FaroresPlugin.cs" />
     <Compile Include="ZobjCopyTool.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,6 +1,34 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.60
+--------------
+
+
+- Added a build task in Tools tab to compile all .pngs in a z64rom folder to .inc files, useful for #include's
+
+- Added a build task in Tools tab to compile all files found in src/system/DMA/<filename>/ into a DMA file, creating entries in dma.toml and a header file in /include/DMA/
+
+- Added option to run all build tasks everytime z64rom is built (via File or play button)
+
+- Added command line to run only the build tasks of SharpOcarina without opening the UI part itself
+	"PathToSharpOcarina.exe" --z64romtasks "PathToZ64project.toml"
+
+- Added button to view source file in Auto-Hooker window
+
+- Crawlspace cameras (type 0x1E) now render both their points in the viewport (there's 6 points in fact, but 4 are unused, they can be seen by editing settings.xml)
+
+- Enabled Z shortcut (stick to ground) to fixed camera's, mostly to help with crawlspace placement
+
+- [MM] Actor database can now display debug names
+
+- Fixed an issue where a good amount of scenes could not be previewed with File > View Scene
+
+- Fixed an issue where autosaves were happening while viewing scenes. This caused lagspikes every 60 seconds.
+
+- Fixed an issue where images of uneven resolutions would bring up error messages
+
+--------------
 ---1.59
 --------------
 

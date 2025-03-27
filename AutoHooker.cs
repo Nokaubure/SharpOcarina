@@ -36,6 +36,9 @@ namespace SharpOcarina
             this.mainform = mainform;
             InitializeComponent();
             HookGrid.AutoGenerateColumns = false;
+#if DEBUG
+            button2.Visible = true;
+#endif
 
             string linker = rom64.getPath() + "\\include\\z64hdr\\oot_mq_debug\\sym_src.ld";
             string functionsh = rom64.getPath() + "\\include\\z64hdr\\include\\functions.h";
@@ -791,10 +794,108 @@ namespace SharpOcarina
 
         private void button2_Click(object sender, EventArgs e)
         {
+
+            string[] files =
+            {
+                "do_action_static", "icon_item_24_static", "icon_item_dungeon_static",
+                "icon_item_field_static","icon_item_gameover_static","icon_item_NES_static",
+                "icon_item_static","item_name_static","map_grand_static","message_static",
+                "message_texture_static","map_name_static",
+                "nintendo_rogo_static","parameter_static","title_static","map_i_static"
+            };
+            //"nes_font_static",
+            Array.Sort(files);
+
+            string texelcfg = "# # Patch with textures # # # # # # # # # # # # # # # # # # # # # # # #\r\n#                                                                     #\r\n#    TEXTURE(\"file\", format)                                          #\r\n#                                                                     #\r\n#    Supported formats:                                               #\r\n#        I4     I8     I16                                            #\r\n#        IA4    IA8    IA16                                           #\r\n#        RGBA16 RGBA32                                                #\r\n#                                                                     #\r\n# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #\r\n\r\ninclude <macros.cfg>\r\n\r\n";
+
+            string z64ootxml = rom64.getPath() + "\\z64oot\\assets\\xml\\textures\\";
+            string z64oottextures = rom64.getPath() + "\\z64oot\\assets\\textures\\";
+            string patchpath = rom64.getPath() + "\\patch\\";
+
+            foreach (string file in files)
+            {
+
+
+                XmlDocument doc = new XmlDocument();
+                var XML = z64ootxml + file + ".xml";
+                FileStream fs = new FileStream(XML, FileMode.Open, FileAccess.ReadWrite);
+                doc.Load(fs);
+                XmlNodeList nodes = doc.SelectNodes("Root/File/Texture");
+
+                texelcfg += "\r\n[rom/system/static/" + file + ".bin]\r\n";
+
+                 Directory.CreateDirectory(patchpath + "images\\" + file);
+                foreach (XmlNode node in nodes)
+                {
+                    XmlAttributeCollection attributes = node.Attributes;
+                    int offsetval = (Convert.ToInt32(attributes["Offset"].Value, 16));
+                    string offset = "0x" + (offsetval).ToString("X8");
+                    string format = attributes["Format"].Value.ToUpper();
+                    if (format.Contains("CI")) continue;
+                    if (offsetval >= new FileInfo(rom64.getPath() + "\\rom\\system\\static\\.vanilla\\" + file + ".bin").Length) continue;
+                    if (file == "parameter_static" && offsetval == 0x3AC0) continue;
+                    string shortfilename = attributes["OutName"].Value + "." + format.ToLower() + ".png";
+                    string filename = file + "/" + shortfilename;
+                    texelcfg += $"##\t{offset} = TEXTURE(\"images/{filename}\", {format})\r\n";
+
+                    File.Copy(z64oottextures + file + "\\" + shortfilename, patchpath + "images\\" + file + "\\" + shortfilename);
+
+                }
+
+                fs.Close();
+                
+                
+            }
+
+            File.WriteAllText(patchpath + "texel.cfg",texelcfg);
+
+
+            //Debug Name add
+
+            /*
+            string[] lines = File.ReadAllLines(@"Z:\rawactortableMM");
+            Dictionary<string,string> DebugNames = new Dictionary<string, string>();
+            foreach (string line in lines)
+            {
+                DebugNames.Add(line.Split('\t')[0], line.Split('\t')[1]);
+            }
+
+            XmlDocument doc = new XmlDocument();
+            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/MM/ActorNames.xml");
+            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite);
+            doc.Load(fs);
+            XmlNodeList nodes = doc.SelectNodes("Table/Actor");
+
+            foreach (XmlNode node in nodes)
+            {
+
+                if (node is XmlElement element && element.HasAttribute("Name"))
+                {
+                    XmlAttributeCollection attributes = element.Attributes;
+                    XmlAttribute nameAttr = attributes["Name"];
+
+                    if (!DebugNames.ContainsKey(attributes["Key"].Value)) continue;
+
+                    string DebugName = DebugNames[attributes["Key"].Value];
+
+                    XmlAttribute newAttr = doc.CreateAttribute("DebugName");
+                    newAttr.Value = DebugName;
+
+                    attributes.InsertAfter(newAttr, nameAttr);
+                }
+
+            }
+
+            doc.Save(@"Z:\ActorNames.xml");
+            */
+
+
+            /*
+            // Hook all functions
             foreach(FunctionHook func in VanillaFunctions)
             {
                 HookFunction(func.Name);
-            }
+            }*/
         }
 
         private void VanillaActorListFilter_TextChanged(object sender, EventArgs e)
@@ -816,46 +917,34 @@ namespace SharpOcarina
             }
         }
 
-
-
-
-        /*
-        Debug Name add
-        string[] lines = File.ReadAllLines(@"Z:\rawactortable");
-        Dictionary<string,string> DebugNames = new Dictionary<string, string>();
-        foreach (string line in lines)
-        {
-            DebugNames.Add(line.Split('\t')[0], line.Split('\t')[1]);
-        }
-
-        XmlDocument doc = new XmlDocument();
-        var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/OOT/ActorNames.xml");
-        FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite);
-        doc.Load(fs);
-        XmlNodeList nodes = doc.SelectNodes("Table/Actor");
-
-        foreach (XmlNode node in nodes)
+        private void ViewFileButton_Click(object sender, EventArgs e)
         {
 
-            if (node is XmlElement element && element.HasAttribute("Name"))
+            if (FunctionNameTextbox.Text == "") return;
+            string functionname = FunctionNameTextbox.Text;
+            int index = FunctionHooks.FindIndex(x => x.Name == functionname);
+            if (index != -1)
             {
-                XmlAttributeCollection attributes = element.Attributes;
-                XmlAttribute nameAttr = attributes["Name"];
-
-                if (!DebugNames.ContainsKey(attributes["Key"].Value)) continue;
-
-                string DebugName = DebugNames[attributes["Key"].Value];
-
-                XmlAttribute newAttr = doc.CreateAttribute("DebugName");
-                newAttr.Value = DebugName;
-
-                attributes.InsertAfter(newAttr, nameAttr);
+                OpenFile(FunctionHooks[index].FileName);
+            }
+            else
+            {
+               
+                int index2 = VanillaFunctions.FindIndex(x => x.Name == functionname);
+                if (index2 == -1)
+                {
+                    MessageBox.Show("This function doesn't exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                OpenFile(VanillaFunctions[index2].FileName);
             }
 
         }
 
-        doc.Save(@"Z:\ActorNames.xml");
-        */
+
+
+
+        
 
     }
 

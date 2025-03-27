@@ -63,6 +63,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.ViewFileButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HookGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -86,7 +87,7 @@
             // 
             // HookButton
             // 
-            this.HookButton.Location = new System.Drawing.Point(127, 64);
+            this.HookButton.Location = new System.Drawing.Point(62, 64);
             this.HookButton.Name = "HookButton";
             this.HookButton.Size = new System.Drawing.Size(83, 23);
             this.HookButton.TabIndex = 11;
@@ -229,6 +230,7 @@
             // 
             // Hooks
             // 
+            this.Hooks.Controls.Add(this.ViewFileButton);
             this.Hooks.Controls.Add(this.button2);
             this.Hooks.Controls.Add(this.CustomFileName);
             this.Hooks.Controls.Add(this.FunctionNameTextbox);
@@ -398,6 +400,16 @@
             this.label2.Text = "Function/Structure Name:";
             this.label2.Visible = false;
             // 
+            // ViewFileButton
+            // 
+            this.ViewFileButton.Location = new System.Drawing.Point(211, 64);
+            this.ViewFileButton.Name = "ViewFileButton";
+            this.ViewFileButton.Size = new System.Drawing.Size(83, 23);
+            this.ViewFileButton.TabIndex = 21;
+            this.ViewFileButton.Text = "View File";
+            this.ViewFileButton.UseVisualStyleBackColor = true;
+            this.ViewFileButton.Click += new System.EventHandler(this.ViewFileButton_Click);
+            // 
             // AutoHookerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -454,5 +466,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox VanillaActorListFilter;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button ViewFileButton;
     }
 }

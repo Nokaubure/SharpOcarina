@@ -419,7 +419,7 @@ namespace SharpOcarina
 
         public void UpdateActorEdit_Faster()
         {
-            if (Actors != null && Actors.Count != 0)
+            if (Actors != null && Actors.Count != 0 && ActorComboBox.SelectedIndex != -1)
             {
                 ActorNumberBox.Value = Actors[ActorComboBox.SelectedIndex].Number;
                 ActorVariableBox.Value = Actors[ActorComboBox.SelectedIndex].Variable;
