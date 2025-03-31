@@ -166,7 +166,9 @@ namespace SharpOcarina
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.postInstallOperationsz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoHookerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.addLinkAnimationsz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createDMAFilesFromFoldersz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -806,18 +808,17 @@ namespace SharpOcarina
             this.GlobalRomRefresh = new System.Windows.Forms.Button();
             this.Z64RomPlay = new System.Windows.Forms.Button();
             this.label86 = new System.Windows.Forms.Label();
-            this.CDILink = new System.Windows.Forms.PictureBox();
             this.labelcamerapos = new System.Windows.Forms.Label();
             this.UpdateLabel = new System.Windows.Forms.Label();
             this.RomModeLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label136 = new System.Windows.Forms.Label();
-            this.RoomSelector = new SharpOcarina.NumericUpDownEx();
-            this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
-            this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.RoomSelector = new SharpOcarina.NumericUpDownEx();
+            this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
+            this.CDILink = new SharpOcarina.TransparentPictureBox();
+            this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1032,12 +1033,12 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationDuration)).BeginInit();
             this.tabCameraEffect.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).BeginInit();
             this.SuspendLayout();
             // 
             // glControl1
@@ -1773,8 +1774,9 @@ namespace SharpOcarina
             this.puzzleTestToolStripMenuItem,
             this.EasterEggToolStripMenuItem});
             this.quickTestToolStripMenuItem.Name = "quickTestToolStripMenuItem";
-            this.quickTestToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.quickTestToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.quickTestToolStripMenuItem.Text = "Fill room with actors...";
+            this.quickTestToolStripMenuItem.Visible = false;
             // 
             // EnemyTestToolStripMenuItem
             // 
@@ -1801,21 +1803,22 @@ namespace SharpOcarina
             // createPathwaysForEachBoundingBoxToolStripMenuItem
             // 
             this.createPathwaysForEachBoundingBoxToolStripMenuItem.Name = "createPathwaysForEachBoundingBoxToolStripMenuItem";
-            this.createPathwaysForEachBoundingBoxToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
-            this.createPathwaysForEachBoundingBoxToolStripMenuItem.Text = "Create pathway for selected DList BBox";
+            this.createPathwaysForEachBoundingBoxToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
+            this.createPathwaysForEachBoundingBoxToolStripMenuItem.Text = "[DEBUG] Create pathway for selected DList BBox";
+            this.createPathwaysForEachBoundingBoxToolStripMenuItem.Visible = false;
             this.createPathwaysForEachBoundingBoxToolStripMenuItem.Click += new System.EventHandler(this.createPathwaysForEachBoundingBoxToolStripMenuItem_Click);
             // 
             // openCutsceneRawDataToolStripMenuItem
             // 
             this.openCutsceneRawDataToolStripMenuItem.Name = "openCutsceneRawDataToolStripMenuItem";
-            this.openCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.openCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.openCutsceneRawDataToolStripMenuItem.Text = "Open cutscene raw data (OoT)";
             this.openCutsceneRawDataToolStripMenuItem.Click += new System.EventHandler(this.openCutsceneRawDataToolStripMenuItem_Click);
             // 
             // exportCutsceneRawDataToolStripMenuItem
             // 
             this.exportCutsceneRawDataToolStripMenuItem.Name = "exportCutsceneRawDataToolStripMenuItem";
-            this.exportCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.exportCutsceneRawDataToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.exportCutsceneRawDataToolStripMenuItem.Text = "Export cutscene raw data";
             this.exportCutsceneRawDataToolStripMenuItem.Click += new System.EventHandler(this.exportCutsceneRawDataToolStripMenuItem_DisplayStyleChanged);
             // 
@@ -1827,7 +1830,7 @@ namespace SharpOcarina
             this.bank0x04ToolStripMenuItem,
             this.writeCollisionToolStripMenuItem});
             this.exportAszobjToolStripMenuItem.Name = "exportAszobjToolStripMenuItem";
-            this.exportAszobjToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.exportAszobjToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.exportAszobjToolStripMenuItem.Text = "Export current room as .zobj";
             // 
             // bank0x06ToolStripMenuItem
@@ -1864,49 +1867,49 @@ namespace SharpOcarina
             // importEnvironmentsToolStripMenuItem
             // 
             this.importEnvironmentsToolStripMenuItem.Name = "importEnvironmentsToolStripMenuItem";
-            this.importEnvironmentsToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importEnvironmentsToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importEnvironmentsToolStripMenuItem.Text = "Import Environments from .zscene";
             this.importEnvironmentsToolStripMenuItem.Click += new System.EventHandler(this.importEnvironmentsToolStripMenuItem_Click);
             // 
             // importActorsAndObjectsOfZmapToolStripMenuItem
             // 
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Name = "importActorsAndObjectsOfZmapToolStripMenuItem";
-            this.importActorsAndObjectsOfZmapToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importActorsAndObjectsOfZmapToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Text = "Import Actors and objects from .zmap/.zroom";
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Click += new System.EventHandler(this.importActorsAndObjectsOfZmapToolStripMenuItem_Click);
             // 
             // importCollisionFromzsceneToolStripMenuItem
             // 
             this.importCollisionFromzsceneToolStripMenuItem.Name = "importCollisionFromzsceneToolStripMenuItem";
-            this.importCollisionFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importCollisionFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importCollisionFromzsceneToolStripMenuItem.Text = "Import Collision from .zscene";
             this.importCollisionFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importCollisionFromzsceneToolStripMenuItem_Click);
             // 
             // importCamerasAndWaterboxFromzsceneToolStripMenuItem
             // 
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Name = "importCamerasAndWaterboxFromzsceneToolStripMenuItem";
-            this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Text = "Import Cameras and Waterbox from .zscene";
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importCamerasAndWaterboxFromzsceneToolStripMenuItem_Click);
             // 
             // importTransitionsAndSpawnsFromzsceneToolStripMenuItem
             // 
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Name = "importTransitionsAndSpawnsFromzsceneToolStripMenuItem";
-            this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Text = "Import Transitions and Spawns from .zscene";
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem_Click);
             // 
             // importPathwaysFromzsceneToolStripMenuItem
             // 
             this.importPathwaysFromzsceneToolStripMenuItem.Name = "importPathwaysFromzsceneToolStripMenuItem";
-            this.importPathwaysFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importPathwaysFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importPathwaysFromzsceneToolStripMenuItem.Text = "Import Pathways from .zscene";
             this.importPathwaysFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importPathwaysFromzsceneToolStripMenuItem_Click);
             // 
             // importActorCutscenesFromzsceneToolStripMenuItem
             // 
             this.importActorCutscenesFromzsceneToolStripMenuItem.Name = "importActorCutscenesFromzsceneToolStripMenuItem";
-            this.importActorCutscenesFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.importActorCutscenesFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importActorCutscenesFromzsceneToolStripMenuItem.Text = "Import Actor Cutscenes from .zscene (MM)";
             this.importActorCutscenesFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importActorCutscenesFromzsceneToolStripMenuItem_Click);
             // 
@@ -1914,7 +1917,7 @@ namespace SharpOcarina
             // 
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.CheckOnClick = true;
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Name = "addEmptySpaceInSceneHeaderToolStripMenuItem";
-            this.addEmptySpaceInSceneHeaderToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.addEmptySpaceInSceneHeaderToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Text = "Add empty space in scene header / zobj";
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Click += new System.EventHandler(this.addEmptySpaceInSceneHeaderToolStripMenuItem_Click);
             // 
@@ -2025,6 +2028,7 @@ namespace SharpOcarina
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
             this.replaceSceneTitleCardTextureToolStripMenuItem,
+            this.postInstallOperationsz64romToolStripMenuItem,
             this.AutoHookerMenuItem,
             this.toolStripSeparator10,
             this.addLinkAnimationsz64romToolStripMenuItem,
@@ -2157,6 +2161,7 @@ namespace SharpOcarina
             this.dEBUGCustomActorDatabasetoolStripMenuItem.Name = "dEBUGCustomActorDatabasetoolStripMenuItem";
             this.dEBUGCustomActorDatabasetoolStripMenuItem.Size = new System.Drawing.Size(314, 22);
             this.dEBUGCustomActorDatabasetoolStripMenuItem.Text = "Public Custom Actor Database (z64rom)";
+            this.dEBUGCustomActorDatabasetoolStripMenuItem.Visible = false;
             this.dEBUGCustomActorDatabasetoolStripMenuItem.Click += new System.EventHandler(this.dEBUGCustomActorDatabasetoolStripMenuItem_Click);
             // 
             // imageTocArrayToolStripMenuItem
@@ -2200,6 +2205,14 @@ namespace SharpOcarina
             this.replaceSceneTitleCardTextureToolStripMenuItem.Visible = false;
             this.replaceSceneTitleCardTextureToolStripMenuItem.Click += new System.EventHandler(this.replaceSceneTitleCardTextureToolStripMenuItem_Click);
             // 
+            // postInstallOperationsz64romToolStripMenuItem
+            // 
+            this.postInstallOperationsz64romToolStripMenuItem.Name = "postInstallOperationsz64romToolStripMenuItem";
+            this.postInstallOperationsz64romToolStripMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.postInstallOperationsz64romToolStripMenuItem.Text = "Post-Install Operations (z64rom)";
+            this.postInstallOperationsz64romToolStripMenuItem.Visible = false;
+            this.postInstallOperationsz64romToolStripMenuItem.Click += new System.EventHandler(this.postInstallOperationsz64romToolStripMenuItem_Click);
+            // 
             // AutoHookerMenuItem
             // 
             this.AutoHookerMenuItem.Name = "AutoHookerMenuItem";
@@ -2207,6 +2220,12 @@ namespace SharpOcarina
             this.AutoHookerMenuItem.Text = "Auto-hooker (z64rom)";
             this.AutoHookerMenuItem.Visible = false;
             this.AutoHookerMenuItem.Click += new System.EventHandler(this.AutoHookerMenuItem_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(311, 6);
+            this.toolStripSeparator10.Visible = false;
             // 
             // addLinkAnimationsz64romToolStripMenuItem
             // 
@@ -12013,18 +12032,6 @@ namespace SharpOcarina
             this.label86.TabIndex = 44;
             this.label86.Text = "Scene Header:";
             // 
-            // CDILink
-            // 
-            this.CDILink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CDILink.BackColor = System.Drawing.Color.Black;
-            this.CDILink.Location = new System.Drawing.Point(13, 507);
-            this.CDILink.Name = "CDILink";
-            this.CDILink.Size = new System.Drawing.Size(1, 1);
-            this.CDILink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.CDILink.TabIndex = 45;
-            this.CDILink.TabStop = false;
-            this.CDILink.Visible = false;
-            // 
             // labelcamerapos
             // 
             this.labelcamerapos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -12137,6 +12144,20 @@ namespace SharpOcarina
             0});
             this.ViewportFOV.ValueChanged += new System.EventHandler(this.numericUpDownEx1_ValueChanged_2);
             // 
+            // CDILink
+            // 
+            this.CDILink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CDILink.BackColor = System.Drawing.Color.Transparent;
+            this.CDILink.Image = global::SharpOcarina.Properties.Resources.cdilink;
+            this.CDILink.Location = new System.Drawing.Point(837, 522);
+            this.CDILink.Name = "CDILink";
+            this.CDILink.Size = new System.Drawing.Size(1, 1);
+            this.CDILink.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.CDILink.TabIndex = 45;
+            this.CDILink.TabStop = false;
+            this.CDILink.Visible = false;
+            this.CDILink.Click += new System.EventHandler(this.CDILink_Click);
+            // 
             // SceneHeaderSelector
             // 
             this.SceneHeaderSelector.AlwaysFireValueChanged = false;
@@ -12167,11 +12188,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(311, 6);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12191,8 +12207,8 @@ namespace SharpOcarina
             this.Controls.Add(this.label86);
             this.Controls.Add(this.SceneHeaderSelector);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.glControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.glControl1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -12469,12 +12485,12 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationDuration)).EndInit();
             this.tabCameraEffect.ResumeLayout(false);
             this.tabCameraEffect.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ViewportFOV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CDILink)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SceneHeaderSelector)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12939,7 +12955,6 @@ namespace SharpOcarina
         private ToolStripMenuItem importCamerasAndWaterboxFromzsceneToolStripMenuItem;
         private CheckBox GroupPixelated;
         private ToolStripMenuItem showRotationValuesAsHexadecimalToolStripMenuItem;
-        private PictureBox CDILink;
         private Panel panel8;
         private RadioButton NoMiscRadioButton;
         private RadioButton AutograbClimbRadioButton;
@@ -13268,6 +13283,8 @@ namespace SharpOcarina
         private ToolStripSeparator toolStripSeparator10;
         private BindingSource bindingSource1;
         private BindingSource bindingSource2;
+        private TransparentPictureBox CDILink;
+        private ToolStripMenuItem postInstallOperationsz64romToolStripMenuItem;
     }
     }
 

@@ -15,6 +15,7 @@ namespace SharpOcarina
         public bool removeallscenes;
         public bool removen64logo;
         public bool clearcutscenetable;
+        public bool removeprerendereds;
 
         public Z64romInstallPostOperations()
         {
@@ -22,6 +23,7 @@ namespace SharpOcarina
             removeallscenes = true;
             removen64logo = true;
             clearcutscenetable = true;
+            removeprerendereds = true;
 
         }
 
@@ -45,6 +47,11 @@ namespace SharpOcarina
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             clearcutscenetable = checkBox3.Checked;
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            removeprerendereds = checkBox4.Checked;
         }
     }
 }

@@ -172,6 +172,7 @@
             this.Controls.Add(this.ActorIDNumeric);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "PickCustomActorID";
             this.Text = "Pick Actor ID";
             ((System.ComponentModel.ISupportInitialize)(this.ActorIDNumeric)).EndInit();

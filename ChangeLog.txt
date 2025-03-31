@@ -5,7 +5,13 @@
 --------------
 
 
-- Added a build task in Tools tab to compile all .pngs in a z64rom folder to .inc files, useful for #include's
+- Added a post install operation to remove prerendered cutscenes from z64rom (4 MB more of ROM space)
+
+- Post install operations can now be accessed at any time in tools tab
+
+- Convert File to C array window can now create .inc files and split big images into several parts. C arrays are now u64 instead of u32.
+
+- Added a build task in Tools tab to compile all .pngs in a z64rom folder to .inc files, useful for #include's. #SplitWWxHH can be used in the filename to split big images into several parts.
 
 - Added a build task in Tools tab to compile all files found in src/system/DMA/<filename>/ into a DMA file, creating entries in dma.toml and a header file in /include/DMA/
 
@@ -20,6 +26,10 @@
 
 - Enabled Z shortcut (stick to ground) to fixed camera's, mostly to help with crawlspace placement
 
+- Toned down the April Fools pranks due complains over the years
+
+- Cleaned the menus to not show binary exclusive options in z64rom mode and viceversa
+
 - [MM] Actor database can now display debug names
 
 - Fixed an issue where a good amount of scenes could not be previewed with File > View Scene
@@ -27,6 +37,8 @@
 - Fixed an issue where autosaves were happening while viewing scenes. This caused lagspikes every 60 seconds.
 
 - Fixed an issue where images of uneven resolutions would bring up error messages
+
+- Fixed an issue where ignore rotation in actor rendering would not work with rigged actors
 
 --------------
 ---1.59

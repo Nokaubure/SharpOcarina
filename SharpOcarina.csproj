@@ -115,6 +115,9 @@
     <Reference Include="windowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TransparentPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FileToC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1694,6 +1697,8 @@
     <Content Include="ndec\z64decompress.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\harkinian.bmp" />
+    <None Include="Resources\harkinian.gif" />
     <Content Include="XML\OOT\ItemDrops.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

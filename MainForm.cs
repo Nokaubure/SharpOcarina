@@ -154,6 +154,7 @@ namespace SharpOcarina
         public byte extrapick = 0;
         public string LastScene = "";
         public DateTime LastAutoSave = DateTime.Now;
+        public DateTime Last1April = DateTime.Now;
         public bool isundo = false;
         public bool storeundo = true;
         public string LastInject = "";
@@ -247,12 +248,14 @@ namespace SharpOcarina
             dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem.Visible = true;
+            createPathwaysForEachBoundingBoxToolStripMenuItem.Visible = true;
 #else
             if ((int)System.DateTime.Now.Day == 1 && (int)System.DateTime.Now.Month == 4)
             {
                 Is1April = true;
                 CDILink.Visible = true;
                 CDILink.Size = new Size(324, 238);
+                if (new Random().Next(0,1) == 1)  {CDILink.Image = Properties.Resources.harkinian; CDILink.Image.Tag = "h"; }
                 Program.ApplicationTitle = "OoT, but its a tool to make maps ";
             }
 #endif
@@ -1088,7 +1091,7 @@ namespace SharpOcarina
                     GL.Translate(0, (float)zobj_cache[render].Yoff, 0);
                     GL.PushAttrib(AttribMask.AllAttribBits);
                     GL.Enable(EnableCap.Light0);
-                    DrawBone(zobj_cache[render].Limbs, 0, Actor, zobj_cache[render].scale, transparency);
+                    DrawBone(zobj_cache[render].Limbs, 0, Actor, render, zobj_cache[render].scale, transparency);
                     GL.PopAttrib();
                     GL.PopMatrix();
                 }
@@ -1097,7 +1100,7 @@ namespace SharpOcarina
 
         }
 
-        void DrawBone(List<ZScene.Limb> Limbs, int CurrentBone, ZActor Actor, float scale, bool transparency)
+        void DrawBone(List<ZScene.Limb> Limbs, int CurrentBone, ZActor Actor, int render, float scale, bool transparency)
         {
             GL.PushMatrix();
 
@@ -1110,15 +1113,23 @@ namespace SharpOcarina
                 GL.Translate(Actor.XPos, Actor.YPos, Actor.ZPos);
                 if (settings.MajorasMask && settings.IgnoreMMDaySystem == false)
                 {
-                    GL.Rotate(((ushort)Actor.YRot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
-                    GL.Rotate(((ushort)Actor.XRot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
-                    GL.Rotate(((ushort)Actor.ZRot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
+                    float xrot = !zobj_cache[render].IgnoreRot[0] ? Actor.XRot : 0;
+                    float yrot = !zobj_cache[render].IgnoreRot[1] ? Actor.YRot : 0;
+                    float zrot = !zobj_cache[render].IgnoreRot[2] ? Actor.ZRot : 0;
+
+                    GL.Rotate(((ushort)yrot & 0xFF80) >> 7, 0.0f, 1.0f, 0.0f);
+                    GL.Rotate(((ushort)xrot & 0xFF80) >> 7, 1.0f, 0.0f, 0.0f);
+                    GL.Rotate(((ushort)zrot & 0xFF80) >> 7, 0.0f, 0.0f, 1.0f);
                 }
                 else
                 {
-                    GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
-                    GL.Rotate(Actor.YRot / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
-                    GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
+                    float xrot = !zobj_cache[render].IgnoreRot[0] ? Actor.XRot : 0;
+                    float yrot = !zobj_cache[render].IgnoreRot[1] ? Actor.YRot : 0;
+                    float zrot = !zobj_cache[render].IgnoreRot[2] ? Actor.ZRot : 0;
+
+                    GL.Rotate(zrot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
+                    GL.Rotate(yrot / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
+                    GL.Rotate(xrot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
                 }
                 GL.Scale(scale, scale, scale);
             }
@@ -1138,13 +1149,13 @@ namespace SharpOcarina
 
             //Draw child
             if (Limbs[CurrentBone].firstchild > -1)
-                DrawBone(Limbs, Limbs[CurrentBone].firstchild, Actor, scale, transparency);
+                DrawBone(Limbs, Limbs[CurrentBone].firstchild, Actor, render, scale, transparency);
 
             GL.PopMatrix(); // pop matrix here!
 
             //Draw next
             if (Limbs[CurrentBone].nextchild > -1)
-                DrawBone(Limbs, Limbs[CurrentBone].nextchild, Actor, scale, transparency);
+                DrawBone(Limbs, Limbs[CurrentBone].nextchild, Actor, render, scale, transparency);
         }
 
         private void DrawPathway(Vector3 Pathway, Vector3 NextPathway, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder, bool SelectedPathway, bool Actorpick = false)
@@ -4186,7 +4197,7 @@ namespace SharpOcarina
 
                     if (Is1April)
                     {
-                        if (CurrentScene != null) CDILink.Visible = false;
+                       // if (CurrentScene != null && CurrentScene.CollisionFilename != "") CDILink.Visible = false;
 
                         Random rand = new Random();
                         foreach (TabPage page in tabControl1.TabPages)
@@ -4205,6 +4216,11 @@ namespace SharpOcarina
                                     ctrl2.ForeColor = Color.FromArgb(255 - page.BackColor.R, 255 - page.BackColor.G, 255 - page.BackColor.B);
                                 }
                             }
+                        }
+                        if ((DateTime.Now - Last1April).TotalSeconds >= 300)
+                        {
+                            CDILink.Visible = true;
+                            Last1April = DateTime.Now;
                         }
                     }
 
@@ -4579,7 +4595,7 @@ namespace SharpOcarina
 
 
             }
-            patchROMToolStripMenuItem.Enabled = !rom64.isSet();
+            
         }
 
         public void RefreshExitLabels()
@@ -6502,7 +6518,7 @@ namespace SharpOcarina
                 MessageBox.Show("Injection failed... the ROM is currently being used by another program. Close it and try again.", "Injection", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-
+                /*
                 if (Is1April && Game == "OOT")
                 {
                     bool addedbombiwa = false, addedfun = false;
@@ -6549,7 +6565,7 @@ namespace SharpOcarina
                     if (addedfun)
                         MessageBox.Show("Added some fun! \n\nHave a happy 1-April day - Nokaubure", "Injection", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
-
+                */
                 CurrentScene.ConvertInject(rom, settings.ConsecutiveRoomInject, settings.ForceRGBATextures, Game);
                 if (GlobalROM == "" && !rom64.isSet()) RefreshRecentRoms(rom);
 
@@ -13772,16 +13788,14 @@ namespace SharpOcarina
             if (!Directory.Exists(destinationDir))
             {
                 Directory.CreateDirectory(destinationDir);
+                // Get the files in the directory and copy them to the new location.
+                FileInfo[] files = sourcedir.GetFiles();
+                foreach (FileInfo file in files)
+                {
+                    string tempPath = Path.Combine(destinationDir, file.Name);
+                    file.CopyTo(tempPath, false);
+                }
             }
-
-            // Get the files in the directory and copy them to the new location.
-            FileInfo[] files = sourcedir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string tempPath = Path.Combine(destinationDir, file.Name);
-                file.CopyTo(tempPath, false);
-            }
-
 
             Helpers.ReplaceLine("gExitParam.nextEntranceIndex", "    gExitParam.nextEntranceIndex = 0x009B;", path + @"src\system\state\0x04-Opening\Opening.c");
             Helpers.ReplaceLine("gSaveContext.cutsceneIndex", "    gSaveContext.cutsceneIndex = 0x0000;  gSaveContext.entranceIndex = 0x009B;", path + @"src\system\state\0x04-Opening\Opening.c");
@@ -15601,7 +15615,15 @@ namespace SharpOcarina
                 convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Visible = false;
                 createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = false;
                 AutoHookerMenuItem.Visible = false;
-
+                rebuildDmaTableallToolStripMenuItem.Visible = true;
+                decompressROMToolStripMenuItem.Visible = true;
+                dEBUGCustomActorDatabasetoolStripMenuItem.Visible = false;
+                patchROMToolStripMenuItem.Visible = true;
+                postInstallOperationsz64romToolStripMenuItem.Visible = false;
+                restrictionFlagsTableEditorToolStripMenuItem.Visible = true;
+                clearSceneDmatableToolStripMenuItem.Visible = true;
+                removeAllRomScenesToolStripMenuItem.Visible = true;
+                toolStripSeparator10.Visible = false;
 
                 ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
                 if (rom.Game == "MM" && !settings.MajorasMask)
@@ -15658,6 +15680,15 @@ namespace SharpOcarina
                 createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = true;
                 AutoHookerMenuItem.Visible = true;
                 UpdateSceneRender(rom64.getPath() + "\\", true);
+                rebuildDmaTableallToolStripMenuItem.Visible = false;
+                decompressROMToolStripMenuItem.Visible = false;
+                dEBUGCustomActorDatabasetoolStripMenuItem.Visible = true;
+                patchROMToolStripMenuItem.Visible = false;
+                postInstallOperationsz64romToolStripMenuItem.Visible = true;
+                restrictionFlagsTableEditorToolStripMenuItem.Visible = false;
+                clearSceneDmatableToolStripMenuItem.Visible = false;
+                removeAllRomScenesToolStripMenuItem.Visible = false;
+                toolStripSeparator10.Visible = true;
 
                 actorEditControl1.cacheId = 0xFEFE;
                 actorEditControl2.cacheId = 0xFEFE;
@@ -18872,24 +18903,9 @@ namespace SharpOcarina
                     file.Directory.Create(); //if directory exists, does nothing
                     File.Copy(path + "\\BaseDebugRom.z64", binarydata);
 
-                    using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations())
-                    {
-                        if (postoperations.ShowDialog() == DialogResult.OK)
-                        {
-                            if (postoperations.removeallscenes)
-                            {
-                                RemoveAllZ64romScenes(path);
-                            }
-                            if (postoperations.removen64logo)
-                            {
-                                Helpers.ReplaceLine("this->ult++;", "this->ult++; this->exit = 1; //SO disabled logo", path + @"src\system\state\0x02-BootTitle\BootTitle.c");
-                            }
-                            if (postoperations.clearcutscenetable)
-                            {
-                                ClearCutsceneTableZ64rom(path, false);
-                            }
-                        }
-                    }
+                    PostInstallOperations(path);
+
+                    
 
                     //Last version of SceneRender is mandatory in install
                     UpdateSceneRender(path,false);
@@ -19386,6 +19402,66 @@ namespace SharpOcarina
         private void SOBuildOperationsMenuItem_Click(object sender, EventArgs e)
         {
             settings.SOBuildOperations = SOBuildOperationsMenuItem.Checked;
+        }
+
+        private void CDILink_Click(object sender, EventArgs e)
+        {
+            CDILink.Visible = false;
+            if (CDILink.Image.Tag != "h")
+            {
+                CDILink.Image = Properties.Resources.harkinian;
+                CDILink.Image.Tag = "h";
+            }
+            else
+            {
+                CDILink.Image = Properties.Resources.cdilink;
+                CDILink.Image.Tag = "";
+            }
+        }
+
+        private void postInstallOperationsz64romToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PostInstallOperations(rom64.getPath() + Path.DirectorySeparatorChar);
+            
+        }
+
+        private void PostInstallOperations(string path)
+        {
+            using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations())
+            {
+                if (postoperations.ShowDialog() == DialogResult.OK)
+                {
+                    if (postoperations.removeallscenes)
+                    {
+                        RemoveAllZ64romScenes(path);
+                    }
+                    if (postoperations.removen64logo)
+                    {
+                        Helpers.ReplaceLine("this->ult++;", "this->ult++; this->exit = 1; //SO disabled logo", path + @"src\system\state\0x02-BootTitle\BootTitle.c");
+                    }
+                    if (postoperations.clearcutscenetable)
+                    {
+                        ClearCutsceneTableZ64rom(path, false);
+                    }
+                    if (postoperations.removeprerendereds)
+                    {
+                        System.IO.DirectoryInfo di = new DirectoryInfo(path + "rom\\system\\skybox\\.vanilla");
+                        foreach (DirectoryInfo dir in di.GetDirectories())
+                        {
+                            if (dir.Name.Contains("Prerender"))
+                            {
+                                foreach (FileInfo file in dir.GetFiles())
+                                {
+                                    file.Delete();
+                                }
+                                dir.Delete(true);
+                            }
+                                
+                        }
+
+                    }
+                }
+            }
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

@@ -4337,14 +4337,14 @@ namespace SharpOcarina
                 else polytypeID = (ushort)Group.PolyType;
 
                // DebugConsole.WriteLine("Polytype assigned: " + polytypeID);
-
+               /*
                 if (MainForm.Is1April)
                 {
                     foreach(ZColPolyType poly in PolyTypes)
                     {
                         poly.Raw = poly.Raw | 0x0000800000000000;
                     }
-                }
+                }*/
 
                 foreach (ObjFile.Triangle Tri in Group.Triangles)
                 {

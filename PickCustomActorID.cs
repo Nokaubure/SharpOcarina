@@ -18,8 +18,9 @@ namespace SharpOcarina
         public bool HasCustomObject;
         public MainForm mainform;
         public CustomActorDatabase parent;
+        public string name;
 
-        public PickCustomActorID(ushort _ActorID , ushort _ObjectID, bool _AutoFind, bool _HasCustomObject, CustomActorDatabase _parent)
+        public PickCustomActorID(ushort _ActorID , ushort _ObjectID, bool _AutoFind, bool _HasCustomObject, string _Name, CustomActorDatabase _parent)
         {
             ActorID = _ActorID;
             ObjectID = _ObjectID;
@@ -27,8 +28,10 @@ namespace SharpOcarina
             HasCustomObject = _HasCustomObject;
             parent = _parent;
             mainform = parent.mainform;
+            
             InitializeComponent();
             Init();
+            Text = "Pick Actor ID: " + _Name;
             UpdateForm();
         }
         public void Init()
@@ -55,7 +58,7 @@ namespace SharpOcarina
                 }
                 ActorIDNumeric.Value = i;
 
-                if (HasCustomObject)
+                if (HasCustomObject && ObjectID == 0)
                 {
                     for (i = 4; i < 0x999; i++)
                     {

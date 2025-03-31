@@ -41,6 +41,7 @@
             this.ActorName = new System.Windows.Forms.TextBox();
             this.ActorProperties = new System.Windows.Forms.TextBox();
             this.HideInstalledActors = new System.Windows.Forms.CheckBox();
+            this.HideDependencyActors = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ActorImage)).BeginInit();
             this.SuspendLayout();
@@ -175,11 +176,25 @@
             this.HideInstalledActors.UseVisualStyleBackColor = true;
             this.HideInstalledActors.CheckedChanged += new System.EventHandler(this.HideInstalledActors_CheckedChanged);
             // 
+            // HideDependencyActors
+            // 
+            this.HideDependencyActors.AutoSize = true;
+            this.HideDependencyActors.Checked = true;
+            this.HideDependencyActors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.HideDependencyActors.Location = new System.Drawing.Point(460, 14);
+            this.HideDependencyActors.Name = "HideDependencyActors";
+            this.HideDependencyActors.Size = new System.Drawing.Size(142, 17);
+            this.HideDependencyActors.TabIndex = 12;
+            this.HideDependencyActors.Text = "Hide dependency actors";
+            this.HideDependencyActors.UseVisualStyleBackColor = true;
+            this.HideDependencyActors.CheckedChanged += new System.EventHandler(this.HideDependencyActors_CheckedChanged);
+            // 
             // CustomActorDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(711, 531);
+            this.Controls.Add(this.HideDependencyActors);
             this.Controls.Add(this.HideInstalledActors);
             this.Controls.Add(this.ActorProperties);
             this.Controls.Add(this.ActorName);
@@ -219,5 +234,6 @@
         private System.Windows.Forms.TextBox ActorName;
         private System.Windows.Forms.TextBox ActorProperties;
         private System.Windows.Forms.CheckBox HideInstalledActors;
+        private System.Windows.Forms.CheckBox HideDependencyActors;
     }
 }
