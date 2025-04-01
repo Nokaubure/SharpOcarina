@@ -219,6 +219,7 @@ namespace SharpOcarina
             Text = Program.ApplicationTitle;
             InitializeComponent();
 
+
             this.args = args;
 
             //   ChangeTheme(new ColorScheme(true),tabControl1.Controls);
@@ -270,8 +271,7 @@ namespace SharpOcarina
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.ResizeRedraw, true);
 
-
-
+            
             // textBox2.ContextMenu = new ContextMenu();
 
             SimulateN64CheckBox.LostFocus += new EventHandler(checkBox5_LostFocus);
@@ -284,12 +284,14 @@ namespace SharpOcarina
             int fontLength = Properties.Resources.FOT_ChiaroStd_B.Length;
             byte[] fontdata = Properties.Resources.FOT_ChiaroStd_B;
 
+            /*
+
             System.IntPtr data = Marshal.AllocCoTaskMem(fontLength);
             Marshal.Copy(fontdata, 0, data, fontLength);
             Fonts.AddMemoryFont(data, fontLength);
             zeldafont = new Font(Fonts.Families[0], 12);
 
-
+            */
 
             /*
             label121.BackColor = Color.Transparent;
@@ -18426,7 +18428,7 @@ namespace SharpOcarina
         {
             if (settings.EnableNewExitFormat)
             {
-                CurrentScene.ExitListV2[ExitList.SelectedIndex].HeaderIndex = (uint)ExitHeaderIndex.Value;
+                CurrentScene.ExitListV2[ExitList.SelectedIndex].HeaderIndex = ExitHeaderIndex.Value == -1 ? 0xF : (uint)ExitHeaderIndex.Value;
                 UpdateExits();
             }
         }

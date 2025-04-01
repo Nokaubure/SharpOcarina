@@ -9,7 +9,9 @@
 
 - Post install operations can now be accessed at any time in tools tab
 
-- Convert File to C array window can now create .inc files and split big images into several parts. C arrays are now u64 instead of u32.
+- Convert File to C array window can now create .inc files and split big images into several parts. C arrays are now u64 instead of u32
+
+- Updated Custom Actor Database to allow actors that depend on other actors, such as Eyegore, as well as actors that share the same custom object
 
 - Added a build task in Tools tab to compile all .pngs in a z64rom folder to .inc files, useful for #include's. #SplitWWxHH can be used in the filename to split big images into several parts.
 
@@ -39,6 +41,8 @@
 - Fixed an issue where images of uneven resolutions would bring up error messages
 
 - Fixed an issue where ignore rotation in actor rendering would not work with rigged actors
+
+- Fixed an issue where the application didn't worked in windows 7 (since 1.40)
 
 --------------
 ---1.59
