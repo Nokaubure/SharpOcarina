@@ -4030,7 +4030,7 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, cutscene.EndFrame);
                     Helpers.Append16(ref data, cutscene.EndFrame);
                 }
-                else if (Game == "OOT" && cutscene.Marker == 0x8C) //set time
+                else if (Game == "OOT" && (cutscene.Marker == 0x8C)) //set time
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
@@ -4039,6 +4039,15 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, 0x0000);
                     Helpers.Append16(ref data, (ushort)(cutscene.Data[0] << 8 | cutscene.Data[1]));
                     Helpers.Append32(ref data, 0x00000000);
+                }
+                else if ((Game == "OOT" && cutscene.Marker == 0xDE01)) //motion_blur
+                {
+                    Helpers.Append32(ref data, (uint)cutscene.Marker);
+                    Helpers.Append32(ref data, 0x00000001);
+                    Helpers.Append16(ref data, cutscene.Data[0]);
+                    Helpers.Append16(ref data, cutscene.StartFrame);
+                    Helpers.Append16(ref data, cutscene.EndFrame);
+                    Helpers.Append16(ref data, cutscene.EndFrame);
                 }
                 else if (cutscene.CutsceneActors.Count > 0)
                 {

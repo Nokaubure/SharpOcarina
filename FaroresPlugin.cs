@@ -366,6 +366,7 @@ namespace SharpOcarina
                 if (int.TryParse(key.Replace("0x", ""), NumberStyles.HexNumber, null, out int numericKey))
                 {
                     maxKey = Math.Max(maxKey, numericKey);
+                    if (animExists) return maxKey;
                     
                 }
             }

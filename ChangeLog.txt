@@ -1,5 +1,18 @@
 ﻿///CHANGELOG///
 
+
+--------------
+---1.61
+--------------
+
+- Motion blur
+
+- Fixed an issue where custom Link anims hook would fail if more DMA files were also created in the project (z64rom)
+
+- Fixed an issue where stop music command didnt worked at all
+
+- Fixed an issue where imported cutscenes would not import the textbox command correctly
+
 --------------
 ---1.60
 --------------

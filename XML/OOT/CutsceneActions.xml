@@ -86,6 +86,7 @@
   <Zelda Key="000E">Continuation of 000D, starts disappearing</Zelda>
   <Zelda Key="000F">Plays ganondorf laught sound</Zelda>
 
+  <StopMusic Key="0000">Stop Music</StopMusic>
   <FadeMusic Key="0004">Music Fade Out</FadeMusic>
 
   <Misc Key="0001">Starts raining</Misc>
@@ -100,7 +101,7 @@
   <Misc Key="000C">Cutscene ends instantly</Misc>
   <Misc Key="000D">Plays triforce sound, roomCtx.unk_74[1] +5 per frame, till 255 (check Texture Animation flag presets)</Misc>
   <Misc Key="000E">Sets viewpoint to locked (?)</Misc>
-  <Misc Key="000F">Makes the scene title card appear (unafected by frame duration)</Misc>
+  <Misc Key="000F">Makes the scene title card appear (uneffected by frame duration)</Misc>
   <Misc Key="0010">Starts Earthquake</Misc>
   <Misc Key="0011">Stops Earthquake</Misc>
   <Misc Key="0012">Stops Rain</Misc>

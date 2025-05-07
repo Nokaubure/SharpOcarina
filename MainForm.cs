@@ -3421,7 +3421,7 @@ namespace SharpOcarina
                     GL.GetInteger(GetPName.Viewport, viewport);
                     GL.ReadPixels(e.X, viewport[3] - e.Y - 6, 1, 1, PixelFormat.Rgba, PixelType.UnsignedByte, pixel);
 
-                    if (pixel[0] == 255)
+                    if (pixel[0] == 250 || pixel[0] == 255) // ????
                     {
                         actorpick = _Waterbox_;
                     }
@@ -5083,7 +5083,8 @@ namespace SharpOcarina
                     CutsceneActorZRot.Value = (decimal)selectedpos.Rotation.Z;
                     CutsceneActorFrameDuration.Value = selectedpos.Frames;
                     CutsceneActorAnimation.SelectedIndex = FindSongComboItemValue(CutsceneActorAnimation.Items, selectedpos.Animation);
-                    if (selectedpos.Animation != Convert.ToUInt16(((SongItem)CutsceneActorAnimation.SelectedItem).Value))
+
+                    if (CutsceneActorAnimation.SelectedIndex != -1 && selectedpos.Animation != Convert.ToUInt16(((SongItem)CutsceneActorAnimation.SelectedItem).Value))
                         selectedpos.Animation = Convert.ToUInt16(((SongItem)CutsceneActorAnimation.SelectedItem).Value);
 
                     if ((MarkerType.SelectedItem as MarkerItem).Type == "Actor")
@@ -5165,6 +5166,15 @@ namespace SharpOcarina
                 {
                     CutsceneSetTimeHours.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0];
                     CutsceneSetTimeMinutes.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[1];
+                }
+
+                #endregion
+
+                #region motion blur
+
+                if (CutsceneTabs.SelectedIndex == 8)
+                {
+                    CutsceneMotionBlurValue.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0];
                 }
 
                 #endregion
@@ -10707,6 +10717,7 @@ namespace SharpOcarina
 
         private int FindComboItemValue(ComboBox.ObjectCollection items, uint marker)
         {
+            if (items.Count == 0) return -1;
             foreach (MarkerItem item in items)
             {
                 if (Convert.ToUInt32(item.Value) == marker) return items.IndexOf(item);
@@ -10716,6 +10727,7 @@ namespace SharpOcarina
 
         private int FindSongComboItemValue(ComboBox.ObjectCollection items, uint marker)
         {
+            if (items.Count == 0) return -1;
             foreach (SongItem item in items)
             {
                 if (Convert.ToUInt32(item.Value.ToString()) == marker) return items.IndexOf(item);
@@ -11428,6 +11440,9 @@ namespace SharpOcarina
 
                         textbox.Message = Helpers.Read16(CutsceneBinaryData, offset);
                         textbox.Frames = (ushort)(Helpers.Read16(CutsceneBinaryData, offset + 4) - Helpers.Read16(CutsceneBinaryData, offset + 2));
+                        textbox.Type = (byte)Helpers.Read16(CutsceneBinaryData, offset + 6);
+                        textbox.TopMessage = (byte)Helpers.Read16(CutsceneBinaryData, offset + 8);
+                        textbox.BottomMessage = (byte)Helpers.Read16(CutsceneBinaryData, offset + 10);
 
                         cutscene.Textboxes.Add(textbox);
                         //  }
@@ -19464,6 +19479,12 @@ namespace SharpOcarina
                     }
                 }
             }
+        }
+
+        private void CutsceneMotionBlurValue_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0] = (ushort) CutsceneMotionBlurValue.Value;
+            UpdateCutsceneEdit();
         }
 
         public void OpenRecentRom(object sender, System.EventArgs e)

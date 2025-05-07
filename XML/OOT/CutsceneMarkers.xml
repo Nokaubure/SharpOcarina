@@ -4,49 +4,51 @@
   <Marker Key="0003" Tab="6" Actor="Misc" Type="Special">Misc actions</Marker>
   <Marker Key="0004" Tab="6" Actor="Environment" Type="Special">Change Environment</Marker>
   <Marker Key="0005" Tab="0">Camera Relative Position</Marker>
-  <Marker Key="0009" Tab="2">(placeholder) Unknown, rumble?</Marker>
+  <Marker Key="0009" Tab="2">Unknown, rumble?</Marker>
   <Marker Key="000A" Tab="6" Actor="Link" Type="Actor">Link actions</Marker>
-  <Marker Key="0012" Tab="6" Actor="Zelda_Child" Type="Actor">Child Zelda actions (Slot 1)</Marker>
   <Marker Key="0013" Tab="3">Textbox</Marker>
+  <Marker Key="0056" Tab="6" Actor="Music" Type="Special">Change Music</Marker>
+  <Marker Key="0057" Tab="6" Actor="StopMusic" Type="Special">Stop Music</Marker>
+  <Marker Key="007C" Tab="6" Actor="FadeMusic" Type="Special">Fade Music</Marker>
+  <Marker Key="008C" Tab="1">Set Time</Marker>
+  <Marker Key="03E8" Tab="5">ASM execution</Marker> 
+  <Marker Key="002D" Tab="4">Transition effect</Marker>
+  <Marker Key="DE00" Tab="7">Trigger Exit / Set Flag (z64rom)</Marker>
+  <Marker Key="DE01" Tab="8">Motion Blur (z64rom)</Marker>
+  <Marker Key="003E" Tab="6" Actor="Navi" Type="Actor">Navi actions (Slot 9)</Marker>
+  <Marker Key="0012" Tab="6" Actor="Zelda_Child" Type="Actor">Child Zelda actions (Slot 1)</Marker>
   <Marker Key="0027" Tab="6" Actor="Rauru" Type="Actor">Rauru actions (Slot 1)</Marker><!-- 00A6  -->
   <Marker Key="0028" Tab="6" Actor="Nabooru" Type="Actor">Nabooru actions (Slot 2)</Marker> <!-- 00C3 0004 nabooru -->
   <Marker Key="002B" Tab="6" Actor="Saria" Type="Actor">Saria action (Slot 5)</Marker> <!-- 00C3 0004 nabooru -->
   <Marker Key="002C" Tab="6" Actor="Impa" Type="Actor">Impa actions (Slot 6)</Marker> <!-- 00C3 0004 nabooru -->
   <Marker Key="0029" Tab="6" Actor="Darunia" Type="Actor">Darunia Sage actions (Slot 3)</Marker>
   <Marker Key="002A" Tab="6" Actor="Ruto_Adult" Type="Actor">Ruto (Adult) actions (Slot 4)</Marker>
-  <Marker Key="002D" Tab="4">Transition effect</Marker>
   <Marker Key="0030" Tab="6" Actor="Placeholder" Type="Actor">Goron Ruby actions (Slot 2)</Marker>
   <Marker Key="0031" Tab="6" Actor="LightBallEffect" Type="Actor">Light Ball Effect (Slot 8)</Marker>
   <Marker Key="0032" Tab="6" Actor="Placeholder" Type="Actor">Darunia actions (Slot 3)</Marker>
   <Marker Key="0033" Tab="6" Actor="Placeholder" Type="Actor">Goron 1 actions (Slot 4)</Marker>
   <Marker Key="0036" Tab="6" Actor="Placeholder" Type="Actor">Goron 2 actions (Slot 5)</Marker>
   <Marker Key="0037" Tab="6" Actor="Placeholder" Type="Actor">Goron 3 actions (Slot 6)</Marker>
-  <Marker Key="003E" Tab="6" Actor="Navi" Type="Actor">Navi actions (Slot 9)</Marker>
   <Marker Key="0051" Tab="6" Actor="KoumeKotake" Type="Actor">Koume actions (Slot 3)</Marker><!-- 00CC 0000 Koume -->
   <Marker Key="0052" Tab="6" Actor="KoumeKotake" Type="Actor">Kotake actions (Slot 4)</Marker> <!-- 00CC 0001 Kotake -->
   <Marker Key="0055" Tab="6" Actor="Zelda" Type="Actor">Adult Zelda actions (Slot 7)</Marker>
-  <Marker Key="0056" Tab="6" Actor="Music" Type="Special">Change Music</Marker>
-  <Marker Key="0057" Tab="2">Stop Music</Marker>
-  <Marker Key="007C" Tab="6" Actor="FadeMusic" Type="Special">Fade Music</Marker>
-  <Marker Key="008C" Tab="1">Set Time</Marker>
-  <Marker Key="03E8" Tab="5">ASM execution</Marker>
-  <Marker Key="000F" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 1)</Marker>
-  <Marker Key="005D" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 1)</Marker>
-  <Marker Key="000E" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 2)</Marker>
-  <Marker Key="0050" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 2)</Marker>
-  <Marker Key="005E" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 2)</Marker>
-  <Marker Key="0019" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 3)</Marker>
-  <Marker Key="001D" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 4)</Marker>
-  <Marker Key="0035" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 4)</Marker>
-  <Marker Key="001E" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 5)</Marker>
-  <Marker Key="0053" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 5)</Marker>
-  <Marker Key="0054" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 6)</Marker>
-  <Marker Key="005A" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 6)</Marker>
-  <Marker Key="001F" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 7)</Marker>
-  <Marker Key="0034" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 7)</Marker>
-  <Marker Key="0058" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 7)</Marker>
-  <Marker Key="0059" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 8)</Marker>
-  <Marker Key="008F" Tab="6" Actor="Placeholder" Type="Actor">??? (Slot 10)</Marker>
+  <Marker Key="000F" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 1)</Marker>
+  <Marker Key="005D" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 1)</Marker>
+  <Marker Key="000E" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 2)</Marker>
+  <Marker Key="0050" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 2)</Marker>
+  <Marker Key="005E" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 2)</Marker>
+  <Marker Key="0019" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 3)</Marker>
+  <Marker Key="001D" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 4)</Marker>
+  <Marker Key="0035" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 4)</Marker>
+  <Marker Key="001E" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 5)</Marker>
+  <Marker Key="0053" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 5)</Marker>
+  <Marker Key="0054" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 6)</Marker>
+  <Marker Key="005A" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 6)</Marker>
+  <Marker Key="001F" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 7)</Marker>
+  <Marker Key="0034" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 7)</Marker>
+  <Marker Key="0058" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 7)</Marker>
+  <Marker Key="0059" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 8)</Marker>
+  <Marker Key="008F" Tab="6" Actor="Placeholder" Type="Actor">Actor actions (Slot 10)</Marker>
   <Marker Key="005B" Tab="6" Actor="Placeholder" Type="Actor">Nothing</Marker>
   <Marker Key="005C" Tab="6" Actor="Placeholder" Type="Actor">Nothing</Marker>
   <Marker Key="005F" Tab="6" Actor="Placeholder" Type="Actor">Nothing</Marker>
