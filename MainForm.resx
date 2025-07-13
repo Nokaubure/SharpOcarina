@@ -123,67 +123,9 @@
   <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>571, 17</value>
   </metadata>
-  <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>571, 17</value>
-  </metadata>
   <data name="GroupAlphaMask.ToolTip" xml:space="preserve">
     <value>Erase alpha from the first texture based on the alpha of the second. Use IA4, IA8 or IA16 formats on the second texture. You need to manually specify the texture formats with the new SO plugin, or use texture tags in the texture filename such as #IA8 or enable the option "Don't convert multitextures to RGBA"</value>
   </data>
-  <metadata name="PathwayZPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
-  </metadata>
-  <metadata name="PathwayYPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>920, 17</value>
-  </metadata>
-  <metadata name="PathwayXPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>771, 17</value>
-  </metadata>
-  <metadata name="PathwayZPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
-  </metadata>
-  <metadata name="PathwayYPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>920, 17</value>
-  </metadata>
-  <metadata name="PathwayXPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>771, 17</value>
-  </metadata>
-  <metadata name="RenderFunctionFlagPresetToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>166, 3</value>
-  </metadata>
-  <metadata name="RenderFunctionFlagPresetToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>166, 3</value>
-  </metadata>
-  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>126, 17</value>
-  </metadata>
-  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>266, 17</value>
-  </metadata>
-  <metadata name="folderBrowserDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>402, 17</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GlobalRomRefresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAkJJREFUOE9j
-        oClIm8nAlbdWal7heslFpdskqyr3S2lApYgDeauk5DKWSf6Pny3xP3m+5P/cVVJ/K3dJLyg7IsILVUIA
-        /GdgTF8qeS9upsR/EE4AGpS6UPJ/5U7pkyU7xbmhqlBBUL9oSGiHID+Uy5C6UMwlfZnkuvQlEm9ALgFh
-        kCF1+2WmQJUggHermHtIr9iv4F6xNVAhOMhdIsSXu0ZyZ/wsoCFAXLhB+lfVIRFJqDQDg2uVgIFPi+jH
-        6Gni/yMmi/8P7hEphErBQf5GMXGgS37FTge6YpHk/8bDUolgCbsiIVmXKpEnQNvBmqOBCsIniv8MmShk
-        BVaABDKXSd6ImgpxRf1B6WYG4zRBfss84Use9aL/AzrE/of2A10wUfx/JNCg0Alij0Mn8YhC9TI4NDCw
-        pC2WfBcxSRwcqHUHpGsZTDJ51c0yhUJtCoSz3etE/wd1AzUCDfHvFHsN9EZk6AQRdah+hswVkkVRU8T/
-        hwHlk+ZJ/K/ZLxUAlYIAh3LhS/5AVwT3gGwX/x/SJ3Y+YrJocvwsseCkuRLzga76G9gJFO8V/w8M0DcN
-        m6W4oFohwLZYyN2zXvRvYBfElqip4v+9m0X/AwP3v3eTGJAW++/fLvY/dobE/7Id0hlQbagAGJiFvi1i
-        f4G2/w8DusKxXPS/S7Xof5D3vICGRAK9ULhBciJUOXbg1Sjk6t8peh4UFu61ov89G0FhI/Y/YY7EnZy1
-        UlFQZYRBcI+wRtRUsSCgxtDU+aIGoKQNlaIWYGAAAPNg6d09IRs7AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <metadata name="bindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>166, 56</value>
-  </metadata>
-  <metadata name="bindingSource2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>303, 56</value>
-  </metadata>
   <data name="ExitFadeOut.ToolTip" xml:space="preserve">
     <value>00 - Spiky (Glitched?)
 01 - Triforce
@@ -248,6 +190,49 @@ D: Loose earth
 E: Earth/dirt
 F: Earth/dirt</value>
   </data>
+  <metadata name="PathwayZPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 56</value>
+  </metadata>
+  <metadata name="PathwayYPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>920, 17</value>
+  </metadata>
+  <metadata name="PathwayXPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>771, 17</value>
+  </metadata>
+  <metadata name="RenderFunctionFlagPresetToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>166, 3</value>
+  </metadata>
+  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>126, 17</value>
+  </metadata>
+  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>266, 17</value>
+  </metadata>
+  <metadata name="folderBrowserDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>402, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="GlobalRomRefresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAkJJREFUOE9j
+        oClIm8nAlbdWal7heslFpdskqyr3S2lApYgDeauk5DKWSf6Pny3xP3m+5P/cVVJ/K3dJLyg7IsILVUIA
+        /GdgTF8qeS9upsR/EE4AGpS6UPJ/5U7pkyU7xbmhqlBBUL9oSGiHID+Uy5C6UMwlfZnkuvQlEm9ALgFh
+        kCF1+2WmQJUggHermHtIr9iv4F6xNVAhOMhdIsSXu0ZyZ/wsoCFAXLhB+lfVIRFJqDQDg2uVgIFPi+jH
+        6Gni/yMmi/8P7hEphErBQf5GMXGgS37FTge6YpHk/8bDUolgCbsiIVmXKpEnQNvBmqOBCsIniv8MmShk
+        BVaABDKXSd6ImgpxRf1B6WYG4zRBfss84Use9aL/AzrE/of2A10wUfx/JNCg0Alij0Mn8YhC9TI4NDCw
+        pC2WfBcxSRwcqHUHpGsZTDJ51c0yhUJtCoSz3etE/wd1AzUCDfHvFHsN9EZk6AQRdah+hswVkkVRU8T/
+        hwHlk+ZJ/K/ZLxUAlYIAh3LhS/5AVwT3gGwX/x/SJ3Y+YrJocvwsseCkuRLzga76G9gJFO8V/w8M0DcN
+        m6W4oFohwLZYyN2zXvRvYBfElqip4v+9m0X/AwP3v3eTGJAW++/fLvY/dobE/7Id0hlQbagAGJiFvi1i
+        f4G2/w8DusKxXPS/S7Xof5D3vICGRAK9ULhBciJUOXbg1Sjk6t8peh4UFu61ov89G0FhI/Y/YY7EnZy1
+        UlFQZYRBcI+wRtRUsSCgxtDU+aIGoKQNlaIWYGAAAPNg6d09IRs7AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <metadata name="bindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>166, 56</value>
+  </metadata>
+  <metadata name="bindingSource2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>303, 56</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>79</value>
   </metadata>

@@ -453,6 +453,8 @@ namespace SharpOcarina
                         else if (line.Contains(");") && line.SubstringTill(0,'(').Contains(" "))
                         {
                             string predeclaration = line.Substring(line.IndexOf(' ') + 1, line.IndexOf('(') - line.IndexOf(' ') - 1);
+                            while (predeclaration.Contains(' '))
+                                predeclaration = predeclaration.Substring(predeclaration.IndexOf(' ') + 1).Trim();
                             file.predeclarations.Add(new CData(predeclaration, rawline));
                         }
                         else if (line.Contains("="))

@@ -5,13 +5,19 @@
 ---1.61
 --------------
 
-- Motion blur
+- New cutscene command: Motion blur, requires z64rom, on older installations SO will provide the needed updates
+
+- Object space/size is now displayed in Kilobytes
+
+- SO will only prompt to update a file (such as scenerender.c) if its necessary for using a new feature. Older files will go to a trashbin folder instead of being permanently deleted.
 
 - Fixed an issue where custom Link anims hook would fail if more DMA files were also created in the project (z64rom)
 
 - Fixed an issue where stop music command didnt worked at all
 
 - Fixed an issue where imported cutscenes would not import the textbox command correctly
+
+- Fixed an issue regarding custom actor database not assigning the actor ID of dependencies correctly
 
 --------------
 ---1.60

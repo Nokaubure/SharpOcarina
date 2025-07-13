@@ -1175,7 +1175,7 @@ namespace SharpOcarina
             }
             return file;
         }
-
+        //save binary / send to z64rom
         public void ConvertSave(string Filepath, bool ConsecutiveRoomInject, bool ForceRGBATextures, int zzrp)
         {
             string game = (!MainForm.settings.MajorasMask) ? "OOT" : "MM";
@@ -1299,112 +1299,112 @@ namespace SharpOcarina
 
             }
 
-            if (zzrp != 4)
+            if (zzrp != 4) //is not decomp
             {
 
-            for (int i = 0; i < _Rooms.Count; i++)
-            {
-                string SaveRoomTo = "";
-                string extension = zzrp == 3 ? ".zroom" : ".zmap";
+                for (int i = 0; i < _Rooms.Count; i++)
+                {
+                    string SaveRoomTo = "";
+                    string extension = zzrp == 3 ? ".zroom" : ".zmap";
 
                 
 
+                    if (zzrp > 0)
+                        SaveRoomTo = Filepath + "room_" + i + extension;
+                    else if (MainForm.settings.Zmapoffsetnames)
+                        SaveRoomTo = Filepath + (_Rooms[i].InjectOffset+_Rooms[i].FullDataLength).ToString("X8") + extension;
+                    else
+                        SaveRoomTo = Filepath + Helpers.MakeValidFileName(Name) + "_room_" + i + extension;
+
+                    DebugConsole.WriteLine("SAVING DATA TO " + SaveRoomTo);
+
+                    if (MainForm.IsFileLocked(SaveRoomTo))
+                    { 
+                        MessageBox.Show("File " + SaveRoomTo + " is in use, try again later.", "Saving failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    File.Delete(SaveRoomTo);
+
+                    BinaryWriter BWR = new BinaryWriter(File.OpenWrite(SaveRoomTo));
+                    BWR.Write(_Rooms[i].RoomData.ToArray());
+                    BWR.Close();
+                }
+                string SaveSceneTo = "";
                 if (zzrp > 0)
-                    SaveRoomTo = Filepath + "room_" + i + extension;
-                else if (MainForm.settings.Zmapoffsetnames)
-                    SaveRoomTo = Filepath + (_Rooms[i].InjectOffset+_Rooms[i].FullDataLength).ToString("X8") + extension;
+                    SaveSceneTo = Filepath + "scene.zscene";
                 else
-                    SaveRoomTo = Filepath + Helpers.MakeValidFileName(Name) + "_room_" + i + extension;
+                    SaveSceneTo = Filepath + Helpers.MakeValidFileName(Name) + "_scene.zscene";
 
-                DebugConsole.WriteLine("SAVING DATA TO " + SaveRoomTo);
+                DebugConsole.WriteLine("SAVING DATA TO " + SaveSceneTo);
 
-                if (MainForm.IsFileLocked(SaveRoomTo))
-                { 
-                    MessageBox.Show("File " + SaveRoomTo + " is in use, try again later.", "Saving failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                if (MainForm.IsFileLocked(SaveSceneTo))
+                {
+                    MessageBox.Show("File " + SaveSceneTo + " is in use, try again later.", "Saving failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                File.Delete(SaveRoomTo);
+                File.Delete(SaveSceneTo);
 
-                BinaryWriter BWR = new BinaryWriter(File.OpenWrite(SaveRoomTo));
-                BWR.Write(_Rooms[i].RoomData.ToArray());
-                BWR.Close();
-            }
-            string SaveSceneTo = "";
-            if (zzrp > 0)
-                SaveSceneTo = Filepath + "scene.zscene";
-            else
-                SaveSceneTo = Filepath + Helpers.MakeValidFileName(Name) + "_scene.zscene";
+                BinaryWriter BWS = new BinaryWriter(File.OpenWrite(SaveSceneTo));
+                BWS.Write(SceneData.ToArray());
+                BWS.Close();
 
-            DebugConsole.WriteLine("SAVING DATA TO " + SaveSceneTo);
-
-
-            if (MainForm.IsFileLocked(SaveSceneTo))
-            {
-                MessageBox.Show("File " + SaveSceneTo + " is in use, try again later.", "Saving failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            File.Delete(SaveSceneTo);
-
-            BinaryWriter BWS = new BinaryWriter(File.OpenWrite(SaveSceneTo));
-            BWS.Write(SceneData.ToArray());
-            BWS.Close();
-
-            if (zzrp > 0 && zzrp != 4)
-            {
-                uint restriction = RestrictionFlags;
-
-                
-                string filenameconf = (zzrp != 3) ? "conf.txt" : "config.toml";
-
-                if (File.Exists(Filepath + filenameconf)) File.Delete(Filepath + filenameconf);
-
-                StreamWriter sw = File.CreateText(Filepath + filenameconf);
-                if (zzrp == 1)
-                    sw.Write("unk-a: 0\r\nunk-b: 0\r\nshader: " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\nsave: " + SceneNumber + "\r\nrestrict: " + restriction);
-                else if (zzrp == 2)
-                    sw.Write("unk-a 0\r\nunk-b 0\r\nshader " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\nsave " + SceneNumber + "\r\nrestrict " + restriction);
-                else
+                if (zzrp > 0 && zzrp != 4)
                 {
-                    string restrictiontext = "";
-                    var dict = new Dictionary<string, uint>(){
-                    { "\tbottles     = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x03)) },
-                    { "\ta_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x0C)) },
-                    { "\tb_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x30)) },
-                    { "\tunused      = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0xC0)) },
-                    { "\twarp_song   = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x03))  },
-                    { "\tocarina     = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x0C))  },
-                    { "\thookshot    = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x30))  },
-                    { "\ttrade_item  = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0xC0))  },
-                    { "\tother       = ",  ((((RestrictionFlags & 0x000000FF)) & 0x03))       },
-                    { "\tdin_nayru   = ",  ((((RestrictionFlags & 0x000000FF)) & 0x0C))       },
-                    { "\tfarores     = ",  ((((RestrictionFlags & 0x000000FF)) & 0x30))       },
-                    { "\tsun_song    = ",  ((((RestrictionFlags & 0x000000FF)) & 0xC0))       },
-                };
+                    uint restriction = RestrictionFlags;
 
-                    foreach (var i in dict)
+                
+                    string filenameconf = (zzrp != 3) ? "conf.txt" : "config.toml";
+
+                    if (File.Exists(Filepath + filenameconf)) File.Delete(Filepath + filenameconf);
+
+                    StreamWriter sw = File.CreateText(Filepath + filenameconf);
+                    if (zzrp == 1)
+                        sw.Write("unk-a: 0\r\nunk-b: 0\r\nshader: " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\nsave: " + SceneNumber + "\r\nrestrict: " + restriction);
+                    else if (zzrp == 2)
+                        sw.Write("unk-a 0\r\nunk-b 0\r\nshader " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\nsave " + SceneNumber + "\r\nrestrict " + restriction);
+                    else
                     {
-                        restrictiontext += i.Key;
-                        if (i.Value != 0) restrictiontext += "false\r\n";
-                        else restrictiontext += "true\r\n";
-                    }
+                        string restrictiontext = "";
+                        var dict = new Dictionary<string, uint>(){
+                            { "\tbottles     = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x03)) },
+                            { "\ta_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x0C)) },
+                            { "\tb_button    = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0x30)) },
+                            { "\tunused      = ",  ((((RestrictionFlags & 0x00FF0000) >> 16) & 0xC0)) },
+                            { "\twarp_song   = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x03))  },
+                            { "\tocarina     = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x0C))  },
+                            { "\thookshot    = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0x30))  },
+                            { "\ttrade_item  = ",  ((((RestrictionFlags & 0x0000FF00) >> 8) & 0xC0))  },
+                            { "\tother       = ",  ((((RestrictionFlags & 0x000000FF)) & 0x03))       },
+                            { "\tdin_nayru   = ",  ((((RestrictionFlags & 0x000000FF)) & 0x0C))       },
+                            { "\tfarores     = ",  ((((RestrictionFlags & 0x000000FF)) & 0x30))       },
+                            { "\tsun_song    = ",  ((((RestrictionFlags & 0x000000FF)) & 0xC0))       },
+                        };
 
-                    sw.Write("# " + Name + "\r\n" +
-                        "draw_func_index = " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\n" +
-                        "[enables]\r\n" + restrictiontext);
-                }
-                sw.Close();
+                        foreach (var i in dict)
+                        {
+                            restrictiontext += i.Key;
+                            if (i.Value != 0) restrictiontext += "false\r\n";
+                            else restrictiontext += "true\r\n";
+                        }
+
+                        sw.Write("# " + Name + "\r\n" +
+                                 "draw_func_index = " + ((MainForm.settings.command1AOoT && MainForm.NormalHeader.SegmentFunctions.FindIndex(x => x.Functions.Count > 0) != -1) ? 0x4 : SceneSettings) + "\r\n" +
+                                 "[enables]\r\n" + restrictiontext);
+                    }
+                    sw.Close();
                 
 
-            }
+                }
 
-            //title card
+                //title card
 
-            if (TitleCard.Length > 0)
-            {
-                MemoryStream ms = new MemoryStream(TitleCard);
-                Image returnImage = Image.FromStream(ms);
-                returnImage.Save(Filepath + "title.png", ImageFormat.Png);
-            }
+                if (TitleCard.Length > 0)
+                {
+                    MemoryStream ms = new MemoryStream(TitleCard);
+                    Image returnImage = Image.FromStream(ms);
+                    returnImage.Save(Filepath + "title.png", ImageFormat.Png);
+                }
 
             }
             else

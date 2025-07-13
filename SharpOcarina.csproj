@@ -115,6 +115,7 @@
     <Reference Include="windowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LinkedFile.cs" />
     <Compile Include="TransparentPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1629,6 +1630,9 @@
     <EmbeddedResource Include="Files\Advanced_Texture_Animations">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Files\Cutscene.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\droptable_SO.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1677,10 +1681,19 @@
     <Content Include="Files\NewLinkAnims.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\Play.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\PreRender.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\SceneRender.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\SceneRender.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\uLib_gameplay.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\z_map_data_minimap.h">

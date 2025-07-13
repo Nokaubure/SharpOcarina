@@ -27,6 +27,7 @@ using SharpOcarina.SayakaGL;
 using System.Drawing.Text;
 using System.Globalization;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using Ionic.Zip;
 using RedCell.Diagnostics.Update;
 using TexLib;
@@ -194,6 +195,10 @@ namespace SharpOcarina
 
         public const float SceneRenderVersion = 1.2f;
 
+        public const float CutsceneHookVersion = 1.1f;
+
+        public const float PlayVersion = 1.1f;
+
         public string[] args;
 
         int ActorCubeGLID = 0, ActorPyramidGLID = 0, AxisMarkerGLID = 0, DoorGLID = 0, EnemyGLID = 0, BossGLID = 0, ActorCameraGLID = 0;
@@ -249,6 +254,7 @@ namespace SharpOcarina
             dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem.Visible = true;
+            dEBUGTestToolStripMenuItem.Visible = true;
             createPathwaysForEachBoundingBoxToolStripMenuItem.Visible = true;
 #else
             if ((int)System.DateTime.Now.Day == 1 && (int)System.DateTime.Now.Month == 4)
@@ -4387,7 +4393,7 @@ namespace SharpOcarina
                             int maxsize = 0xFA000;
 
                             if (rom64.isSet())
-                                maxsize = 2000000;
+                                maxsize = 0x200000; //TODO get true size
 
                             foreach (ZScene.ZUShort obj in CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects)
                             {
@@ -4405,7 +4411,7 @@ namespace SharpOcarina
                                     size += Convert.ToInt32(XMLreader.getObjectSize(obj.ValueHex)[0], 16);
                             }
 
-                            RoomObjectSpace.Text = "Object space: " + size.ToString("X") + " / " + maxsize.ToString("X");
+                            RoomObjectSpace.Text = "Object space: " + (size/1024).ToString("0") + " / " + (maxsize / 1024).ToString("0") + " KB";
                             if (size > maxsize) RoomObjectSpace.ForeColor = Color.Red;
                             else RoomObjectSpace.ForeColor = Color.Black;
 
@@ -7838,7 +7844,7 @@ namespace SharpOcarina
                 if (ObjectCache.ContainsKey(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value))
                 {
                     RoomObjectDescription.Text += "Internal name: " + ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value].name + Environment.NewLine;
-                    RoomObjectDescription.Text += String.Format("Size: {0:X}", ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value].size) + Environment.NewLine;
+                    RoomObjectDescription.Text += String.Format("Size: {0:0}", ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value].size/1024) + " KB " + Environment.NewLine;
                     RoomObjectDescription.Text += "Actors that use this object: ";
                     RoomObjectDescription.Text += ObjectCache[CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].Value].usedby;
                 }
@@ -7846,7 +7852,7 @@ namespace SharpOcarina
                 {
                     String[] data = XMLreader.getObjectSize((CurrentScene.Rooms[RoomList.SelectedIndex]).ZObjects[RoomObjectListBox.SelectedIndex].ValueHex);
                     RoomObjectDescription.Text += "Internal name: " + data[1] + Environment.NewLine;
-                    RoomObjectDescription.Text += String.Format("Size: {0:X}", data[0]) + Environment.NewLine;
+                    RoomObjectDescription.Text += String.Format("Size: {0:0}", Convert.ToInt32(data[0], 16)/1024) +  " KB "+ Environment.NewLine;
                     RoomObjectDescription.Text += "Actors that use this object: ";
                     RoomObjectDescription.Text += XMLreader.getActorNamesByObject(CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects[RoomObjectListBox.SelectedIndex].ValueHex);
                 }
@@ -10845,11 +10851,25 @@ namespace SharpOcarina
 
         private void MarkerType_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            uint markerID = Convert.ToUInt32((MarkerType.SelectedItem as MarkerItem).Value);
             if (CurrentScene != null && CurrentScene.Cutscene.Count > 0)
             {
-                CurrentScene.Cutscene[MarkerSelect.SelectedIndex] = new ZCutscene(Convert.ToUInt32((MarkerType.SelectedItem as MarkerItem).Value), (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
+                CurrentScene.Cutscene[MarkerSelect.SelectedIndex] = new ZCutscene(markerID, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
                 UpdateCutsceneEdit();
+
+                if ((markerID == 0xDE00 || markerID == 0xDE01) && rom64.isSet())
+                {
+                    if (rom64.CutsceneHookVersion < 1.1f) UpdateCutsceneHook(1.1f, true);
+                    if (rom64.PlayVersion < 1.1f)
+                    {
+                        UpdatePlay(1.1f, true);
+                        
+                    }
+                    AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur"); //TODO slow to do this everytime...
+                }
             }
+            
+
         }
 
         private void CutscenePositionFrameDuration_Leave(object sender, EventArgs e)
@@ -13569,33 +13589,6 @@ namespace SharpOcarina
 
         }
 
-        private void RecalculateCRC(string rom)
-        {
-            String pdetail = @"/c rn64crc\rn64crc.exe -u " + "\"" + rom + "\"";
-            ProcessStartInfo pcmd = new ProcessStartInfo("cmd.exe");
-            pcmd.Arguments = pdetail;
-            pcmd.UseShellExecute = false;
-            pcmd.RedirectStandardOutput = true;
-            pcmd.RedirectStandardError = true;
-            Process cmd = Process.Start(pcmd);
-            string output = cmd.StandardError.ReadToEnd();
-            string output2 = cmd.StandardOutput.ReadToEnd();
-            DebugConsole.WriteLine(output);
-            DebugConsole.WriteLine(output2);
-            output = output + output2;
-
-            File.Delete(Path.GetTempPath() + "rn64crc.exe");
-
-            if (output.Contains("[OK]") || output.Contains("[Updated]")) ;
-            // DebugConsole.WriteLine("CRC recalculated");
-            else
-            {
-                MessageBox.Show("CRC recalculation failed, this normally happens when the program doesn't have admin rights", "Injection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-        }
-
         private void removeAllRomScenesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string ROM = "";
@@ -15696,7 +15689,7 @@ namespace SharpOcarina
                 convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Visible = true;
                 createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = true;
                 AutoHookerMenuItem.Visible = true;
-                UpdateSceneRender(rom64.getPath() + "\\", true);
+                
                 rebuildDmaTableallToolStripMenuItem.Visible = false;
                 decompressROMToolStripMenuItem.Visible = false;
                 dEBUGCustomActorDatabasetoolStripMenuItem.Visible = true;
@@ -15707,6 +15700,11 @@ namespace SharpOcarina
                 removeAllRomScenesToolStripMenuItem.Visible = false;
                 toolStripSeparator10.Visible = true;
 
+                rom64.SceneRenderVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\SceneRender.c");
+                rom64.CutsceneHookVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\Cutscene.c");
+                rom64.PlayVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\vanilla\Play.c");
+                
+
                 actorEditControl1.cacheId = 0xFEFE;
                 actorEditControl2.cacheId = 0xFEFE;
                 actorEditControl3.cacheId = 0xFEFE;
@@ -15715,6 +15713,30 @@ namespace SharpOcarina
                 actorEditControl3.UpdateActorEdit();
                 UpdateForm();
             }
+        }
+
+        public void UpdateSceneRender(float version, bool ask)
+        {
+            UpdateZ64romFile(new string[]{
+                            rom64.getPath() +  @"\src\lib_user\library\SceneRender.c" ,
+                            rom64.getPath() +  @"\src\lib_user\library\SceneRender.h"
+                            }, version, ask);
+        }
+
+        public void UpdatePlay(float version, bool ask)
+        {
+            UpdateZ64romFile(new string[]{
+                            rom64.getPath() +  @"\src\lib_user\vanilla\Play.c",
+                            rom64.getPath() +  @"\src\lib_user\uLib_gameplay.c"
+                            }, version, ask);
+        }
+
+        public void UpdateCutsceneHook(float version, bool ask)
+        {
+            UpdateZ64romFile(new string[]{
+                            rom64.getPath() +  @"\src\lib_user\library\Cutscene.c",
+                            rom64.getPath() +  @"\src\lib_user\library\PreRender.c"
+                            }, version, ask);
         }
 
         public void RefreshBGMCache()
@@ -17815,6 +17837,10 @@ namespace SharpOcarina
                     addedfunction.Preview = false;
                 }
 
+                if ((addedfunction.Type == ZTextureAnim.condition || addedfunction.Type == ZTextureAnim.blending) && rom64.isSet() && rom64.SceneRenderVersion < 1.2f)
+                {
+                    UpdateSceneRender(1.2f, true);
+                }
 
                 UpdateRenderFunctionEdit();
 
@@ -18921,17 +18947,22 @@ namespace SharpOcarina
                     File.Copy(path + "\\BaseDebugRom.z64", binarydata);
 
                     PostInstallOperations(path);
-
-                    
-
                     //Last version of SceneRender is mandatory in install
-                    UpdateSceneRender(path,false);
+                    string prevdir = rom64.getPath();
+                    rom64.pathRomDir = path;
+                    UpdateSceneRender(SceneRenderVersion,false);
+                    UpdatePlay(PlayVersion, false);
+                    UpdateCutsceneHook(CutsceneHookVersion, false);
+                    AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur");
+
 
                     DialogResult dialogResult = MessageBox.Show("Done! Load the project into SharpOcarina?", "Load?", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
                         OpenGlobalFile(path + "z64project.toml");
                     }
+                    else
+                        rom64.pathRomDir = prevdir;
 
 
                 }
@@ -18942,55 +18973,65 @@ namespace SharpOcarina
 
         }
 
-        private void UpdateSceneRender(string path, bool ask)
+        private void DeleteZ64romFile(string file)
         {
-            if (!File.Exists(path + @"src\lib_user\library\SceneRender.c")) return;
-            string[] lines = File.ReadAllLines(path + @"src\lib_user\library\SceneRender.c");
-            float curVer = 1.0f;
+            string trashdir = rom64.getPath() + "\\Trashbin";
+            if (!Directory.Exists(trashdir))
+                Directory.CreateDirectory(trashdir);
+            string newfile = trashdir + "\\" + Path.GetFileName(file);
+            if (File.Exists(newfile))
+                newfile = trashdir + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + DateTime.Now.Ticks.ToString() + Path.GetExtension(file);
+            File.Move(file,newfile);
+        }
+
+        private void UpdateZ64romFile(string[] files, float version, bool ask)
+        {
+
+            
+            if (!ask || MessageBox.Show($"Your project has an outdated version of {Path.GetFileName(files[0])}, SO will update it with a more recent one. If you edited the file at {files[0]} then select No.", "Replace z64rom file",
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                
+                for (int i = 0; i < files.Length; i++)
+                {
+                    if (File.Exists(files[i]))
+                        DeleteZ64romFile(files[i]);
+                    
+                    File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\" + Path.GetFileName(files[i])), files[i]);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Never ask again in this project?", "SceneRender z64rom",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    string file = File.ReadAllText(files[0]);
+                    string data = "//Version: 99" + Environment.NewLine + file;
+                    File.WriteAllText(files[0], data);
+                }
+            }
+
+            
+        }
+
+        private float GetZ64romfileVersion(string file)
+        {
+            float curVer = 0.0f;
+            if (!File.Exists(file)) return curVer;
+            string[] lines = File.ReadAllLines(file);
             for (int i = 0; i < 10; i++)
             {
 
                 if (lines[i].Contains("//Version:"))
                 {
                     curVer = Convert.ToSingle(lines[i].Replace("//Version:", "").Replace(" ", ""), CultureInfo.InvariantCulture);
-                    return;
+                    break;
                 }
             }
-            if (curVer < SceneRenderVersion)
-            {
-                if (!ask || MessageBox.Show("Your project has an outdated version of SceneRender.c, SO will update it with a more recent one. If you edited the file at /src/lib_user/library/SceneRender.c then select No.", "SceneRender z64rom",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    string[] files =
-                    {
-                            Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\SceneRender.c") ,
-                            Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\SceneRender.h")
-                        };
-                    string[] oldfiles =
-                    {
-                            path + @"src\lib_user\library\SceneRender.c" ,
-                            path + @"src\lib_user\library\SceneRender.h"
-                        };
-                    for (int i = 0; i < files.Length; i++)
-                    {
-                        if (File.Exists(oldfiles[i]))
-                            File.Delete(oldfiles[i]);
-                        File.Copy(files[i], oldfiles[i]);
-                    }
-                }
-                else
-                {
-                    if (MessageBox.Show("Never ask again in this project?", "SceneRender z64rom",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        string file = File.ReadAllText(path + @"src\lib_user\library\SceneRender.c");
-                        string data = "//Version: 99" + Environment.NewLine + file;
-                        File.WriteAllText(path + @"src\lib_user\library\SceneRender.c", data);
-                    }
-                }
-
-            }
+            return curVer;
         }
+
+       
 
         private void Z64RomPlay_Click(object sender, EventArgs e)
         {
@@ -19321,6 +19362,7 @@ namespace SharpOcarina
             CurrentScene.SegmentFunctions[(int)(RenderFunctionID.Value - 8)].Functions[RenderFunctionSelect.SelectedIndex].FreezeAtEnd = RenderFunctionFlagFreezeAtEndCheckBox.Checked;
 
             UpdateRenderFunctionEdit();
+
         }
 
         private void TexPointerCheckBox(object sender, EventArgs e)
@@ -19492,10 +19534,174 @@ namespace SharpOcarina
             InjectToRom(((ToolStripMenuItem)sender).Text);
         }
 
+        private void dEBUGTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur");
+        }
+
         public void EasterEggPhaseOne()
         {
             EasterEggToolStripMenuItem.Enabled = true;
             EasterEggToolStripMenuItem.Text = "Wtf is this?";
+        }
+
+        public void AddCallToUlibGameplay(string function, string call)
+        {
+            string filepath = rom64.getPath() + "\\src\\lib_user\\uLib_gameplay.c";
+            if (!File.Exists(filepath))
+            {
+                MessageBox.Show(filepath + " not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string[] lines = File.ReadAllLines(filepath);
+            bool inMultiLineComment = false;
+            bool inStruct = false;
+            bool inVariable = false;
+            bool inFunction = false;
+            bool isTargetFunction = false;
+            int block = 0;
+            int cline = -1;
+            int insertLine = 0;
+            int lastPredeclaration = 0;
+            CFile file = new CFile(); 
+            List<string> references = new List<string>();
+            foreach (string rawline in lines)
+            {
+                cline++;
+                string line = rawline.Trim();
+                if (line.StartsWith("/*"))
+                {
+                    inMultiLineComment = true;
+                }
+                if (inMultiLineComment)
+                {
+                    if (line.Contains("*/"))
+                    {
+                        inMultiLineComment = false;
+                        line = line.SubstringTill(0, "*/");
+                    }
+                    else continue;
+                }
+                if (line.StartsWith("//"))
+                {
+                    continue;
+                }
+                if (line.Contains("//"))
+                    line = line.SubstringTill(0, "//");
+
+                if (line.Contains("Asm_VanillaHook"))
+                {
+                    continue;
+                }
+
+                if (inStruct)
+                {
+                    if (inMultiLineComment)
+                    {
+                        continue;
+                    }
+                    if (line.Contains("}") && line.Contains(";"))
+                    {
+                        inStruct = false;
+                    }
+                    continue;
+                }
+
+                if (inVariable)
+                {
+                    if (inMultiLineComment)
+                    {
+                        continue;
+                    }
+                    if (line.Contains("}") && line.Contains(";"))
+                    {
+                        inVariable = false;
+                    }
+                    continue;
+                }
+
+                if (inFunction)
+                {
+                    int prevblock = block;
+                    if (inMultiLineComment)
+                    {
+                        continue;
+                    }
+                    //lets find the references
+                    if (isTargetFunction && line.Contains("("))
+                    {
+                        string testline = line.Replace(")", ") ");
+                        string[] testsplit = testline.Split(' ');
+                        foreach (string split in testsplit)
+                        {
+                            if (split.Contains("("))
+                            {
+                                string reference = split.SubstringTill(0, '(');
+                                references.Add(reference);
+                                
+
+                            }
+                        }
+                    }
+
+
+                    block += line.Count(x => x == '{') - line.Count(x => x == '}');
+                    if (block == 0 && prevblock != 0)
+                    {
+                        inFunction = false;
+                        isTargetFunction = false;
+                        insertLine = cline;
+                    }
+                    continue;
+                }
+
+                if (line.Contains("#include"))
+                {
+
+                }
+                else if (line.Contains("#define"))
+                {
+
+                }
+                else if (line.Contains("typedef"))
+                {
+                    inStruct = true;
+                }
+                else if (line.Contains(");") && line.SubstringTill(0, '(').Contains(" "))
+                {
+                    string predeclaration = line.Substring(line.IndexOf(' ') + 1, line.IndexOf('(') - line.IndexOf(' ') - 1);
+                    while (predeclaration.Contains(' '))
+                        predeclaration = predeclaration.Substring(predeclaration.IndexOf(' ') + 1).Trim();
+                    file.predeclarations.Add(new CData(predeclaration, rawline));
+                    lastPredeclaration = cline;
+                }
+                else if (line.Contains("="))
+                {
+                    if (!line.Contains("};") && !line.EndsWith(";")) inVariable = true;
+
+                }
+                else if ((line.Contains("{") || line.EndsWith(",")) && line.Contains("("))
+                {
+                    inFunction = true;
+                    string functionname = line.SubstringTill(line.IndexOf(' ') + 1, '(');
+                    while (functionname.Contains(' '))
+                        functionname = functionname.Substring(functionname.IndexOf(' ') + 1).Trim();
+                    file.functions.Add(new CData(functionname, rawline));
+                    block = line.Contains("{") ? 1 : 0;
+                    if (functionname == function) isTargetFunction = true;
+                }
+            }
+            if (!references.Contains(call))
+            {
+                if (file.predeclarations.FindIndex(x => x.name == call) == -1)
+                {
+                    lines[lastPredeclaration] = lines[lastPredeclaration].Insert(lines[lastPredeclaration].LastIndexOf(";")+1, "\nextern void " + call + "(PlayState* play);");
+                }
+
+                lines[insertLine] = lines[insertLine].Insert(lines[insertLine].LastIndexOf("}"), call + "(play);\n");
+                File.WriteAllLines(filepath,lines);
+            }
+            
         }
 
         public static ROM CheckVersion(List<byte> ROM)

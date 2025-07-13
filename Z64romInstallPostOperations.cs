@@ -16,6 +16,8 @@ namespace SharpOcarina
         public bool removen64logo;
         public bool clearcutscenetable;
         public bool removeprerendereds;
+        public bool useMMHUD;
+        public bool useMMTitleCard;
 
         public Z64romInstallPostOperations()
         {
@@ -52,6 +54,16 @@ namespace SharpOcarina
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
             removeprerendereds = checkBox4.Checked;
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

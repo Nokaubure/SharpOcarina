@@ -2,7 +2,7 @@
 #include "SceneRender.h"
 //Version: 1.2
 /*This version value is used by SharpOcarina to determine if it needs to update the SceneRender.c of an old project
-to use newly added features. Put a high value like 99 if you want SharpOcarina to stop asking if you want to update.
+to use newly added features. Put a high value like 99 to stop SharpOcarina from ever asking to update it again.
 */
 
 void func_8009BEEC(PlayState* play);

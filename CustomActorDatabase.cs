@@ -448,10 +448,13 @@ namespace SharpOcarina
                                         {
                                             string targetfile = Path.Combine(dir.FullName, dirfile.Name);
                                             Helpers.ReplaceLine("#define ACT_ID", "#define ACT_ID 0x" + ActorID.ToString("X4"), targetfile, 100);
+
+                                            int c = 2;
                                             foreach (string dependency in node.Actor.Dependencies)
                                             {
                                                 int dependencyID = z64romactors.Find(x => x.name == dependency).ID;
-                                                Helpers.ReplaceLine("#define ACT_ID", "#define ACT_ID 0x" + dependencyID.ToString("X4"), targetfile, 100);
+                                                Helpers.ReplaceLine($"#define ACT{c}_ID", $"#define ACT{c}_ID 0x" + dependencyID.ToString("X4"), targetfile, 100);
+                                                c++;
                                             }
                                             if (node.Actor.HasCustomObject)
                                             {
