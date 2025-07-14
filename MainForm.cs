@@ -18946,7 +18946,7 @@ namespace SharpOcarina
                     file.Directory.Create(); //if directory exists, does nothing
                     File.Copy(path + "\\BaseDebugRom.z64", binarydata);
 
-                    PostInstallOperations(path);
+                    PostInstallOperations(path,true);
                     //Last version of SceneRender is mandatory in install
                     string prevdir = rom64.getPath();
                     rom64.pathRomDir = path;
@@ -19480,13 +19480,13 @@ namespace SharpOcarina
 
         private void postInstallOperationsz64romToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PostInstallOperations(rom64.getPath() + Path.DirectorySeparatorChar);
+            PostInstallOperations(rom64.getPath() + Path.DirectorySeparatorChar, false);
             
         }
 
-        private void PostInstallOperations(string path)
+        private void PostInstallOperations(string path, bool defaults)
         {
-            using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations())
+            using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations(defaults))
             {
                 if (postoperations.ShowDialog() == DialogResult.OK)
                 {
@@ -19519,6 +19519,17 @@ namespace SharpOcarina
                         }
 
                     }
+                    
+                    string ulibfile = path + @"src\lib_user\uLib.h";
+                    rom64.MMTitleCards = postoperations.MMTitleCard;
+                    Helpers.ReplaceLine("#define SAVE_ANYWHERE", "#define SAVE_ANYWHERE " + (postoperations.SaveAnywhere ? "true" : "false"), ulibfile);
+                    Helpers.ReplaceLine("#define MM_BUNNYHOOD", "#define MM_BUNNYHOOD " + (postoperations.MMBunnyHood ? "true" : "false"), ulibfile);
+                    Helpers.ReplaceLine("#define Patch_MM_INTERFACE_BUTTONS_CORDS", "#define Patch_MM_INTERFACE_BUTTONS_CORDS " + (postoperations.MMHUD ? "true" : "false"), ulibfile);
+                    Helpers.ReplaceLine("#define Patch_MM_INTERFACE_SHADOWS", "#define Patch_MM_INTERFACE_SHADOWS " + (postoperations.MMHUD ? "true" : "false"), ulibfile);
+                    Helpers.ReplaceLine("#define Patch_INTERFACE_C_UP_TATL", "#define Patch_INTERFACE_C_UP_TATL " + (postoperations.MMHUD ? "true" : "false"), ulibfile);
+                    Helpers.ReplaceLine("#define Patch_MM_INTERFACE_RUPEE_UPGRADES", "#define Patch_MM_INTERFACE_RUPEE_UPGRADES " + (postoperations.MMHUD ? "true" : "false"), ulibfile);
+                    Helpers.ReplaceLine("#define Patch_INTERFACE_C_BUTTON_COLORS_MM", "#define Patch_INTERFACE_C_BUTTON_COLORS_MM " + (postoperations.MMCButtonColors ? "true" : "false"), ulibfile);
+                    Helpers.ReplaceLine("#define Patch_INTERFACE_BUTTON_COLORS", "#define Patch_INTERFACE_BUTTON_COLORS " + postoperations.ABButtonColors, ulibfile);
                 }
             }
         }

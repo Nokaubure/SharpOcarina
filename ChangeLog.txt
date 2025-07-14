@@ -11,6 +11,8 @@
 
 - SO will only prompt to update a file (such as scenerender.c) if its necessary for using a new feature. Older files will go to a trashbin folder instead of being permanently deleted.
 
+- Added customization settings in z64rom post-install operations window
+
 - Fixed an issue where custom Link anims hook would fail if more DMA files were also created in the project (z64rom)
 
 - Fixed an issue where stop music command didnt worked at all

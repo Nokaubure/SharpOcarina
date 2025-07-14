@@ -14,10 +14,11 @@ namespace SharpOcarina
 
 public class rom64 {
     static string pathRomCfg = "";
-        public static string pathRomDir = "";
-        public static float SceneRenderVersion = 1.0f;
-        public static float CutsceneHookVersion = 1.0f;
-        public static float PlayVersion = 1.0f;
+    public static string pathRomDir = "";
+    public static float SceneRenderVersion = 1.0f;
+    public static float CutsceneHookVersion = 1.0f;
+    public static float PlayVersion = 1.0f;
+    public static bool MMTitleCards = false;
 
     static public bool isSet() {
         return pathRomCfg != "";

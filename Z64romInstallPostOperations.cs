@@ -16,17 +16,30 @@ namespace SharpOcarina
         public bool removen64logo;
         public bool clearcutscenetable;
         public bool removeprerendereds;
-        public bool useMMHUD;
-        public bool useMMTitleCard;
+        public bool MMHUD = false;
+        public bool MMTitleCard = false;
+        public bool MMCButtonColors = false;
+        public bool MMBunnyHood = false;
+        public string ABButtonColors = "OOT";
+        public bool SaveAnywhere = false;
 
-        public Z64romInstallPostOperations()
+        public Z64romInstallPostOperations(bool defaults)
         {
             InitializeComponent();
-            removeallscenes = true;
-            removen64logo = true;
-            clearcutscenetable = true;
-            removeprerendereds = true;
+            RemoveAllScenesCheckBox.Checked = defaults;
+            RemoveLogoCheckBox.Checked = defaults;
+            ClearCutsceneTableCheckBox.Checked = defaults;
+            RemovePrerenderedsCheckBox.Checked = defaults;
+            WarningLabel.Visible = !defaults;
+            ABButtonColorsDropdown.SelectedIndex = 0;
 
+            Init();
+
+        }
+
+        private void Init()
+        {
+            
         }
 
 
@@ -38,32 +51,52 @@ namespace SharpOcarina
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            removeallscenes = checkBox1.Checked;
+            removeallscenes = RemoveAllScenesCheckBox.Checked;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            removen64logo = checkBox2.Checked;
+            removen64logo = RemoveLogoCheckBox.Checked;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            clearcutscenetable = checkBox3.Checked;
+            clearcutscenetable = ClearCutsceneTableCheckBox.Checked;
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
-            removeprerendereds = checkBox4.Checked;
+            removeprerendereds = RemovePrerenderedsCheckBox.Checked;
         }
 
-        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        private void SaveAnywhereCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-
+            SaveAnywhere = SaveAnywhereCheckbox.Checked;
         }
 
-        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        private void MMButtonShadowsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            MMHUD = MMButtonShadowsCheckBox.Checked;
+        }
 
+        private void MMEntranceTitleCards_CheckedChanged(object sender, EventArgs e)
+        {
+            MMTitleCard = MMEntranceTitleCardsCheckBox.Checked;
+        }
+
+        private void MMCbuttonColorsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            MMCButtonColors = MMCbuttonColorsCheckBox.Checked;
+        }
+
+        private void MMBunnyHoodCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            MMBunnyHood = MMButtonShadowsCheckBox.Checked;
+        }
+
+        private void ABButtonColorsDropdown_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ABButtonColors = ABButtonColorsDropdown.SelectedText;
         }
     }
 }

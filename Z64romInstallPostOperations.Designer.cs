@@ -29,17 +29,23 @@
         private void InitializeComponent()
         {
             this.Ok = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.RemoveAllScenesCheckBox = new System.Windows.Forms.CheckBox();
+            this.RemoveLogoCheckBox = new System.Windows.Forms.CheckBox();
+            this.ClearCutsceneTableCheckBox = new System.Windows.Forms.CheckBox();
+            this.RemovePrerenderedsCheckBox = new System.Windows.Forms.CheckBox();
+            this.MMButtonShadowsCheckBox = new System.Windows.Forms.CheckBox();
+            this.MMEntranceTitleCardsCheckBox = new System.Windows.Forms.CheckBox();
+            this.MMBunnyHoodCheckBox = new System.Windows.Forms.CheckBox();
+            this.SaveAnywhereCheckbox = new System.Windows.Forms.CheckBox();
+            this.ABButtonColorsDropdown = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.MMCbuttonColorsCheckBox = new System.Windows.Forms.CheckBox();
+            this.WarningLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Ok
             // 
-            this.Ok.Location = new System.Drawing.Point(114, 180);
+            this.Ok.Location = new System.Drawing.Point(105, 264);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 0;
@@ -47,91 +53,162 @@
             this.Ok.UseVisualStyleBackColor = true;
             this.Ok.Click += new System.EventHandler(this.Ok_Click);
             // 
-            // checkBox1
+            // RemoveAllScenesCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(12, 21);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(283, 17);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Remove all vanilla scenes and add a simple title sceen";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.RemoveAllScenesCheckBox.AutoSize = true;
+            this.RemoveAllScenesCheckBox.Checked = true;
+            this.RemoveAllScenesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.RemoveAllScenesCheckBox.Location = new System.Drawing.Point(12, 21);
+            this.RemoveAllScenesCheckBox.Name = "RemoveAllScenesCheckBox";
+            this.RemoveAllScenesCheckBox.Size = new System.Drawing.Size(283, 17);
+            this.RemoveAllScenesCheckBox.TabIndex = 1;
+            this.RemoveAllScenesCheckBox.Text = "Remove all vanilla scenes and add a simple title sceen";
+            this.RemoveAllScenesCheckBox.UseVisualStyleBackColor = true;
+            this.RemoveAllScenesCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // checkBox2
+            // RemoveLogoCheckBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(12, 44);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(154, 17);
-            this.checkBox2.TabIndex = 2;
-            this.checkBox2.Text = "Remove spinning N64 logo";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.RemoveLogoCheckBox.AutoSize = true;
+            this.RemoveLogoCheckBox.Checked = true;
+            this.RemoveLogoCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.RemoveLogoCheckBox.Location = new System.Drawing.Point(12, 44);
+            this.RemoveLogoCheckBox.Name = "RemoveLogoCheckBox";
+            this.RemoveLogoCheckBox.Size = new System.Drawing.Size(154, 17);
+            this.RemoveLogoCheckBox.TabIndex = 2;
+            this.RemoveLogoCheckBox.Text = "Remove spinning N64 logo";
+            this.RemoveLogoCheckBox.UseVisualStyleBackColor = true;
+            this.RemoveLogoCheckBox.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
-            // checkBox3
+            // ClearCutsceneTableCheckBox
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(12, 67);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(168, 17);
-            this.checkBox3.TabIndex = 3;
-            this.checkBox3.Text = "Clear entrance cutscene table";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            this.ClearCutsceneTableCheckBox.AutoSize = true;
+            this.ClearCutsceneTableCheckBox.Checked = true;
+            this.ClearCutsceneTableCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ClearCutsceneTableCheckBox.Location = new System.Drawing.Point(12, 67);
+            this.ClearCutsceneTableCheckBox.Name = "ClearCutsceneTableCheckBox";
+            this.ClearCutsceneTableCheckBox.Size = new System.Drawing.Size(168, 17);
+            this.ClearCutsceneTableCheckBox.TabIndex = 3;
+            this.ClearCutsceneTableCheckBox.Text = "Clear entrance cutscene table";
+            this.ClearCutsceneTableCheckBox.UseVisualStyleBackColor = true;
+            this.ClearCutsceneTableCheckBox.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
-            // checkBox4
+            // RemovePrerenderedsCheckBox
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Location = new System.Drawing.Point(12, 90);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(186, 17);
-            this.checkBox4.TabIndex = 4;
-            this.checkBox4.Text = "Remove all prerendered skyboxes";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            this.RemovePrerenderedsCheckBox.AutoSize = true;
+            this.RemovePrerenderedsCheckBox.Checked = true;
+            this.RemovePrerenderedsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.RemovePrerenderedsCheckBox.Location = new System.Drawing.Point(12, 90);
+            this.RemovePrerenderedsCheckBox.Name = "RemovePrerenderedsCheckBox";
+            this.RemovePrerenderedsCheckBox.Size = new System.Drawing.Size(186, 17);
+            this.RemovePrerenderedsCheckBox.TabIndex = 4;
+            this.RemovePrerenderedsCheckBox.Text = "Remove all prerendered skyboxes";
+            this.RemovePrerenderedsCheckBox.UseVisualStyleBackColor = true;
+            this.RemovePrerenderedsCheckBox.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
-            // checkBox5
+            // MMButtonShadowsCheckBox
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(12, 113);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(143, 17);
-            this.checkBox5.TabIndex = 5;
-            this.checkBox5.Text = "Use Majora\'s Mask HUD";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
+            this.MMButtonShadowsCheckBox.AutoSize = true;
+            this.MMButtonShadowsCheckBox.Location = new System.Drawing.Point(12, 113);
+            this.MMButtonShadowsCheckBox.Name = "MMButtonShadowsCheckBox";
+            this.MMButtonShadowsCheckBox.Size = new System.Drawing.Size(280, 17);
+            this.MMButtonShadowsCheckBox.TabIndex = 5;
+            this.MMButtonShadowsCheckBox.Text = "Majora\'s Mask button shadows, positions, rupee icons";
+            this.MMButtonShadowsCheckBox.UseVisualStyleBackColor = true;
+            this.MMButtonShadowsCheckBox.CheckedChanged += new System.EventHandler(this.MMButtonShadowsCheckBox_CheckedChanged);
             // 
-            // checkBox6
+            // MMEntranceTitleCardsCheckBox
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(12, 136);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(209, 17);
-            this.checkBox6.TabIndex = 6;
-            this.checkBox6.Text = "Use Majora\'s Mask entrance title cards";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
+            this.MMEntranceTitleCardsCheckBox.AutoSize = true;
+            this.MMEntranceTitleCardsCheckBox.Location = new System.Drawing.Point(12, 136);
+            this.MMEntranceTitleCardsCheckBox.Name = "MMEntranceTitleCardsCheckBox";
+            this.MMEntranceTitleCardsCheckBox.Size = new System.Drawing.Size(187, 17);
+            this.MMEntranceTitleCardsCheckBox.TabIndex = 6;
+            this.MMEntranceTitleCardsCheckBox.Text = "Majora\'s Mask entrance title cards";
+            this.MMEntranceTitleCardsCheckBox.UseVisualStyleBackColor = true;
+            this.MMEntranceTitleCardsCheckBox.CheckedChanged += new System.EventHandler(this.MMEntranceTitleCards_CheckedChanged);
+            // 
+            // MMBunnyHoodCheckBox
+            // 
+            this.MMBunnyHoodCheckBox.AutoSize = true;
+            this.MMBunnyHoodCheckBox.Location = new System.Drawing.Point(12, 159);
+            this.MMBunnyHoodCheckBox.Name = "MMBunnyHoodCheckBox";
+            this.MMBunnyHoodCheckBox.Size = new System.Drawing.Size(223, 17);
+            this.MMBunnyHoodCheckBox.TabIndex = 7;
+            this.MMBunnyHoodCheckBox.Text = "Majora\'s Mask Bunny Hood (speed boost)";
+            this.MMBunnyHoodCheckBox.UseVisualStyleBackColor = true;
+            this.MMBunnyHoodCheckBox.CheckedChanged += new System.EventHandler(this.MMBunnyHoodCheckBox_CheckedChanged);
+            // 
+            // SaveAnywhereCheckbox
+            // 
+            this.SaveAnywhereCheckbox.AutoSize = true;
+            this.SaveAnywhereCheckbox.Location = new System.Drawing.Point(12, 232);
+            this.SaveAnywhereCheckbox.Name = "SaveAnywhereCheckbox";
+            this.SaveAnywhereCheckbox.Size = new System.Drawing.Size(274, 17);
+            this.SaveAnywhereCheckbox.TabIndex = 8;
+            this.SaveAnywhereCheckbox.Text = "Load savefile on any scene instead of just dungeons";
+            this.SaveAnywhereCheckbox.UseVisualStyleBackColor = true;
+            this.SaveAnywhereCheckbox.CheckedChanged += new System.EventHandler(this.SaveAnywhereCheckbox_CheckedChanged);
+            // 
+            // ABButtonColorsDropdown
+            // 
+            this.ABButtonColorsDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ABButtonColorsDropdown.FormattingEnabled = true;
+            this.ABButtonColorsDropdown.Items.AddRange(new object[] {
+            "OOT",
+            "MM",
+            "GC"});
+            this.ABButtonColorsDropdown.Location = new System.Drawing.Point(105, 205);
+            this.ABButtonColorsDropdown.Name = "ABButtonColorsDropdown";
+            this.ABButtonColorsDropdown.Size = new System.Drawing.Size(121, 21);
+            this.ABButtonColorsDropdown.TabIndex = 9;
+            this.ABButtonColorsDropdown.SelectionChangeCommitted += new System.EventHandler(this.ABButtonColorsDropdown_SelectionChangeCommitted);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 208);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "A/B button colors";
+            // 
+            // MMCbuttonColorsCheckBox
+            // 
+            this.MMCbuttonColorsCheckBox.AutoSize = true;
+            this.MMCbuttonColorsCheckBox.Location = new System.Drawing.Point(12, 182);
+            this.MMCbuttonColorsCheckBox.Name = "MMCbuttonColorsCheckBox";
+            this.MMCbuttonColorsCheckBox.Size = new System.Drawing.Size(169, 17);
+            this.MMCbuttonColorsCheckBox.TabIndex = 11;
+            this.MMCbuttonColorsCheckBox.Text = "Majora\'s Mask C button Colors";
+            this.MMCbuttonColorsCheckBox.UseVisualStyleBackColor = true;
+            this.MMCbuttonColorsCheckBox.CheckedChanged += new System.EventHandler(this.MMCbuttonColorsCheckBox_CheckedChanged);
+            // 
+            // WarningLabel
+            // 
+            this.WarningLabel.AutoSize = true;
+            this.WarningLabel.Location = new System.Drawing.Point(9, 290);
+            this.WarningLabel.Name = "WarningLabel";
+            this.WarningLabel.Size = new System.Drawing.Size(290, 13);
+            this.WarningLabel.TabIndex = 12;
+            this.WarningLabel.Text = "(!) Customizations may not work on older z64rom installations";
             // 
             // Z64romInstallPostOperations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(307, 215);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.ClientSize = new System.Drawing.Size(307, 314);
+            this.Controls.Add(this.WarningLabel);
+            this.Controls.Add(this.MMCbuttonColorsCheckBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ABButtonColorsDropdown);
+            this.Controls.Add(this.SaveAnywhereCheckbox);
+            this.Controls.Add(this.MMBunnyHoodCheckBox);
+            this.Controls.Add(this.MMEntranceTitleCardsCheckBox);
+            this.Controls.Add(this.MMButtonShadowsCheckBox);
+            this.Controls.Add(this.RemovePrerenderedsCheckBox);
+            this.Controls.Add(this.ClearCutsceneTableCheckBox);
+            this.Controls.Add(this.RemoveLogoCheckBox);
+            this.Controls.Add(this.RemoveAllScenesCheckBox);
             this.Controls.Add(this.Ok);
             this.Name = "Z64romInstallPostOperations";
             this.Text = "Post Installation Options";
@@ -143,11 +220,17 @@
         #endregion
 
         private System.Windows.Forms.Button Ok;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox RemoveAllScenesCheckBox;
+        private System.Windows.Forms.CheckBox RemoveLogoCheckBox;
+        private System.Windows.Forms.CheckBox ClearCutsceneTableCheckBox;
+        private System.Windows.Forms.CheckBox RemovePrerenderedsCheckBox;
+        private System.Windows.Forms.CheckBox MMButtonShadowsCheckBox;
+        private System.Windows.Forms.CheckBox MMEntranceTitleCardsCheckBox;
+        private System.Windows.Forms.CheckBox MMBunnyHoodCheckBox;
+        private System.Windows.Forms.CheckBox SaveAnywhereCheckbox;
+        private System.Windows.Forms.ComboBox ABButtonColorsDropdown;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox MMCbuttonColorsCheckBox;
+        private System.Windows.Forms.Label WarningLabel;
     }
 }
