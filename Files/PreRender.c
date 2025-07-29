@@ -5,10 +5,10 @@
  * buffer copies and coverage drawing. Also contains software implementations of the Video Interface anti-aliasing and
  * divot filters.
  */
-#include "global.h"
-#include "alloca.h"
+
 #include <uLib.h>
 
+#if MOTION_BLUR
 
 #define G_IM_SIZ_16b_BYTES      2
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
@@ -962,3 +962,5 @@ void Gameplay_DrawMotionBlur(PlayState* play) {
         CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
     }
 }
+
+#endif

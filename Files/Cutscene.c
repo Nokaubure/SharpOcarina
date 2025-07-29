@@ -6,7 +6,7 @@
 to use newly added features. Put a high value like 99 to stop SharpOcarina from ever asking to update it again.
 */
 
-#define motionBlurAlpha unk_12428[0]
+
 
 typedef enum {
     TYPE_EVENT_CHK_INF,
@@ -35,6 +35,8 @@ typedef struct {
 
 #define CLEAR_ITEMGETINF(flag) (gSaveContext.itemGetInf[(flag) >> 4] &= ~(1 << ((flag) & 0xF)))
 
+#if MOTION_BLUR
+
 s16 MotionBlurCacheDif = 0;
 
 static void CutsceneCmd_MotionBlur(PlayState* play, CutsceneContext* csCtx, CsCmdBase* cmd) {
@@ -58,6 +60,8 @@ static void CutsceneCmd_MotionBlur(PlayState* play, CutsceneContext* csCtx, CsCm
         }
     
 }
+
+#endif
 
 static void* CutsceneCmd_ExitParam(PlayState* play, void* ptr) {
     CmdHeader* cmd = ptr;
@@ -474,12 +478,14 @@ void Cutscene_ProcessCommands(PlayState* play, CutsceneContext* csCtx, u8* cutsc
                 cutscenePtr = CutsceneCmd_ExitParam(play, cutscenePtr);
                 break;
 
+            #if MOTION_BLUR
             // z64rom motion blur
             case 0xDE01:
                 cutscenePtr += 4;
                 CutsceneCmd_MotionBlur(play, csCtx, (void*)cutscenePtr);
                 cutscenePtr += 8;
                 break;
+            #endif
                 
             default:
                 MemCpy(&cmdEntries, cutscenePtr, 4);

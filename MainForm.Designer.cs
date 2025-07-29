@@ -175,6 +175,7 @@ namespace SharpOcarina
             this.createDMAFilesFromFoldersz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.TitlecardTextboxLabel = new System.Windows.Forms.Label();
             this.SetTitlecard = new System.Windows.Forms.Button();
             this.SetRestrictionFlags = new System.Windows.Forms.Button();
             this.AutoInjectOffsetCheckBox = new System.Windows.Forms.CheckBox();
@@ -260,7 +261,7 @@ namespace SharpOcarina
             this.WaterboxSelect = new SharpOcarina.NumericUpDownEx();
             this.niceLine2 = new SharpOcarina.NiceLine();
             this.InjectoffsetTextbox = new SharpOcarina.NumericTextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.InjectOffsetLabel = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.CollisionTextbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -290,6 +291,7 @@ namespace SharpOcarina
             this.AddTextureAnim = new System.Windows.Forms.Button();
             this.TextureAnimSelect = new SharpOcarina.NumericUpDownEx();
             this.niceLine13 = new SharpOcarina.NiceLine();
+            this.TitlecardTextbox = new System.Windows.Forms.TextBox();
             this.tabRooms = new System.Windows.Forms.TabPage();
             this.AdditionalTexturesGroupBox = new System.Windows.Forms.GroupBox();
             this.AdditionalTextureLabel = new System.Windows.Forms.Label();
@@ -2308,6 +2310,7 @@ namespace SharpOcarina
             // 
             this.tabGeneral.BackColor = System.Drawing.Color.White;
             this.tabGeneral.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tabGeneral.Controls.Add(this.TitlecardTextboxLabel);
             this.tabGeneral.Controls.Add(this.SetTitlecard);
             this.tabGeneral.Controls.Add(this.SetRestrictionFlags);
             this.tabGeneral.Controls.Add(this.AutoInjectOffsetCheckBox);
@@ -2323,7 +2326,7 @@ namespace SharpOcarina
             this.tabGeneral.Controls.Add(this.label33);
             this.tabGeneral.Controls.Add(this.WaterboxGroupBox);
             this.tabGeneral.Controls.Add(this.InjectoffsetTextbox);
-            this.tabGeneral.Controls.Add(this.label6);
+            this.tabGeneral.Controls.Add(this.InjectOffsetLabel);
             this.tabGeneral.Controls.Add(this.button4);
             this.tabGeneral.Controls.Add(this.CollisionTextbox);
             this.tabGeneral.Controls.Add(this.label4);
@@ -2332,6 +2335,7 @@ namespace SharpOcarina
             this.tabGeneral.Controls.Add(this.NameTextbox);
             this.tabGeneral.Controls.Add(this.label1);
             this.tabGeneral.Controls.Add(this.TextureAnimsGroupBox);
+            this.tabGeneral.Controls.Add(this.TitlecardTextbox);
             this.tabGeneral.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabGeneral.Location = new System.Drawing.Point(4, 40);
             this.tabGeneral.Name = "tabGeneral";
@@ -2339,6 +2343,16 @@ namespace SharpOcarina
             this.tabGeneral.Size = new System.Drawing.Size(411, 676);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
+            // 
+            // TitlecardTextboxLabel
+            // 
+            this.TitlecardTextboxLabel.AutoSize = true;
+            this.TitlecardTextboxLabel.Location = new System.Drawing.Point(132, 648);
+            this.TitlecardTextboxLabel.Name = "TitlecardTextboxLabel";
+            this.TitlecardTextboxLabel.Size = new System.Drawing.Size(51, 13);
+            this.TitlecardTextboxLabel.TabIndex = 78;
+            this.TitlecardTextboxLabel.Text = "Titlecard:";
+            this.TitlecardTextboxLabel.Visible = false;
             // 
             // SetTitlecard
             // 
@@ -3851,14 +3865,14 @@ namespace SharpOcarina
             this.InjectoffsetTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericTextBox3_KeyDown);
             this.InjectoffsetTextbox.Leave += new System.EventHandler(this.InjectoffsetTextbox_Leave);
             // 
-            // label6
+            // InjectOffsetLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(167, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(81, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Injection Offset:";
+            this.InjectOffsetLabel.AutoSize = true;
+            this.InjectOffsetLabel.Location = new System.Drawing.Point(167, 34);
+            this.InjectOffsetLabel.Name = "InjectOffsetLabel";
+            this.InjectOffsetLabel.Size = new System.Drawing.Size(81, 13);
+            this.InjectOffsetLabel.TabIndex = 9;
+            this.InjectOffsetLabel.Text = "Injection Offset:";
             // 
             // button4
             // 
@@ -4356,6 +4370,17 @@ namespace SharpOcarina
             this.niceLine13.Size = new System.Drawing.Size(384, 15);
             this.niceLine13.TabIndex = 25;
             this.niceLine13.TabStop = false;
+            // 
+            // TitlecardTextbox
+            // 
+            this.TitlecardTextbox.Location = new System.Drawing.Point(189, 645);
+            this.TitlecardTextbox.Name = "TitlecardTextbox";
+            this.TitlecardTextbox.Size = new System.Drawing.Size(210, 20);
+            this.TitlecardTextbox.TabIndex = 77;
+            this.EnvironmentControlTooltip.SetToolTip(this.TitlecardTextbox, "Optional field, only used by SharpOcarina");
+            this.TitlecardTextbox.Visible = false;
+            this.TitlecardTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TitlecardTextbox_Key);
+            this.TitlecardTextbox.Leave += new System.EventHandler(this.TitlecardTextbox_Leave);
             // 
             // tabRooms
             // 
@@ -9098,6 +9123,7 @@ namespace SharpOcarina
             this.RoomObjectListBox.Size = new System.Drawing.Size(112, 108);
             this.RoomObjectListBox.TabIndex = 0;
             this.RoomObjectListBox.Click += new System.EventHandler(this.RoomObjectListBox_Click);
+            this.RoomObjectListBox.SelectedValueChanged += new System.EventHandler(this.RoomObjectListBox_SelectedValueChanged);
             this.RoomObjectListBox.DoubleClick += new System.EventHandler(this.RoomObjectListBox_DoubleClick);
             // 
             // RoomObjectDescription
@@ -12732,7 +12758,7 @@ namespace SharpOcarina
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
         private SharpOcarina.NumericTextBox InjectoffsetTextbox;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label InjectOffsetLabel;
         private SharpOcarina.NumericTextBox RoomInjectionOffset;
         private System.Windows.Forms.ToolStripMenuItem showRoomModelsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AutoReload;
@@ -13497,6 +13523,8 @@ namespace SharpOcarina
         private Label label78;
         private NumericUpDownEx CutsceneMotionBlurValue;
         private ToolStripMenuItem dEBUGTestToolStripMenuItem;
+        private Label TitlecardTextboxLabel;
+        private TextBox TitlecardTextbox;
     }
     }
 

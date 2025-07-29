@@ -22,8 +22,7 @@ namespace SharpOcarina
         public bool MMBunnyHood = false;
         public string ABButtonColors = "OOT";
         public bool SaveAnywhere = false;
-
-        public Z64romInstallPostOperations(bool defaults)
+        public Z64romInstallPostOperations(string path, bool defaults)
         {
             InitializeComponent();
             RemoveAllScenesCheckBox.Checked = defaults;
@@ -33,18 +32,34 @@ namespace SharpOcarina
             WarningLabel.Visible = !defaults;
             ABButtonColorsDropdown.SelectedIndex = 0;
 
+            if (!defaults)
+            {
+                SaveAnywhereCheckbox.Checked = Helpers.GetDefineBool("SAVE_ANYWHERE", path + @"\src\lib_user\uLib.h");
+                MMBunnyHoodCheckBox.Checked = Helpers.GetDefineBool("MM_BUNNYHOOD", path + @"\src\lib_user\uLib.h");
+                MMButtonShadowsCheckBox.Checked = Helpers.GetDefineBool("Patch_MM_INTERFACE_BUTTONS_CORDS", path + @"\src\lib_user\uLib.h");
+                //MMButtonShadowsCheckBox.Checked = Helpers.GetDefineBool("Patch_MM_INTERFACE_SHADOWS", path + @"\src\lib_user\uLib.h");
+                //MMButtonShadowsCheckBox.Checked = Helpers.GetDefineBool("Patch_INTERFACE_C_UP_TATL", path + @"\src\lib_user\uLib.h");
+                //.Checked = Helpers.GetDefineBool("Patch_MM_INTERFACE_RUPEE_UPGRADES", path + @"\src\lib_user\uLib.h");
+                MMCbuttonColorsCheckBox.Checked = Helpers.GetDefineBool("Patch_INTERFACE_C_BUTTON_COLORS_MM", path + @"\src\lib_user\uLib.h");
+                MMEntranceTitleCardsCheckBox.Checked = Helpers.GetDefineBool("MM_TITLECARD", path + @"\src\lib_user\uLib.h");
+                
+                string AB = Helpers.GetDefineString("Patch_INTERFACE_BUTTON_COLORS", path + @"\src\lib_user\uLib.h");
+
+                ABButtonColorsDropdown.SelectedIndex = (AB == "OOT") ? 0 : (AB == "MM" ? 1 : 2);
+            }
+
             Init();
 
         }
 
         private void Init()
         {
-            
         }
 
 
         private void Ok_Click(object sender, EventArgs e)
         {
+            ABButtonColors = ABButtonColorsDropdown.SelectedItem.ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -91,12 +106,18 @@ namespace SharpOcarina
 
         private void MMBunnyHoodCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            MMBunnyHood = MMButtonShadowsCheckBox.Checked;
+            MMBunnyHood = MMBunnyHoodCheckBox.Checked;
         }
 
         private void ABButtonColorsDropdown_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ABButtonColors = ABButtonColorsDropdown.SelectedText;
+            ABButtonColors = ABButtonColorsDropdown.SelectedItem.ToString();
         }
+
+        private void WarningLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

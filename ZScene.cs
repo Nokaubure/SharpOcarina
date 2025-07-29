@@ -261,6 +261,7 @@ namespace SharpOcarina
         public uint MainHeaderTextureAnimOffset = 0;
         public uint RestrictionFlags = 0;
         public byte[] TitleCard = new byte[]{};
+        public string MMTitleCard = "";
 
         [XmlIgnore]
         private uint cachecutsceneoffset = 0;
@@ -1396,14 +1397,22 @@ namespace SharpOcarina
                 
 
                 }
-
+                
                 //title card
 
-                if (TitleCard.Length > 0)
+                if (TitleCard.Length > 0 || rom64.MMTitleCards && MMTitleCard != "")
                 {
-                    MemoryStream ms = new MemoryStream(TitleCard);
-                    Image returnImage = Image.FromStream(ms);
-                    returnImage.Save(Filepath + "title.png", ImageFormat.Png);
+                    if (!rom64.MMTitleCards)
+                    {
+                        MemoryStream ms = new MemoryStream(TitleCard);
+                        Image returnImage = Image.FromStream(ms);
+                        returnImage.Save(Filepath + "title.png", ImageFormat.Png);
+                    }
+                    else
+                    {
+                        if (File.Exists(Filepath + "title.png")) File.Delete(Filepath + "title.png");
+                        File.WriteAllText(Filepath + "title.txt", MMTitleCard);
+                    }
                 }
 
             }

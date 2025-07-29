@@ -4237,6 +4237,7 @@ namespace SharpOcarina
                     tabControl1.Enabled = true;
 
                     NameTextbox.Text = CurrentScene.Name;
+                    TitlecardTextbox.Text = CurrentScene.MMTitleCard;
                     ScaleNumericbox.Value = (decimal)CurrentScene.Scale;
                     CollisionTextbox.Text = System.IO.Path.GetFileName(CurrentScene.CollisionFilename);
                     InjectoffsetTextbox.Text = CurrentScene.InjectOffset.ToString("X8");
@@ -4286,7 +4287,11 @@ namespace SharpOcarina
                         TextureAnimsGroupBox.Visible = false;
                         WaterboxGroupBox.Location = new Point(6, 222);
                         CamerasGroupBox.Location = new Point(6, 397);
-                        SetTitlecard.Visible = true;
+                        if (!rom64.isSet())
+                            SetTitlecard.Visible = true;
+                        else
+                            SetTitlecard.Visible = !rom64.MMTitleCards;
+                        
                         SetRestrictionFlags.Visible = true;
                     }
 
@@ -6763,9 +6768,10 @@ namespace SharpOcarina
                         }
                         roomind++;
 
-                        if ((room.ZObjects.Count + CurrentScene.ZObjects.Count) > 0x0F)
+                        int maxobjects = rom64.isSet() ? rom64.MaxObjects : 15;
+                        if ((room.ZObjects.Count + CurrentScene.ZObjects.Count) > maxobjects)
                         {
-                            MessageBox.Show("Too many objects on Header " + scene.cloneid + " | Room " + roomind + "! max is 0x0F", "Auto-add objects", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Too many objects on Header " + scene.cloneid + " | Room " + roomind + "! max is " + maxobjects, "Auto-add objects", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         if (room.ZObjects.Exists(x => x.Value < 4))
                         {
@@ -7886,7 +7892,7 @@ namespace SharpOcarina
 
         private void RoomObjectListBox_Click(object sender, EventArgs e)
         {
-            RefreshRoomObjectDescription();
+           // RefreshRoomObjectDescription();
         }
 
         private void RoomObjectListBox_DoubleClick(object sender, EventArgs e)
@@ -10859,13 +10865,21 @@ namespace SharpOcarina
 
                 if ((markerID == 0xDE00 || markerID == 0xDE01) && rom64.isSet())
                 {
-                    if (rom64.CutsceneHookVersion < 1.1f) UpdateCutsceneHook(1.1f, true);
+                    if (rom64.CutsceneHookVersion < 1.1f)
+                    {
+                        UpdateCutsceneHook(1.1f, true);
+                        rom64.CutsceneHookVersion = CutsceneHookVersion;
+
+                        
+                    }
                     if (rom64.PlayVersion < 1.1f)
                     {
                         UpdatePlay(1.1f, true);
-                        
+                        AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR", "#endif"); //TODO slow to do this everytime...
+                        Helpers.GetDefineBoolAddIfNotExists("MOTION_BLUR", rom64.getPath() + @"\src\lib_user\uLib.h", "#define motionBlurAlpha unk_12428[0]");
+                        rom64.PlayVersion = PlayVersion;
                     }
-                    AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur"); //TODO slow to do this everytime...
+                    
                 }
             }
             
@@ -15635,6 +15649,14 @@ namespace SharpOcarina
                 removeAllRomScenesToolStripMenuItem.Visible = true;
                 toolStripSeparator10.Visible = false;
 
+                SetTitlecard.Visible = true;
+                TitlecardTextbox.Visible = false;
+                TitlecardTextboxLabel.Visible = false;
+
+                InjectOffsetLabel.Visible = true;
+                InjectoffsetTextbox.Visible = true;
+                AutoInjectOffsetCheckBox.Visible = true;
+
                 ROM rom = CheckVersion(new List<byte>(File.ReadAllBytes(GlobalROM)));
                 if (rom.Game == "MM" && !settings.MajorasMask)
                 {
@@ -15700,10 +15722,22 @@ namespace SharpOcarina
                 removeAllRomScenesToolStripMenuItem.Visible = false;
                 toolStripSeparator10.Visible = true;
 
+                InjectOffsetLabel.Visible = false;
+                InjectoffsetTextbox.Visible = false;
+                AutoInjectOffsetCheckBox.Visible = false;
+
                 rom64.SceneRenderVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\SceneRender.c");
                 rom64.CutsceneHookVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\Cutscene.c");
                 rom64.PlayVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\vanilla\Play.c");
-                
+
+                rom64.MMTitleCards = Helpers.GetDefineBool("MM_TITLECARD", rom64.getPath() + @"\src\lib_user\uLib.h");
+
+                rom64.MaxObjects = Helpers.GetDefineInt("OBJECT_EXCHANGE_BANK_MAX", rom64.getPath() + @"\include\z64hdr\include\z64object.h")-4;
+                if (rom64.MaxObjects <= 0) rom64.MaxObjects = 15;
+
+                SetTitlecard.Visible = !rom64.MMTitleCards;
+                TitlecardTextbox.Visible = rom64.MMTitleCards;
+                TitlecardTextboxLabel.Visible = rom64.MMTitleCards;
 
                 actorEditControl1.cacheId = 0xFEFE;
                 actorEditControl2.cacheId = 0xFEFE;
@@ -17263,13 +17297,14 @@ namespace SharpOcarina
                         ushort objectid = addobject.objectid;
                         int position = addobject.position;
                         int cnt = 0;
+                        int maxobjects = rom64.isSet() ? rom64.MaxObjects : 15;
                         foreach (ZScene.ZRoom room in CurrentScene.Rooms)
                         {
                             if (room.ZObjects.FindIndex(x => x.Value == objectid) == -1)
                             {
-                                if (room.ZObjects.Count == 15)
+                                if (room.ZObjects.Count == maxobjects)
                                 {
-                                    MessageBox.Show("Room " + cnt + " already has 15 objects!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Room " + cnt + " already has " + maxobjects + " objects!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
                                 }
                                 else
@@ -18953,7 +18988,7 @@ namespace SharpOcarina
                     UpdateSceneRender(SceneRenderVersion,false);
                     UpdatePlay(PlayVersion, false);
                     UpdateCutsceneHook(CutsceneHookVersion, false);
-                    AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur");
+                    AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR" , "#endif");
 
 
                     DialogResult dialogResult = MessageBox.Show("Done! Load the project into SharpOcarina?", "Load?", MessageBoxButtons.YesNo);
@@ -19031,7 +19066,22 @@ namespace SharpOcarina
             return curVer;
         }
 
-       
+        private float GetZ64rombool(string file)
+        {
+            float curVer = 0.0f;
+            if (!File.Exists(file)) return curVer;
+            string[] lines = File.ReadAllLines(file);
+            for (int i = 0; i < 10; i++)
+            {
+
+                if (lines[i].Contains("//Version:"))
+                {
+                    curVer = Convert.ToSingle(lines[i].Replace("//Version:", "").Replace(" ", ""), CultureInfo.InvariantCulture);
+                    break;
+                }
+            }
+            return curVer;
+        }
 
         private void Z64RomPlay_Click(object sender, EventArgs e)
         {
@@ -19486,7 +19536,7 @@ namespace SharpOcarina
 
         private void PostInstallOperations(string path, bool defaults)
         {
-            using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations(defaults))
+            using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations(path, defaults))
             {
                 if (postoperations.ShowDialog() == DialogResult.OK)
                 {
@@ -19521,7 +19571,7 @@ namespace SharpOcarina
                     }
                     
                     string ulibfile = path + @"src\lib_user\uLib.h";
-                    rom64.MMTitleCards = postoperations.MMTitleCard;
+                    
                     Helpers.ReplaceLine("#define SAVE_ANYWHERE", "#define SAVE_ANYWHERE " + (postoperations.SaveAnywhere ? "true" : "false"), ulibfile);
                     Helpers.ReplaceLine("#define MM_BUNNYHOOD", "#define MM_BUNNYHOOD " + (postoperations.MMBunnyHood ? "true" : "false"), ulibfile);
                     Helpers.ReplaceLine("#define Patch_MM_INTERFACE_BUTTONS_CORDS", "#define Patch_MM_INTERFACE_BUTTONS_CORDS " + (postoperations.MMHUD ? "true" : "false"), ulibfile);
@@ -19530,6 +19580,16 @@ namespace SharpOcarina
                     Helpers.ReplaceLine("#define Patch_MM_INTERFACE_RUPEE_UPGRADES", "#define Patch_MM_INTERFACE_RUPEE_UPGRADES " + (postoperations.MMHUD ? "true" : "false"), ulibfile);
                     Helpers.ReplaceLine("#define Patch_INTERFACE_C_BUTTON_COLORS_MM", "#define Patch_INTERFACE_C_BUTTON_COLORS_MM " + (postoperations.MMCButtonColors ? "true" : "false"), ulibfile);
                     Helpers.ReplaceLine("#define Patch_INTERFACE_BUTTON_COLORS", "#define Patch_INTERFACE_BUTTON_COLORS " + postoperations.ABButtonColors, ulibfile);
+
+                    Helpers.ReplaceLine("#define MM_TITLECARD", "#define MM_TITLECARD " + (postoperations.MMTitleCard ? "true" : "false"), ulibfile);
+
+                    if (!defaults)
+                    {
+                        rom64.MMTitleCards = postoperations.MMTitleCard;
+                        SetTitlecard.Visible = !rom64.MMTitleCards;
+                        TitlecardTextbox.Visible = rom64.MMTitleCards;
+                        TitlecardTextboxLabel.Visible = rom64.MMTitleCards;
+                    }
                 }
             }
         }
@@ -19547,7 +19607,28 @@ namespace SharpOcarina
 
         private void dEBUGTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur");
+            AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR", "#endif");
+        }
+
+        private void TitlecardTextbox_Leave(object sender, EventArgs e)
+        {
+            if (CurrentScene != null && rom64.isSet() && rom64.MMTitleCards)
+            {
+                CurrentScene.MMTitleCard = TitlecardTextbox.Text;
+            }
+        }
+
+        private void TitlecardTextbox_Key(object sender, KeyEventArgs e)
+        {
+            if (CurrentScene != null && rom64.isSet() && rom64.MMTitleCards)
+            {
+                CurrentScene.MMTitleCard = TitlecardTextbox.Text;
+            }
+        }
+
+        private void RoomObjectListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            RefreshRoomObjectDescription();
         }
 
         public void EasterEggPhaseOne()
@@ -19556,7 +19637,7 @@ namespace SharpOcarina
             EasterEggToolStripMenuItem.Text = "Wtf is this?";
         }
 
-        public void AddCallToUlibGameplay(string function, string call)
+        public void AddCallToUlibGameplay(string function, string call, string prefix = "", string suffix = "")
         {
             string filepath = rom64.getPath() + "\\src\\lib_user\\uLib_gameplay.c";
             if (!File.Exists(filepath))
@@ -19706,10 +19787,10 @@ namespace SharpOcarina
             {
                 if (file.predeclarations.FindIndex(x => x.name == call) == -1)
                 {
-                    lines[lastPredeclaration] = lines[lastPredeclaration].Insert(lines[lastPredeclaration].LastIndexOf(";")+1, "\nextern void " + call + "(PlayState* play);");
+                    lines[lastPredeclaration] = lines[lastPredeclaration].Insert(lines[lastPredeclaration].LastIndexOf(";")+1, (prefix != "" ? "\n" + prefix + "\n" : "") + "\nextern void " + call + "(PlayState* play);\n" + (suffix != "" ? suffix + "\n" : ""));
                 }
 
-                lines[insertLine] = lines[insertLine].Insert(lines[insertLine].LastIndexOf("}"), call + "(play);\n");
+                lines[insertLine] = lines[insertLine].Insert(lines[insertLine].LastIndexOf("}"), (prefix != "" ? prefix + "\n" : "") +  call + "(play);\n" + (suffix != "" ? suffix + "\n" : ""));
                 File.WriteAllLines(filepath,lines);
             }
             

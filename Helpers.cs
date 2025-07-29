@@ -195,6 +195,84 @@ namespace SharpOcarina
             return false;
         }
 
+        public static bool GetDefineBool(string search, string path, int max = 999999)
+        {
+            if (!File.Exists(path)) return false;
+
+            string[] lines = File.ReadAllLines(path);
+
+            for (int i = 0; i < lines.Length && i < 999999; i++)
+            {
+                if (lines[i].Contains(search) && lines[i].Contains("define"))
+                {
+                    string trimmedline = lines[i].Trim().Replace("  ", "").Replace("# define", "#define");
+                    string[] splits = trimmedline.Split(' ');
+                    if (splits.Length >= 3 && splits[2].ToLower() == "true") return true;
+                    else return false;
+                }
+            }
+            return false;
+        }
+
+        public static int GetDefineInt(string search, string path, int max = 999999)
+        {
+            if (!File.Exists(path)) return -1;
+
+            string[] lines = File.ReadAllLines(path);
+
+            for (int i = 0; i < lines.Length && i < 999999; i++)
+            {
+                if (lines[i].Contains(search) && lines[i].Contains("define"))
+                {
+                    string trimmedline = lines[i].Trim().Replace("  ", "").Replace("# define", "#define");
+                    string[] splits = trimmedline.Split(' ');
+                    if (splits.Length >= 3) return Convert.ToInt32(splits[2]);
+                    else return -1;
+                }
+            }
+            return -1;
+        }
+
+        public static bool GetDefineBoolAddIfNotExists(string search, string path, string bonus, int max = 999999)
+        {
+            if (!File.Exists(path)) return false;
+
+            string[] lines = File.ReadAllLines(path);
+
+            for (int i = 0; i < lines.Length && i < 999999; i++)
+            {
+                if (lines[i].Contains(search) && lines[i].Contains("define"))
+                {
+                    string trimmedline = lines[i].Trim().Replace("  ", "").Replace("# define", "#define");
+                    string[] splits = trimmedline.Split(' ');
+                    if (splits.Length >= 3 && splits[2].ToLower() == "true") return true;
+                    else return false;
+                }
+            }
+            ReplaceLine("#define __ULIB_H__", "#define __ULIB_H__\n\n" + "#define " + search + " true" + "\n" + bonus,path,50);
+            return true;
+        }
+
+
+        public static string GetDefineString(string search, string path, int max = 999999)
+        {
+            if (!File.Exists(path)) return "";
+
+            string[] lines = File.ReadAllLines(path);
+
+            for (int i = 0; i < lines.Length && i < 999999; i++)
+            {
+                if (lines[i].Contains(search) && lines[i].Contains("define"))
+                {
+                    string trimmedline = lines[i].Trim().Replace("  ", "").Replace("# define", "#define");
+                    string[] splits = trimmedline.Split(' ');
+                    if (splits.Length >= 3) return splits[2];
+                    else return "";
+                }
+            }
+            return "";
+        }
+
         public static List<byte> ConvertImageToData(string image, string format)
         {
             ObjFile.Material Mat = new ObjFile.Material();

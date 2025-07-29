@@ -45,7 +45,7 @@
             // 
             // Ok
             // 
-            this.Ok.Location = new System.Drawing.Point(105, 264);
+            this.Ok.Location = new System.Drawing.Point(106, 255);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 0;
@@ -161,7 +161,7 @@
             this.ABButtonColorsDropdown.Name = "ABButtonColorsDropdown";
             this.ABButtonColorsDropdown.Size = new System.Drawing.Size(121, 21);
             this.ABButtonColorsDropdown.TabIndex = 9;
-            this.ABButtonColorsDropdown.SelectionChangeCommitted += new System.EventHandler(this.ABButtonColorsDropdown_SelectionChangeCommitted);
+            this.ABButtonColorsDropdown.SelectedIndexChanged += new System.EventHandler(this.ABButtonColorsDropdown_SelectionChangeCommitted);
             // 
             // label1
             // 
@@ -186,17 +186,18 @@
             // WarningLabel
             // 
             this.WarningLabel.AutoSize = true;
-            this.WarningLabel.Location = new System.Drawing.Point(9, 290);
+            this.WarningLabel.Location = new System.Drawing.Point(10, 281);
             this.WarningLabel.Name = "WarningLabel";
             this.WarningLabel.Size = new System.Drawing.Size(290, 13);
             this.WarningLabel.TabIndex = 12;
             this.WarningLabel.Text = "(!) Customizations may not work on older z64rom installations";
+            this.WarningLabel.Click += new System.EventHandler(this.WarningLabel_Click);
             // 
             // Z64romInstallPostOperations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(307, 314);
+            this.ClientSize = new System.Drawing.Size(307, 307);
             this.Controls.Add(this.WarningLabel);
             this.Controls.Add(this.MMCbuttonColorsCheckBox);
             this.Controls.Add(this.label1);

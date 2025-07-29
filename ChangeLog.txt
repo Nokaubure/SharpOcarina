@@ -13,6 +13,10 @@
 
 - Added customization settings in z64rom post-install operations window
 
+- Added full support to Majora's Mask style titlecards (requires up to date z64rom)
+
+- Added support to extended object cap, so you can have 42 objects in a scene instead of 19 (requires up to date z64rom)
+
 - Fixed an issue where custom Link anims hook would fail if more DMA files were also created in the project (z64rom)
 
 - Fixed an issue where stop music command didnt worked at all
@@ -20,6 +24,8 @@
 - Fixed an issue where imported cutscenes would not import the textbox command correctly
 
 - Fixed an issue regarding custom actor database not assigning the actor ID of dependencies correctly
+
+- Fixed an issue where using arrow keys to scroll the object list would not refresh the description
 
 --------------
 ---1.60
