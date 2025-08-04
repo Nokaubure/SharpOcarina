@@ -1368,10 +1368,10 @@ Z ROTATION +0xF = Destination //Type 0 only
     <Variable Var="0400"> Giant crystal</Variable>
     <Notes>0xFF = Nullable Switch Flag</Notes>
   </Actor>
-  <Actor Key="00F0" Name="Blue Flame" DebugName="En_Ice_Hono" Category="7">
-    <Variable Var="0000"> Group of small blue flames, disappear</Variable>
-    <Variable Var="0001"> Blue flame, disappears</Variable>
-    <Variable Var="FFFF"> Blue flame, targetable</Variable>
+  <Actor Key="00F0" Name="Blue Fire Flame" DebugName="En_Ice_Hono" Category="7">
+    <Variable Var="0000"> Group of small blue fire flames, disappear</Variable>
+    <Variable Var="0001"> Blue fire flame, disappears</Variable>
+    <Variable Var="FFFF"> Blue fire flame, targetable</Variable>
   </Actor>
   <Actor Key="00F1" Object="00DE" Name="Ocarina of Time" DebugName="Item_Ocarina" Category="7">
     <Variable Var="0000"> Ocarina of Time being tossed higher in air</Variable>

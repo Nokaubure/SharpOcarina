@@ -115,6 +115,10 @@ namespace SharpOcarina
 
         public static List<UcodeSimulator.TextureCacheStruct> AdditionalTexturesGLID = new List<UcodeSimulator.TextureCacheStruct>();
 
+        public List<SFX> VanillaSFX = new List<SFX>();
+
+        public List<SFX> CustomSFX = new List<SFX>();
+
         public static bool exportingZobj = false;
 
         ObjFile.Material DummyMaterial = new ObjFile.Material();
@@ -200,6 +204,8 @@ namespace SharpOcarina
         public const float PlayVersion = 1.1f;
 
         public string[] args;
+
+        public BindingSource SFXbindingSource = new BindingSource();
 
         int ActorCubeGLID = 0, ActorPyramidGLID = 0, AxisMarkerGLID = 0, DoorGLID = 0, EnemyGLID = 0, BossGLID = 0, ActorCameraGLID = 0;
 
@@ -536,7 +542,7 @@ namespace SharpOcarina
 
             Camera.Initialize();
 
-            datatemplate = new ushort[4];
+            datatemplate = new ushort[5];
             Array.Clear(datatemplate, 0, datatemplate.Length);
 
             SongItem[] objs = new[]
@@ -787,6 +793,24 @@ namespace SharpOcarina
 
             CutsceneTransitionComboBox.Items.Clear();
             CutsceneTransitionComboBox.Items.AddRange(XMLreader.getXMLItems(gameprefix + "CutsceneTransition", "Transition"));
+
+            CutsceneSetFlagType.Items.Clear();
+            XmlNodeList nodes = XMLreader.getXMLNodes("OOT/CutsceneFlagTypes", "FlagType");
+            foreach (XmlNode node in nodes)
+            {
+                XmlAttributeCollection nodeAtt = node.Attributes;
+                CutsceneSetFlagItem item = new CutsceneSetFlagItem();
+                item.Text = nodeAtt["Key"].Value + " - " + node.InnerText;
+                item.Value = Convert.ToInt64(nodeAtt["Key"].Value, 16);
+                item.Decimal = (nodeAtt["Decimal"] != null);
+                item.EasyValueItems = new List<SongItem>();
+                if ((nodeAtt["Xml"] != null))
+                {
+                    string[] split = nodeAtt["Xml"].Value.Split('/');
+                    item.EasyValueItems.AddRange(XMLreader.getXMLItems(gameprefix + split[0], split[1]));
+                }
+                CutsceneSetFlagType.Items.Add(item);
+            }
 
             XmlNodeList renderflagnodes = XMLreader.getXMLNodes("OOT/" + "RenderFunctions", "Flag");
 
@@ -5161,13 +5185,11 @@ namespace SharpOcarina
 
                 if (CutsceneTransitionComboBox.SelectedIndex < 0) CutsceneTransitionComboBox.SelectedIndex = 0;
                 if (CutsceneAsmComboBox.SelectedIndex < 0) CutsceneAsmComboBox.SelectedIndex = 0;
-
+                
 
 
                 CutsceneTransitionComboBox.SelectedIndex = FindSongComboItemValue(CutsceneTransitionComboBox.Items, CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0]);
                 CutsceneAsmComboBox.SelectedIndex = FindSongComboItemValue(CutsceneAsmComboBox.Items, CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0]);
-
-
 
                 #endregion
 
@@ -5181,11 +5203,64 @@ namespace SharpOcarina
 
                 #endregion
 
+                #region trigger exit
+
+                if (CutsceneTabs.SelectedIndex == 7)
+                {
+                    CutsceneTriggerExitValue.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0];
+                }
+
+                #endregion
+
                 #region motion blur
 
                 if (CutsceneTabs.SelectedIndex == 8)
                 {
                     CutsceneMotionBlurValue.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0];
+                }
+
+                #endregion
+
+
+                #region play sound
+
+                if (CutsceneTabs.SelectedIndex == 9)
+                {
+                    CutscenePlaySFXValue.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0];
+                    CutscenePlaySFXCustom.Checked = (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[1] == 1);
+                    CutscenePlaySFXVolume.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[3];
+                    CutscenePlaySFXPitch.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[4];
+                    CutscenePlaySFXReverb.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[2];
+                    if (VanillaSFX.Count == 0)
+                    {
+                        RefreshSFXList();
+                    }
+                }
+
+                #endregion
+
+                #region set flag
+
+                if (CutsceneTabs.SelectedIndex == 10)
+                {
+                    if (CutsceneSetFlagType.SelectedIndex < 0) CutsceneSetFlagType.SelectedIndex = 0;
+                    CutsceneSetFlagType.SelectedIndex = FindSetFlagComboItemValue(CutsceneSetFlagType.Items, CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[1]);
+                    CutsceneSetFlagDisable.Checked = (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[2] == 0);
+                    CutsceneSetFlagValue.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0];
+                    CutsceneSetFlagValue.Hexadecimal = !(CutsceneSetFlagType.SelectedItem as CutsceneSetFlagItem).Decimal;
+                    CutsceneSetFlagEasyValue.Items.Clear();
+                    CutsceneSetFlagEasyValue.Items.Add(new SongItem{ Text = "Unknown", Value = 0 });
+                    CutsceneSetFlagEasyValue.SelectedIndex = 0;
+                    CutsceneSetFlagEasyValue.Items.AddRange((CutsceneSetFlagType.SelectedItem as CutsceneSetFlagItem).EasyValueItems.ToArray());
+                    foreach (SongItem item in CutsceneSetFlagEasyValue.Items)
+                    {
+                        if (item != null && item.Text != "Unknown" && Convert.ToInt32(item.Value) == CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0])
+                        {
+                            CutsceneSetFlagEasyValue.SelectedItem = item;
+                            break;
+                        }
+                    }
+                    CutsceneSetFlagEasyValue.Enabled = CutsceneSetFlagEasyValue.Items.Count > 1;
                 }
 
                 #endregion
@@ -5196,7 +5271,7 @@ namespace SharpOcarina
 
                 if (!settings.MajorasMask)
                 {
-                    autoendframe = new uint[] { 0x01, 0x05, 0x13, 0x0A, 0x3E };
+                    autoendframe = new uint[] { 0x01, 0x05, 0x13, 0x0A, 0x3E, 0xC000, 0xC003 };
                 }
                 else
                 {
@@ -10747,6 +10822,17 @@ namespace SharpOcarina
             return 0;
         }
 
+        private int FindSetFlagComboItemValue(ComboBox.ObjectCollection items, uint marker)
+        {
+            if (items.Count == 0) return -1;
+            foreach (CutsceneSetFlagItem item in items)
+            {
+                if (Convert.ToUInt32(item.Value.ToString()) == marker) return items.IndexOf(item);
+            }
+            return 0;
+        }
+
+
         private void clearSceneDmatableToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string ROM = "";
@@ -10863,7 +10949,7 @@ namespace SharpOcarina
                 CurrentScene.Cutscene[MarkerSelect.SelectedIndex] = new ZCutscene(markerID, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
                 UpdateCutsceneEdit();
 
-                if ((markerID == 0xDE00 || markerID == 0xDE01) && rom64.isSet())
+                if ((markerID >= 0xC000 && markerID <= 0xC003) && rom64.isSet())
                 {
                     if (rom64.CutsceneHookVersion < 1.1f)
                     {
@@ -15739,6 +15825,11 @@ namespace SharpOcarina
                 TitlecardTextbox.Visible = rom64.MMTitleCards;
                 TitlecardTextboxLabel.Visible = rom64.MMTitleCards;
 
+                if (VanillaSFX.Count != 0)
+                {
+                    RefreshSFXList();
+                }
+
                 actorEditControl1.cacheId = 0xFEFE;
                 actorEditControl2.cacheId = 0xFEFE;
                 actorEditControl3.cacheId = 0xFEFE;
@@ -16284,6 +16375,10 @@ namespace SharpOcarina
             RefreshActorCache();
             RefreshObjectCache();
             RefreshBGMCache();
+            if (VanillaSFX.Count != 0)
+            {
+                RefreshSFXList();
+            }
             UpdateForm();
         }
 
@@ -18964,7 +19059,7 @@ namespace SharpOcarina
                     
                     File.Copy(binutilsPath, path + "tools\\mips64-binutils-win32.zip");
 
-                    pleasewait = new PleaseWait("https://github.com/z64tools/z64hdr/archive/refs/heads/main.zip", path + "include\\z64hdr.zip");
+                    pleasewait = new PleaseWait("https://github.com/z64utils/z64hdr/archive/refs/heads/main.zip", path + "include\\z64hdr.zip");
                     pleasewait.ShowDialog();
 
                     String pdetail = @"/c """ + path + "\\z64rom.exe\" --auto-install --no-wait";
@@ -19631,6 +19726,173 @@ namespace SharpOcarina
             RefreshRoomObjectDescription();
         }
 
+        private void CutsceneTriggerExitValue_ValueChanged(object sender, EventArgs e)
+        {
+            if (!MainForm.settings.EnableNewExitFormat && CutsceneTriggerExitValue.Value > CurrentScene.ExitList.Count-1)
+            {
+                CutsceneTriggerExitValue.Value = Clamp(CurrentScene.ExitList.Count - 1, 0, CurrentScene.ExitList.Count - 1);
+            }
+            else if (MainForm.settings.EnableNewExitFormat && CutsceneTriggerExitValue.Value > CurrentScene.ExitListV2.Count - 1)
+            {
+                CutsceneTriggerExitValue.Value = Clamp(CurrentScene.ExitListV2.Count - 1, 0, CurrentScene.ExitListV2.Count - 1);
+
+            }
+            
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0] = (ushort)CutsceneTriggerExitValue.Value;
+            UpdateCutsceneEdit();
+        }
+
+        private void CutsceneSetFlagValue_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0] = (ushort)CutsceneSetFlagValue.Value;
+            UpdateCutsceneEdit();
+        }
+
+        private void CutsceneSetFlagDisable_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[2] = (ushort) (CutsceneSetFlagDisable.Checked ? 0 : 1);
+            //UpdateCutsceneEdit();
+        }
+
+        private void CutsceneSetFlagType_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[1] = Convert.ToUInt16((CutsceneSetFlagType.SelectedItem as CutsceneSetFlagItem).Value);
+            UpdateCutsceneEdit();
+        }
+
+        private void CutsceneSetFlagEasyValue_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if ((CutsceneSetFlagEasyValue.SelectedItem as SongItem).Text != "Unknown")
+            {
+                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0] = Convert.ToUInt16((CutsceneSetFlagEasyValue.SelectedItem as SongItem).Value);
+                UpdateCutsceneEdit();
+            }
+        }
+
+        private void CutscenePlaySFXValue_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0] = (ushort)CutscenePlaySFXValue.Value;
+            UpdateCutsceneEdit();
+        }
+
+        private void CutscenePlaySFXEasyValue_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CutscenePlaySFXCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[1] = (ushort)(CutscenePlaySFXCustom.Checked ? 1 : 0);
+        }
+
+        private void CutscenePlaySFXVolume_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[3] = (ushort) CutscenePlaySFXVolume.Value;
+            UpdateCutsceneEdit();
+        }
+
+        private void CutscenePlaySFXPitch_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[4] = (ushort)CutscenePlaySFXPitch.Value;
+            UpdateCutsceneEdit();
+        }
+
+        private void CutscenePlaySFXReverb_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[2] = (ushort)CutscenePlaySFXReverb.Value;
+            UpdateCutsceneEdit();
+        }
+
+        private void CutscenePlaySFXListFilter_TextChanged(object sender, EventArgs e)
+        {
+            string filterText = CutscenePlaySFXListFilter.Text.ToLower();
+            List<SFX> AllSFX = new List<SFX>();
+            AllSFX.AddRange(VanillaSFX);
+            AllSFX.AddRange(CustomSFX);
+            if (string.IsNullOrWhiteSpace(filterText))
+            {
+
+                SFXbindingSource.DataSource = new BindingList<SFX>(AllSFX);
+            }
+            else
+            {
+                SFXbindingSource.DataSource = new BindingList<SFX>(
+                    AllSFX.Where(item =>
+                        item.name.ToLower().Contains(filterText) ||
+                        item.debugname.ToLower().Contains(filterText)
+                    ).ToList()
+                );
+            }
+        }
+
+        private void CutscenePlaySFXList_Click(object sender, EventArgs e)
+        {
+            if (CutscenePlaySFXList.SelectedItem != null)
+            {
+                CutscenePlaySFXValue.Value = (CutscenePlaySFXList.SelectedItem as SFX).ID;
+                CutscenePlaySFXCustom.Checked = (CutscenePlaySFXList.SelectedItem as SFX).custom;
+                UpdateCutsceneEdit();
+            }
+                
+        }
+
+        private void RefreshSFXList()
+        {
+            if (rom64.isSet())
+            {
+                if (VanillaSFX.Count == 0)
+                {
+                    XmlDocument doc = new XmlDocument();
+                    var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/OOT/SFXNames.xml");
+                    FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                    doc.Load(fs);
+                    XmlNodeList nodes = doc.SelectNodes("Table/SFX");
+
+                    foreach (XmlNode node in nodes)
+                    {
+                        if (node is XmlElement element)
+                        {
+                            XmlAttributeCollection attr = element.Attributes;
+                            ushort ID = Convert.ToUInt16(attr["Key"].Value,16);
+                            ushort bank = Convert.ToUInt16(attr["Bank"].Value);
+                            bool unused = attr["Unused"] != null;
+                            string name = node.InnerText;
+                            string debugname = attr["DebugName"].Value;
+                            string comment = attr["Comment"].Value;
+                            VanillaSFX.Add(new SFX(ID, bank, false, name, debugname, comment, unused));
+
+                        }
+
+                    }
+                    fs.Close();
+                }
+
+                CustomSFX.Clear();
+                string[] lines = File.ReadAllLines(rom64.getPath() + "/include/sfx_enum.h");
+                ushort cnt = 0;
+
+                foreach(string line in lines)
+                {
+                    string trimmedline = line.Trim();
+                    if (trimmedline.Contains("SOUND_"))
+                    {
+                        CustomSFX.Add(new SFX(cnt,0,true,trimmedline,"","",false));
+                        cnt++;
+                    }
+                }
+
+                List<SFX> AllSFX = new List<SFX>();
+                AllSFX.AddRange(VanillaSFX);
+                AllSFX.AddRange(CustomSFX);
+
+                SFXbindingSource.DataSource = new BindingList<SFX>(AllSFX);
+                CutscenePlaySFXList.DataSource = SFXbindingSource;
+            }
+           
+
+        }
+
         public void EasterEggPhaseOne()
         {
             EasterEggToolStripMenuItem.Enabled = true;
@@ -20072,6 +20334,19 @@ namespace SharpOcarina
         }
     }
 
+    public class CutsceneSetFlagItem
+    {
+        public string Text { get; set; }
+        public object Value { get; set; }
+        public bool Decimal { get; set; }
+        public List<SongItem> EasyValueItems { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
+    }
+
     public class MarkerItem
     {
         public string Text { get; set; }
@@ -20329,6 +20604,33 @@ namespace SharpOcarina
             objects = _objects;
             NoMMYRot = _NoMMYRot;
         }
+    }
+
+    public class SFX
+    {
+        public ushort ID = 0;
+        public string name = "";
+        public string debugname = "";
+        public string comment = "";
+        public bool custom = false;
+        public bool unused = false;
+
+        public SFX(ushort ID, ushort bank, bool custom, string name, string debugname, string comment, bool unused)
+        {
+            this.custom = custom;
+            this.name = name;
+            this.debugname = debugname;
+            this.comment = comment;
+            if (!custom) this.ID = (ushort)(ID | 0x800 | (bank << 12));
+            else this.ID = ID;
+            this.unused = unused;
+        }
+
+        public override string ToString()
+        {
+            return $"{ID.ToString("X4")} - {name}" + (debugname != "" ? $" / {debugname}" : "") + $" {comment}" + (unused ? " (unused)" : "");
+        }
+
     }
 
     public class ColorScheme

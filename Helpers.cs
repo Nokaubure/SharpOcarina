@@ -478,7 +478,11 @@ namespace SharpOcarina
             int ToAdd = Length - (Data.Count % Length);
             if (ToAdd != Length) for (int i = 0; i < ToAdd; i++) Data.Add(0);
         }
-
+        public static uint FloatToHex(float value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            return BitConverter.ToUInt32(bytes, 0);
+        }
 
 
     }
@@ -550,6 +554,7 @@ namespace SharpOcarina
             }
 
         }
+
     }
 
     public static class DebugConsole

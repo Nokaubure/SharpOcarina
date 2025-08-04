@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Imaging;
@@ -4049,14 +4050,52 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, (ushort)(cutscene.Data[0] << 8 | cutscene.Data[1]));
                     Helpers.Append32(ref data, 0x00000000);
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0xDE01)) //motion_blur
+                else if ((Game == "OOT" && cutscene.Marker == 0xC000)) //trigger exit
+                {
+                    Helpers.Append32(ref data, (uint)cutscene.Marker);
+                    Helpers.Append32(ref data, 0x00000001);
+                    Helpers.Append16(ref data, cutscene.Data[0]);
+                    Helpers.Append16(ref data, cutscene.StartFrame);
+                    Helpers.Append16(ref data, cutscene.StartFrame);
+                    
+                }
+                else if ((Game == "OOT" && cutscene.Marker == 0xC001)) //motion blur
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
                     Helpers.Append16(ref data, cutscene.Data[0]);
                     Helpers.Append16(ref data, cutscene.StartFrame);
                     Helpers.Append16(ref data, cutscene.EndFrame);
+                }
+                else if ((Game == "OOT" && cutscene.Marker == 0xC002)) //play sound
+                {
+                    Helpers.Append32(ref data, (uint)cutscene.Marker);
+                    Helpers.Append32(ref data, 0x00000001);
+                    Helpers.Append16(ref data, cutscene.Data[0]); //SFX id
+                    Helpers.Append16(ref data, cutscene.StartFrame);
                     Helpers.Append16(ref data, cutscene.EndFrame);
+                    data.Add((byte)cutscene.Data[1]); //type
+                    data.Add((byte)cutscene.Data[2]); //reverb
+                    uint vol = Helpers.FloatToHex((cutscene.Data[3] / 100.0f));
+                    uint freq = Helpers.FloatToHex((cutscene.Data[4] / 100.0f));
+                    Helpers.Append32(ref data, vol); //vol
+                    Helpers.Append32(ref data, freq); //freq
+                    Helpers.Append16(ref data, 0); //range unused
+                    Helpers.Append16(ref data, 0); //X unused
+                    Helpers.Append16(ref data, 0); //Y unused
+                    Helpers.Append16(ref data, 0); //Z unused
+
+                }
+                else if ((Game == "OOT" && cutscene.Marker == 0xC003)) //set flag
+                {
+                    Helpers.Append32(ref data, (uint)cutscene.Marker);
+                    Helpers.Append32(ref data, 0x00000001);
+                    byte CmdFlag = (byte) (cutscene.Data[1] | (cutscene.Data[2] << 7));
+                    data.Add(CmdFlag);
+                    data.Add((byte)cutscene.Data[0]);
+                    Helpers.Append16(ref data, cutscene.StartFrame);
+                    Helpers.Append16(ref data, cutscene.StartFrame);
+
                 }
                 else if (cutscene.CutsceneActors.Count > 0)
                 {
@@ -4087,7 +4126,7 @@ namespace SharpOcarina
                         actorframes += actoraction.Frames;
                     }
                 }
-
+                AddPadding(ref data, 8);
             }
 
             Helpers.Append64(ref data, 0xFFFFFFFF00000000); // cutscene terminator

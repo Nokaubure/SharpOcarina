@@ -13,8 +13,10 @@
   <Marker Key="008C" Tab="1">Set Time</Marker>
   <Marker Key="03E8" Tab="5">ASM execution</Marker> 
   <Marker Key="002D" Tab="4">Transition effect</Marker>
-  <Marker Key="DE00" Tab="7">Trigger Exit / Set Flag (z64rom)</Marker>
-  <Marker Key="DE01" Tab="8">Motion Blur (z64rom)</Marker>
+  <Marker Key="C000" Tab="7">Trigger Exit (z64rom)</Marker>
+  <Marker Key="C001" Tab="8">Motion Blur (z64rom)</Marker>
+  <Marker Key="C002" Tab="9">Play Sound (z64rom)</Marker>
+  <Marker Key="C003" Tab="10">Set Flag (z64rom)</Marker>
   <Marker Key="003E" Tab="6" Actor="Navi" Type="Actor">Navi actions (Slot 9)</Marker>
   <Marker Key="0012" Tab="6" Actor="Zelda_Child" Type="Actor">Child Zelda actions (Slot 1)</Marker>
   <Marker Key="0027" Tab="6" Actor="Rauru" Type="Actor">Rauru actions (Slot 1)</Marker><!-- 00A6  -->

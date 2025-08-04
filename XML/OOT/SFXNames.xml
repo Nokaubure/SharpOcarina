@@ -1,0 +1,1250 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Table KeyType="System.Byte" ValueType="System.String">
+	<SFX Key="0" Bank="0" DebugName="NA_SE_PL_WALK_GROUND" Comment="Dirt paths, other miscellaneous ground types." >Child Link — Walking on Ground</SFX>
+	<SFX Key="1" Bank="0" DebugName="NA_SE_PL_WALK_SAND" Comment="" >Child Link — Walking on Sand</SFX>
+	<SFX Key="2" Bank="0" DebugName="NA_SE_PL_WALK_CONCRETE" Comment="" >Child Link — Walking on Stone</SFX>
+	<SFX Key="3" Bank="0" DebugName="NA_SE_PL_WALK_DIRT" Comment="Mismatched filename?" >Child Link — Walking on Jabu-Jabu's Insides</SFX>
+	<SFX Key="4" Bank="0" DebugName="NA_SE_PL_WALK_WATER0" Comment="" >Child Link — Walking in Shallow Water</SFX>
+	<SFX Key="5" Bank="0" DebugName="NA_SE_PL_WALK_WATER1" Comment="" >Child Link — Walking in Deep Water</SFX>
+	<SFX Key="6" Bank="0" DebugName="NA_SE_PL_WALK_WATER2" Comment="Mismatched filename? Tall grass found in Kokiri Forest" >Child Link — Walking in Tall Grass</SFX>
+	<SFX Key="7" Bank="0" DebugName="NA_SE_PL_WALK_MAGMA" Comment="" >Child Link — Walking in Magma</SFX>
+	<SFX Key="8" Bank="0" DebugName="NA_SE_PL_WALK_GRASS" Comment="" >Child Link — Walking on Grass</SFX>
+	<SFX Key="9" Bank="0" DebugName="NA_SE_PL_WALK_IRON" Comment="Mismatched filename?" >Child Link ­— Walking on Carpets</SFX>
+	<SFX Key="0A" Bank="0" DebugName="NA_SE_PL_WALK_LADDER" Comment="Also ladder climb sound for Child and Adult Link." >Child Link — Walking on Wood</SFX>
+	<SFX Key="0B" Bank="0" DebugName="NA_SE_PL_WALK_GLASS" Comment="Mismatched filename?" >Child Link — Walking on Wood Bridges</SFX>
+	<SFX Key="0C" Bank="0" DebugName="NA_SE_PL_WALK_WALL" Comment="" >Climbing Vine Walls</SFX>
+	<SFX Key="0D" Bank="0" DebugName="NA_SE_PL_WALK_HEAVYBOOTS" Comment="" >Walking with Iron Boots</SFX>
+	<SFX Key="0E" Bank="0" DebugName="NA_SE_PL_DUMMY_14" Comment="" Unused="1"></SFX>
+	<SFX Key="0F" Bank="0" DebugName="NA_SE_PL_WALK_ICE" Comment="" >Child Link — Walking on Ice</SFX>
+	<SFX Key="10" Bank="0" DebugName="NA_SE_PL_JUMP" Comment="" >Child Link — Jumping off Ground</SFX>
+	<SFX Key="11" Bank="0" DebugName="NA_SE_PL_JUMP_SAND" Comment="" >Child Link — Jumping off Sand</SFX>
+	<SFX Key="12" Bank="0" DebugName="NA_SE_PL_JUMP_CONCRETE" Comment="" >Child Link — Jumping off Stone</SFX>
+	<SFX Key="13" Bank="0" DebugName="NA_SE_PL_JUMP_DIRT" Comment="Mismatched filename?" >Child Link — Jumping off Jabu-Jabu's Insides</SFX>
+	<SFX Key="14" Bank="0" DebugName="NA_SE_PL_JUMP_WATER0" Comment="" >Child Link — Jumping out of Shallow Water</SFX>
+	<SFX Key="15" Bank="0" DebugName="NA_SE_PL_JUMP_WATER1" Comment="" >Child Link — Jumping out of Deep Water</SFX>
+	<SFX Key="16" Bank="0" DebugName="NA_SE_PL_JUMP_WATER2" Comment="Mismatched filename?" >Child Link — Jumping out of Tall Grass</SFX>
+	<SFX Key="17" Bank="0" DebugName="NA_SE_PL_JUMP_MAGMA" Comment="" >Child Link — Jumping out of Magma</SFX>
+	<SFX Key="18" Bank="0" DebugName="NA_SE_PL_JUMP_GRASS" Comment="" >Child Link ­— Jumping off Grass</SFX>
+	<SFX Key="19" Bank="0" DebugName="NA_SE_PL_JUMP_IRON" Comment="Mismatched filename?" >Child Link — Jumping off Carpets</SFX>
+	<SFX Key="1A" Bank="0" DebugName="NA_SE_PL_JUMP_LADDER" Comment="" >Child Link — Jumping off Wood</SFX>
+	<SFX Key="1B" Bank="0" DebugName="NA_SE_PL_JUMP_GLASS" Comment="Mismatched filename?" >Child Link — Jumping off Wood Bridges</SFX>
+	<SFX Key="1C" Bank="0" DebugName="NA_SE_PL_DUMMY28" Comment="" Unused="1"></SFX>
+	<SFX Key="1D" Bank="0" DebugName="NA_SE_PL_JUMP_HEAVYBOOTS" Comment="" >Jumping with Iron Boots</SFX>
+	<SFX Key="1E" Bank="0" DebugName="NA_SE_PL_DUMMY30" Comment="" Unused="1"></SFX>
+	<SFX Key="1F" Bank="0" DebugName="NA_SE_PL_JUMP_ICE" Comment="" >Child Link — Jumping off Ice</SFX>
+	<SFX Key="20" Bank="0" DebugName="NA_SE_PL_LAND" Comment="" >Child Link — Landing on Ground</SFX>
+	<SFX Key="21" Bank="0" DebugName="NA_SE_PL_LAND_SAND" Comment="" >Child Link — Landing on Sand</SFX>
+	<SFX Key="22" Bank="0" DebugName="NA_SE_PL_LAND_CONCRETE" Comment="" >Child Link — Landing on Stone</SFX>
+	<SFX Key="23" Bank="0" DebugName="NA_SE_PL_LAND_DIRT" Comment="Mismatched filename?" >Child Link — Landing on Jabu-Jabu's Insides</SFX>
+	<SFX Key="24" Bank="0" DebugName="NA_SE_PL_LAND_WATER0" Comment="" >Child Link — Landing in Shallow Water</SFX>
+	<SFX Key="25" Bank="0" DebugName="NA_SE_PL_LAND_WATER1" Comment="" >Child Link — Landing in Deep Water</SFX>
+	<SFX Key="26" Bank="0" DebugName="NA_SE_PL_LAND_WATER2" Comment="Mismatched filename?" >Child Link — Landing in Tall Grass</SFX>
+	<SFX Key="27" Bank="0" DebugName="NA_SE_PL_LAND_MAGMA" Comment="" >Child Link — Landing in Magma</SFX>
+	<SFX Key="28" Bank="0" DebugName="NA_SE_PL_LAND_GRASS" Comment="" >Child Link — Landing on Grass</SFX>
+	<SFX Key="29" Bank="0" DebugName="NA_SE_PL_LAND_IRON" Comment="Mismatched filename?" >Child Link — Landing on Carpets</SFX>
+	<SFX Key="2A" Bank="0" DebugName="NA_SE_PL_LAND_LADDER" Comment="" >Child Link — Landing on Wood</SFX>
+	<SFX Key="2B" Bank="0" DebugName="NA_SE_PL_LAND_GLASS" Comment="Mismatched filename?" >Child Link — Landing on Wood Bridges</SFX>
+	<SFX Key="2C" Bank="0" DebugName="NA_SE_PL_DUMMY_44" Comment="" Unused="1"></SFX>
+	<SFX Key="2D" Bank="0" DebugName="NA_SE_PL_LAND_HEAVYBOOTS" Comment="" >Landing with Iron Boots</SFX>
+	<SFX Key="2E" Bank="0" DebugName="NA_SE_PL_DUMMY_46" Comment="" Unused="1"></SFX>
+	<SFX Key="2F" Bank="0" DebugName="NA_SE_PL_LAND_ICE" Comment="" >Child Link — Landing on Ice</SFX>
+	<SFX Key="30" Bank="0" DebugName="NA_SE_PL_SLIPDOWN" Comment="e.g. getting on vine wall from top" >Going over Ledge from Top</SFX>
+	<SFX Key="31" Bank="0" DebugName="NA_SE_PL_CLIMB_CLIFF" Comment="e.g. getting off vine wall from top" >Going over Ledge from Side</SFX>
+	<SFX Key="32" Bank="0" DebugName="NA_SE_PL_SIT_ON_HORSE" Comment="" >Getting on Epona</SFX>
+	<SFX Key="33" Bank="0" DebugName="NA_SE_PL_GET_OFF_HORSE" Comment="" >Getting off Epona</SFX>
+	<SFX Key="34" Bank="0" DebugName="NA_SE_PL_TAKE_OUT_SHIELD" Comment="Meant for using sword/shield on Epona?" Unused="1"></SFX>
+	<SFX Key="35" Bank="0" DebugName="NA_SE_PL_CHANGE_ARMS" Comment="" >Changing Held Item</SFX>
+	<SFX Key="36" Bank="0" DebugName="NA_SE_PL_CATCH_BOOMERANG" Comment="" >Catching Boomerang</SFX>
+	<SFX Key="37" Bank="0" DebugName="NA_SE_PL_DUMMY_55" Comment="land in water?" Unused="1"></SFX>
+	<SFX Key="38" Bank="0" DebugName="NA_SE_PL_DUMMY_56" Comment="land in water?" Unused="1"></SFX>
+	<SFX Key="39" Bank="0" DebugName="NA_SE_PL_SWIM" Comment="" >Swimming in Water</SFX>
+	<SFX Key="3A" Bank="0" DebugName="NA_SE_PL_THROW" Comment="e.g. bombs, grass, etc." >Throwing Objects</SFX>
+	<SFX Key="3B" Bank="0" DebugName="NA_SE_PL_BODY_BOUND" Comment="Link running into a bumper?" Unused="1"></SFX>
+	<SFX Key="3C" Bank="0" DebugName="NA_SE_PL_ROLL" Comment="" >Rolling and Backflips</SFX>
+	<SFX Key="3D" Bank="0" DebugName="NA_SE_PL_SKIP" Comment="" >Side-jumping</SFX>
+	<SFX Key="3E" Bank="0" DebugName="NA_SE_PL_BODY_HIT" Comment="e.g. enemy, fall damage" >Hit by Something</SFX>
+	<SFX Key="3F" Bank="0" DebugName="NA_SE_PL_DAMAGE" Comment="" >Hit by Enemy</SFX>
+	<SFX Key="40" Bank="0" DebugName="NA_SE_PL_SLIP" Comment="" Unused="1"></SFX>
+	<SFX Key="41" Bank="0" DebugName="NA_SE_PL_SLIP_SAND" Comment="" Unused="1"></SFX>
+	<SFX Key="42" Bank="0" DebugName="NA_SE_PL_SLIP_CONCRETE" Comment="" Unused="1"></SFX>
+	<SFX Key="43" Bank="0" DebugName="NA_SE_PL_SLIP_DIRT" Comment="" Unused="1"></SFX>
+	<SFX Key="44" Bank="0" DebugName="NA_SE_PL_SLIP_WATER0" Comment="Sounds like 0x43" Unused="1"></SFX>
+	<SFX Key="45" Bank="0" DebugName="NA_SE_PL_SLIP_WATER1" Comment="Sounds like 0x43" Unused="1"></SFX>
+	<SFX Key="46" Bank="0" DebugName="NA_SE_PL_SLIP_WATER2" Comment="Sounds like 0x43" Unused="1"></SFX>
+	<SFX Key="47" Bank="0" DebugName="NA_SE_PL_SLIP_MAGMA" Comment="Sounds like 0x43" Unused="1"></SFX>
+	<SFX Key="48" Bank="0" DebugName="NA_SE_PL_SLIP_GRASS" Comment="" Unused="1"></SFX>
+	<SFX Key="49" Bank="0" DebugName="NA_SE_PL_SLIP_IRON" Comment="" Unused="1"></SFX>
+	<SFX Key="4A" Bank="0" DebugName="NA_SE_PL_SLIP_LADDER" Comment="" Unused="1"></SFX>
+	<SFX Key="4B" Bank="0" DebugName="NA_SE_PL_SLIP_GLASS" Comment="Sounds like 0x4A" Unused="1"></SFX>
+	<SFX Key="4C" Bank="0" DebugName="NA_SE_PL_DUMMY76" Comment="Water drop?" Unused="1"></SFX>
+	<SFX Key="4D" Bank="0" DebugName="NA_SE_PL_SLIP_HEAVYBOOTS" Comment="Sounds like 0x4A" Unused="1"></SFX>
+	<SFX Key="4E" Bank="0" DebugName="NA_SE_PL_DUMMY78" Comment="" Unused="1"></SFX>
+	<SFX Key="4F" Bank="0" DebugName="NA_SE_PL_SLIP_ICE" Comment="" Unused="1"></SFX>
+	<SFX Key="50" Bank="0" DebugName="NA_SE_PL_BOUND" Comment="" >Rebound from Hit onto Ground</SFX>
+	<SFX Key="51" Bank="0" DebugName="NA_SE_PL_BOUND_SAND" Comment="" >Rebound from Hit onto Sand</SFX>
+	<SFX Key="52" Bank="0" DebugName="NA_SE_PL_BOUND_CONCRETE" Comment="" >Rebound from Hit onto Stone</SFX>
+	<SFX Key="53" Bank="0" DebugName="NA_SE_PL_BOUND_DIRT" Comment="Mismatched filename?" >Rebound from Hit onto Jabu-Jabu's Insides</SFX>
+	<SFX Key="54" Bank="0" DebugName="NA_SE_PL_BOUND_WATER0" Comment="" >Rebound from Hit into Shallow Water</SFX>
+	<SFX Key="55" Bank="0" DebugName="NA_SE_PL_BOUND_WATER1" Comment="" >Rebound from Hit into Deep Water</SFX>
+	<SFX Key="56" Bank="0" DebugName="NA_SE_PL_BOUND_WATER2" Comment="Mismatched filename?" >Rebound from Hit into Tall Grass</SFX>
+	<SFX Key="57" Bank="0" DebugName="NA_SE_PL_BOUND_MAGMA" Comment="" >Rebound from Hit into Magma</SFX>
+	<SFX Key="58" Bank="0" DebugName="NA_SE_PL_BOUND_GRASS" Comment="" >Rebound from Hit onto Grass</SFX>
+	<SFX Key="59" Bank="0" DebugName="NA_SE_PL_BOUND_IRON" Comment="Mismatched filename?" >Rebound from Hit onto Carpets</SFX>
+	<SFX Key="5A" Bank="0" DebugName="NA_SE_PL_BOUND_LADDER" Comment="" >Rebound from Hit onto Wood</SFX>
+	<SFX Key="5B" Bank="0" DebugName="NA_SE_PL_BOUND_WOOD" Comment="" >Rebound from Hit onto Wood Bridges</SFX>
+	<SFX Key="5C" Bank="0" DebugName="NA_SE_PL_DUMMY_92" Comment="?" Unused="1"></SFX>
+	<SFX Key="5D" Bank="0" DebugName="NA_SE_PL_BOUND_HEAVYBOOTS" Comment="" Unused="1"></SFX>
+	<SFX Key="5E" Bank="0" DebugName="NA_SE_PL_DUMMY_94" Comment="?" Unused="1"></SFX>
+	<SFX Key="5F" Bank="0" DebugName="NA_SE_PL_BOUND_ICE" Comment="" >Rebound from Hit onto Ice</SFX>
+	<SFX Key="60" Bank="0" DebugName="NA_SE_PL_DUMMY_96" Comment="Sounds like 0D" Unused="1"></SFX>
+	<SFX Key="61" Bank="0" DebugName="NA_SE_PL_DUMMY_97" Comment="Sounds like 1D" Unused="1"></SFX>
+	<SFX Key="62" Bank="0" DebugName="NA_SE_PL_DUMMY_98" Comment="Sounds like 2D" Unused="1"></SFX>
+	<SFX Key="63" Bank="0" DebugName="NA_SE_PL_FACE_UP" Comment="" >Surfacing from Water</SFX>
+	<SFX Key="64" Bank="0" DebugName="NA_SE_PL_DIVE_BUBBLE" Comment="" >Diving in Water</SFX>
+	<SFX Key="65" Bank="0" DebugName="NA_SE_PL_MOVE_BUBBLE" Comment="Moving while diving has no sound effect" Unused="1"></SFX>
+	<SFX Key="66" Bank="0" DebugName="NA_SE_PL_METALEFFECT_KID" Comment="Also when wearing Iron Boots as Adult Link" >Child Link — Clanging Equipment when Walking</SFX>
+	<SFX Key="67" Bank="0" DebugName="NA_SE_PL_METALEFFECT_ADULT" Comment="" >Adult Link — Clanging Equipment when Walking</SFX>
+	<SFX Key="68" Bank="0" DebugName="NA_SE_PL_SPARK" Comment="Long sound" Unused="1"></SFX>
+	<SFX Key="69" Bank="0" DebugName="NA_SE_PL_PULL_UP_PLANT" Comment="" >Picking up Grass</SFX>
+	<SFX Key="6A" Bank="0" DebugName="NA_SE_PL_PULL_UP_ROCK" Comment="" >Picking up Rock or Bomb Flower</SFX>
+	<SFX Key="6B" Bank="0" DebugName="NA_SE_PL_IN_BUBBLE" Comment="(long sound)" >While Underwater</SFX>
+	<SFX Key="6C" Bank="0" DebugName="NA_SE_PL_PULL_UP_BIGROCK" Comment="" >Picking up Large, Obsidian Rocks</SFX>
+	<SFX Key="6D" Bank="0" DebugName="NA_SE_PL_SWORD_CHARGE" Comment="" >Spin Attack Charge</SFX>
+	<SFX Key="6E" Bank="0" DebugName="NA_SE_PL_FREEZE" Comment="" Unused="1"></SFX>
+	<SFX Key="6F" Bank="0" DebugName="NA_SE_PL_PULL_UP_POT" Comment="" >Picking up Pot</SFX>
+	<SFX Key="70" Bank="0" DebugName="NA_SE_PL_KNOCK" Comment="Unused boot-tapping noise?" Unused="1"></SFX>
+	<SFX Key="71" Bank="0" DebugName="NA_SE_PL_CALM_HIT" Comment="Mismatched filename?" >Shuffling in Idle Animation</SFX>
+	<SFX Key="72" Bank="0" DebugName="NA_SE_PL_CALM_PAT" Comment="Unused idle anim sound?" Unused="1"></SFX>
+	<SFX Key="73" Bank="0" DebugName="NA_SE_PL_SUBMERGE" Comment="Used diving noise is an ENVIRONMENT sound" Unused="1"></SFX>
+	<SFX Key="74" Bank="0" DebugName="NA_SE_PL_FREEZE_S" Comment="" >Frozen by Enemy</SFX>
+	<SFX Key="75" Bank="0" DebugName="NA_SE_PL_ICE_BROKEN" Comment="" >Breaking Out of Freeze Effect</SFX>
+	<SFX Key="76" Bank="0" DebugName="NA_SE_PL_SLIP_ICE_LELEL" Comment="Ice slipping sound" Unused="1"></SFX>
+	<SFX Key="77" Bank="0" DebugName="NA_SE_PL_PUT_OUT_ITEM" Comment="Put away item?" Unused="1"></SFX>
+	<SFX Key="78" Bank="0" DebugName="NA_SE_PL_PULL_UP_WOODBOX" Comment="" >Picking up Small Wooden Crate</SFX>
+	<SFX Key="79" Bank="0" DebugName="NA_SE_PL_MAGIC_FIRE" Comment="" >Casting Din's Fire</SFX>
+	<SFX Key="7A" Bank="0" DebugName="NA_SE_PL_MAGIC_WIND_NORMAL" Comment="" >Casting Farore's Wind</SFX>
+	<SFX Key="7B" Bank="0" DebugName="NA_SE_PL_MAGIC_WIND_WARP" Comment="" >Warping with Farore's Wind</SFX>
+	<SFX Key="7C" Bank="0" DebugName="NA_SE_PL_MAGIC_SOUL_NORMAL" Comment="Sound effect prints 087C in ScrPrt, but Nayru's Love usage prints 007C" Unused="1">Using Nayru's Love</SFX>
+	<SFX Key="7D" Bank="0" DebugName="NA_SE_PL_ARROW_CHARGE_FIRE" Comment="Sound effect prints 087D in ScrPrt, but fire arrow prints 007D" Unused="1">Charging Fire Arrow</SFX>
+	<SFX Key="7E" Bank="0" DebugName="NA_SE_PL_ARROW_CHARGE_ICE" Comment="Sound effect prints 087E in ScrPrt, but ice arrow prints 007E" Unused="1">Charging Ice Arrow</SFX>
+	<SFX Key="7F" Bank="0" DebugName="NA_SE_PL_ARROW_CHARGE_LIGHT" Comment="Sound effect prints 087F in ScrPrt, but light arrow prints 007F" Unused="1">Charging Light Arrow</SFX>
+	<SFX Key="80" Bank="0" DebugName="NA_SE_PL_DUMMY_128" Comment="" >Adult Link — Walking on Ground</SFX>
+	<SFX Key="81" Bank="0" DebugName="NA_SE_PL_DUMMY_129" Comment="" >Adult Link — Walking on Sand</SFX>
+	<SFX Key="82" Bank="0" DebugName="NA_SE_PL_DUMMY_130" Comment="" >Adult Link — Walking on Stone</SFX>
+	<SFX Key="83" Bank="0" DebugName="NA_SE_PL_PULL_UP_RUTO" Comment="Also used for walking on Jabu-Jabu's insides as Adult Link" >Picking up Ruto</SFX>
+	<SFX Key="84" Bank="0" DebugName="NA_SE_PL_DUMMY_132" Comment="" >Adult Link — Walking in Shallow Water</SFX>
+	<SFX Key="85" Bank="0" DebugName="NA_SE_PL_DUMMY_133" Comment="" >Adult Link — Walking in Deep Water</SFX>
+	<SFX Key="86" Bank="0" DebugName="NA_SE_PL_DUMMY_134" Comment="" >Adult Link — Walking in Tall Grass</SFX>
+	<SFX Key="87" Bank="0" DebugName="NA_SE_PL_DUMMY_135" Comment="" >Adult Link — Walking in Magma</SFX>
+	<SFX Key="88" Bank="0" DebugName="NA_SE_PL_DUMMY_136" Comment="" >Adult Link — Walking on Grass</SFX>
+	<SFX Key="89" Bank="0" DebugName="NA_SE_PL_DUMMY_137" Comment="" >Adult Link — Walking on Carpets</SFX>
+	<SFX Key="8A" Bank="0" DebugName="NA_SE_PL_DUMMY_138" Comment="" >Adult Link — Walking on Wood</SFX>
+	<SFX Key="8B" Bank="0" DebugName="NA_SE_PL_DUMMY_139" Comment="" >Adult Link — Walking on Wood Bridges</SFX>
+	<SFX Key="8C" Bank="0" DebugName="NA_SE_PL_DUMMY_140" Comment="Sounds like it could be adult version of 0C, but Adult Link uses 0C too." Unused="1"></SFX>
+	<SFX Key="8D" Bank="0" DebugName="NA_SE_PL_DUMMY_141" Comment="Sounds like 0D" Unused="1"></SFX>
+	<SFX Key="8E" Bank="0" DebugName="NA_SE_PL_DUMMY_142" Comment="Sounds like 80" Unused="1"></SFX>
+	<SFX Key="8F" Bank="0" DebugName="NA_SE_PL_DUMMY_143" Comment="" >Adult Link — Walking on Ice</SFX>
+	<SFX Key="90" Bank="0" DebugName="NA_SE_PL_DUMMY_144" Comment="" >Adult Link — Jumping off Ground</SFX>
+	<SFX Key="91" Bank="0" DebugName="NA_SE_PL_DUMMY_145" Comment="" >Adult Link — Jumping off Sand</SFX>
+	<SFX Key="92" Bank="0" DebugName="NA_SE_PL_DUMMY_146" Comment="" >Adult Link — Jumping off Stone</SFX>
+	<SFX Key="93" Bank="0" DebugName="NA_SE_PL_DUMMY_147" Comment="" >Adult Link — Jumping off Jabu-Jabu's Insides</SFX>
+	<SFX Key="94" Bank="0" DebugName="NA_SE_PL_DUMMY_148" Comment="" >Adult Link — Jumping out of Shallow Water</SFX>
+	<SFX Key="95" Bank="0" DebugName="NA_SE_PL_DUMMY_149" Comment="" >Adult Link — Jumping out of Deep Water</SFX>
+	<SFX Key="96" Bank="0" DebugName="NA_SE_PL_DUMMY_150" Comment="" >Adult Link — Jumping out of Tall Grass</SFX>
+	<SFX Key="97" Bank="0" DebugName="NA_SE_PL_DUMMY_151" Comment="" >Adult Link — Jumping out of Magma</SFX>
+	<SFX Key="98" Bank="0" DebugName="NA_SE_PL_DUMMY_152" Comment="" >Adult Link — Jumping off Grass</SFX>
+	<SFX Key="99" Bank="0" DebugName="NA_SE_PL_DUMMY_153" Comment="" >Adult Link — Jumping off Carpets</SFX>
+	<SFX Key="9A" Bank="0" DebugName="NA_SE_PL_DUMMY_154" Comment="" >Adult Link — Jumping off Wood</SFX>
+	<SFX Key="9B" Bank="0" DebugName="NA_SE_PL_DUMMY_155" Comment="" >Adult Link — Jumping off Wood Bridges</SFX>
+	<SFX Key="9C" Bank="0" DebugName="NA_SE_PL_DUMMY_156" Comment="Sounds like 80" Unused="1"></SFX>
+	<SFX Key="9D" Bank="0" DebugName="NA_SE_PL_DUMMY_157" Comment="Sounds like 1D" Unused="1"></SFX>
+	<SFX Key="9E" Bank="0" DebugName="NA_SE_PL_DUMMY_158" Comment="Sounds like 80" Unused="1"></SFX>
+	<SFX Key="9F" Bank="0" DebugName="NA_SE_PL_DUMMY_159" Comment="" >Adult Link — Jumping off Ice</SFX>
+	<SFX Key="A0" Bank="0" DebugName="NA_SE_PL_DUMMY_160" Comment="" >Adult Link — Landing on Ground</SFX>
+	<SFX Key="A1" Bank="0" DebugName="NA_SE_PL_DUMMY_161" Comment="" >Adult Link — Landing on Sand</SFX>
+	<SFX Key="A2" Bank="0" DebugName="NA_SE_PL_DUMMY_162" Comment="" >Adult Link — Landing on Stone</SFX>
+	<SFX Key="A3" Bank="0" DebugName="NA_SE_PL_DUMMY_163" Comment="" >Adult Link — Landing on Jabu-Jabu's Insides</SFX>
+	<SFX Key="A4" Bank="0" DebugName="NA_SE_PL_DUMMY_164" Comment="" >Adult Link — Landing in Shallow Water</SFX>
+	<SFX Key="A5" Bank="0" DebugName="NA_SE_PL_DUMMY_165" Comment="" >Adult Link — Landing in Deep Water</SFX>
+	<SFX Key="A6" Bank="0" DebugName="NA_SE_PL_DUMMY_166" Comment="" >Adult Link — Landing in Tall Grass</SFX>
+	<SFX Key="A7" Bank="0" DebugName="NA_SE_PL_DUMMY_167" Comment="" >Adult Link — Landing in Magma</SFX>
+	<SFX Key="A8" Bank="0" DebugName="NA_SE_PL_DUMMY_168" Comment="" >Adult Link — Landing on Grass</SFX>
+	<SFX Key="A9" Bank="0" DebugName="NA_SE_PL_DUMMY_169" Comment="" >Adult Link — Landing on Carpets</SFX>
+	<SFX Key="AA" Bank="0" DebugName="NA_SE_PL_DUMMY_170" Comment="" >Adult Link — Landing on Wood</SFX>
+	<SFX Key="AB" Bank="0" DebugName="NA_SE_PL_DUMMY_171" Comment="" >Adult Link — Landing on Wood Bridges</SFX>
+	<SFX Key="AC" Bank="0" DebugName="NA_SE_PL_DUMMY_172" Comment="Sounds like 80" Unused="1"></SFX>
+	<SFX Key="AD" Bank="0" DebugName="NA_SE_PL_DUMMY_173" Comment="Sounds like 2D" Unused="1"></SFX>
+	<SFX Key="AE" Bank="0" DebugName="NA_SE_PL_DUMMY_174" Comment="Sounds like 80" Unused="1"></SFX>
+	<SFX Key="AF" Bank="0" DebugName="NA_SE_PL_DUMMY_175" Comment="" >Adult Link — Landing on Ice</SFX>
+	<SFX Key="B0" Bank="0" DebugName="NA_SE_PL_CRAWL" Comment="Through a crawl hole" >Crawling on Ground</SFX>
+	<SFX Key="B1" Bank="0" DebugName="NA_SE_PL_CRAWL_SAND" Comment="Crawling on sand?" Unused="1"></SFX>
+	<SFX Key="B2" Bank="0" DebugName="NA_SE_PL_CRAWL_CONCRETE" Comment="" >Crawling on Stone Floor</SFX>
+	<SFX Key="B3" Bank="0" DebugName="NA_SE_PL_CRAWL_DIRT" Comment="Crawling in Jabu-Jabu?" Unused="1"></SFX>
+	<SFX Key="B4" Bank="0" DebugName="NA_SE_PL_CRAWL_WATER0" Comment="Crawling in shallow water?" Unused="1"></SFX>
+	<SFX Key="B5" Bank="0" DebugName="NA_SE_PL_DUMMY_181" Comment="Crawling in deep water?" Unused="1"></SFX>
+	<SFX Key="B6" Bank="0" DebugName="NA_SE_PL_DUMMY_182" Comment="Crawling in tall grass?" Unused="1"></SFX>
+	<SFX Key="B7" Bank="0" DebugName="NA_SE_PL_DUMMY_183" Comment="Crawling in magma?" Unused="1"></SFX>
+	<SFX Key="B8" Bank="0" DebugName="NA_SE_PL_DUMMY_184" Comment="" >Crawling on Grass</SFX>
+	<SFX Key="B9" Bank="0" DebugName="NA_SE_PL_DUMMY_185" Comment="Crawling on carpet?" Unused="1"></SFX>
+	<SFX Key="BA" Bank="0" DebugName="NA_SE_PL_DUMMY_186" Comment="" >Crawling on Wood</SFX>
+	<SFX Key="BB" Bank="0" DebugName="NA_SE_PL_CRAWL_WOOD" Comment="Crawling on wood bridge?" Unused="1"></SFX>
+	<SFX Key="BC" Bank="0" DebugName="NA_SE_PL_CRAWL_ICE" Comment="Mismatched filename? (Sounds like 00)" Unused="1"></SFX>
+	<SFX Key="BD" Bank="0" DebugName="NA_SE_PL_DUMMY_189" Comment="Sounds like 00" Unused="1"></SFX>
+	<SFX Key="BE" Bank="0" DebugName="NA_SE_PL_DUMMY_190" Comment="Sounds like 00" Unused="1"></SFX>
+	<SFX Key="BF" Bank="0" DebugName="NA_SE_PL_DUMMY_191" Comment="Crawling on ice?" Unused="1"></SFX>
+	<SFX Key="C0" Bank="0" DebugName="NA_SE_PL_MAGIC_SOUL_FLASH" Comment="ScrPrt prints 08C0 for this effect, but 00C0 when using Nayru's Love" Unused="1">Nayru's Love Ending</SFX>
+	<SFX Key="C1" Bank="0" DebugName="NA_SE_PL_ROLL_DUST" Comment="ScrPrt prints 08C1 for this effect, but 00C1 when rolling." Unused="1">Dust Clouds when Rolling</SFX>
+	<SFX Key="C2" Bank="0" DebugName="NA_SE_PL_DUMMY_192" Comment="" Unused="1"></SFX>
+	<SFX Key="C3" Bank="0" DebugName="NA_SE_PL_MAGIC_SOUL_BALL" Comment="ScrPrt prints 08C3 for this effect, but 00C3 when casting Nayru's Love" Unused="1">Casting Nayru's Love</SFX>
+	<SFX Key="C4" Bank="0" DebugName="NA_SE_PL_SPIRAL_HEAL_BEAM" Comment="" >Great Fairy Healing</SFX>
+	<SFX Key="C5" Bank="0" DebugName="NA_SE_PL_BOUND_NOWEAPON" Comment="Rebounding with no sword/shield?" Unused="1"></SFX>
+	<SFX Key="C6" Bank="0" DebugName="NA_SE_PL_PLANT_GROW_UP" Comment="ScrPrt shows 08C6 for this effect, but 00C6 when planting." Unused="1">Planting Magic Bean Plant</SFX>
+	<SFX Key="C7" Bank="0" DebugName="NA_SE_PL_PLANT_TALLER" Comment="Magic bean plant growing? (Appears fully grown as adult)" Unused="1"></SFX>
+	<SFX Key="C8" Bank="0" DebugName="NA_SE_PL_MAGIC_WIND_VANISH" Comment="" >Farore's Wind — Dispelling the Warp Point</SFX>
+	<SFX Key="C9" Bank="0" DebugName="NA_SE_PL_HOBBERBOOTS_LV" Comment="ScrPrt shows 08C9 for this effect, but 00C9 when hover boots are used" Unused="1">Hovering with Hover Boots</SFX>
+	<SFX Key="CA" Bank="0" DebugName="NA_SE_PL_PLANT_MOVE" Comment="ScrPrt shows 08CA for this effect, but 00CA when the plant moves." Unused="1">Magic Bean Plant Moving</SFX>
+	<SFX Key="CB" Bank="0" DebugName="NA_SE_EV_WALL_MOVE_SP" Comment="" Unused="1"></SFX>
+	<SFX Key="CC" Bank="0" DebugName="NA_SE_PL_DUMMY_204" Comment="Sounds like 00" Unused="1"></SFX>
+	<SFX Key="CD" Bank="0" DebugName="NA_SE_PL_DUMMY_205" Comment="Sounds like 00" Unused="1"></SFX>
+	<SFX Key="CE" Bank="0" DebugName="NA_SE_PL_DUMMY_206" Comment="Sounds like 00" Unused="1"></SFX>
+	<SFX Key="CF" Bank="0" DebugName="NA_SE_PL_DUMMY_207" Comment="Sounds like 00" Unused="1"></SFX>
+	<SFX Key="D0" Bank="0" DebugName="NA_SE_PL_SLIP_LEVEL" Comment="ScrPrt shows 08D0 for this effect, but 00D0 when slipping around." Unused="1">Slipping on Floor</SFX>
+	<SFX Key="D1" Bank="0" DebugName="NA_SE_PL_SLIP_SAND_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="D2" Bank="0" DebugName="NA_SE_PL_SLIP_CONCRETE_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="D3" Bank="0" DebugName="NA_SE_PL_SLIP_DIRT_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="D4" Bank="0" DebugName="NA_SE_PL_SLIP_WATER0_LEVEL" Comment="Sounds like D3" Unused="1"></SFX>
+	<SFX Key="D5" Bank="0" DebugName="NA_SE_PL_SLIP_WATER1_LEVEL" Comment="Sounds like D3" Unused="1"></SFX>
+	<SFX Key="D6" Bank="0" DebugName="NA_SE_PL_SLIP_WATER2_LEVEL" Comment="Sounds like D3" Unused="1"></SFX>
+	<SFX Key="D7" Bank="0" DebugName="NA_SE_PL_SLIP_MAGMA_LEVEL" Comment="Sounds like D3" Unused="1"></SFX>
+	<SFX Key="D8" Bank="0" DebugName="NA_SE_PL_SLIP_GRASS_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="D9" Bank="0" DebugName="NA_SE_PL_SLIP_IRON_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="DA" Bank="0" DebugName="NA_SE_PL_SLIP_GLASS_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="DB" Bank="0" DebugName="NA_SE_PL_SLIP_WOOD_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="DC" Bank="0" DebugName="NA_SE_PL_DUMMY_220" Comment="Sounds like walking in water" Unused="1"></SFX>
+	<SFX Key="DD" Bank="0" DebugName="NA_SE_PL_DUMMY_221" Comment="" Unused="1"></SFX>
+	<SFX Key="DE" Bank="0" DebugName="NA_SE_PL_SLIP_HEAVYBOOTS_LEVEL" Comment="" Unused="1"></SFX>
+	<SFX Key="DF" Bank="0" DebugName="NA_SE_PL_SLIP_ICE_LEVEL" Comment="End of PLAYER bank sounds?" Unused="1"></SFX>
+	<SFX Key="0" Bank="1" DebugName="NA_SE_IT_SWORD_IMPACT" Comment="Used as the cursor noise in Map Select." Unused="1"></SFX>
+	<SFX Key="1" Bank="1" DebugName="NA_SE_IT_SWORD_SWING" Comment="" >Swing Sword</SFX>
+	<SFX Key="2" Bank="1" DebugName="NA_SE_IT_SWORD_PUTAWAY" Comment="" >Sheathe Sword</SFX>
+	<SFX Key="3" Bank="1" DebugName="NA_SE_IT_SWORD_PICKOUT" Comment="" >Draw Sword</SFX>
+	<SFX Key="4" Bank="1" DebugName="NA_SE_IT_ARROW_SHOT" Comment="" >Shoot Arrow</SFX>
+	<SFX Key="5" Bank="1" DebugName="NA_SE_IT_BOOMERANG_THROW" Comment="" >Throw Boomerang</SFX>
+	<SFX Key="6" Bank="1" DebugName="NA_SE_IT_SHIELD_BOUND" Comment="Also hitting rocks with sword" >Projectile Bounces off Shield</SFX>
+	<SFX Key="7" Bank="1" DebugName="NA_SE_IT_BOW_DRAW" Comment="" >Draw Bow</SFX>
+	<SFX Key="8" Bank="1" DebugName="NA_SE_IT_SHIELD_REFLECT_SW" Comment="" >Blade Reflects off Shield</SFX>
+	<SFX Key="9" Bank="1" DebugName="NA_SE_IT_ARROW_STICK_HRAD" Comment="Sounds like 15" Unused="1">Arrow Sticks in Hard Surface</SFX>
+	<SFX Key="0A" Bank="1" DebugName="NA_SE_IT_HAMMER_HIT" Comment="" >Hammer Hits Target</SFX>
+	<SFX Key="0B" Bank="1" DebugName="NA_SE_IT_HOOKSHOT_CHAIN" Comment="ScrPrt shows 180B for this effect, but 100B when using hookshot" Unused="1">Hookshot Chain Unravels</SFX>
+	<SFX Key="0C" Bank="1" DebugName="NA_SE_IT_SHIELD_REFLECT_MG" Comment="Twinrova boss battle" >Mirror Shield Reflects Magic</SFX>
+	<SFX Key="0D" Bank="1" DebugName="NA_SE_IT_BOMB_IGNIT" Comment="ScrPrt shows 180D for this effect, but 100D when using bomb" Unused="1">Bomb is Lit</SFX>
+	<SFX Key="0E" Bank="1" DebugName="NA_SE_IT_BOMB_EXPLOSION" Comment="" >Bomb Explodes</SFX>
+	<SFX Key="0F" Bank="1" DebugName="NA_SE_IT_BOMB_UNEXPLOSION" Comment="Thrown in water" >Bomb is Extinguished</SFX>
+	<SFX Key="10" Bank="1" DebugName="NA_SE_IT_BOOMERANG_FLY" Comment="ScrPrt shows 1810 for this effect, but 1010 when using boomerang" Unused="1">Boomerang Flies</SFX>
+	<SFX Key="11" Bank="1" DebugName="NA_SE_IT_SWORD_STRIKE" Comment="" >Strike Enemy with Sword</SFX>
+	<SFX Key="12" Bank="1" DebugName="NA_SE_IT_HAMMER_SWING" Comment="" >Hammer Swung through Air</SFX>
+	<SFX Key="13" Bank="1" DebugName="NA_SE_IT_HOOKSHOT_REFLECT" Comment="" >Hookshot Bounces off Hard Surface</SFX>
+	<SFX Key="14" Bank="1" DebugName="NA_SE_IT_ARROW_STICK_CRE" Comment="" >Arrows Sticks in Enemy</SFX>
+	<SFX Key="15" Bank="1" DebugName="NA_SE_IT_ARROW_STICK_OBJ" Comment="" >Arrow Sticks in Object</SFX>
+	<SFX Key="16" Bank="1" DebugName="NA_SE_IT_DUMMY" Comment="" Unused="1"></SFX>
+	<SFX Key="17" Bank="1" DebugName="NA_SE_IT_DUMMY2" Comment="" Unused="1"></SFX>
+	<SFX Key="18" Bank="1" DebugName="NA_SE_IT_SWORD_SWING_HARD" Comment="Mismatched Filename?" >Swing Fishing Rod</SFX>
+	<SFX Key="19" Bank="1" DebugName="NA_SE_IT_DUMMY3" Comment="" Unused="1"></SFX>
+	<SFX Key="1A" Bank="1" DebugName="NA_SE_IT_WALL_HIT_HARD" Comment="" >Sword Bounces off Wall</SFX>
+	<SFX Key="1B" Bank="1" DebugName="NA_SE_IT_WALL_HIT_SOFT" Comment="" >Sword Bounces off Bombable Wall</SFX>
+	<SFX Key="1C" Bank="1" DebugName="NA_SE_IT_STONE_HIT" Comment="" Unused="1">Sword Bounces off Stone</SFX>
+	<SFX Key="1D" Bank="1" DebugName="NA_SE_IT_WOODSTICK_BROKEN" Comment="" >Deku Stick Breaks</SFX>
+	<SFX Key="1E" Bank="1" DebugName="NA_SE_IT_LASH" Comment="" >Whip Epona</SFX>
+	<SFX Key="1F" Bank="1" DebugName="NA_SE_IT_SHIELD_POSTURE" Comment="" >Take out/Use Shield</SFX>
+	<SFX Key="20" Bank="1" DebugName="NA_SE_IT_SLING_SHOT" Comment="" >Fire Slingshot</SFX>
+	<SFX Key="21" Bank="1" DebugName="NA_SE_IT_SLING_DRAW" Comment="" >Draw Slingshot</SFX>
+	<SFX Key="22" Bank="1" DebugName="NA_SE_IT_SWORD_CHARGE" Comment="ScrPrt shows 1822 for this effect, but 1022 when charging sword" Unused="1">Charging Spin Attack</SFX>
+	<SFX Key="23" Bank="1" DebugName="NA_SE_IT_ROLLING_CUT" Comment="" >Spin Attack, No Magic</SFX>
+	<SFX Key="24" Bank="1" DebugName="NA_SE_IT_SWORD_STRIKE_HARD" Comment="" Unused="1"></SFX>
+	<SFX Key="25" Bank="1" DebugName="NA_SE_IT_SLING_REFLECT" Comment="" >Deku Seed Bounces off Hard Surface</SFX>
+	<SFX Key="26" Bank="1" DebugName="NA_SE_IT_SHIELD_REMOVE" Comment="" >Put Away Shield</SFX>
+	<SFX Key="27" Bank="1" DebugName="NA_SE_IT_HOOKSHOT_READY" Comment="" >Hookshot is Ready to Fire</SFX>
+	<SFX Key="28" Bank="1" DebugName="NA_SE_IT_HOOKSHOT_RECEIVE" Comment="" Unused="1"></SFX>
+	<SFX Key="29" Bank="1" DebugName="NA_SE_IT_HOOKSHOT_STICK_OBJ" Comment="" >Hookshot Latches to Surface</SFX>
+	<SFX Key="2A" Bank="1" DebugName="NA_SE_IT_SWORD_REFLECT_MG" Comment="Meant for Twinrova?" Unused="1">Reflect Magic With Sword</SFX>
+	<SFX Key="2B" Bank="1" DebugName="NA_SE_IT_DEKU" Comment="" >Throw Deku Nut</SFX>
+	<SFX Key="2C" Bank="1" DebugName="NA_SE_IT_WALL_HIT_BUYO" Comment="" Unused="1"></SFX>
+	<SFX Key="2D" Bank="1" DebugName="NA_SE_IT_SWORD_PUTAWAY_STN" Comment="" Unused="1"></SFX>
+	<SFX Key="2E" Bank="1" DebugName="NA_SE_IT_ROLLING_CUT_LV1" Comment="" >Spin Attack, Blue Spin</SFX>
+	<SFX Key="2F" Bank="1" DebugName="NA_SE_IT_ROLLING_CUT_LV2" Comment="" >Spin Attack, Red Spin</SFX>
+	<SFX Key="30" Bank="1" DebugName="NA_SE_IT_BOW_FLICK" Comment="" >Fire Empty Bow</SFX>
+	<SFX Key="31" Bank="1" DebugName="NA_SE_IT_BOMBCHU_MOVE" Comment="ScrPrt shows 1831 for this effect, but 1031 when dropping Bombchu" Unused="1">Set Bombchu Free</SFX>
+	<SFX Key="32" Bank="1" DebugName="NA_SE_IT_SHIELD_CHARGE_LV1" Comment="ScrPrt shows 1832 for this effect, but 1032 while battling Twinrova" Unused="1">Charge Mirror Shield (Level 1)</SFX>
+	<SFX Key="33" Bank="1" DebugName="NA_SE_IT_SHIELD_CHARGE_LV2" Comment="ScrPrt shows 1833 for this effect, but 1033 while battling Twinrova" Unused="1">Charge Mirror Shield (Level 2)</SFX>
+	<SFX Key="34" Bank="1" DebugName="NA_SE_IT_SHIELD_CHARGE_LV3" Comment="ScrPrt shows 1834 for this effect, but 1034 while battling Twinrova" Unused="1">Charge Mirror Shield (Level 3)</SFX>
+	<SFX Key="35" Bank="1" DebugName="NA_SE_IT_SLING_FLICK" Comment="" >Fire Empty Slingshot</SFX>
+	<SFX Key="36" Bank="1" DebugName="NA_SE_IT_SWORD_STICK_STN" Comment="" Unused="1"></SFX>
+	<SFX Key="37" Bank="1" DebugName="NA_SE_IT_REFLECTION_WOOD" Comment="Also Deku Stick hitting rock" >Sword Bounces Off Wooden Surface</SFX>
+	<SFX Key="38" Bank="1" DebugName="NA_SE_IT_SHIELD_REFLECT_MG2" Comment="Meant for Twinrova?" Unused="1">Shield Reflects Magic (2)</SFX>
+	<SFX Key="39" Bank="1" DebugName="NA_SE_IT_MAGIC_ARROW_SHOT" Comment="" >Fire Magic Arrow</SFX>
+	<SFX Key="3A" Bank="1" DebugName="NA_SE_IT_EXPLOSION_FRAME" Comment="" >Fire Arrow Explodes on Impact</SFX>
+	<SFX Key="3B" Bank="1" DebugName="NA_SE_IT_EXPLOSION_ICE" Comment="" >Ice Arrow Explodes on Impact</SFX>
+	<SFX Key="3C" Bank="1" DebugName="NA_SE_IT_EXPLOSION_LIGHT" Comment="" >Light Arrow Explodes on Impact</SFX>
+	<SFX Key="3D" Bank="1" DebugName="NA_SE_IT_FISHING_REEL_SLOW" Comment="ScrPrt shows 183D for this effect, but 103D when reeling." Unused="1">Reel In Fishing Rod Slowly</SFX>
+	<SFX Key="3E" Bank="1" DebugName="NA_SE_IT_FISHING_REEL_HIGH" Comment="ScrPrt shows 183E for this effect, but 103E when reeling." Unused="1">Reel In Fishing Rod Quickly</SFX>
+	<SFX Key="3F" Bank="1" DebugName="NA_SE_IT_PULL_FISHING_ROD" Comment="" Unused="1">Pull Back on Fishing Rod</SFX>
+	<SFX Key="40" Bank="1" DebugName="NA_SE_IT_DM_FLYING_GOD_PASS" Comment="Cutscene" >Goddess Passing by Camera</SFX>
+	<SFX Key="41" Bank="1" DebugName="NA_SE_IT_DM_FLYING_GOD_DASH" Comment="Cutscene" >Goddess Dashing</SFX>
+	<SFX Key="42" Bank="1" DebugName="NA_SE_IT_DM_RING_EXPLOSION" Comment="Cutscene" >Goddess Causing Explosion</SFX>
+	<SFX Key="43" Bank="1" DebugName="NA_SE_IT_DM_RING_GATHER" Comment="Cutscene" Unused="1"></SFX>
+	<SFX Key="44" Bank="1" DebugName="NA_SE_IT_INGO_HORSE_NEIGH" Comment="Used sound is an ENVIRONMENT sound" Unused="1">Horse Neigh</SFX>
+	<SFX Key="45" Bank="1" DebugName="NA_SE_IT_EARTHQUAKE" Comment="" Unused="1"></SFX>
+	<SFX Key="46" Bank="1" DebugName="NA_SE_IT_DUMMY4" Comment="" Unused="1"></SFX>
+	<SFX Key="47" Bank="1" DebugName="NA_SE_IT_KAKASHI_JUMP" Comment="" >Scarecrow Jumping</SFX>
+	<SFX Key="48" Bank="1" DebugName="NA_SE_IT_FLAME" Comment="" Unused="1"></SFX>
+	<SFX Key="49" Bank="1" DebugName="NA_SE_IT_SHIELD_BEAM" Comment="Meant for Twinrova?" Unused="1"></SFX>
+	<SFX Key="4A" Bank="1" DebugName="NA_SE_IT_FISHING_HIT" Comment="" Unused="1"></SFX>
+	<SFX Key="4B" Bank="1" DebugName="NA_SE_IT_GOODS_APPEAR" Comment="" Unused="1"></SFX>
+	<SFX Key="4C" Bank="1" DebugName="NA_SE_IT_MAJIN_SWORD_BROKEN" Comment="" >Giant's Knife Breaking</SFX>
+	<SFX Key="4D" Bank="1" DebugName="NA_SE_IT_HAND_CLAP" Comment="Not that?" Unused="1"></SFX>
+	<SFX Key="4E" Bank="1" DebugName="NA_SE_IT_MASTER_SWORD_SWING" Comment="" Unused="1"></SFX>
+	<SFX Key="4F" Bank="1" DebugName="NA_SE_IT_DUMMY5" Comment="" Unused="1"></SFX>
+	<SFX Key="50" Bank="1" DebugName="NA_SE_IT_YOBI19" Comment="Blank" Unused="1"></SFX>
+	<SFX Key="0" Bank="2" DebugName="NA_SE_EV_DOOR_OPEN" Comment="Used sound is an OCARINA sound" Unused="1">Open Door</SFX>
+	<SFX Key="1" Bank="2" DebugName="NA_SE_EV_DOOR_CLOSE" Comment="" >Close Door</SFX>
+	<SFX Key="2" Bank="2" DebugName="NA_SE_EV_EXPLOSION" Comment="" Unused="1"></SFX>
+	<SFX Key="3" Bank="2" DebugName="NA_SE_EV_HORSE_WALK" Comment="" >Epona Walks</SFX>
+	<SFX Key="4" Bank="2" DebugName="NA_SE_EV_HORSE_RUN" Comment="" >Epona Runs</SFX>
+	<SFX Key="5" Bank="2" DebugName="NA_SE_EV_HORSE_NEIGH" Comment="" >Epona Neighs</SFX>
+	<SFX Key="6" Bank="2" DebugName="NA_SE_EV_RIVER_STREAM" Comment="Looping sound" >Flowing River</SFX>
+	<SFX Key="7" Bank="2" DebugName="NA_SE_EV_WATER_WALL_BIG" Comment="Looping sound" >Large Waterfall Rushes</SFX>
+	<SFX Key="8" Bank="2" DebugName="NA_SE_EV_OUT_OF_WATER" Comment="Also fish when fishing" >Zora Jumping out of Water</SFX>
+	<SFX Key="9" Bank="2" DebugName="NA_SE_EV_DIVE_WATER" Comment="" >Zora Diving into Water</SFX>
+	<SFX Key="0A" Bank="2" DebugName="NA_SE_EV_ROCK_SLIDE" Comment="Looping sound" >Pushing Block</SFX>
+	<SFX Key="0B" Bank="2" DebugName="NA_SE_EV_MAGMA_LEVEL" Comment="Used version is 32" Unused="1">Magma Bubbles</SFX>
+	<SFX Key="0C" Bank="2" DebugName="NA_SE_EV_BRIDGE_OPEN" Comment="Looping sound" >Drawbridge Opens</SFX>
+	<SFX Key="0D" Bank="2" DebugName="NA_SE_EV_BRIDGE_CLOSE" Comment="Looping sound" >Drawbridge Closes</SFX>
+	<SFX Key="0E" Bank="2" DebugName="NA_SE_EV_BRIDGE_OPEN_STOP" Comment="" >Drawbridge Finishes Opening</SFX>
+	<SFX Key="0F" Bank="2" DebugName="NA_SE_EV_BRIDGE_CLOSE_STOP" Comment="" >Drawbridge Finishes Closing</SFX>
+	<SFX Key="10" Bank="2" DebugName="NA_SE_EV_WALL_BROKEN" Comment="" >Wall Destroyed by Explosion</SFX>
+	<SFX Key="11" Bank="2" DebugName="NA_SE_EV_CHICKEN_CRY_N" Comment="" >Cucco Clucks</SFX>
+	<SFX Key="12" Bank="2" DebugName="NA_SE_EV_CHICKEN_CRY_A" Comment="" >Cucco Clucks While Attacking</SFX>
+	<SFX Key="13" Bank="2" DebugName="NA_SE_EV_CHICKEN_CRY_M" Comment="Also when hit" >Cucco Crows at Dawn</SFX>
+	<SFX Key="14" Bank="2" DebugName="NA_SE_EV_SLIDE_DOOR_OPEN" Comment="" >Sliding Dungeon Door Opens</SFX>
+	<SFX Key="15" Bank="2" DebugName="NA_SE_EV_FOOT_SWITCH" Comment="" >Switch Depressed</SFX>
+	<SFX Key="16" Bank="2" DebugName="NA_SE_EV_HORSE_GROAN" Comment="" >Horse Snorts</SFX>
+	<SFX Key="17" Bank="2" DebugName="NA_SE_EV_BOMB_DROP_WATER" Comment="" >Bomb Dropped in Water</SFX>
+	<SFX Key="18" Bank="2" DebugName="NA_SE_EV_HORSE_JUMP" Comment="" >Epona Jumps</SFX>
+	<SFX Key="19" Bank="2" DebugName="NA_SE_EV_HORSE_LAND" Comment="" >Epona Lands</SFX>
+	<SFX Key="1A" Bank="2" DebugName="NA_SE_EV_HORSE_SLIP" Comment="" >Epona Comes to a Screeching Halt</SFX>
+	<SFX Key="1B" Bank="2" DebugName="NA_SE_EV_FAIRY_DASH" Comment="" >Navi Emerges, Flies to Targetable Object</SFX>
+	<SFX Key="1C" Bank="2" DebugName="NA_SE_EV_SLIDE_DOOR_CLOSE" Comment="" >Sliding Dungeon Door Closes</SFX>
+	<SFX Key="1D" Bank="2" DebugName="NA_SE_EV_STONE_BOUND" Comment="" >Large Stone Door Closes</SFX>
+	<SFX Key="1E" Bank="2" DebugName="NA_SE_EV_STONE_STATUE_OPEN" Comment="Mismatched filename?" >Temple of Time Door Opening</SFX>
+	<SFX Key="1F" Bank="2" DebugName="NA_SE_EV_TBOX_UNLOCK" Comment="" >Unlock Treasure Chest</SFX>
+	<SFX Key="20" Bank="2" DebugName="NA_SE_EV_TBOX_OPEN" Comment="Chests with cutscene only" >Open Treasure Chest</SFX>
+	<SFX Key="21" Bank="2" DebugName="NA_SE_SY_TIMER" Comment="The filename indicates that this is meant to be a System file. Looping sound." Unused="1">Timer Ticks</SFX>
+	<SFX Key="22" Bank="2" DebugName="NA_SE_EV_FLAME_IGNITION" Comment="" >Light Torch</SFX>
+	<SFX Key="23" Bank="2" DebugName="NA_SE_EV_SPEAR_HIT" Comment="" >Guard Hits Spear on Ground</SFX>
+	<SFX Key="24" Bank="2" DebugName="NA_SE_EV_ELEVATOR_MOVE" Comment="Also Goron Statue spinning. Looping sound." >Elevator Moves</SFX>
+	<SFX Key="25" Bank="2" DebugName="NA_SE_EV_WARP_HOLE" Comment="Looping sound" >Blue Warp Resonates</SFX>
+	<SFX Key="26" Bank="2" DebugName="NA_SE_EV_LINK_WARP" Comment="" >Enter Blue Warp</SFX>
+	<SFX Key="27" Bank="2" DebugName="NA_SE_EV_PILLAR_SINK" Comment="Looping sound" Unused="1"></SFX>
+	<SFX Key="28" Bank="2" DebugName="NA_SE_EV_WATER_WALL" Comment="Looping sound" >Small Waterfall Trickles</SFX>
+	<SFX Key="29" Bank="2" DebugName="NA_SE_EV_RIVER_STREAM_S" Comment="Looping sound" Unused="1"></SFX>
+	<SFX Key="2A" Bank="2" DebugName="NA_SE_EV_RIVER_STREAM_F" Comment="Looping sound" Unused="1"></SFX>
+	<SFX Key="2B" Bank="2" DebugName="NA_SE_EV_HORSE_LAND2" Comment="Used by Phantom Ganon's horse in intro cutscene" >Epona Lands (2)</SFX>
+	<SFX Key="2C" Bank="2" DebugName="NA_SE_EV_HORSE_SANDDUST" Comment="" >Epona Stops in Sand/Dust</SFX>
+	<SFX Key="2D" Bank="2" DebugName="NA_SE_EV_DUMMY45" Comment="Sounds like electricity?" Unused="1"></SFX>
+	<SFX Key="2E" Bank="2" DebugName="NA_SE_EV_LIGHTNING" Comment="" >Lightning Crashes</SFX>
+	<SFX Key="2F" Bank="2" DebugName="NA_SE_EV_BOMB_BOUND" Comment="" >Bomb Bouncing off Wall</SFX>
+	<SFX Key="30" Bank="2" DebugName="NA_SE_EV_WATERDROP" Comment="Looping sound" >Water Drips</SFX>
+	<SFX Key="31" Bank="2" DebugName="NA_SE_EV_TORCH" Comment="Looping sound" >Torch Crackles</SFX>
+	<SFX Key="32" Bank="2" DebugName="NA_SE_EV_MAGMA_LEVEL_M" Comment="Looping sound" >Lava Bubbles</SFX>
+	<SFX Key="33" Bank="2" DebugName="NA_SE_EV_FIRE_PILLAR" Comment="Looping sound" >Pillar of Fire</SFX>
+	<SFX Key="34" Bank="2" DebugName="NA_SE_EV_FIRE_PLATE" Comment="Looping sound" >Wall of Fire</SFX>
+	<SFX Key="35" Bank="2" DebugName="NA_SE_EV_BLOCK_BOUND" Comment="" >Push Block Into Place</SFX>
+	<SFX Key="36" Bank="2" DebugName="NA_SE_EV_METALDOOR_SLIDE" Comment="Looping sound" Unused="1"></SFX>
+	<SFX Key="37" Bank="2" DebugName="NA_SE_EV_METALDOOR_STOP" Comment="" Unused="1"></SFX>
+	<SFX Key="38" Bank="2" DebugName="NA_SE_EV_BLOCK_SHAKE" Comment="Fire Temple Face Block" >Shaking Block</SFX>
+	<SFX Key="39" Bank="2" DebugName="NA_SE_EV_BOX_BREAK" Comment="" >Wood Breaking</SFX>
+	<SFX Key="3A" Bank="2" DebugName="NA_SE_EV_HAMMER_SWITCH" Comment="" Unused="1"></SFX>
+	<SFX Key="3B" Bank="2" DebugName="NA_SE_EV_MAGMA_LEVEL_L" Comment="" Unused="1">Magma Bubbles</SFX>
+	<SFX Key="3C" Bank="2" DebugName="NA_SE_EV_SPEAR_FENCE" Comment="Found in Forest Temple Boss Room" >Spear-shaped Fence Rising</SFX>
+	<SFX Key="3D" Bank="2" DebugName="NA_SE_EV_GANON_HORSE_NEIGH" Comment="" >Ganondorf's Horse Neighs</SFX>
+	<SFX Key="3E" Bank="2" DebugName="NA_SE_EV_GANON_HORSE_GROAN" Comment="" >Ganondorf's Horse Snorts</SFX>
+	<SFX Key="3F" Bank="2" DebugName="NA_SE_EV_FANTOM_WARP_S" Comment="" >Phantom Ganon Going through Painting</SFX>
+	<SFX Key="40" Bank="2" DebugName="NA_SE_EV_FANTOM_WARP_L" Comment="Mismatched filename?" >Witches Kidnapping Nabooru</SFX>
+	<SFX Key="41" Bank="2" DebugName="NA_SE_EV_FOUNTAIN" Comment="" >Pillar of Water</SFX>
+	<SFX Key="42" Bank="2" DebugName="NA_SE_EV_KID_HORSE_WALK" Comment="" Unused="1">Child Epona Walks</SFX>
+	<SFX Key="43" Bank="2" DebugName="NA_SE_EV_KID_HORSE_RUN" Comment="" Unused="1">Child Epona Runs</SFX>
+	<SFX Key="44" Bank="2" DebugName="NA_SE_EV_KID_HORSE_NEIGH" Comment="" >Child Epona Neighs</SFX>
+	<SFX Key="45" Bank="2" DebugName="NA_SE_EV_KID_HORSE_GROAN" Comment="" >Child Epona Snorts</SFX>
+	<SFX Key="46" Bank="2" DebugName="NA_SE_EV_WHITE_OUT" Comment="Used in Ganon's Tower, hitting orbs with Light Arrow and warping back to barrier room" ></SFX>
+	<SFX Key="47" Bank="2" DebugName="NA_SE_EV_LIGHT_GATHER" Comment="Used in Ganon's Tower, sage preparing to remove part of barrier" ></SFX>
+	<SFX Key="48" Bank="2" DebugName="NA_SE_EV_TREE_CUT" Comment="Early cutting bush?" Unused="1"></SFX>
+	<SFX Key="49" Bank="2" DebugName="NA_SE_EV_VOLCANO" Comment="Looping sound" >Volcano Erupts</SFX>
+	<SFX Key="4A" Bank="2" DebugName="NA_SE_EV_GUILLOTINE_UP" Comment="" >Guillotine Rises</SFX>
+	<SFX Key="4B" Bank="2" DebugName="NA_SE_EV_GUILLOTINE_BOUND" Comment="" >Guillotine Falls</SFX>
+	<SFX Key="4C" Bank="2" DebugName="NA_SE_EV_ROLLCUTTER_MOTOR" Comment="" >Spinning Blades (Giant Scythes)</SFX>
+	<SFX Key="4D" Bank="2" DebugName="NA_SE_EV_CHINETRAP_DOWN" Comment="Looping sound" Unused="1">Chain Trap Lowers</SFX>
+	<SFX Key="4E" Bank="2" DebugName="NA_SE_EV_PLANT_BROKEN" Comment="" >Thrown Plant Destroyed on Impact</SFX>
+	<SFX Key="4F" Bank="2" DebugName="NA_SE_EV_SHIP_BELL" Comment="Looping sound" >Bells on Shadow Temple Ship</SFX>
+	<SFX Key="50" Bank="2" DebugName="NA_SE_EV_FLUTTER_FLAG" Comment="Looping sound" Unused="1">Flag Flaps in Wind</SFX>
+	<SFX Key="51" Bank="2" DebugName="NA_SE_EV_TRAP_BOUND" Comment="" Unused="1"></SFX>
+	<SFX Key="52" Bank="2" DebugName="NA_SE_EV_ROCK_BROKEN" Comment="" >Thrown Rock Destroyed on Impact</SFX>
+	<SFX Key="53" Bank="2" DebugName="NA_SE_EV_FANTOM_WARP_S2" Comment="" >Phantom Ganon Going through Painting</SFX>
+	<SFX Key="54" Bank="2" DebugName="NA_SE_EV_FANTOM_WARP_L2" Comment="Looping version of 53" Unused="1"></SFX>
+	<SFX Key="55" Bank="2" DebugName="NA_SE_EV_COFFIN_CAP_OPEN" Comment="" Unused="1">Coffin Lid Opens</SFX>
+	<SFX Key="56" Bank="2" DebugName="NA_SE_EV_COFFIN_CAP_BOUND" Comment="" Unused="1"></SFX>
+	<SFX Key="57" Bank="2" DebugName="NA_SE_EV_WIND_TRAP" Comment="Looping sound" >Giant Fans</SFX>
+	<SFX Key="58" Bank="2" DebugName="NA_SE_EV_TRAP_OBJ_SLIDE" Comment="Looping sound" >Spike Wall Trap Closing In</SFX>
+	<SFX Key="59" Bank="2" DebugName="NA_SE_EV_METALDOOR_OPEN" Comment="" >Portcullis Rising</SFX>
+	<SFX Key="5A" Bank="2" DebugName="NA_SE_EV_METALDOOR_CLOSE" Comment="" Unused="1"></SFX>
+	<SFX Key="5B" Bank="2" DebugName="NA_SE_EV_BURN_OUT" Comment="Looping sound" Unused="1"></SFX>
+	<SFX Key="5C" Bank="2" DebugName="NA_SE_EV_BLOCKSINK" Comment="Looping sound" >Floor Tiles in Ganondorf Battle Falling</SFX>
+	<SFX Key="5D" Bank="2" DebugName="NA_SE_EV_CROWD" Comment="Looping sound" >Hyrule Market Crowd Hubbub</SFX>
+	<SFX Key="5E" Bank="2" DebugName="NA_SE_EV_WATER_LEVEL_DOWN" Comment="Looping sound" >Water Level Changes in Water Temple</SFX>
+	<SFX Key="5F" Bank="2" DebugName="NA_SE_EV_NAVY_VANISH" Comment="" >Navi Hides under Link's Hat</SFX>
+	<SFX Key="60" Bank="2" DebugName="NA_SE_EV_LADDER_DOUND" Comment="" >Ladder Landing</SFX>
+	<SFX Key="61" Bank="2" DebugName="NA_SE_EV_WEB_VIBRATION" Comment="Floor web in Deku Tree" >Web Vibrating</SFX>
+	<SFX Key="62" Bank="2" DebugName="NA_SE_EV_WEB_BROKEN" Comment="Floor web in Deku Tree" >Web Breaking</SFX>
+	<SFX Key="63" Bank="2" DebugName="NA_SE_EV_ROLL_STAND" Comment="Looping sound" Unused="1"></SFX>
+	<SFX Key="64" Bank="2" DebugName="NA_SE_EV_BUYODOOR_OPEN" Comment="" >Jabu-Jabu Door Opening</SFX>
+	<SFX Key="65" Bank="2" DebugName="NA_SE_EV_BUYODOOR_CLOSE" Comment="" >Jabu-Jabu Door Closing</SFX>
+	<SFX Key="66" Bank="2" DebugName="NA_SE_EV_WOODDOOR_OPEN" Comment="" Unused="1"></SFX>
+	<SFX Key="67" Bank="2" DebugName="NA_SE_EV_METALGATE_OPEN" Comment="Looping sound" >Gate to Death Mountain Trail Opening</SFX>
+	<SFX Key="68" Bank="2" DebugName="NA_SE_IT_SCOOP_UP_WATER" Comment="Filename indicates it may supposed to be an ITEM sound" >Dipping Bottle in Water</SFX>
+	<SFX Key="69" Bank="2" DebugName="NA_SE_EV_FISH_LEAP" Comment="" >Fish Flopping on Ground</SFX>
+	<SFX Key="6A" Bank="2" DebugName="NA_SE_EV_KAKASHI_SWING" Comment="" >Scarecrow Swaying Side-to-Side</SFX>
+	<SFX Key="6B" Bank="2" DebugName="NA_SE_EV_KAKASHI_ROLL" Comment="" >Scarecrow Spinning Around</SFX>
+	<SFX Key="6C" Bank="2" DebugName="NA_SE_EV_BOTTLE_CAP_OPEN" Comment="Releasing fish, bugs" >Opening Bottle</SFX>
+	<SFX Key="6D" Bank="2" DebugName="NA_SE_EV_JABJAB_BREATHE" Comment="Looping sound" >Jabu-Jabu Breathing In</SFX>
+	<SFX Key="6E" Bank="2" DebugName="NA_SE_EV_SPIRIT_STONE" Comment="Looping sound" >Resonating Spiritual Stones</SFX>
+	<SFX Key="6F" Bank="2" DebugName="NA_SE_EV_TRIFORCE_FLASH" Comment="" >Triforce above Door of Time Flashing</SFX>
+	<SFX Key="70" Bank="2" DebugName="NA_SE_EV_FALL_DOWN_DIRT" Comment="" >Ruto Falling through Hole</SFX>
+	<SFX Key="71" Bank="2" DebugName="NA_SE_EV_NAVY_FLY" Comment="" >Navi Flying</SFX>
+	<SFX Key="72" Bank="2" DebugName="NA_SE_EV_NAVY_CRASH" Comment="" >Navi Crashing into Fence</SFX>
+	<SFX Key="73" Bank="2" DebugName="NA_SE_EV_WOOD_HIT" Comment="" Unused="1"></SFX>
+	<SFX Key="74" Bank="2" DebugName="NA_SE_EV_SCOOPUP_WATER" Comment="Not that? Looping sound" Unused="1"></SFX>
+	<SFX Key="75" Bank="2" DebugName="NA_SE_EV_DROP_FALL" Comment="Water Droplets" Unused="1"></SFX>
+	<SFX Key="76" Bank="2" DebugName="NA_SE_EV_WOOD_GEAR" Comment="Looping sound" >Windmill Gears Spinning</SFX>
+	<SFX Key="77" Bank="2" DebugName="NA_SE_EV_TREE_SWING" Comment="2D bushes in Hyrule Field" >Moving through Bush</SFX>
+	<SFX Key="78" Bank="2" DebugName="NA_SE_EV_HORSE_RUN_LEVEL" Comment="Also Zelda's Horse" >Ganondorf's Horse Running</SFX>
+	<SFX Key="79" Bank="2" DebugName="NA_SE_EV_ELEVATOR_MOVE2" Comment="Looping sound" Unused="1"></SFX>
+	<SFX Key="7A" Bank="2" DebugName="NA_SE_EV_ELEVATOR_STOP" Comment="" Unused="1"></SFX>
+	<SFX Key="7B" Bank="2" DebugName="NA_SE_EV_TRE_BOX_APPEAR" Comment="" >Treasure Chest Appearing</SFX>
+	<SFX Key="7C" Bank="2" DebugName="NA_SE_EV_CHAIN_KEY_UNLOCK" Comment="" >Unlocking Chained Door</SFX>
+	<SFX Key="7D" Bank="2" DebugName="NA_SE_EV_SPINE_TRAP_MOVE" Comment="" >Sliding Blade Trap Hitting Wall</SFX>
+	<SFX Key="7E" Bank="2" DebugName="NA_SE_EV_HEALING" Comment="" Unused="1"></SFX>
+	<SFX Key="7F" Bank="2" DebugName="NA_SE_EV_GREAT_FAIRY_APPEAR" Comment="" >Great Fairy Appears</SFX>
+	<SFX Key="80" Bank="2" DebugName="NA_SE_EV_GREAT_FAIRY_VANISH" Comment="" >Great Fairy Disappears</SFX>
+	<SFX Key="81" Bank="2" DebugName="NA_SE_EV_RED_EYE" Comment="Early Lens of Truth sound?" Unused="1"></SFX>
+	<SFX Key="82" Bank="2" DebugName="NA_SE_EV_ROLL_STAND_2" Comment="Not that?" Unused="1"></SFX>
+	<SFX Key="83" Bank="2" DebugName="NA_SE_EV_WALL_SLIDE" Comment="" Unused="1"></SFX>
+	<SFX Key="84" Bank="2" DebugName="NA_SE_EV_TRE_BOX_FLASH" Comment="" >Flash of Light Opening Chest</SFX>
+	<SFX Key="85" Bank="2" DebugName="NA_SE_EV_WINDMILL_LEVEL" Comment="Looping sound" >Windmill Blades Spinning</SFX>
+	<SFX Key="86" Bank="2" DebugName="NA_SE_EV_GOTO_HEAVEN" Comment="" Unused="1"></SFX>
+	<SFX Key="87" Bank="2" DebugName="NA_SE_EV_POT_BROKEN" Comment="" >Breaking Pot</SFX>
+	<SFX Key="88" Bank="2" DebugName="NA_SE_PL_PUT_DOWN_POT" Comment="Can't put down pots" Unused="1"></SFX>
+	<SFX Key="89" Bank="2" DebugName="NA_SE_EV_DIVE_INTO_WATER" Comment="" >Diving into Water</SFX>
+	<SFX Key="8A" Bank="2" DebugName="NA_SE_EV_JUMP_OUT_WATER" Comment="" >Climbing out of Water</SFX>
+	<SFX Key="8B" Bank="2" DebugName="NA_SE_EV_GOD_FLYING" Comment="Looping sound" >Goddesses Flying</SFX>
+	<SFX Key="8C" Bank="2" DebugName="NA_SE_EV_TRIFORCE" Comment="Looping sound" >Triforce Resonating</SFX>
+	<SFX Key="8D" Bank="2" DebugName="NA_SE_EV_AURORA" Comment="Looping sound" >Light around Triforce</SFX>
+	<SFX Key="8E" Bank="2" DebugName="NA_SE_EV_DEKU_DEATH" Comment="" >Deku Tree Dying</SFX>
+	<SFX Key="8F" Bank="2" DebugName="NA_SE_EV_BUYOSTAND_RISING" Comment="Looping sound" >Jabu-Jabu Miniboss Platform Rising</SFX>
+	<SFX Key="90" Bank="2" DebugName="NA_SE_EV_BUYOSTAND_FALL" Comment="Looping sound" >Jabu-Jabu Miniboss Platform Falling</SFX>
+	<SFX Key="91" Bank="2" DebugName="NA_SE_EV_BUYOSHUTTER_OPEN" Comment="" >Jabu-Jabu Door Unbarred</SFX>
+	<SFX Key="92" Bank="2" DebugName="NA_SE_EV_BUYOSHUTTER_CLOSE" Comment="" >Jabu-Jabu Door Barred</SFX>
+	<SFX Key="93" Bank="2" DebugName="NA_SE_EV_STONEDOOR_STOP" Comment="" >Temple of Time Door Finished Opening</SFX>
+	<SFX Key="94" Bank="2" DebugName="NA_SE_EV_S_STONE_REVIVAL" Comment="Power returning to spiritual stones?" Unused="1"></SFX>
+	<SFX Key="95" Bank="2" DebugName="NA_SE_EV_MEDAL_APPEAR_S" Comment="Looping sound" >Medallion Falling in Chamber of Sages</SFX>
+	<SFX Key="96" Bank="2" DebugName="NA_SE_EV_HUMAN_BOUND" Comment="" Unused="1"></SFX>
+	<SFX Key="97" Bank="2" DebugName="NA_SE_EV_MEDAL_APPEAR_L" Comment="Mismatched filename?" >Link Gets Arrow of Light</SFX>
+	<SFX Key="98" Bank="2" DebugName="NA_SE_EV_EARTHQUAKE" Comment="" >Temple of Time Rumbling (Zelda Captured)</SFX>
+	<SFX Key="99" Bank="2" DebugName="NA_SE_EV_SHUT_BY_CRYSTAL" Comment="" >Zelda Trapped in Crystal</SFX>
+	<SFX Key="9A" Bank="2" DebugName="NA_SE_EV_GOD_LIGHTBALL_2" Comment="" >Sages Becoming Balls of Light (Trapping Ganondorf)</SFX>
+	<SFX Key="9B" Bank="2" DebugName="NA_SE_EV_RUN_AROUND" Comment="Dupe of 9C?" Unused="1"></SFX>
+	<SFX Key="9C" Bank="2" DebugName="NA_SE_EV_CONSENTRATION" Comment="" >Sages Flying into Triforce (Trapping Ganondorf)</SFX>
+	<SFX Key="9D" Bank="2" DebugName="NA_SE_EV_TIMETRIP_LIGHT" Comment="" >Halo at End of Time Travel</SFX>
+	<SFX Key="9E" Bank="2" DebugName="NA_SE_EV_BUYOSTAND_STOP_A" Comment="" >Jabu-Jabu Miniboss Platform Stopping at Top</SFX>
+	<SFX Key="9F" Bank="2" DebugName="NA_SE_EV_BUYOSTAND_STOP_U" Comment="" >Jabu-Jabu Miniboss Platform Stopping at Bottom</SFX>
+	<SFX Key="A0" Bank="2" DebugName="NA_SE_EV_OBJECT_FALL" Comment="" >Goron Falling (Getting Goron Ruby)</SFX>
+	<SFX Key="A1" Bank="2" DebugName="NA_SE_EV_JUMP_CONC" Comment="Sounds like PLAYER sound 3C" Unused="1"></SFX>
+	<SFX Key="A2" Bank="2" DebugName="NA_SE_EV_ICE_MELT" Comment="" >Red Ice Melting</SFX>
+	<SFX Key="A3" Bank="2" DebugName="NA_SE_EV_FIRE_PILLAR_S" Comment="Looping sound. Fire Temple room 0x15" >Constant Pillar of Fire</SFX>
+	<SFX Key="A4" Bank="2" DebugName="NA_SE_EV_BLOCK_RISING" Comment="" Unused="1"></SFX>
+	<SFX Key="A5" Bank="2" DebugName="NA_SE_EV_NABALL_VANISH" Comment="?" Unused="1"></SFX>
+	<SFX Key="A6" Bank="2" DebugName="NA_SE_EV_SARIA_MELODY" Comment="Mismatched filename?" >Warp Song — Leaving</SFX>
+	<SFX Key="A7" Bank="2" DebugName="NA_SE_EV_LINK_WARP_OUT" Comment="" >Warp Song — Arriving</SFX>
+	<SFX Key="A8" Bank="2" DebugName="NA_SE_EV_FIATY_HEAL" Comment="Looping sound" >Pink Fairy Heals</SFX>
+	<SFX Key="A9" Bank="2" DebugName="NA_SE_EV_CHAIN_KEY_UNLOCK_B" Comment="" >Unlock Boss Door</SFX>
+	<SFX Key="AA" Bank="2" DebugName="NA_SE_EV_WOODBOX_BREAK" Comment="" >Throwing Small Wooden Crate</SFX>
+	<SFX Key="AB" Bank="2" DebugName="NA_SE_EV_PUT_DOWN_WOODBOX" Comment="" >Dropping Small Wooden Crate</SFX>
+	<SFX Key="AC" Bank="2" DebugName="NA_SE_EV_LAND_DIRT" Comment="" >Throwing Ruto onto Jabu-Jabu's Insides</SFX>
+	<SFX Key="AD" Bank="2" DebugName="NA_SE_EV_FLOOR_ROLLING" Comment="" Unused="1"></SFX>
+	<SFX Key="AE" Bank="2" DebugName="NA_SE_EV_DOG_CRY_EVENING" Comment="" >Wolf Howl for Night</SFX>
+	<SFX Key="AF" Bank="2" DebugName="NA_SE_EV_JABJAB_HICCUP" Comment="" Unused="1"></SFX>
+	<SFX Key="B0" Bank="2" DebugName="NA_SE_EV_NALE_MAGIC" Comment="Not that? Sounds like bottle swipe." ></SFX>
+	<SFX Key="B1" Bank="2" DebugName="NA_SE_EV_FROG_JUMP" Comment="" >Frog Jumps on Log</SFX>
+	<SFX Key="B2" Bank="2" DebugName="NA_SE_EV_ICE_FREEZE" Comment="" Unused="1"></SFX>
+	<SFX Key="B3" Bank="2" DebugName="NA_SE_EV_BURNING" Comment="" >Wall of Fire</SFX>
+	<SFX Key="B4" Bank="2" DebugName="NA_SE_EV_WOODPLATE_BOUND" Comment="" Unused="1"></SFX>
+	<SFX Key="B5" Bank="2" DebugName="NA_SE_EV_GORON_WATER_DROP" Comment="" Unused="1"></SFX>
+	<SFX Key="B6" Bank="2" DebugName="NA_SE_EV_JABJAB_GROAN" Comment="" >Jabu-Jabu Breathing</SFX>
+	<SFX Key="B7" Bank="2" DebugName="NA_SE_EV_DARUMA_VANISH" Comment="" >Hitting Dalm Block (Fire Temple Entrance)</SFX>
+	<SFX Key="B8" Bank="2" DebugName="NA_SE_EV_BIGBALL_ROLL" Comment="" >Rolling Boulder</SFX>
+	<SFX Key="B9" Bank="2" DebugName="NA_SE_EV_ELEVATOR_MOVE3" Comment="" Unused="1"></SFX>
+	<SFX Key="BA" Bank="2" DebugName="NA_SE_EV_DIAMOND_SWITCH" Comment="" >Hitting Diamond Switch</SFX>
+	<SFX Key="BB" Bank="2" DebugName="NA_SE_EV_FLAME_OF_FIRE" Comment="" >Fires in Kakariko Village</SFX>
+	<SFX Key="BC" Bank="2" DebugName="NA_SE_EV_RAINBOW_SHOWER" Comment="" >Light Constructing Rainbow Bridge</SFX>
+	<SFX Key="BD" Bank="2" DebugName="NA_SE_EV_FLYING_AIR" Comment="" Unused="1"></SFX>
+	<SFX Key="BE" Bank="2" DebugName="NA_SE_EV_PASS_AIR" Comment="" Unused="1"></SFX>
+	<SFX Key="BF" Bank="2" DebugName="NA_SE_EV_COME_UP_DEKU_JR" Comment="" >Deku Tree Sprout Rises from Ground</SFX>
+	<SFX Key="C0" Bank="2" DebugName="NA_SE_EV_SAND_STORM" Comment="Looping sound" >Desert Sand Storm</SFX>
+	<SFX Key="C1" Bank="2" DebugName="NA_SE_EV_TRIFORCE_MARK" Comment="" >Triforce Hand Mark Shines</SFX>
+	<SFX Key="C2" Bank="2" DebugName="NA_SE_EV_GRAVE_EXPLOSION" Comment="" >Royal Family's Tomb Explodes</SFX>
+	<SFX Key="C3" Bank="2" DebugName="NA_SE_EV_LURE_MOVE_W" Comment="" >Moving Fishing Lure</SFX>
+	<SFX Key="C4" Bank="2" DebugName="NA_SE_EV_POT_MOVE_START" Comment="Used sound is a PLAYER sound" Unused="1">Picking up Pot</SFX>
+	<SFX Key="C5" Bank="2" DebugName="NA_SE_EV_DIVE_INTO_WATER_L" Comment="Mismatched Filename?" >Throwing Rock or Grass into Water</SFX>
+	<SFX Key="C6" Bank="2" DebugName="NA_SE_EV_OUT_OF_WATER_L" Comment="" Unused="1"></SFX>
+	<SFX Key="C7" Bank="2" DebugName="NA_SE_EV_GANON_MANTLE" Comment="" >Ganondorf Whips His Cloak</SFX>
+	<SFX Key="C8" Bank="2" DebugName="NA_SE_EV_DIG_UP" Comment="" Unused="1"></SFX>
+	<SFX Key="C9" Bank="2" DebugName="NA_SE_EV_WOOD_BOUND" Comment="" Unused="1"></SFX>
+	<SFX Key="CA" Bank="2" DebugName="NA_SE_EV_WATER_BUBBLE" Comment="Looping sound" >Tank in Laboratory</SFX>
+	<SFX Key="CB" Bank="2" DebugName="NA_SE_EV_ICE_BROKEN" Comment="" Unused="1"></SFX>
+	<SFX Key="CC" Bank="2" DebugName="NA_SE_EV_FROG_GROW_UP" Comment="" >Frog Growing after Song</SFX>
+	<SFX Key="CD" Bank="2" DebugName="NA_SE_EV_WATER_CONVECTION" Comment="" Unused="1"></SFX>
+	<SFX Key="CE" Bank="2" DebugName="NA_SE_EV_GROUND_GATE_OPEN" Comment="" Unused="1"></SFX>
+	<SFX Key="CF" Bank="2" DebugName="NA_SE_EV_FACE_BREAKDOWN" Comment="" Unused="1"></SFX>
+	<SFX Key="D0" Bank="2" DebugName="NA_SE_EV_FACE_EXPLOSION" Comment="" Unused="1"></SFX>
+	<SFX Key="D1" Bank="2" DebugName="NA_SE_EV_FACE_CRUMBLE_SLOW" Comment="" Unused="1"></SFX>
+	<SFX Key="D2" Bank="2" DebugName="NA_SE_EV_ROUND_TRAP_MOVE" Comment="" Unused="1"></SFX>
+	<SFX Key="D3" Bank="2" DebugName="NA_SE_EV_HIT_SOUND" Comment="" Unused="1"></SFX>
+	<SFX Key="D4" Bank="2" DebugName="NA_SE_EV_ICE_SWING" Comment="Not that?" Unused="1"></SFX>
+	<SFX Key="D5" Bank="2" DebugName="NA_SE_EV_DOWN_TO_GROUND" Comment="Descend from warp" Unused="1"></SFX>
+	<SFX Key="D6" Bank="2" DebugName="NA_SE_EV_KENJA_ENVIROMENT_0" Comment="" >Chamber of Sages Ambience</SFX>
+	<SFX Key="D7" Bank="2" DebugName="NA_SE_EV_KENJA_ENVIROMENT_1" Comment="" >Chamber of Sages Ambience (Sealing Ganondorf)</SFX>
+	<SFX Key="D8" Bank="2" DebugName="NA_SE_EV_SMALL_DOG_BARK" Comment="" >Dog Barking</SFX>
+	<SFX Key="D9" Bank="2" DebugName="NA_SE_EV_ZELDA_POWER" Comment="" >Zelda Opening Gate</SFX>
+	<SFX Key="DA" Bank="2" DebugName="NA_SE_EV_RAIN" Comment="" Unused="1"></SFX>
+	<SFX Key="DB" Bank="2" DebugName="NA_SE_EV_IRON_DOOR_OPEN" Comment="In Shadow Temple" >Iron Door Opening</SFX>
+	<SFX Key="DC" Bank="2" DebugName="NA_SE_EV_IRON_DOOR_CLOSE" Comment="In Shadow Temple" >Iron Door Closing</SFX>
+	<SFX Key="DD" Bank="2" DebugName="NA_SE_EV_WHIRLPOOL" Comment="" >Whirlpool</SFX>
+	<SFX Key="DE" Bank="2" DebugName="NA_SE_EV_TOWER_PARTS_BROKEN" Comment="" >Ganon's Tower Crumbling</SFX>
+	<SFX Key="DF" Bank="2" DebugName="NA_SE_EV_COW_CRY" Comment="" >Cow Mooing</SFX>
+	<SFX Key="E0" Bank="2" DebugName="NA_SE_EV_METAL_BOX_BOUND" Comment="" Unused="1"></SFX>
+	<SFX Key="E1" Bank="2" DebugName="NA_SE_EV_ELECTRIC_EXPLOSION" Comment="" >Throwing Obsidian Rock into Tower Barrier</SFX>
+	<SFX Key="E2" Bank="2" DebugName="NA_SE_EV_HEAVY_THROW" Comment="" >Throwing Obsidian Rock</SFX>
+	<SFX Key="E3" Bank="2" DebugName="NA_SE_EV_FROG_CRY_0" Comment="" >Frog Croaks while Jumping Back into Water</SFX>
+	<SFX Key="E4" Bank="2" DebugName="NA_SE_EV_FROG_CRY_1" Comment="" >Frog Croaks after Growing</SFX>
+	<SFX Key="E5" Bank="2" DebugName="NA_SE_EV_COW_CRY_LV" Comment="" >Cow mooing from Elsewhere</SFX>
+	<SFX Key="E6" Bank="2" DebugName="NA_SE_EV_RONRON_DOOR_CLOSE" Comment="" >Ingo Gates Closing</SFX>
+	<SFX Key="E7" Bank="2" DebugName="NA_SE_EV_BUTTERFRY_TO_FAIRY" Comment="" >Butterfly Transforms into Fairy</SFX>
+	<SFX Key="E8" Bank="2" DebugName="NA_SE_EV_FIVE_COUNT_LUPY" Comment="" >Collect Silver Rupee</SFX>
+	<SFX Key="E9" Bank="2" DebugName="NA_SE_EV_STONE_GROW_UP" Comment="" >Gossip Stone Stretches</SFX>
+	<SFX Key="EA" Bank="2" DebugName="NA_SE_EV_STONE_LAUNCH" Comment="Looping sound" >Gossip Stone Launching into Space</SFX>
+	<SFX Key="EB" Bank="2" DebugName="NA_SE_EV_STONE_ROLLING" Comment="" >Gossip Stone Spins in Place</SFX>
+	<SFX Key="EC" Bank="2" DebugName="NA_SE_EV_TOGE_STICK_ROLLING" Comment="" >Spiky Log Rolling</SFX>
+	<SFX Key="ED" Bank="2" DebugName="NA_SE_EV_TOWER_ENERGY" Comment="Looping sound" >Energy Fluctuating in Minidungeon Final Rooms</SFX>
+	<SFX Key="EE" Bank="2" DebugName="NA_SE_EV_TOWER_BARRIER" Comment="Looping sound" >Ganon's Tower Barrier Fluctuating</SFX>
+	<SFX Key="EF" Bank="2" DebugName="NA_SE_EV_CHIBI_WALK" Comment="" >Grave Kid Walking</SFX>
+	<SFX Key="F0" Bank="2" DebugName="NA_SE_EV_KNIGHT_WALK" Comment="" >Hyrule Guard Walking</SFX>
+	<SFX Key="F1" Bank="2" DebugName="NA_SE_EV_PILLAR_MOVE_STOP" Comment="Last ENVIRONMENT sound?" >Pillar Stops Moving</SFX>
+	<SFX Key="0" Bank="3" DebugName="NA_SE_EN_DODO_J_WALK" Comment="" >Dodongo — Walking</SFX>
+	<SFX Key="1" Bank="3" DebugName="NA_SE_EN_DODO_J_CRY" Comment="" >Dodongo — Exhaling</SFX>
+	<SFX Key="2" Bank="3" DebugName="NA_SE_EN_DODO_J_FIRE" Comment="Looping sound" >Dodongo — Breathing Fire</SFX>
+	<SFX Key="3" Bank="3" DebugName="NA_SE_EN_DODO_J_DAMAGE" Comment="" >Dodongo — Hurt by Link</SFX>
+	<SFX Key="4" Bank="3" DebugName="NA_SE_EN_DODO_J_DEAD" Comment="" >Dodongo — Final Hit</SFX>
+	<SFX Key="5" Bank="3" DebugName="NA_SE_EN_DODO_K_CRY" Comment="" >King Dodongo — Exhaling</SFX>
+	<SFX Key="6" Bank="3" DebugName="NA_SE_EN_DODO_K_DAMAGE" Comment="" >King Dodongo — Hurt by Link</SFX>
+	<SFX Key="7" Bank="3" DebugName="NA_SE_EN_DODO_K_DEAD" Comment="" >King Dodongo — Final Hit</SFX>
+	<SFX Key="8" Bank="3" DebugName="NA_SE_EN_DODO_K_WALK" Comment="" >King Dodongo — Walking</SFX>
+	<SFX Key="9" Bank="3" DebugName="NA_SE_EN_DODO_K_FIRE" Comment="Looping sound" >King Dodongo — Breathing Fire</SFX>
+	<SFX Key="0A" Bank="3" DebugName="NA_SE_EN_GOMA_WALK" Comment="" >Gohma — Walking on Ground</SFX>
+	<SFX Key="0B" Bank="3" DebugName="NA_SE_EN_GOMA_HIGH" Comment="" >Gohma — Walking on Ceiling</SFX>
+	<SFX Key="0C" Bank="3" DebugName="NA_SE_EN_GOMA_CLIM" Comment="" >Gohma — Climbing to Ceiling</SFX>
+	<SFX Key="0D" Bank="3" DebugName="NA_SE_EN_GOMA_DOWN" Comment="" >Gohma — Falls off Ceiling</SFX>
+	<SFX Key="0E" Bank="3" DebugName="NA_SE_EN_GOMA_CRY1" Comment="" >Gohma — Cries</SFX>
+	<SFX Key="0F" Bank="3" DebugName="NA_SE_EN_GOMA_CRY2" Comment="" >Gohma — Grumbles</SFX>
+	<SFX Key="10" Bank="3" DebugName="NA_SE_EN_GOMA_DAM1" Comment="" >Gohma — Hurt by Link</SFX>
+	<SFX Key="11" Bank="3" DebugName="NA_SE_EN_GOMA_DAM2" Comment="" >Gohma — Hit in Eyeball</SFX>
+	<SFX Key="12" Bank="3" DebugName="NA_SE_EN_GOMA_DEAD" Comment="" >Gohma — Final Hit</SFX>
+	<SFX Key="13" Bank="3" DebugName="NA_SE_EN_GOMA_UNARI" Comment="" >Gohma — Dropping Larvae</SFX>
+	<SFX Key="14" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_EGG1" Comment="" >Gohma Larva (Boss Battle) — Egg Falls onto Floor</SFX>
+	<SFX Key="15" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_EGG2" Comment="" >Gohma Larva (Boss Battle) — Egg Hatches</SFX>
+	<SFX Key="16" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_WALK" Comment="" >Gohma Larva (Boss Battle) — Walking</SFX>
+	<SFX Key="17" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_CRY" Comment="" >Gohma Larva (Boss Battle) — Cries</SFX>
+	<SFX Key="18" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_DAM1" Comment="" >Gohma Larva (Boss Battle) — Hurt by Link</SFX>
+	<SFX Key="19" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_DAM2" Comment="" >Gohma Larva (Boss Battle) — Hurt by Link</SFX>
+	<SFX Key="1A" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_DEAD" Comment="" >Gohma Larva (Boss Battle) — Final Hit</SFX>
+	<SFX Key="1B" Bank="3" DebugName="NA_SE_EN_GOMA_DEMO_EYE" Comment="" >Gohma — Eye Rolls (Battle Start)</SFX>
+	<SFX Key="1C" Bank="3" DebugName="NA_SE_EN_GOMA_LAST" Comment="Looping sound" >Gohma — Body Burns Away</SFX>
+	<SFX Key="1D" Bank="3" DebugName="NA_SE_EN_GOMA_UNARI2" Comment="" >Gohma — Cries When Stuck in Ground</SFX>
+	<SFX Key="1E" Bank="3" DebugName="NA_SE_EN_GOMA_FAINT" Comment="Looping sound" >Gohma — Temporarily Paralyzed</SFX>
+	<SFX Key="1F" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_FREEZE" Comment="" >Gohma Larva (Boss Battle) — Paralyzed</SFX>
+	<SFX Key="20" Bank="3" DebugName="NA_SE_EN_DODO_M_CRY" Comment="" >Baby Dodongo — Attack Cry</SFX>
+	<SFX Key="21" Bank="3" DebugName="NA_SE_EN_DODO_M_DEAD" Comment="" >Baby Dodongo — Final Hit</SFX>
+	<SFX Key="22" Bank="3" DebugName="NA_SE_EN_DODO_M_MOVE" Comment="" >Baby Dodongo — Moving</SFX>
+	<SFX Key="23" Bank="3" DebugName="NA_SE_EN_DODO_M_DOWN" Comment="" >Baby Dodongo — Burrowing</SFX>
+	<SFX Key="24" Bank="3" DebugName="NA_SE_EN_DODO_M_UP" Comment="" >Baby Dodongo — Emerging</SFX>
+	<SFX Key="25" Bank="3" DebugName="NA_SE_EN_GANON_THROW_MASIC" Comment="" >Ganondorf — Throws Energy Orb</SFX>
+	<SFX Key="26" Bank="3" DebugName="NA_SE_EN_DODO_M_EAT" Comment="" >Baby Dodongo — Eats Bomb</SFX>
+	<SFX Key="27" Bank="3" DebugName="NA_SE_EN_GANON_DD_THUNDER" Comment="" >Ganondorf — Hit by Light Arrow</SFX>
+	<SFX Key="28" Bank="3" DebugName="NA_SE_EN_RIZA_ONGND" Comment="Similar to 2E" Unused="1">Lizalfos — xxx</SFX>
+	<SFX Key="29" Bank="3" DebugName="NA_SE_EN_RIZA_CRY" Comment="" >Lizalfos — Cries</SFX>
+	<SFX Key="2A" Bank="3" DebugName="NA_SE_EN_RIZA_ATTACK" Comment="" >Lizalfos — Attacks</SFX>
+	<SFX Key="2B" Bank="3" DebugName="NA_SE_EN_RIZA_DAMAGE" Comment="" >Lizalfos — Hurt by Link</SFX>
+	<SFX Key="2C" Bank="3" DebugName="NA_SE_EN_RIZA_WARAU" Comment="Laughing" Unused="1">Lizalfos - xxx</SFX>
+	<SFX Key="2D" Bank="3" DebugName="NA_SE_EN_RIZA_DEAD" Comment="" >Lizalfos — Final Hit</SFX>
+	<SFX Key="2E" Bank="3" DebugName="NA_SE_EN_RIZA_WALK" Comment="" >Lizalfos — Walking</SFX>
+	<SFX Key="2F" Bank="3" DebugName="NA_SE_EN_RIZA_JUMP" Comment="" >Lizalfos — Jumps</SFX>
+	<SFX Key="30" Bank="3" DebugName="NA_SE_EN_STALKID_WALK" Comment="" >Stalchild — Walking</SFX>
+	<SFX Key="31" Bank="3" DebugName="NA_SE_EN_STALKID_ATTACK" Comment="" >Stalchild — Attacking</SFX>
+	<SFX Key="32" Bank="3" DebugName="NA_SE_EN_STALKID_DAMAGE" Comment="" >Stalchild — Hurt by Link</SFX>
+	<SFX Key="33" Bank="3" DebugName="NA_SE_EN_STALKID_DEAD" Comment="" >Stalchild — Final Hit</SFX>
+	<SFX Key="34" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_SLIDING" Comment="Looping sound" >Floormaster — Sliding on Ground</SFX>
+	<SFX Key="35" Bank="3" DebugName="NA_SE_EN_TEKU_WALK_WATER" Comment="" >Tektite — Turning around in Water</SFX>
+	<SFX Key="36" Bank="3" DebugName="NA_SE_EN_LIGHT_ARROW_HIT" Comment="" Unused="1"></SFX>
+	<SFX Key="37" Bank="3" DebugName="NA_SE_EN_TUBOOCK_FLY" Comment="" >Flying Pot Trap — Flying</SFX>
+	<SFX Key="38" Bank="3" DebugName="NA_SE_EN_STAL_WARAU" Comment="" >Stalfos — Laughs</SFX>
+	<SFX Key="39" Bank="3" DebugName="NA_SE_EN_STAL_SAKEBI" Comment="" >Stalfos — Swipes Sword</SFX>
+	<SFX Key="3A" Bank="3" DebugName="NA_SE_EN_STAL_DAMAGE" Comment="" >Stalfos — Hurt by Link</SFX>
+	<SFX Key="3B" Bank="3" DebugName="NA_SE_EN_STAL_DEAD" Comment="" >Stalfos — Final Hit</SFX>
+	<SFX Key="3C" Bank="3" DebugName="NA_SE_EN_WOLFOS_APPEAR" Comment="" >Wolfos — Howling on Appearance</SFX>
+	<SFX Key="3D" Bank="3" DebugName="NA_SE_EN_STAL_WALK" Comment="" >Stalfos — Walking</SFX>
+	<SFX Key="3E" Bank="3" DebugName="NA_SE_EN_WOLFOS_CRY" Comment="" >Wolfos — Cries</SFX>
+	<SFX Key="3F" Bank="3" DebugName="NA_SE_EN_WOLFOS_ATTACK" Comment="" >Wolfos — Attack and Cry</SFX>
+	<SFX Key="40" Bank="3" DebugName="NA_SE_EN_FFLY_ATTACK" Comment="" >Keese — Attacking</SFX>
+	<SFX Key="41" Bank="3" DebugName="NA_SE_EN_FFLY_FLY" Comment="" >Keese — Flying</SFX>
+	<SFX Key="42" Bank="3" DebugName="NA_SE_EN_FFLY_DEAD" Comment="" >Keese — Final Hit</SFX>
+	<SFX Key="43" Bank="3" DebugName="NA_SE_EN_WOLFOS_DAMAGE" Comment="" >Wolfos — Hurt by Link</SFX>
+	<SFX Key="44" Bank="3" DebugName="NA_SE_EN_AMOS_WALK" Comment="" >Armos — Hopping</SFX>
+	<SFX Key="45" Bank="3" DebugName="NA_SE_EN_AMOS_WAVE" Comment="" >Armos — Awakes</SFX>
+	<SFX Key="46" Bank="3" DebugName="NA_SE_EN_AMOS_DEAD" Comment="" >Armos — Final Hit</SFX>
+	<SFX Key="47" Bank="3" DebugName="NA_SE_EN_AMOS_DAMAGE" Comment="" >Armos — Hurt by Link</SFX>
+	<SFX Key="48" Bank="3" DebugName="NA_SE_EN_AMOS_VOICE" Comment="" >Armos — Roars</SFX>
+	<SFX Key="49" Bank="3" DebugName="NA_SE_EN_SHELL_MOUTH" Comment="" >Shellblade — Opens Mouth</SFX>
+	<SFX Key="4A" Bank="3" DebugName="NA_SE_EN_SHELL_DEAD" Comment="" >Shellblade — Final Hit</SFX>
+	<SFX Key="4B" Bank="3" DebugName="NA_SE_EN_WOLFOS_DEAD" Comment="" >Wolfos — Final Hit</SFX>
+	<SFX Key="4C" Bank="3" DebugName="NA_SE_EN_DODO_K_COLI" Comment="" >King Dodongo — Last Roll into Wall</SFX>
+	<SFX Key="4D" Bank="3" DebugName="NA_SE_EN_DODO_K_COLI2" Comment="" >King Dodongo — Curls into Ball, Rolls into Wall</SFX>
+	<SFX Key="4E" Bank="3" DebugName="NA_SE_EN_DODO_K_ROLL" Comment="Looping sound" >King Dodongo — Rolling</SFX>
+	<SFX Key="4F" Bank="3" DebugName="NA_SE_EN_DODO_K_BREATH" Comment="Looping sound" >King Dodongo — Inhaling</SFX>
+	<SFX Key="50" Bank="3" DebugName="NA_SE_EN_DODO_K_DRINK" Comment="" >King Dodongo — Swallows Bomb</SFX>
+	<SFX Key="51" Bank="3" DebugName="NA_SE_EN_DODO_K_DOWN" Comment="Looping sound" >King Dodongo — Temporarily Paralyzed</SFX>
+	<SFX Key="52" Bank="3" DebugName="NA_SE_EN_DODO_K_OTAKEBI" Comment="" >King Dodongo — Introductory Roar</SFX>
+	<SFX Key="53" Bank="3" DebugName="NA_SE_EN_DODO_K_END" Comment="" >King Dodongo — Melting</SFX>
+	<SFX Key="54" Bank="3" DebugName="NA_SE_EN_DODO_K_LAST" Comment="" >King Dodongo — Melting</SFX>
+	<SFX Key="55" Bank="3" DebugName="NA_SE_EN_DODO_K_LAVA" Comment="Looping sound" >King Dodongo — In Lava</SFX>
+	<SFX Key="56" Bank="3" DebugName="NA_SE_EN_GANON_FLOAT" Comment="Looping sound" >Ganondorf — Floating in Air (Cutscene)</SFX>
+	<SFX Key="57" Bank="3" DebugName="NA_SE_EN_GANON_DARKWAVE_M" Comment="Looping sound" >Ganondorf — Purple Vortex</SFX>
+	<SFX Key="58" Bank="3" DebugName="NA_SE_EN_DODO_J_BREATH" Comment="Looping sound" >Dodongo — Inhaling</SFX>
+	<SFX Key="59" Bank="3" DebugName="NA_SE_EN_DODO_J_TAIL" Comment="" >Dodongo — Tail Dragging on Ground</SFX>
+	<SFX Key="5A" Bank="3" DebugName="NA_SE_EN_WOLFOS_WALK" Comment="" >Wolfos — Walking</SFX>
+	<SFX Key="5B" Bank="3" DebugName="NA_SE_EN_DODO_J_EAT" Comment="Can dodongos eat bombs?" Unused="1">Dodongo — Eats Bomb</SFX>
+	<SFX Key="5C" Bank="3" DebugName="NA_SE_EN_DEKU_MOUTH" Comment="" >Big Deku Baba — Chomps Mouth</SFX>
+	<SFX Key="5D" Bank="3" DebugName="NA_SE_EN_DEKU_ATTACK" Comment="" >Big Deku Baba — Attacks</SFX>
+	<SFX Key="5E" Bank="3" DebugName="NA_SE_EN_DEKU_DAMAGE" Comment="Used by Deku Baba too" >Big Deku Baba — Hurt by Link</SFX>
+	<SFX Key="5F" Bank="3" DebugName="NA_SE_EN_DEKU_DEAD" Comment="" >Big Deku Baba — Final Hit</SFX>
+	<SFX Key="60" Bank="3" DebugName="NA_SE_EN_DEKU_JR_MOUTH" Comment="" >Deku Baba — Chomps Mouth</SFX>
+	<SFX Key="61" Bank="3" DebugName="NA_SE_EN_DEKU_JR_ATTACK" Comment="" >Dekub Baba — Attacks</SFX>
+	<SFX Key="62" Bank="3" DebugName="NA_SE_EN_DEKU_JR_DEAD" Comment="" >Deku Baba — Final Hit</SFX>
+	<SFX Key="63" Bank="3" DebugName="NA_SE_EN_DEKU_SCRAPE" Comment="Used by Big Deku Baba too" >Deku Baba — Scrapes Mouth along Ground</SFX>
+	<SFX Key="64" Bank="3" DebugName="NA_SE_EN_TAIL_FLY" Comment="" >Tailpasaran — Flying, Rising out of Ground</SFX>
+	<SFX Key="65" Bank="3" DebugName="NA_SE_EN_TAIL_CRY" Comment="" >Tailpasaran — Cries</SFX>
+	<SFX Key="66" Bank="3" DebugName="NA_SE_EN_TAIL_DEAD" Comment="" >Tailpasaran — Final Hit</SFX>
+	<SFX Key="67" Bank="3" DebugName="NA_SE_EN_GANON_SPARK" Comment="" >Ganondorf — Charging Ball</SFX>
+	<SFX Key="68" Bank="3" DebugName="NA_SE_EN_STALTU_DOWN" Comment="" >Skulltula — Drops Down</SFX>
+	<SFX Key="69" Bank="3" DebugName="NA_SE_EN_STALTU_UP" Comment="" >Skulltula — Goes Up</SFX>
+	<SFX Key="6A" Bank="3" DebugName="NA_SE_EN_STALTU_LAUGH" Comment="" >Skulltula — Quivers</SFX>
+	<SFX Key="6B" Bank="3" DebugName="NA_SE_EN_STALTU_DAMAGE" Comment="" >Skulltula — Hurt by Link</SFX>
+	<SFX Key="6C" Bank="3" DebugName="NA_SE_EN_STAL_JUMP" Comment="Also tektite jumping on ground" >Stalfos — Jumps</SFX>
+	<SFX Key="6D" Bank="3" DebugName="NA_SE_EN_TEKU_DAMAGE" Comment="" >Tektite — Hurt by Link</SFX>
+	<SFX Key="6E" Bank="3" DebugName="NA_SE_EN_TEKU_DEAD" Comment="" >Tektite — Final Hit</SFX>
+	<SFX Key="6F" Bank="3" DebugName="NA_SE_EN_TEKU_WALK" Comment="" >Tektite — Turning around on Ground</SFX>
+	<SFX Key="70" Bank="3" DebugName="NA_SE_EN_PO_KANTERA" Comment="" >Poe — Spins Lantern</SFX>
+	<SFX Key="71" Bank="3" DebugName="NA_SE_EN_PO_FLY" Comment="" >Poe — Flying</SFX>
+	<SFX Key="72" Bank="3" DebugName="NA_SE_EN_PO_AWAY" Comment="" >Poe — Runs Away</SFX>
+	<SFX Key="73" Bank="3" DebugName="NA_SE_EN_PO_APPEAR" Comment="" >Poe — Appears</SFX>
+	<SFX Key="74" Bank="3" DebugName="NA_SE_EN_PO_DISAPPEAR" Comment="" >Poe — Disappears When Z-Targeting</SFX>
+	<SFX Key="75" Bank="3" DebugName="NA_SE_EN_PO_DAMAGE" Comment="" >Poe — Hurt by Link</SFX>
+	<SFX Key="76" Bank="3" DebugName="NA_SE_EN_PO_DEAD" Comment="" >Poe — Final Hit</SFX>
+	<SFX Key="77" Bank="3" DebugName="NA_SE_EN_PO_DEAD2" Comment="" >Poe — Turns into Soul</SFX>
+	<SFX Key="78" Bank="3" DebugName="NA_SE_EN_EXTINCT" Comment="" >Body Disappears (Any Enemy)</SFX>
+	<SFX Key="79" Bank="3" DebugName="NA_SE_EN_GOLON_LAND_BIG" Comment="" >Rolling Goron — Hits Ground</SFX>
+	<SFX Key="7A" Bank="3" DebugName="NA_SE_EN_RIZA_DOWN" Comment="" >Lizalfos — Lands on Back</SFX>
+	<SFX Key="7B" Bank="3" DebugName="NA_SE_EN_DODO_M_GND" Comment="Also other enemies" >Baby Dodongo — Landing on Ground</SFX>
+	<SFX Key="7C" Bank="3" DebugName="NA_SE_EN_NUTS_UP" Comment="" >Mad Scrub — Emerges from Ground</SFX>
+	<SFX Key="7D" Bank="3" DebugName="NA_SE_EN_NUTS_DOWN" Comment="" >Mad Scrub — Burrows into Ground</SFX>
+	<SFX Key="7E" Bank="3" DebugName="NA_SE_EN_NUTS_THROW" Comment="" >Mad Scrub — Spits Nut</SFX>
+	<SFX Key="7F" Bank="3" DebugName="NA_SE_EN_NUTS_WALK" Comment="" >Mad Scrub — Walking</SFX>
+	<SFX Key="80" Bank="3" DebugName="NA_SE_EN_NUTS_DAMAGE" Comment="" >Mad Scrub — Hurt by Link</SFX>
+	<SFX Key="81" Bank="3" DebugName="NA_SE_EN_NUTS_DEAD" Comment="" >Mad Scrub — Last Hit</SFX>
+	<SFX Key="82" Bank="3" DebugName="NA_SE_EN_NUTS_FAINT" Comment="" >Business Scrub — Squeaks When Talking</SFX>
+	<SFX Key="83" Bank="3" DebugName="NA_SE_EN_PO_BIG_GET" Comment="" >Big Poe — Catch Poe Soul</SFX>
+	<SFX Key="84" Bank="3" DebugName="NA_SE_EN_STALTU_ROLL" Comment="" >Skulltula — Turns Around</SFX>
+	<SFX Key="85" Bank="3" DebugName="NA_SE_EN_STALWALL_DEAD" Comment="" >Skullwalltula — Final Hit</SFX>
+	<SFX Key="86" Bank="3" DebugName="NA_SE_EN_PO_SISTER_DEAD" Comment="" >Poe Sister — Final Hit</SFX>
+	<SFX Key="87" Bank="3" DebugName="NA_SE_EN_BARI_SPLIT" Comment="" >Bari — Splits into Biri</SFX>
+	<SFX Key="88" Bank="3" DebugName="NA_SE_EN_TEKU_REVERSE" Comment="Shockwave from Megaton Hammer" >Tektite — Flipped Upside-Down</SFX>
+	<SFX Key="89" Bank="3" DebugName="NA_SE_EN_VALVAISA_LAND2" Comment="" >Volvagia — Skull Lands</SFX>
+	<SFX Key="8A" Bank="3" DebugName="NA_SE_EN_TEKU_LAND_WATER" Comment="" >Tektite — Land in Water (Long Jump)</SFX>
+	<SFX Key="8B" Bank="3" DebugName="NA_SE_EN_LAST_DAMAGE" Comment="" >Final Hit (Any Enemy)</SFX>
+	<SFX Key="8C" Bank="3" DebugName="NA_SE_EN_STALWALL_ROLL" Comment="" >Skullwalltula — Spinning on Wall</SFX>
+	<SFX Key="8D" Bank="3" DebugName="NA_SE_EN_STALWALL_DASH" Comment="" >Skullwalltula — Dashing towards Link</SFX>
+	<SFX Key="8E" Bank="3" DebugName="NA_SE_EN_TEKU_JUMP_WATER" Comment="" >Tektite — Jump in Water</SFX>
+	<SFX Key="8F" Bank="3" DebugName="NA_SE_EN_TEKU_LAND_WATER2" Comment="" >Tektite — Land in Water (Short Jump)</SFX>
+	<SFX Key="90" Bank="3" DebugName="NA_SE_EN_FALL_AIM" Comment="" >Wallmaster — Falling over Link</SFX>
+	<SFX Key="91" Bank="3" DebugName="NA_SE_EN_FALL_UP" Comment="" >Wallmaster — Flies Up</SFX>
+	<SFX Key="92" Bank="3" DebugName="NA_SE_EN_FALL_CATCH" Comment="" >Wallmaster — Catches Link</SFX>
+	<SFX Key="93" Bank="3" DebugName="NA_SE_EN_FALL_LAND" Comment="" >Wallmaster and Floormaster — Lands</SFX>
+	<SFX Key="94" Bank="3" DebugName="NA_SE_EN_FALL_WALK" Comment="" >Wallmaster and Floormaster — Walking</SFX>
+	<SFX Key="95" Bank="3" DebugName="NA_SE_EN_FALL_DAMAGE" Comment="" >Wallmaster and Floormaster — Hurt by Link</SFX>
+	<SFX Key="96" Bank="3" DebugName="NA_SE_EN_FALL_DEAD" Comment="" >Wallmaster and Floormaster — Final Hit</SFX>
+	<SFX Key="97" Bank="3" DebugName="NA_SE_EN_KAICHO_FLUTTER" Comment="" >Guay — Flying</SFX>
+	<SFX Key="98" Bank="3" DebugName="NA_SE_EN_BIRI_FLY" Comment="" >Biri — Floating</SFX>
+	<SFX Key="99" Bank="3" DebugName="NA_SE_EN_BIRI_JUMP" Comment="" >Biri — Flies Up</SFX>
+	<SFX Key="9A" Bank="3" DebugName="NA_SE_EN_BIRI_SPARK" Comment="Looping sound" >Biri — Attacks</SFX>
+	<SFX Key="9B" Bank="3" DebugName="NA_SE_EN_BIRI_DEAD" Comment="" >Biri — Final Hit</SFX>
+	<SFX Key="9C" Bank="3" DebugName="NA_SE_EN_BIRI_BUBLE" Comment="" >Biri — Bubbles when Dead</SFX>
+	<SFX Key="9D" Bank="3" DebugName="NA_SE_EN_BARI_ROLL" Comment="" >Bari — Spinning</SFX>
+	<SFX Key="9E" Bank="3" DebugName="NA_SE_EN_GOMA_JR_FREEZE" Comment="" >Gohma Larva — Temporarily Paralyzed</SFX>
+	<SFX Key="9F" Bank="3" DebugName="NA_SE_EN_BARI_DEAD" Comment="" >Bari — Final Hit</SFX>
+	<SFX Key="A0" Bank="3" DebugName="NA_SE_EN_GANON_FIRE" Comment="Looping sound" >Ganondorf — Thrown Magic Orb</SFX>
+	<SFX Key="A1" Bank="3" DebugName="NA_SE_EN_FANTOM_TRANSFORM" Comment="" >Phantom Ganon — Removes Face</SFX>
+	<SFX Key="A2" Bank="3" DebugName="NA_SE_EN_FANTOM_THUNDER" Comment="" >Phantom Ganon — Lighting Attack</SFX>
+	<SFX Key="A3" Bank="3" DebugName="NA_SE_EN_FANTOM_SPARK" Comment="" >Phantom Ganon — Sparks from Lighting Attack</SFX>
+	<SFX Key="A4" Bank="3" DebugName="NA_SE_EN_FANTOM_FLOAT" Comment="Also Ganondorf. Looping sound" >Phantom Ganon — Floating</SFX>
+	<SFX Key="A5" Bank="3" DebugName="NA_SE_EN_FANTOM_MASIC1" Comment="Magic 1" Unused="1">Phantom Ganon — xxx</SFX>
+	<SFX Key="A6" Bank="3" DebugName="NA_SE_EN_FANTOM_MASIC2" Comment="" >Phantom Ganon — Enters Painting</SFX>
+	<SFX Key="A7" Bank="3" DebugName="NA_SE_EN_FANTOM_FIRE" Comment="" >Phantom Ganon — Fires Lightning Ball with Staff</SFX>
+	<SFX Key="A8" Bank="3" DebugName="NA_SE_EN_FANTOM_HIT_THUNDER" Comment="" >Phantom Ganon — Lightning Ball hits Phantom Ganon or Link</SFX>
+	<SFX Key="A9" Bank="3" DebugName="NA_SE_EN_FANTOM_ATTACK" Comment="" Unused="1">Phantom Ganon — xxx</SFX>
+	<SFX Key="AA" Bank="3" DebugName="NA_SE_EN_FANTOM_STICK" Comment="" >Phantom Ganon — Spins Staff</SFX>
+	<SFX Key="AB" Bank="3" DebugName="NA_SE_EN_FANTOM_EYE" Comment="" >Phantom Ganon — Eye Glows after Face Removal</SFX>
+	<SFX Key="AC" Bank="3" DebugName="NA_SE_EN_FANTOM_LAST" Comment="" >Phantom Ganon — Dying Roar</SFX>
+	<SFX Key="AD" Bank="3" DebugName="NA_SE_EN_FANTOM_THUNDER_GND" Comment="" >Phantom Ganon — Lightning Ball Hits Ground</SFX>
+	<SFX Key="AE" Bank="3" DebugName="NA_SE_EN_FANTOM_DAMAGE" Comment="" >Phantom Ganon — Hurt by Link</SFX>
+	<SFX Key="AF" Bank="3" DebugName="NA_SE_EN_FANTOM_DEAD" Comment="" >Phantom Ganon — Final Hit</SFX>
+	<SFX Key="B0" Bank="3" DebugName="NA_SE_EN_FANTOM_LAUGH" Comment="" >Phantom Ganon — Laughs</SFX>
+	<SFX Key="B1" Bank="3" DebugName="NA_SE_EN_FANTOM_DAMAGE2" Comment="" >Phantom Ganon — Hurt by Lightning Ball</SFX>
+	<SFX Key="B2" Bank="3" DebugName="NA_SE_EN_FANTOM_VOICE" Comment="" >Phantom Ganon — Yells</SFX>
+	<SFX Key="B3" Bank="3" DebugName="NA_SE_EN_KAICHO_DAMAGE" Comment="Guays can't be hurt non-fatally." Unused="1">Guay — Hurt by Link</SFX>
+	<SFX Key="B4" Bank="3" DebugName="NA_SE_EN_GANON_ATTACK_DEMO" Comment="" >Ganondorf (Cutscene) — Charges Magic Attack</SFX>
+	<SFX Key="B5" Bank="3" DebugName="NA_SE_EN_GANON_FIRE_DEMO" Comment="" >Ganondorf (Cutscene) — Shoots Magic Attack</SFX>
+	<SFX Key="B6" Bank="3" DebugName="NA_SE_EN_KAICHO_CRY" Comment="" >Guay — Cries</SFX>
+	<SFX Key="B7" Bank="3" DebugName="NA_SE_EN_KAICHO_ATTACK" Comment="" >Guay — Attacks Link</SFX>
+	<SFX Key="B8" Bank="3" DebugName="NA_SE_EN_MORIBLIN_WALK" Comment="" >Spear Moblin — Walking</SFX>
+	<SFX Key="B9" Bank="3" DebugName="NA_SE_EN_MORIBLIN_SLIDE" Comment="" >Spear Moblin — Slides to a Halt</SFX>
+	<SFX Key="BA" Bank="3" DebugName="NA_SE_EN_MORIBLIN_ATTACK" Comment="" >Spear Moblin — Attack Cry</SFX>
+	<SFX Key="BB" Bank="3" DebugName="NA_SE_EN_MORIBLIN_VOICE" Comment="" >Spear Moblin — Grunts</SFX>
+	<SFX Key="BC" Bank="3" DebugName="NA_SE_EN_MORIBLIN_SPEAR_AT" Comment="" >Spear Moblin — Readies Spear</SFX>
+	<SFX Key="BD" Bank="3" DebugName="NA_SE_EN_MORIBLIN_SPEAR_NORM" Comment="" >Spear Moblin — Pulls Spear Up</SFX>
+	<SFX Key="BE" Bank="3" DebugName="NA_SE_EN_MORIBLIN_DEAD" Comment="" >Spear Moblin — Final Hit</SFX>
+	<SFX Key="BF" Bank="3" DebugName="NA_SE_EN_MORIBLIN_DASH" Comment="" >Spear Moblin — Dashes after Link</SFX>
+	<SFX Key="C0" Bank="3" DebugName="NA_SE_EN_OCTAROCK_ROCK" Comment="" >Octorok — Rock Breaks on Impact</SFX>
+	<SFX Key="C1" Bank="3" DebugName="NA_SE_EN_OCTAROCK_FLOAT" Comment="" >Octorok — Floating on Water</SFX>
+	<SFX Key="C2" Bank="3" DebugName="NA_SE_EN_OCTAROCK_JUMP" Comment="" >Octorok — Jumps out of Water</SFX>
+	<SFX Key="C3" Bank="3" DebugName="NA_SE_EN_OCTAROCK_LAND" Comment="" >Octorok — Settles on Surface</SFX>
+	<SFX Key="C4" Bank="3" DebugName="NA_SE_EN_OCTAROCK_SINK" Comment="" >Octorok — Goes under Surface</SFX>
+	<SFX Key="C5" Bank="3" DebugName="NA_SE_EN_OCTAROCK_BUBLE" Comment="" >Octorok — Bubbles Underwater</SFX>
+	<SFX Key="C6" Bank="3" DebugName="NA_SE_EN_OCTAROCK_DEAD1" Comment="" >Octorok — Final Hit</SFX>
+	<SFX Key="C7" Bank="3" DebugName="NA_SE_EN_OCTAROCK_DEAD2" Comment="" >Octorok — Dying Noise</SFX>
+	<SFX Key="C8" Bank="3" DebugName="NA_SE_EN_BUBLE_WING" Comment="" >Bubble — Flying</SFX>
+	<SFX Key="C9" Bank="3" DebugName="NA_SE_EN_BUBLE_MOUTH" Comment="other Bubbles too?" >Red Bubble — Chomps Mouth</SFX>
+	<SFX Key="CA" Bank="3" DebugName="NA_SE_EN_BUBLE_LAUGH" Comment="" >Bubble — Laughing</SFX>
+	<SFX Key="CB" Bank="3" DebugName="NA_SE_EN_BUBLE_BITE" Comment="" >Bubble — Attacks</SFX>
+	<SFX Key="CC" Bank="3" DebugName="NA_SE_EN_BUBLE_UP" Comment="" >Bubble — Protective Flame Reappears</SFX>
+	<SFX Key="CD" Bank="3" DebugName="NA_SE_EN_BUBLE_DOWN" Comment="" >Bubble — Protective Flame Disappears</SFX>
+	<SFX Key="CE" Bank="3" DebugName="NA_SE_EN_BUBLE_DEAD" Comment="" >Bubble — Final Hit</SFX>
+	<SFX Key="CF" Bank="3" DebugName="NA_SE_EN_BUBLEFALL_FIRE" Comment="" >Red Bubble — Jumping through Magma</SFX>
+	<SFX Key="D0" Bank="3" DebugName="NA_SE_EN_VALVAISA_APPEAR" Comment="" >Volvagia — Dives into/Appears from Magma Holes</SFX>
+	<SFX Key="D1" Bank="3" DebugName="NA_SE_EN_VALVAISA_ROAR" Comment="" >Volvagia — Roars</SFX>
+	<SFX Key="D2" Bank="3" DebugName="NA_SE_EN_VALVAISA_MAHI1" Comment="" >Volvagia — Hit with Hammer</SFX>
+	<SFX Key="D3" Bank="3" DebugName="NA_SE_EN_VALVAISA_MAHI2" Comment="" >Volvagia — Falls to Ground</SFX>
+	<SFX Key="D4" Bank="3" DebugName="NA_SE_EN_VALVAISA_KNOCKOUT" Comment="" >Volvagia — Temporarily Paralyzed</SFX>
+	<SFX Key="D5" Bank="3" DebugName="NA_SE_EN_VALVAISA_DAMAGE1" Comment="" >Volvagia — Hurt by Link</SFX>
+	<SFX Key="D6" Bank="3" DebugName="NA_SE_EN_VALVAISA_DAMAGE2" Comment="" >Volvagia — Awoken by Link's Attacks</SFX>
+	<SFX Key="D7" Bank="3" DebugName="NA_SE_EN_VALVAISA_ROCK" Comment="" >Volvagia — Falling Rock</SFX>
+	<SFX Key="D8" Bank="3" DebugName="NA_SE_EN_VALVAISA_SW_NAIL" Comment="" >Volvagia — Swipes at Link</SFX>
+	<SFX Key="D9" Bank="3" DebugName="NA_SE_EN_VALVAISA_DEAD" Comment="" >Volvagia — Final Hit</SFX>
+	<SFX Key="DA" Bank="3" DebugName="NA_SE_EN_VALVAISA_BURN" Comment="" >Volvagia — Burns Up</SFX>
+	<SFX Key="DB" Bank="3" DebugName="NA_SE_EN_VALVAISA_FIRE" Comment="Looping sound" >Volvagia — Breathes Fire</SFX>
+	<SFX Key="DC" Bank="3" DebugName="NA_SE_EN_BARI_DAMAGE" Comment="" Unused="1">Bari — xxx</SFX>
+	<SFX Key="DD" Bank="3" DebugName="NA_SE_EN_MOFER_CORE_LAND" Comment="" >Morpha — Nucleus Lands on Ground</SFX>
+	<SFX Key="DE" Bank="3" DebugName="NA_SE_EN_MOFER_CORE_MOVE_WT" Comment="" >Morpha — Goes after Link in Water</SFX>
+	<SFX Key="DF" Bank="3" DebugName="NA_SE_EN_MOFER_CORE_SMJUMP" Comment="" >Morpha — Nucleus Hops on Water</SFX>
+	<SFX Key="E0" Bank="3" DebugName="NA_SE_EN_MONBLIN_GNDWAVE" Comment="Looping sound" >Club Moblin — Shockwave from Club Hit</SFX>
+	<SFX Key="E1" Bank="3" DebugName="NA_SE_EN_MONBLIN_HAM_DOWN" Comment="" >Club Moblin — Hit Ground with Club</SFX>
+	<SFX Key="E2" Bank="3" DebugName="NA_SE_EN_MONBLIN_HAM_UP" Comment="" >Club Moblin — Raise Club</SFX>
+	<SFX Key="E3" Bank="3" DebugName="NA_SE_EN_BUBLE_DAMAGE" Comment="" >Bubble — Hurt by Link</SFX>
+	<SFX Key="E4" Bank="3" DebugName="NA_SE_EN_REDEAD_CRY" Comment="" >Redead — Moaning</SFX>
+	<SFX Key="E5" Bank="3" DebugName="NA_SE_EN_REDEAD_AIM" Comment="" >Redead — Screams at Link, Approaches</SFX>
+	<SFX Key="E6" Bank="3" DebugName="NA_SE_EN_REDEAD_DAMAGE" Comment="" >Redead — Hurt by Link</SFX>
+	<SFX Key="E7" Bank="3" DebugName="NA_SE_EN_REDEAD_DEAD" Comment="" >Redead — Final Hit</SFX>
+	<SFX Key="E8" Bank="3" DebugName="NA_SE_EN_REDEAD_ATTACK" Comment="" >Redead — Jumps on Link and Attacks</SFX>
+	<SFX Key="E9" Bank="3" DebugName="NA_SE_EN_NYU_MOVE" Comment="" >Spike Trap — Rolling towards Link</SFX>
+	<SFX Key="EA" Bank="3" DebugName="NA_SE_EN_NYU_HIT_STOP" Comment="" >Spike Trap — Turns into Rock</SFX>
+	<SFX Key="EB" Bank="3" DebugName="NA_SE_EN_KAICHO_DEAD" Comment="" >Guay — Final Hit</SFX>
+	<SFX Key="EC" Bank="3" DebugName="NA_SE_EN_PO_LAUGH" Comment="" >Poe — Laughs</SFX>
+	<SFX Key="ED" Bank="3" DebugName="NA_SE_EN_PO_CRY" Comment="" Unused="1">Poe — Cries</SFX>
+	<SFX Key="EE" Bank="3" DebugName="NA_SE_EN_PO_ROLL" Comment="Poe Sisters only?" >Poe — Spinning after Link</SFX>
+	<SFX Key="EF" Bank="3" DebugName="NA_SE_EN_PO_LAUGH2" Comment="" >Poe Sister — Laughs</SFX>
+	<SFX Key="F0" Bank="3" DebugName="NA_SE_EN_MOFER_APPEAR" Comment="" >Morpha — Appears</SFX>
+	<SFX Key="F1" Bank="3" DebugName="NA_SE_EN_MOFER_ATTACK" Comment="" >Morpha — Attacks Link</SFX>
+	<SFX Key="F2" Bank="3" DebugName="NA_SE_EN_MOFER_WAVE" Comment="" >Morpha — Waves Link Around</SFX>
+	<SFX Key="F3" Bank="3" DebugName="NA_SE_EN_MOFER_CATCH" Comment="" >Morpha — Grabs Link</SFX>
+	<SFX Key="F4" Bank="3" DebugName="NA_SE_EN_MOFER_CUT" Comment="" >Morpha — Link Grabs Nucleus from Tentacle</SFX>
+	<SFX Key="F5" Bank="3" DebugName="NA_SE_EN_MOFER_MOVE_DEMO" Comment="Looping sound" >Morpha (Cutscene) — Moving Underwater</SFX>
+	<SFX Key="F6" Bank="3" DebugName="NA_SE_EN_MOFER_BUBLE_DEMO" Comment="" >Morpha (Cutscene) — Makes Bubbles</SFX>
+	<SFX Key="F7" Bank="3" DebugName="NA_SE_EN_MOFER_CORE_JUMP" Comment="" >Morpha — Nucleus Jumps on Water</SFX>
+	<SFX Key="F8" Bank="3" DebugName="NA_SE_EN_MOFER_DEAD" Comment="Looping sound" >Morpha — Final Hit</SFX>
+	<SFX Key="F9" Bank="3" DebugName="NA_SE_EN_MOFER_LASTVOICE" Comment="" >Morpha — Dying Cry</SFX>
+	<SFX Key="FA" Bank="3" DebugName="NA_SE_EN_MOFER_CORE_ROLL" Comment="Looping sound" >Morpha — Nucleus Rolls in Water</SFX>
+	<SFX Key="FB" Bank="3" DebugName="NA_SE_EN_MOFER_CORE_FLY" Comment="" Unused="1">Morpha — xxx</SFX>
+	<SFX Key="FC" Bank="3" DebugName="NA_SE_EN_GOLON_WAKE_UP" Comment="" >Goron — Sitting Up</SFX>
+	<SFX Key="FD" Bank="3" DebugName="NA_SE_EN_GOLON_SIT_DOWN" Comment="" >Goron ­— Standing up or Sitting Down</SFX>
+	<SFX Key="FE" Bank="3" DebugName="NA_SE_EN_CHICKEN_FLUTTER" Comment="Blank?" Unused="1">Cucco — xxx</SFX>
+	<SFX Key="FF" Bank="3" DebugName="NA_SE_EN_DEKU_WAKEUP" Comment="Mismatched filename?" >Cucco — Fluttering Wings</SFX>
+	<SFX Key="100" Bank="3" DebugName="NA_SE_EN_DEADHAND_BITE" Comment="" >Dead Hand — Bites Link</SFX>
+	<SFX Key="101" Bank="3" DebugName="NA_SE_EN_DEADHAND_WALK" Comment="" >Dead Hand — Sliding</SFX>
+	<SFX Key="102" Bank="3" DebugName="NA_SE_EN_DEADHAND_GRIP" Comment="" >Dead Hand — Has Grip on Link</SFX>
+	<SFX Key="103" Bank="3" DebugName="NA_SE_EN_DEADHAND_HAND_AT" Comment="" >Dead Hand's Hands — Grab Link</SFX>
+	<SFX Key="104" Bank="3" DebugName="NA_SE_EN_DAIOCTA_MAHI" Comment="" >Big Octorok — Temporarily Paralyzed</SFX>
+	<SFX Key="105" Bank="3" DebugName="NA_SE_EN_DAIOCTA_SPLASH" Comment="Looping sound" >Big Octorok — Walking around in Water</SFX>
+	<SFX Key="106" Bank="3" DebugName="NA_SE_EN_DAIOCTA_VOICE" Comment="" >Big Octorok — Grunts</SFX>
+	<SFX Key="107" Bank="3" DebugName="NA_SE_EN_DAIOCTA_DAMAGE" Comment="" >Big Octorok — Hurt by Link</SFX>
+	<SFX Key="108" Bank="3" DebugName="NA_SE_EN_DAIOCTA_SINK" Comment="" >Big Octorok — Sinks into Ground</SFX>
+	<SFX Key="109" Bank="3" DebugName="NA_SE_EN_DAIOCTA_DEAD" Comment="" >Big Octorok — Final Hit</SFX>
+	<SFX Key="10A" Bank="3" DebugName="NA_SE_EN_DAIOCTA_DEAD2" Comment="" >Big Octorok — Dying</SFX>
+	<SFX Key="10B" Bank="3" DebugName="NA_SE_EN_GANON_HIT_THUNDER" Comment="" >Ganondorf — Lightning Ball Hits Someone</SFX>
+	<SFX Key="10C" Bank="3" DebugName="NA_SE_EN_TWINROBA_APPEAR_MS" Comment="" >Twinrova — Sisters Appear</SFX>
+	<SFX Key="10D" Bank="3" DebugName="NA_SE_EN_TWINROBA_TRANSFORM" Comment="When starting first and second forms" >Twinrova — Sister Transforms</SFX>
+	<SFX Key="10E" Bank="3" DebugName="NA_SE_EN_TWINROBA_MS_FIRE" Comment="" >Twinrova — Fire Attack Charging</SFX>
+	<SFX Key="10F" Bank="3" DebugName="NA_SE_EN_TWINROBA_FIRE_EXP" Comment="Looping sound" >Twinrova — Fire Attack Hits Ground</SFX>
+	<SFX Key="110" Bank="3" DebugName="NA_SE_EN_TWINROBA_POWERUP" Comment="" Unused="1">Twinrova — xxx</SFX>
+	<SFX Key="111" Bank="3" DebugName="NA_SE_EN_TWINROBA_SHOOT_FREEZE" Comment="" >Twinrova — Shooting Ice Attack</SFX>
+	<SFX Key="112" Bank="3" DebugName="NA_SE_EN_TWINROBA_MS_FREEZE" Comment="" >Twinrova — Charging Ice Attack</SFX>
+	<SFX Key="113" Bank="3" DebugName="NA_SE_EN_TWINROBA_MASIC_SET" Comment="" >Twinrova — Starting to Cast Magic</SFX>
+	<SFX Key="114" Bank="3" DebugName="NA_SE_EN_TWINROBA_CUTBODY" Comment="" >Young Twinrova — Hit by Link with Sword</SFX>
+	<SFX Key="115" Bank="3" DebugName="NA_SE_EN_GANON_HIT_GND_IMP" Comment="" >Ganondorf — Pounds Ground</SFX>
+	<SFX Key="116" Bank="3" DebugName="NA_SE_EN_TWINROBA_DAMAGE_VOICE" Comment="" >Twinrova — Hurt by Link</SFX>
+	<SFX Key="117" Bank="3" DebugName="NA_SE_EN_TWINROBA_REFL_FIRE" Comment="" >Twinrova — Reflect Fire Attack</SFX>
+	<SFX Key="118" Bank="3" DebugName="NA_SE_EN_TWINROBA_REFL_FREEZE" Comment="" >Twinrova — Reflect Ice Attack</SFX>
+	<SFX Key="119" Bank="3" DebugName="NA_SE_EN_GANON_CUTBODY" Comment="" >Ganondorf — Hit with Sword by Link</SFX>
+	<SFX Key="11A" Bank="3" DebugName="NA_SE_EN_TWINROBA_YOUNG_DAMAGE" Comment="" >Young Twinrova — Hit with Mirror Shield</SFX>
+	<SFX Key="11B" Bank="3" DebugName="NA_SE_EN_TWINROBA_YOUNG_DEAD" Comment="" >Young Twinrova — Final Hit</SFX>
+	<SFX Key="11C" Bank="3" DebugName="NA_SE_EN_GOLON_EYE_BIG" Comment="" Unused="1">Biggoron — xxx</SFX>
+	<SFX Key="11D" Bank="3" DebugName="NA_SE_EN_GOLON_GOOD_BIG" Comment="" Unused="1">Biggoron — xxx</SFX>
+	<SFX Key="11E" Bank="3" DebugName="NA_SE_EN_TWINROBA_FB_FLY" Comment="After boss fight" >Twinrova — Particle Remains Flying</SFX>
+	<SFX Key="11F" Bank="3" DebugName="NA_SE_EN_TWINROBA_FLY" Comment="Looping sound" >Twinrova — Flying</SFX>
+	<SFX Key="120" Bank="3" DebugName="NA_SE_EN_TWINROBA_UNARI" Comment="" >Twinrova — Sisters Hovering</SFX>
+	<SFX Key="121" Bank="3" DebugName="NA_SE_EN_TWINROBA_ROLL" Comment="" >Twinrova — Sister Spins Around</SFX>
+	<SFX Key="122" Bank="3" DebugName="NA_SE_EN_TWINROBA_SHOOT_FIRE" Comment="" >Twinrova — Shooting Fire Attack</SFX>
+	<SFX Key="123" Bank="3" DebugName="NA_SE_EN_TWINROBA_THROW_MASIC" Comment="" >Twinrova — Casts Magic</SFX>
+	<SFX Key="124" Bank="3" DebugName="NA_SE_EN_DARUNIA_HIT_BREAST" Comment="Looping sound" >Darunia — Pounds Chest</SFX>
+	<SFX Key="125" Bank="3" DebugName="NA_SE_EN_DARUNIA_HIT_LINK" Comment="" >Darunia — Hits Link's Head</SFX>
+	<SFX Key="126" Bank="3" DebugName="NA_SE_EN_OWL_FLUTTER" Comment="" >Kaepora Gaebora — Flies Away</SFX>
+	<SFX Key="127" Bank="3" DebugName="NA_SE_EN_VALVAISA_LAND" Comment="After Hammer Hit" >Volvagia — Collapses on Ground</SFX>
+	<SFX Key="128" Bank="3" DebugName="NA_SE_EN_IRONNACK_WALK" Comment="" >Iron Knuckle — Walking</SFX>
+	<SFX Key="129" Bank="3" DebugName="NA_SE_EN_IRONNACK_SWING_AXE" Comment="" >Iron Knuckle — Swings Axe</SFX>
+	<SFX Key="12A" Bank="3" DebugName="NA_SE_EN_IRONNACK_ARMOR_DEMO" Comment="" >Iron Knuckle (Cutscene) — Armor Clank</SFX>
+	<SFX Key="12B" Bank="3" DebugName="NA_SE_EN_IRONNACK_STAGGER_DEMO" Comment="" >Iron Knuckle (Cutscene) — Staggers</SFX>
+	<SFX Key="12C" Bank="3" DebugName="NA_SE_EN_IRONNACK_ARMOR_OFF_DEMO" Comment="" >Iron Knuckle (Cutscene) — Armor Falls Off</SFX>
+	<SFX Key="12D" Bank="3" DebugName="NA_SE_EN_IRONNACK_ARMOR_LAND1_DEMO" Comment="" >Iron Knuckle (Cutscene) — Armor Lands</SFX>
+	<SFX Key="12E" Bank="3" DebugName="NA_SE_EN_IRONNACK_ARMOR_LAND2_DEMO" Comment="" >Iron Knuckle (Cutscene) — Armor Lands</SFX>
+	<SFX Key="12F" Bank="3" DebugName="NA_SE_EN_IRONNACK_ARMOR_LAND3_DEMO" Comment="" >Iron Knuckle (Cutscene) — Armor Lands</SFX>
+	<SFX Key="130" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_ATTACK" Comment="" >Floormaster — Attacks</SFX>
+	<SFX Key="131" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_SM_WALK" Comment="" >Small Floormaster — Walking</SFX>
+	<SFX Key="132" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_SM_DEAD" Comment="" >Small Floormaster — Final Hit</SFX>
+	<SFX Key="133" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_RESTORE" Comment="" >Floormaster — Grows</SFX>
+	<SFX Key="134" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_EXPAND" Comment="" >Floormaster — Grows</SFX>
+	<SFX Key="135" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_SPLIT" Comment="" >Floormaster — Splits Apart</SFX>
+	<SFX Key="136" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_SM_STICK" Comment="" >Small Floormaster — Grabs onto Link</SFX>
+	<SFX Key="137" Bank="3" DebugName="NA_SE_EN_FLOORMASTER_SM_LAND" Comment="" >Small Floormaster — Lands on Floor</SFX>
+	<SFX Key="138" Bank="3" DebugName="NA_SE_EN_IRONNACK_WAVE_DEMO" Comment="" >Iron Knuckle (Cutscene) — Shakes Axe</SFX>
+	<SFX Key="139" Bank="3" DebugName="NA_SE_EN_IRONNACK_FINGER_DEMO" Comment="" >Iron Knuckle (Cutscene) — Finger Snap</SFX>
+	<SFX Key="13A" Bank="3" DebugName="NA_SE_EN_IRONNACK_ARMOR_HIT" Comment="" >Iron Knuckle — Link Hits Armor</SFX>
+	<SFX Key="13B" Bank="3" DebugName="NA_SE_EN_NUTS_CUTBODY" Comment="" >Mad Scrub — Hit with Sword by Link</SFX>
+	<SFX Key="13C" Bank="3" DebugName="NA_SE_EN_BALINADE_LEVEL" Comment="" >Barinade — Rumbling</SFX>
+	<SFX Key="13D" Bank="3" DebugName="NA_SE_EN_BALINADE_DAMAGE" Comment="" >Barinade — Hurt by Link</SFX>
+	<SFX Key="13E" Bank="3" DebugName="NA_SE_EN_BALINADE_FAINT" Comment="" >Barinade — Weakpoint Hurt by Link</SFX>
+	<SFX Key="13F" Bank="3" DebugName="NA_SE_EN_BALINADE_BREAK" Comment="" >Barinade — Dying</SFX>
+	<SFX Key="140" Bank="3" DebugName="NA_SE_EN_BALINADE_DEAD" Comment="" >Barinade — Dying Cry</SFX>
+	<SFX Key="141" Bank="3" DebugName="NA_SE_EN_BALINADE_STICK" Comment="" >Barinade — Bari Attaches to Barinade</SFX>
+	<SFX Key="142" Bank="3" DebugName="NA_SE_EN_BALINADE_THUNDER" Comment="" >Barinade — Lightning Attack</SFX>
+	<SFX Key="143" Bank="3" DebugName="NA_SE_EN_BALINADE_BL_SPARK" Comment="" >Barinade (Bari) — Sparks</SFX>
+	<SFX Key="144" Bank="3" DebugName="NA_SE_EN_BALINADE_BL_DEAD" Comment="" >Barinade (Bari) — Final Hit</SFX>
+	<SFX Key="145" Bank="3" DebugName="NA_SE_EN_BALINADE_BREAK2" Comment="" >Barinade — Tentacles Break Off</SFX>
+	<SFX Key="146" Bank="3" DebugName="NA_SE_EN_BALINADE_HIT_RINK" Comment="" >Barinade — Hits Edge of Room?</SFX>
+	<SFX Key="147" Bank="3" DebugName="NA_SE_EN_GANON_WAVE_GND" Comment="Looping sound" >Ganondorf — Shockwave from Ground Pound</SFX>
+	<SFX Key="148" Bank="3" DebugName="NA_SE_EN_AWA_BOUND" Comment="" >Shabom — Bounces off Surface</SFX>
+	<SFX Key="149" Bank="3" DebugName="NA_SE_EN_AWA_BREAK" Comment="" >Shabom — Pops</SFX>
+	<SFX Key="14A" Bank="3" DebugName="NA_SE_EN_BROB_WAVE" Comment="" >Red Jelly — Waves Around</SFX>
+	<SFX Key="14B" Bank="3" DebugName="NA_SE_EN_NYU_DEAD" Comment="" >Spike Trap — Final Hit</SFX>
+	<SFX Key="14C" Bank="3" DebugName="NA_SE_EN_EIER_DAMAGE" Comment="" >Stinger — Hurt by Link</SFX>
+	<SFX Key="14D" Bank="3" DebugName="NA_SE_EN_EIER_DEAD" Comment="" >Stinger — Final Hit</SFX>
+	<SFX Key="14E" Bank="3" DebugName="NA_SE_EN_EIER_FLUTTER" Comment="" >Stinger — Flops on Ground</SFX>
+	<SFX Key="14F" Bank="3" DebugName="NA_SE_EN_EIER_FLY" Comment="Looping sound" >Stinger (Land) — Gliding</SFX>
+	<SFX Key="150" Bank="3" DebugName="NA_SE_EN_SHADEST_TAIKO_LOW" Comment="" >Bongo Bongo — Low Drum Hit</SFX>
+	<SFX Key="151" Bank="3" DebugName="NA_SE_EN_SHADEST_TAIKO_HIGH" Comment="" >Bongo Bongo — High Drum Hit</SFX>
+	<SFX Key="152" Bank="3" DebugName="NA_SE_EN_SHADEST_CLAP" Comment="" >Bongo Bongo — Claps Link</SFX>
+	<SFX Key="153" Bank="3" DebugName="NA_SE_EN_SHADEST_FLY_ATTACK" Comment="" >Bongo Bongo — Swipes Hand</SFX>
+	<SFX Key="154" Bank="3" DebugName="NA_SE_EN_PIHAT_UP" Comment="" >Peahat — Rises out of Ground</SFX>
+	<SFX Key="155" Bank="3" DebugName="NA_SE_EN_PIHAT_FLY" Comment="Looping sound" >Peahat — Flying</SFX>
+	<SFX Key="156" Bank="3" DebugName="NA_SE_EN_PIHAT_DAMAGE" Comment="" >Peahat — Hurt by Link</SFX>
+	<SFX Key="157" Bank="3" DebugName="NA_SE_EN_PIHAT_LAND" Comment="" >Peahat — Lands</SFX>
+	<SFX Key="158" Bank="3" DebugName="NA_SE_EN_BALINADE_HAND_DOWN" Comment="" >Parasitic Tentacle — Hits Link</SFX>
+	<SFX Key="159" Bank="3" DebugName="NA_SE_EN_BALINADE_HAND_UP" Comment="" >Parasitic Tentacle — Gets Ready to Hit</SFX>
+	<SFX Key="15A" Bank="3" DebugName="NA_SE_EN_BALINADE_HAND_DAMAGE" Comment="" >Parasitic Tentacle — Hurt by Link</SFX>
+	<SFX Key="15B" Bank="3" DebugName="NA_SE_EN_BALINADE_HAND_DEAD" Comment="" >Parasitic Tentacle — Final Hit</SFX>
+	<SFX Key="15C" Bank="3" DebugName="NA_SE_EN_GOMA_JR_WALK" Comment="" >Gohma Larva — Walking</SFX>
+	<SFX Key="15D" Bank="3" DebugName="NA_SE_EN_GOMA_JR_CRY" Comment="" >Gohma Larva — Croaks</SFX>
+	<SFX Key="15E" Bank="3" DebugName="NA_SE_EN_GOMA_JR_DAM1" Comment="" >Gohma Larva — Hurt by Link</SFX>
+	<SFX Key="15F" Bank="3" DebugName="NA_SE_EN_GOMA_JR_DAM2" Comment="" >Gohma Larva — Cries when Hurt by Link</SFX>
+	<SFX Key="160" Bank="3" DebugName="NA_SE_EN_GOMA_JR_DEAD" Comment="" >Gohma Larva — Final Hit</SFX>
+	<SFX Key="161" Bank="3" DebugName="NA_SE_EN_GOMA_EGG1" Comment="" >Gohma Larva — Larva Escapes Egg</SFX>
+	<SFX Key="162" Bank="3" DebugName="NA_SE_EN_GOMA_EGG2" Comment="" >Gohma Larva — Egg Cracks</SFX>
+	<SFX Key="163" Bank="3" DebugName="NA_SE_EN_GANON_BODY_SPARK" Comment="Looping sound" >Ganondorf — Lightning when Transforming into Ganon</SFX>
+	<SFX Key="164" Bank="3" DebugName="NA_SE_EN_SHADEST_HAND_WAVE" Comment="" >Bongo Bongo — Waves Hand</SFX>
+	<SFX Key="165" Bank="3" DebugName="NA_SE_EN_SHADEST_CATCH" Comment="" >Bongo Bongo — Grabs Link</SFX>
+	<SFX Key="166" Bank="3" DebugName="NA_SE_EN_SHADEST_LAND" Comment="" >Bongo Bongo — Falls after Shot in Eye</SFX>
+	<SFX Key="167" Bank="3" DebugName="NA_SE_EN_SHADEST_HAND_FLY" Comment="Looping sound" >Bongo Bongo — Attacks with Hand</SFX>
+	<SFX Key="168" Bank="3" DebugName="NA_SE_EN_SHADEST_SHAKEHAND" Comment="" >Bongo Bongo — Shakes Attacked Hand</SFX>
+	<SFX Key="169" Bank="3" DebugName="NA_SE_EN_SHADEST_DAMAGE" Comment="" >Bongo Bongo — Hurt by Link</SFX>
+	<SFX Key="16A" Bank="3" DebugName="NA_SE_EN_SHADEST_DAMAGE_HAND" Comment="" >Bongo Bongo — Hand Hurt by Link</SFX>
+	<SFX Key="16B" Bank="3" DebugName="NA_SE_EN_SHADEST_DISAPPEAR" Comment="" >Bongo Bongo — Turns Invisible</SFX>
+	<SFX Key="16C" Bank="3" DebugName="NA_SE_EN_GANON_CHARGE_MASIC" Comment="" >Ganondorf — Charges Big Lightning Attack</SFX>
+	<SFX Key="16D" Bank="3" DebugName="NA_SE_EN_GANON_THROW_BIG" Comment="Also Transforming into Ganon" >Ganondorf — Throws Big Lightning Attack</SFX>
+	<SFX Key="16E" Bank="3" DebugName="NA_SE_EN_SHADEST_FREEZE" Comment="" >Bongo Bongo — Temporarily Paralyzed</SFX>
+	<SFX Key="16F" Bank="3" DebugName="NA_SE_EN_SHADEST_DEAD" Comment="" >Bongo Bongo — Final Hit</SFX>
+	<SFX Key="170" Bank="3" DebugName="NA_SE_EN_BIMOS_ROLL_HEAD" Comment="" >Beamos — Spinning Around</SFX>
+	<SFX Key="171" Bank="3" DebugName="NA_SE_EN_BIMOS_LAZER" Comment="" >Beamos — Laser Beam</SFX>
+	<SFX Key="172" Bank="3" DebugName="NA_SE_EN_BIMOS_LAZER_GND" Comment="" >Beamos — Laser Hits Ground</SFX>
+	<SFX Key="173" Bank="3" DebugName="NA_SE_EN_BIMOS_AIM" Comment="" >Beamos — About to Fire</SFX>
+	<SFX Key="174" Bank="3" DebugName="NA_SE_EN_BUBLEWALK_WALK" Comment="" >Torch Slug — Crawling</SFX>
+	<SFX Key="175" Bank="3" DebugName="NA_SE_EN_BUBLEWALK_AIM" Comment="" >Torch Slug — Sees Link</SFX>
+	<SFX Key="176" Bank="3" DebugName="NA_SE_EN_BUBLEWALK_REVERSE" Comment="" Unused="1">Torch Slug — xxx</SFX>
+	<SFX Key="177" Bank="3" DebugName="NA_SE_EN_BUBLEWALK_DAMAGE" Comment="" >Torch Slug — Hurt by Link</SFX>
+	<SFX Key="178" Bank="3" DebugName="NA_SE_EN_BUBLEWALK_DEAD" Comment="" >Torch Slug — Final Hit</SFX>
+	<SFX Key="179" Bank="3" DebugName="NA_SE_EN_YUKABYUN_FLY" Comment="" >Flying Floor Tile — Flies After Link</SFX>
+	<SFX Key="17A" Bank="3" DebugName="NA_SE_EN_FLAME_DAMAGE" Comment="" >Flare Dancer — Hurt by Link</SFX>
+	<SFX Key="17B" Bank="3" DebugName="NA_SE_EN_TWINROBA_FLY_DEMO" Comment="" >Twinrova — Flying (Non-boss Cutscenes)</SFX>
+	<SFX Key="17C" Bank="3" DebugName="NA_SE_EN_FLAME_KICK" Comment="" >Flare Dancer — Kicks while Running</SFX>
+	<SFX Key="17D" Bank="3" DebugName="NA_SE_EN_FLAME_RUN" Comment="" >Flare Dancer — Runs Around</SFX>
+	<SFX Key="17E" Bank="3" DebugName="NA_SE_EN_FLAME_ROLL" Comment="" >Flare Dancer — Spins Around</SFX>
+	<SFX Key="17F" Bank="3" DebugName="NA_SE_EN_FLAME_MAN_RUN" Comment="" >Flare Dancer Head — Runs</SFX>
+	<SFX Key="180" Bank="3" DebugName="NA_SE_EN_FLAME_MAN_DAMAGE" Comment="" >Flare Dancer Head — Hurt by Link</SFX>
+	<SFX Key="181" Bank="3" DebugName="NA_SE_EN_FLAME_LAUGH" Comment="" >Flare Dancer — Laughs</SFX>
+	<SFX Key="182" Bank="3" DebugName="NA_SE_EN_FLAME_MAN_SLIDE" Comment="" >Flare Dancer Head — Slides on Ground</SFX>
+	<SFX Key="183" Bank="3" DebugName="NA_SE_EN_FLAME_FIRE_ATTACK" Comment="" >Flare Dancer — Shoots Fire</SFX>
+	<SFX Key="184" Bank="3" DebugName="NA_SE_EN_PIHAT_SM_FLY" Comment="Looping sound" >Peahat Larva — Flying</SFX>
+	<SFX Key="185" Bank="3" DebugName="NA_SE_EN_PIHAT_SM_DEAD" Comment="" >Peahat Larva — Final Hit</SFX>
+	<SFX Key="186" Bank="3" DebugName="NA_SE_EN_RIVA_APPEAR" Comment="" >Leaver — Emerges from Ground</SFX>
+	<SFX Key="187" Bank="3" DebugName="NA_SE_EN_AKINDONUTS_HIDE" Comment="Also Leaver" >Deku Seller — Burrows into Ground</SFX>
+	<SFX Key="188" Bank="3" DebugName="NA_SE_EN_RIVA_DAMAGE" Comment="" >Leaver — Hurt by Link</SFX>
+	<SFX Key="189" Bank="3" DebugName="NA_SE_EN_RIVA_DEAD" Comment="" >Leaver — Final Hit</SFX>
+	<SFX Key="18A" Bank="3" DebugName="NA_SE_EN_RIVA_MOVE" Comment="" >Leaver — Moves on Ground</SFX>
+	<SFX Key="18B" Bank="3" DebugName="NA_SE_EN_FLAME_MAN_SURP" Comment="" >Flare Dancer Head — Yells</SFX>
+	<SFX Key="18C" Bank="3" DebugName="NA_SE_EN_SHADEST_LAST" Comment="Looping sound" >Bongo Bongo — Disappears after Death</SFX>
+	<SFX Key="18D" Bank="3" DebugName="NA_SE_EN_SHADEST_MOVE" Comment="" >Bongo Bongo ­— Charges after Link</SFX>
+	<SFX Key="18E" Bank="3" DebugName="NA_SE_EN_SHADEST_PRAY" Comment="" >Bongo Bongo — Chanting</SFX>
+	<SFX Key="18F" Bank="3" DebugName="NA_SE_EN_MGANON_ROAR" Comment="" >Ganon — Roars</SFX>
+	<SFX Key="190" Bank="3" DebugName="NA_SE_EN_LIKE_WALK" Comment="" >Like Like — Moving</SFX>
+	<SFX Key="191" Bank="3" DebugName="NA_SE_EN_LIKE_UNARI" Comment="" >Like Like — Groans</SFX>
+	<SFX Key="192" Bank="3" DebugName="NA_SE_EN_LIKE_DRINK" Comment="" >Like Like — Swallows Link</SFX>
+	<SFX Key="193" Bank="3" DebugName="NA_SE_EN_LIKE_EAT" Comment="" >Like Like — Eating Link</SFX>
+	<SFX Key="194" Bank="3" DebugName="NA_SE_EN_LIKE_THROW" Comment="" >Like Like — Spits out Link</SFX>
+	<SFX Key="195" Bank="3" DebugName="NA_SE_EN_LIKE_DAMAGE" Comment="" >Like Like — Hurt by Link</SFX>
+	<SFX Key="196" Bank="3" DebugName="NA_SE_EN_LIKE_DEAD" Comment="" >Like Like — Final Hit</SFX>
+	<SFX Key="197" Bank="3" DebugName="NA_SE_EN_MGANON_SWORD" Comment="" >Ganon — Swings Sword</SFX>
+	<SFX Key="198" Bank="3" DebugName="NA_SE_EN_GERUDOFT_ATTACK" Comment="" >Gerudo Fighter — Attacks Link</SFX>
+	<SFX Key="199" Bank="3" DebugName="NA_SE_EN_GERUDOFT_DAMAGE" Comment="" >Gerudo Fighter — Hurt by Link</SFX>
+	<SFX Key="19A" Bank="3" DebugName="NA_SE_EN_GERUDOFT_DEAD" Comment="" >Gerudo Fighter — Final Hit</SFX>
+	<SFX Key="19B" Bank="3" DebugName="NA_SE_EN_MGANON_DAMAGE" Comment="" >Ganon — Hurt by Link</SFX>
+	<SFX Key="19C" Bank="3" DebugName="NA_SE_EN_ANUBIS_FIRE" Comment="" >Anubis — Breathes Fire</SFX>
+	<SFX Key="19D" Bank="3" DebugName="NA_SE_EN_ANUBIS_FIREBOMB" Comment="" >Anubis — Fire Attack Hits Surface</SFX>
+	<SFX Key="19E" Bank="3" DebugName="NA_SE_EN_MGANON_DEAD1" Comment="" >Ganon — Final Hit (Can Get Master Sword)</SFX>
+	<SFX Key="19F" Bank="3" DebugName="NA_SE_EN_ANUBIS_DEAD" Comment="" >Anubis — Final Hit</SFX>
+	<SFX Key="1A0" Bank="3" DebugName="NA_SE_EN_MUSI_LAND" Comment="Also Gerudo Fighter walking" >Insect — Fall on Ground</SFX>
+	<SFX Key="1A1" Bank="3" DebugName="NA_SE_EN_MGANON_DEAD2" Comment="" >Ganon — Final Hit (Stabbed with Master Sword)</SFX>
+	<SFX Key="1A2" Bank="3" DebugName="NA_SE_EN_EIER_ATTACK" Comment="" >Stinger (Water) — Attacks Link</SFX>
+	<SFX Key="1A3" Bank="3" DebugName="NA_SE_EN_EIER_CRY" Comment="" >Stinger (Water) — Squeaks</SFX>
+	<SFX Key="1A4" Bank="3" DebugName="NA_SE_EN_FREEZAD_BREATH" Comment="" >Freezard — Breathes Ice</SFX>
+	<SFX Key="1A5" Bank="3" DebugName="NA_SE_EN_FREEZAD_DAMAGE" Comment="" >Freezard — Hurt by Link</SFX>
+	<SFX Key="1A6" Bank="3" DebugName="NA_SE_EN_FREEZAD_DEAD" Comment="" >Freezard — Final Hit</SFX>
+	<SFX Key="1A7" Bank="3" DebugName="NA_SE_EN_DEADHAND_LAUGH" Comment="" >Dead Hand — Laughs</SFX>
+	<SFX Key="1A8" Bank="3" DebugName="NA_SE_EN_DEADHAND_HIDE" Comment="" >Dead Hand — Hides in Ground</SFX>
+	<SFX Key="1A9" Bank="3" DebugName="NA_SE_EN_DEADHAND_DAMAGE" Comment="" >Dead Hand — Hurt by Link</SFX>
+	<SFX Key="1AA" Bank="3" DebugName="NA_SE_EN_DEADHAND_HAND_DEAD" Comment="" >Dead Hand's Hand — Final Hit</SFX>
+	<SFX Key="1AB" Bank="3" DebugName="NA_SE_EN_DEADHAND_DEAD" Comment="" >Dead Hand — Final Hit</SFX>
+	<SFX Key="1AC" Bank="3" DebugName="NA_SE_EN_IRONNACK_BREAK_PILLAR2" Comment="" >Iron Knuckle — Breaks Pillar Stump</SFX>
+	<SFX Key="1AD" Bank="3" DebugName="NA_SE_EN_IRONNACK_BREAK_PILLAR" Comment="" >Iron Knuckle — Breaks Pillar</SFX>
+	<SFX Key="1AE" Bank="3" DebugName="NA_SE_EN_IRONNACK_HIT_GND" Comment="" >Iron Knuckle — Swings Axe into Ground</SFX>
+	<SFX Key="1AF" Bank="3" DebugName="NA_SE_EN_MGANON_BREATH" Comment="" >Ganon — Temporarily Paralyzed</SFX>
+	<SFX Key="1B0" Bank="3" DebugName="NA_SE_EN_TWINROBA_LAUGH" Comment="" >Twinrova — Koume Laughs</SFX>
+	<SFX Key="1B1" Bank="3" DebugName="NA_SE_EN_TWINROBA_LAUGH2" Comment="" >Twinrova — Kotake Laughs</SFX>
+	<SFX Key="1B2" Bank="3" DebugName="NA_SE_EN_DUMMY434" Comment="Twinrova shrieking?" Unused="1"></SFX>
+	<SFX Key="1B3" Bank="3" DebugName="NA_SE_EN_TWINROBA_SHOOT_VOICE" Comment="" >Twinrova — Yells when Casting Magic</SFX>
+	<SFX Key="1B4" Bank="3" DebugName="NA_SE_EN_TWINROBA_SENSE" Comment="" >Twinrova — Sister Notices Halo</SFX>
+	<SFX Key="1B5" Bank="3" DebugName="NA_SE_EN_TWINROBA_DIE" Comment="" >Twinrova — Final Cry</SFX>
+	<SFX Key="1B6" Bank="3" DebugName="NA_SE_EN_DUMMY438" Comment="Twinrova shrieking?" Unused="1"></SFX>
+	<SFX Key="1B7" Bank="3" DebugName="NA_SE_EN_TWINROBA_YOUNG_DAMAGE2" Comment="" >Young Twinrova — Hurt by Link</SFX>
+	<SFX Key="1B8" Bank="3" DebugName="NA_SE_EN_TWINROBA_YOUNG_SHOOTVC" Comment="" >Young Twinrova — Casting Magic</SFX>
+	<SFX Key="1B9" Bank="3" DebugName="NA_SE_EN_TWINROBA_YOUNG_LAUGH" Comment="" >Young Twinrova — Laughs</SFX>
+	<SFX Key="1BA" Bank="3" DebugName="NA_SE_EN_DUMMY442" Comment="Twinrova shrieking?" Unused="1"></SFX>
+	<SFX Key="1BB" Bank="3" DebugName="NA_SE_EN_TWINROBA_YOUNG_WINK" Comment="" >Young Twinrova — Winks at Link</SFX>
+	<SFX Key="1BC" Bank="3" DebugName="NA_SE_EN_DUMMY444" Comment="Duplicate of 139?" Unused="1"></SFX>
+	<SFX Key="1BD" Bank="3" DebugName="NA_SE_EN_DUMMY445" Comment="Grunt from 129?" Unused="1"></SFX>
+	<SFX Key="1BE" Bank="3" DebugName="NA_SE_EN_IRONNACK_DAMAGE" Comment="" >Iron Knuckle — Hurt by Link</SFX>
+	<SFX Key="1BF" Bank="3" DebugName="NA_SE_EN_IRONNACK_DASH" Comment="" >Iron Knuckle — Dashes after Link</SFX>
+	<SFX Key="1C0" Bank="3" DebugName="NA_SE_EN_IRONNACK_DEAD" Comment="" >Iron Knuckle — Final Hit</SFX>
+	<SFX Key="1C1" Bank="3" DebugName="NA_SE_EN_IRONNACK_PULLOUT" Comment="" >Iron Knuckle — Pulls Axe out of Ground</SFX>
+	<SFX Key="1C2" Bank="3" DebugName="NA_SE_EN_IRONNACK_WAKEUP" Comment="" >Iron Knuckle — Wakes Up</SFX>
+	<SFX Key="1C3" Bank="3" DebugName="NA_SE_EN_DUMMY451" Comment="duplicate of 198 (NA_SE_EN_GERUDOFT_ATTACK)" Unused="1"></SFX>
+	<SFX Key="1C4" Bank="3" DebugName="NA_SE_EN_DUMMY452" Comment="duplicate of 199 (GERUDOFT_DAMAGE)" Unused="1"></SFX>
+	<SFX Key="1C5" Bank="3" DebugName="NA_SE_EN_DUMMY453" Comment="duplicate of 19A (GERUDOFT_DEAD)" Unused="1"></SFX>
+	<SFX Key="1C6" Bank="3" DebugName="NA_SE_EN_GERUDOFT_BREATH" Comment="" >Gerudo Fighter — Exhales</SFX>
+	<SFX Key="1C7" Bank="3" DebugName="NA_SE_EN_GANON_LAUGH" Comment="" >Ganondorf — Laughs</SFX>
+	<SFX Key="1C8" Bank="3" DebugName="NA_SE_EN_GANON_VOICE_DEMO" Comment="" >Ganondorf (Cutscene) — Whips Horse</SFX>
+	<SFX Key="1C9" Bank="3" DebugName="NA_SE_EN_GANON_THROW" Comment="" >Ganondorf — Yells when Throwing Lightning Ball</SFX>
+	<SFX Key="1CA" Bank="3" DebugName="NA_SE_EN_GANON_AT_RETURN" Comment="" >Ganondorf — Yells when Hitting Lightning Ball</SFX>
+	<SFX Key="1CB" Bank="3" DebugName="NA_SE_EN_GANON_HIT_GND" Comment="" >Ganondorf — Yells when Hitting Ground</SFX>
+	<SFX Key="1CC" Bank="3" DebugName="NA_SE_EN_GANON_DAMAGE1" Comment="Also when hit with sword" >Ganondorf — Yells when Hurt by Lightning Ball</SFX>
+	<SFX Key="1CD" Bank="3" DebugName="NA_SE_EN_GANON_DAMAGE2" Comment="" >Ganondorf — Yells when Hurt by Light Arrow</SFX>
+	<SFX Key="1CE" Bank="3" DebugName="NA_SE_EN_GANON_DOWN" Comment="" >Ganondorf — Gasping while on Knees</SFX>
+	<SFX Key="1CF" Bank="3" DebugName="NA_SE_EN_GANON_RESTORE" Comment="" >Ganondorf — Yells when Back Up</SFX>
+	<SFX Key="1D0" Bank="3" DebugName="NA_SE_EN_GANON_DEAD" Comment="" >Ganondorf — Final Hit</SFX>
+	<SFX Key="1D1" Bank="3" DebugName="NA_SE_EN_GANON_BREATH" Comment="" >Ganondorf — Dying Gasps</SFX>
+	<SFX Key="1D2" Bank="3" DebugName="NA_SE_EN_GANON_TOKETU" Comment="" >Ganondorf — Vomits Blood</SFX>
+	<SFX Key="1D3" Bank="3" DebugName="NA_SE_EN_GANON_CASBREAK" Comment="" >Ganondorf — Yells when Destroying Tower</SFX>
+	<SFX Key="1D4" Bank="3" DebugName="NA_SE_EN_GANON_BIGMASIC" Comment="" >Ganondorf — Yells when Throwing Big Lightning Attack</SFX>
+	<SFX Key="1D5" Bank="3" DebugName="NA_SE_EN_GANON_DARKWAVE" Comment="" >Ganondorf — Yells when Using Dark Vortex</SFX>
+	<SFX Key="1D6" Bank="3" DebugName="NA_SE_EN_FANTOM_ST_LAUGH" Comment="Also Ganondorf" >Phantom Ganon — Laughs</SFX>
+	<SFX Key="1D7" Bank="3" DebugName="NA_SE_EN_MGANON_WALK" Comment="" >Ganon — Walking</SFX>
+	<SFX Key="1D8" Bank="3" DebugName="NA_SE_EN_MGANON_STAND" Comment="" >Ganon — Stands after Getting Stabbed</SFX>
+	<SFX Key="1D9" Bank="3" DebugName="NA_SE_EN_MGANON_UNARI" Comment="" >Ganon — Roars</SFX>
+	<SFX Key="1DA" Bank="3" DebugName="NA_SE_EN_STALGOLD_ROLL" Comment="" >Gold Skulltula — Spinning Around</SFX>
+	<SFX Key="1DB" Bank="3" DebugName="NA_SE_EN_KDOOR_WAVE" Comment="" >Killer Door — Waves Around</SFX>
+	<SFX Key="1DC" Bank="3" DebugName="NA_SE_EN_KDOOR_HIT" Comment="" >Killer Door — Hits Link</SFX>
+	<SFX Key="1DD" Bank="3" DebugName="NA_SE_EN_KDOOR_BREAK" Comment="" >Killer Door — Breaks Apart</SFX>
+	<SFX Key="1DE" Bank="3" DebugName="NA_SE_EN_KDOOR_HIT_GND" Comment="" >Killer Door — Hits Ground</SFX>
+	<SFX Key="1DF" Bank="3" DebugName="NA_SE_EN_MGANON_SWDIMP" Comment="Bell sound? Sword ?" Unused="1">Ganon — xxx</SFX>
+	<SFX Key="1E0" Bank="3" DebugName="NA_SE_EN_STALTU_WAVE" Comment="" >Skulltula — Swings Side-to-Side</SFX>
+	<SFX Key="1E1" Bank="3" DebugName="NA_SE_EN_STALTU_DOWN_SET" Comment="" >Skulltula — Creaks after Falling</SFX>
+	<SFX Key="1E2" Bank="3" DebugName="NA_SE_EN_DUMMY482" Comment="Something coming out of the ground?" Unused="1"></SFX>
+	<SFX Key="1E3" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_LAND" Comment="" >Gohma Larva (Boss) — Lands after Hurt by Link</SFX>
+	<SFX Key="1E4" Bank="3" DebugName="NA_SE_EN_GOMA_BJR_LAND2" Comment="" >Gohma Larva (Boss) — Lands after Attack Hop</SFX>
+	<SFX Key="1E5" Bank="3" DebugName="NA_SE_EN_GOMA_JR_LAND" Comment="" >Gohma Larva — Lands after Hurt by Link</SFX>
+	<SFX Key="1E6" Bank="3" DebugName="NA_SE_EN_GOMA_JR_LAND2" Comment="" >Gohma Larva — Lands after Attack Hop</SFX>
+	<SFX Key="1E7" Bank="3" DebugName="NA_SE_EN_TWINROBA_FIGHT" Comment="" >Twinrova — Sisters Bickering</SFX>
+	<SFX Key="1E8" Bank="3" DebugName="NA_SE_EN_PO_BIG_CRY" Comment="" >Big Poe — Poe Soul Crying (Getting with Bottle)</SFX>
+	<SFX Key="1E9" Bank="3" DebugName="NA_SE_EN_MUSI_SINK" Comment="" >Insect — Burrows in Bean Planting Spot</SFX>
+	<SFX Key="1EA" Bank="3" DebugName="NA_SE_EN_STALGOLD_UP_CRY" Comment="" Unused="1">Gold Skulltula — xxx</SFX>
+	<SFX Key="1EB" Bank="3" DebugName="NA_SE_EN_GOLON_CRY" Comment="Goron Crying" Unused="1">Goron — xxx</SFX>
+	<SFX Key="1EC" Bank="3" DebugName="NA_SE_EN_MOFER_CORE_DAMAGE" Comment="" >Morpha — Nucleus Hurt by Link</SFX>
+	<SFX Key="1ED" Bank="3" DebugName="NA_SE_EN_DAIOCTA_LAND_WATER" Comment="" >Big Octorok — Lands in Water</SFX>
+	<SFX Key="1EE" Bank="3" DebugName="NA_SE_EN_RIVA_BIG_APPEAR" Comment="" >Big Leever — Appears</SFX>
+	<SFX Key="1EF" Bank="3" DebugName="NA_SE_EN_MONBLIN_HAM_LAND" Comment="" >Club Moblin — Club Hits Ground</SFX>
+	<SFX Key="1F0" Bank="3" DebugName="NA_SE_EN_MUSI_WALK" Comment="" >Insect ­— Walking</SFX>
+	<SFX Key="1F1" Bank="3" DebugName="NA_SE_EN_MIMICK_BREATH" Comment="Duplicate of 1A4?" Unused="1"></SFX>
+	<SFX Key="1F2" Bank="3" DebugName="NA_SE_EN_STALWALL_LAUGH" Comment="End of ENEMY bank?" >Skullwalltula — Makes Noise before Attacking</SFX>
+	<SFX Key="0" Bank="4" DebugName="NA_SE_SY_WIN_OPEN" Comment="" >Open Pause Window</SFX>
+	<SFX Key="1" Bank="4" DebugName="NA_SE_SY_WIN_CLOSE" Comment="" >Close Pause Window</SFX>
+	<SFX Key="2" Bank="4" DebugName="NA_SE_SY_CORRECT_CHIME" Comment="The classic Zelda chime." >Player Accomplished Something</SFX>
+	<SFX Key="3" Bank="4" DebugName="NA_SE_SY_GET_RUPY" Comment="" >Get Rupee</SFX>
+	<SFX Key="4" Bank="4" DebugName="NA_SE_SY_MESSAGE_WOMAN" Comment="The filename indicates that this may have been used for dialogue by female NPCs." >Countdown Timer — 10 Seconds Down</SFX>
+	<SFX Key="5" Bank="4" DebugName="NA_SE_SY_MESSAGE_MAN" Comment="Duplicate of ERROR. The filename indicates that this may have been used for dialogue by male NPCs. It seems to have been overwritten." Unused="1"></SFX>
+	<SFX Key="6" Bank="4" DebugName="NA_SE_SY_ERROR" Comment="" >Error</SFX>
+	<SFX Key="7" Bank="4" DebugName="NA_SE_SY_TRE_BOX_APPEAR" Comment="" >Reveal Treasure Chest</SFX>
+	<SFX Key="8" Bank="4" DebugName="NA_SE_SY_DECIDE" Comment="" >Select Pause Menu Option</SFX>
+	<SFX Key="9" Bank="4" DebugName="NA_SE_SY_CURSOR" Comment="" >Move Pause Menu Cursor</SFX>
+	<SFX Key="0A" Bank="4" DebugName="NA_SE_SY_CANCEL" Comment="" Unused="1">Cancel Pause Menu Selection</SFX>
+	<SFX Key="0B" Bank="4" DebugName="NA_SE_SY_HP_RECOVER" Comment="" >Get Recovery Heart</SFX>
+	<SFX Key="0C" Bank="4" DebugName="NA_SE_SY_ATTENTION_ON" Comment="" >Enter Z-Target Mode</SFX>
+	<SFX Key="0D" Bank="4" DebugName="NA_SE_SY_DUMMY_13" Comment="" Unused="1"></SFX>
+	<SFX Key="0E" Bank="4" DebugName="NA_SE_SY_DUMMY_14" Comment="Duplicate of ITEM sound 00?" Unused="1"></SFX>
+	<SFX Key="0F" Bank="4" DebugName="NA_SE_SY_LOCK_OFF" Comment="" >Stop Z-Targeting Object</SFX>
+	<SFX Key="10" Bank="4" DebugName="NA_SE_SY_LOCK_ON_HUMAN" Comment="" >Start Z-Targeting Object (Except Enemies)</SFX>
+	<SFX Key="11" Bank="4" DebugName="NA_SE_SY_DUMMY_17" Comment="Duplicate of 0D (DUMMY_13)." Unused="1"></SFX>
+	<SFX Key="12" Bank="4" DebugName="NA_SE_SY_DUMMY_18" Comment="Sounds like opposite of 0D." Unused="1"></SFX>
+	<SFX Key="13" Bank="4" DebugName="NA_SE_SY_CAMERA_ZOOM_UP" Comment="Also hiding map with L" >Enter/Exit First-Person View</SFX>
+	<SFX Key="14" Bank="4" DebugName="NA_SE_SY_CAMERA_ZOOM_DOWN" Comment="" >Show Map with L</SFX>
+	<SFX Key="15" Bank="4" DebugName="NA_SE_SY_DUMMY_21" Comment="Duplicate of 13 (CAMERA_ZOOM_UP)." Unused="1"></SFX>
+	<SFX Key="16" Bank="4" DebugName="NA_SE_SY_DUMMY_22" Comment="Duplicate of 13 (CAMERA_ZOOM_UP)." Unused="1"></SFX>
+	<SFX Key="17" Bank="4" DebugName="NA_SE_SY_ATTENTION_ON_OLD" Comment="The filename indicates that this is an older version of ATTENTION_ON." Unused="1">Z-Target Enemy (Early)</SFX>
+	<SFX Key="18" Bank="4" DebugName="NA_SE_SY_MESSAGE_PASS" Comment="" >Advance Text Box</SFX>
+	<SFX Key="19" Bank="4" DebugName="NA_SE_SY_WARNING_COUNT_N" Comment="" >Countdown Timer — Under 1 Minute (per 2 Seconds)</SFX>
+	<SFX Key="1A" Bank="4" DebugName="NA_SE_SY_WARNING_COUNT_E" Comment="" >Countdown Timer — Under 10 Seconds (per Second)</SFX>
+	<SFX Key="1B" Bank="4" DebugName="NA_SE_SY_HITPOINT_ALARM" Comment="" >Low Health Beep</SFX>
+	<SFX Key="1C" Bank="4" DebugName="NA_SE_SY_DUMMY_28" Comment="Duplicate of DEMO_CUT." Unused="1"></SFX>
+	<SFX Key="1D" Bank="4" DebugName="NA_SE_SY_DEMO_CUT" Comment="" Unused="1"></SFX>
+	<SFX Key="1E" Bank="4" DebugName="NA_SE_SY_NAVY_CALL" Comment="The filename indicates that this may be the noise that played when Link selected the Navi button." Unused="1">Navi Button (Early)</SFX>
+	<SFX Key="1F" Bank="4" DebugName="NA_SE_SY_GAUGE_UP" Comment="Looping sound" >Magic Meter Refills</SFX>
+	<SFX Key="20" Bank="4" DebugName="NA_SE_SY_DUMMY_32" Comment="Sounds like some sort of targeting sound, perhaps?" Unused="1"></SFX>
+	<SFX Key="21" Bank="4" DebugName="NA_SE_SY_DUMMY_33" Comment="Blank" Unused="1"></SFX>
+	<SFX Key="22" Bank="4" DebugName="NA_SE_SY_DUMMY_34" Comment="Blank" Unused="1"></SFX>
+	<SFX Key="23" Bank="4" DebugName="NA_SE_SY_PIECE_OF_HEART" Comment="Mismatched filename?" >Press Start on Title Screen</SFX>
+	<SFX Key="24" Bank="4" DebugName="NA_SE_SY_GET_ITEM" Comment="" >Get Small Item</SFX>
+	<SFX Key="25" Bank="4" DebugName="NA_SE_SY_WIN_SCROLL_LEFT" Comment="" >Scroll Pause Menu Left</SFX>
+	<SFX Key="26" Bank="4" DebugName="NA_SE_SY_WIN_SCROLL_RIGHT" Comment="" >Scroll Pause Menu Right</SFX>
+	<SFX Key="27" Bank="4" DebugName="NA_SE_SY_OCARINA_ERROR" Comment="" >Make a Mistake Playing the Ocarina</SFX>
+	<SFX Key="28" Bank="4" DebugName="NA_SE_SY_CAMERA_ZOOM_UP_2" Comment="The filename indicates that this is another version of CAMERA_ZOOM_UP." Unused="1">Sound Effect - Enter First-Person View (Alternate)</SFX>
+	<SFX Key="29" Bank="4" DebugName="NA_SE_SY_CAMERA_ZOOM_DOWN_2" Comment="The filename indicates that this is another version of CAMERA_ZOOM_DOWN." Unused="1">Sound Effect - Exit First-Person View (Alternate)</SFX>
+	<SFX Key="2A" Bank="4" DebugName="NA_SE_SY_GLASSMODE_ON" Comment="" >Activate Lens of Truth</SFX>
+	<SFX Key="2B" Bank="4" DebugName="NA_SE_SY_GLASSMODE_OFF" Comment="" >Deactivate Lens of Truth</SFX>
+	<SFX Key="2C" Bank="4" DebugName="NA_SE_SY_FOUND" Comment="" >Gerudo Guard Blows Whistle</SFX>
+	<SFX Key="2D" Bank="4" DebugName="NA_SE_SY_HIT_SOUND" Comment="?" Unused="1"></SFX>
+	<SFX Key="2E" Bank="4" DebugName="NA_SE_SY_MESSAGE_END" Comment="" >Last Text Window</SFX>
+	<SFX Key="2F" Bank="4" DebugName="NA_SE_SY_RUPY_COUNT" Comment="" >Rupee Counter Increases</SFX>
+	<SFX Key="30" Bank="4" DebugName="NA_SE_SY_LOCK_ON" Comment="" >Z-Target Enemy</SFX>
+	<SFX Key="31" Bank="4" DebugName="NA_SE_SY_GET_BOXITEM" Comment="" >Sound Effect — Get Small Item From Chest</SFX>
+	<SFX Key="32" Bank="4" DebugName="NA_SE_SY_WHITE_OUT_L" Comment="Long" Unused="1"></SFX>
+	<SFX Key="33" Bank="4" DebugName="NA_SE_SY_WHITE_OUT_S" Comment="" >Short Fade to White</SFX>
+	<SFX Key="34" Bank="4" DebugName="NA_SE_SY_WHITE_OUT_T" Comment="" >Sage Appears (Opening Sacred Realm)</SFX>
+	<SFX Key="35" Bank="4" DebugName="NA_SE_SY_START_SHOT" Comment="" >Shotgun Fires to Start Race</SFX>
+	<SFX Key="36" Bank="4" DebugName="NA_SE_SY_METRONOME" Comment="" >Skullkids' Tambourine Metronome (First Skull Kid Done)</SFX>
+	<SFX Key="37" Bank="4" DebugName="NA_SE_SY_ATTENTION_URGENCY" Comment="" >Threat Detected when Z-Targeting</SFX>
+	<SFX Key="38" Bank="4" DebugName="NA_SE_SY_METRONOME_LV" Comment="" >Skullkids' Drum Metronome (Playing Tune)</SFX>
+	<SFX Key="39" Bank="4" DebugName="NA_SE_SY_FSEL_CURSOR" Comment="File select" >File Select — Move File Select Cursor</SFX>
+	<SFX Key="3A" Bank="4" DebugName="NA_SE_SY_FSEL_DECIDE_S" Comment="" >File Select — Type Character in Name Entry</SFX>
+	<SFX Key="3B" Bank="4" DebugName="NA_SE_SY_FSEL_DECIDE_L" Comment="" >File Select — Select Option</SFX>
+	<SFX Key="3C" Bank="4" DebugName="NA_SE_SY_FSEL_CLOSE" Comment="" >File Select — Exit Option</SFX>
+	<SFX Key="3D" Bank="4" DebugName="NA_SE_SY_FSEL_ERROR" Comment="" Unused="1">File Select — Error</SFX>
+	<SFX Key="3E" Bank="4" DebugName="NA_SE_SY_SET_FIRE_ARROW" Comment="" >Fire Magic Set to Bow</SFX>
+	<SFX Key="3F" Bank="4" DebugName="NA_SE_SY_SET_ICE_ARROW" Comment="" >Ice Magic Set to Bow</SFX>
+	<SFX Key="40" Bank="4" DebugName="NA_SE_SY_SET_LIGHT_ARROW" Comment="" >Light Magic Set to Bow</SFX>
+	<SFX Key="41" Bank="4" DebugName="NA_SE_SY_SYNTH_MAGIC_ARROW" Comment="" >Magic Bow Set to C</SFX>
+	<SFX Key="42" Bank="4" DebugName="NA_SE_SY_METRONOME_2" Comment="" >Skullkids' Tambourine Metronome (Second Skull Kid Done)</SFX>
+	<SFX Key="43" Bank="4" DebugName="NA_SE_SY_KINSTA_MARK_APPEAR" Comment="" >Gold Skulltula Token Appears</SFX>
+	<SFX Key="44" Bank="4" DebugName="NA_SE_SY_FIVE_COUNT_LUPY" Comment="Used version is ENVIRONMENT sound E8" Unused="1">Sound Effect - Get Silver Rupee</SFX>
+	<SFX Key="45" Bank="4" DebugName="NA_SE_SY_CARROT_RECOVER" Comment="Last SYSTEM sound?" >Carrot Replenished</SFX>
+	<SFX Key="0" Bank="5" DebugName="NA_SE_OC_OCARINA" Comment="" >Harp or Ocarina Note</SFX>
+	<SFX Key="1" Bank="5" DebugName="NA_SE_OC_ABYSS" Comment="" >Fall into Abyss</SFX>
+	<SFX Key="2" Bank="5" DebugName="NA_SE_OC_DOOR_OPEN" Comment="" >Open Door</SFX>
+	<SFX Key="3" Bank="5" DebugName="NA_SE_OC_SECRET_WARP_IN" Comment="Also entering grotto" >Exit Lost Woods/Goron City Shortcut</SFX>
+	<SFX Key="4" Bank="5" DebugName="NA_SE_OC_SECRET_WARP_OUT" Comment="" >Enter Lost Woods/Goron City Shortcut</SFX>
+	<SFX Key="5" Bank="5" DebugName="NA_SE_OC_SECRET_HOLE_OUT" Comment="" >Exiting Grotto</SFX>
+	<SFX Key="6" Bank="5" DebugName="NA_SE_OC_REVENGE" Comment="Last OCARINA sound?" >Respawn after Falling into Abyss</SFX>
+	<SFX Key="0" Bank="6" DebugName="NA_SE_VO_LI_SWORD_N" Comment="" >Adult Link — Attack Yell</SFX>
+	<SFX Key="1" Bank="6" DebugName="NA_SE_VO_LI_SWORD_L" Comment="" >Adult Link — Long Attack Yell</SFX>
+	<SFX Key="2" Bank="6" DebugName="NA_SE_VO_LI_LASH" Comment="" >Adult Link — Whips Epona</SFX>
+	<SFX Key="3" Bank="6" DebugName="NA_SE_VO_LI_HANG" Comment="" >Adult Link — Grabs onto Ledge</SFX>
+	<SFX Key="4" Bank="6" DebugName="NA_SE_VO_LI_CLIMB_END" Comment="" >Adult Link — Climbs up from Ledge</SFX>
+	<SFX Key="5" Bank="6" DebugName="NA_SE_VO_LI_DAMAGE_S" Comment="" >Adult Link — Hurt by Enemy</SFX>
+	<SFX Key="6" Bank="6" DebugName="NA_SE_VO_LI_FREEZE" Comment="" >Adult Link — Frozen in Ice</SFX>
+	<SFX Key="7" Bank="6" DebugName="NA_SE_VO_LI_FALL_S" Comment="" >Adult Link — Short Fall</SFX>
+	<SFX Key="8" Bank="6" DebugName="NA_SE_VO_LI_FALL_L" Comment="Hints at fall damage?" >Adult Link — Long Fall</SFX>
+	<SFX Key="9" Bank="6" DebugName="NA_SE_VO_LI_BREATH_REST" Comment="" >Adult Link — Breathing when Low on Health</SFX>
+	<SFX Key="0A" Bank="6" DebugName="NA_SE_VO_LI_BREATH_DRINK" Comment="" >Adult Link — Breath after Drinking</SFX>
+	<SFX Key="0B" Bank="6" DebugName="NA_SE_VO_LI_DOWN" Comment="" >Adult Link — Dying Gasps</SFX>
+	<SFX Key="0C" Bank="6" DebugName="NA_SE_VO_LI_TAKEN_AWAY" Comment="" >Adult Link — Taken by Wallmaster</SFX>
+	<SFX Key="0D" Bank="6" DebugName="NA_SE_VO_LI_HELD" Comment="Bongo-Bong, Dead Hand" >Adult Link — Held by Hand</SFX>
+	<SFX Key="0E" Bank="6" DebugName="NA_SE_VO_LI_SNEEZE" Comment="" >Adult Link — Sneezes in Cold Places</SFX>
+	<SFX Key="0F" Bank="6" DebugName="NA_SE_VO_LI_SWEAT" Comment="" >Adult Link — Sweats in Hot Places</SFX>
+	<SFX Key="10" Bank="6" DebugName="NA_SE_VO_LI_DRINK" Comment="" >Adult Link — Drinks from Bottle</SFX>
+	<SFX Key="11" Bank="6" DebugName="NA_SE_VO_LI_RELAX" Comment="" >Adult Link — Stretching and Yawning</SFX>
+	<SFX Key="12" Bank="6" DebugName="NA_SE_VO_LI_SWORD_PUTAWAY" Comment="Sounds like one of the possible 00 sounds" Unused="1">Adult Link — xxx</SFX>
+	<SFX Key="13" Bank="6" DebugName="NA_SE_VO_LI_GROAN" Comment="Sounds like Child Link shivering" Unused="1">Adult Link — xxx</SFX>
+	<SFX Key="14" Bank="6" DebugName="NA_SE_VO_LI_AUTO_JUMP" Comment="" >Adult Link — Automatic Jump</SFX>
+	<SFX Key="15" Bank="6" DebugName="NA_SE_VO_LI_MAGIC_NALE" Comment="" >Adult Link — Casting Nayru's Love</SFX>
+	<SFX Key="16" Bank="6" DebugName="NA_SE_VO_LI_SURPRISE" Comment="" >Adult Link — Shocked Gasp</SFX>
+	<SFX Key="17" Bank="6" DebugName="NA_SE_VO_LI_MAGIC_FROL" Comment="" >Adult Link — Casting Farore's Wind</SFX>
+	<SFX Key="18" Bank="6" DebugName="NA_SE_VO_LI_PUSH" Comment="" >Adult Link — Pushes Block</SFX>
+	<SFX Key="19" Bank="6" DebugName="NA_SE_VO_LI_HOOKSHOT_HANG" Comment="Sounds similar to 18." Unused="1">Adult Link — xxx</SFX>
+	<SFX Key="1A" Bank="6" DebugName="NA_SE_VO_LI_LAND_DAMAGE_S" Comment="" >Adult Link — Cringing from Fall Damage</SFX>
+	<SFX Key="1B" Bank="6" DebugName="NA_SE_VO_LI_NULL_0x1b" Comment="" Unused="1">Adult Link — xxx</SFX>
+	<SFX Key="1C" Bank="6" DebugName="NA_SE_VO_LI_MAGIC_ATTACK" Comment="" >Adult Link — Casting Din's Fire</SFX>
+	<SFX Key="1D" Bank="6" DebugName="NA_SE_VO_BL_DOWN" Comment="Sounds like 08." Unused="1">Adult Link — xxx</SFX>
+	<SFX Key="1E" Bank="6" DebugName="NA_SE_VO_LI_DEMO_DAMAGE" Comment="" Unused="1">Adult Link — xxx</SFX>
+	<SFX Key="1F" Bank="6" DebugName="NA_SE_VO_LI_ELECTRIC_SHOCK_LV" Comment="Sounds like 00" Unused="1">Adult Link — xxx</SFX>
+	<SFX Key="20" Bank="6" DebugName="NA_SE_VO_LI_SWORD_N_KID" Comment="" >Child Link — Attack Yell</SFX>
+	<SFX Key="21" Bank="6" DebugName="NA_SE_VO_LI_ROLLING_CUT_KID" Comment="" >Child Link — Long Attack Yell</SFX>
+	<SFX Key="22" Bank="6" DebugName="NA_SE_VO_LI_LASH_KID" Comment="Can't ride horse as child (sounds like Adult Link)" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="23" Bank="6" DebugName="NA_SE_VO_LI_HANG_KID" Comment="" >Child Link — Grabs onto Ledge</SFX>
+	<SFX Key="24" Bank="6" DebugName="NA_SE_VO_LI_CLIMB_END_KID" Comment="" >Child Link — Climbs up from Ledge</SFX>
+	<SFX Key="25" Bank="6" DebugName="NA_SE_VO_LI_DAMAGE_S_KID" Comment="" >Child Link — Hurt by Enemy</SFX>
+	<SFX Key="26" Bank="6" DebugName="NA_SE_VO_LI_FREEZE_KID" Comment="" >Child Link — Frozen in Ice</SFX>
+	<SFX Key="27" Bank="6" DebugName="NA_SE_VO_LI_FALL_S_KID" Comment="" >Child Link — Short Fall</SFX>
+	<SFX Key="28" Bank="6" DebugName="NA_SE_VO_LI_FALL_L_KID" Comment="Hints at fall damage?" >Child Link — Long Fall</SFX>
+	<SFX Key="29" Bank="6" DebugName="NA_SE_VO_LI_BREATH_REST_KID" Comment="" >Child Link — Breathing when Low on Health</SFX>
+	<SFX Key="2A" Bank="6" DebugName="NA_SE_VO_LI_BREATH_DRINK_KID" Comment="" >Child Link — Breath after Drinking</SFX>
+	<SFX Key="2B" Bank="6" DebugName="NA_SE_VO_LI_DOWN_KID" Comment="" >Child Link — Dying Gasps</SFX>
+	<SFX Key="2C" Bank="6" DebugName="NA_SE_VO_LI_TAKEN_AWAY_KID" Comment="" >Child Link — Taken by Wallmaster</SFX>
+	<SFX Key="2D" Bank="6" DebugName="NA_SE_VO_LI_HELD_KID" Comment="e.g. Dead Hand" >Child Link — Grabbed by Hand</SFX>
+	<SFX Key="2E" Bank="6" DebugName="NA_SE_VO_LI_SNEEZE_KID" Comment="" >Child Link — Sneezes in Cold Places</SFX>
+	<SFX Key="2F" Bank="6" DebugName="NA_SE_VO_LI_SWEAT_KID" Comment="" >Child Link — Sweats in Hot Places</SFX>
+	<SFX Key="30" Bank="6" DebugName="NA_SE_VO_LI_DRINK_KID" Comment="" >Child Link — Drinks from Bottle</SFX>
+	<SFX Key="31" Bank="6" DebugName="NA_SE_VO_LI_RELAX_KID" Comment="" >Child Link — Stretching and Yawning</SFX>
+	<SFX Key="32" Bank="6" DebugName="NA_SE_VO_LI_SWORD_PUTAWAY_KID" Comment="Sounds like of the possible 20 sounds" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="33" Bank="6" DebugName="NA_SE_VO_LI_GROAN_KID" Comment="Sounds like Child Link shivering" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="34" Bank="6" DebugName="NA_SE_VO_LI_AUTO_JUMP_KID" Comment="" >Child Link — Automatic Jump</SFX>
+	<SFX Key="35" Bank="6" DebugName="NA_SE_VO_LI_MAGIC_NALE_KID" Comment="" >Child Link — Casting Nayru's Love</SFX>
+	<SFX Key="36" Bank="6" DebugName="NA_SE_VO_LI_SURPRISE_KID" Comment="" >Child Link — Surprised Gasp</SFX>
+	<SFX Key="37" Bank="6" DebugName="NA_SE_VO_LI_MAGIC_FROL_KID" Comment="" >Child Link — Casting Farore's Wind</SFX>
+	<SFX Key="38" Bank="6" DebugName="NA_SE_VO_LI_PUSH_KID" Comment="" >Child Link — Pushes Block</SFX>
+	<SFX Key="39" Bank="6" DebugName="NA_SE_VO_LI_HOOKSHOT_HANG_KID" Comment="" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="3A" Bank="6" DebugName="NA_SE_VO_LI_LAND_DAMAGE_S_KID" Comment="" >Child Link — Cringing from Fall Damage</SFX>
+	<SFX Key="3B" Bank="6" DebugName="NA_SE_VO_LI_NULL_0x1b_KID" Comment="" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="3C" Bank="6" DebugName="NA_SE_VO_LI_MAGIC_ATTACK_KID" Comment="" >Child Link — Casting Din's Fire</SFX>
+	<SFX Key="3D" Bank="6" DebugName="NA_SE_VO_BL_DOWN_KID" Comment="Sounds like 28" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="3E" Bank="6" DebugName="NA_SE_VO_LI_DEMO_DAMAGE_KID" Comment="Sounds like 28" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="3F" Bank="6" DebugName="NA_SE_VO_LI_ELECTRIC_SHOCK_LV_KID" Comment="Sounds like Adult Link attacking" Unused="1">Child Link — xxx</SFX>
+	<SFX Key="40" Bank="6" DebugName="NA_SE_VO_NAVY_ENEMY" Comment="Blank. Plays just before 43, or when retargeting enemy" >Navi — Z-Targeting Enemy</SFX>
+	<SFX Key="41" Bank="6" DebugName="NA_SE_VO_NAVY_HELLO" Comment="Blank. Blue arrow targets." >Navi — Z-Targeting Friendly NPC</SFX>
+	<SFX Key="42" Bank="6" DebugName="NA_SE_VO_NAVY_HEAR" Comment="Blank. Green arrow targets." >Navi — Z-Targeting Sign</SFX>
+	<SFX Key="43" Bank="6" DebugName="NA_SE_VO_NAVY_CALL" Comment="" >Navi — Z-Targeting Enemy</SFX>
+	<SFX Key="44" Bank="6" DebugName="NA_SE_VO_NA_HELLO_3" Comment="Opening cutscene" >Navi — Says "H'lo!"</SFX>
+	<SFX Key="45" Bank="6" DebugName="NA_SE_VO_DUMMY_0x45" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="46" Bank="6" DebugName="NA_SE_VO_DUMMY_0x46" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="47" Bank="6" DebugName="NA_SE_VO_DUMMY_0x47" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="48" Bank="6" DebugName="NA_SE_VO_DUMMY_0x48" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="49" Bank="6" DebugName="NA_SE_VO_DUMMY_0x49" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="4A" Bank="6" DebugName="NA_SE_VO_DUMMY_0x4a" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="4B" Bank="6" DebugName="NA_SE_VO_DUMMY_0x4b" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="4C" Bank="6" DebugName="NA_SE_VO_DUMMY_0x4c" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="4D" Bank="6" DebugName="NA_SE_VO_DUMMY_0x4d" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="4E" Bank="6" DebugName="NA_SE_VO_DUMMY_0x4e" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="4F" Bank="6" DebugName="NA_SE_VO_DUMMY_0x4f" Comment="Duplicate of 43?" Unused="1"></SFX>
+	<SFX Key="50" Bank="6" DebugName="NA_SE_VO_TA_SLEEP" Comment="" >Talon — Snoring</SFX>
+	<SFX Key="51" Bank="6" DebugName="NA_SE_VO_TA_SURPRISE" Comment="" >Talon — Surprised at Being Woken</SFX>
+	<SFX Key="52" Bank="6" DebugName="NA_SE_VO_TA_CRY_0" Comment="" >Talon — Says "Huh?"</SFX>
+	<SFX Key="53" Bank="6" DebugName="NA_SE_VO_TA_CRY_1" Comment="" >Talon — Screaming while Running Away</SFX>
+	<SFX Key="54" Bank="6" DebugName="NA_SE_VO_IN_CRY_0" Comment="" >Ingo — Yells when Starting Race</SFX>
+	<SFX Key="55" Bank="6" DebugName="NA_SE_VO_IN_LOST" Comment="" >Ingo — Frustrated at Losing Race</SFX>
+	<SFX Key="56" Bank="6" DebugName="NA_SE_VO_IN_LASH_0" Comment="" >Ingo — Whips Horse</SFX>
+	<SFX Key="57" Bank="6" DebugName="NA_SE_VO_IN_LASH_1" Comment="" >Ingo — Whips Horse</SFX>
+	<SFX Key="58" Bank="6" DebugName="NA_SE_VO_FR_LAUGH_0" Comment="" >Great Fairy — Laughs on Appearance</SFX>
+	<SFX Key="59" Bank="6" DebugName="NA_SE_VO_FR_SMILE_0" Comment="" >Great Fairy — Gentle Laugh</SFX>
+	<SFX Key="5A" Bank="6" DebugName="NA_SE_VO_NB_AGONY" Comment="" >Nabooru — In Agony</SFX>
+	<SFX Key="5B" Bank="6" DebugName="NA_SE_VO_NB_CRY_0" Comment="" >Nabooru — Cries</SFX>
+	<SFX Key="5C" Bank="6" DebugName="NA_SE_VO_NB_NOTICE" Comment="" >Nabooru — Notices Link</SFX>
+	<SFX Key="5D" Bank="6" DebugName="NA_SE_VO_NA_HELLO_0" Comment="Watch out! (2 pitches)" Unused="1">Navi — xxx</SFX>
+	<SFX Key="5E" Bank="6" DebugName="NA_SE_VO_NA_HELLO_1" Comment="Look! (2 pitches)" Unused="1">Navi — xxx</SFX>
+	<SFX Key="5F" Bank="6" DebugName="NA_SE_VO_NA_HELLO_2" Comment="'Hey!', 2 pitches" >Navi — Has Something to Tell Link</SFX>
+	<SFX Key="60" Bank="6" DebugName="NA_SE_VO_RT_CRASH" Comment="" >Ruto — Crashes into Wall</SFX>
+	<SFX Key="61" Bank="6" DebugName="NA_SE_VO_RT_DISCOVER" Comment="" >Ruto — Sees Zora's Sapphire</SFX>
+	<SFX Key="62" Bank="6" DebugName="NA_SE_VO_RT_FALL" Comment="" >Ruto — Falls down Hole</SFX>
+	<SFX Key="63" Bank="6" DebugName="NA_SE_VO_RT_LAUGH_0" Comment="" >Ruto — Laughs</SFX>
+	<SFX Key="64" Bank="6" DebugName="NA_SE_VO_RT_LIFT" Comment="" >Ruto — Picked up by Link</SFX>
+	<SFX Key="65" Bank="6" DebugName="NA_SE_VO_RT_THROW" Comment="Also Navi squeaking after hitting fence" >Ruto — Thrown by Link</SFX>
+	<SFX Key="66" Bank="6" DebugName="NA_SE_VO_RT_UNBALLANCE" Comment="" Unused="1">Ruto — xxx</SFX>
+	<SFX Key="67" Bank="6" DebugName="NA_SE_VO_ST_DAMAGE" Comment="Cursed Skulltula men?" Unused="1"></SFX>
+	<SFX Key="68" Bank="6" DebugName="NA_SE_VO_ST_ATTACK" Comment="Cursed Skulltula men?" Unused="1"></SFX>
+	<SFX Key="69" Bank="6" DebugName="NA_SE_VO_Z0_HURRY" Comment="Saying you didn't understand the legend" >Child Zelda — Gaps before Retelling Legend</SFX>
+	<SFX Key="6A" Bank="6" DebugName="NA_SE_VO_Z0_MEET" Comment="" >Child Zelda — Gasp when Meeting Link</SFX>
+	<SFX Key="6B" Bank="6" DebugName="NA_SE_VO_Z0_QUESTION" Comment="Saying you don't have the stone" >Child Zelda — Questions Link's Response</SFX>
+	<SFX Key="6C" Bank="6" DebugName="NA_SE_VO_Z0_SIGH_0" Comment="Not promising to keep legend a secret" >Child Zelda — Sighs</SFX>
+	<SFX Key="6D" Bank="6" DebugName="NA_SE_VO_Z0_SMILE_0" Comment="" >Child Zelda — Gentle Laugh</SFX>
+	<SFX Key="6E" Bank="6" DebugName="NA_SE_VO_Z0_SURPRISE" Comment="" >Child Zelda — Cries while Riding Away</SFX>
+	<SFX Key="6F" Bank="6" DebugName="NA_SE_VO_Z0_THROW" Comment="" >Child Zelda — Throws Ocarina of Time</SFX>
+	<SFX Key="70" Bank="6" DebugName="NA_SE_VO_SK_CRY_0" Comment="" Unused="1">Sheik — xxx</SFX>
+	<SFX Key="71" Bank="6" DebugName="NA_SE_VO_SK_CRY_1" Comment="" >Sheik — Thrown by Shadow Spirit</SFX>
+	<SFX Key="72" Bank="6" DebugName="NA_SE_VO_SK_CRASH" Comment="" >Sheik — Falls after Being Thrown</SFX>
+	<SFX Key="73" Bank="6" DebugName="NA_SE_VO_SK_LAUGH" Comment="'Listen!', 2 pitches. Mismatched filename?" >Navi — Starts Telling Link Something</SFX>
+	<SFX Key="74" Bank="6" DebugName="NA_SE_VO_SK_SHOUT" Comment="" >Sheik — Throws Deku Nut</SFX>
+	<SFX Key="75" Bank="6" DebugName="NA_SE_VO_Z1_CRY_0" Comment="" >Adult Zelda — Cries when Imprisoned in Crystal</SFX>
+	<SFX Key="76" Bank="6" DebugName="NA_SE_VO_Z1_CRY_1" Comment="" >Adult Zelda — Screams when Link is Hurt (Boss Battle)</SFX>
+	<SFX Key="77" Bank="6" DebugName="NA_SE_VO_Z1_OPENDOOR" Comment="" >Adult Zelda — Opening Barred Door</SFX>
+	<SFX Key="78" Bank="6" DebugName="NA_SE_VO_Z1_SURPRISE" Comment="" >Adult Zelda — Gasp when Temple of Time Shaking</SFX>
+	<SFX Key="79" Bank="6" DebugName="NA_SE_VO_Z1_PAIN" Comment="" >Adult Zelda — Gasps when Link is Hurt (Escaping the Tower)</SFX>
+	<SFX Key="7A" Bank="6" DebugName="NA_SE_VO_KZ_MOVE" Comment="Last VOICE sound?" >King Zora — Scooting Aside</SFX>
+
+</Table>

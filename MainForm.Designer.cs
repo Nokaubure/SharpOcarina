@@ -712,16 +712,31 @@ namespace SharpOcarina
             this.CutsceneActorXStart = new SharpOcarina.NumericUpDownEx();
             this.CutsceneActorYStart = new SharpOcarina.NumericUpDownEx();
             this.TriggerExit = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label77 = new System.Windows.Forms.Label();
-            this.label76 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label75 = new System.Windows.Forms.Label();
-            this.numericUpDownEx2 = new SharpOcarina.NumericUpDownEx();
-            this.numericUpDownEx1 = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneTriggerExitValue = new SharpOcarina.NumericUpDownEx();
             this.MotionBlur = new System.Windows.Forms.TabPage();
             this.label78 = new System.Windows.Forms.Label();
             this.CutsceneMotionBlurValue = new SharpOcarina.NumericUpDownEx();
+            this.PlaySound = new System.Windows.Forms.TabPage();
+            this.CutscenePlaySFXListFilter = new System.Windows.Forms.TextBox();
+            this.label145 = new System.Windows.Forms.Label();
+            this.CutscenePlaySFXList = new System.Windows.Forms.ListBox();
+            this.label144 = new System.Windows.Forms.Label();
+            this.CutscenePlaySFXReverb = new SharpOcarina.NumericUpDownEx();
+            this.label77 = new System.Windows.Forms.Label();
+            this.CutscenePlaySFXPitch = new SharpOcarina.NumericUpDownEx();
+            this.label76 = new System.Windows.Forms.Label();
+            this.CutscenePlaySFXVolume = new SharpOcarina.NumericUpDownEx();
+            this.CutscenePlaySFXCustom = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.CutscenePlaySFXValue = new SharpOcarina.NumericUpDownEx();
+            this.SetFlag = new System.Windows.Forms.TabPage();
+            this.CutsceneSetFlagEasyValue = new System.Windows.Forms.ComboBox();
+            this.CutsceneSetFlagDisable = new System.Windows.Forms.CheckBox();
+            this.label103 = new System.Windows.Forms.Label();
+            this.CutsceneSetFlagType = new System.Windows.Forms.ComboBox();
+            this.label104 = new System.Windows.Forms.Label();
+            this.CutsceneSetFlagValue = new SharpOcarina.NumericUpDownEx();
             this.label51 = new System.Windows.Forms.Label();
             this.MarkerTypeLabel = new System.Windows.Forms.Label();
             this.MarkerType = new System.Windows.Forms.ComboBox();
@@ -1017,10 +1032,16 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorXStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorYStart)).BeginInit();
             this.TriggerExit.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTriggerExitValue)).BeginInit();
             this.MotionBlur.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneMotionBlurValue)).BeginInit();
+            this.PlaySound.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXReverb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXPitch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXVolume)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXValue)).BeginInit();
+            this.SetFlag.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetFlagValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneTableEntry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneFlag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSpawn)).BeginInit();
@@ -2245,7 +2266,7 @@ namespace SharpOcarina
             // 
             this.AutoHookerMenuItem.Name = "AutoHookerMenuItem";
             this.AutoHookerMenuItem.Size = new System.Drawing.Size(314, 22);
-            this.AutoHookerMenuItem.Text = "Auto-hooker (z64rom)";
+            this.AutoHookerMenuItem.Text = "Auto-hook (z64rom)";
             this.AutoHookerMenuItem.Visible = false;
             this.AutoHookerMenuItem.Click += new System.EventHandler(this.AutoHookerMenuItem_Click);
             // 
@@ -9343,6 +9364,8 @@ namespace SharpOcarina
             this.CutsceneTabs.Controls.Add(this.ActorCommand);
             this.CutsceneTabs.Controls.Add(this.TriggerExit);
             this.CutsceneTabs.Controls.Add(this.MotionBlur);
+            this.CutsceneTabs.Controls.Add(this.PlaySound);
+            this.CutsceneTabs.Controls.Add(this.SetFlag);
             this.CutsceneTabs.ItemSize = new System.Drawing.Size(96, 7);
             this.CutsceneTabs.Location = new System.Drawing.Point(6, 229);
             this.CutsceneTabs.Multiline = true;
@@ -9382,10 +9405,10 @@ namespace SharpOcarina
             this.CameraPositions.Controls.Add(this.CutsceneAbsolutePositionY);
             this.CameraPositions.Controls.Add(this.label55);
             this.CameraPositions.Controls.Add(this.label53);
-            this.CameraPositions.Location = new System.Drawing.Point(4, 31);
+            this.CameraPositions.Location = new System.Drawing.Point(4, 41);
             this.CameraPositions.Name = "CameraPositions";
             this.CameraPositions.Padding = new System.Windows.Forms.Padding(3);
-            this.CameraPositions.Size = new System.Drawing.Size(383, 277);
+            this.CameraPositions.Size = new System.Drawing.Size(383, 267);
             this.CameraPositions.TabIndex = 0;
             this.CameraPositions.Text = "Camera Positions";
             // 
@@ -9833,9 +9856,9 @@ namespace SharpOcarina
             this.SpecialExecution.Controls.Add(this.CutsceneSetTimeHours);
             this.SpecialExecution.Controls.Add(this.CutsceneSetTimeMinutes);
             this.SpecialExecution.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.SpecialExecution.Location = new System.Drawing.Point(4, 31);
+            this.SpecialExecution.Location = new System.Drawing.Point(4, 41);
             this.SpecialExecution.Name = "SpecialExecution";
-            this.SpecialExecution.Size = new System.Drawing.Size(383, 277);
+            this.SpecialExecution.Size = new System.Drawing.Size(383, 267);
             this.SpecialExecution.TabIndex = 2;
             this.SpecialExecution.Text = "SetTime";
             // 
@@ -9915,9 +9938,9 @@ namespace SharpOcarina
             // 
             // Unknown
             // 
-            this.Unknown.Location = new System.Drawing.Point(4, 31);
+            this.Unknown.Location = new System.Drawing.Point(4, 41);
             this.Unknown.Name = "Unknown";
-            this.Unknown.Size = new System.Drawing.Size(383, 277);
+            this.Unknown.Size = new System.Drawing.Size(383, 267);
             this.Unknown.TabIndex = 3;
             this.Unknown.Text = "Unknown";
             this.Unknown.UseVisualStyleBackColor = true;
@@ -9940,9 +9963,9 @@ namespace SharpOcarina
             this.Textbox.Controls.Add(this.CutsceneTextboxMessageId);
             this.Textbox.Controls.Add(this.CutsceneTextboxList);
             this.Textbox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Textbox.Location = new System.Drawing.Point(4, 31);
+            this.Textbox.Location = new System.Drawing.Point(4, 41);
             this.Textbox.Name = "Textbox";
-            this.Textbox.Size = new System.Drawing.Size(383, 277);
+            this.Textbox.Size = new System.Drawing.Size(383, 267);
             this.Textbox.TabIndex = 4;
             this.Textbox.Text = "Textbox";
             // 
@@ -10114,9 +10137,9 @@ namespace SharpOcarina
             this.TransitionEffect.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.TransitionEffect.Controls.Add(this.label70);
             this.TransitionEffect.Controls.Add(this.CutsceneTransitionComboBox);
-            this.TransitionEffect.Location = new System.Drawing.Point(4, 31);
+            this.TransitionEffect.Location = new System.Drawing.Point(4, 41);
             this.TransitionEffect.Name = "TransitionEffect";
-            this.TransitionEffect.Size = new System.Drawing.Size(383, 277);
+            this.TransitionEffect.Size = new System.Drawing.Size(383, 267);
             this.TransitionEffect.TabIndex = 5;
             this.TransitionEffect.Text = "Transition Effect";
             // 
@@ -10147,9 +10170,9 @@ namespace SharpOcarina
             this.AsmExecution.Controls.Add(this.CutsceneAsmLabel);
             this.AsmExecution.Controls.Add(this.CutsceneAsmComboBox);
             this.AsmExecution.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.AsmExecution.Location = new System.Drawing.Point(4, 31);
+            this.AsmExecution.Location = new System.Drawing.Point(4, 41);
             this.AsmExecution.Name = "AsmExecution";
-            this.AsmExecution.Size = new System.Drawing.Size(383, 277);
+            this.AsmExecution.Size = new System.Drawing.Size(383, 267);
             this.AsmExecution.TabIndex = 6;
             this.AsmExecution.Text = "Asm Execution";
             // 
@@ -10204,9 +10227,9 @@ namespace SharpOcarina
             this.ActorCommand.Controls.Add(this.CutsceneActorZStart);
             this.ActorCommand.Controls.Add(this.CutsceneActorXStart);
             this.ActorCommand.Controls.Add(this.CutsceneActorYStart);
-            this.ActorCommand.Location = new System.Drawing.Point(4, 31);
+            this.ActorCommand.Location = new System.Drawing.Point(4, 41);
             this.ActorCommand.Name = "ActorCommand";
-            this.ActorCommand.Size = new System.Drawing.Size(383, 277);
+            this.ActorCommand.Size = new System.Drawing.Size(383, 267);
             this.ActorCommand.TabIndex = 7;
             this.ActorCommand.Text = "Actor Command";
             // 
@@ -10700,56 +10723,13 @@ namespace SharpOcarina
             // TriggerExit
             // 
             this.TriggerExit.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.TriggerExit.Controls.Add(this.checkBox1);
-            this.TriggerExit.Controls.Add(this.label77);
-            this.TriggerExit.Controls.Add(this.label76);
-            this.TriggerExit.Controls.Add(this.comboBox3);
             this.TriggerExit.Controls.Add(this.label75);
-            this.TriggerExit.Controls.Add(this.numericUpDownEx2);
-            this.TriggerExit.Controls.Add(this.numericUpDownEx1);
-            this.TriggerExit.Location = new System.Drawing.Point(4, 31);
+            this.TriggerExit.Controls.Add(this.CutsceneTriggerExitValue);
+            this.TriggerExit.Location = new System.Drawing.Point(4, 41);
             this.TriggerExit.Name = "TriggerExit";
-            this.TriggerExit.Size = new System.Drawing.Size(383, 277);
+            this.TriggerExit.Size = new System.Drawing.Size(383, 267);
             this.TriggerExit.TabIndex = 8;
             this.TriggerExit.Text = "TriggerExit";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(171, 16);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(61, 17);
-            this.checkBox1.TabIndex = 76;
-            this.checkBox1.Text = "Disable";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // label77
-            // 
-            this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(17, 70);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(30, 13);
-            this.label77.TabIndex = 74;
-            this.label77.Text = "Flag:";
-            // 
-            // label76
-            // 
-            this.label76.AutoSize = true;
-            this.label76.Location = new System.Drawing.Point(17, 44);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(40, 13);
-            this.label76.TabIndex = 73;
-            this.label76.Text = "Action:";
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(81, 41);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(185, 21);
-            this.comboBox3.TabIndex = 72;
-            this.comboBox3.Tag = "";
             // 
             // label75
             // 
@@ -10760,68 +10740,42 @@ namespace SharpOcarina
             this.label75.TabIndex = 65;
             this.label75.Text = "Exit ID:";
             // 
-            // numericUpDownEx2
+            // CutsceneTriggerExitValue
             // 
-            this.numericUpDownEx2.AlwaysFireValueChanged = false;
-            this.numericUpDownEx2.DisplayDigits = 1;
-            this.numericUpDownEx2.DoValueRollover = false;
-            this.numericUpDownEx2.IncrementMouseWheel = 1;
-            this.numericUpDownEx2.Location = new System.Drawing.Point(81, 68);
-            this.numericUpDownEx2.Maximum = new decimal(new int[] {
+            this.CutsceneTriggerExitValue.AlwaysFireValueChanged = false;
+            this.CutsceneTriggerExitValue.DisplayDigits = 1;
+            this.CutsceneTriggerExitValue.DoValueRollover = false;
+            this.CutsceneTriggerExitValue.IncrementMouseWheel = 1;
+            this.CutsceneTriggerExitValue.Location = new System.Drawing.Point(81, 15);
+            this.CutsceneTriggerExitValue.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.numericUpDownEx2.Minimum = new decimal(new int[] {
+            this.CutsceneTriggerExitValue.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.numericUpDownEx2.Name = "numericUpDownEx2";
-            this.numericUpDownEx2.ShiftMultiplier = 1;
-            this.numericUpDownEx2.Size = new System.Drawing.Size(84, 20);
-            this.numericUpDownEx2.TabIndex = 75;
-            this.numericUpDownEx2.Value = new decimal(new int[] {
+            this.CutsceneTriggerExitValue.Name = "CutsceneTriggerExitValue";
+            this.CutsceneTriggerExitValue.ShiftMultiplier = 1;
+            this.CutsceneTriggerExitValue.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneTriggerExitValue.TabIndex = 66;
+            this.CutsceneTriggerExitValue.Value = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            // 
-            // numericUpDownEx1
-            // 
-            this.numericUpDownEx1.AlwaysFireValueChanged = false;
-            this.numericUpDownEx1.DisplayDigits = 1;
-            this.numericUpDownEx1.DoValueRollover = false;
-            this.numericUpDownEx1.IncrementMouseWheel = 1;
-            this.numericUpDownEx1.Location = new System.Drawing.Point(81, 15);
-            this.numericUpDownEx1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericUpDownEx1.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownEx1.Name = "numericUpDownEx1";
-            this.numericUpDownEx1.ShiftMultiplier = 1;
-            this.numericUpDownEx1.Size = new System.Drawing.Size(84, 20);
-            this.numericUpDownEx1.TabIndex = 66;
-            this.numericUpDownEx1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+            this.CutsceneTriggerExitValue.ValueChanged += new System.EventHandler(this.CutsceneTriggerExitValue_ValueChanged);
             // 
             // MotionBlur
             // 
             this.MotionBlur.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.MotionBlur.Controls.Add(this.label78);
             this.MotionBlur.Controls.Add(this.CutsceneMotionBlurValue);
-            this.MotionBlur.Location = new System.Drawing.Point(4, 31);
+            this.MotionBlur.Location = new System.Drawing.Point(4, 41);
             this.MotionBlur.Name = "MotionBlur";
-            this.MotionBlur.Size = new System.Drawing.Size(383, 277);
+            this.MotionBlur.Size = new System.Drawing.Size(383, 267);
             this.MotionBlur.TabIndex = 9;
             this.MotionBlur.Text = "MotionBlur";
             // 
@@ -10861,6 +10815,312 @@ namespace SharpOcarina
             0,
             0});
             this.CutsceneMotionBlurValue.ValueChanged += new System.EventHandler(this.CutsceneMotionBlurValue_ValueChanged);
+            // 
+            // PlaySound
+            // 
+            this.PlaySound.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXListFilter);
+            this.PlaySound.Controls.Add(this.label145);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXList);
+            this.PlaySound.Controls.Add(this.label144);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXReverb);
+            this.PlaySound.Controls.Add(this.label77);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXPitch);
+            this.PlaySound.Controls.Add(this.label76);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXVolume);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXCustom);
+            this.PlaySound.Controls.Add(this.label6);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXValue);
+            this.PlaySound.Location = new System.Drawing.Point(4, 41);
+            this.PlaySound.Name = "PlaySound";
+            this.PlaySound.Size = new System.Drawing.Size(383, 267);
+            this.PlaySound.TabIndex = 10;
+            this.PlaySound.Text = "PlaySound";
+            // 
+            // CutscenePlaySFXListFilter
+            // 
+            this.CutscenePlaySFXListFilter.Location = new System.Drawing.Point(46, 68);
+            this.CutscenePlaySFXListFilter.Name = "CutscenePlaySFXListFilter";
+            this.CutscenePlaySFXListFilter.Size = new System.Drawing.Size(151, 20);
+            this.CutscenePlaySFXListFilter.TabIndex = 97;
+            this.CutscenePlaySFXListFilter.TextChanged += new System.EventHandler(this.CutscenePlaySFXListFilter_TextChanged);
+            // 
+            // label145
+            // 
+            this.label145.AutoSize = true;
+            this.label145.Location = new System.Drawing.Point(8, 78);
+            this.label145.Name = "label145";
+            this.label145.Size = new System.Drawing.Size(32, 13);
+            this.label145.TabIndex = 96;
+            this.label145.Text = "Filter:";
+            // 
+            // CutscenePlaySFXList
+            // 
+            this.CutscenePlaySFXList.FormattingEnabled = true;
+            this.CutscenePlaySFXList.HorizontalScrollbar = true;
+            this.CutscenePlaySFXList.Location = new System.Drawing.Point(8, 94);
+            this.CutscenePlaySFXList.Name = "CutscenePlaySFXList";
+            this.CutscenePlaySFXList.Size = new System.Drawing.Size(367, 186);
+            this.CutscenePlaySFXList.TabIndex = 95;
+            this.CutscenePlaySFXList.Click += new System.EventHandler(this.CutscenePlaySFXList_Click);
+            // 
+            // label144
+            // 
+            this.label144.AutoSize = true;
+            this.label144.Location = new System.Drawing.Point(245, 40);
+            this.label144.Name = "label144";
+            this.label144.Size = new System.Drawing.Size(45, 13);
+            this.label144.TabIndex = 93;
+            this.label144.Text = "Reverb:";
+            // 
+            // CutscenePlaySFXReverb
+            // 
+            this.CutscenePlaySFXReverb.AlwaysFireValueChanged = false;
+            this.CutscenePlaySFXReverb.DisplayDigits = 1;
+            this.CutscenePlaySFXReverb.DoValueRollover = false;
+            this.CutscenePlaySFXReverb.IncrementMouseWheel = 1;
+            this.CutscenePlaySFXReverb.Location = new System.Drawing.Point(298, 38);
+            this.CutscenePlaySFXReverb.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXReverb.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXReverb.Name = "CutscenePlaySFXReverb";
+            this.CutscenePlaySFXReverb.ShiftMultiplier = 1;
+            this.CutscenePlaySFXReverb.Size = new System.Drawing.Size(57, 20);
+            this.CutscenePlaySFXReverb.TabIndex = 94;
+            this.EnvironmentControlTooltip.SetToolTip(this.CutscenePlaySFXReverb, "0 = default");
+            this.CutscenePlaySFXReverb.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXReverb.ValueChanged += new System.EventHandler(this.CutscenePlaySFXReverb_ValueChanged);
+            // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.Location = new System.Drawing.Point(142, 40);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(34, 13);
+            this.label77.TabIndex = 92;
+            this.label77.Text = "Pitch:";
+            // 
+            // CutscenePlaySFXPitch
+            // 
+            this.CutscenePlaySFXPitch.AlwaysFireValueChanged = false;
+            this.CutscenePlaySFXPitch.DisplayDigits = 1;
+            this.CutscenePlaySFXPitch.DoValueRollover = true;
+            this.CutscenePlaySFXPitch.IncrementMouseWheel = 3;
+            this.CutscenePlaySFXPitch.Location = new System.Drawing.Point(182, 38);
+            this.CutscenePlaySFXPitch.Maximum = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXPitch.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.CutscenePlaySFXPitch.Name = "CutscenePlaySFXPitch";
+            this.CutscenePlaySFXPitch.ShiftMultiplier = 1;
+            this.CutscenePlaySFXPitch.Size = new System.Drawing.Size(55, 20);
+            this.CutscenePlaySFXPitch.TabIndex = 91;
+            this.EnvironmentControlTooltip.SetToolTip(this.CutscenePlaySFXPitch, "100 = normal pitch");
+            this.CutscenePlaySFXPitch.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXPitch.ValueChanged += new System.EventHandler(this.CutscenePlaySFXPitch_ValueChanged);
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Location = new System.Drawing.Point(14, 40);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(45, 13);
+            this.label76.TabIndex = 90;
+            this.label76.Text = "Volume:";
+            // 
+            // CutscenePlaySFXVolume
+            // 
+            this.CutscenePlaySFXVolume.AlwaysFireValueChanged = false;
+            this.CutscenePlaySFXVolume.DisplayDigits = 1;
+            this.CutscenePlaySFXVolume.DoValueRollover = true;
+            this.CutscenePlaySFXVolume.IncrementMouseWheel = 3;
+            this.CutscenePlaySFXVolume.Location = new System.Drawing.Point(67, 38);
+            this.CutscenePlaySFXVolume.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXVolume.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.CutscenePlaySFXVolume.Name = "CutscenePlaySFXVolume";
+            this.CutscenePlaySFXVolume.ShiftMultiplier = 1;
+            this.CutscenePlaySFXVolume.Size = new System.Drawing.Size(60, 20);
+            this.CutscenePlaySFXVolume.TabIndex = 89;
+            this.EnvironmentControlTooltip.SetToolTip(this.CutscenePlaySFXVolume, "100 = max");
+            this.CutscenePlaySFXVolume.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXVolume.ValueChanged += new System.EventHandler(this.CutscenePlaySFXVolume_ValueChanged);
+            // 
+            // CutscenePlaySFXCustom
+            // 
+            this.CutscenePlaySFXCustom.AutoSize = true;
+            this.CutscenePlaySFXCustom.Location = new System.Drawing.Point(157, 13);
+            this.CutscenePlaySFXCustom.Name = "CutscenePlaySFXCustom";
+            this.CutscenePlaySFXCustom.Size = new System.Drawing.Size(147, 17);
+            this.CutscenePlaySFXCustom.TabIndex = 87;
+            this.CutscenePlaySFXCustom.Text = "Use z64rom custom SFXs";
+            this.CutscenePlaySFXCustom.UseVisualStyleBackColor = true;
+            this.CutscenePlaySFXCustom.CheckedChanged += new System.EventHandler(this.CutscenePlaySFXCustom_CheckedChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 14);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 13);
+            this.label6.TabIndex = 85;
+            this.label6.Text = "SFX ID:";
+            // 
+            // CutscenePlaySFXValue
+            // 
+            this.CutscenePlaySFXValue.AlwaysFireValueChanged = false;
+            this.CutscenePlaySFXValue.DisplayDigits = 1;
+            this.CutscenePlaySFXValue.DoValueRollover = false;
+            this.CutscenePlaySFXValue.Hexadecimal = true;
+            this.CutscenePlaySFXValue.IncrementMouseWheel = 1;
+            this.CutscenePlaySFXValue.Location = new System.Drawing.Point(67, 12);
+            this.CutscenePlaySFXValue.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXValue.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXValue.Name = "CutscenePlaySFXValue";
+            this.CutscenePlaySFXValue.ShiftMultiplier = 1;
+            this.CutscenePlaySFXValue.Size = new System.Drawing.Size(84, 20);
+            this.CutscenePlaySFXValue.TabIndex = 86;
+            this.CutscenePlaySFXValue.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutscenePlaySFXValue.ValueChanged += new System.EventHandler(this.CutscenePlaySFXValue_ValueChanged);
+            // 
+            // SetFlag
+            // 
+            this.SetFlag.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.SetFlag.Controls.Add(this.CutsceneSetFlagEasyValue);
+            this.SetFlag.Controls.Add(this.CutsceneSetFlagDisable);
+            this.SetFlag.Controls.Add(this.label103);
+            this.SetFlag.Controls.Add(this.CutsceneSetFlagType);
+            this.SetFlag.Controls.Add(this.label104);
+            this.SetFlag.Controls.Add(this.CutsceneSetFlagValue);
+            this.SetFlag.Location = new System.Drawing.Point(4, 41);
+            this.SetFlag.Name = "SetFlag";
+            this.SetFlag.Size = new System.Drawing.Size(383, 267);
+            this.SetFlag.TabIndex = 11;
+            this.SetFlag.Text = "SetFlag";
+            // 
+            // CutsceneSetFlagEasyValue
+            // 
+            this.CutsceneSetFlagEasyValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CutsceneSetFlagEasyValue.FormattingEnabled = true;
+            this.CutsceneSetFlagEasyValue.Location = new System.Drawing.Point(81, 65);
+            this.CutsceneSetFlagEasyValue.Name = "CutsceneSetFlagEasyValue";
+            this.CutsceneSetFlagEasyValue.Size = new System.Drawing.Size(185, 21);
+            this.CutsceneSetFlagEasyValue.TabIndex = 84;
+            this.CutsceneSetFlagEasyValue.Tag = "";
+            this.CutsceneSetFlagEasyValue.SelectionChangeCommitted += new System.EventHandler(this.CutsceneSetFlagEasyValue_SelectionChangeCommitted);
+            // 
+            // CutsceneSetFlagDisable
+            // 
+            this.CutsceneSetFlagDisable.AutoSize = true;
+            this.CutsceneSetFlagDisable.Location = new System.Drawing.Point(171, 40);
+            this.CutsceneSetFlagDisable.Name = "CutsceneSetFlagDisable";
+            this.CutsceneSetFlagDisable.Size = new System.Drawing.Size(112, 17);
+            this.CutsceneSetFlagDisable.TabIndex = 83;
+            this.CutsceneSetFlagDisable.Text = "Disable / Remove";
+            this.CutsceneSetFlagDisable.UseVisualStyleBackColor = true;
+            this.CutsceneSetFlagDisable.CheckedChanged += new System.EventHandler(this.CutsceneSetFlagDisable_CheckedChanged);
+            // 
+            // label103
+            // 
+            this.label103.AutoSize = true;
+            this.label103.Location = new System.Drawing.Point(17, 15);
+            this.label103.Name = "label103";
+            this.label103.Size = new System.Drawing.Size(34, 13);
+            this.label103.TabIndex = 80;
+            this.label103.Text = "Type:";
+            // 
+            // CutsceneSetFlagType
+            // 
+            this.CutsceneSetFlagType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CutsceneSetFlagType.FormattingEnabled = true;
+            this.CutsceneSetFlagType.Location = new System.Drawing.Point(81, 12);
+            this.CutsceneSetFlagType.Name = "CutsceneSetFlagType";
+            this.CutsceneSetFlagType.Size = new System.Drawing.Size(185, 21);
+            this.CutsceneSetFlagType.TabIndex = 79;
+            this.CutsceneSetFlagType.Tag = "";
+            this.CutsceneSetFlagType.SelectionChangeCommitted += new System.EventHandler(this.CutsceneSetFlagType_SelectionChangeCommitted);
+            // 
+            // label104
+            // 
+            this.label104.AutoSize = true;
+            this.label104.Location = new System.Drawing.Point(17, 41);
+            this.label104.Name = "label104";
+            this.label104.Size = new System.Drawing.Size(61, 13);
+            this.label104.TabIndex = 77;
+            this.label104.Text = "Flag / Item:";
+            // 
+            // CutsceneSetFlagValue
+            // 
+            this.CutsceneSetFlagValue.AlwaysFireValueChanged = false;
+            this.CutsceneSetFlagValue.DisplayDigits = 1;
+            this.CutsceneSetFlagValue.DoValueRollover = false;
+            this.CutsceneSetFlagValue.Hexadecimal = true;
+            this.CutsceneSetFlagValue.IncrementMouseWheel = 1;
+            this.CutsceneSetFlagValue.Location = new System.Drawing.Point(81, 39);
+            this.CutsceneSetFlagValue.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.CutsceneSetFlagValue.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSetFlagValue.Name = "CutsceneSetFlagValue";
+            this.CutsceneSetFlagValue.ShiftMultiplier = 1;
+            this.CutsceneSetFlagValue.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneSetFlagValue.TabIndex = 78;
+            this.CutsceneSetFlagValue.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneSetFlagValue.ValueChanged += new System.EventHandler(this.CutsceneSetFlagValue_ValueChanged);
             // 
             // label51
             // 
@@ -12666,11 +12926,19 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneActorYStart)).EndInit();
             this.TriggerExit.ResumeLayout(false);
             this.TriggerExit.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEx1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTriggerExitValue)).EndInit();
             this.MotionBlur.ResumeLayout(false);
             this.MotionBlur.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneMotionBlurValue)).EndInit();
+            this.PlaySound.ResumeLayout(false);
+            this.PlaySound.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXReverb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXPitch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXVolume)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutscenePlaySFXValue)).EndInit();
+            this.SetFlag.ResumeLayout(false);
+            this.SetFlag.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetFlagValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneTableEntry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneFlag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSpawn)).EndInit();
@@ -13512,19 +13780,34 @@ namespace SharpOcarina
         private TransparentPictureBox CDILink;
         private ToolStripMenuItem postInstallOperationsz64romToolStripMenuItem;
         private TabPage TriggerExit;
-        private CheckBox checkBox1;
-        private Label label77;
-        private NumericUpDownEx numericUpDownEx2;
-        private Label label76;
-        private ComboBox comboBox3;
         private Label label75;
-        private NumericUpDownEx numericUpDownEx1;
+        private NumericUpDownEx CutsceneTriggerExitValue;
         private TabPage MotionBlur;
         private Label label78;
         private NumericUpDownEx CutsceneMotionBlurValue;
         private ToolStripMenuItem dEBUGTestToolStripMenuItem;
         private Label TitlecardTextboxLabel;
         private TextBox TitlecardTextbox;
+        private TabPage PlaySound;
+        private TabPage SetFlag;
+        private CheckBox CutsceneSetFlagDisable;
+        private Label label103;
+        private ComboBox CutsceneSetFlagType;
+        private Label label104;
+        private NumericUpDownEx CutsceneSetFlagValue;
+        private ComboBox CutsceneSetFlagEasyValue;
+        private Label label144;
+        private NumericUpDownEx CutscenePlaySFXReverb;
+        private Label label77;
+        private NumericUpDownEx CutscenePlaySFXPitch;
+        private Label label76;
+        private NumericUpDownEx CutscenePlaySFXVolume;
+        private CheckBox CutscenePlaySFXCustom;
+        private Label label6;
+        private NumericUpDownEx CutscenePlaySFXValue;
+        private TextBox CutscenePlaySFXListFilter;
+        private Label label145;
+        private ListBox CutscenePlaySFXList;
     }
     }
 

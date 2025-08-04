@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt16" ValueType="System.String">
+
+<FlagType Key="00">Switch Flag</FlagType>
+<FlagType Key="01">Collectible Flag</FlagType>
+<FlagType Key="02">Chest Flag</FlagType>
+<FlagType Key="03">Global Flag</FlagType>
+<FlagType Key="04">Item Get Flag</FlagType>
+<FlagType Key="05">Event Flag</FlagType>
+<FlagType Key="06" Xml="ItemList/Item">Obtain/Remove Item</FlagType>
+<FlagType Key="07" Xml="ItemList/QuestItem">Obtain/Remove Quest Item</FlagType>
+<FlagType Key="08" Decimal="1">Give/Subtract Rupees</FlagType>
+
+</Table>

@@ -49,6 +49,7 @@
             this.CustomFileName = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Hooks = new System.Windows.Forms.TabPage();
+            this.ViewFileButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.Extra = new System.Windows.Forms.TabPage();
             this.VanillaActorListFilter = new System.Windows.Forms.TextBox();
@@ -63,7 +64,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.ViewFileButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HookGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -248,6 +248,16 @@
             this.Hooks.Text = "Hooks";
             this.Hooks.UseVisualStyleBackColor = true;
             // 
+            // ViewFileButton
+            // 
+            this.ViewFileButton.Location = new System.Drawing.Point(211, 64);
+            this.ViewFileButton.Name = "ViewFileButton";
+            this.ViewFileButton.Size = new System.Drawing.Size(83, 23);
+            this.ViewFileButton.TabIndex = 21;
+            this.ViewFileButton.Text = "View File";
+            this.ViewFileButton.UseVisualStyleBackColor = true;
+            this.ViewFileButton.Click += new System.EventHandler(this.ViewFileButton_Click);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(607, 467);
@@ -400,16 +410,6 @@
             this.label2.Text = "Function/Structure Name:";
             this.label2.Visible = false;
             // 
-            // ViewFileButton
-            // 
-            this.ViewFileButton.Location = new System.Drawing.Point(211, 64);
-            this.ViewFileButton.Name = "ViewFileButton";
-            this.ViewFileButton.Size = new System.Drawing.Size(83, 23);
-            this.ViewFileButton.TabIndex = 21;
-            this.ViewFileButton.Text = "View File";
-            this.ViewFileButton.UseVisualStyleBackColor = true;
-            this.ViewFileButton.Click += new System.EventHandler(this.ViewFileButton_Click);
-            // 
             // AutoHookerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -418,7 +418,7 @@
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AutoHookerForm";
-            this.Text = "Auto-Hooker&Actors";
+            this.Text = "Auto-Hook&Actors";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AutoHookerForm_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
