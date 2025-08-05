@@ -4074,7 +4074,8 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, cutscene.Data[0]); //SFX id
                     Helpers.Append16(ref data, cutscene.StartFrame);
                     Helpers.Append16(ref data, cutscene.EndFrame);
-                    data.Add((byte)cutscene.Data[1]); //type
+                    byte type = (byte)(cutscene.Data[1] | (cutscene.Data[5] << 7));
+                    data.Add(type);
                     data.Add((byte)cutscene.Data[2]); //reverb
                     uint vol = Helpers.FloatToHex((cutscene.Data[3] / 100.0f));
                     uint freq = Helpers.FloatToHex((cutscene.Data[4] / 100.0f));

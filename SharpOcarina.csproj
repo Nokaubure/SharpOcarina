@@ -1786,7 +1786,6 @@
     </Content>
     <None Include="Resources\databaseicon.png" />
     <None Include="Resources\MM.ico" />
-    <Content Include="ReadMe - copia.txt" />
     <Content Include="Resources\Bombiwa.ico" />
     <None Include="Resources\wat.png" />
     <None Include="Resources\UIitems.png" />
@@ -1870,6 +1869,7 @@
     </Content>
     <Content Include="XML\OOT\ItemList.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="XML\OOT\Miscelaneous.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

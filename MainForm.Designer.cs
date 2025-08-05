@@ -848,6 +848,7 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.CutscenePlaySFXStopCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -10819,6 +10820,7 @@ namespace SharpOcarina
             // PlaySound
             // 
             this.PlaySound.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXStopCheckBox);
             this.PlaySound.Controls.Add(this.CutscenePlaySFXListFilter);
             this.PlaySound.Controls.Add(this.label145);
             this.PlaySound.Controls.Add(this.CutscenePlaySFXList);
@@ -12667,6 +12669,17 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // CutscenePlaySFXStopCheckBox
+            // 
+            this.CutscenePlaySFXStopCheckBox.AutoSize = true;
+            this.CutscenePlaySFXStopCheckBox.Location = new System.Drawing.Point(208, 68);
+            this.CutscenePlaySFXStopCheckBox.Name = "CutscenePlaySFXStopCheckBox";
+            this.CutscenePlaySFXStopCheckBox.Size = new System.Drawing.Size(146, 17);
+            this.CutscenePlaySFXStopCheckBox.TabIndex = 98;
+            this.CutscenePlaySFXStopCheckBox.Text = "Stop sound at End Frame";
+            this.CutscenePlaySFXStopCheckBox.UseVisualStyleBackColor = true;
+            this.CutscenePlaySFXStopCheckBox.CheckedChanged += new System.EventHandler(this.CutscenePlaySFXStopCheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13808,6 +13821,7 @@ namespace SharpOcarina
         private TextBox CutscenePlaySFXListFilter;
         private Label label145;
         private ListBox CutscenePlaySFXList;
+        private CheckBox CutscenePlaySFXStopCheckBox;
     }
     }
 

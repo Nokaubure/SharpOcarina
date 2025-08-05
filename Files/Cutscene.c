@@ -1,4 +1,3 @@
-
 #include <uLib.h>
 #include <code/z_demo.h>
 //Version: 1.1
@@ -9,29 +8,53 @@ to use newly added features. Put a high value like 99 to stop SharpOcarina from 
 
 
 typedef enum {
+    TYPE_SWITCH_FLAG,
+    TYPE_COLLECTIBLE_FLAG,
+    TYPE_CHEST_FLAG,
     TYPE_EVENT_CHK_INF,
     TYPE_ITEM_GET_INF,
     TYPE_EVENT_INF,
     TYPE_ITEM,
     TYPE_QUEST_ITEM,
-    TYPE_SWITCH_FLAG,
+    TYPE_RUPEES,
 } CmdType;
 
 typedef struct {
     struct {
-        u8 lastCmd : 1; // O***-****
-        u8 set     : 1; // *O**-****
-        u8 type    : 6; // **OO-OOOO
+        u8 set     : 1; // 0***-****
+        u8 type    : 7; // *0OO-OOOO
     };
     u8 flag;
 } CmdFlag;
 
 typedef struct {
-    /* 0x00 */ u16     cmdId;
-    /* 0x02 */ u16     __padding;
-    /* 0x04 */ NewExit exitParam;
-    /* 0x08 */ CmdFlag list[];
-} CmdHeader;
+    /* 0x00 */ CmdFlag flag;
+    /* 0x02 */ u16 startFrame;
+    /* 0x04 */ u16 endFrame;
+} CsCmdFlag;
+
+typedef struct {
+    /* 0x00 */ u16 base;
+    /* 0x02 */ u16 startFrame;
+    /* 0x04 */ u16 endFrame;
+    /* 0x06 */ u16 pad;
+    /* 0x08 */ NewExit exitParam;
+} CsCmdExit; 
+
+typedef struct {
+    /* 0x00 */ u16 sfxID;
+    /* 0x02 */ u16 startFrame;
+    /* 0x04 */ u16 endFrame;
+    /* 0x06 */ struct {
+        u8 stop     : 1;
+        u8 type     : 7;
+    };
+    /* 0x07 */ s8 reverb;
+    /* 0x08 */ f32 vol;
+    /* 0x0C */ f32 freq;
+    /* 0x10 */ u16 range; //unused
+    /* 0x12 */ Vec3s pos; //unused
+} CsCmdSound;
 
 #define CLEAR_ITEMGETINF(flag) (gSaveContext.itemGetInf[(flag) >> 4] &= ~(1 << ((flag) & 0xF)))
 
@@ -63,67 +86,138 @@ static void CutsceneCmd_MotionBlur(PlayState* play, CutsceneContext* csCtx, CsCm
 
 #endif
 
-static void* CutsceneCmd_ExitParam(PlayState* play, void* ptr) {
-    CmdHeader* cmd = ptr;
-    
-    play->transitionTrigger = TRANS_TRIGGER_START;
-    gExitParam.nextEntranceIndex = cmd->exitParam.upper;
-    gExitParam.exit = cmd->exitParam;
-    
-    for (s32 i = 0;; i++) {
-        CmdType type = cmd->list[i].type;
-        u16 flag = cmd->list[i].flag;
-        s8 set = cmd->list[i].set;
+static void CutsceneCmd_ExitParam(PlayState* play, CutsceneContext* csCtx, CsCmdBase* cmd) {
+
+    if (csCtx->frames == cmd->startFrame)
+    {
+                u16* setupList = (u16*)play->setupExitList;
+
+                for (s32 i = 0; i < cmd->base; i++) {
+                    if ((*setupList & 0x8000) == 0x8000)
+                        setupList += 2;
+                    
+                    else
+                        setupList++;
+                }
+
+                gExitParam.nextEntranceIndex = setupList[0];
+
+                if ((*setupList & 0x8000) == 0x8000) {
+                    gExitParam.exit.upper = setupList[0];
+                    gExitParam.exit.lower = setupList[1];
+                    play->transitionType = gExitParam.exit.fadeOut;
+                }
+                else
+                    play->transitionType = gEntranceTable[setupList[0]].field & 0x7F;
+
+                play->transitionTrigger = TRANS_TRIGGER_START;
+
+                        
+
+    }
         
-        switch (type) {
-            case TYPE_EVENT_CHK_INF:
-                if (set)
-                    SET_EVENTCHKINF(flag);
-                else
-                    CLEAR_EVENTCHKINF(flag);
-                break;
-                
-            case TYPE_ITEM_GET_INF:
-                if (set)
-                    SET_ITEMGETINF(flag);
-                else
-                    CLEAR_ITEMGETINF(flag);
-                break;
-                
-            case TYPE_EVENT_INF:
-                if (set)
-                    SET_EVENTINF(flag);
-                else
-                    CLEAR_EVENTINF(flag);
-                break;
-                
-            case TYPE_ITEM:
-                if (set)
-                    Item_Give(play, flag);
-                else
-                    Inventory_DeleteItem(flag, gItemSlots[flag]);
-                break;
-                
-            case TYPE_QUEST_ITEM:
-                if (set)
-                    gSaveContext.inventory.questItems |= (1 << flag);
-                else
-                    gSaveContext.inventory.questItems &= ~(1 << flag);
-                break;
-                
-            case TYPE_SWITCH_FLAG:
-                if (set)
-                    Flags_SetSwitch(play, flag);
-                else
-                    Flags_UnsetSwitch(play, flag);
-                break;
+    
+}
+
+static void CutsceneCmd_PlaySound(PlayState* play, CutsceneContext* csCtx, CsCmdSound* cmd)
+{
+    u8 frames = cmd->endFrame-cmd->startFrame;
+    if (csCtx->frames >= cmd->startFrame && csCtx->frames <= cmd->endFrame)
+    {
+        if (cmd->type == 0)
+        {
+            if (!cmd->stop || (cmd->stop && csCtx->frames < cmd->endFrame))
+            {
+                if (csCtx->frames == cmd->startFrame) Audio_PlaySfxGeneral(cmd->sfxID, &gSfxDefaultPos, 4, &cmd->freq, &cmd->vol,&cmd->reverb);
+            }
+            else
+            {
+                Audio_StopSfxById(cmd->sfxID);
+            }
+            
         }
-        
-        if (cmd->list[i].lastCmd == false)
+        else
+        {
+
+            if (frames <= 1)
+                SoundEffect_PlayOneshot(cmd->sfxID, cmd->vol, cmd->freq, &gSfxDefaultPos, cmd->reverb, 30000, NULL);
+            else
+                SoundEffect_PlayHeld(cmd->sfxID, cmd->vol, cmd->freq, 1.0f, &gSfxDefaultPos, cmd->reverb, 30000, NULL);
+
+        }
+    }
+}
+
+static void CutsceneCmd_SetFlag(PlayState* play, CutsceneContext* csCtx, CsCmdFlag* cmd)
+{
+
+    if (csCtx->frames == cmd->startFrame)
+    {
+    switch (cmd->flag.type) {
+
+        case TYPE_SWITCH_FLAG:
+            if (cmd->flag.set)
+                Flags_SetSwitch(play, cmd->flag.flag);
+            else
+                Flags_UnsetSwitch(play, cmd->flag.flag);
+            break;
+
+        case TYPE_COLLECTIBLE_FLAG:
+            if (cmd->flag.set)
+                Flags_SetCollectible(play, cmd->flag.flag);
+            else
+                play->actorCtx.flags.collect  &= ~(1 << cmd->flag.flag);
+            break;
+        case TYPE_CHEST_FLAG:
+            if (cmd->flag.set)
+                Flags_SetTreasure(play, cmd->flag.flag);
+            else
+                play->actorCtx.flags.chest  &= ~(1 << cmd->flag.flag);
+            break;
+        case TYPE_EVENT_CHK_INF:
+            if (cmd->flag.set)
+                SET_EVENTCHKINF(cmd->flag.flag);
+            else
+                CLEAR_EVENTCHKINF(cmd->flag.flag);
+            break;
+            
+        case TYPE_ITEM_GET_INF:
+            if (cmd->flag.set)
+                SET_ITEMGETINF(cmd->flag.flag);
+            else
+                CLEAR_ITEMGETINF(cmd->flag.flag);
+            break;
+            
+        case TYPE_EVENT_INF:
+            if (cmd->flag.set)
+                SET_EVENTINF(cmd->flag.flag);
+            else
+                CLEAR_EVENTINF(cmd->flag.flag);
+            break;
+            
+        case TYPE_ITEM:
+            if (cmd->flag.set)
+                Item_Give(play, cmd->flag.flag);
+            else
+                Inventory_DeleteItem(cmd->flag.flag, gItemSlots[cmd->flag.flag]);
+            break;
+            
+        case TYPE_QUEST_ITEM:
+            if (cmd->flag.set)
+                gSaveContext.inventory.questItems |= (1 << cmd->flag.flag);
+            else
+                gSaveContext.inventory.questItems &= ~(1 << cmd->flag.flag);
+            break;
+
+        case TYPE_RUPEES:
+            if (cmd->flag.set)
+                Rupees_ChangeBy(cmd->flag.flag);
+            else
+                Rupees_ChangeBy(-cmd->flag.flag);
             break;
     }
+    }
     
-    return cmd + 1;
 }
 
 Asm_VanillaHook(Cutscene_ProcessCommands);
@@ -474,19 +568,35 @@ void Cutscene_ProcessCommands(PlayState* play, CutsceneContext* csCtx, u8* cutsc
                 break;
                 
             // z64rom trigger exit
-            case CS_CMD_EXITPARAM:
-                cutscenePtr = CutsceneCmd_ExitParam(play, cutscenePtr);
+            case 0xC000:
+                cutscenePtr += 4;
+                CutsceneCmd_ExitParam(play, csCtx, (void*)cutscenePtr);
+                cutscenePtr += 8;
                 break;
 
             #if MOTION_BLUR
             // z64rom motion blur
-            case 0xDE01:
+            case 0xC001:
                 cutscenePtr += 4;
                 CutsceneCmd_MotionBlur(play, csCtx, (void*)cutscenePtr);
                 cutscenePtr += 8;
                 break;
             #endif
-                
+
+            // z64rom play sound
+            case 0xC002:
+                cutscenePtr += 4;
+                CutsceneCmd_PlaySound(play, csCtx, (void*)cutscenePtr);
+                cutscenePtr += 0x18;
+                break;
+            
+            // z64rom set flag
+            case 0xC003:
+                cutscenePtr += 4;
+                CutsceneCmd_SetFlag(play, csCtx, (void*)cutscenePtr);
+                cutscenePtr += 8;
+                break;
+
             default:
                 MemCpy(&cmdEntries, cutscenePtr, 4);
                 cutscenePtr += 4;
@@ -507,6 +617,8 @@ void Cutscene_PlaySegment(PlayState* play, void* segment) {
 
 Asm_VanillaHook(Cutscene_HandleEntranceTriggers);
 void Cutscene_HandleEntranceTriggers(PlayState* play) {
+    if(gSaveContext.cutsceneIndex >= 0xFFF0) return; 
+    
     u8 spawnID;
     u8 sceneID;
     s32 playSegment = false;

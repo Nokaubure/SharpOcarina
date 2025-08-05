@@ -5,7 +5,11 @@
 ---1.61
 --------------
 
-- New cutscene command: Motion blur, requires z64rom, on older installations SO will provide the needed updates
+- New cutscene commands (all require z64rom, on older installations SO will provide the needed updates to use them):
+	- Motion Blur: Camera effect imported from MM, credits to Thar0
+	- Trigger Exit: Triggers an exit, supports both vanilla and z64rom exits
+	- Play Sound: Plays a sound, supports both vanilla and z64rom custom ones
+	- Set Flag: Sets/Disables a flag, or also Adds/Removes an item or rupees
 
 - Object space/size is now displayed in Kilobytes
 

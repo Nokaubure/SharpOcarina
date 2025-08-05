@@ -29,6 +29,10 @@ namespace SharpOcarina
             RemoveLogoCheckBox.Checked = defaults;
             ClearCutsceneTableCheckBox.Checked = defaults;
             RemovePrerenderedsCheckBox.Checked = defaults;
+            removeallscenes = defaults;
+            removen64logo = defaults;
+            clearcutscenetable = defaults;
+            removeprerendereds = defaults;
             WarningLabel.Visible = !defaults;
             ABButtonColorsDropdown.SelectedIndex = 0;
 

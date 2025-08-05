@@ -542,7 +542,7 @@ namespace SharpOcarina
 
             Camera.Initialize();
 
-            datatemplate = new ushort[5];
+            datatemplate = new ushort[6];
             Array.Clear(datatemplate, 0, datatemplate.Length);
 
             SongItem[] objs = new[]
@@ -5228,6 +5228,7 @@ namespace SharpOcarina
                 {
                     CutscenePlaySFXValue.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0];
                     CutscenePlaySFXCustom.Checked = (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[1] == 1);
+                    CutscenePlaySFXStopCheckBox.Checked = (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[5] == 1);
                     CutscenePlaySFXVolume.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[3];
                     CutscenePlaySFXPitch.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[4];
                     CutscenePlaySFXReverb.Value = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[2];
@@ -5282,6 +5283,7 @@ namespace SharpOcarina
                 {
                     MarkerEndFrame.Enabled = false;
                     CurrentScene.Cutscene[MarkerSelect.SelectedIndex].EndFrame = (ushort)(CurrentScene.Cutscene[MarkerSelect.SelectedIndex].StartFrame + CurrentScene.Cutscene[MarkerSelect.SelectedIndex].GetTotalFrames());
+                    if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].EndFrame < CurrentScene.Cutscene[MarkerSelect.SelectedIndex].StartFrame) CurrentScene.Cutscene[MarkerSelect.SelectedIndex].EndFrame = CurrentScene.Cutscene[MarkerSelect.SelectedIndex].StartFrame;
                 }
                 else
                 {
@@ -10947,6 +10949,11 @@ namespace SharpOcarina
             if (CurrentScene != null && CurrentScene.Cutscene.Count > 0)
             {
                 CurrentScene.Cutscene[MarkerSelect.SelectedIndex] = new ZCutscene(markerID, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
+                if (markerID == 0xC002)
+                {
+                    if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[3] == 0) CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[3] = 100;
+                    if (CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[4] == 0) CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[4] = 100;
+                }
                 UpdateCutsceneEdit();
 
                 if ((markerID >= 0xC000 && markerID <= 0xC003) && rom64.isSet())
@@ -10965,6 +10972,7 @@ namespace SharpOcarina
                         Helpers.GetDefineBoolAddIfNotExists("MOTION_BLUR", rom64.getPath() + @"\src\lib_user\uLib.h", "#define motionBlurAlpha unk_12428[0]");
                         rom64.PlayVersion = PlayVersion;
                     }
+
                     
                 }
             }
@@ -19775,11 +19783,7 @@ namespace SharpOcarina
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0] = (ushort)CutscenePlaySFXValue.Value;
             UpdateCutsceneEdit();
         }
-
-        private void CutscenePlaySFXEasyValue_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void CutscenePlaySFXCustom_CheckedChanged(object sender, EventArgs e)
         {
@@ -19830,8 +19834,9 @@ namespace SharpOcarina
         {
             if (CutscenePlaySFXList.SelectedItem != null)
             {
-                CutscenePlaySFXValue.Value = (CutscenePlaySFXList.SelectedItem as SFX).ID;
-                CutscenePlaySFXCustom.Checked = (CutscenePlaySFXList.SelectedItem as SFX).custom;
+
+                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[0] = (CutscenePlaySFXList.SelectedItem as SFX).ID;
+                CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[1] = (ushort) ((CutscenePlaySFXList.SelectedItem as SFX).custom ? 1 : 0);
                 UpdateCutsceneEdit();
             }
                 
@@ -19891,6 +19896,11 @@ namespace SharpOcarina
             }
            
 
+        }
+
+        private void CutscenePlaySFXStopCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Data[5] = (ushort)(CutscenePlaySFXStopCheckBox.Checked ? 1 : 0);
         }
 
         public void EasterEggPhaseOne()

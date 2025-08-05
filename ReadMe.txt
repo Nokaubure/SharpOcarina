@@ -1,6 +1,6 @@
 ﻿------------------------------------------------------
-SharpOcarina v1.51 - Zelda OoT Scene Development System
-             Revived in 2017-2024 by Nokaubure, started in 2011/2012 by xdaniel
+SharpOcarina v1.61 - Zelda OoT Scene Development System
+             Revived in 2017-2025 by Nokaubure, started in 2011/2012 by xdaniel
 Find me on: https://discord.gg/74pHDEU
 ------------------------------------------------------
 
@@ -44,6 +44,8 @@ Credits & Thanks
  Thanks to Dragorn421 for the updated io_import script
 
  Thanks to Rankaisija and Skawo for making update 1.40+ possible
+
+ Thanks to Thar0 for the Motion Blur implementation
 
  Also thanks to everyone who reported bugs, asked questions and provided ideas during the program's
  development.
