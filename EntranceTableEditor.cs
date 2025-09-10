@@ -28,7 +28,7 @@ namespace SharpOcarina
 
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
-            XmlNodeList nodes = XMLreader.getXMLNodes(gameprefix + "SceneNames", "Scene");
+            XmlNodeList nodes = XMLreader.getXMLNodes("SceneNames", "Scene");
             SceneNames = new Dictionary<byte, string>();
             if (!rom64.isSet())
             {

@@ -329,7 +329,7 @@
   <Actor Key="017D" Var="...." Scale="0.2" Offset="00004CD0" TextureOffsets="00003350">gameplay_dangeon_keep</Actor> <!-- Push Block (Has Savepoint) -->
   <Actor Key="006C" Var="...." Scale="0.01" Offset="00001BD0">object_toki_objects</Actor> <!-- Mastersword -->
 	<!-- Actor Key="005D" Var="...." Scale="0.01" Offset="000001A0" Colors="0,125,255,255,125,255,255,125">object_warp1</--> <!-- Blue warp -->
-  <Actor Key="0068" Var="...." Offset="00001980" Scale="0.1">object_mori_hineri1a</Actor> <!--Twisted room-->
+  <Actor Key="0068" Var="...." Offset="00001980" Scale="1.0">object_mori_hineri1a</Actor> <!--Twisted room-->
   <Actor Key="0008" Var="83F0" Offset="00000440" Scale="0.0075" Colors="255,0,0,125,255,200,0,125">gameplay_dangeon_keep</Actor> <!--candle flame -->
   <Actor Key="0008" Var="...0" Offset="0004D4E0" Scale="0.0075" Colors="255,0,0,125,255,200,0,125">gameplay_keep</Actor> <!--flame -->
   <Actor Key="0008" Var="...1" Offset="0004D4E0" Scale="0.0075" Colors="255,200,0,125,255,0,0,125">gameplay_keep</Actor> <!--flame -->

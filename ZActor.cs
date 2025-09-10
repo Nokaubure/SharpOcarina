@@ -190,5 +190,26 @@ namespace SharpOcarina
         {
             return (ZActor)this.MemberwiseClone();
         }
+
+        public int GetPropertyValue(ActorProperty property)
+        {
+            if (property.Target == "Var")
+            {
+                return ((Variable & property.Mask) >> property.Position);
+            }
+            else if (property.Target == "XRot")
+            {
+                return (((ushort)XRot & property.Mask) >> property.Position);
+            }
+            else if (property.Target == "YRot")
+            {
+                return (((ushort)YRot & property.Mask) >> property.Position);
+            }
+            else if (property.Target == "ZRot")
+            {
+                return (((ushort)ZRot & property.Mask) >> property.Position);
+            }
+            return 0;
+        }
     }
 }

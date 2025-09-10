@@ -1,5 +1,55 @@
 ﻿///CHANGELOG///
 
+--------------
+---1.62
+--------------
+
+- Added snap features when moving actors
+	- Hold C to snap to nearest vertex
+	- Hold V to snap to the center of the nearest edge
+	- Hold B to snap alongside the nearest edge
+
+- The rom will no longer be played in the emulator if the project has build errors
+
+- Added feature to move all cutscene commands from an specified start frame by X frames in Extra tab
+
+- Added feature to move all cutscene points / textboxes of the selected command from an specified start frame by X frames in Extra tab
+
+- Added feature to move selected actor to another room in Extra tab
+
+- Added feature in auto-hook to create empty actors, finds empty ID's automatically
+
+- Added 2 advanced build options in File tab for z64rom:
+	- Rebuild all files to fix a broken project (--force)
+	- Public release, turns all debug features off (--release) (it also takes care of the --release bug that plagues z64rom with a temporal fix)
+
+- [TODO] Clean up import from scene, allow xml's too
+
+- [TODO] Auto-update feature rewriten to fetch updates from a github server, improving speed and showing a download bar
+
+- Added setting to be able to fully spin the camera and have it upside down. When the camera is upside down, camera and actor movement is also adjusted to take care of the inverted view.
+
+- Added copy&paste buttons on actors and pathway points, this copies their data in the clipboard meaning it works between SO windows. Pathway points can read the position data of actors and viceversa.
+
+- Added view button in pathway tab, which renders the actors that use this pathway in the selected point (needs global ROM/z64rom mode)
+
+- XMLs can now be loaded from an XML folder inside a z64rom installation, for example <z64rom_path>/XML/ModelFlags.xml
+
+- Cutscene window now displays the start frame of selected camera position / text box / actor position
+
+- Fixed an issue where instances would be dragged 2x faster than intended when holding Z or X (stick to ground/ceiling)
+
+- Removed the redundant option "Add object to all rooms" since Scene Objects tab does the same thing
+
+- Fixed an issue where working directory pointed to system32 when opening the application via task bar
+
+- [Test] Fixed an issue where the droptable link in the droptable editor was broken
+
+- [Test] Fixed an issue where Motion blur would not be set to true when using the cutscene command in new projects
+
+- Fixed an issue where doing undo (ctrl+Z) after an actor change on a different room would remove all actors from current room
+
+- Cutscene entrance parameters are now invisible in z64rom mode since they're not needed
 
 --------------
 ---1.61

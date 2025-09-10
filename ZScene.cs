@@ -1042,7 +1042,7 @@ namespace SharpOcarina
 
                     int slot = -1;
 
-                    XmlNodeList animnodes = XMLreader.getXMLNodes("OOT/" + "SceneAnimations", "Function");
+                    XmlNodeList animnodes = XMLreader.getXMLNodes("SceneAnimations", "Function");
                     AnimationItem AnimNode = new AnimationItem();
                     if (animnodes != null)
                         foreach (XmlNode node in animnodes)
@@ -1916,7 +1916,7 @@ namespace SharpOcarina
                 if (MainForm.skyboxdlists[i].Count == 0)
                 {
 
-                    List<byte> skybox = new List<byte>(File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"F3DEX2\" + skyboxfiles[i])));
+                    List<byte> skybox = new List<byte>(File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"F3DEX2\" + skyboxfiles[i])));
 
                     UcodeSimulator.currentfilename = skyboxfiles[i];
 
@@ -1945,7 +1945,7 @@ namespace SharpOcarina
             {
                 string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
-                XmlNodeList nodes = XMLreader.getXMLNodes(gameprefix + "ActorRendering", "Actor");
+                XmlNodeList nodes = XMLreader.getXMLNodes("ActorRendering", "Actor");
                 List<uint> z64romActors = new List<uint>();
 
                 if (rom64.isSet())
@@ -4494,6 +4494,7 @@ namespace SharpOcarina
                 Helpers.Append16(ref Data, (ushort)Convert.ToInt16(WBox.ZSize));
                 Helpers.Append16(ref Data, 0x0000);
                 Helpers.Append32(ref Data, (uint)(WBox.Camera | (WBox.Env << 8) | (WBox.Room << 13)));
+
             }
             Helpers.Overwrite32(ref Data, CmdWaterBoxes, (uint)(Waterboxes.Count << 16));
             Helpers.Overwrite32(ref Data, CmdWaterBoxes + 4, (uint)(0x00000000 | bank << 24 | WaterBoxesOffset));

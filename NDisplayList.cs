@@ -759,7 +759,7 @@ namespace SharpOcarina
 
                     if(!MainForm.settings.MajorasMask && !MainForm.settings.command1AOoT)
                     { 
-                    XmlNodeList animnodes = XMLreader.getXMLNodes(gameprefix + "SceneAnimations", "Function");
+                    XmlNodeList animnodes = XMLreader.getXMLNodes("SceneAnimations", "Function");
                     AnimationItem AnimNode = new AnimationItem();
                         if (animnodes != null)
                             foreach (XmlNode node in animnodes)

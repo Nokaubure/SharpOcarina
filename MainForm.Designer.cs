@@ -48,6 +48,9 @@ namespace SharpOcarina
             this.LaunchRomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildAndLaunchZ64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedBuildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rebuildAllFilesforceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.NewZ64romProject = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -131,6 +134,7 @@ namespace SharpOcarina
             this.importPathwaysFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importActorCutscenesFromzsceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEmptySpaceInSceneHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importDataFromROMzscenezroomxmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddObjectToAllRoomsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadXMLMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,6 +144,9 @@ namespace SharpOcarina
             this.setRoomsToUseEnvironment1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoplaceDoorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllGroupSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveSelectedActorToRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveAllItemsOfSelectedCutsceneToolStripMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -579,6 +586,9 @@ namespace SharpOcarina
             this.label139 = new System.Windows.Forms.Label();
             this.ActorCutsceneLength = new SharpOcarina.NumericUpDownEx();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.PathwayViewButton = new System.Windows.Forms.Button();
+            this.PathwayCopyButton = new System.Windows.Forms.Button();
+            this.PathwayPasteButton = new System.Windows.Forms.Button();
             this.PathwayDown = new System.Windows.Forms.Button();
             this.PathwayUp = new System.Windows.Forms.Button();
             this.PathwayZPosStrip = new System.Windows.Forms.ToolStrip();
@@ -621,12 +631,12 @@ namespace SharpOcarina
             this.RoomObjectSpace = new System.Windows.Forms.Label();
             this.actorEditControl1 = new SharpOcarina.ActorEditControl();
             this.tabCutscene = new System.Windows.Forms.TabPage();
-            this.DebugTextBox = new System.Windows.Forms.RichTextBox();
             this.CutsceneTableEntryLabel = new System.Windows.Forms.Label();
             this.CutsceneFlagLabel = new System.Windows.Forms.Label();
             this.CutsceneSpawnLabel = new System.Windows.Forms.Label();
             this.CutsceneEntranceLabel = new System.Windows.Forms.Label();
             this.CutsceneGroupBox = new System.Windows.Forms.GroupBox();
+            this.CutsceneStartFrameOfSelectedLabel = new System.Windows.Forms.Label();
             this.MarkerEndFrame = new SharpOcarina.NumericTextBox();
             this.CutsceneTabs = new System.Windows.Forms.TabControl();
             this.CameraPositions = new System.Windows.Forms.TabPage();
@@ -718,17 +728,18 @@ namespace SharpOcarina
             this.label78 = new System.Windows.Forms.Label();
             this.CutsceneMotionBlurValue = new SharpOcarina.NumericUpDownEx();
             this.PlaySound = new System.Windows.Forms.TabPage();
+            this.CutscenePlaySFXStopCheckBox = new System.Windows.Forms.CheckBox();
             this.CutscenePlaySFXListFilter = new System.Windows.Forms.TextBox();
             this.label145 = new System.Windows.Forms.Label();
             this.CutscenePlaySFXList = new System.Windows.Forms.ListBox();
             this.label144 = new System.Windows.Forms.Label();
-            this.CutscenePlaySFXReverb = new SharpOcarina.NumericUpDownEx();
             this.label77 = new System.Windows.Forms.Label();
-            this.CutscenePlaySFXPitch = new SharpOcarina.NumericUpDownEx();
             this.label76 = new System.Windows.Forms.Label();
-            this.CutscenePlaySFXVolume = new SharpOcarina.NumericUpDownEx();
             this.CutscenePlaySFXCustom = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.CutscenePlaySFXReverb = new SharpOcarina.NumericUpDownEx();
+            this.CutscenePlaySFXPitch = new SharpOcarina.NumericUpDownEx();
+            this.CutscenePlaySFXVolume = new SharpOcarina.NumericUpDownEx();
             this.CutscenePlaySFXValue = new SharpOcarina.NumericUpDownEx();
             this.SetFlag = new System.Windows.Forms.TabPage();
             this.CutsceneSetFlagEasyValue = new System.Windows.Forms.ComboBox();
@@ -848,7 +859,6 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.CutscenePlaySFXStopCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1136,6 +1146,7 @@ namespace SharpOcarina
             this.LaunchRomToolStripMenuItem,
             this.buildAndLaunchZ64romToolStripMenuItem,
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem,
+            this.advancedBuildToolStripMenuItem,
             this.toolStripSeparator8,
             this.NewZ64romProject,
             this.toolStripSeparator6,
@@ -1246,6 +1257,31 @@ namespace SharpOcarina
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.ToolTipText = "Permanently skips titlescreen until the user clicks \"Send to z64rom\"";
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Visible = false;
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem.Click += new System.EventHandler(this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem_Click);
+            // 
+            // advancedBuildToolStripMenuItem
+            // 
+            this.advancedBuildToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rebuildAllFilesforceToolStripMenuItem,
+            this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem});
+            this.advancedBuildToolStripMenuItem.Enabled = false;
+            this.advancedBuildToolStripMenuItem.Name = "advancedBuildToolStripMenuItem";
+            this.advancedBuildToolStripMenuItem.Size = new System.Drawing.Size(324, 22);
+            this.advancedBuildToolStripMenuItem.Text = "Advanced z64rom build...";
+            this.advancedBuildToolStripMenuItem.Visible = false;
+            // 
+            // rebuildAllFilesforceToolStripMenuItem
+            // 
+            this.rebuildAllFilesforceToolStripMenuItem.Name = "rebuildAllFilesforceToolStripMenuItem";
+            this.rebuildAllFilesforceToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.rebuildAllFilesforceToolStripMenuItem.Text = "Rebuild all files to fix a broken project (--force)";
+            this.rebuildAllFilesforceToolStripMenuItem.Click += new System.EventHandler(this.rebuildAllFilesforceToolStripMenuItem_Click);
+            // 
+            // publicReleaseDebugFeaturesOffreleaseToolStripMenuItem
+            // 
+            this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem.Name = "publicReleaseDebugFeaturesOffreleaseToolStripMenuItem";
+            this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem.Text = "Public release, turns all debug features off (--release)";
+            this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem.Click += new System.EventHandler(this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
@@ -1771,6 +1807,7 @@ namespace SharpOcarina
             // 
             this.extraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.debugToolStripMenuItem,
+            this.importDataFromROMzscenezroomxmlToolStripMenuItem,
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem,
             this.AddObjectToAllRoomsMenuItem,
             this.ReloadXMLMenuItem,
@@ -1780,6 +1817,9 @@ namespace SharpOcarina
             this.setRoomsToUseEnvironment1ToolStripMenuItem,
             this.autoplaceDoorsToolStripMenuItem,
             this.clearAllGroupSettingsToolStripMenuItem,
+            this.moveSelectedActorToRoomToolStripMenuItem,
+            this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem,
+            this.moveAllItemsOfSelectedCutsceneToolStripMenu,
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem,
@@ -1807,7 +1847,7 @@ namespace SharpOcarina
             this.addEmptySpaceInSceneHeaderToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
-            this.debugToolStripMenuItem.Text = "Related to external files / zobj exporting";
+            this.debugToolStripMenuItem.Text = "Deprecated stuff";
             // 
             // quickTestToolStripMenuItem
             // 
@@ -1874,6 +1914,7 @@ namespace SharpOcarina
             this.exportAszobjToolStripMenuItem.Name = "exportAszobjToolStripMenuItem";
             this.exportAszobjToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.exportAszobjToolStripMenuItem.Text = "Export current room as .zobj";
+            this.exportAszobjToolStripMenuItem.ToolTipText = "Obsolete";
             // 
             // bank0x06ToolStripMenuItem
             // 
@@ -1963,6 +2004,13 @@ namespace SharpOcarina
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Text = "Add empty space in scene header / zobj";
             this.addEmptySpaceInSceneHeaderToolStripMenuItem.Click += new System.EventHandler(this.addEmptySpaceInSceneHeaderToolStripMenuItem_Click);
             // 
+            // importDataFromROMzscenezroomxmlToolStripMenuItem
+            // 
+            this.importDataFromROMzscenezroomxmlToolStripMenuItem.Name = "importDataFromROMzscenezroomxmlToolStripMenuItem";
+            this.importDataFromROMzscenezroomxmlToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
+            this.importDataFromROMzscenezroomxmlToolStripMenuItem.Text = "Import data from ROM/.zscene/SharpOcarina XML";
+            this.importDataFromROMzscenezroomxmlToolStripMenuItem.Click += new System.EventHandler(this.importDataFromROMzscenezroomxmlToolStripMenuItem_Click);
+            // 
             // displaySwitchFlagsUsedByAllRoomsToolStripMenuItem
             // 
             this.displaySwitchFlagsUsedByAllRoomsToolStripMenuItem.Name = "displaySwitchFlagsUsedByAllRoomsToolStripMenuItem";
@@ -1975,6 +2023,7 @@ namespace SharpOcarina
             this.AddObjectToAllRoomsMenuItem.Name = "AddObjectToAllRoomsMenuItem";
             this.AddObjectToAllRoomsMenuItem.Size = new System.Drawing.Size(356, 22);
             this.AddObjectToAllRoomsMenuItem.Text = "Add object to all rooms";
+            this.AddObjectToAllRoomsMenuItem.Visible = false;
             this.AddObjectToAllRoomsMenuItem.Click += new System.EventHandler(this.AddObjectToAllRoomsMenuItem_Click);
             // 
             // ReloadXMLMenuItem
@@ -2025,6 +2074,27 @@ namespace SharpOcarina
             this.clearAllGroupSettingsToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
             this.clearAllGroupSettingsToolStripMenuItem.Text = "Clear all group settings";
             this.clearAllGroupSettingsToolStripMenuItem.Click += new System.EventHandler(this.clearAllGroupSettingsToolStripMenuItem_Click);
+            // 
+            // moveSelectedActorToRoomToolStripMenuItem
+            // 
+            this.moveSelectedActorToRoomToolStripMenuItem.Name = "moveSelectedActorToRoomToolStripMenuItem";
+            this.moveSelectedActorToRoomToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
+            this.moveSelectedActorToRoomToolStripMenuItem.Text = "Move selected Actor to Room...";
+            this.moveSelectedActorToRoomToolStripMenuItem.Click += new System.EventHandler(this.moveSelectedActorToRoomToolStripMenuItem_Click);
+            // 
+            // changeStartFrameOfCutsceneCommandsByToolStripMenuItem
+            // 
+            this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem.Name = "changeStartFrameOfCutsceneCommandsByToolStripMenuItem";
+            this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
+            this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem.Text = "Move all cutscene commands from X start frame by...";
+            this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem.Click += new System.EventHandler(this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem_Click);
+            // 
+            // moveAllItemsOfSelectedCutsceneToolStripMenu
+            // 
+            this.moveAllItemsOfSelectedCutsceneToolStripMenu.Name = "moveAllItemsOfSelectedCutsceneToolStripMenu";
+            this.moveAllItemsOfSelectedCutsceneToolStripMenu.Size = new System.Drawing.Size(356, 22);
+            this.moveAllItemsOfSelectedCutsceneToolStripMenu.Text = "Move all items of selected cutscene command by...";
+            this.moveAllItemsOfSelectedCutsceneToolStripMenu.Click += new System.EventHandler(this.moveAllItemsOfSelectedCutsceneToolStripMenu_Click);
             // 
             // dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem
             // 
@@ -8356,9 +8426,9 @@ namespace SharpOcarina
             // 
             this.actorEditControl3.ActorNumber = -1;
             this.actorEditControl3.Enabled = false;
-            this.actorEditControl3.Location = new System.Drawing.Point(3, 328);
+            this.actorEditControl3.Location = new System.Drawing.Point(3, 337);
             this.actorEditControl3.Name = "actorEditControl3";
-            this.actorEditControl3.Size = new System.Drawing.Size(402, 319);
+            this.actorEditControl3.Size = new System.Drawing.Size(402, 333);
             this.actorEditControl3.TabIndex = 1;
             // 
             // actorEditControl2
@@ -8367,7 +8437,7 @@ namespace SharpOcarina
             this.actorEditControl2.Enabled = false;
             this.actorEditControl2.Location = new System.Drawing.Point(3, 3);
             this.actorEditControl2.Name = "actorEditControl2";
-            this.actorEditControl2.Size = new System.Drawing.Size(402, 319);
+            this.actorEditControl2.Size = new System.Drawing.Size(402, 333);
             this.actorEditControl2.TabIndex = 0;
             // 
             // tabPathways
@@ -8720,6 +8790,9 @@ namespace SharpOcarina
             // 
             // groupBox13
             // 
+            this.groupBox13.Controls.Add(this.PathwayViewButton);
+            this.groupBox13.Controls.Add(this.PathwayCopyButton);
+            this.groupBox13.Controls.Add(this.PathwayPasteButton);
             this.groupBox13.Controls.Add(this.PathwayDown);
             this.groupBox13.Controls.Add(this.PathwayUp);
             this.groupBox13.Controls.Add(this.PathwayZPosStrip);
@@ -8744,6 +8817,47 @@ namespace SharpOcarina
             this.groupBox13.TabIndex = 43;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Pathways";
+            // 
+            // PathwayViewButton
+            // 
+            this.PathwayViewButton.Enabled = false;
+            this.PathwayViewButton.Image = global::SharpOcarina.Properties.Resources.eye;
+            this.PathwayViewButton.Location = new System.Drawing.Point(244, 165);
+            this.PathwayViewButton.Name = "PathwayViewButton";
+            this.PathwayViewButton.Size = new System.Drawing.Size(68, 28);
+            this.PathwayViewButton.TabIndex = 100;
+            this.PathwayViewButton.Text = "View";
+            this.PathwayViewButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.EnvironmentControlTooltip.SetToolTip(this.PathwayViewButton, "Renders the actor with matching pathway ID in the selected point (needs global RO" +
+        "M/z64rom mode)");
+            this.PathwayViewButton.UseVisualStyleBackColor = true;
+            this.PathwayViewButton.Click += new System.EventHandler(this.PathwayViewButton_Click);
+            // 
+            // PathwayCopyButton
+            // 
+            this.PathwayCopyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PathwayCopyButton.BackgroundImage = global::SharpOcarina.Properties.Resources.icon_copy;
+            this.PathwayCopyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PathwayCopyButton.Location = new System.Drawing.Point(320, 165);
+            this.PathwayCopyButton.Name = "PathwayCopyButton";
+            this.PathwayCopyButton.Size = new System.Drawing.Size(22, 22);
+            this.PathwayCopyButton.TabIndex = 99;
+            this.EnvironmentControlTooltip.SetToolTip(this.PathwayCopyButton, "Copy position values");
+            this.PathwayCopyButton.UseVisualStyleBackColor = true;
+            this.PathwayCopyButton.Click += new System.EventHandler(this.PathwayCopyButton_Click);
+            // 
+            // PathwayPasteButton
+            // 
+            this.PathwayPasteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PathwayPasteButton.BackgroundImage = global::SharpOcarina.Properties.Resources.icon_paste;
+            this.PathwayPasteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PathwayPasteButton.Location = new System.Drawing.Point(348, 165);
+            this.PathwayPasteButton.Name = "PathwayPasteButton";
+            this.PathwayPasteButton.Size = new System.Drawing.Size(22, 22);
+            this.PathwayPasteButton.TabIndex = 98;
+            this.EnvironmentControlTooltip.SetToolTip(this.PathwayPasteButton, "Paste position values");
+            this.PathwayPasteButton.UseVisualStyleBackColor = true;
+            this.PathwayPasteButton.Click += new System.EventHandler(this.PathwayPasteButton_Click);
             // 
             // PathwayDown
             // 
@@ -9243,13 +9357,12 @@ namespace SharpOcarina
             this.actorEditControl1.Enabled = false;
             this.actorEditControl1.Location = new System.Drawing.Point(3, 163);
             this.actorEditControl1.Name = "actorEditControl1";
-            this.actorEditControl1.Size = new System.Drawing.Size(405, 319);
+            this.actorEditControl1.Size = new System.Drawing.Size(405, 383);
             this.actorEditControl1.TabIndex = 3;
             this.actorEditControl1.Load += new System.EventHandler(this.actorEditControl1_Load);
             // 
             // tabCutscene
             // 
-            this.tabCutscene.Controls.Add(this.DebugTextBox);
             this.tabCutscene.Controls.Add(this.CutsceneTableEntryLabel);
             this.tabCutscene.Controls.Add(this.CutsceneFlagLabel);
             this.tabCutscene.Controls.Add(this.CutsceneSpawnLabel);
@@ -9266,20 +9379,10 @@ namespace SharpOcarina
             this.tabCutscene.Text = "Cutscene";
             this.tabCutscene.UseVisualStyleBackColor = true;
             // 
-            // DebugTextBox
-            // 
-            this.DebugTextBox.Location = new System.Drawing.Point(172, 584);
-            this.DebugTextBox.Name = "DebugTextBox";
-            this.DebugTextBox.ReadOnly = true;
-            this.DebugTextBox.Size = new System.Drawing.Size(223, 86);
-            this.DebugTextBox.TabIndex = 73;
-            this.DebugTextBox.Text = "";
-            this.DebugTextBox.Visible = false;
-            // 
             // CutsceneTableEntryLabel
             // 
             this.CutsceneTableEntryLabel.AutoSize = true;
-            this.CutsceneTableEntryLabel.Location = new System.Drawing.Point(0, 584);
+            this.CutsceneTableEntryLabel.Location = new System.Drawing.Point(1, 630);
             this.CutsceneTableEntryLabel.Name = "CutsceneTableEntryLabel";
             this.CutsceneTableEntryLabel.Size = new System.Drawing.Size(77, 13);
             this.CutsceneTableEntryLabel.TabIndex = 71;
@@ -9290,7 +9393,7 @@ namespace SharpOcarina
             // CutsceneFlagLabel
             // 
             this.CutsceneFlagLabel.AutoSize = true;
-            this.CutsceneFlagLabel.Location = new System.Drawing.Point(300, 559);
+            this.CutsceneFlagLabel.Location = new System.Drawing.Point(301, 605);
             this.CutsceneFlagLabel.Name = "CutsceneFlagLabel";
             this.CutsceneFlagLabel.Size = new System.Drawing.Size(30, 13);
             this.CutsceneFlagLabel.TabIndex = 69;
@@ -9299,7 +9402,7 @@ namespace SharpOcarina
             // CutsceneSpawnLabel
             // 
             this.CutsceneSpawnLabel.AutoSize = true;
-            this.CutsceneSpawnLabel.Location = new System.Drawing.Point(154, 559);
+            this.CutsceneSpawnLabel.Location = new System.Drawing.Point(155, 605);
             this.CutsceneSpawnLabel.Name = "CutsceneSpawnLabel";
             this.CutsceneSpawnLabel.Size = new System.Drawing.Size(68, 13);
             this.CutsceneSpawnLabel.TabIndex = 67;
@@ -9309,7 +9412,7 @@ namespace SharpOcarina
             // CutsceneEntranceLabel
             // 
             this.CutsceneEntranceLabel.AutoSize = true;
-            this.CutsceneEntranceLabel.Location = new System.Drawing.Point(18, 559);
+            this.CutsceneEntranceLabel.Location = new System.Drawing.Point(19, 605);
             this.CutsceneEntranceLabel.Name = "CutsceneEntranceLabel";
             this.CutsceneEntranceLabel.Size = new System.Drawing.Size(53, 13);
             this.CutsceneEntranceLabel.TabIndex = 65;
@@ -9317,6 +9420,7 @@ namespace SharpOcarina
             // 
             // CutsceneGroupBox
             // 
+            this.CutsceneGroupBox.Controls.Add(this.CutsceneStartFrameOfSelectedLabel);
             this.CutsceneGroupBox.Controls.Add(this.MarkerEndFrame);
             this.CutsceneGroupBox.Controls.Add(this.CutsceneTabs);
             this.CutsceneGroupBox.Controls.Add(this.label51);
@@ -9333,11 +9437,21 @@ namespace SharpOcarina
             this.CutsceneGroupBox.MaximumSize = new System.Drawing.Size(403, 999);
             this.CutsceneGroupBox.MinimumSize = new System.Drawing.Size(403, 462);
             this.CutsceneGroupBox.Name = "CutsceneGroupBox";
-            this.CutsceneGroupBox.Size = new System.Drawing.Size(403, 547);
+            this.CutsceneGroupBox.Size = new System.Drawing.Size(403, 593);
             this.CutsceneGroupBox.TabIndex = 0;
             this.CutsceneGroupBox.TabStop = false;
             this.CutsceneGroupBox.Text = "Entrance Cutscene";
             this.CutsceneGroupBox.Enter += new System.EventHandler(this.CutsceneGroupBox_Enter);
+            // 
+            // CutsceneStartFrameOfSelectedLabel
+            // 
+            this.CutsceneStartFrameOfSelectedLabel.AutoSize = true;
+            this.CutsceneStartFrameOfSelectedLabel.Location = new System.Drawing.Point(7, 565);
+            this.CutsceneStartFrameOfSelectedLabel.Name = "CutsceneStartFrameOfSelectedLabel";
+            this.CutsceneStartFrameOfSelectedLabel.Size = new System.Drawing.Size(125, 13);
+            this.CutsceneStartFrameOfSelectedLabel.TabIndex = 67;
+            this.CutsceneStartFrameOfSelectedLabel.Text = "Start frame of selected: 0";
+            this.CutsceneStartFrameOfSelectedLabel.Visible = false;
             // 
             // MarkerEndFrame
             // 
@@ -9373,7 +9487,7 @@ namespace SharpOcarina
             this.CutsceneTabs.Name = "CutsceneTabs";
             this.CutsceneTabs.Padding = new System.Drawing.Point(0, 0);
             this.CutsceneTabs.SelectedIndex = 0;
-            this.CutsceneTabs.Size = new System.Drawing.Size(391, 312);
+            this.CutsceneTabs.Size = new System.Drawing.Size(391, 333);
             this.CutsceneTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.CutsceneTabs.TabIndex = 54;
             // 
@@ -9409,7 +9523,7 @@ namespace SharpOcarina
             this.CameraPositions.Location = new System.Drawing.Point(4, 41);
             this.CameraPositions.Name = "CameraPositions";
             this.CameraPositions.Padding = new System.Windows.Forms.Padding(3);
-            this.CameraPositions.Size = new System.Drawing.Size(383, 267);
+            this.CameraPositions.Size = new System.Drawing.Size(383, 288);
             this.CameraPositions.TabIndex = 0;
             this.CameraPositions.Text = "Camera Positions";
             // 
@@ -9489,7 +9603,7 @@ namespace SharpOcarina
             0});
             this.CutsceneAbsolutePositionAngleView.Name = "CutsceneAbsolutePositionAngleView";
             this.CutsceneAbsolutePositionAngleView.ShiftMultiplier = 10;
-            this.CutsceneAbsolutePositionAngleView.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneAbsolutePositionAngleView.Size = new System.Drawing.Size(71, 20);
             this.CutsceneAbsolutePositionAngleView.TabIndex = 69;
             this.CutsceneAbsolutePositionAngleView.Value = new decimal(new int[] {
             1,
@@ -9518,7 +9632,7 @@ namespace SharpOcarina
             0});
             this.CutscenePositionFrameDuration.Name = "CutscenePositionFrameDuration";
             this.CutscenePositionFrameDuration.ShiftMultiplier = 20;
-            this.CutscenePositionFrameDuration.Size = new System.Drawing.Size(84, 20);
+            this.CutscenePositionFrameDuration.Size = new System.Drawing.Size(71, 20);
             this.CutscenePositionFrameDuration.TabIndex = 67;
             this.CutscenePositionFrameDuration.Value = new decimal(new int[] {
             0,
@@ -9547,7 +9661,7 @@ namespace SharpOcarina
             -2147483648});
             this.CutsceneAbsolutePositionCameraRoll.Name = "CutsceneAbsolutePositionCameraRoll";
             this.CutsceneAbsolutePositionCameraRoll.ShiftMultiplier = 20;
-            this.CutsceneAbsolutePositionCameraRoll.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneAbsolutePositionCameraRoll.Size = new System.Drawing.Size(71, 20);
             this.CutsceneAbsolutePositionCameraRoll.TabIndex = 68;
             this.CutsceneAbsolutePositionCameraRoll.Value = new decimal(new int[] {
             0,
@@ -9859,7 +9973,7 @@ namespace SharpOcarina
             this.SpecialExecution.ForeColor = System.Drawing.SystemColors.ControlText;
             this.SpecialExecution.Location = new System.Drawing.Point(4, 41);
             this.SpecialExecution.Name = "SpecialExecution";
-            this.SpecialExecution.Size = new System.Drawing.Size(383, 267);
+            this.SpecialExecution.Size = new System.Drawing.Size(383, 288);
             this.SpecialExecution.TabIndex = 2;
             this.SpecialExecution.Text = "SetTime";
             // 
@@ -9941,7 +10055,7 @@ namespace SharpOcarina
             // 
             this.Unknown.Location = new System.Drawing.Point(4, 41);
             this.Unknown.Name = "Unknown";
-            this.Unknown.Size = new System.Drawing.Size(383, 267);
+            this.Unknown.Size = new System.Drawing.Size(383, 288);
             this.Unknown.TabIndex = 3;
             this.Unknown.Text = "Unknown";
             this.Unknown.UseVisualStyleBackColor = true;
@@ -9966,7 +10080,7 @@ namespace SharpOcarina
             this.Textbox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Textbox.Location = new System.Drawing.Point(4, 41);
             this.Textbox.Name = "Textbox";
-            this.Textbox.Size = new System.Drawing.Size(383, 267);
+            this.Textbox.Size = new System.Drawing.Size(383, 288);
             this.Textbox.TabIndex = 4;
             this.Textbox.Text = "Textbox";
             // 
@@ -10090,7 +10204,7 @@ namespace SharpOcarina
             0});
             this.CutsceneTextboxFrames.Name = "CutsceneTextboxFrames";
             this.CutsceneTextboxFrames.ShiftMultiplier = 1;
-            this.CutsceneTextboxFrames.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneTextboxFrames.Size = new System.Drawing.Size(72, 20);
             this.CutsceneTextboxFrames.TabIndex = 69;
             this.CutsceneTextboxFrames.Value = new decimal(new int[] {
             0,
@@ -10140,7 +10254,7 @@ namespace SharpOcarina
             this.TransitionEffect.Controls.Add(this.CutsceneTransitionComboBox);
             this.TransitionEffect.Location = new System.Drawing.Point(4, 41);
             this.TransitionEffect.Name = "TransitionEffect";
-            this.TransitionEffect.Size = new System.Drawing.Size(383, 267);
+            this.TransitionEffect.Size = new System.Drawing.Size(383, 288);
             this.TransitionEffect.TabIndex = 5;
             this.TransitionEffect.Text = "Transition Effect";
             // 
@@ -10173,7 +10287,7 @@ namespace SharpOcarina
             this.AsmExecution.ForeColor = System.Drawing.SystemColors.ControlText;
             this.AsmExecution.Location = new System.Drawing.Point(4, 41);
             this.AsmExecution.Name = "AsmExecution";
-            this.AsmExecution.Size = new System.Drawing.Size(383, 267);
+            this.AsmExecution.Size = new System.Drawing.Size(383, 288);
             this.AsmExecution.TabIndex = 6;
             this.AsmExecution.Text = "Asm Execution";
             // 
@@ -10230,7 +10344,7 @@ namespace SharpOcarina
             this.ActorCommand.Controls.Add(this.CutsceneActorYStart);
             this.ActorCommand.Location = new System.Drawing.Point(4, 41);
             this.ActorCommand.Name = "ActorCommand";
-            this.ActorCommand.Size = new System.Drawing.Size(383, 267);
+            this.ActorCommand.Size = new System.Drawing.Size(383, 288);
             this.ActorCommand.TabIndex = 7;
             this.ActorCommand.Text = "Actor Command";
             // 
@@ -10422,7 +10536,7 @@ namespace SharpOcarina
             0});
             this.CutsceneActorFrameDuration.Name = "CutsceneActorFrameDuration";
             this.CutsceneActorFrameDuration.ShiftMultiplier = 1;
-            this.CutsceneActorFrameDuration.Size = new System.Drawing.Size(84, 20);
+            this.CutsceneActorFrameDuration.Size = new System.Drawing.Size(69, 20);
             this.CutsceneActorFrameDuration.TabIndex = 91;
             this.CutsceneActorFrameDuration.Value = new decimal(new int[] {
             0,
@@ -10728,7 +10842,7 @@ namespace SharpOcarina
             this.TriggerExit.Controls.Add(this.CutsceneTriggerExitValue);
             this.TriggerExit.Location = new System.Drawing.Point(4, 41);
             this.TriggerExit.Name = "TriggerExit";
-            this.TriggerExit.Size = new System.Drawing.Size(383, 267);
+            this.TriggerExit.Size = new System.Drawing.Size(383, 288);
             this.TriggerExit.TabIndex = 8;
             this.TriggerExit.Text = "TriggerExit";
             // 
@@ -10776,7 +10890,7 @@ namespace SharpOcarina
             this.MotionBlur.Controls.Add(this.CutsceneMotionBlurValue);
             this.MotionBlur.Location = new System.Drawing.Point(4, 41);
             this.MotionBlur.Name = "MotionBlur";
-            this.MotionBlur.Size = new System.Drawing.Size(383, 267);
+            this.MotionBlur.Size = new System.Drawing.Size(383, 288);
             this.MotionBlur.TabIndex = 9;
             this.MotionBlur.Text = "MotionBlur";
             // 
@@ -10825,19 +10939,30 @@ namespace SharpOcarina
             this.PlaySound.Controls.Add(this.label145);
             this.PlaySound.Controls.Add(this.CutscenePlaySFXList);
             this.PlaySound.Controls.Add(this.label144);
-            this.PlaySound.Controls.Add(this.CutscenePlaySFXReverb);
             this.PlaySound.Controls.Add(this.label77);
-            this.PlaySound.Controls.Add(this.CutscenePlaySFXPitch);
             this.PlaySound.Controls.Add(this.label76);
-            this.PlaySound.Controls.Add(this.CutscenePlaySFXVolume);
             this.PlaySound.Controls.Add(this.CutscenePlaySFXCustom);
             this.PlaySound.Controls.Add(this.label6);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXReverb);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXPitch);
+            this.PlaySound.Controls.Add(this.CutscenePlaySFXVolume);
             this.PlaySound.Controls.Add(this.CutscenePlaySFXValue);
             this.PlaySound.Location = new System.Drawing.Point(4, 41);
             this.PlaySound.Name = "PlaySound";
-            this.PlaySound.Size = new System.Drawing.Size(383, 267);
+            this.PlaySound.Size = new System.Drawing.Size(383, 288);
             this.PlaySound.TabIndex = 10;
             this.PlaySound.Text = "PlaySound";
+            // 
+            // CutscenePlaySFXStopCheckBox
+            // 
+            this.CutscenePlaySFXStopCheckBox.AutoSize = true;
+            this.CutscenePlaySFXStopCheckBox.Location = new System.Drawing.Point(208, 68);
+            this.CutscenePlaySFXStopCheckBox.Name = "CutscenePlaySFXStopCheckBox";
+            this.CutscenePlaySFXStopCheckBox.Size = new System.Drawing.Size(146, 17);
+            this.CutscenePlaySFXStopCheckBox.TabIndex = 98;
+            this.CutscenePlaySFXStopCheckBox.Text = "Stop sound at End Frame";
+            this.CutscenePlaySFXStopCheckBox.UseVisualStyleBackColor = true;
+            this.CutscenePlaySFXStopCheckBox.CheckedChanged += new System.EventHandler(this.CutscenePlaySFXStopCheckBox_CheckedChanged);
             // 
             // CutscenePlaySFXListFilter
             // 
@@ -10875,6 +11000,44 @@ namespace SharpOcarina
             this.label144.TabIndex = 93;
             this.label144.Text = "Reverb:";
             // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.Location = new System.Drawing.Point(142, 40);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(34, 13);
+            this.label77.TabIndex = 92;
+            this.label77.Text = "Pitch:";
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Location = new System.Drawing.Point(14, 40);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(45, 13);
+            this.label76.TabIndex = 90;
+            this.label76.Text = "Volume:";
+            // 
+            // CutscenePlaySFXCustom
+            // 
+            this.CutscenePlaySFXCustom.AutoSize = true;
+            this.CutscenePlaySFXCustom.Location = new System.Drawing.Point(157, 13);
+            this.CutscenePlaySFXCustom.Name = "CutscenePlaySFXCustom";
+            this.CutscenePlaySFXCustom.Size = new System.Drawing.Size(147, 17);
+            this.CutscenePlaySFXCustom.TabIndex = 87;
+            this.CutscenePlaySFXCustom.Text = "Use z64rom custom SFXs";
+            this.CutscenePlaySFXCustom.UseVisualStyleBackColor = true;
+            this.CutscenePlaySFXCustom.CheckedChanged += new System.EventHandler(this.CutscenePlaySFXCustom_CheckedChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 14);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 13);
+            this.label6.TabIndex = 85;
+            this.label6.Text = "SFX ID:";
+            // 
             // CutscenePlaySFXReverb
             // 
             this.CutscenePlaySFXReverb.AlwaysFireValueChanged = false;
@@ -10903,15 +11066,6 @@ namespace SharpOcarina
             0,
             0});
             this.CutscenePlaySFXReverb.ValueChanged += new System.EventHandler(this.CutscenePlaySFXReverb_ValueChanged);
-            // 
-            // label77
-            // 
-            this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(142, 40);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(34, 13);
-            this.label77.TabIndex = 92;
-            this.label77.Text = "Pitch:";
             // 
             // CutscenePlaySFXPitch
             // 
@@ -10942,15 +11096,6 @@ namespace SharpOcarina
             0});
             this.CutscenePlaySFXPitch.ValueChanged += new System.EventHandler(this.CutscenePlaySFXPitch_ValueChanged);
             // 
-            // label76
-            // 
-            this.label76.AutoSize = true;
-            this.label76.Location = new System.Drawing.Point(14, 40);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(45, 13);
-            this.label76.TabIndex = 90;
-            this.label76.Text = "Volume:";
-            // 
             // CutscenePlaySFXVolume
             // 
             this.CutscenePlaySFXVolume.AlwaysFireValueChanged = false;
@@ -10979,26 +11124,6 @@ namespace SharpOcarina
             0,
             0});
             this.CutscenePlaySFXVolume.ValueChanged += new System.EventHandler(this.CutscenePlaySFXVolume_ValueChanged);
-            // 
-            // CutscenePlaySFXCustom
-            // 
-            this.CutscenePlaySFXCustom.AutoSize = true;
-            this.CutscenePlaySFXCustom.Location = new System.Drawing.Point(157, 13);
-            this.CutscenePlaySFXCustom.Name = "CutscenePlaySFXCustom";
-            this.CutscenePlaySFXCustom.Size = new System.Drawing.Size(147, 17);
-            this.CutscenePlaySFXCustom.TabIndex = 87;
-            this.CutscenePlaySFXCustom.Text = "Use z64rom custom SFXs";
-            this.CutscenePlaySFXCustom.UseVisualStyleBackColor = true;
-            this.CutscenePlaySFXCustom.CheckedChanged += new System.EventHandler(this.CutscenePlaySFXCustom_CheckedChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 14);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(44, 13);
-            this.label6.TabIndex = 85;
-            this.label6.Text = "SFX ID:";
             // 
             // CutscenePlaySFXValue
             // 
@@ -11040,7 +11165,7 @@ namespace SharpOcarina
             this.SetFlag.Controls.Add(this.CutsceneSetFlagValue);
             this.SetFlag.Location = new System.Drawing.Point(4, 41);
             this.SetFlag.Name = "SetFlag";
-            this.SetFlag.Size = new System.Drawing.Size(383, 267);
+            this.SetFlag.Size = new System.Drawing.Size(383, 288);
             this.SetFlag.TabIndex = 11;
             this.SetFlag.Text = "SetFlag";
             // 
@@ -11233,7 +11358,7 @@ namespace SharpOcarina
             this.CutsceneTableEntry.DisplayDigits = 1;
             this.CutsceneTableEntry.DoValueRollover = false;
             this.CutsceneTableEntry.IncrementMouseWheel = 1;
-            this.CutsceneTableEntry.Location = new System.Drawing.Point(80, 582);
+            this.CutsceneTableEntry.Location = new System.Drawing.Point(81, 628);
             this.CutsceneTableEntry.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -11264,7 +11389,7 @@ namespace SharpOcarina
             this.CutsceneFlag.DoValueRollover = false;
             this.CutsceneFlag.Hexadecimal = true;
             this.CutsceneFlag.IncrementMouseWheel = 1;
-            this.CutsceneFlag.Location = new System.Drawing.Point(345, 556);
+            this.CutsceneFlag.Location = new System.Drawing.Point(346, 602);
             this.CutsceneFlag.Maximum = new decimal(new int[] {
             255,
             0,
@@ -11293,7 +11418,7 @@ namespace SharpOcarina
             this.CutsceneSpawn.DoValueRollover = false;
             this.CutsceneSpawn.Hexadecimal = true;
             this.CutsceneSpawn.IncrementMouseWheel = 1;
-            this.CutsceneSpawn.Location = new System.Drawing.Point(228, 556);
+            this.CutsceneSpawn.Location = new System.Drawing.Point(229, 602);
             this.CutsceneSpawn.Maximum = new decimal(new int[] {
             255,
             0,
@@ -11323,7 +11448,7 @@ namespace SharpOcarina
             this.CutsceneEntrance.DoValueRollover = false;
             this.CutsceneEntrance.Hexadecimal = true;
             this.CutsceneEntrance.IncrementMouseWheel = 1;
-            this.CutsceneEntrance.Location = new System.Drawing.Point(80, 556);
+            this.CutsceneEntrance.Location = new System.Drawing.Point(81, 602);
             this.CutsceneEntrance.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -12669,17 +12794,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // CutscenePlaySFXStopCheckBox
-            // 
-            this.CutscenePlaySFXStopCheckBox.AutoSize = true;
-            this.CutscenePlaySFXStopCheckBox.Location = new System.Drawing.Point(208, 68);
-            this.CutscenePlaySFXStopCheckBox.Name = "CutscenePlaySFXStopCheckBox";
-            this.CutscenePlaySFXStopCheckBox.Size = new System.Drawing.Size(146, 17);
-            this.CutscenePlaySFXStopCheckBox.TabIndex = 98;
-            this.CutscenePlaySFXStopCheckBox.Text = "Stop sound at End Frame";
-            this.CutscenePlaySFXStopCheckBox.UseVisualStyleBackColor = true;
-            this.CutscenePlaySFXStopCheckBox.CheckedChanged += new System.EventHandler(this.CutscenePlaySFXStopCheckBox_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13551,7 +13665,6 @@ namespace SharpOcarina
         private Button CutscenePositionPlayMode;
         private ToolStripMenuItem OpenGlobalROM;
         private ToolStripSeparator toolStripSeparator6;
-        private RichTextBox DebugTextBox;
         private GroupBox PrerenderedGroupBox;
         private Button DeleteJFIF;
         private NiceLine niceLine15;
@@ -13822,6 +13935,17 @@ namespace SharpOcarina
         private Label label145;
         private ListBox CutscenePlaySFXList;
         private CheckBox CutscenePlaySFXStopCheckBox;
+        private ToolStripMenuItem changeStartFrameOfCutsceneCommandsByToolStripMenuItem;
+        private ToolStripMenuItem moveSelectedActorToRoomToolStripMenuItem;
+        private ToolStripMenuItem moveAllItemsOfSelectedCutsceneToolStripMenu;
+        private ToolStripMenuItem advancedBuildToolStripMenuItem;
+        private ToolStripMenuItem rebuildAllFilesforceToolStripMenuItem;
+        private ToolStripMenuItem publicReleaseDebugFeaturesOffreleaseToolStripMenuItem;
+        private ToolStripMenuItem importDataFromROMzscenezroomxmlToolStripMenuItem;
+        private Label CutsceneStartFrameOfSelectedLabel;
+        private Button PathwayViewButton;
+        private Button PathwayCopyButton;
+        private Button PathwayPasteButton;
     }
     }
 

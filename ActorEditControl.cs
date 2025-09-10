@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using OpenTK;
 
 namespace SharpOcarina
@@ -50,6 +51,15 @@ namespace SharpOcarina
            // button6.Text = "Add " + TypeName;
           //  button5.Text = "Delete " + TypeName;
            // DuplicateButton.Text = "Duplicate " + TypeName;
+        }
+
+        public void SetSize()
+        {
+            if (!IsTransitionActor && !IsSpawnActor)
+            {
+                ActorVariableListBox.Size = new Size(ActorVariableListBox.Size.Width, ActorVariableListBox.Height + 52);
+                ActorTextBox.Size = new Size(ActorTextBox.Size.Width, ActorTextBox.Height + 52);
+            }
         }
 
         public void SetActors(ref List<ZActor> ActorList)
@@ -194,6 +204,16 @@ namespace SharpOcarina
 
 
             }
+            if (!IsSpawnActor && !IsTransitionActor)
+            {
+                ActorCopyButton.Visible = true;
+                ActorPasteButton.Visible = true;
+            }
+            else
+            {
+                ActorCopyButton.Visible = false;
+                ActorPasteButton.Visible = false;
+            }
           //  if (IsSpawnActor) DatabaseButton.Visible = false;
         }
 
@@ -311,7 +331,8 @@ namespace SharpOcarina
                     if (ActorVariableListBox.Items.Count > 0 && ActorVariableListBox.Items.Count - 1 >= propertyprevindex) ActorVariableListBox.SelectedIndex = propertyprevindex;
                     cacheId = ActorID;
                 }
-
+                ActorTextBox.Clear();
+                
                 if (ActorVariableListBox.Items.Count > 0)
                 {
                     if (ActorVariableListBox.SelectedIndex < 0) ActorVariableListBox.SelectedIndex = 0;
@@ -326,14 +347,7 @@ namespace SharpOcarina
                     // SetNumericUpDownValue(ActorListBoxValue, (Actors[ActorComboBox.SelectedIndex].Variable & prop.Mask) >> prop.Position);
                     ActorListBoxValue.Maximum = 0xFFFF;
 
-                    if (prop.Target == "Var")
-                        ActorListBoxValue.Value = (Actors[ActorComboBox.SelectedIndex].Variable & prop.Mask) >> prop.Position;
-                    else if (prop.Target == "XRot")
-                        ActorListBoxValue.Value = ((ushort)Actors[ActorComboBox.SelectedIndex].XRot & prop.Mask) >> prop.Position;
-                    else if (prop.Target == "YRot")
-                        ActorListBoxValue.Value = ((ushort)Actors[ActorComboBox.SelectedIndex].YRot & prop.Mask) >> prop.Position;
-                    else if (prop.Target == "ZRot")
-                        ActorListBoxValue.Value = ((ushort)Actors[ActorComboBox.SelectedIndex].ZRot & prop.Mask) >> prop.Position;
+                    ActorListBoxValue.Value = Actors[ActorComboBox.SelectedIndex].GetPropertyValue(prop);
 
                     ActorListBoxValue.Maximum = prop.Max;
                     ActorListBoxValue.Hexadecimal = !prop.Decimal;
@@ -354,6 +368,62 @@ namespace SharpOcarina
 
                         }
                     }
+                    if (prop.Name.ToLower().Contains("switch flag") && prop.DropdItems.Count == 0)
+                    {
+                        int entryIndex = 0;
+                        int roomIndex = 0;
+                        List<MainForm.FlagEntryInfo> switchflags = new List<MainForm.FlagEntryInfo>();
+                        bool found = false;
+                        foreach (ZScene.ZRoom room in MainForm.CurrentScene.Rooms)
+                        {
+                            entryIndex = 0;
+                            foreach (ZActor actor in room.ZActors)
+                            {
+                                if (actor == Actors[ActorComboBox.SelectedIndex]) continue;
+                                ushort actorid = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
+
+                                if (!MainForm.ActorCache.ContainsKey(actorid) || MainForm.ActorCache[actorid].switchFlag == null) continue;
+
+                                string name = MainForm.ActorCache[actorid].name + " " + actor.Variable.ToString("X4");
+                                string roomName = roomIndex.ToString("d") + ". " + room.ModelShortFilename;
+                                int flag = actor.GetPropertyValue(MainForm.ActorCache[actorid].switchFlag);
+                                switchflags.Add(new MainForm.FlagEntryInfo(flag, roomName, name, entryIndex));
+                                entryIndex++;
+                                found = true;
+                            }
+                            roomIndex++;
+                        }
+                        entryIndex = 0;
+                        foreach (ZActor actor in MainForm.CurrentScene.Transitions)
+                        {
+                            if (actor == Actors[ActorComboBox.SelectedIndex]) continue;
+                            List<ActorProperty> properties = MainForm.ActorCache[actor.Number].actorproperties;
+                            ushort actorid = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
+                            string name = MainForm.ActorCache[actorid].name + " " + actor.Variable.ToString("X4");
+                            if (!MainForm.ActorCache.ContainsKey(actorid) || MainForm.ActorCache[actorid].switchFlag == null) continue;
+                            int flag = actor.GetPropertyValue(MainForm.ActorCache[actorid].switchFlag);
+                            switchflags.Add(new MainForm.FlagEntryInfo(flag, "", name, entryIndex));
+                            entryIndex++;
+                            found = true;
+                        }
+
+                        if (found)
+                        {
+
+                            switchflags = switchflags.OrderBy(x => x.room).ToList();
+
+                            string message = @"{\rtf1\ansi\deff0{\colortbl;\red0\green0\blue0;\red0\green0\blue255;} \cf2\b " + "Switch flag " + ((int)ActorListBoxValue.Value).ToString("X2") + " used by..." + @"\b0\cf1  ";
+
+                            MainForm.FlagLogInfo flag2 = new MainForm.FlagLogInfo((int)ActorListBoxValue.Value);
+
+                            foreach (MainForm.FlagEntryInfo match in switchflags.FindAll(x => x.ID == ActorListBoxValue.Value))
+                                flag2.processEntry(match, true);
+
+                            message += flag2.getMsg();
+
+                            ActorTextBox.SelectedRtf = message + "}";
+                        }
+                    }
                 }
                 else
                 {
@@ -364,6 +434,8 @@ namespace SharpOcarina
                     PresetDropdown.Enabled = PresetDropdown.Visible = false;
 
                 }
+                ActorTextBox.Visible = (ActorTextBox.Text != "");
+
 
 
                 DeleteButton.Enabled = true;
@@ -373,6 +445,8 @@ namespace SharpOcarina
                 YPosStrip.Enabled = true;
                 ZPosStrip.Enabled = true;
                 DatabaseButton.Enabled = true;
+                ActorCopyButton.Enabled = true;
+                ActorPasteButton.Enabled = true;
 
                 /*
                 List<String> variables = XMLreader.getTransitionVars(Actors[ActorComboBox.SelectedIndex].Number.ToString("X4"));
@@ -414,6 +488,8 @@ namespace SharpOcarina
                 YPosStrip.Enabled = false;
                 ZPosStrip.Enabled = false;
                 DatabaseButton.Enabled = false;
+                ActorCopyButton.Enabled = false;
+                ActorPasteButton.Enabled = false;
             }
         }
 
@@ -816,6 +892,65 @@ namespace SharpOcarina
 
                 UpdateActorEdit();
             }
+        }
+
+        private void ActorCopyButton_Click(object sender, EventArgs e)
+        {
+            if (ActorComboBox.Items.Count <= 0) return;
+            
+            ZActor actor = Actors[ActorComboBox.SelectedIndex];
+
+            var xml = new XElement("SOdata",
+                new XElement("Position",
+                new XAttribute("X", actor.XPos),
+                new XAttribute("Y", actor.YPos),
+                new XAttribute("Z", actor.ZPos)
+            ),
+                 new XElement("Rotation",
+                new XAttribute("X", actor.XRot),
+                new XAttribute("Y", actor.YRot),
+                new XAttribute("Z", actor.ZRot)
+            ),
+                new XElement("Number",actor.Number),
+                new XElement("Variable", actor.Variable));
+
+            string xmlString = xml.ToString();
+            Clipboard.SetText("#SODATA#" + xmlString);
+        }
+
+        private void ActorPasteButton_Click(object sender, EventArgs e)
+        {
+            if (ActorComboBox.Items.Count <= 0) return;
+
+            if (Clipboard.ContainsText())
+            {
+                mainform.StoreUndo((IsTransitionActor) ? 2 : (IsSpawnActor) ? 3 : 1);
+
+                string xml = Clipboard.GetText();
+                if (xml.Length < 8 || xml.Substring(0, 8) != "#SODATA#") return;
+                var root = XElement.Parse(xml.Substring(8));
+
+                var pos = root.Element("Position");
+                if (pos != null)
+                {
+                    Actors[ActorComboBox.SelectedIndex].XPos = float.Parse(pos.Attribute("X").Value);
+                    Actors[ActorComboBox.SelectedIndex].YPos = float.Parse(pos.Attribute("Y").Value);
+                    Actors[ActorComboBox.SelectedIndex].ZPos = float.Parse(pos.Attribute("Z").Value);
+                }
+                var rot = root.Element("Rotation");
+                if (rot != null)
+                {
+                    Actors[ActorComboBox.SelectedIndex].XRot = float.Parse(rot.Attribute("X").Value);
+                    Actors[ActorComboBox.SelectedIndex].YRot = float.Parse(rot.Attribute("Y").Value);
+                    Actors[ActorComboBox.SelectedIndex].ZRot = float.Parse(rot.Attribute("Z").Value);
+                }
+                var number = root.Element("Number");
+                if (number != null) Actors[ActorComboBox.SelectedIndex].Number = ushort.Parse(number.Value);
+                var variable = root.Element("Variable");
+                if (variable != null) Actors[ActorComboBox.SelectedIndex].Variable = ushort.Parse(variable.Value);
+                UpdateActorEdit(); 
+            }
+            
         }
     }
 

@@ -83,7 +83,7 @@ namespace SharpOcarina
                 Helpers.ReplaceLine("#include \"Player.h\"", "#include \"Player.h\"\n#include \"NewAnimHeader.h\"", playerpath);
             }
 
-            string newfile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\NewLinkAnims.c");
+            string newfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\NewLinkAnims.c");
             string oldfile = basedir + @"\src\lib_user\library\NewLinkAnims.c";
 
             for (int i = 0; i < files.Length; i++)

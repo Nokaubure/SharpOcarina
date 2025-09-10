@@ -29,6 +29,7 @@ namespace SharpOcarina
         public static float CameraCoeff = 0.05f;
         public static Vector3d Pos, Rot;
         public static Vector2d MouseCoord;
+        
 
         public static Keys[] CameraControlKeys = new Keys[0];
 
@@ -50,6 +51,12 @@ namespace SharpOcarina
                 default:
                     CameraControlKeys = new Keys[] { Keys.W, Keys.A, Keys.S, Keys.D, Keys.Q, Keys.E }; break;
             }
+        }
+
+        public static int GetMaxCameraXRotation()
+        {
+            if (MainForm.settings.FullCameraRotation) return 180;
+            else return 90;
         }
 
         public static void MouseCenter(Vector2d NewMouseCoord)
@@ -75,28 +82,28 @@ namespace SharpOcarina
 
             if (Changed)
             {
-                if (MouseCoord.X < NewMouseCoord.X)
+                if ((MouseCoord.X < NewMouseCoord.X))
                 {
-                    Rot.Y += (NewMouseCoord.X - MouseCoord.X) * (CameraCoeff * 5.0f);
+                    Rot.Y += ((NewMouseCoord.X - MouseCoord.X) * (CameraCoeff * 5.0f)) * (Math.Abs(Rot.X) > 90 ? -1.0f : 1.0f);
                     if (Rot.Y > 360) Rot.Y = 0;
                 }
                 else
                 {
-                    Rot.Y -= (MouseCoord.X - NewMouseCoord.X) * (CameraCoeff * 5.0f);
+                    Rot.Y -= ((MouseCoord.X - NewMouseCoord.X) * (CameraCoeff * 5.0f)) * (Math.Abs(Rot.X) > 90 ? -1.0f : 1.0f);
                     if (Rot.Y < -360) Rot.Y = 0;
                 }
                 
                 if (MouseCoord.Y < NewMouseCoord.Y)
                 {
-                    if(Rot.X >= 90)
-                        Rot.X = 90;
+                    if(Rot.X >= GetMaxCameraXRotation())
+                        Rot.X = MainForm.settings.FullCameraRotation ? -Rot.X : GetMaxCameraXRotation();
                     else
                         Rot.X += (Dy / Speed) * (CameraCoeff * 5.0f);
                 }
                 else
                 {
-                    if (Rot.X <= -90)
-                        Rot.X = -90;
+                    if (Rot.X <= -GetMaxCameraXRotation())
+                        Rot.X = MainForm.settings.FullCameraRotation ? -Rot.X : -GetMaxCameraXRotation();
                     else
                         Rot.X += (Dy / Speed) * (CameraCoeff * 5.0f);
                 }
@@ -107,61 +114,65 @@ namespace SharpOcarina
 
         public static void KeyUpdate(bool[] KeysDown)
         {
-            double RotYRad = (Rot.Y / 180.0f * Math.PI);
-            double RotXRad = (Rot.X / 180.0f * Math.PI);
+            const int yawSign = -1;
+            const int zForwardSign = +1;
 
-            double Modifier = 1.0f;
-            if (KeysDown[(char)Keys.Space]) Modifier = 10.0f;
-            else if (KeysDown[(char)Keys.ShiftKey]) Modifier = 0.25f;
+            float speed = CameraCoeff * 2.0f;
+            if (KeysDown[(char)Keys.Space]) speed *= 10.0f;
+            else if (KeysDown[(char)Keys.ShiftKey]) speed *= 0.25f;
 
-            if (KeysDown[(char)CameraControlKeys[0]])
+            double yaw = yawSign * Rot.Y * Math.PI / 180.0;
+            double pitch = Rot.X * Math.PI / 180.0;
+
+            // Camera forward (yaw around Y, pitch around X)
+            Vector3d forward = new Vector3d(
+                (float)(Math.Cos(pitch) * Math.Sin(yaw)),
+                (float)(Math.Sin(pitch)),
+                (float)(zForwardSign * Math.Cos(pitch) * Math.Cos(yaw))
+            );
+
+            // Build a stable, screen-true basis
+            Vector3d worldUp = Vector3d.UnitY;
+
+            // Right = normalize( worldUp x forward )  -> gives +X when facing +Z
+            Vector3d right = Vector3d.Cross(worldUp, forward);
+            double rLen = right.Length;
+            if (rLen < 1e-6f)
             {
-                if (Rot.X >= 90.0f || Rot.X <= -90.0f)
-                {
-                    Pos.Y += (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
-                }
-                else
-                {
-                    Pos.X -= (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                    Pos.Z += (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                    Pos.Y += (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
-                }
+                // Looking nearly straight up/down: derive a horizontal right from yaw
+                right = new Vector3d(
+                    (float)Math.Sin(yaw - Math.PI / 2.0),
+                    0f,
+                    (float)(zForwardSign * Math.Cos(yaw - Math.PI / 2.0))
+                );
             }
-
-            if (KeysDown[(char)CameraControlKeys[1]])
+            else
             {
-                Pos.X += (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                Pos.Z += (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
+                right /= rLen;
             }
-
-            if (KeysDown[(char)CameraControlKeys[2]])
+            if (Math.Abs(Rot.X) < 90f)
             {
-                if (Rot.X >= 90.0f || Rot.X <= -90.0f)
-                {
-                    Pos.Y -= (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
-                }
-                else
-                {
-                    Pos.X += (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                    Pos.Z -= (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                    Pos.Y -= (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
-                }
+                //forward = -forward;
+                right = -right;
             }
+            // Make the basis orthonormal (helps numerical stability)
+            Vector3d upCam = Vector3d.Normalize(Vector3d.Cross(forward, right));
 
-            if (KeysDown[(char)CameraControlKeys[3]])
-            {
-                Pos.X -= (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                Pos.Z -= (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
-            }
+            // Input -> camera-relative movement
+            Vector3d move = Vector3d.Zero;
+            if (KeysDown[(char)CameraControlKeys[0]]) move += forward; // W
+            if (KeysDown[(char)CameraControlKeys[2]]) move -= forward; // S
+            if (KeysDown[(char)CameraControlKeys[1]]) move -= right;   // A
+            if (KeysDown[(char)CameraControlKeys[3]]) move += right;   // D
 
-            if (KeysDown[(char)CameraControlKeys[4]])
-            {
-                Pos.Y -= 1 * CameraCoeff * 2.0f * Modifier;
-            }
+            // Vertical in world space (keep as you had it)
+            if (KeysDown[(char)CameraControlKeys[5]]) move += worldUp; // Up
+            if (KeysDown[(char)CameraControlKeys[4]]) move -= worldUp; // Down
 
-            if (KeysDown[(char)CameraControlKeys[5]])
+            if (move.LengthSquared > 0f)
             {
-                Pos.Y += 1 * CameraCoeff * 2.0f * Modifier;
+                move = Vector3d.Normalize(move) * speed;
+                Pos += move;
             }
         }
 

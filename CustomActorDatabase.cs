@@ -55,7 +55,7 @@ namespace SharpOcarina
             }
 
 
-            tempw = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Tempw\\");
+            tempw = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\");
             if (!Directory.Exists(tempw)) Directory.CreateDirectory(tempw);
 
             client = new WebClient();
@@ -357,7 +357,7 @@ namespace SharpOcarina
                             objID = tmp.ID;
                         }
                     }
-                    using (PickCustomActorID pickID = new PickCustomActorID((ushort)node.Actor.ActorID, (ushort)objID, node.Actor.ActorID == 0, node.Actor.HasCustomObject, node.Actor.FolderName, this))
+                    using (PickCustomActorID pickID = new PickCustomActorID((ushort)node.Actor.ActorID, (ushort)objID, node.Actor.ActorID == 0, node.Actor.HasCustomObject, node.Actor.FolderName, z64romactors,z64romobjects))
                     {
                         if (pickID.ShowDialog() == DialogResult.OK)
                         {
@@ -380,7 +380,7 @@ namespace SharpOcarina
                 }
                 if (proceed)
                 {
-                    string temppath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Temp\\");
+                    string temppath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Temp\\");
 
                     if (Directory.Exists(temppath))
                     {
@@ -553,7 +553,7 @@ namespace SharpOcarina
 
         private void CustomActorDatabase_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string tmp = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Temp\\");
+            string tmp = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Temp\\");
 
             //Directory.Delete(tmp, true);
             //Directory.Delete(tempw, true);

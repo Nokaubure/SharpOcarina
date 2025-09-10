@@ -348,7 +348,7 @@ namespace SharpOcarina
 
                 if (File.Exists(droptable_SO)) File.Delete(droptable_SO);
 
-                File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/droptable_SO.cfg"), droptable_SO);
+                File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/droptable_SO.cfg"), droptable_SO);
 
 
                 MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

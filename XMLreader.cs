@@ -16,7 +16,7 @@ namespace SharpOcarina
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -37,7 +37,7 @@ namespace SharpOcarina
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -73,7 +73,7 @@ namespace SharpOcarina
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -97,7 +97,7 @@ namespace SharpOcarina
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ObjectData.xml");
+            var fileName = GetXMLFilename("ObjectData");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Object");
@@ -122,7 +122,7 @@ namespace SharpOcarina
             bool[] ret = { false, false, false };
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -155,7 +155,7 @@ namespace SharpOcarina
             int ret = 0;
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames"); 
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -181,7 +181,7 @@ namespace SharpOcarina
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames"); 
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -358,7 +358,7 @@ namespace SharpOcarina
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -397,11 +397,33 @@ namespace SharpOcarina
             return output;
         }
 
+        public static string GetXMLFilename(string XMLFile)
+        {
+            string file = "";
+            if (XMLFile.Contains("OOT") || XMLFile.Contains("MM"))
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/" + XMLFile + ".xml");
+            else
+            {
+                if (rom64.isSet())
+                {
+                    file = rom64.getPath() + "/XML/" + XMLFile + ".xml";
+                    if (File.Exists(file))
+                        return file;
+                }
+                if (MainForm.settings.MajorasMask)
+                {
+                    file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/MM/" + XMLFile + ".xml");
+                    if (File.Exists(file))
+                        return file;
+                }
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/OOT/" + XMLFile + ".xml");
+            }
+        }
 
         public static SongItem[] getXMLItems(String XMLFile, String XMLTag)
         {
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/"+XMLFile+".xml");
+            var fileName = GetXMLFilename(XMLFile);
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/" + XMLTag);
@@ -421,7 +443,7 @@ namespace SharpOcarina
         public static SongItem[] getXMLItemsAndAttrs(String XMLFile, String XMLTag)
         {
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + XMLFile + ".xml");
+            var fileName = GetXMLFilename(XMLFile);
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/" + XMLTag);
@@ -441,7 +463,7 @@ namespace SharpOcarina
         public static XmlNodeList getXMLNodes(String XMLFile, String XMLTag)
         {
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + XMLFile + ".xml");
+            var fileName = GetXMLFilename(XMLFile);
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/" + XMLTag);
@@ -453,7 +475,7 @@ namespace SharpOcarina
             string gameprefix = (!MainForm.settings.MajorasMask) ? "OOT/" : "MM/";
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/" + gameprefix + "ActorNames.xml");
+            var fileName = GetXMLFilename("ActorNames");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");

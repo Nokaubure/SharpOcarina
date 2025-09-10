@@ -519,10 +519,11 @@ namespace SharpOcarina
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(173, 324);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(218, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(493, 13);
             this.linkLabel1.TabIndex = 39;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "https://www.speedrun.com/oot/guide/prwj5";
+            this.linkLabel1.Text = "https://discord.com/channels/388361645073629187/388362111534759942/14106679956631" +
+    "75813";
             this.linkLabel1.Click += new System.EventHandler(this.linkLabel1_Click);
             // 
             // label3

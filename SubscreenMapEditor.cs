@@ -1708,7 +1708,7 @@ namespace SharpOcarina
 
             StreamWriter sw = File.CreateText(path);
 
-            string output = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/KaleidoMapMarkData.c"));
+            string output = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/KaleidoMapMarkData.c"));
 
             for (int i = 0; i < maplist.Length; i++)
             {
@@ -1770,15 +1770,15 @@ namespace SharpOcarina
             string subpath = Path.GetDirectoryName(basepath) + "\\src\\lib_user\\library\\z_map_data_subscreenmap.h";
             if (File.Exists(z_map_data_minimap)) File.Delete(z_map_data_minimap);
             if (File.Exists(z_map_exp_SO)) File.Delete(z_map_exp_SO);
-            File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/z_map_data_minimap.h"), z_map_data_minimap);
-            File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/z_map_exp_SO.c"), z_map_exp_SO);
+            File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/z_map_data_minimap.h"), z_map_data_minimap);
+            File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/z_map_exp_SO.c"), z_map_exp_SO);
 
             //subscreen
             if (File.Exists(subpath)) File.Delete(subpath);
 
             sw = File.CreateText(subpath);
 
-            output = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/z_map_data_subscreenmap.h"));
+            output = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/z_map_data_subscreenmap.h"));
 
             
 

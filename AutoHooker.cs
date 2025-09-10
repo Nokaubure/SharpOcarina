@@ -26,7 +26,9 @@ namespace SharpOcarina
         public List<FunctionHook> VanillaFunctions = new List<FunctionHook>();
         public List<HookActor> VanillaActors = new List<HookActor>();
         public List<CustomActorz64rom> z64romactors = new List<CustomActorz64rom>();
+        public List<CustomObjectz64rom> z64romobjects = new List<CustomObjectz64rom>();
         public BindingSource bindingSource = new BindingSource();
+        
         string website = "https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/";
         public WebClient client;
         public bool descending;
@@ -57,7 +59,7 @@ namespace SharpOcarina
             {
                 //MessageBox.Show("Directory " + rom64.getPath() + "\\z64oot\\src\\" + " doesn't exists! download z64oot decomp project from github and place it in that path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-                string z64ootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\z64oot_optimized.zip");
+                string z64ootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\z64oot_optimized.zip");
                 if (!File.Exists(z64ootPath))
                 {
                     if (MessageBox.Show("z64oot decomp folder not present in the project, download it? (this is only required once)", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
@@ -122,6 +124,20 @@ namespace SharpOcarina
                 if (!rom64.getNameAndIndex(str, ref basename, ref index))
                     continue;
                 z64romactors.Add(new CustomActorz64rom(index, basename, -1));
+
+            }
+
+            List<String> objects = rom64.getList("src\\object\\");
+
+            foreach (String str in objects)
+            {
+                string basename = "";
+                ushort index = 0;
+
+                if (!rom64.getNameAndIndex(str, ref basename, ref index))
+                    continue;
+
+                z64romobjects.Add(new CustomObjectz64rom(index, basename));
 
             }
 
@@ -223,7 +239,7 @@ namespace SharpOcarina
         {
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/OOT/ActorNames.xml");
+            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/OOT/ActorNames.xml");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -658,7 +674,7 @@ namespace SharpOcarina
                             if (includes.Count > 0)
                             {
                                 bool exists = false;
-                                string assets_overlaysPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files\z64oot_assets_overlays.zip");
+                                string assets_overlaysPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\z64oot_assets_overlays.zip");
                                 if (!Directory.Exists(rom64.getPath() + "\\z64oot\\assets\\overlays\\"))
                                 {
                                     if (!File.Exists(assets_overlaysPath))
@@ -863,7 +879,7 @@ namespace SharpOcarina
             }
 
             XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/MM/ActorNames.xml");
+            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/MM/ActorNames.xml");
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite);
             doc.Load(fs);
             XmlNodeList nodes = doc.SelectNodes("Table/Actor");
@@ -943,11 +959,73 @@ namespace SharpOcarina
 
         }
 
+        private void CreateActorTextBox_TextChanged(object sender, EventArgs e)
+        {
+            CreateActorTextBox.Text = Regex.Replace(CreateActorTextBox.Text, "[^a-zA-Z0-9_]", "");//ConvertToValidDirectoryName(CreateActorTextBox.Text);
+        }
 
+        private void CreateActorButton_Click(object sender, EventArgs e)
+        {
+            if (CreateActorTextBox.Text == "")
+            {
+                MessageBox.Show("Please, choose a name for the new empty actor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string template = rom64.getPath() + "\\tools\\ActorTemplate";
+            string destination;
+            ushort ActorID = 0;
+            ushort ObjectID = 0;
+            bool proceed = false;
+            using (PickCustomActorID pickID = new PickCustomActorID(0, 0, true, true, "Empty", z64romactors, z64romobjects))
+            {
+                if (pickID.ShowDialog() == DialogResult.OK)
+                {
+                    ActorID = pickID.ActorID;
+                    ObjectID = pickID.ObjectID;
+                    if (z64romactors.FindIndex(x => x.ID == ActorID) != -1 || MainForm.ActorCache.ContainsKey(ActorID))
+                    {
+                        MessageBox.Show("ActorID already in use!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    proceed = true;
+                }
+            }
+            if (proceed)
+            {
+                destination = rom64.getPath() + "\\src\\actor\\0x" + ActorID.ToString("X4") + "-" + CreateActorTextBox.Text + "\\";
+                string newfileC = destination + CreateActorTextBox.Text + ".c";
+                string newfileH = destination + CreateActorTextBox.Text + ".h";
+                Directory.CreateDirectory(destination);
+                File.Copy(template + ".c", newfileC);
+                File.Copy(template + ".h", newfileH);
+                Helpers.ReplaceLine("#define MOTION_BLUR", "#define MOTION_BLUR " + "true", newfileC);
 
+                string newfileCtxt = File.ReadAllText(newfileC);
+                string newfileHtxt = File.ReadAllText(newfileH);
+                newfileCtxt = newfileCtxt.Replace("[[ACTOR_ID_PLACEHOLDER]]", ".id           = 0x" + ActorID.ToString("X4") + ",");
+                newfileCtxt = newfileCtxt.Replace("[[OBJECT_ID_PLACEHOLDER]]", ".objectId     = 0x" + ObjectID.ToString("X4") + ",");
+                newfileCtxt = newfileCtxt.Replace("EnActor", CreateActorTextBox.Text);
+                newfileCtxt = newfileCtxt.Replace("ActorTemplate.h", CreateActorTextBox.Text + ".h");
+                newfileHtxt = newfileHtxt.Replace("__EN_ACTOR_H__", "__" + CreateActorTextBox.Text.ToUpper().Replace("-","") + "_H__");
+                newfileHtxt = newfileHtxt.Replace("EnActor", CreateActorTextBox.Text);
 
-        
+                File.WriteAllText(newfileC,newfileCtxt);
+                File.WriteAllText(newfileH, newfileHtxt);
 
+                z64romactors.Add(new CustomActorz64rom(ActorID, CreateActorTextBox.Text, -1));
+                MainForm.ActorCache.Add(ActorID, new ActorInfo(CreateActorTextBox.Text, new List<ActorProperty>(), "" + ObjectID.ToString("X4")));
+                if (z64romobjects.FindIndex(x => x.ID == ObjectID) == -1 && !MainForm.ObjectCache.ContainsKey(ObjectID))
+                {
+                    z64romobjects.Add(new CustomObjectz64rom(ObjectID, "NewObject" + ObjectID.ToString("X4")));
+                    MainForm.ObjectCache.Add(ObjectID, new ObjectInfo(1, CreateActorTextBox.Text, "" + ActorID.ToString("X4")));
+                }
+
+                if (MessageBox.Show("Done! created directory in " + destination + "\nOpen directory in explorer?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    Process.Start(destination);
+                }
+            }
+        }
     }
 
     public class FunctionHook

@@ -115,6 +115,24 @@
     <Reference Include="windowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtraImportDataFromFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtraImportDataFromFile.Designer.cs">
+      <DependentUpon>ExtraImportDataFromFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraPushCutsceneCommands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtraPushCutsceneCommands.Designer.cs">
+      <DependentUpon>ExtraPushCutsceneCommands.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraMoveActorToRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtraMoveActorToRoom.Designer.cs">
+      <DependentUpon>ExtraMoveActorToRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="LinkedFile.cs" />
     <Compile Include="TransparentPictureBox.cs">
       <SubType>Component</SubType>
@@ -337,6 +355,15 @@
     <Compile Include="RandomDropTableEditor.Designer.cs">
       <DependentUpon>RandomDropTableEditor.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ExtraImportDataFromFile.resx">
+      <DependentUpon>ExtraImportDataFromFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraPushCutsceneCommands.resx">
+      <DependentUpon>ExtraPushCutsceneCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraMoveActorToRoom.resx">
+      <DependentUpon>ExtraMoveActorToRoom.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileToC.resx">
       <DependentUpon>FileToC.cs</DependentUpon>
     </EmbeddedResource>
@@ -1693,6 +1720,9 @@
     <Content Include="Files\SceneRender.h">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\uLib.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\uLib_gameplay.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1712,6 +1742,8 @@
     </Content>
     <None Include="Resources\harkinian.bmp" />
     <None Include="Resources\harkinian.gif" />
+    <None Include="Resources\icon_copy.png" />
+    <None Include="Resources\icon_paste.png" />
     <Content Include="XML\OOT\CutsceneFlagTypes.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

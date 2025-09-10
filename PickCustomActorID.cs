@@ -16,18 +16,18 @@ namespace SharpOcarina
         public ushort ObjectID;
         public bool AutoFind;
         public bool HasCustomObject;
-        public MainForm mainform;
-        public CustomActorDatabase parent;
+        public List<CustomActorz64rom> z64romactors;
+        public List<CustomObjectz64rom> z64romobjects;
         public string name;
 
-        public PickCustomActorID(ushort _ActorID , ushort _ObjectID, bool _AutoFind, bool _HasCustomObject, string _Name, CustomActorDatabase _parent)
+        public PickCustomActorID(ushort _ActorID , ushort _ObjectID, bool _AutoFind, bool _HasCustomObject, string _Name, List<CustomActorz64rom> _z64romactors, List<CustomObjectz64rom> _z64romobjects)
         {
             ActorID = _ActorID;
             ObjectID = _ObjectID;
             AutoFind = _AutoFind;
             HasCustomObject = _HasCustomObject;
-            parent = _parent;
-            mainform = parent.mainform;
+            z64romactors = _z64romactors;
+            z64romobjects = _z64romobjects;
             
             InitializeComponent();
             Init();
@@ -82,7 +82,7 @@ namespace SharpOcarina
                     ActorInUseLabel.Text = "Recommended by author";
                     Ok.Enabled = true;
                 }
-                else if (parent.z64romactors.FindIndex(x => x.ID == ActorIDNumeric.Value) != -1)
+                else if (z64romactors.FindIndex(x => x.ID == ActorIDNumeric.Value) != -1)
                 {
                     ActorInUseLabel.Visible = true;
                     ActorInUseLabel.ForeColor = Color.Red;
@@ -106,7 +106,7 @@ namespace SharpOcarina
                         ObjectInUseLabel.Text = "Recommended by author";
                         Ok.Enabled = true;
                     }
-                    else if (parent.z64romobjects.FindIndex(x => x.ID == ObjectIDNumeric.Value) != -1)
+                    else if (z64romobjects.FindIndex(x => x.ID == ObjectIDNumeric.Value) != -1)
                     {
                         ObjectInUseLabel.Visible = true;
                         ObjectInUseLabel.ForeColor = Color.Red;

@@ -33,6 +33,9 @@
             this.ActorComboBox = new System.Windows.Forms.ComboBox();
             this.DuplicateButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.ActorTextBox = new System.Windows.Forms.RichTextBox();
+            this.ActorCopyButton = new System.Windows.Forms.Button();
+            this.ActorPasteButton = new System.Windows.Forms.Button();
             this.BackCamBox = new SharpOcarina.NumericUpDownEx();
             this.BackSwitchBox = new SharpOcarina.NumericUpDownEx();
             this.FrontCamBox = new SharpOcarina.NumericUpDownEx();
@@ -111,7 +114,7 @@
             this.groupBox3.Controls.Add(this.niceLine1);
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(398, 312);
+            this.groupBox3.Size = new System.Drawing.Size(398, 327);
             this.groupBox3.TabIndex = 28;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "!!!!";
@@ -144,6 +147,8 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.ActorCopyButton);
+            this.panel2.Controls.Add(this.ActorPasteButton);
             this.panel2.Controls.Add(this.BackCamBox);
             this.panel2.Controls.Add(this.BackSwitchBox);
             this.panel2.Controls.Add(this.FrontCamBox);
@@ -176,11 +181,48 @@
             this.panel2.Controls.Add(this.ActorYRot);
             this.panel2.Controls.Add(this.ActorXPos);
             this.panel2.Controls.Add(this.label15);
+            this.panel2.Controls.Add(this.ActorTextBox);
             this.panel2.Location = new System.Drawing.Point(3, 62);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(392, 247);
+            this.panel2.Size = new System.Drawing.Size(392, 262);
             this.panel2.TabIndex = 21;
+            // 
+            // ActorTextBox
+            // 
+            this.ActorTextBox.Location = new System.Drawing.Point(177, 180);
+            this.ActorTextBox.Name = "ActorTextBox";
+            this.ActorTextBox.ReadOnly = true;
+            this.ActorTextBox.Size = new System.Drawing.Size(210, 73);
+            this.ActorTextBox.TabIndex = 102;
+            this.ActorTextBox.Text = "";
+            this.ActorTextBox.Visible = false;
+            // 
+            // ActorCopyButton
+            // 
+            this.ActorCopyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ActorCopyButton.BackgroundImage = global::SharpOcarina.Properties.Resources.icon_copy;
+            this.ActorCopyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ActorCopyButton.Location = new System.Drawing.Point(317, 107);
+            this.ActorCopyButton.Name = "ActorCopyButton";
+            this.ActorCopyButton.Size = new System.Drawing.Size(22, 22);
+            this.ActorCopyButton.TabIndex = 101;
+            this.ActorCopyButton.UseVisualStyleBackColor = true;
+            this.ActorCopyButton.Visible = false;
+            this.ActorCopyButton.Click += new System.EventHandler(this.ActorCopyButton_Click);
+            // 
+            // ActorPasteButton
+            // 
+            this.ActorPasteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ActorPasteButton.BackgroundImage = global::SharpOcarina.Properties.Resources.icon_paste;
+            this.ActorPasteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ActorPasteButton.Location = new System.Drawing.Point(345, 107);
+            this.ActorPasteButton.Name = "ActorPasteButton";
+            this.ActorPasteButton.Size = new System.Drawing.Size(22, 22);
+            this.ActorPasteButton.TabIndex = 100;
+            this.ActorPasteButton.UseVisualStyleBackColor = true;
+            this.ActorPasteButton.Visible = false;
+            this.ActorPasteButton.Click += new System.EventHandler(this.ActorPasteButton_Click);
             // 
             // BackCamBox
             // 
@@ -421,7 +463,7 @@
             this.ActorVariableListBox.FormattingEnabled = true;
             this.ActorVariableListBox.Location = new System.Drawing.Point(6, 132);
             this.ActorVariableListBox.Name = "ActorVariableListBox";
-            this.ActorVariableListBox.Size = new System.Drawing.Size(164, 108);
+            this.ActorVariableListBox.Size = new System.Drawing.Size(164, 121);
             this.ActorVariableListBox.TabIndex = 29;
             this.ActorVariableListBox.Click += new System.EventHandler(this.ActorVariableListBox_Click);
             // 
@@ -919,7 +961,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox3);
             this.Name = "ActorEditControl";
-            this.Size = new System.Drawing.Size(404, 318);
+            this.Size = new System.Drawing.Size(404, 333);
             this.groupBox3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -997,5 +1039,8 @@
         private NumericUpDownEx BackSwitchBox;
         private NumericUpDownEx FrontCamBox;
         private NumericUpDownEx FrontSwitchBox;
+        private System.Windows.Forms.Button ActorCopyButton;
+        private System.Windows.Forms.Button ActorPasteButton;
+        private System.Windows.Forms.RichTextBox ActorTextBox;
     }
 }

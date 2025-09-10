@@ -964,10 +964,10 @@ namespace SharpOcarina
                 if (File.Exists(initialsave_SO)) File.Delete(initialsave_SO);
                 if (File.Exists(debugsave_SO)) File.Delete(debugsave_SO);
 
-                File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/initialsave_SO.cfg"), initialsave_SO);
+                File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/initialsave_SO.cfg"), initialsave_SO);
 
                 if (OverwriteDebugSave.Checked)
-                    File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Files/debugsave_SO.cfg"), debugsave_SO);
+                    File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/debugsave_SO.cfg"), debugsave_SO);
 
 
                 path = rom64.getPath() + "\\";

@@ -58,8 +58,8 @@ namespace SharpOcarina
             {
                 try
                 {
-                fontLength = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/FOT-ChiaroStd-BWin7.otf")).Length;
-                fontdata = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"XML/FOT-ChiaroStd-BWin7.otf"));
+                fontLength = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/FOT-ChiaroStd-BWin7.otf")).Length;
+                fontdata = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/FOT-ChiaroStd-BWin7.otf"));
                 System.IntPtr data = Marshal.AllocCoTaskMem(fontLength);
                 Marshal.Copy(fontdata, 0, data, fontLength);
                 pfc.AddMemoryFont(data, fontLength);
