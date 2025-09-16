@@ -141,6 +141,10 @@ namespace SharpOcarina
             get { return ((Raw & 0x8000000000000000) != 0); }
             set { if (value == true) { Raw |= 0x8000000000000000; } else { Raw &= ~((ulong)0x8000000000000000); } }
         }
+        public ZColPolyType Clone()
+        {
+            return (ZColPolyType)this.MemberwiseClone();
+        }
 
     }
 }

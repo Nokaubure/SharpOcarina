@@ -206,13 +206,15 @@ namespace SharpOcarina
             get { return _CameraEffect; }
             set { _CameraEffect = value; }
         }
-        /*
+        
         public ZTextureAnim Clone()
         {
             ZTextureAnim clone = (ZTextureAnim)this.MemberwiseClone();
-            
+            clone.ColorList = ColorList.ConvertAll(x => (x.Clone()));
+            clone.TextureSwapList = TextureSwapList.ConvertAll(x => (x.Clone()));
+
             return clone;
-        }*/
+        }
     }
 
     public class ZSegmentFunction
@@ -277,6 +279,13 @@ namespace SharpOcarina
             get { return _Texture; }
             set { _Texture = value; }
         }
+
+        public ZTextureAnimImage Clone()
+        {
+            ZTextureAnimImage clone = (ZTextureAnimImage)this.MemberwiseClone();
+
+            return clone;
+        }
     }
     public class ZTextureAnimColor
     {
@@ -309,6 +318,13 @@ namespace SharpOcarina
         {
             get { return _Color.Color; }
             set { _Color.Color = value; }
+        }
+
+        public ZTextureAnimColor Clone()
+        {
+            ZTextureAnimColor clone = (ZTextureAnimColor)this.MemberwiseClone();
+
+            return clone;
         }
     }
 }

@@ -47,13 +47,19 @@
             this.TextureAnimCheckbox = new System.Windows.Forms.CheckBox();
             this.ActorCutsceneCheckbox = new System.Windows.Forms.CheckBox();
             this.ExitCheckbox = new System.Windows.Forms.CheckBox();
+            this.AllRoomsCheckbox = new System.Windows.Forms.CheckBox();
+            this.AllHeadersCheckbox = new System.Windows.Forms.CheckBox();
+            this.overrideCheckbox = new System.Windows.Forms.CheckBox();
+            this.RoomSettingsCheckbox = new System.Windows.Forms.CheckBox();
+            this.SceneSettingsCheckbox = new System.Windows.Forms.CheckBox();
+            this.AdditionalTexturesCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.RoomID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderID)).BeginInit();
             this.SuspendLayout();
             // 
             // Ok
             // 
-            this.Ok.Location = new System.Drawing.Point(58, 316);
+            this.Ok.Location = new System.Drawing.Point(55, 420);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 0;
@@ -99,7 +105,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(139, 316);
+            this.CancelButton.Location = new System.Drawing.Point(136, 420);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 5;
@@ -267,7 +273,7 @@
             // ActorCutsceneCheckbox
             // 
             this.ActorCutsceneCheckbox.AutoSize = true;
-            this.ActorCutsceneCheckbox.Location = new System.Drawing.Point(12, 285);
+            this.ActorCutsceneCheckbox.Location = new System.Drawing.Point(12, 354);
             this.ActorCutsceneCheckbox.Name = "ActorCutsceneCheckbox";
             this.ActorCutsceneCheckbox.Size = new System.Drawing.Size(131, 17);
             this.ActorCutsceneCheckbox.TabIndex = 19;
@@ -286,11 +292,86 @@
             this.ExitCheckbox.UseVisualStyleBackColor = true;
             this.ExitCheckbox.CheckedChanged += new System.EventHandler(this.ExitCheckbox_CheckedChanged);
             // 
+            // AllRoomsCheckbox
+            // 
+            this.AllRoomsCheckbox.AutoSize = true;
+            this.AllRoomsCheckbox.Location = new System.Drawing.Point(185, 64);
+            this.AllRoomsCheckbox.Name = "AllRoomsCheckbox";
+            this.AllRoomsCheckbox.Size = new System.Drawing.Size(73, 17);
+            this.AllRoomsCheckbox.TabIndex = 21;
+            this.AllRoomsCheckbox.Text = "All Rooms";
+            this.AllRoomsCheckbox.UseVisualStyleBackColor = true;
+            this.AllRoomsCheckbox.CheckedChanged += new System.EventHandler(this.AllRoomsCheckbox_CheckedChanged);
+            // 
+            // AllHeadersCheckbox
+            // 
+            this.AllHeadersCheckbox.AutoSize = true;
+            this.AllHeadersCheckbox.Location = new System.Drawing.Point(185, 87);
+            this.AllHeadersCheckbox.Name = "AllHeadersCheckbox";
+            this.AllHeadersCheckbox.Size = new System.Drawing.Size(80, 17);
+            this.AllHeadersCheckbox.TabIndex = 22;
+            this.AllHeadersCheckbox.Text = "All Headers";
+            this.AllHeadersCheckbox.UseVisualStyleBackColor = true;
+            this.AllHeadersCheckbox.CheckedChanged += new System.EventHandler(this.AllHeadersCheckbox_CheckedChanged);
+            // 
+            // overrideCheckbox
+            // 
+            this.overrideCheckbox.AutoSize = true;
+            this.overrideCheckbox.Checked = true;
+            this.overrideCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.overrideCheckbox.Location = new System.Drawing.Point(185, 397);
+            this.overrideCheckbox.Name = "overrideCheckbox";
+            this.overrideCheckbox.Size = new System.Drawing.Size(92, 17);
+            this.overrideCheckbox.TabIndex = 23;
+            this.overrideCheckbox.Text = "Override Data";
+            this.overrideCheckbox.UseVisualStyleBackColor = true;
+            this.overrideCheckbox.Visible = false;
+            this.overrideCheckbox.CheckedChanged += new System.EventHandler(this.overrideCheckbox_CheckedChanged);
+            // 
+            // RoomSettingsCheckbox
+            // 
+            this.RoomSettingsCheckbox.AutoSize = true;
+            this.RoomSettingsCheckbox.Location = new System.Drawing.Point(12, 308);
+            this.RoomSettingsCheckbox.Name = "RoomSettingsCheckbox";
+            this.RoomSettingsCheckbox.Size = new System.Drawing.Size(95, 17);
+            this.RoomSettingsCheckbox.TabIndex = 25;
+            this.RoomSettingsCheckbox.Text = "Room Settings";
+            this.RoomSettingsCheckbox.UseVisualStyleBackColor = true;
+            this.RoomSettingsCheckbox.CheckedChanged += new System.EventHandler(this.RoomSettingsCheckbox_CheckedChanged);
+            // 
+            // SceneSettingsCheckbox
+            // 
+            this.SceneSettingsCheckbox.AutoSize = true;
+            this.SceneSettingsCheckbox.Location = new System.Drawing.Point(12, 285);
+            this.SceneSettingsCheckbox.Name = "SceneSettingsCheckbox";
+            this.SceneSettingsCheckbox.Size = new System.Drawing.Size(98, 17);
+            this.SceneSettingsCheckbox.TabIndex = 24;
+            this.SceneSettingsCheckbox.Text = "Scene Settings";
+            this.SceneSettingsCheckbox.UseVisualStyleBackColor = true;
+            this.SceneSettingsCheckbox.CheckedChanged += new System.EventHandler(this.SceneSettingsCheckbox_CheckedChanged);
+            // 
+            // AdditionalTexturesCheckbox
+            // 
+            this.AdditionalTexturesCheckbox.AutoSize = true;
+            this.AdditionalTexturesCheckbox.Location = new System.Drawing.Point(12, 331);
+            this.AdditionalTexturesCheckbox.Name = "AdditionalTexturesCheckbox";
+            this.AdditionalTexturesCheckbox.Size = new System.Drawing.Size(116, 17);
+            this.AdditionalTexturesCheckbox.TabIndex = 26;
+            this.AdditionalTexturesCheckbox.Text = "Additional Textures";
+            this.AdditionalTexturesCheckbox.UseVisualStyleBackColor = true;
+            this.AdditionalTexturesCheckbox.CheckedChanged += new System.EventHandler(this.AdditionalTexturesCheckbox_CheckedChanged);
+            // 
             // ImportDataFromFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 351);
+            this.ClientSize = new System.Drawing.Size(282, 455);
+            this.Controls.Add(this.AdditionalTexturesCheckbox);
+            this.Controls.Add(this.RoomSettingsCheckbox);
+            this.Controls.Add(this.SceneSettingsCheckbox);
+            this.Controls.Add(this.overrideCheckbox);
+            this.Controls.Add(this.AllHeadersCheckbox);
+            this.Controls.Add(this.AllRoomsCheckbox);
             this.Controls.Add(this.ExitCheckbox);
             this.Controls.Add(this.ActorCutsceneCheckbox);
             this.Controls.Add(this.TextureAnimCheckbox);
@@ -341,5 +422,11 @@
         private System.Windows.Forms.CheckBox TextureAnimCheckbox;
         private System.Windows.Forms.CheckBox ActorCutsceneCheckbox;
         private System.Windows.Forms.CheckBox ExitCheckbox;
+        private System.Windows.Forms.CheckBox AllRoomsCheckbox;
+        private System.Windows.Forms.CheckBox AllHeadersCheckbox;
+        private System.Windows.Forms.CheckBox overrideCheckbox;
+        private System.Windows.Forms.CheckBox RoomSettingsCheckbox;
+        private System.Windows.Forms.CheckBox SceneSettingsCheckbox;
+        private System.Windows.Forms.CheckBox AdditionalTexturesCheckbox;
     }
 }

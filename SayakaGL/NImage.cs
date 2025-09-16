@@ -206,7 +206,7 @@ namespace NImage
                     Target[TargetOffset] = (byte)((Raw & 0x0E) << 4);
                     Target[TargetOffset + 1] = (byte)((Raw & 0x0E) << 4);
                     Target[TargetOffset + 2] = (byte)((Raw & 0x0E) << 4);
-                    Target[TargetOffset + 3] = 0xFF;
+                    Target[TargetOffset + 3] = 0xFF; //0xFF
 
                     Raw = (byte)(Source[SourceOffset] & 0x0F);
                     Target[TargetOffset + 4] = (byte)((Raw & 0x0E) << 4);

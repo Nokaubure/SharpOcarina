@@ -85,5 +85,10 @@ namespace SharpOcarina
             _Camera = Camera;
             _Room = Room;
         }
+
+        public ZWaterbox Clone()
+        {
+            return (ZWaterbox)this.MemberwiseClone();
+        }
     }
 }

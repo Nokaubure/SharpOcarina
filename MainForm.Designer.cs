@@ -1847,7 +1847,7 @@ namespace SharpOcarina
             this.addEmptySpaceInSceneHeaderToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(356, 22);
-            this.debugToolStripMenuItem.Text = "Deprecated stuff";
+            this.debugToolStripMenuItem.Text = "Deprecated stuff related to external files";
             // 
             // quickTestToolStripMenuItem
             // 
@@ -1952,6 +1952,7 @@ namespace SharpOcarina
             this.importEnvironmentsToolStripMenuItem.Name = "importEnvironmentsToolStripMenuItem";
             this.importEnvironmentsToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importEnvironmentsToolStripMenuItem.Text = "Import Environments from .zscene";
+            this.importEnvironmentsToolStripMenuItem.Visible = false;
             this.importEnvironmentsToolStripMenuItem.Click += new System.EventHandler(this.importEnvironmentsToolStripMenuItem_Click);
             // 
             // importActorsAndObjectsOfZmapToolStripMenuItem
@@ -1959,6 +1960,7 @@ namespace SharpOcarina
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Name = "importActorsAndObjectsOfZmapToolStripMenuItem";
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Text = "Import Actors and objects from .zmap/.zroom";
+            this.importActorsAndObjectsOfZmapToolStripMenuItem.Visible = false;
             this.importActorsAndObjectsOfZmapToolStripMenuItem.Click += new System.EventHandler(this.importActorsAndObjectsOfZmapToolStripMenuItem_Click);
             // 
             // importCollisionFromzsceneToolStripMenuItem
@@ -1966,6 +1968,7 @@ namespace SharpOcarina
             this.importCollisionFromzsceneToolStripMenuItem.Name = "importCollisionFromzsceneToolStripMenuItem";
             this.importCollisionFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importCollisionFromzsceneToolStripMenuItem.Text = "Import Collision from .zscene";
+            this.importCollisionFromzsceneToolStripMenuItem.Visible = false;
             this.importCollisionFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importCollisionFromzsceneToolStripMenuItem_Click);
             // 
             // importCamerasAndWaterboxFromzsceneToolStripMenuItem
@@ -1973,6 +1976,7 @@ namespace SharpOcarina
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Name = "importCamerasAndWaterboxFromzsceneToolStripMenuItem";
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Text = "Import Cameras and Waterbox from .zscene";
+            this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Visible = false;
             this.importCamerasAndWaterboxFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importCamerasAndWaterboxFromzsceneToolStripMenuItem_Click);
             // 
             // importTransitionsAndSpawnsFromzsceneToolStripMenuItem
@@ -1980,6 +1984,7 @@ namespace SharpOcarina
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Name = "importTransitionsAndSpawnsFromzsceneToolStripMenuItem";
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Text = "Import Transitions and Spawns from .zscene";
+            this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Visible = false;
             this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importTransitionsAndSpawnsFromzsceneToolStripMenuItem_Click);
             // 
             // importPathwaysFromzsceneToolStripMenuItem
@@ -1987,6 +1992,7 @@ namespace SharpOcarina
             this.importPathwaysFromzsceneToolStripMenuItem.Name = "importPathwaysFromzsceneToolStripMenuItem";
             this.importPathwaysFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importPathwaysFromzsceneToolStripMenuItem.Text = "Import Pathways from .zscene";
+            this.importPathwaysFromzsceneToolStripMenuItem.Visible = false;
             this.importPathwaysFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importPathwaysFromzsceneToolStripMenuItem_Click);
             // 
             // importActorCutscenesFromzsceneToolStripMenuItem
@@ -1994,6 +2000,7 @@ namespace SharpOcarina
             this.importActorCutscenesFromzsceneToolStripMenuItem.Name = "importActorCutscenesFromzsceneToolStripMenuItem";
             this.importActorCutscenesFromzsceneToolStripMenuItem.Size = new System.Drawing.Size(326, 22);
             this.importActorCutscenesFromzsceneToolStripMenuItem.Text = "Import Actor Cutscenes from .zscene (MM)";
+            this.importActorCutscenesFromzsceneToolStripMenuItem.Visible = false;
             this.importActorCutscenesFromzsceneToolStripMenuItem.Click += new System.EventHandler(this.importActorCutscenesFromzsceneToolStripMenuItem_Click);
             // 
             // addEmptySpaceInSceneHeaderToolStripMenuItem
@@ -3453,7 +3460,7 @@ namespace SharpOcarina
             this.SceneSettingsComboBox.Size = new System.Drawing.Size(260, 21);
             this.SceneSettingsComboBox.TabIndex = 38;
             this.SceneSettingsComboBox.DropDown += new System.EventHandler(this.AdjustWidthAnimationBox_DropDown);
-            this.SceneSettingsComboBox.SelectedValueChanged += new System.EventHandler(this.SceneSettingsChanged);
+            this.SceneSettingsComboBox.SelectionChangeCommitted += new System.EventHandler(this.SceneSettingsChanged);
             // 
             // SceneFunctionLabel
             // 
@@ -3472,7 +3479,7 @@ namespace SharpOcarina
             this.ElfMessageComboBox.Name = "ElfMessageComboBox";
             this.ElfMessageComboBox.Size = new System.Drawing.Size(141, 21);
             this.ElfMessageComboBox.TabIndex = 36;
-            this.ElfMessageComboBox.SelectedValueChanged += new System.EventHandler(this.ElfMessageChanged);
+            this.ElfMessageComboBox.SelectionChangeCommitted += new System.EventHandler(this.ElfMessageChanged);
             // 
             // label42
             // 
@@ -3491,7 +3498,7 @@ namespace SharpOcarina
             this.SpecialObjectComboBox.Name = "SpecialObjectComboBox";
             this.SpecialObjectComboBox.Size = new System.Drawing.Size(141, 21);
             this.SpecialObjectComboBox.TabIndex = 34;
-            this.SpecialObjectComboBox.SelectedValueChanged += new System.EventHandler(this.SpecialObjectChanged);
+            this.SpecialObjectComboBox.SelectionChangeCommitted += new System.EventHandler(this.SpecialObjectChanged);
             // 
             // label38
             // 
@@ -4573,7 +4580,8 @@ namespace SharpOcarina
             this.ReloadRoomButton.Size = new System.Drawing.Size(66, 23);
             this.ReloadRoomButton.TabIndex = 17;
             this.ReloadRoomButton.Text = "Reload";
-            this.EnvironmentControlTooltip.SetToolTip(this.ReloadRoomButton, "Hold SHIFT to load a new model while keeping actors and everything else");
+            this.EnvironmentControlTooltip.SetToolTip(this.ReloadRoomButton, "Updates the model while leaving actors and everything else untouched, including m" +
+        "anual group settings.\nAlso reloads the collision file.\nHold SHIFT to reload the model from a different file.");
             this.ReloadRoomButton.UseVisualStyleBackColor = true;
             this.ReloadRoomButton.Click += new System.EventHandler(this.ReloadRoomButton_Click);
             // 
@@ -4672,7 +4680,7 @@ namespace SharpOcarina
             // GroupScaledNormals
             // 
             this.GroupScaledNormals.AutoSize = true;
-            this.GroupScaledNormals.Location = new System.Drawing.Point(306, 220);
+            this.GroupScaledNormals.Location = new System.Drawing.Point(306, 204);
             this.GroupScaledNormals.Name = "GroupScaledNormals";
             this.GroupScaledNormals.Size = new System.Drawing.Size(100, 17);
             this.GroupScaledNormals.TabIndex = 45;
@@ -4708,11 +4716,11 @@ namespace SharpOcarina
             // GroupVertexNormals
             // 
             this.GroupVertexNormals.AutoSize = true;
-            this.GroupVertexNormals.Location = new System.Drawing.Point(306, 202);
+            this.GroupVertexNormals.Location = new System.Drawing.Point(194, 279);
             this.GroupVertexNormals.Name = "GroupVertexNormals";
-            this.GroupVertexNormals.Size = new System.Drawing.Size(97, 17);
+            this.GroupVertexNormals.Size = new System.Drawing.Size(141, 17);
             this.GroupVertexNormals.TabIndex = 43;
-            this.GroupVertexNormals.Text = "Vertex Normals";
+            this.GroupVertexNormals.Text = "Dummy (Vertex Normals)";
             this.EnvironmentControlTooltip.SetToolTip(this.GroupVertexNormals, "Uses vertex colors to calculate normals");
             this.GroupVertexNormals.UseVisualStyleBackColor = true;
             this.GroupVertexNormals.CheckedChanged += new System.EventHandler(this.GroupVertexNormals_CheckedChanged);
@@ -5647,7 +5655,7 @@ namespace SharpOcarina
             this.WorldMapComboBox.Size = new System.Drawing.Size(208, 21);
             this.WorldMapComboBox.TabIndex = 42;
             this.WorldMapComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
-            this.WorldMapComboBox.SelectedValueChanged += new System.EventHandler(this.WorldmapChanged);
+            this.WorldMapComboBox.SelectionChangeCommitted += new System.EventHandler(this.WorldmapChanged);
             // 
             // label44
             // 
@@ -5667,7 +5675,7 @@ namespace SharpOcarina
             this.CameraMovementComboBox.Size = new System.Drawing.Size(208, 21);
             this.CameraMovementComboBox.TabIndex = 40;
             this.CameraMovementComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
-            this.CameraMovementComboBox.SelectedValueChanged += new System.EventHandler(this.CameraMovementChanged);
+            this.CameraMovementComboBox.SelectionChangeCommitted += new System.EventHandler(this.CameraMovementChanged);
             // 
             // groupBox7
             // 
@@ -5737,7 +5745,7 @@ namespace SharpOcarina
             this.SkyboxComboBox.Size = new System.Drawing.Size(152, 21);
             this.SkyboxComboBox.TabIndex = 33;
             this.SkyboxComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
-            this.SkyboxComboBox.SelectedValueChanged += new System.EventHandler(this.SkyboxComboBox_SelectedValueChanged);
+            this.SkyboxComboBox.SelectionChangeCommitted += new System.EventHandler(this.SkyboxComboBox_SelectedValueChanged);
             // 
             // NightSFXComboBox
             // 
@@ -5748,7 +5756,7 @@ namespace SharpOcarina
             this.NightSFXComboBox.Size = new System.Drawing.Size(152, 21);
             this.NightSFXComboBox.TabIndex = 35;
             this.NightSFXComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
-            this.NightSFXComboBox.SelectedValueChanged += new System.EventHandler(this.NightSFXChanged);
+            this.NightSFXComboBox.SelectionChangeCommitted += new System.EventHandler(this.NightSFXChanged);
             // 
             // label35
             // 
@@ -5777,7 +5785,7 @@ namespace SharpOcarina
             this.SongComboBox.Size = new System.Drawing.Size(152, 21);
             this.SongComboBox.TabIndex = 33;
             this.SongComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
-            this.SongComboBox.SelectedValueChanged += new System.EventHandler(this.SongOnChange);
+            this.SongComboBox.SelectionChangeCommitted += new System.EventHandler(this.SongOnChange);
             // 
             // groupBox5
             // 
@@ -6759,7 +6767,7 @@ namespace SharpOcarina
             this.IdleAnimComboBox.Size = new System.Drawing.Size(141, 21);
             this.IdleAnimComboBox.TabIndex = 48;
             this.IdleAnimComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
-            this.IdleAnimComboBox.SelectedValueChanged += new System.EventHandler(this.IdleAnimComboBox_SelectedValueChanged);
+            this.IdleAnimComboBox.SelectionChangeCommitted += new System.EventHandler(this.IdleAnimComboBox_SelectedValueChanged);
             // 
             // label50
             // 
@@ -6779,7 +6787,7 @@ namespace SharpOcarina
             this.RestrictionComboBox.Size = new System.Drawing.Size(141, 21);
             this.RestrictionComboBox.TabIndex = 44;
             this.RestrictionComboBox.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
-            this.RestrictionComboBox.SelectedValueChanged += new System.EventHandler(this.RestrictionComboBox_SelectedValueChanged);
+            this.RestrictionComboBox.SelectionChangeCommitted += new System.EventHandler(this.RestrictionComboBox_SelectedValueChanged);
             // 
             // groupBox9
             // 
@@ -10141,7 +10149,7 @@ namespace SharpOcarina
             this.CutsceneTextboxType.Size = new System.Drawing.Size(176, 21);
             this.CutsceneTextboxType.TabIndex = 65;
             this.CutsceneTextboxType.Tag = "";
-            this.CutsceneTextboxType.SelectedValueChanged += new System.EventHandler(this.CutsceneTextboxType_SelectedValueChanged);
+            this.CutsceneTextboxType.SelectionChangeCommitted += new System.EventHandler(this.CutsceneTextboxType_SelectedValueChanged);
             // 
             // CutsceneTextboxMessageIdLabel
             // 

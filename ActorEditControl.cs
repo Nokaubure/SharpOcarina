@@ -368,12 +368,20 @@ namespace SharpOcarina
 
                         }
                     }
-                    if (prop.Name.ToLower().Contains("switch flag") && prop.DropdItems.Count == 0)
+                    if (prop.DropdItems.Count == 0 && (prop.Name.ToLower().Contains("switch flag") || prop.Name.ToLower().Contains("chest flag") || prop.Name.ToLower().Contains("collectible flag") || prop.Name.ToLower().Contains("path id") || prop.Name.ToLower().Contains("pathway id")))
                     {
                         int entryIndex = 0;
                         int roomIndex = 0;
                         List<MainForm.FlagEntryInfo> switchflags = new List<MainForm.FlagEntryInfo>();
                         bool found = false;
+
+                        int cachepropid = -1;
+                        string propname = "";
+                        if (prop.Name.ToLower().Contains("switch flag")) { cachepropid = 0; propname = "Switch Flag "; }
+                        else if (prop.Name.ToLower().Contains("chest flag")) { cachepropid = 1; propname = "Chest Flag "; }
+                        else if (prop.Name.ToLower().Contains("collectible flag")) { cachepropid = 2; propname = "Collectible Flag "; }
+                        else if (prop.Name.ToLower().Contains("path id") || prop.Name.ToLower().Contains("pathway id")) { cachepropid = 3; propname = "Pathway ID "; }
+
                         foreach (ZScene.ZRoom room in MainForm.CurrentScene.Rooms)
                         {
                             entryIndex = 0;
@@ -382,11 +390,20 @@ namespace SharpOcarina
                                 if (actor == Actors[ActorComboBox.SelectedIndex]) continue;
                                 ushort actorid = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
 
-                                if (!MainForm.ActorCache.ContainsKey(actorid) || MainForm.ActorCache[actorid].switchFlag == null) continue;
+                                if (!MainForm.ActorCache.ContainsKey(actorid)) continue;
+                                ActorProperty cacheprop = null;
+                                if (cachepropid == 0) cacheprop = MainForm.ActorCache[actorid].switchFlag;
+                                else if (cachepropid == 1) cacheprop = MainForm.ActorCache[actorid].chestFlag;
+                                else if (cachepropid == 2) cacheprop = MainForm.ActorCache[actorid].collectibleFlag;
+                                else if (cachepropid == 3) cacheprop = MainForm.ActorCache[actorid].pathwayID;
+                                if (cacheprop == null) continue;
+
+                                int flag = actor.GetPropertyValue(cacheprop);
+                                if (flag != ActorListBoxValue.Value) continue;
 
                                 string name = MainForm.ActorCache[actorid].name + " " + actor.Variable.ToString("X4");
                                 string roomName = roomIndex.ToString("d") + ". " + room.ModelShortFilename;
-                                int flag = actor.GetPropertyValue(MainForm.ActorCache[actorid].switchFlag);
+
                                 switchflags.Add(new MainForm.FlagEntryInfo(flag, roomName, name, entryIndex));
                                 entryIndex++;
                                 found = true;
@@ -397,11 +414,26 @@ namespace SharpOcarina
                         foreach (ZActor actor in MainForm.CurrentScene.Transitions)
                         {
                             if (actor == Actors[ActorComboBox.SelectedIndex]) continue;
-                            List<ActorProperty> properties = MainForm.ActorCache[actor.Number].actorproperties;
+                            
                             ushort actorid = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
+
+                            if (!MainForm.ActorCache.ContainsKey(actorid)) continue;
+                            List<ActorProperty> properties = MainForm.ActorCache[actor.Number].actorproperties;
+
+                            ActorProperty cacheprop = null;
+                            if (cachepropid == 0) cacheprop = MainForm.ActorCache[actorid].switchFlag;
+                            else if (cachepropid == 1) cacheprop = MainForm.ActorCache[actorid].chestFlag;
+                            else if (cachepropid == 2) cacheprop = MainForm.ActorCache[actorid].collectibleFlag;
+                            else if (cachepropid == 3) cacheprop = MainForm.ActorCache[actorid].pathwayID;
+                            if (cacheprop == null) continue;
+
+                           
+                            int flag = actor.GetPropertyValue(cacheprop);
+                            if (flag != ActorListBoxValue.Value) continue;
+
                             string name = MainForm.ActorCache[actorid].name + " " + actor.Variable.ToString("X4");
-                            if (!MainForm.ActorCache.ContainsKey(actorid) || MainForm.ActorCache[actorid].switchFlag == null) continue;
-                            int flag = actor.GetPropertyValue(MainForm.ActorCache[actorid].switchFlag);
+
+
                             switchflags.Add(new MainForm.FlagEntryInfo(flag, "", name, entryIndex));
                             entryIndex++;
                             found = true;
@@ -412,11 +444,11 @@ namespace SharpOcarina
 
                             switchflags = switchflags.OrderBy(x => x.room).ToList();
 
-                            string message = @"{\rtf1\ansi\deff0{\colortbl;\red0\green0\blue0;\red0\green0\blue255;} \cf2\b " + "Switch flag " + ((int)ActorListBoxValue.Value).ToString("X2") + " used by..." + @"\b0\cf1  ";
+                            string message = @"{\rtf1\ansi\deff0{\colortbl;\red0\green0\blue0;\red0\green0\blue255;} \cf2\b " + propname + ((int)ActorListBoxValue.Value).ToString("X2") + " used by..." + @"\b0\cf1  ";
 
                             MainForm.FlagLogInfo flag2 = new MainForm.FlagLogInfo((int)ActorListBoxValue.Value);
 
-                            foreach (MainForm.FlagEntryInfo match in switchflags.FindAll(x => x.ID == ActorListBoxValue.Value))
+                            foreach (MainForm.FlagEntryInfo match in switchflags)
                                 flag2.processEntry(match, true);
 
                             message += flag2.getMsg();

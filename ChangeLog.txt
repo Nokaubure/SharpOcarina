@@ -23,7 +23,7 @@
 	- Rebuild all files to fix a broken project (--force)
 	- Public release, turns all debug features off (--release) (it also takes care of the --release bug that plagues z64rom with a temporal fix)
 
-- [TODO] Clean up import from scene, allow xml's too
+- Added "Import data from ROM/.zscene/SharpOcarina XML" in Extra tab, as the name suggest it allows importing data from scenes in different formats, also hidded the old options to import stuff from zscenes since they're now obsolete
 
 - [TODO] Auto-update feature rewriten to fetch updates from a github server, improving speed and showing a download bar
 
@@ -33,9 +33,15 @@
 
 - Added view button in pathway tab, which renders the actors that use this pathway in the selected point (needs global ROM/z64rom mode)
 
+- Information about which actors are using the switch/chest/collectible flags is now displayed in the actor window
+
 - XMLs can now be loaded from an XML folder inside a z64rom installation, for example <z64rom_path>/XML/ModelFlags.xml
 
 - Cutscene window now displays the start frame of selected camera position / text box / actor position
+
+- I4 textures now use alpha values if alpha is set below 255
+
+- Overall performance boost
 
 - Fixed an issue where instances would be dragged 2x faster than intended when holding Z or X (stick to ground/ceiling)
 
@@ -43,11 +49,17 @@
 
 - Fixed an issue where working directory pointed to system32 when opening the application via task bar
 
-- [Test] Fixed an issue where the droptable link in the droptable editor was broken
+- Fixed an issue where the droptable link in the droptable editor was broken
 
-- [Test] Fixed an issue where Motion blur would not be set to true when using the cutscene command in new projects
+- Fixed an issue where Motion blur would not be set to true when using the cutscene command in new projects
 
 - Fixed an issue where doing undo (ctrl+Z) after an actor change on a different room would remove all actors from current room
+
+- Fixed an issue where undo/redo (ctrl+Z ctrl+Y) didnt worked at all with pathways, cameras, pointlights, waterboxes and cutscenes
+
+- Fixed an issue where the wrong pathway or cutscene command would be selected sometimes when trying to select points
+
+- Removed Vertex Normals checkbox since it was simply an unfinished version of Scaled Normals
 
 - Cutscene entrance parameters are now invisible in z64rom mode since they're not needed
 

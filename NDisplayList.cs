@@ -221,6 +221,11 @@ namespace SharpOcarina
 
         #region Texture & Palette Macros
 
+        private bool IsI4(NTexture texture)
+        {
+            return (texture.Format == GBI.G_IM_FMT_I && texture.Size == GBI.G_IM_SIZ_4b);
+        }
+
         private ulong SetTextureLUT(uint Type_)
         {
             return SetOtherMode(GBI.G_SETOTHERMODE_H, GBI.G_MDSFT_TEXTLUT, 2, Type_);
@@ -729,7 +734,7 @@ namespace SharpOcarina
                         */
 
                     Helpers.Append64(ref DList, SetOtherMode(GBI.G_SETOTHERMODE_H, 4, 20, (ulong) (GBI.G_AD_NOISE | GBI.G_CD_MAGICSQ | GBI.G_CK_NONE | GBI.G_TC_FILT | (Pixelated ? GBI.G_TF_POINT : GBI.G_TF_BILERP) | GBI.G_TL_TILE | GBI.G_TD_CLAMP | GBI.G_TP_PERSP | GBI.G_CYC_2CYCLE | GBI.G_PM_NPRIMITIVE | (ThisTexture.Format == GBI.G_IM_FMT_CI ? GBI.G_TT_RGBA16 : GBI.G_TT_NONE))));
-
+                    
                     Helpers.Append64(ref DList, Texture(-1, -1, 0, GBI.G_TX_RENDERTILE, GBI.G_ON)); //G_TEXTURE
 
                 }
@@ -1019,7 +1024,7 @@ namespace SharpOcarina
                             {
                                 if (Group.MultiTexMaterialName == "")
                                 {
-                                    if (!ThisTexture.HasAlpha)
+                                    if (!ThisTexture.HasAlpha && !IsI4(ThisTexture))
                                         //Helpers.Append64(ref DList, 0xFC127E03FF1FFDFC);
                                         // Vertex alpha, single opaque texture
                                         Helpers.Append64(ref DList, SetCombineNew(
@@ -1038,7 +1043,7 @@ namespace SharpOcarina
                                 }
                                 else
                                 {
-                                    if (!ThisTexture.HasAlpha)
+                                    if (!ThisTexture.HasAlpha && !IsI4(ThisTexture))
                                         // Vertex alpha, multi opaque texture
                                         Helpers.Append64(ref DList, SetCombineNew(
                                             C_TEXEL1,   C_TEXEL0, LerpValue,   C_TEXEL0,
@@ -1056,7 +1061,7 @@ namespace SharpOcarina
                             }
                             else if (Group.MultiTexMaterialName != "")
                             {
-                                if ((Textures[matindex].HasAlpha))
+                                if ((Textures[matindex].HasAlpha || IsI4(Textures[matindex])))
                                 {
                                     if (AlphaMask)
                                         //Helpers.Append64(ref DList, SetCombine(0x127E03FFFFF5F8));
@@ -1086,7 +1091,7 @@ namespace SharpOcarina
                                         A_COMBINED, A_0,      A_PRIMITIVE, A_0));
 
                             }
-                            else if (ThisTexture.HasAlpha)
+                            else if (ThisTexture.HasAlpha || IsI4(ThisTexture))
                                 //Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
                                 //xlu single transparent texture
                                 Helpers.Append64(ref DList, SetCombineNew(
@@ -1112,7 +1117,7 @@ namespace SharpOcarina
                                 Helpers.Append64(ref DList, 0xE200001C0C1849D8 | (ulong)((Decal) ? 0xC00 : 0x000));
                                 Helpers.Append64(ref DList, 0xD9FEFFFF00000000);
                             }
-                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha))
+                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha) || IsI4(ThisTexture))
                                 Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D0 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
                             else
                                 Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D8 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));

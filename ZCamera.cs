@@ -159,6 +159,10 @@ namespace SharpOcarina
             _Unk2 = unk2;
         }
 
+        public ZCamera Clone()
+        {
+            return (ZCamera)this.MemberwiseClone();
+        }
 
     }
 }

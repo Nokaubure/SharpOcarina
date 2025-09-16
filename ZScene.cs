@@ -4660,7 +4660,14 @@ namespace SharpOcarina
                     if (ni[i] < 0)
                         ni[i] += 0x10000;
                     Helpers.Overwrite16(ref Data, (pos + 8 + (i << 1)), (ushort)(ni[i] & 0xFFFF));
-                }
+                }/*
+                double normalXZ = Math.Sqrt(ni[0] * ni[0] + ni[2] * ni[2]);
+                if (normalXZ == 0.0)
+                {
+                    //TODO
+                    //MessageBox.Show("Collision crash!");
+                    int o = 0;
+                }*/
             }
         }
 

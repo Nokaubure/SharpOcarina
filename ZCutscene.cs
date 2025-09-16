@@ -93,6 +93,16 @@ namespace SharpOcarina
             return result;
         }
 
+        public ZCutscene Clone()
+        {
+            ZCutscene clone = (ZCutscene)this.MemberwiseClone();
+            clone._Points = Points.ConvertAll(x => (x.Clone()));
+            clone._Textboxes = Textboxes.ConvertAll(x => (x.Clone()));
+            clone._CutsceneActors = CutsceneActors.ConvertAll(x => (x.Clone()));
+
+            return clone;
+        }
+
     }
     public class ZCutscenePosition
     {
@@ -147,6 +157,11 @@ namespace SharpOcarina
             _Position = Position;
             _Position2 = Position2;
         }
+
+        public ZCutscenePosition Clone()
+        {
+            return (ZCutscenePosition)this.MemberwiseClone();
+        }
     }
     public class ZTextbox
     {
@@ -200,6 +215,11 @@ namespace SharpOcarina
             _Message = Message;
             _TopMessage = TopMessage;
             _BottomMessage = BottomMessage;
+        }
+
+        public ZTextbox Clone()
+        {
+            return (ZTextbox)this.MemberwiseClone();
         }
     }
     public class ZCutsceneActor
@@ -256,6 +276,11 @@ namespace SharpOcarina
             _Position = Position;
             _Position2 = Position2;
             _Rotation = Rotation;
+        }
+
+        public ZCutsceneActor Clone()
+        {
+            return (ZCutsceneActor)this.MemberwiseClone();
         }
     }
     /*

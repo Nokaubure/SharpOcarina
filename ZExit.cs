@@ -72,7 +72,10 @@ namespace SharpOcarina
             set { Raw = ((Raw & 0xFFFFFF00) | ((uint)(value & 0xFF))); }
         }
 
-
+        public ZExit Clone()
+        {
+            return (ZExit)this.MemberwiseClone();
+        }
 
     }
 }

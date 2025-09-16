@@ -28,8 +28,14 @@ namespace SharpOcarina
         public bool textureanimations = false;
         public bool actorcutscenes = false;
         public bool exits = false;
+        public bool scenesettings = false;
+        public bool roomsettings = false;
+        public bool allrooms = false;
+        public bool allheaders = false;
+        public bool additionaltextures = true;
+        public bool dataoverride = true;
 
-        public ImportDataFromFile(int rooms, int headers, string filename)
+        public ImportDataFromFile(int rooms, int headers, string filename, bool equalrooms, bool equalheaders)
         {
             InitializeComponent();
             this.Text = "Import data from " + Path.GetFileName(filename);
@@ -42,8 +48,23 @@ namespace SharpOcarina
             {
                 ActorCheckbox.Enabled = false;
                 ObjectCheckbox.Enabled = false;
+                RoomSettingsCheckbox.Enabled = false;
+            }
+            if (!equalrooms)
+            {
+                AllRoomsCheckbox.Enabled = false;
+            }
+            if (!equalheaders)
+            {
+                AllHeadersCheckbox.Enabled = false;
             }
 
+        }
+
+        private void UpdateForm()
+        {
+            RoomID.Enabled = !allrooms;
+            HeaderID.Enabled = !allrooms;
         }
 
 
@@ -125,6 +146,38 @@ namespace SharpOcarina
         private void ExitCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             exits = ExitCheckbox.Checked;
+        }
+
+        private void AllRoomsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            allrooms = AllRoomsCheckbox.Checked;
+            UpdateForm();
+        }
+
+        private void AllHeadersCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            allheaders = AllHeadersCheckbox.Checked;
+            UpdateForm();
+        }
+
+        private void SceneSettingsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            scenesettings = SceneSettingsCheckbox.Checked;
+        }
+
+        private void RoomSettingsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            roomsettings = RoomSettingsCheckbox.Checked;
+        }
+
+        private void overrideCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            dataoverride = overrideCheckbox.Checked;
+        }
+
+        private void AdditionalTexturesCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            additionaltextures = AdditionalTexturesCheckbox.Checked;
         }
     }
 }
