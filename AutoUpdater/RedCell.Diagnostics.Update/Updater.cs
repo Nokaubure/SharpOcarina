@@ -189,7 +189,13 @@ namespace RedCell.Diagnostics.Update
             foreach (string update in this._remoteConfig.Payloads)
             {
                 Log.Write("Fetching '{0}'.", update);
-                var url = this._remoteConfig.BaseUri + update;
+
+
+                string url = this._remoteConfig.BaseUri + update;
+
+                PleaseWait pleasewait = new PleaseWait(url, Path.Combine(WorkPath, update), Path.Combine(WorkPath, update), true);
+                pleasewait.ShowDialog();
+                /*
                 var file = Fetch.Get(url);
                 if (file == null)
                 {
@@ -215,7 +221,7 @@ namespace RedCell.Diagnostics.Update
                         Log.Write("Unpack failed: {0}", ex.Message);
                         return;
                     }
-                }
+                }*/
             }
 
             // Change the currently running executable so it can be overwritten.

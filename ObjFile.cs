@@ -123,6 +123,18 @@ namespace SharpOcarina
             {
                 return new Vector3d(X,Y,Z);
             }
+
+            public Vector3d ToVector3dRounded()
+            {
+                return new Vector3d(Math.Round(X,3), Math.Round(Y,3), Math.Round(Z,3));
+            }
+
+            public Vertex Clone()
+            {
+                Vertex clone = (Vertex)this.MemberwiseClone();
+
+                return clone;
+            }
         }
 
         public class VertexColor
@@ -134,6 +146,18 @@ namespace SharpOcarina
             public VertexColor(double _R, double _G, double _B, double _A)
             {
                 R = _R; G = _G; B = _B; A = _A;
+            }
+
+            public VertexColor Clone()
+            {
+                VertexColor clone = (VertexColor)this.MemberwiseClone();
+
+                return clone;
+            }
+
+            public string ToString()
+            {
+                return $"{R},{G},{B},{A}";
             }
         }
 
@@ -152,6 +176,17 @@ namespace SharpOcarina
             {
                 U = _U; V = _V; W = _W;
             }
+            public TextureCoord Clone()
+            {
+                TextureCoord clone = (TextureCoord)this.MemberwiseClone();
+
+                return clone;
+            }
+
+            public Vector2d ToVector2dRounded()
+            {
+                return new Vector2d(Math.Round(U, 3), Math.Round(V, 3));
+            }
         }
 
         public class Normal
@@ -163,6 +198,13 @@ namespace SharpOcarina
             public Normal(double _X, double _Y, double _Z)
             {
                 X = _X; Y = _Y; Z = _Z;
+            }
+
+            public Normal Clone()
+            {
+                Normal clone = (Normal)this.MemberwiseClone();
+
+                return clone;
             }
         }
 
@@ -443,6 +485,7 @@ namespace SharpOcarina
                         break;
 
                     case "mtllib":
+                        //if (IgnoreMaterials) continue;
                         /* Material lib reference */
                         MtlFilename = Line.Substring(Line.IndexOf(' ') + 1);
                         //ParseMtl(Filename.Substring(0, Filename.LastIndexOf('\\')) + "\\" + MtlFilename);
@@ -481,8 +524,10 @@ namespace SharpOcarina
                     case "vc":
                         /* Vertex Color */
 
+                        if (IgnoreMaterials) continue;
+                       /*
                         if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
-                            continue;
+                            continue;*/
 
                         R = G = B = A = 0;
                         double.TryParse(Tokenized[1], NumberStyles.Float, CultureInfo.InvariantCulture, out R);
@@ -495,9 +540,10 @@ namespace SharpOcarina
 
                     case "vt":
                         /* Texture coordinates */
-
+                        if (IgnoreMaterials) continue;
+                        /*
                         if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
-                            continue;
+                            continue;*/
 
                         U = V = W = 0;
                         double.TryParse(Tokenized[1], NumberStyles.Float, CultureInfo.InvariantCulture, out U);
@@ -540,8 +586,10 @@ namespace SharpOcarina
                     case "fc":
                         // link colors to triangles
 
+                       if (IgnoreMaterials) continue;
+                        /*
                         if (IgnoreMaterials && NewGroup.Name != null && NewGroup.Name.ToLower().Contains("#nocollision"))
-                            continue;
+                            continue;*/
 
                         X = Y = Z = 0;
                         double.TryParse(Tokenized[1], NumberStyles.Float, CultureInfo.InvariantCulture, out X);
@@ -552,7 +600,7 @@ namespace SharpOcarina
                         Y += 1;
                         Z += 1;
 
-                        NewGroup.Triangles[NewGroup.Triangles.Count - 1].VertColor = new int[] { (int)X, (int)Y, (int)Z, 0 };
+                        NewGroup.Triangles[NewGroup.Triangles.Count - 1].VertColor = new int[] { (int)X, (int)Y, (int)Z, 0};
 
                         break;
 
@@ -630,20 +678,99 @@ namespace SharpOcarina
                 _VertColors.Add(new VertexColor());
             }
 
-            if (_TexCoords.Count == 0)
-            {
-                _TexCoords.Add(new TextureCoord());
-            }
-
-            //    FixUv();
+            //FixUv();
 
             if (IgnoreMaterials)
             {
                 AddDoorMeshes();
             }
 
+            //cleanup
+
+
+            Dictionary<Vector3d, int> usedvertex = new Dictionary<Vector3d, int>();
+            Dictionary<Vector2d, int> usedtexcoord = new Dictionary<Vector2d, int>();
+            int cnt = 0;
+            int cnt2 = 0;
+            List<ObjFile.Vertex> newvertex = new List<ObjFile.Vertex>();
+            List<ObjFile.Normal> newnormal = new List<ObjFile.Normal>();
+            List<ObjFile.TextureCoord> nextexcoord = new List<ObjFile.TextureCoord>();
+            List<ObjFile.VertexColor> newvertexcol = new List<ObjFile.VertexColor>();
+            newvertexcol.Add(new VertexColor(1, 1, 1, 1));
+            List<int> skip2nd = new List<int>();
+
+            
+            if ((IgnoreMaterials && MainForm.settings.FixedCollisionWrite) || (!IgnoreMaterials && MainForm.settings.FixedMeshWrite))
+            {
+                foreach (ObjFile.Group group in _Groups)
+                {
+                    foreach (ObjFile.Triangle tri in group.Triangles)
+                    {
+                        for (int i = 0; i <= 2; i++)
+                        {
+                            if (!usedvertex.ContainsKey(_Verts[tri.VertIndex[i]].ToVector3dRounded()))
+                            {
+                                usedvertex.Add(_Verts[tri.VertIndex[i]].ToVector3dRounded(), cnt);
+                                newvertex.Add(_Verts[tri.VertIndex[i]].Clone());
+                                tri.VertIndex[i] = cnt;
+                                cnt++;
+                            }
+                            else
+                            {
+                                tri.VertIndex[i] = usedvertex[_Verts[tri.VertIndex[i]].ToVector3dRounded()];
+                            }
+                        }
+
+                    }
+
+                }
+                
+                cnt = 0;
+                if (_TexCoords.Count > 0)
+                {
+                    foreach (ObjFile.Group group in _Groups)
+                    {
+
+                        foreach (ObjFile.Triangle tri in group.Triangles)
+                        {
+                            for (int i = 0; i <= 2; i++)
+                            {
+                                if (!usedtexcoord.ContainsKey(_TexCoords[tri.TexCoordIndex[i]].ToVector2dRounded()))
+                                {
+                                    usedtexcoord.Add(_TexCoords[tri.TexCoordIndex[i]].ToVector2dRounded(), cnt);
+                                    nextexcoord.Add(_TexCoords[tri.TexCoordIndex[i]].Clone());
+                                    tri.TexCoordIndex[i] = cnt;
+                                    cnt++;
+                                }
+                                else
+                                {
+                                    tri.TexCoordIndex[i] = usedtexcoord[_TexCoords[tri.TexCoordIndex[i]].ToVector2dRounded()];
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+                
+
+                _Verts = newvertex;
+                _Norms.Clear(); //they're already recalculated elsewhere
+                _TexCoords = nextexcoord;
+
+            }
+
+            if (_TexCoords.Count == 0)
+            {
+                _TexCoords.Add(new TextureCoord());
+            }
+
             Prepare(_Groups);
         }
+
+
+
+
 
         private void ParseDae(string filename)
         {

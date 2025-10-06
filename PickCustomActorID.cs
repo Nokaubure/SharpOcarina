@@ -16,16 +16,18 @@ namespace SharpOcarina
         public ushort ObjectID;
         public bool AutoFind;
         public bool HasCustomObject;
+        public bool AllowCustomObject;
         public List<CustomActorz64rom> z64romactors;
         public List<CustomObjectz64rom> z64romobjects;
         public string name;
 
-        public PickCustomActorID(ushort _ActorID , ushort _ObjectID, bool _AutoFind, bool _HasCustomObject, string _Name, List<CustomActorz64rom> _z64romactors, List<CustomObjectz64rom> _z64romobjects)
+        public PickCustomActorID(ushort _ActorID , ushort _ObjectID, bool _AutoFind, bool _HasCustomObject, bool _AllowCustomObject, string _Name, List<CustomActorz64rom> _z64romactors, List<CustomObjectz64rom> _z64romobjects)
         {
             ActorID = _ActorID;
             ObjectID = _ObjectID;
             AutoFind = _AutoFind;
             HasCustomObject = _HasCustomObject;
+            AllowCustomObject = _AllowCustomObject;
             z64romactors = _z64romactors;
             z64romobjects = _z64romobjects;
             
@@ -108,16 +110,27 @@ namespace SharpOcarina
                     }
                     else if (z64romobjects.FindIndex(x => x.ID == ObjectIDNumeric.Value) != -1)
                     {
-                        ObjectInUseLabel.Visible = true;
-                        ObjectInUseLabel.ForeColor = Color.Red;
-                        ObjectInUseLabel.Text = "Already in use!";
-                        Ok.Enabled = false;
+                        if (!AllowCustomObject)
+                        {
+                            ObjectInUseLabel.Visible = true;
+                            ObjectInUseLabel.ForeColor = Color.Red;
+                            ObjectInUseLabel.Text = "Already in use!";
+                            Ok.Enabled = false;
+                        }
+                        else
+                        {
+                            ObjectInUseLabel.Visible = true;
+                            ObjectInUseLabel.ForeColor = Color.Orange;
+                            ObjectInUseLabel.Text = "Custom object";
+                            Ok.Enabled = true;
+                        }
+
                     }
                     else if (MainForm.ObjectCache.ContainsKey((ushort)ObjectIDNumeric.Value))
                     {
                         ObjectInUseLabel.Visible = true;
                         ObjectInUseLabel.ForeColor = Color.Orange;
-                        ObjectInUseLabel.Text = "Used by vanilla object";
+                        ObjectInUseLabel.Text = "Vanilla object";
                         Ok.Enabled = true;
                     }
                 }

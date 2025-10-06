@@ -357,7 +357,7 @@ namespace SharpOcarina
                             objID = tmp.ID;
                         }
                     }
-                    using (PickCustomActorID pickID = new PickCustomActorID((ushort)node.Actor.ActorID, (ushort)objID, node.Actor.ActorID == 0, node.Actor.HasCustomObject, node.Actor.FolderName, z64romactors,z64romobjects))
+                    using (PickCustomActorID pickID = new PickCustomActorID((ushort)node.Actor.ActorID, (ushort)objID, node.Actor.ActorID == 0, node.Actor.HasCustomObject, false, node.Actor.FolderName, z64romactors,z64romobjects))
                     {
                         if (pickID.ShowDialog() == DialogResult.OK)
                         {

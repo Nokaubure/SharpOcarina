@@ -55,6 +55,11 @@ namespace SharpOcarina
             AppendXX(ref Data, Value, 1);
         }
 
+        public static void Append16S(ref List<byte> Data, short Value)
+        {
+            AppendXX(ref Data, (ushort)Value, 1);
+        }
+
         public static void Append32(ref List<byte> Data, uint Value)
         {
 

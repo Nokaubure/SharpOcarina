@@ -244,11 +244,11 @@ namespace SharpOcarina
             switch (Program.KeyboardLayout)
             {
                 case "AZERTY":
-                    ActorControlKeys = new Keys[] { Keys.W, Keys.X }; break;
+                    ActorControlKeys = new Keys[] { Keys.W, Keys.X, Keys.C, Keys.B, Keys.V }; break;
                 case "DVORAK":
-                    ActorControlKeys = new Keys[] { Keys.OemSemicolon, Keys.Q }; break;
+                    ActorControlKeys = new Keys[] { Keys.OemSemicolon, Keys.Q, Keys.J, Keys.X, Keys.OemPeriod }; break;
                 default:
-                    ActorControlKeys = new Keys[] { Keys.Z, Keys.X }; break;
+                    ActorControlKeys = new Keys[] { Keys.Z, Keys.X, Keys.C, Keys.B, Keys.V }; break;
             }
 
             globalframestart = DateTime.Now;
@@ -614,6 +614,7 @@ namespace SharpOcarina
 
 
             Updater updater = new Updater();
+            updater.StartMonitoring();
 #if !DEBUG
             updater.StartMonitoring();
 #endif
@@ -3352,7 +3353,7 @@ namespace SharpOcarina
 
                 actorpick = -1;
 
-                if (CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0)
+                if (CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0 && actorEditControl1.ActorNumber != -1)
                 {
                     DrawActorModel(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber],
                         Color.FromArgb(255, 0, 0),
@@ -3368,7 +3369,7 @@ namespace SharpOcarina
                     }
                 }
 
-                if (actorpick == -1 && CurrentScene.Transitions.Count > 0)
+                if (actorpick == -1 && CurrentScene.Transitions.Count > 0 && actorEditControl2.ActorNumber != -1)
                 {
                     DrawActorModel(CurrentScene.Transitions[actorEditControl2.ActorNumber],
                         Color.FromArgb(255, 0, 0),
@@ -3386,7 +3387,7 @@ namespace SharpOcarina
 
                 }
 
-                if (actorpick == -1 && CurrentScene.SpawnPoints.Count > 0)
+                if (actorpick == -1 && CurrentScene.SpawnPoints.Count > 0 && actorEditControl3.ActorNumber != -1)
                 {
                     DrawActorModel(CurrentScene.SpawnPoints[actorEditControl3.ActorNumber],
                         Color.FromArgb(255, 0, 0),
@@ -3704,7 +3705,7 @@ namespace SharpOcarina
                         //objpos.Z += ((Math.Sin(CamYRotd) * pickObjDisplacement.X));
                         objpos.Y = MoveToCollision(new Vector3((float)objpos.X, (float)objpos.Y - 50, (float)objpos.Z), new Vector3(0, 30000, 0)).Y;
                     }
-                    else if (KeysDown[(int)Keys.C])
+                    else if (KeysDown[(int)ActorControlKeys[2]]) // C
                     {
                         float maxdist = 9999.9f;
                         Vector3d newpos = objpos;
@@ -3716,11 +3717,11 @@ namespace SharpOcarina
                             {
                                 for (int v = 0; v < 2; v++)
                                 {
-                                    float dist = Distance3D((Vector3)objpos, (Vector3)CurrentScene.ColModel.Vertices[Tri.VertIndex[v]].ToVector3d());
+                                    float dist = Distance3D((Vector3)objpos, (Vector3)CurrentScene.ColModel.Vertices[Tri.VertIndex[v]].ToVector3d() * CurrentScene.Scale);
                                     if (dist < maxdist)
                                     {
                                         maxdist = dist;
-                                        newpos = CurrentScene.ColModel.Vertices[Tri.VertIndex[v]].ToVector3d();
+                                        newpos = CurrentScene.ColModel.Vertices[Tri.VertIndex[v]].ToVector3d() * CurrentScene.Scale;
                                     }
                                 }
 
@@ -3729,7 +3730,7 @@ namespace SharpOcarina
                         }
                         if (maxdist < 50.0f) objpos = newpos;
                     }
-                    else if (KeysDown[(int)Keys.V])
+                    else if ((KeysDown[(int)ActorControlKeys[4]])) //V
                     {
                         float maxdist = 9999.9f;
                         Vector3d newpos = objpos;
@@ -3747,8 +3748,8 @@ namespace SharpOcarina
                                     int v1 = Tri.VertIndex[edge];
                                     int v2 = Tri.VertIndex[(edge + 1) % 3]; // next vertex (wrap around)
 
-                                    Vector3d p1 = CurrentScene.ColModel.Vertices[v1].ToVector3d();
-                                    Vector3d p2 = CurrentScene.ColModel.Vertices[v2].ToVector3d();
+                                    Vector3d p1 = CurrentScene.ColModel.Vertices[v1].ToVector3d() * CurrentScene.Scale;
+                                    Vector3d p2 = CurrentScene.ColModel.Vertices[v2].ToVector3d() * CurrentScene.Scale;
 
                                     // Edge midpoint
                                     Vector3d mid = (p1 + p2) * 0.5;
@@ -3773,7 +3774,7 @@ namespace SharpOcarina
 
                         }
                     }
-                    else if (KeysDown[(int)Keys.B])
+                    else if ((KeysDown[(int)ActorControlKeys[3]])) //B
                     {
                         float maxdist = 9999.9f;
                         Vector3d newpos = objpos;
@@ -3791,8 +3792,8 @@ namespace SharpOcarina
                                     int v1 = Tri.VertIndex[edge];
                                     int v2 = Tri.VertIndex[(edge + 1) % 3]; // next vertex (wrap around)
 
-                                    Vector3d p1 = CurrentScene.ColModel.Vertices[v1].ToVector3d();
-                                    Vector3d p2 = CurrentScene.ColModel.Vertices[v2].ToVector3d();
+                                    Vector3d p1 = CurrentScene.ColModel.Vertices[v1].ToVector3d() * CurrentScene.Scale;
+                                    Vector3d p2 = CurrentScene.ColModel.Vertices[v2].ToVector3d() * CurrentScene.Scale;
 
                                     // Find closest point on segment [p1, p2] to objpos
                                     Vector3d closest = ClosestPointOnSegment(objpos, p1, p2);
@@ -4386,6 +4387,7 @@ namespace SharpOcarina
                     AutoFixErrorsStripMenuItem3.Checked = settings.AutoFixErrors;
                     AdvancedTextureAnimationsMenuItem.Checked = settings.command1AOoT;
                     AutoReload.Checked = settings.AutoReload;
+                    UseFixedCollisionWriteMenuItem.Checked = settings.FixedCollisionWrite;
 
                     RenderWaterboxesMenuItem.Checked = settings.OnlyRenderWaterboxesGeneral;
                     ColorBlindMenuItem.Checked = settings.colorblindaxis;
@@ -4451,7 +4453,7 @@ namespace SharpOcarina
                     NameTextbox.Text = CurrentScene.Name;
                     TitlecardTextbox.Text = CurrentScene.MMTitleCard;
                     ScaleNumericbox.Value = (decimal)CurrentScene.Scale;
-                    CollisionTextbox.Text = System.IO.Path.GetFileName(CurrentScene.CollisionFilename);
+                    CollisionTextbox.Text = Path.GetFileName(CurrentScene.CollisionFilename);
                     InjectoffsetTextbox.Text = CurrentScene.InjectOffset.ToString("X8");
                     ScenenumberTextbox.Value = CurrentScene.SceneNumber;
                     // checkBox1.Checked = CurrentScene.IsOutdoors;
@@ -4506,6 +4508,12 @@ namespace SharpOcarina
                         
                         SetRestrictionFlags.Visible = true;
                     }
+
+                    MultiRoomCollisionCheckBox.Checked = CurrentScene.AutoCollision;
+                    CollisionTextbox.Enabled = !CurrentScene.AutoCollision;
+                    LoadCollisionButton.Enabled = !CurrentScene.AutoCollision;
+
+                    MultiRoomCollisionCheckBox.Enabled = !CurrentScene.PregeneratedMesh;
 
                     RefreshExitLabels();
 
@@ -4696,7 +4704,7 @@ namespace SharpOcarina
                     else
                         DeleteRoom.Text = "Delete Room";
 
-                    if (CurrentScene.ColModel == null)
+                    if (CurrentScene.ColModel == null && !CurrentScene.AutoCollision)
                     {
                         AddRoom.Enabled = false;
                         AddMultipleRooms.Enabled = false;
@@ -4807,18 +4815,15 @@ namespace SharpOcarina
                 if (CurrentScene.PregeneratedMesh)
                 {
                     foreach (Control Ctrl in tabRooms.Controls)
-                        if (Ctrl != AdditionalTextureList && Ctrl != AdditionalTexturesGroupBox && Ctrl != AddAdditionalTexture && Ctrl != DeleteAdditionalTexture) Ctrl.Enabled = false;
+                        if (Ctrl != AdditionalTextureList && Ctrl != AdditionalTexturesGroupBox && Ctrl != AddAdditionalTexture && Ctrl != DeleteAdditionalTexture && Ctrl != ReloadRoomButton) Ctrl.Enabled = false;
                     RoomList.Enabled = true;
-                }
-
-                if (CurrentScene.PregeneratedMesh)
-                {
                     AddpolygonButton.Enabled = false;
                     DeletepolygonButton.Enabled = false;
-                    /*
-                    foreach (Control Ctrl in groupBoxCollisionPolytype.Controls)
-                        if (Ctrl != ExitList && Ctrl != ExitNumber && Ctrl != ExitListLabel && Ctrl != AddexitButton && Ctrl != DeleteexitButton) Ctrl.Enabled = false;
-*/
+                    ReloadRoomButton.Text = "Load";
+                }
+                else
+                {
+                    ReloadRoomButton.Text = "Reload";
                 }
 
 
@@ -6353,8 +6358,11 @@ namespace SharpOcarina
                 allmats.Add(DummyMaterial);
                 foreach (ObjFile.Material Mat in CurrentScene.Rooms[RoomList.SelectedIndex].ObjModel.Materials)
                 {
-                    MultiTextureComboBox.Items.Add(Mat);
-                    allmats.Add(Mat);
+                    if (Mat.map_Kd != null)
+                    {
+                        MultiTextureComboBox.Items.Add(Mat);
+                        allmats.Add(Mat);
+                    }
                 }
 
                 foreach (ObjFile.Material Mat in CurrentScene.AdditionalTextures)
@@ -6661,6 +6669,7 @@ namespace SharpOcarina
             CurrentScene.SkyboxType = 0x00;
             CurrentScene.version = Program.ApplicationVersion;
             CurrentScene.PregeneratedMesh = false;
+            CurrentScene.AutoCollision = true;
 
             while (CurrentScene.SegmentFunctions.Count < 8)
             {
@@ -7870,6 +7879,8 @@ namespace SharpOcarina
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                if (CurrentScene.AutoCollision && CurrentScene.Rooms.Count == 0)
+                    LoadCollision(openFileDialog1.FileName);
                 CurrentScene.AddRoom(openFileDialog1.FileName);
                 ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
                 CurrentScene.NewRoomMode = false;
@@ -11452,6 +11463,7 @@ namespace SharpOcarina
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                if (CurrentScene.AutoCollision) LoadCollision(openFileDialog1.FileName);
                 AddMultipleRoomsFunc(openFileDialog1.FileName);
             }
         }
@@ -12732,7 +12744,7 @@ namespace SharpOcarina
 
             if (customcombiner != null) customcombiner.Close();
 
-            if (!File.Exists(CurrentScene.Rooms[RoomList.SelectedIndex].ModelFilename) && Control.ModifierKeys != Keys.Shift)
+            if (!File.Exists(CurrentScene.Rooms[RoomList.SelectedIndex].ModelFilename) && Control.ModifierKeys != Keys.Shift && !CurrentScene.PregeneratedMesh)
             {
                 MessageBox.Show("Room file no longer exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -12752,8 +12764,18 @@ namespace SharpOcarina
             savechanges = true;
 
 
-            if (((ModifierKeys & Keys.Shift) != 0))
+            if ((ModifierKeys & Keys.Shift) != 0 || CurrentScene.PregeneratedMesh)
             {
+                if (CurrentScene.PregeneratedMesh)
+                {
+                    if (MessageBox.Show("This will turn the zscene into an editable SO scene by providing yourself the scene mesh in multiroom mode, same or more amount of rooms is recommended to not lose data. Continue?", "Confirmation",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                        {
+                             return;
+                        }  
+                    
+                }
+
                 openFileDialog1.FileName = "";
                 openFileDialog1.Filter = "Wavefront .obj / Collada .dae (*.obj;*.dae)|*.obj;*.dae|All Files (*.*)|*.*";
                 openFileDialog1.FilterIndex = 1;
@@ -12761,15 +12783,50 @@ namespace SharpOcarina
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
+                    //SetSceneHeader(0);
+                    if (CurrentScene.PregeneratedMesh)
+                    {
+                        CurrentScene.NewRoomMode = true;
+                    }
+
                     if (CurrentScene.NewRoomMode == false)
                     {
                         CurrentScene.Rooms[RoomList.SelectedIndex].ModelFilename = openFileDialog1.FileName;
                     }
                     else
                     {
-                        foreach (ZScene.ZRoom room in CurrentScene.Rooms)
+                        for (int i = 0; i < CurrentScene.Rooms.Count; i++)
                         {
-                            room.ModelFilename = openFileDialog1.FileName;
+                            CurrentScene.Rooms[i].ModelFilename = openFileDialog1.FileName;
+                            if (CurrentScene.PregeneratedMesh) {
+                                CurrentScene.Rooms[i].OriginalMeshHeaderOffset = 0;
+                                CurrentScene.Rooms[i].OriginalRoomData = null;
+                            }
+                            foreach (ZSceneHeader header in CurrentScene.SceneHeaders)
+                            {
+                                header.Scene.Rooms[i].OriginalMeshHeaderOffset = 0;
+                                header.Scene.Rooms[i].OriginalMeshHeaderOffset = 0;
+                                if (CurrentScene.PregeneratedMesh)
+                                {
+                                    header.Scene.Rooms[i].OriginalRoomData = null;
+                                }
+                            }
+                        }
+                    }
+
+
+                    if (CurrentScene.PregeneratedMesh)
+                    {
+
+                        CurrentScene.OriginalSceneData = null;
+                        CurrentScene.NewRoomMode = true;
+                        CurrentScene.PregeneratedMesh = false;
+                        foreach(ZSceneHeader header in CurrentScene.SceneHeaders)
+                        {
+                            header.Scene.NewRoomMode = true;
+                            header.Scene.OriginalSceneData = null;
+                            header.Scene.NewRoomMode = true;
+                            header.Scene.PregeneratedMesh = false;
                         }
                     }
                 }
@@ -12779,7 +12836,6 @@ namespace SharpOcarina
                 }
 
             }
-
             CurrentScene.ColModel = new ObjFile(CurrentScene.CollisionFilename, true);
 
             if (CurrentScene.NewRoomMode == false)
@@ -13283,7 +13339,6 @@ namespace SharpOcarina
                 MessageBox.Show("Texture image " + filename + " has incorrect format and cannot be loaded!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             CurrentScene.AdditionalTextures.Add(mat);
             UpdateAdditionalTextures();
             AdditionalTextureList.Value = AdditionalTextureList.Maximum;
@@ -13900,6 +13955,7 @@ namespace SharpOcarina
                     }
                     // MessageBox.Show("Imported: ", "Import", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     CollisionTextbox.Text = saveFileDialog1.FileName;
+                    CurrentScene.AutoCollision = false;
                     UpdateForm();
                     break;
                 }
@@ -17042,6 +17098,10 @@ namespace SharpOcarina
             ZScene returnScene = new ZScene();
             ZScene normalHeader = null;
 
+            returnScene.Scale = 1.0f;
+            returnScene.version = Program.ApplicationVersion;
+            returnScene.Name = "ImportedScene";
+
             if (sceneid != -1)
             {
                 originaldata = new List<byte>(data);
@@ -17396,9 +17456,9 @@ namespace SharpOcarina
                         if ((data[offset] == 0x03 || Helpers.Read32(data, offset) == 0) && test < data.Count)
                         {
 
-                            ZScene clone = returnScene.Clone();
-                            clone.cloneid = returnScene.SceneHeaders.Count + 1;
-                            returnScene.SceneHeaders.Add(new ZSceneHeader(data[offset] != 0x03, clone));
+                            //ZScene clone = returnScene.Clone();
+                            //clone.cloneid = returnScene.SceneHeaders.Count + 1;
+                            //returnScene.SceneHeaders.Add(new ZSceneHeader(data[offset] != 0x03, clone));
 
                             headeroffsets.Add(test);
 
@@ -17682,11 +17742,23 @@ namespace SharpOcarina
 
             CurrentScene = LoadZsceneData(data, sceneid);
 
+            NormalHeader = CurrentScene;
 
-            ((CurrencyManager)RoomList.BindingContext[CurrentScene.Rooms]).Refresh();
+            RoomList.DataSource = null;
+            RoomList.DataSource = CurrentScene.Rooms;
+            RoomList.DisplayMember = "ModelShortFilename";
+
+            while (CurrentScene.SegmentFunctions.Count < 8)
+            {
+                CurrentScene.SegmentFunctions.Add(new ZSegmentFunction());
+            }
+
             SetSceneHeader(0);
             SelectRoom(0);
             UpdateAlternateSceneHeaders();
+            actorEditControl1.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
+            actorEditControl2.SetActors(ref CurrentScene.Transitions);
+            actorEditControl3.SetActors(ref CurrentScene.SpawnPoints);
             actorEditControl1.UpdateActorEdit();
             actorEditControl2.UpdateActorEdit();
             actorEditControl3.UpdateActorEdit();
@@ -19477,7 +19549,7 @@ namespace SharpOcarina
 
 
 
-                    PleaseWait pleasewait = new PleaseWait("https://github.com/z64utils/z64rom/releases/latest/download/z64rom.zip", path + "z64rom.zip", path, true);
+                    PleaseWait pleasewait = new PleaseWait("https://github.com/z64dev/z64rom/releases/latest/download/z64rom.zip", path + "z64rom.zip", path, true);
                     pleasewait.ShowDialog();
 
                     string binutilsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\/mips64-binutils-win32.zip");
@@ -19489,7 +19561,7 @@ namespace SharpOcarina
                     
                     File.Copy(binutilsPath, path + "tools\\mips64-binutils-win32.zip");
 
-                    pleasewait = new PleaseWait("https://github.com/z64utils/z64hdr/archive/refs/heads/main.zip", path + "include\\z64hdr.zip");
+                    pleasewait = new PleaseWait("https://github.com/z64dev/z64hdr/archive/refs/heads/main.zip", path + "include\\z64hdr.zip");
                     pleasewait.ShowDialog();
 
                
@@ -20592,14 +20664,13 @@ namespace SharpOcarina
                     }
                     else if (extension.ToLower() == ".zscene")
                     {
-                        if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                        {
+                        
 
                             data = new List<byte>(File.ReadAllBytes(openFileDialog1.FileName));
                             MainScene = LoadZsceneData(data, -1, true);
 
 
-                        }
+                        
                     }
                     else if (extension.ToLower() == ".z64")
                     {
@@ -20640,6 +20711,7 @@ namespace SharpOcarina
                             CurrentScene.PolyTypes = TargetScene.PolyTypes.ConvertAll(x => (x.Clone()));
                             CurrentScene.CollisionFilename = TargetScene.CollisionFilename;
                             LoadCollision(CurrentScene.CollisionFilename);
+                            CurrentScene.AutoCollision = false;
                         }
                         if (window.cameras)
                         {
@@ -20823,6 +20895,17 @@ namespace SharpOcarina
         {
             pathwayactorpreview = !pathwayactorpreview;
             UpdatePathwayEdit();
+        }
+
+        private void MultiRoomCollisionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentScene.AutoCollision = MultiRoomCollisionCheckBox.Checked;
+            UpdateForm();
+        }
+
+        private void UseFixedCollisionWriteMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.FixedCollisionWrite = UseFixedCollisionWriteMenuItem.Checked;
         }
 
         public void EasterEggPhaseOne()
@@ -21392,6 +21475,8 @@ namespace SharpOcarina
         public bool SixPointCrawlSpace = false;
         public bool SOBuildOperations = false;
         public bool FullCameraRotation = true;
+        public bool FixedMeshWrite = true;
+        public bool FixedCollisionWrite = true;
     }
 
     public class UndoRedo

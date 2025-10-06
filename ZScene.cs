@@ -263,6 +263,7 @@ namespace SharpOcarina
         public uint RestrictionFlags = 0;
         public byte[] TitleCard = new byte[]{};
         public string MMTitleCard = "";
+        public bool AutoCollision = false;
 
         [XmlIgnore]
         private uint cachecutsceneoffset = 0;
@@ -1412,7 +1413,7 @@ namespace SharpOcarina
                     else
                     {
                         if (File.Exists(Filepath + "title.png")) File.Delete(Filepath + "title.png");
-                        File.WriteAllText(Filepath + "title.txt", MMTitleCard);
+                        if (MMTitleCard != "") File.WriteAllText(Filepath + "title.txt", MMTitleCard);
                     }
                 }
 
@@ -1847,7 +1848,7 @@ namespace SharpOcarina
 
             string game = (!MainForm.settings.MajorasMask) ? "OOT" : "MM";
 
-            if (OriginalSceneData == null || OriginalSceneData.Count == 0)
+            if (1 == 1)
             {
                 MainForm.n64preview = true;
 
@@ -1881,6 +1882,8 @@ namespace SharpOcarina
                 // Load the room data into dummy memory
 
                 List<uint> DLOffsets;
+
+                
 
                 if (_Rooms[i].OriginalRoomData != null && _Rooms[i].OriginalRoomData.Count != 0)
                 {
@@ -2308,7 +2311,7 @@ namespace SharpOcarina
         public void ConvertScene(bool ConsecutiveRoomInject, bool ForceRGBATextures, ZScene MainHeader, string Game)
         {
             /* Check if collision model is valid */
-            if (ColModel == null)
+            if (ColModel == null && cloneid == 0)
             {
                 MessageBox.Show("There's no collision file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -2618,7 +2621,7 @@ namespace SharpOcarina
                             {
                                 foreach (ObjFile.Group Group in Room.TrueGroups)
                                 {
-                                    if (Group.Name.ToLower().Contains("#nocollision")) continue;
+                                    //if (Group.Name.ToLower().Contains("#nocollision")) continue;
 
                                     foreach (ObjFile.Triangle Tri in Group.Triangles)
                                     {
@@ -4616,6 +4619,10 @@ namespace SharpOcarina
             int[] p1 = new int[3], p2 = new int[3], p3 = new int[3], dx = new int[2], dy = new int[2], dz = new int[2], ni = new int[3];
             float nd;
             float[] nf = new float[3], uv = new float[3];
+            //for debug
+            int crashtris = 0;
+            int totaltris = 0;
+            int fixedtris = 0;
 
             for (pos = TriOff; pos < end; pos += 0x10)
             {
@@ -4660,14 +4667,19 @@ namespace SharpOcarina
                     if (ni[i] < 0)
                         ni[i] += 0x10000;
                     Helpers.Overwrite16(ref Data, (pos + 8 + (i << 1)), (ushort)(ni[i] & 0xFFFF));
-                }/*
+                }
                 double normalXZ = Math.Sqrt(ni[0] * ni[0] + ni[2] * ni[2]);
-                if (normalXZ == 0.0)
+                if (normalXZ == 0.0 && ni[1] < (0.5f * 32767.0f) && ni[1] > (-0.8f * 32767.0f))
                 {
-                    //TODO
-                    //MessageBox.Show("Collision crash!");
-                    int o = 0;
-                }*/
+                    
+                    ni[1] = 32767;
+                    Helpers.Overwrite16(ref Data, (pos + 8 + (1 << 1)), (ushort)(ni[1] & 0xFFFF));
+                    fixedtris++;
+                }
+            }
+            if (fixedtris > 0)
+            {
+                DebugConsole.WriteLine("fixed tris:" + fixedtris);
             }
         }
 

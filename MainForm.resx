@@ -120,6 +120,9 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="UseFixedCollisionWriteMenuItem.ToolTipText" xml:space="preserve">
+    <value>Before 1.62, SO would write more vertex than needed on the collision which was obviously a mistake, however in some cases the game performs better, so untick this as a last resort if your scene lags, maybe it helps</value>
+  </data>
   <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>571, 17</value>
   </metadata>

@@ -4,6 +4,22 @@
 ---1.62
 --------------
 
+- Updated SharpOcarina plugin to 1.1.3 (update it manually by importing BlenderScripts\io_export_so_3.0.zip)
+	- Added collision checkboxes for Block Epona, Priority, Wall Damage
+	- IA4 texture type support
+	- Mass Initialize can now convert Fast64 collision materials
+	- Added unknown collision flags for modding purposes
+	- Added quick exporting with one click in the viewport menu
+	- Fixed an issue where converting from Fast64 would assign multitextures to faces that werent supposed to have one
+	- Fixed small void and conveyor direction not exporting
+
+- Updated Objex2 plugin to 2.6.3 (update it manually by importing BlenderScripts\io_export_objex2.zip)
+	- Added quick exporting with one click in the viewport menu 
+	- Mass Initialize can now convert Fast64 collision materials
+	- Mass Initialize now sets the Deform checkbox of all bones to true
+	- Fixed an issue where converting from Fast64 would assign multitextures to faces that werent supposed to have one
+	- (2.6.2) Added the armature folding menu from objex 2.0
+
 - Added snap features when moving actors
 	- Hold C to snap to nearest vertex
 	- Hold V to snap to the center of the nearest edge
@@ -25,7 +41,7 @@
 
 - Added "Import data from ROM/.zscene/SharpOcarina XML" in Extra tab, as the name suggest it allows importing data from scenes in different formats, also hidded the old options to import stuff from zscenes since they're now obsolete
 
-- [TODO] Auto-update feature rewriten to fetch updates from a github server, improving speed and showing a download bar
+- Auto-update feature rewriten to fetch updates from a github server, improving speed and showing a download bar
 
 - Added setting to be able to fully spin the camera and have it upside down. When the camera is upside down, camera and actor movement is also adjusted to take care of the inverted view.
 
@@ -39,13 +55,17 @@
 
 - Cutscene window now displays the start frame of selected camera position / text box / actor position
 
-- I4 textures now use alpha values if alpha is set below 255
+- I4 and I8 textures now use alpha values if alpha is set below 255 (not rendered inside SO)
 
 - Overall performance boost
+
+- Fixed an issue where more vertex than usual were written in the scene file (performance boost ingame on hardware/LLE emus), added option to disable it for collision since one test performed better with the old code
 
 - Fixed an issue where instances would be dragged 2x faster than intended when holding Z or X (stick to ground/ceiling)
 
 - Removed the redundant option "Add object to all rooms" since Scene Objects tab does the same thing
+
+- Added auto checkbox next to collision, if checked it will use the room model as collision (if single room mode, only room0 provides it)
 
 - Fixed an issue where working directory pointed to system32 when opening the application via task bar
 
@@ -59,9 +79,19 @@
 
 - Fixed an issue where the wrong pathway or cutscene command would be selected sometimes when trying to select points
 
+- Fixed an issue where z64rom would not compile if an MM titlecard was blank
+
 - Removed Vertex Normals checkbox since it was simply an unfinished version of Scaled Normals
 
+- Fixed an issue where the game would get a bg_check crash: !IS_ZERO(ac_size) on unoptimized maps
+
 - Cutscene entrance parameters are now invisible in z64rom mode since they're not needed
+
+- Fixed issues related to reload button and scene headers
+
+- Fixed an issue where materials named "None" would appear on multitexture list when having collision only materials in the scene
+
+- Fixed an issue where spawnpoints with room set to FF would fail to detect which room they're in
 
 --------------
 ---1.61

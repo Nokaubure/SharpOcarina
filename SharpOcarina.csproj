@@ -462,9 +462,6 @@
     <None Include="BlenderScripts\io_scene_obj_so.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="BlenderScripts\io_scene_obj_so_2.81.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="ClassDiagram1.cd" />
     <None Include="F3DEX2\custom_adultlink.zobj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

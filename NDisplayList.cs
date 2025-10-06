@@ -221,9 +221,9 @@ namespace SharpOcarina
 
         #region Texture & Palette Macros
 
-        private bool IsI4(NTexture texture)
+        private bool IsI4orI8(NTexture texture)
         {
-            return (texture.Format == GBI.G_IM_FMT_I && texture.Size == GBI.G_IM_SIZ_4b);
+            return (texture.Format == GBI.G_IM_FMT_I);
         }
 
         private ulong SetTextureLUT(uint Type_)
@@ -312,10 +312,7 @@ namespace SharpOcarina
             Helpers.Append64(ref DList, SetTileSize(RTile, 0, 0,
                 (int)((Width - 1) << GBI.G_TEXTURE_IMAGE_FRAC),
                 (int)((Height - 1) << GBI.G_TEXTURE_IMAGE_FRAC)));
-            //animated
-           // if (!Animated) return;
-          //  Helpers.Append64(ref DList, 0xDE00000009000000);
-          //  DebugConsole.WriteLine("Animated! " + DList.Count.ToString("X"));
+           // Console.WriteLine((SetTileSize(RTile, 0, 0,(int)((Width - 1) << GBI.G_TEXTURE_IMAGE_FRAC),(int)((Height - 1) << GBI.G_TEXTURE_IMAGE_FRAC))).ToString("X16"));
         }
 
         private void LoadTextureBlock_4b(ref List<byte> DList, uint TImg, int Fmt, uint Width, uint Height, uint Pal, uint CMS, uint CMT, uint MaskS, uint MaskT, uint ShiftS, uint ShiftT)
@@ -1024,7 +1021,7 @@ namespace SharpOcarina
                             {
                                 if (Group.MultiTexMaterialName == "")
                                 {
-                                    if (!ThisTexture.HasAlpha && !IsI4(ThisTexture))
+                                    if (!ThisTexture.HasAlpha && !IsI4orI8(ThisTexture))
                                         //Helpers.Append64(ref DList, 0xFC127E03FF1FFDFC);
                                         // Vertex alpha, single opaque texture
                                         Helpers.Append64(ref DList, SetCombineNew(
@@ -1043,7 +1040,7 @@ namespace SharpOcarina
                                 }
                                 else
                                 {
-                                    if (!ThisTexture.HasAlpha && !IsI4(ThisTexture))
+                                    if (!ThisTexture.HasAlpha && !IsI4orI8(ThisTexture))
                                         // Vertex alpha, multi opaque texture
                                         Helpers.Append64(ref DList, SetCombineNew(
                                             C_TEXEL1,   C_TEXEL0, LerpValue,   C_TEXEL0,
@@ -1061,7 +1058,7 @@ namespace SharpOcarina
                             }
                             else if (Group.MultiTexMaterialName != "")
                             {
-                                if ((Textures[matindex].HasAlpha || IsI4(Textures[matindex])))
+                                if ((Textures[matindex].HasAlpha || IsI4orI8(Textures[matindex])))
                                 {
                                     if (AlphaMask)
                                         //Helpers.Append64(ref DList, SetCombine(0x127E03FFFFF5F8));
@@ -1091,7 +1088,7 @@ namespace SharpOcarina
                                         A_COMBINED, A_0,      A_PRIMITIVE, A_0));
 
                             }
-                            else if (ThisTexture.HasAlpha || IsI4(ThisTexture))
+                            else if (ThisTexture.HasAlpha || IsI4orI8(ThisTexture))
                                 //Helpers.Append64(ref DList, SetCombine(0x127E03, 0xFFFFF3F8));
                                 //xlu single transparent texture
                                 Helpers.Append64(ref DList, SetCombineNew(
@@ -1117,7 +1114,7 @@ namespace SharpOcarina
                                 Helpers.Append64(ref DList, 0xE200001C0C1849D8 | (ulong)((Decal) ? 0xC00 : 0x000));
                                 Helpers.Append64(ref DList, 0xD9FEFFFF00000000);
                             }
-                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha) || IsI4(ThisTexture))
+                            else if (ThisTexture.HasAlpha || (Group.MultiTexMaterialName != "" && Textures[matindex].HasAlpha) || IsI4orI8(ThisTexture))
                                 Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D0 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
                             else
                                 Helpers.Append64(ref DList, SetRenderMode(0x18, (uint)(0x081049D8 | ((IgnoreFog) ? 0x00000000 : 0xC0000000) | ((Decal) ? 0xC00 : 0x000))));
@@ -1387,8 +1384,8 @@ namespace SharpOcarina
                                 Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(MainForm.Clamp(VertList[j].Position.Y * Scale, -32768, 32767)) - midY));
                                 Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt16(MainForm.Clamp(VertList[j].Position.Z * Scale, -32768, 32767)) - midZ));
                                 Helpers.Append16(ref VertData, 0);
-                                Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt32(VertList[j].TexCoord.X * 1024.0f) & 0xFFFF));
-                                Helpers.Append16(ref VertData, (ushort)(System.Convert.ToInt32(VertList[j].TexCoord.Y * 1024.0f) & 0xFFFF));
+                                Helpers.Append16S(ref VertData, (short)(VertList[j].TexCoord.X * 1024.0f));
+                                Helpers.Append16S(ref VertData, (short)(VertList[j].TexCoord.Y * 1024.0f));
                             }
                             catch(System.OverflowException e)
                             {

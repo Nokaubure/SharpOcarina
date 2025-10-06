@@ -182,6 +182,7 @@ namespace SharpOcarina
             this.createDMAFilesFromFoldersz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.MultiRoomCollisionCheckBox = new System.Windows.Forms.CheckBox();
             this.TitlecardTextboxLabel = new System.Windows.Forms.Label();
             this.SetTitlecard = new System.Windows.Forms.Button();
             this.SetRestrictionFlags = new System.Windows.Forms.Button();
@@ -269,7 +270,7 @@ namespace SharpOcarina
             this.niceLine2 = new SharpOcarina.NiceLine();
             this.InjectoffsetTextbox = new SharpOcarina.NumericTextBox();
             this.InjectOffsetLabel = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.LoadCollisionButton = new System.Windows.Forms.Button();
             this.CollisionTextbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.ScaleNumericbox = new SharpOcarina.NumericUpDownEx();
@@ -859,6 +860,7 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.UseFixedCollisionWriteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1364,6 +1366,7 @@ namespace SharpOcarina
             this.toolStripSeparator9,
             this.consecutiveRoomInjectionToolStripMenuItem,
             this.CheckEmptyOffsetItem,
+            this.UseFixedCollisionWriteMenuItem,
             this.printOffsetsOnInjectToolStripMenuItem,
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem,
             this.updateCRCMenuItem,
@@ -2409,6 +2412,7 @@ namespace SharpOcarina
             // 
             this.tabGeneral.BackColor = System.Drawing.Color.White;
             this.tabGeneral.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tabGeneral.Controls.Add(this.MultiRoomCollisionCheckBox);
             this.tabGeneral.Controls.Add(this.TitlecardTextboxLabel);
             this.tabGeneral.Controls.Add(this.SetTitlecard);
             this.tabGeneral.Controls.Add(this.SetRestrictionFlags);
@@ -2426,7 +2430,7 @@ namespace SharpOcarina
             this.tabGeneral.Controls.Add(this.WaterboxGroupBox);
             this.tabGeneral.Controls.Add(this.InjectoffsetTextbox);
             this.tabGeneral.Controls.Add(this.InjectOffsetLabel);
-            this.tabGeneral.Controls.Add(this.button4);
+            this.tabGeneral.Controls.Add(this.LoadCollisionButton);
             this.tabGeneral.Controls.Add(this.CollisionTextbox);
             this.tabGeneral.Controls.Add(this.label4);
             this.tabGeneral.Controls.Add(this.ScaleNumericbox);
@@ -2442,6 +2446,18 @@ namespace SharpOcarina
             this.tabGeneral.Size = new System.Drawing.Size(411, 676);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
+            // 
+            // MultiRoomCollisionCheckBox
+            // 
+            this.MultiRoomCollisionCheckBox.AutoSize = true;
+            this.MultiRoomCollisionCheckBox.Location = new System.Drawing.Point(357, 123);
+            this.MultiRoomCollisionCheckBox.Name = "MultiRoomCollisionCheckBox";
+            this.MultiRoomCollisionCheckBox.Size = new System.Drawing.Size(48, 17);
+            this.MultiRoomCollisionCheckBox.TabIndex = 79;
+            this.MultiRoomCollisionCheckBox.Text = "Auto";
+            this.EnvironmentControlTooltip.SetToolTip(this.MultiRoomCollisionCheckBox, "Room model will be used as collision");
+            this.MultiRoomCollisionCheckBox.UseVisualStyleBackColor = true;
+            this.MultiRoomCollisionCheckBox.CheckedChanged += new System.EventHandler(this.MultiRoomCollisionCheckBox_CheckedChanged);
             // 
             // TitlecardTextboxLabel
             // 
@@ -3973,21 +3989,21 @@ namespace SharpOcarina
             this.InjectOffsetLabel.TabIndex = 9;
             this.InjectOffsetLabel.Text = "Injection Offset:";
             // 
-            // button4
+            // LoadCollisionButton
             // 
-            this.button4.Location = new System.Drawing.Point(358, 121);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(44, 20);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "Load";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.LoadCollision_Click);
+            this.LoadCollisionButton.Location = new System.Drawing.Point(308, 121);
+            this.LoadCollisionButton.Name = "LoadCollisionButton";
+            this.LoadCollisionButton.Size = new System.Drawing.Size(44, 20);
+            this.LoadCollisionButton.TabIndex = 6;
+            this.LoadCollisionButton.Text = "Load";
+            this.LoadCollisionButton.UseVisualStyleBackColor = true;
+            this.LoadCollisionButton.Click += new System.EventHandler(this.LoadCollision_Click);
             // 
             // CollisionTextbox
             // 
             this.CollisionTextbox.Location = new System.Drawing.Point(93, 121);
             this.CollisionTextbox.Name = "CollisionTextbox";
-            this.CollisionTextbox.Size = new System.Drawing.Size(259, 20);
+            this.CollisionTextbox.Size = new System.Drawing.Size(206, 20);
             this.CollisionTextbox.TabIndex = 5;
             // 
             // label4
@@ -4581,7 +4597,8 @@ namespace SharpOcarina
             this.ReloadRoomButton.TabIndex = 17;
             this.ReloadRoomButton.Text = "Reload";
             this.EnvironmentControlTooltip.SetToolTip(this.ReloadRoomButton, "Updates the model while leaving actors and everything else untouched, including m" +
-        "anual group settings.\nAlso reloads the collision file.\nHold SHIFT to reload the model from a different file.");
+        "anual group settings.\nAlso reloads the collision file.\nHold SHIFT to reload the " +
+        "model from a different file.");
             this.ReloadRoomButton.UseVisualStyleBackColor = true;
             this.ReloadRoomButton.Click += new System.EventHandler(this.ReloadRoomButton_Click);
             // 
@@ -12802,6 +12819,15 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // UseFixedCollisionWriteMenuItem
+            // 
+            this.UseFixedCollisionWriteMenuItem.CheckOnClick = true;
+            this.UseFixedCollisionWriteMenuItem.Name = "UseFixedCollisionWriteMenuItem";
+            this.UseFixedCollisionWriteMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.UseFixedCollisionWriteMenuItem.Text = "Use new collision write";
+            this.UseFixedCollisionWriteMenuItem.ToolTipText = resources.GetString("UseFixedCollisionWriteMenuItem.ToolTipText");
+            this.UseFixedCollisionWriteMenuItem.Click += new System.EventHandler(this.UseFixedCollisionWriteMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13150,7 +13176,7 @@ namespace SharpOcarina
         private System.Windows.Forms.Button AddRoom;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button LoadCollisionButton;
         private System.Windows.Forms.TextBox CollisionTextbox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
@@ -13954,6 +13980,8 @@ namespace SharpOcarina
         private Button PathwayViewButton;
         private Button PathwayCopyButton;
         private Button PathwayPasteButton;
+        private CheckBox MultiRoomCollisionCheckBox;
+        private ToolStripMenuItem UseFixedCollisionWriteMenuItem;
     }
     }
 

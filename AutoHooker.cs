@@ -562,8 +562,7 @@ namespace SharpOcarina
                 {
                     int index = HookGrid.CurrentRow.Index;
                     if (index > -1 && index < FunctionHooks.Count)
-                        index = 0;
-                    System.Diagnostics.Process.Start(FunctionHooks[index].FileName);
+                        System.Diagnostics.Process.Start(FunctionHooks[index].FileName);
                 }
                 else
                 {
@@ -976,7 +975,7 @@ namespace SharpOcarina
             ushort ActorID = 0;
             ushort ObjectID = 0;
             bool proceed = false;
-            using (PickCustomActorID pickID = new PickCustomActorID(0, 0, true, true, "Empty", z64romactors, z64romobjects))
+            using (PickCustomActorID pickID = new PickCustomActorID(0, 0, true, true, true, "Empty", z64romactors, z64romobjects))
             {
                 if (pickID.ShowDialog() == DialogResult.OK)
                 {
