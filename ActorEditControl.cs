@@ -298,6 +298,12 @@ namespace SharpOcarina
                 if (ActorID != cacheId)
                 {
                     int propertyprevindex = ActorVariableListBox.SelectedIndex;
+                    bool wasswitchflag = false;
+                    if (ActorVariableListBox.SelectedIndex != -1 && ActorVariableListBox.Items.Count > ActorVariableListBox.SelectedIndex)
+                    {
+                        ActorProperty prevprop = (ActorVariableListBox.Items[ActorVariableListBox.SelectedIndex] as ActorProperty);
+                        if (prevprop.Name.ToLower().Contains("switch flag")) wasswitchflag = true;
+                    }
                     ActorVariableListBox.Items.Clear();
                     List<ActorProperty> properties;
                     if (MainForm.ActorCache.ContainsKey(ActorID))
@@ -326,8 +332,13 @@ namespace SharpOcarina
                     }
 
 
-
-                    foreach (ActorProperty property in properties) ActorVariableListBox.Items.Add(property);
+                    int p = 0;
+                    foreach (ActorProperty property in properties)
+                    {
+                        ActorVariableListBox.Items.Add(property);
+                        if (wasswitchflag && property.Name.ToLower().Contains("switch flag")) propertyprevindex = p;
+                        p++;
+                    }
                     if (ActorVariableListBox.Items.Count > 0 && ActorVariableListBox.Items.Count - 1 >= propertyprevindex) ActorVariableListBox.SelectedIndex = propertyprevindex;
                     cacheId = ActorID;
                 }
@@ -384,9 +395,11 @@ namespace SharpOcarina
 
                         foreach (ZScene.ZRoom room in MainForm.CurrentScene.Rooms)
                         {
-                            entryIndex = 0;
+                            entryIndex = -1;
                             foreach (ZActor actor in room.ZActors)
                             {
+                                entryIndex++;
+
                                 if (actor == Actors[ActorComboBox.SelectedIndex]) continue;
                                 ushort actorid = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
 
@@ -410,9 +423,11 @@ namespace SharpOcarina
                             }
                             roomIndex++;
                         }
-                        entryIndex = 0;
+                        entryIndex = -1;
                         foreach (ZActor actor in MainForm.CurrentScene.Transitions)
                         {
+                            entryIndex++;
+
                             if (actor == Actors[ActorComboBox.SelectedIndex]) continue;
                             
                             ushort actorid = !MainForm.settings.MajorasMask ? actor.Number : (ushort)(actor.Number & 0x0FFF);
@@ -435,7 +450,6 @@ namespace SharpOcarina
 
 
                             switchflags.Add(new MainForm.FlagEntryInfo(flag, "", name, entryIndex));
-                            entryIndex++;
                             found = true;
                         }
 
@@ -983,6 +997,11 @@ namespace SharpOcarina
                 UpdateActorEdit(); 
             }
             
+        }
+
+        private void ActorVariableListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateActorEdit();
         }
     }
 

@@ -614,7 +614,6 @@ namespace SharpOcarina
 
 
             Updater updater = new Updater();
-            updater.StartMonitoring();
 #if !DEBUG
             updater.StartMonitoring();
 #endif
@@ -12734,7 +12733,7 @@ namespace SharpOcarina
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Seems that there's no emulator associated with this extension. Assign one and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Seems that there's no emulator associated with this extension. Assign one and try again.\nSteps to assign one:\n-In windows explorer, right click on any rom, then properties\n-Click 'Open With...'\n-Select your emulator of choice", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

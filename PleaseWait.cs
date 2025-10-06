@@ -55,7 +55,8 @@ namespace SharpOcarina
                 {
 
                     System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                    
+
+
                     if (website != "")
                         await client.DownloadFileTaskAsync(new Uri(website), downloadlocation);
                     
@@ -82,7 +83,7 @@ namespace SharpOcarina
                                         }));
                                     }
                                 };
-
+                                
                                 zip.ExtractAll(unziplocation, ExtractExistingFileAction.Throw);
                             }
                             if (delete)

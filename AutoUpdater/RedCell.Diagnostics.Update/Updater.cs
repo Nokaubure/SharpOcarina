@@ -149,8 +149,8 @@ namespace RedCell.Diagnostics.Update
             if (dialogResult == DialogResult.Yes)
             {
 
-                PleaseWait pleasewait = new PleaseWait();
-                pleasewait.Show();
+                //PleaseWait pleasewait = new PleaseWait();
+                //pleasewait.Show();
 
                 Log.Write("Remote version is newer. Updating.");
                 _updating = true;
@@ -193,7 +193,7 @@ namespace RedCell.Diagnostics.Update
 
                 string url = this._remoteConfig.BaseUri + update;
 
-                PleaseWait pleasewait = new PleaseWait(url, Path.Combine(WorkPath, update), Path.Combine(WorkPath, update), true);
+                PleaseWait pleasewait = new PleaseWait(url, Path.Combine(WorkPath, update), Path.GetDirectoryName(Path.Combine(WorkPath, update)), true);
                 pleasewait.ShowDialog();
                 /*
                 var file = Fetch.Get(url);

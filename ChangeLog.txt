@@ -4,6 +4,8 @@
 ---1.62
 --------------
 
+Note: unfortunately 1.61 was broken on autoupdater and didnt noticed till 5 months after, so also check 1.61 changelog if you only use autoupdate
+
 - Updated SharpOcarina plugin to 1.1.3 (update it manually by importing BlenderScripts\io_export_so_3.0.zip)
 	- Added collision checkboxes for Block Epona, Priority, Wall Damage
 	- IA4 texture type support
@@ -25,11 +27,11 @@
 	- Hold V to snap to the center of the nearest edge
 	- Hold B to snap alongside the nearest edge
 
-- The rom will no longer be played in the emulator if the project has build errors
+- The rom will no longer be played in the emulator if the project has build errors (z64rom)
 
 - Added feature to move all cutscene commands from an specified start frame by X frames in Extra tab
 
-- Added feature to move all cutscene points / textboxes of the selected command from an specified start frame by X frames in Extra tab
+- Added feature to change the frame duration of all cutscene points / textboxes of the selected command from an specified start frame by X frames in Extra tab
 
 - Added feature to move selected actor to another room in Extra tab
 
@@ -57,15 +59,19 @@
 
 - I4 and I8 textures now use alpha values if alpha is set below 255 (not rendered inside SO)
 
+- If switch flag property is selected on current actor and then a different one with switch flag property is selected, the cursor will automatically select switch flag
+
+- You can now load a model when viewing a scene, doing so will allow you to save it and test ingame
+
 - Overall performance boost
 
-- Fixed an issue where more vertex than usual were written in the scene file (performance boost ingame on hardware/LLE emus), added option to disable it for collision since one test performed better with the old code
+- IMPORTANT! Fixed an issue where more vertex than usual were written in the scene file (performance boost ingame on hardware/LLE emus), added option to disable it for collision since one test performed better with the old code
+
+- Added auto checkbox next to collision, if checked it will use the room model as collision (if single room mode, only room0 provides it)
 
 - Fixed an issue where instances would be dragged 2x faster than intended when holding Z or X (stick to ground/ceiling)
 
 - Removed the redundant option "Add object to all rooms" since Scene Objects tab does the same thing
-
-- Added auto checkbox next to collision, if checked it will use the room model as collision (if single room mode, only room0 provides it)
 
 - Fixed an issue where working directory pointed to system32 when opening the application via task bar
 
@@ -92,6 +98,8 @@
 - Fixed an issue where materials named "None" would appear on multitexture list when having collision only materials in the scene
 
 - Fixed an issue where spawnpoints with room set to FF would fail to detect which room they're in
+
+- Fixed an issue where arrow keys didnt worked for selecting properties
 
 --------------
 ---1.61

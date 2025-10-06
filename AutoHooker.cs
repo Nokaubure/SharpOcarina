@@ -981,9 +981,9 @@ namespace SharpOcarina
                 {
                     ActorID = pickID.ActorID;
                     ObjectID = pickID.ObjectID;
-                    if (z64romactors.FindIndex(x => x.ID == ActorID) != -1 || MainForm.ActorCache.ContainsKey(ActorID))
+                    if (z64romactors.FindIndex(x => x.ID == ActorID) != -1)
                     {
-                        MessageBox.Show("ActorID already in use!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("ActorID already in use by a custom actor!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     proceed = true;
@@ -1012,7 +1012,14 @@ namespace SharpOcarina
                 File.WriteAllText(newfileH, newfileHtxt);
 
                 z64romactors.Add(new CustomActorz64rom(ActorID, CreateActorTextBox.Text, -1));
-                MainForm.ActorCache.Add(ActorID, new ActorInfo(CreateActorTextBox.Text, new List<ActorProperty>(), "" + ObjectID.ToString("X4")));
+                if (MainForm.ActorCache.ContainsKey(ActorID))
+                {
+                    MainForm.ActorCache[ActorID].name = CreateActorTextBox.Text;
+                    MainForm.ActorCache[ActorID].actorproperties = new List<ActorProperty>();
+                    MainForm.ActorCache[ActorID].objects = "" + ObjectID.ToString("X4");
+                }
+                else
+                    MainForm.ActorCache.Add(ActorID, new ActorInfo(CreateActorTextBox.Text, new List<ActorProperty>(), "" + ObjectID.ToString("X4")));
                 if (z64romobjects.FindIndex(x => x.ID == ObjectID) == -1 && !MainForm.ObjectCache.ContainsKey(ObjectID))
                 {
                     z64romobjects.Add(new CustomObjectz64rom(ObjectID, "NewObject" + ObjectID.ToString("X4")));
