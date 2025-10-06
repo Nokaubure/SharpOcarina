@@ -52,7 +52,7 @@ namespace RedCell.Diagnostics.Update
         public Updater (FileInfo configFile)
         {
             Log.Debug = true;
-
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             _localConfigFile = configFile;
             Log.Write("Loaded.");
             Log.Write("Initializing using file '{0}'.", configFile.FullName);
