@@ -1,6 +1,14 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.63
+--------------
+
+- [TODO] Open autosave
+
+- Fixed an issue where add object button was still limited to 15 objects in z64rom installations that had the object cap increased (autoadd object still worked)
+
+--------------
 ---1.62
 --------------
 

@@ -4733,7 +4733,7 @@ namespace SharpOcarina
                         SceneObjectDeleteButton.Enabled = true;
 
                     RoomObjectAddButton.Enabled = SceneObjectAddButton.Enabled = 
-                        (RoomObjectListBox.Items.Count + SceneObjectListBox.Items.Count) < 0x0F;
+                        (RoomObjectListBox.Items.Count + SceneObjectListBox.Items.Count) < (rom64.isSet() ? rom64.MaxObjects : 15); 
 
                     if (ExitList.Items.Count == 0 || ExitList.SelectedIndex == -1)
                         DeleteexitButton.Enabled = false;
