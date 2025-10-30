@@ -818,7 +818,7 @@ namespace SharpOcarina
                 "icon_item_field_static","icon_item_gameover_static","icon_item_NES_static",
                 "icon_item_static","item_name_static","map_grand_static","message_static",
                 "message_texture_static","map_name_static",
-                "nintendo_rogo_static","parameter_static","title_static","map_i_static"
+                "nintendo_rogo_static","parameter_static","title_static","map_i_static","object_mag"
             };
             //"nes_font_static",
             Array.Sort(files);
@@ -827,14 +827,21 @@ namespace SharpOcarina
 
             string z64ootxml = rom64.getPath() + "\\z64oot\\assets\\xml\\textures\\";
             string z64oottextures = rom64.getPath() + "\\z64oot\\assets\\textures\\";
+            string z64ootxml2 = rom64.getPath() + "\\z64oot\\assets\\xml\\objects\\";
+            string z64oottextures2 = rom64.getPath() + "\\z64oot\\assets\\objects\\";
             string patchpath = rom64.getPath() + "\\patch\\";
 
             foreach (string file in files)
             {
 
-
+                bool isobject = false;
                 XmlDocument doc = new XmlDocument();
                 var XML = z64ootxml + file + ".xml";
+                if (!File.Exists(XML))
+                {
+                    XML = z64ootxml2 + file + ".xml";
+                    isobject = true;
+                }
                 FileStream fs = new FileStream(XML, FileMode.Open, FileAccess.ReadWrite);
                 doc.Load(fs);
                 XmlNodeList nodes = doc.SelectNodes("Root/File/Texture");
@@ -849,13 +856,15 @@ namespace SharpOcarina
                     string offset = "0x" + (offsetval).ToString("X8");
                     string format = attributes["Format"].Value.ToUpper();
                     if (format.Contains("CI")) continue;
-                    if (offsetval >= new FileInfo(rom64.getPath() + "\\rom\\system\\static\\.vanilla\\" + file + ".bin").Length) continue;
+                    FileInfo sourcefile = new FileInfo(rom64.getPath() + "\\rom\\system\\static\\.vanilla\\" + file + ".bin");
+                    if (!isobject && offsetval >= sourcefile.Length) continue;
                     if (file == "parameter_static" && offsetval == 0x3AC0) continue;
                     string shortfilename = attributes["OutName"].Value + "." + format.ToLower() + ".png";
                     string filename = file + "/" + shortfilename;
                     texelcfg += $"##\t{offset} = TEXTURE(\"images/{filename}\", {format})\r\n";
-
-                    File.Copy(z64oottextures + file + "\\" + shortfilename, patchpath + "images\\" + file + "\\" + shortfilename);
+                    string newfile = patchpath + "images\\" + file + "\\" + shortfilename;
+                    if (!File.Exists(newfile))
+                        File.Copy((!isobject ? z64oottextures : z64oottextures2) + file + "\\" + shortfilename, patchpath + "images\\" + file + "\\" + shortfilename);
 
                 }
 

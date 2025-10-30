@@ -8,6 +8,8 @@
 
 - Fixed an issue where add object button was still limited to 15 objects in z64rom installations that had the object cap increased (autoadd object still worked)
 
+- Fixed an issue where a debug dummy checkbox appeared in room tab
+
 --------------
 ---1.62
 --------------
