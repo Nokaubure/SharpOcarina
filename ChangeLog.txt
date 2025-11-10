@@ -4,11 +4,23 @@
 ---1.63
 --------------
 
-- [TODO] Open autosave
+- Added subdivision and collision bounds editor in collision tab, z64rom only. Since this feature is still not in z64rom, click the "auto" checkbox next to subdivisions to download the patch into your project.
+
+- Redesigned collision tab so it now uses dropdowns instead of radio buttons
+
+- Added Zelda64 Text Editor (Skawo fork) in Tools tab. It will download the latest version in Tools folder and check for updates automatically.
+
+- Slightly performance boost
 
 - Fixed an issue where add object button was still limited to 15 objects in z64rom installations that had the object cap increased (autoadd object still worked)
 
 - Fixed an issue where a debug dummy checkbox appeared in room tab
+
+- Fixed an issue where texture scrolling speed of advanced texture anims didnt matched ingame speed
+
+- Fixed an issue where transparent I4/I8 textures werent being rendered in SO viewport (reminder, for an I4/I8 texture to be considered transparent, the group needs to have less than 255 alpha)
+
+- Fixed an issue where all vertex in the object file were taken into account when calculating the collision bounds, instead of only the collision vertex
 
 --------------
 ---1.62

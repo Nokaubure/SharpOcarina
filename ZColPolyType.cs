@@ -90,7 +90,7 @@ namespace SharpOcarina
         }
 
         [XmlIgnore]
-        public int GroundType
+        public int SoundEffect
         {
             get { return (int)(Raw & 0x000000000000000F); }
             set { Raw = ((Raw & 0xFFFFFFFFFFFFFFF0) | (ulong)((uint)(value & 0xF))); }
@@ -141,6 +141,27 @@ namespace SharpOcarina
             get { return ((Raw & 0x8000000000000000) != 0); }
             set { if (value == true) { Raw |= 0x8000000000000000; } else { Raw &= ~((ulong)0x8000000000000000); } }
         }
+        [XmlIgnore]
+        public int FloorFlags
+        {
+            get { return (int)((Raw & 0x3C00000000000000) >> 58); }
+            set { Raw = ((Raw & 0xC3FFFFFFFFFFFFFF) | ((ulong)(value) << 58)); }
+        }
+
+        [XmlIgnore]
+        public int WallFlags
+        {
+            get { return (int)((Raw & 0x03E0000000000000) >> 53); }
+            set { Raw = ((Raw & 0xFC1FFFFFFFFFFFFF) | ((ulong)(value) << 53)); }
+        }
+
+        [XmlIgnore]
+        public int SpecialFlags
+        {
+            get { return (int)((Raw & 0x0003E00000000000) >> 45); }
+            set { Raw = ((Raw & 0xFFFC1FFFFFFFFFFF) | ((ulong)(value) << 45)); }
+        }
+
         public ZColPolyType Clone()
         {
             return (ZColPolyType)this.MemberwiseClone();

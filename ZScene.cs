@@ -293,6 +293,12 @@ namespace SharpOcarina
         public List<ObjFile.Material> AdditionalTextures = new List<ObjFile.Material>();
         public List<ZTextureAnim> TextureAnims = new List<ZTextureAnim>();
         public List<ZActorCutscene> ActorCutscenes = new List<ZActorCutscene>();
+        public Vector3s MinCollisionBounds = new Vector3s(0, 0, 0);
+        public Vector3s MaxCollisionBounds = new Vector3s(0, 0, 0);
+        public byte[] CollisionSubdivisions = new byte[3] { 16, 16, 16 };
+        public bool AutomaticCollisionBounds = true;
+        public bool AutomaticSubdivisions = true;
+
 
         [XmlIgnore]
         public Dictionary<string, int> textureoffsets = new Dictionary<string, int>();
@@ -2364,9 +2370,13 @@ namespace SharpOcarina
 
             Helpers.Append64(ref SceneData, (ulong)(0x1900000000000000 | (ulong)CameraMovement << 48 | (ulong)WorldMap));  /* Camera movement, world map */
             if (cloneid == 0)
-            { 
+            {
+
+            if (CollisionSubdivisions[0] == 0 || CollisionSubdivisions[1] == 0 || CollisionSubdivisions[2] == 0) CollisionSubdivisions = new byte[3] { 16, 4, 16 };
+
+
             CmdCollisionOffset = SceneData.Count;
-            Helpers.Append64(ref SceneData, 0x0300000000000000);                        /* Collision header */
+            Helpers.Append64(ref SceneData, 0x0300000000000000 | (ulong)CollisionSubdivisions[0] << 48 | (ulong)CollisionSubdivisions[1] << 40 | (ulong)CollisionSubdivisions[2] << 32 );                        /* Collision header */
 
             CmdEntranceListOffset = SceneData.Count;
             Helpers.Append64(ref SceneData, 0x0600000000000000);                        /* Entrance index */
@@ -2454,6 +2464,11 @@ namespace SharpOcarina
 
             int endofsceneheader = SceneData.Count;
 
+            if (cloneid == 0 && AutomaticCollisionBounds)
+            {
+                //TODO optimize this call
+                CalculateCollisionBounds();
+            }
 
             if (!MainForm.n64preview)
             {
@@ -4146,6 +4161,94 @@ namespace SharpOcarina
 
         #region Collision
 
+        public void CalculateCollisionBounds()
+        {
+
+            List<ObjFile.Vertex> UsableVertex = new List<ObjFile.Vertex>();
+            MinCollisionBounds = new Vector3s(0, 0, 0);
+            MaxCollisionBounds = new Vector3s(0, 0, 0);
+
+            foreach (ObjFile.Group Group in ColModel.Groups)
+            foreach (ObjFile.Triangle Tri in Group.Triangles)
+            {
+                int[] ni = new int[3];
+                Vector3[] vtx = new Vector3[3];
+
+                for (int i = 0; i < 3; i++)
+                    vtx[i] = new Vector3(
+                        (int)ColModel.Vertices[Tri.VertIndex[i]].X,
+                        (int)ColModel.Vertices[Tri.VertIndex[i]].Y,
+                        (int)ColModel.Vertices[Tri.VertIndex[i]].Z);
+
+
+                Vector3 u = vtx[1] - vtx[0];
+                Vector3 v = vtx[2] - vtx[0];
+                Vector3 triWind;
+                triWind.X = (u.Y * v.Z) - (u.Z * v.Y);
+                triWind.Y = (u.Z * v.X) - (u.X * v.Z);
+                triWind.Z = (u.X * v.Y) - (u.Y * v.X);
+
+                Vector3 triNorm = Vector3.Normalize(triWind);
+                ni[0] = (int)Math.Round(triNorm.X * 0x7FFF);
+                ni[1] = (int)Math.Round(triNorm.Y * 0x7FFF);
+                ni[2] = (int)Math.Round(triNorm.Z * 0x7FFF);
+
+                bool skip = false;
+
+                if (ni[0] == 0 && ni[1] == 0 && ni[2] == 0)
+                {
+                    skip = true;
+                }
+
+                if (!Group.Name.ToLower().Contains("#blackplane") && !Group.Name.ToLower().Contains("#nocollision") && !Group.Name.ToLower().Contains("#door") && !skip)
+                {
+                        
+                    UsableVertex.Add(ColModel.Vertices[Tri.VertIndex[0]]);
+                    UsableVertex.Add(ColModel.Vertices[Tri.VertIndex[1]]);
+                    UsableVertex.Add(ColModel.Vertices[Tri.VertIndex[2]]);
+                        
+                   
+                }
+            }
+
+
+            foreach (ObjFile.Vertex Vtx in UsableVertex)
+            {
+                /* Minimum... */
+                MinCollisionBounds.X = (short)Math.Min(MinCollisionBounds.X, Vtx.X * Scale);
+                MinCollisionBounds.Y = (short)Math.Min(MinCollisionBounds.Y, Vtx.Y * Scale);
+                MinCollisionBounds.Z = (short)Math.Min(MinCollisionBounds.Z, Vtx.Z * Scale);
+
+                /* Maximum... */
+                MaxCollisionBounds.X = (short)Math.Max(MaxCollisionBounds.X, Vtx.X * Scale);
+                MaxCollisionBounds.Y = (short)Math.Max(MaxCollisionBounds.Y, Vtx.Y * Scale);
+                MaxCollisionBounds.Z = (short)Math.Max(MaxCollisionBounds.Z, Vtx.Z * Scale);
+
+            }
+
+            if (MainForm.settings.TriplicateCollisionBounds)
+            {
+                MinCollisionBounds.X = (short)MainForm.Clamp(MinCollisionBounds.X * 3, -32767, 32767);
+                MinCollisionBounds.Y = (short)MainForm.Clamp(MinCollisionBounds.Y * 3, -32767, 32767);
+                MinCollisionBounds.Z = (short)MainForm.Clamp(MinCollisionBounds.Z * 3, -32767, 32767);
+                MaxCollisionBounds.X = (short)MainForm.Clamp(MaxCollisionBounds.X * 3, -32767, 32767);
+                MaxCollisionBounds.Y = (short)MainForm.Clamp(MaxCollisionBounds.Y * 3, -32767, 32767);
+                MaxCollisionBounds.Z = (short)MainForm.Clamp(MaxCollisionBounds.Z * 3, -32767, 32767);
+            }
+
+#if DEBUG
+            if (MainForm.settings.TriplicateCollisionBounds && MainForm.CurrentScene.Name.Contains("DunGen"))
+            {
+                MinCollisionBounds.X = -15000;
+                MinCollisionBounds.Y = -1000;
+                MinCollisionBounds.Z = -15000;
+                MaxCollisionBounds.X = 15000;
+                MaxCollisionBounds.Y = 1000;
+                MaxCollisionBounds.Z = 15000;
+            }
+#endif
+        }
+
         public void WriteSceneCollision(List<byte> Data, byte bank, bool zobj, string Game)
         {
             /* Fix scene header */
@@ -4155,45 +4258,7 @@ namespace SharpOcarina
                 CollisionOffset = Data.Count;
             }
 
-            /* Determine collision's minimum/maximum coordinates... */
-            OpenTK.Vector3d MinCoordinate = new OpenTK.Vector3d(0, 0, 0);
-            OpenTK.Vector3d MaxCoordinate = new OpenTK.Vector3d(0, 0, 0);
-    
-            foreach (ObjFile.Vertex Vtx in ColModel.Vertices)
-            {
-                /* Minimum... */
-                MinCoordinate.X = Math.Min(MinCoordinate.X, Vtx.X * Scale);
-                MinCoordinate.Y = Math.Min(MinCoordinate.Y, Vtx.Y * Scale);
-                MinCoordinate.Z = Math.Min(MinCoordinate.Z, Vtx.Z * Scale);
 
-                /* Maximum... */
-                MaxCoordinate.X = Math.Max(MaxCoordinate.X, Vtx.X * Scale);
-                MaxCoordinate.Y = Math.Max(MaxCoordinate.Y, Vtx.Y * Scale);
-                MaxCoordinate.Z = Math.Max(MaxCoordinate.Z, Vtx.Z * Scale);
-
-            }
-
-            if (MainForm.settings.TriplicateCollisionBounds)
-            {
-                MinCoordinate.X = MainForm.Clamp(MinCoordinate.X * 3, -32767, 32767);
-                MinCoordinate.Y = MainForm.Clamp(MinCoordinate.Y * 3, -32767, 32767);
-                MinCoordinate.Z = MainForm.Clamp(MinCoordinate.Z * 3, -32767, 32767);
-                MaxCoordinate.X = MainForm.Clamp(MaxCoordinate.X * 3, -32767, 32767);
-                MaxCoordinate.Y = MainForm.Clamp(MaxCoordinate.Y * 3, -32767, 32767);
-                MaxCoordinate.Z = MainForm.Clamp(MaxCoordinate.Z * 3, -32767, 32767);
-            }
-
-#if DEBUG
-            if (MainForm.settings.TriplicateCollisionBounds && MainForm.CurrentScene.Name.Contains("DunGen"))
-            {
-                MinCoordinate.X = -15000;
-                MinCoordinate.Y = -1000;
-                MinCoordinate.Z = -15000;
-                MaxCoordinate.X = 15000;
-                MaxCoordinate.Y = 1000;
-                MaxCoordinate.Z = 15000;
-            }
-#endif
 
             /* Prepare variables */
             int CmdVertexArray = -1, CmdPolygonArray = -1, CmdPolygonTypes = -1, CmdWaterBoxes = -1;
@@ -4201,12 +4266,12 @@ namespace SharpOcarina
 
             /* Write collision header */
            
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCoordinate.X, -32768, 32767)));  /* Absolute minimum X/Y/Z */
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCoordinate.Y, -32768, 32767)));
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCoordinate.Z, -32768, 32767)));
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCoordinate.X, -32768, 32767)));  /* Absolute maximum X/Y/Z */
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCoordinate.Y, -32768, 32767)));
-            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCoordinate.Z, -32768, 32767)));
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCollisionBounds.X, -32768, 32767)));  /* Absolute minimum X/Y/Z */
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCollisionBounds.Y, -32768, 32767)));
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MinCollisionBounds.Z, -32768, 32767)));
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCollisionBounds.X, -32768, 32767)));  /* Absolute maximum X/Y/Z */
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCollisionBounds.Y, -32768, 32767)));
+            Helpers.Append16(ref Data, (ushort)Convert.ToInt16(MainForm.Clamp(MaxCollisionBounds.Z, -32768, 32767)));
             CmdVertexArray = Data.Count;
             Helpers.Append32(ref Data, 0x00000000);                                /* Vertex count */
             Helpers.Append32(ref Data, 0x00000000);                                /* Vertex array offset */
@@ -4443,6 +4508,7 @@ namespace SharpOcarina
 
                     if (ni[0] == 0 && ni[1] == 0 && ni[2] == 0) {
                         skip = true;
+                        /*
                         DebugConsole.WriteLine("Skip Collision Triangle:");
                         for (int i = 0; i < 3; i++)
                         {
@@ -4452,7 +4518,7 @@ namespace SharpOcarina
                         }
                         DebugConsole.WriteLine( "Tri Nrm: " + triNorm.X.ToString() + ", " +
                             triNorm.Y.ToString() + ", " +
-                            triNorm.Z.ToString());
+                            triNorm.Z.ToString());*/
                     }
 
                     if (!Group.Name.ToLower().Contains("#blackplane") && !Group.Name.ToLower().Contains("#nocollision") && !Group.Name.ToLower().Contains("#door") && !skip)
@@ -5202,5 +5268,31 @@ namespace SharpOcarina
             }
 
         }
+
+        public struct Vector3s
+        {
+            public short X;
+            public short Y;
+            public short Z;
+
+            public Vector3s(short x, short y, short z)
+            {
+                X = x;
+                Y = y;
+                Z = z;
+            }
+
+            public Vector3s Clone()
+            {
+                return this;
+            }
+
+            public override string ToString()
+            {
+                return $"({X}, {Y}, {Z})";
+            }
+        }
+
+       
     }
 }

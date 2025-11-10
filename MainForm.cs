@@ -172,6 +172,8 @@ namespace SharpOcarina
         public bool nocheckevent = false;
         public bool noupdatetextureanim = false;
 
+        public bool viewcollisionbounds = false;
+
         public const int _Actor_ = 1;
         public const int _Transition_ = 2;
         public const int _Spawn_ = 3;
@@ -208,6 +210,8 @@ namespace SharpOcarina
         public const float CutsceneHookVersion = 1.1f;
 
         public const float PlayVersion = 1.1f;
+
+        public const float BGCheckVersion = 1.1f;
 
         public string[] args;
 
@@ -261,6 +265,9 @@ namespace SharpOcarina
             skyboxdlists.Add(new List<UcodeSimulator.DisplayListStruct>());
             // this.glControl1 = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(0, 24));
             // new OpenTK.GraphicsM
+
+            Helpers.DeleteDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Temp\\"));
+            Helpers.DeleteDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\"));
 
 #if DEBUG
             dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem.Visible = true;
@@ -786,13 +793,30 @@ namespace SharpOcarina
             MarkerType.SelectedIndex = 0;
 
             flaglist.Clear();
+            CollisionSound.Items.Clear();
+            CollisionFloorFlags.Items.Clear();
+            CollisionWallFlags.Items.Clear();
+            CollisionSpecialFlags.Items.Clear();
+            ComboBox[] ComboBoxes = { CollisionSound, CollisionFloorFlags, CollisionWallFlags, CollisionSpecialFlags };
+            int[] Shift = { 0, 58, 53, 45 };
             XmlNodeList flagnodes = XMLreader.getXMLNodes("ModelFlags", "Flag");
-
             if (flagnodes != null)
                 foreach (XmlNode node in flagnodes)
                 {
                     XmlAttributeCollection nodeAtt = node.Attributes;
                     flaglist.Add(nodeAtt["Key"].Value, Convert.ToUInt64(nodeAtt["Value"].Value, 16));
+                    if (nodeAtt["Type"] != null)
+                    {
+                        int type = Convert.ToInt32(nodeAtt["Type"].Value);
+                        
+                        SongItem item = new SongItem();
+                        item.Text = nodeAtt["Name"].Value;
+                        item.Value = Convert.ToInt64(nodeAtt["Value"].Value, 16) >> Shift[type];
+                        ComboBoxes[type].Items.Add(item);
+
+                            
+                        
+                    }
                 }
 
             CutsceneAsmComboBox.Items.Clear();
@@ -2293,6 +2317,67 @@ namespace SharpOcarina
 
                 }
 
+                /* Render collision bounds... */
+                if (viewcollisionbounds && CurrentScene.ColModel != null)
+                {
+                    //int[] Subdivisions = { 38, 1, 38 };
+                    //int[] Subdivisions = { 16, 4, 16 };
+
+                    if (CurrentScene.CollisionSubdivisions[0] == 0 || CurrentScene.CollisionSubdivisions[1] == 0 || CurrentScene.CollisionSubdivisions[2] == 0) return;
+
+                    GL.Disable(EnableCap.CullFace);
+                    GL.PushMatrix();
+
+                    GL.Color4(255f/255f, 166f / 255f, 1f / 255f, 1.0f);
+
+                    float dx = (CurrentScene.MaxCollisionBounds.X - CurrentScene.MinCollisionBounds.X) / CurrentScene.CollisionSubdivisions[0];
+                    float dy = (CurrentScene.MaxCollisionBounds.Y - CurrentScene.MinCollisionBounds.Y) / CurrentScene.CollisionSubdivisions[1];
+                    float dz = (CurrentScene.MaxCollisionBounds.Z - CurrentScene.MinCollisionBounds.Z) / CurrentScene.CollisionSubdivisions[2];
+
+                    GL.Begin(BeginMode.Lines);
+
+                    // X
+                    for (int y = 0; y <= CurrentScene.CollisionSubdivisions[1]; y++)
+                    {
+                        for (int z = 0; z <= CurrentScene.CollisionSubdivisions[2]; z++)
+                        {
+                            float fy = CurrentScene.MinCollisionBounds.Y + y * dy;
+                            float fz = CurrentScene.MinCollisionBounds.Z + z * dz;
+                            GL.Vertex3(CurrentScene.MinCollisionBounds.X, fy, fz);
+                            GL.Vertex3(CurrentScene.MaxCollisionBounds.X, fy, fz);
+                        }
+                    }
+
+                    // Y
+                    for (int x = 0; x <= CurrentScene.CollisionSubdivisions[0]; x++)
+                    {
+                        for (int z = 0; z <= CurrentScene.CollisionSubdivisions[2]; z++)
+                        {
+                            float fx = CurrentScene.MinCollisionBounds.X + x * dx;
+                            float fz = CurrentScene.MinCollisionBounds.Z + z * dz;
+                            GL.Vertex3(fx, CurrentScene.MinCollisionBounds.Y, fz);
+                            GL.Vertex3(fx, CurrentScene.MaxCollisionBounds.Y, fz);
+                        }
+                    }
+
+                    // Z
+                    for (int x = 0; x <= CurrentScene.CollisionSubdivisions[0]; x++)
+                    {
+                        for (int y = 0; y <= CurrentScene.CollisionSubdivisions[1]; y++)
+                        {
+                            float fx = CurrentScene.MinCollisionBounds.X + x * dx;
+                            float fy = CurrentScene.MinCollisionBounds.Y + y * dy;
+                            GL.Vertex3(fx, fy, CurrentScene.MinCollisionBounds.Z);
+                            GL.Vertex3(fx, fy, CurrentScene.MaxCollisionBounds.Z);
+                        }
+                    }
+
+                    GL.End();
+
+                    GL.PopMatrix();
+                    GL.Enable(EnableCap.CullFace);
+                }
+
                 /* Render group highlight... */
                 if (((ObjFile.Group)GroupList.SelectedItem) != null && (tabControl1.SelectedIndex == 1 || (tabControl1.SelectedIndex != 1 && selectedtimer > 0)) && customcombiner == null)
                 {
@@ -2633,41 +2718,51 @@ namespace SharpOcarina
                     GL.PushMatrix();
 
 
-
-
-
                     GL.ActiveTexture(TextureUnit.Texture0);
 
                     int boundTexture;
-                    float widthfactor = 1.0f;
-                    float heightfactor = 1.0f;/*
-                    GL.GetInteger(GetPName.TextureBinding2D, out boundTexture);
+                    float widthfactor0 = 32.0f;
+                    float heightfactor0 = 32.0f;
+                    float widthfactor1 = 32.0f;
+                    float heightfactor1 = 32.0f;
 
-                    if (boundTexture != 0)
+                    if (DL.Texture0.X != 0)
                     {
-                        int width, height;
-                        GL.GetTexLevelParameter(TextureTarget.Texture2D, 0, GetTextureParameter.TextureWidth, out width);
-                        GL.GetTexLevelParameter(TextureTarget.Texture2D, 0, GetTextureParameter.TextureHeight, out height);
-                        widthfactor = 32.0f / width;
-                        heightfactor = 32.0f / height;
-                    }*/
+                        widthfactor0 = DL.Texture0.X;
+                        heightfactor0 = DL.Texture0.Y;
+                    }
+                    if (DL.Texture1.X != 0)
+                    {
+                        widthfactor1 = DL.Texture1.X;
+                        heightfactor1 = DL.Texture1.Y;
+                    }
+
 
                     if (TextureScroll != null)
-                        if (!settings.MMTextureScroll)
-                            GL.Translate(-(TextureScroll.XVelocity1 / 80f * (20f / TextureScroll.Width1)) * globalframe * widthfactor, -(TextureScroll.YVelocity1 / 80f * (20f / TextureScroll.Height1)) * globalframe * heightfactor, 0);
-                        else
-                            GL.Translate(-(TextureScroll.XVelocity1 / 80f * (20f / TextureScroll.Width1)) * globalframe * widthfactor, (TextureScroll.YVelocity1 / 80f * (20f / TextureScroll.Height1)) * globalframe * heightfactor, 0);
+                    {
+                        float uScale = 32.0f / widthfactor0;
+                        float vScale = 32.0f / heightfactor0;
+
+                        float uSpeed = (TextureScroll.XVelocity1 / 128f) * uScale;
+                        float vSpeed = (TextureScroll.YVelocity1 / 128f) * vScale;
+
+                        GL.Translate(-uSpeed * globalframe, -(vSpeed * (settings.MMTextureScroll ? -1.0f : 1.0f)) * globalframe, 0);
+                    }
 
 
                     GL.ActiveTexture(TextureUnit.Texture1);
                     GL.PushMatrix();
-
-
                     if (TextureScroll != null)
-                        if (!settings.MMTextureScroll)
-                            GL.Translate(-(TextureScroll.XVelocity2 / 80f * (20f / TextureScroll.Width2)) * globalframe * widthfactor, -(TextureScroll.YVelocity2 / 80f * (20f / TextureScroll.Height2)) * globalframe * heightfactor, 0);
-                        else
-                            GL.Translate(-(TextureScroll.XVelocity2 / 80f * (20f / TextureScroll.Width2)) * globalframe * widthfactor, (TextureScroll.YVelocity2 / 80f * (20f / TextureScroll.Height2)) * globalframe * heightfactor, 0);
+                    {
+                        float uScale = 32.0f / widthfactor1;
+                        float vScale = 32.0f / heightfactor1;
+
+                        float uSpeed = (TextureScroll.XVelocity2 / 128f) * uScale;
+                        float vSpeed = (TextureScroll.YVelocity2 / 128f) * vScale;
+
+                        GL.Translate(-uSpeed * globalframe, -(vSpeed * (settings.MMTextureScroll ? -1.0f : 1.0f)) * globalframe, 0);
+                    }
+
                     GL.MatrixMode(MatrixMode.Modelview);
 
                     GL.ActiveTexture(TextureUnit.Texture0);
@@ -4793,6 +4888,7 @@ namespace SharpOcarina
                 UpdateEnvironmentEdit();
                 UpdateGroupSelect();
                 UpdatePolyTypeEdit();
+                UpdateCollisionBoundsEdit();
                 UpdatePathwayEdit();
                 UpdateCutsceneEdit();
                 UpdateCameraEdit();
@@ -8820,13 +8916,7 @@ namespace SharpOcarina
 
         #region Editor - Collision
 
-        /* Special FX flags
-         * 400 -> climbable ladder
-         * 800 -> whole surface climbable
-         * 008 -> quicksand (shallow)
-         * 018 -> quicksand (deep, kills)
-         * 004 -> lava damage
-         */
+
         private void UpdatePolyTypeEdit()
         {
             if (CurrentScene.PolyTypes.Count != 0)
@@ -8851,7 +8941,6 @@ namespace SharpOcarina
                 CameraAngleNumeric.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].CameraAngle;
 
                 EchoRange.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EchoRange;
-                GroundType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].GroundType;
                 TerrainType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].TerrainType;
                 SteepterrainCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsSteep;
                 HookshotableCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsHookshotable;
@@ -8860,25 +8949,6 @@ namespace SharpOcarina
                 WallDamageCheck.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsWallDamage;
                 Lower1UnitChecbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Lower1Unit;
                 BlockEponaCheckBox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EponaBlock;
-
-                //0000000008000000
-
-                if ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags & 0x30) == 0x30)
-                    VoidCheckBox.Checked = true;
-                else if ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags & 0x24) == 0x24 && (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags & 0x2C) != 0x2C)
-                    NoLedgeJumpRadio.Checked = true;
-                else if ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags & 0x14) == 0x14)
-                    SmallVoidRadioButton.Checked = true;
-                else if ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags & 0x2C) == 0x2C)
-                    DiveRadioButton.Checked = true;
-                else if ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags & 0x18) == 0x18)
-                    AutograbClimbRadioButton.Checked = true;
-                else
-                {
-                    NoMiscRadioButton.Checked = true;
-
-                }
-
 
 
 
@@ -8892,58 +8962,32 @@ namespace SharpOcarina
                 GroupDetectionB8.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB & 0x8000) != 0);
                 nocheckevent = false;
 
-                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags == 0x0)
-                    radioButton1.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags == 0x4)
-                    radioButton2.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags == 0x8)
-                    radioButton3.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags == 0x6)
-                    LadderTopRadioButton.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags == 0xA)
-                    CrawlSpaceRadio.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags == 0x2)
-                    NoLedgeClimbRadio.Checked = true;
-                else
+                int[] flags = { CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SoundEffect, CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FloorFlags, CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].WallFlags, CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SpecialFlags };
+                ComboBox[] ComboBoxes = { CollisionSound, CollisionFloorFlags, CollisionWallFlags, CollisionSpecialFlags };
+                var polyType = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1];
+                Action<int>[] setval = {v => polyType.SoundEffect = v,v => polyType.FloorFlags = v,v => polyType.WallFlags = v, v => polyType.SpecialFlags = v};
+
+                for (int i = 0; i < flags.Length; i++)
                 {
-                    radioButton1.Checked = false;
-                    radioButton2.Checked = false;
-                    radioButton3.Checked = false;
-                    LadderTopRadioButton.Checked = false;
-                    CrawlSpaceRadio.Checked = false;
-                    NoLedgeClimbRadio.Checked = false;
+                    if (flags[i] < ComboBoxes[i].Items.Count)
+                    {
+                        foreach (SongItem item in ComboBoxes[i].Items)
+                        {
+                            if (item != null && Convert.ToInt32(item.Value) == flags[i])
+                            {
+                                ComboBoxes[i].SelectedItem = item;
+                                break;
+                            }
+                        }
+                        //ComboBoxes[i].SelectedIndex = flags[i];
+                    }
+                    else
+                    {
+                        setval[i](0);
+                        ComboBoxes[i].SelectedIndex = 0;
+                    }
                 }
 
-                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x00)
-                    radioButton7.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x08)
-                    radioButton4.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x18)
-                    radioButton5.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x04)
-                    radioButton6.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x12)
-                    KillingLavaRadioButton.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x0C)
-                    NoFallDamageRadio.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x10)
-                    JabuJabuRadio.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x0E)
-                    KillingQuicksand2Radio.Checked = true;
-                else if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags == 0x0A)
-                    IceRadioButton.Checked = true;
-                else
-                {
-                    radioButton7.Checked = false;
-                    radioButton4.Checked = false;
-                    radioButton5.Checked = false;
-                    radioButton6.Checked = false;
-                    KillingLavaRadioButton.Checked = false;
-                    NoFallDamageRadio.Checked = false;
-                    JabuJabuRadio.Checked = false;
-                    KillingQuicksand2Radio.Checked = false;
-                    IceRadioButton.Checked = false;
-                }
 
                 PolygonRawdata.Text = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Raw.ToString("X16");
 
@@ -8963,13 +9007,10 @@ namespace SharpOcarina
                 ExitNumber.Value = 0;
                 EnvironmentType.Value = 0;
                 EchoRange.Value = 0;
-                GroundType.Value = 0;
                 TerrainType.Value = 0;
                 CameraAngleNumeric.Value = 0;
                 SteepterrainCheckbox.Checked = false;
                 HookshotableCheckbox.Checked = false;
-
-                NoMiscRadioButton.Checked = true;
 
                 nocheckevent = true;
                 GroupDetectionA2.Checked = false;
@@ -8981,22 +9022,6 @@ namespace SharpOcarina
                 GroupDetectionB8.Checked = false;
                 nocheckevent = false;
 
-                radioButton1.Checked = false;
-                radioButton2.Checked = false;
-                radioButton3.Checked = false;
-                LadderTopRadioButton.Checked = false;
-                CrawlSpaceRadio.Checked = false;
-                NoLedgeClimbRadio.Checked = false;
-
-                radioButton7.Checked = false;
-                radioButton4.Checked = false;
-                radioButton5.Checked = false;
-                radioButton6.Checked = false;
-                KillingLavaRadioButton.Checked = false;
-                NoFallDamageRadio.Checked = false;
-                JabuJabuRadio.Checked = false;
-                KillingQuicksand2Radio.Checked = false;
-                IceRadioButton.Checked = false;
 
                 WallDamageCheck.Checked = false;
 
@@ -9006,67 +9031,95 @@ namespace SharpOcarina
                     Ctrl.Enabled = false;
 
                 DeletepolygonButton.Enabled = false;
+
+                CollisionSound.Enabled = false;
+                CollisionFloorFlags.Enabled = false;
+                CollisionWallFlags.Enabled = false;
+                CollisionSpecialFlags.Enabled = false;
+
+                CollisionSound.SelectedIndex = 0;
+                CollisionFloorFlags.SelectedIndex = 0;
+                CollisionWallFlags.SelectedIndex = 0;
+                CollisionSpecialFlags.SelectedIndex = 0;
             }
         }
 
-        private void UpdateClimbableCrawlableFlags()
-        {
-            if (radioButton1.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags = 0x0;
-            else if (radioButton2.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags = 0x4;
-            else if (radioButton3.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags = 0x8;
-            else if (LadderTopRadioButton.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags = 0x6;
-            else if (CrawlSpaceRadio.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags = 0xA;
-            else if (NoLedgeClimbRadio.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ClimbingCrawlingFlags = 0x2;
-        }
 
-        private void UpdateDamageSurfaceFlags()
+        private void UpdateCollisionBoundsEdit(bool refreshbounds = false)
         {
-            if (radioButton7.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x00;
-            else if (radioButton4.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x08;
-            else if (radioButton5.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x18;
-            else if (radioButton6.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x04;
-            else if (KillingLavaRadioButton.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x12;
-            else if (NoFallDamageRadio.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x0C;
-            else if (JabuJabuRadio.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x10;
-            else if (KillingQuicksand2Radio.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x0E;
-            else if (IceRadioButton.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].DamageSurfaceFlags = 0x0A;
-        }
+            if (CurrentScene != null && CurrentScene.ColModel != null)
+            {
 
-        private void UpdateFirstByteFlags()
-        {
-            if (VoidCheckBox.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags = 0x30;
-            else if (NoLedgeJumpRadio.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags = 0x24;
-            else if (SmallVoidRadioButton.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags = 0x14;
-            else if (DiveRadioButton.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags = 0x2C;
-            else if (AutograbClimbRadioButton.Checked == true)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags = 0x18;
+                EchoRange.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EchoRange;
+                TerrainType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].TerrainType;
+                SteepterrainCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsSteep;
+                HookshotableCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsHookshotable;
+                PolytypeUnk1.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk1;
+                PolytypeUnk2.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk2;
+                WallDamageCheck.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsWallDamage;
+                Lower1UnitChecbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Lower1Unit;
+                BlockEponaCheckBox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EponaBlock;
+
+                CollisionBoundsAuto.Checked = CurrentScene.AutomaticCollisionBounds;
+                CollisionSubdivisionsAuto.Checked = CurrentScene.AutomaticSubdivisions;
+
+                foreach (Control Ctrl in CollisionBoundsGroupBox.Controls)
+                    Ctrl.Enabled = true;
+
+                if (CurrentScene.AutomaticCollisionBounds)
+                {
+                    if (refreshbounds) CurrentScene.CalculateCollisionBounds();
+                    CollisionMinBoundsX.Enabled = false;
+                    CollisionMinBoundsY.Enabled = false;
+                    CollisionMinBoundsZ.Enabled = false;
+                    CollisionMaxBoundsX.Enabled = false;
+                    CollisionMaxBoundsY.Enabled = false;
+                    CollisionMaxBoundsZ.Enabled = false;
+                }
+                
+                CollisionMinBoundsX.Value = CurrentScene.MinCollisionBounds.X;
+                CollisionMinBoundsY.Value = CurrentScene.MinCollisionBounds.Y;
+                CollisionMinBoundsZ.Value = CurrentScene.MinCollisionBounds.Z;
+
+                CollisionMaxBoundsX.Value = CurrentScene.MaxCollisionBounds.X;
+                CollisionMaxBoundsY.Value = CurrentScene.MaxCollisionBounds.Y;
+                CollisionMaxBoundsZ.Value = CurrentScene.MaxCollisionBounds.Z;
+
+                if (CurrentScene.AutomaticSubdivisions)
+                {
+                    CurrentScene.CollisionSubdivisions[0] = 16;
+                    CurrentScene.CollisionSubdivisions[1] = 16;
+                    CurrentScene.CollisionSubdivisions[2] = 16;
+                    CollisionSubdivisionsX.Enabled = false;
+                    CollisionSubdivisionsY.Enabled = false;
+                    CollisionSubdivisionsZ.Enabled = false;
+                }
+
+                CollisionSubdivisionsX.Value = CurrentScene.CollisionSubdivisions[0];
+                CollisionSubdivisionsY.Value = CurrentScene.CollisionSubdivisions[1];
+                CollisionSubdivisionsZ.Value = CurrentScene.CollisionSubdivisions[2];
+
+           
+            }
             else
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags = 0x00;
+            {
+                CollisionMinBoundsX.Value = 0;
+                CollisionMinBoundsY.Value = 0;
+                CollisionMinBoundsZ.Value = 0;
 
-            if (BlockEponaCheckBox.Checked)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags += 0x80;
-            if (Lower1UnitChecbox.Checked)
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FirstByteFlags += 0x40;
+                CollisionMaxBoundsX.Value = 0;
+                CollisionMaxBoundsY.Value = 0;
+                CollisionMaxBoundsZ.Value = 0;
 
+                CollisionSubdivisionsX.Value = 0;
+                CollisionSubdivisionsY.Value = 0;
+                CollisionSubdivisionsZ.Value = 0;
+
+                foreach (Control Ctrl in CollisionBoundsGroupBox.Controls)
+                    Ctrl.Enabled = false;
+            }
+
+            CollisionBoundsViewButton.BackColor = (viewcollisionbounds) ? Color.LawnGreen : Color.LightGray;
         }
 
         private void PolygonRawData_KeyDown(object sender, KeyEventArgs e)
@@ -9074,19 +9127,19 @@ namespace SharpOcarina
             if (e.KeyCode == Keys.Enter)
             {
                 CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Raw = ulong.Parse(PolygonRawdata.Text, System.Globalization.NumberStyles.HexNumber);
-                UpdateForm();
+                UpdatePolyTypeEdit();
             }
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes.Add(new ZColPolyType());
-            UpdateForm();
+            UpdatePolyTypeEdit();
             PolygonSelect.Value = PolygonSelect.Maximum;
         }
 
@@ -9094,12 +9147,12 @@ namespace SharpOcarina
         {
             ZColPolyType DelPT = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1];
             CurrentScene.PolyTypes.Remove(DelPT);
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void SetPolyTypesInCollision()
         {
-            /* (Fuck Xdaniel haha) See this? Pure lazyness. Collision poly types are stored in the -room's- model data, while later on they're read from the -scene's- collision model.
+            /* (Xdaniel stuff) See this? Pure lazyness. Collision poly types are stored in the -room's- model data, while later on they're read from the -scene's- collision model.
              * So what do I do here? For each group in each room, I go through the collision model's groups and see if their names match up. If they do, I copy over
              * the poly type from the room to the collision model. I -could've- done this differently from the start, but a brainfart hindered me... *cough*
              */
@@ -9141,86 +9194,37 @@ namespace SharpOcarina
         private void numericUpDownEx10_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber = (int)ExitNumber.Value;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx3_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EchoRange = (int)EchoRange.Value;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx7_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EnvNumber = (int)EnvironmentType.Value;
-            UpdateForm();
-        }
-
-        private void numericUpDownEx9_ValueChanged(object sender, EventArgs e)
-        {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].GroundType = (int)GroundType.Value;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx8_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].TerrainType = (int)TerrainType.Value;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsSteep = SteepterrainCheckbox.Checked;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsHookshotable = HookshotableCheckbox.Checked;
-            UpdateForm();
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateClimbableCrawlableFlags();
-            UpdateForm();
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateClimbableCrawlableFlags();
-            //CameraAngleNumeric.Text = "0B";
-            UpdateForm();
-        }
-
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateClimbableCrawlableFlags();
-            UpdateForm();
-        }
-
-        private void radioButton7_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
-
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
-
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
-
-        private void radioButton6_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         #endregion
@@ -10603,46 +10607,9 @@ namespace SharpOcarina
             }
         }
 
-        private void LadderTopRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateClimbableCrawlableFlags();
-            //CameraAngleNumeric.Text = "0B";
-            UpdateForm();
-        }
-
-        private void KillingLavaRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
-
-        private void CrawlSpaceRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateClimbableCrawlableFlags();
-            UpdateForm();
-        }
-
-        private void NoFallDamageRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
-
         private void CameraAngleNumeric_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].CameraAngle = (long)CameraAngleNumeric.Value;
-            UpdateForm();
-        }
-
-        private void JabuJabuRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
-
-        private void VoidCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateFirstByteFlags();
             UpdateForm();
         }
 
@@ -13644,7 +13611,7 @@ namespace SharpOcarina
             if (!nocheckevent)
             {
                 CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
-                UpdateForm();
+                UpdatePolyTypeEdit();
             }
         }
 
@@ -13653,7 +13620,7 @@ namespace SharpOcarina
             if (!nocheckevent)
             {
                 CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
-                UpdateForm();
+                UpdatePolyTypeEdit();
             }
         }
 
@@ -13662,7 +13629,7 @@ namespace SharpOcarina
             if (!nocheckevent)
             {
                 CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
-                UpdateForm();
+                UpdatePolyTypeEdit();
             }
         }
 
@@ -13674,13 +13641,13 @@ namespace SharpOcarina
         private void numericUpDownEx1_ValueChanged_1(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk1 = (int)PolytypeUnk1.Value;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx2_ValueChanged_1(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk2 = (int)PolytypeUnk2.Value;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void GroupDetectionB2_CheckedChanged(object sender, EventArgs e)
@@ -13688,7 +13655,7 @@ namespace SharpOcarina
             if (!nocheckevent)
             {
                 CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
-                UpdateForm();
+                UpdatePolyTypeEdit();
             }
         }
 
@@ -13697,7 +13664,7 @@ namespace SharpOcarina
             if (!nocheckevent)
             {
                 CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
-                UpdateForm();
+                UpdatePolyTypeEdit();
             }
         }
 
@@ -13706,21 +13673,10 @@ namespace SharpOcarina
             if (!nocheckevent)
             {
                 CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
-                UpdateForm();
+                UpdatePolyTypeEdit();
             }
         }
 
-        private void KillingQuicksand2Radio_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
-
-        private void IceRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateDamageSurfaceFlags();
-            UpdateForm();
-        }
 
         private void triplicateCollisionBoundsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -13745,17 +13701,6 @@ namespace SharpOcarina
                 settings.EmptySpace = 0x00;
         }
 
-        private void NoLedgeJumpRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateFirstByteFlags();
-            UpdateForm();
-        }
-
-        private void NoLedgeClimbRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateClimbableCrawlableFlags();
-            UpdateForm();
-        }
 
         private void WallDamageCheck_CheckedChanged(object sender, EventArgs e)
         {
@@ -14708,40 +14653,16 @@ namespace SharpOcarina
             actorEditControl3.UpdateActorEdit();
         }
 
-        private void NoMiscRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateFirstByteFlags();
-            UpdateForm();
-        }
-
-        private void SmallVoidRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateFirstByteFlags();
-            UpdateForm();
-        }
-
-        private void DiveRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateFirstByteFlags();
-            UpdateForm();
-        }
-
-        private void AutograbClimbRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateFirstByteFlags();
-            UpdateForm();
-        }
-
         private void Lower1UnitChecbox_CheckedChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Lower1Unit = Lower1UnitChecbox.Checked;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void BlockEponaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EponaBlock = BlockEponaCheckBox.Checked;
-            UpdateForm();
+            UpdatePolyTypeEdit();
         }
 
         private void CutscenePositionCopyCamera_Click(object sender, EventArgs e)
@@ -16252,6 +16173,7 @@ namespace SharpOcarina
                 rom64.SceneRenderVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\SceneRender.c");
                 rom64.CutsceneHookVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\Cutscene.c");
                 rom64.PlayVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\vanilla\Play.c");
+                rom64.BGCheckVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\vanilla\BgCheck.c");
 
                 rom64.MMTitleCards = Helpers.GetDefineBool("MM_TITLECARD", rom64.getPath() + @"\src\lib_user\uLib.h");
 
@@ -16298,6 +16220,13 @@ namespace SharpOcarina
             UpdateZ64romFile(new string[]{
                             rom64.getPath() +  @"\src\lib_user\library\Cutscene.c",
                             rom64.getPath() +  @"\src\lib_user\library\PreRender.c"
+                            }, version, ask);
+        }
+
+        public void UpdateBGCheck(float version, bool ask)
+        {
+            UpdateZ64romFile(new string[]{
+                            rom64.getPath() +  @"\src\lib_user\vanilla\BgCheck.c"
                             }, version, ask);
         }
 
@@ -19584,9 +19513,17 @@ namespace SharpOcarina
                     //Last version of SceneRender is mandatory in install
                     string prevdir = rom64.getPath();
                     rom64.pathRomDir = path;
-                    UpdateSceneRender(SceneRenderVersion,false);
-                    UpdatePlay(PlayVersion, false);
-                    UpdateCutsceneHook(CutsceneHookVersion, false);
+                    
+                    
+                    rom64.SceneRenderVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\SceneRender.c");
+                    rom64.CutsceneHookVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\library\Cutscene.c");
+                    rom64.PlayVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\vanilla\Play.c");
+                    rom64.BGCheckVersion = GetZ64romfileVersion(rom64.getPath() + @"\src\lib_user\vanilla\BgCheck.c");
+
+                    if (rom64.SceneRenderVersion < SceneRenderVersion) UpdateSceneRender(SceneRenderVersion,false);
+                    if (rom64.PlayVersion < PlayVersion) UpdatePlay(PlayVersion, false);
+                    if (rom64.CutsceneHookVersion < CutsceneHookVersion) UpdateCutsceneHook(CutsceneHookVersion, false);
+                    if (rom64.BGCheckVersion < BGCheckVersion) UpdateBGCheck(BGCheckVersion, false);
                     AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR" , "#endif");
 
 
@@ -20905,6 +20842,253 @@ namespace SharpOcarina
         private void UseFixedCollisionWriteMenuItem_Click(object sender, EventArgs e)
         {
             settings.FixedCollisionWrite = UseFixedCollisionWriteMenuItem.Checked;
+        }
+
+        private void CollisionSound_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SoundEffect = Convert.ToByte((CollisionSound.SelectedItem as SongItem).Value);
+            UpdatePolyTypeEdit();
+        }
+
+        private void CollisionFloorFlags_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FloorFlags = Convert.ToByte((CollisionFloorFlags.SelectedItem as SongItem).Value);
+            UpdatePolyTypeEdit();
+        }
+
+        private void CollisionWallFlags_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].WallFlags = Convert.ToByte((CollisionWallFlags.SelectedItem as SongItem).Value);
+            UpdatePolyTypeEdit();
+        }
+
+        private void CollisionSpecialFlags_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SpecialFlags = Convert.ToByte((CollisionSpecialFlags.SelectedItem as SongItem).Value);
+            UpdatePolyTypeEdit();
+        }
+
+        private void CollisionMinBoundsX_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CollisionMinBoundsX.Value) > 20)
+                    CollisionMinBoundsX.Value += (CollisionMinBoundsX.Value - CurrentScene.MinCollisionBounds.X) * 19;
+
+                CurrentScene.MinCollisionBounds.X = (short)CollisionMinBoundsX.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+            
+        }
+
+        private void CollisionMinBoundsY_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CollisionMinBoundsY.Value) > 20)
+                    CollisionMinBoundsY.Value += (CollisionMinBoundsY.Value - CurrentScene.MinCollisionBounds.Y) * 19;
+
+                CurrentScene.MinCollisionBounds.Y = (short)CollisionMinBoundsY.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionMinBoundsZ_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CollisionMinBoundsZ.Value) > 20)
+                    CollisionMinBoundsZ.Value += (CollisionMinBoundsZ.Value - CurrentScene.MinCollisionBounds.Z) * 19;
+
+                CurrentScene.MinCollisionBounds.Z = (short)CollisionMinBoundsZ.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionMaxBoundsX_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CollisionMaxBoundsX.Value) > 20)
+                    CollisionMaxBoundsX.Value += (CollisionMaxBoundsX.Value - CurrentScene.MaxCollisionBounds.X) * 19;
+
+                CurrentScene.MaxCollisionBounds.X = (short)CollisionMaxBoundsX.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionMaxBoundsY_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CollisionMaxBoundsY.Value) > 20)
+                    CollisionMaxBoundsY.Value += (CollisionMaxBoundsY.Value - CurrentScene.MaxCollisionBounds.Y) * 19;
+
+                CurrentScene.MaxCollisionBounds.Y = (short)CollisionMaxBoundsY.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionMaxBoundsZ_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                if (((ModifierKeys & Keys.Shift) != 0) && short.MaxValue - Math.Abs(CollisionMaxBoundsZ.Value) > 20)
+                    CollisionMaxBoundsZ.Value += (CollisionMaxBoundsZ.Value - CurrentScene.MaxCollisionBounds.Z) * 19;
+
+                CurrentScene.MaxCollisionBounds.Z = (short)CollisionMaxBoundsZ.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionSubdivisionsX_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                CurrentScene.CollisionSubdivisions[0] = (byte)CollisionSubdivisionsX.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionSubdivisionsY_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                CurrentScene.CollisionSubdivisions[1] = (byte)CollisionSubdivisionsY.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionSubdivisionsZ_ValueChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                CurrentScene.CollisionSubdivisions[2] = (byte)CollisionSubdivisionsZ.Value;
+
+                UpdateCollisionBoundsEdit();
+            }
+        }
+
+        private void CollisionBoundsAuto_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                CurrentScene.AutomaticCollisionBounds = CollisionBoundsAuto.Checked;
+                UpdateCollisionBoundsEdit(true);
+            }
+        }
+
+        private void CollisionSubdivisionsAuto_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene != null)
+            {
+                if (rom64.isSet())
+                {
+                    if (rom64.BGCheckVersion < 1.1f)
+                        UpdateBGCheck(1.1f, true);
+                    CurrentScene.AutomaticSubdivisions = CollisionSubdivisionsAuto.Checked;
+                    UpdateCollisionBoundsEdit();
+                }
+                else
+                {
+                    CollisionSubdivisionsAuto.Checked = true;
+                    CurrentScene.AutomaticSubdivisions = true;
+                    UpdateCollisionBoundsEdit();
+                }
+
+            }
+        }
+
+        private void CollisionBoundsViewButton_Click(object sender, EventArgs e)
+        {
+            viewcollisionbounds = !viewcollisionbounds;
+            UpdateCollisionBoundsEdit();
+        }
+
+        private void TextEditorMenuItem_Click(object sender, EventArgs e)
+        {
+            string ToolDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Tools/Zelda64TextEditor/");
+            string exefile = ToolDirectory + "Zelda64 Text Editor.exe";
+            string updatefileurl = "https://raw.githubusercontent.com/Nokaubure/SharpOcarina/Updates/externalupdate.xml";
+            string updatefile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\externalupdate.xml");
+            string zippath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/z64texteditor.zip");
+            WebClient client = null;
+            float latestversion = 0f;
+            string website = "";
+            if (!File.Exists(updatefile))
+                client = Helpers.DownloadTemporalFile(updatefileurl);
+
+            if (client != null)
+            {
+                XmlDocument doc = new XmlDocument();
+                FileStream fs = new FileStream(updatefile, FileMode.Open, FileAccess.Read);
+                doc.Load(fs);
+                XmlNodeList nodes = doc.SelectNodes("TextEditor");
+                XmlAttributeCollection nodeAtt = nodes[0].Attributes;
+                latestversion = Convert.ToSingle(nodeAtt["version"].Value);
+                website = nodes[0].SelectNodes("Url")[0].Value;
+                fs.Close();
+            
+
+                if ((!Directory.Exists(ToolDirectory) || !File.Exists(ToolDirectory + "Zelda64 Text Editor.exe")))
+                {
+                    if (MessageBox.Show("Download zelda64 text editor? (this is only required once)", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        if (File.Exists(zippath)) File.Delete(zippath);
+
+                        Directory.CreateDirectory(ToolDirectory);
+                        PleaseWait pleasewait = new PleaseWait(website, zippath, ToolDirectory, true);
+                        pleasewait.ShowDialog();
+
+                    }
+                    else
+                    {
+                        this.Close();
+                        return;
+                    }
+                
+                }
+                else
+                {
+                    //check for updates
+                    FileVersionInfo info = FileVersionInfo.GetVersionInfo(exefile);
+                    float version = Convert.ToSingle(info.FileVersion);
+                    if (latestversion > version)
+                    {
+                        if (MessageBox.Show("Version " + latestversion + " available, update Text Editor to new version?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        {
+                            if (File.Exists(zippath)) File.Delete(zippath);
+
+                            Directory.CreateDirectory(ToolDirectory);
+                            PleaseWait pleasewait = new PleaseWait(website, zippath, ToolDirectory, true);
+                            pleasewait.ShowDialog();
+
+                        }
+                    }
+                }
+            }
+            if (File.Exists(exefile))
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = exefile,
+                    Arguments = rom64.isSet() ? rom64.getPath() + @"/z64project.toml" :
+                                GlobalROM != "" ? GlobalROM
+                                : "",
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+                Process.Start(startInfo);
+            }
+            
         }
 
         public void EasterEggPhaseOne()

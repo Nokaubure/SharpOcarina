@@ -1405,13 +1405,14 @@ Z ROTATION +0xF = Destination //Type 0 only
   </Actor>
   <Actor Key="00FA" Object="00F1" Name="Moving Brick Wall" DebugName="Bg_Jya_Zurerukabe" Category="1">
   </Actor>
-  <Actor Key="00FC" Object="00F1" Name="Rotating Cobra Mirror" DebugName="Bg_Jya_Cobra" Properties="003F" PropertiesNames="Switch Flag" Category="6">
-    <Variable Var="0000"> Large shadow //looks like it’s reproduced, well-done though</Variable>
+  <Actor Key="00FC" Object="00F1,00AB" Name="Rotating Cobra Mirror" DebugName="Bg_Jya_Cobra" Properties="3F00" PropertiesNames="Switch Flag" Category="6">
+    <Variable Var="0000"> Large shadow</Variable>
     <Variable Var="0001"> Small Shadow //CRASH?</Variable>
     <Variable Var="0002"> No shadow //CRASH?</Variable>
     <Notes>
 The sun switch has to be between 252 and 308 units from the cobra mirror to be activated
-+0x3F = Switch Flag
+If switchflag is On, its Y rotation is set to 0 on room load. It doesn't do anything else.
++0x3F = Switch Flag (unused)
     </Notes>
   </Actor>
   <Actor Key="00FD" Object="00F1" Name="Climbable Mesh Wall" DebugName="Bg_Jya_Kanaami" Category="1">

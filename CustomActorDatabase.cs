@@ -56,17 +56,8 @@ namespace SharpOcarina
 
 
             tempw = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\");
-            if (!Directory.Exists(tempw)) Directory.CreateDirectory(tempw);
 
-            client = new WebClient();
-
-
-            using (client)
-            {
-                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                client.DownloadFile(website + "master/CustomActors.xml", tempw + "CustomActors.xml");
-
-            }
+            client = Helpers.DownloadTemporalFile(website + "master/CustomActors.xml");
 
             XmlDocument doc = new XmlDocument();
 #if DEBUG
@@ -385,7 +376,7 @@ namespace SharpOcarina
                     if (Directory.Exists(temppath))
                     {
 
-                        DeleteDirectory(temppath);
+                        Helpers.DeleteDirectory(temppath);
                         Directory.CreateDirectory(temppath);
                     }
                     else
@@ -554,32 +545,12 @@ namespace SharpOcarina
         private void CustomActorDatabase_FormClosed(object sender, FormClosedEventArgs e)
         {
             string tmp = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Temp\\");
-
-            //Directory.Delete(tmp, true);
-            //Directory.Delete(tempw, true);
-            DeleteDirectory(tmp);
-            DeleteDirectory(tempw);
+            
+            Helpers.DeleteDirectory(tmp);
+            Helpers.DeleteDirectory(tempw);
         }
 
-        public void DeleteDirectory(string target_dir)
-        {
-            if (!Directory.Exists(target_dir)) return;
-            string[] files = Directory.GetFiles(target_dir);
-            string[] dirs = Directory.GetDirectories(target_dir);
-
-            foreach (string file in files)
-            {
-                File.SetAttributes(file, FileAttributes.Normal);
-                File.Delete(file);
-            }
-
-            foreach (string dir in dirs)
-            {
-                DeleteDirectory(dir);
-            }
-
-            Directory.Delete(target_dir, false);
-        }
+        
 
         private void HideDependencyActors_CheckedChanged(object sender, EventArgs e)
         {

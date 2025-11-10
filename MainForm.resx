@@ -175,24 +175,6 @@ D: Ambient light dims slightly with a bit of red, Link begins to slide
 E: Ambient light dims slightly with a bit of red
 F: Ambient light dims slightly with a bit of red</value>
   </data>
-  <data name="GroundType.ToolTip" xml:space="preserve">
-    <value>0: Earth/dirt
-1: Sand
-2: Stone
-3: Wet stone
-4: Shallow water
-5: Not-as-shallow water (lower-pitched sound)
-6: Underbrush/grass
-7: Lava/goo
-8: Snow
-9: Wooden plank
-A: Packed earth/wood
-B: Earth/dirt
-C: Ceramic
-D: Loose earth
-E: Earth/dirt
-F: Earth/dirt</value>
-  </data>
   <metadata name="PathwayZPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 56</value>
   </metadata>

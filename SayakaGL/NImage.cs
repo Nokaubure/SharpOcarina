@@ -194,7 +194,7 @@ namespace NImage
 
         #region I
 
-        public static void I4(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
+        public static void I4(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target, bool isTransparent)
         {
             int TargetOffset = 0;
 
@@ -206,13 +206,13 @@ namespace NImage
                     Target[TargetOffset] = (byte)((Raw & 0x0E) << 4);
                     Target[TargetOffset + 1] = (byte)((Raw & 0x0E) << 4);
                     Target[TargetOffset + 2] = (byte)((Raw & 0x0E) << 4);
-                    Target[TargetOffset + 3] = 0xFF; //0xFF
+                    Target[TargetOffset + 3] = (byte)(isTransparent ? ((Raw & 0x0E) << 4) : 0xFF);
 
                     Raw = (byte)(Source[SourceOffset] & 0x0F);
                     Target[TargetOffset + 4] = (byte)((Raw & 0x0E) << 4);
                     Target[TargetOffset + 5] = (byte)((Raw & 0x0E) << 4);
                     Target[TargetOffset + 6] = (byte)((Raw & 0x0E) << 4);
-                    Target[TargetOffset + 7] = 0xFF;
+                    Target[TargetOffset + 7] = (byte)(isTransparent ? ((Raw & 0x0E) << 4) : 0xFF);
 
                     SourceOffset++;
                     TargetOffset += 8;
@@ -223,7 +223,7 @@ namespace NImage
             }
         }
 
-        public static void I8(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target)
+        public static void I8(uint Width, uint Height, float LineSize, byte[] Source, uint SourceOffset, ref byte[] Target, bool isTransparent)
         {
             int TargetOffset = 0;
 
@@ -234,7 +234,7 @@ namespace NImage
                     Target[TargetOffset] = Source[SourceOffset];
                     Target[TargetOffset + 1] = Source[SourceOffset];
                     Target[TargetOffset + 2] = Source[SourceOffset];
-                    Target[TargetOffset + 3] = 0xFF;
+                    Target[TargetOffset + 3] = (byte)(isTransparent ? Source[SourceOffset] : 0xFF);
 
                     SourceOffset++;
                     TargetOffset += 4;
@@ -249,7 +249,7 @@ namespace NImage
 
         #region Main Function
 
-        public static void ConvertTexture(uint Format, byte[] Source, uint SourceOffset, ref byte[] Target, uint Width, uint Height, uint LineSize, Color4[] Palette)
+        public static void ConvertTexture(uint Format, byte[] Source, uint SourceOffset, ref byte[] Target, uint Width, uint Height, uint LineSize, Color4[] Palette, bool isTransparent = false)
         {
            // DebugConsole.WriteLine("Texture converted");
             try
@@ -285,10 +285,10 @@ namespace NImage
                         break;
                     case 0x80:
                     case 0x90:
-                        I4(Width, Height, LineSize, Source, SourceOffset, ref Target);
+                        I4(Width, Height, LineSize, Source, SourceOffset, ref Target, isTransparent);
                         break;
                     case 0x88:
-                        I8(Width, Height, LineSize, Source, SourceOffset, ref Target);
+                        I8(Width, Height, LineSize, Source, SourceOffset, ref Target, isTransparent);
                         break;
                     default:
                         // Unknown format -> blue texture

@@ -129,65 +129,67 @@
   <!-- These are the same flags that can be found -->
   <!-- above so you do not need to use these. -->
 
+  <Flag Type="0" Key="#SFX_0" Name="Dirt" Value="0000000000000000"></Flag>
+  <Flag Type="0" Key="#SFX_1" Name="Sand" Value="0000000000000001"></Flag>
+  <Flag Type="0" Key="#SFX_2" Name="Stone" Value="0000000000000002"></Flag>
+  <Flag Type="0" Key="#SFX_3" Name="WetStone" Value="0000000000000003"></Flag>
+  <Flag Type="0" Key="#SFX_4" Name="Water" Value="0000000000000004"></Flag>
+  <Flag Type="0" Key="#SFX_5" Name="Shallow Water" Value="0000000000000005"></Flag>
+  <Flag Type="0" Key="#SFX_6" Name="Bush" Value="0000000000000006"></Flag>
+  <Flag Type="0" Key="#SFX_7" Name="Lava" Value="0000000000000007"></Flag>
+  <Flag Type="0" Key="#SFX_8" Name="Grass" Value="0000000000000008"></Flag>
+  <Flag Type="0" Key="#SFX_9" Name="Plank Wood" Value="0000000000000009"></Flag>
+  <Flag Type="0" Key="#SFX_A" Name="Wood" Value="000000000000000A"></Flag>
+  <Flag Type="0" Key="#SFX_B" Name="Ice" Value="000000000000000B"></Flag>
+  <Flag Type="0" Key="#SFX_C" Name="Carpet" Value="000000000000000C"></Flag>
+  <Flag Type="0" Key="#SFX_D" Name="UnkD" Value="000000000000000D"></Flag>
+  <Flag Type="0" Key="#SFX_E" Name="UnkE" Value="000000000000000E"></Flag>
+  <Flag Type="0" Key="#SFX_F" Name="UnkF" Value="000000000000000F"></Flag>
 
-  <Flag Key="#FLOORPROPERTY_UNK01" Value="0400000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_UNK02" Value="0800000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_UNK03" Value="0C00000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_UNK04" Value="1000000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_SMALL_VOID" Value="1400000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_HANG_LEDGE" Value="1800000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_UNK07" Value="1C00000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_STOP_AIR_MOMENTUM" Value="2000000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_NO_LEDGE_JUMP" Value="2400000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_UNK0A" Value="2800000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_DIVE" Value="2C00000000000000"></Flag>
-  <Flag Key="#FLOORPROPERTY_VOID" Value="3000000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_NONE" Name="None" Value="0000000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_SMALL_VOID" Name="Small Void" Value="1400000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_HANG_LEDGE" Name="Hang Ledge" Value="1800000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_STOP_AIR_MOMENTUM" Name ="Stop Air Momentum" Value="2000000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_NO_LEDGE_JUMP" Name ="No Ledge Jump" Value="2400000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_DIVE" Name ="Dive" Value="2C00000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_VOID" Name ="Void" Value="3000000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_UNK01" Name="Unk1" Value="0400000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_UNK02" Name ="Unk2" Value="0800000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_UNK03" Name ="Unk3" Value="0C00000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_UNK04" Name ="Unk4" Value="1000000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_UNK07" Name ="Unk7" Value="1C00000000000000"></Flag>
+  <Flag Type="1" Key="#FLOORPROPERTY_UNK0A" Name ="UnkA" Value="2800000000000000"></Flag>
 
+  <Flag Type="2" Key="#WALLPROPERTY_NONE" Name="None" Value="0000000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_NO_LEDGE_GRAB" Name ="No Ledge Grab" Value="0020000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_LADDER" Name ="Ladder" Value="0040000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_LADDER_TOP" Name ="Ladder Top" Value="0060000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_VINE" Name ="Climbable" Value="0080000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_CRAWL_A" Name ="Crawl A" Value="00A0000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_CRAWL_B" Name ="Crawl B" Value="00C0000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_PUSH" Name ="Push" Value="00E0000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK08" Name ="Unk8" Value="0100000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK09" Name ="Unk9" Value="0120000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK0A" Name ="UnkA" Value="0140000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK0B" Name ="UnkB" Value="0160000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK0C" Name ="UnkC" Value="0180000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK0D" Name ="UnkD" Value="01A0000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK0E" Name ="UnkE" Value="01C0000000000000"></Flag>
+  <Flag Type="2" Key="#WALLPROPERTY_UNK0F" Name ="UnkF" Value="01E0000000000000"></Flag>
 
-  <Flag Key="#WALLPROPERTY_NO_LEDGE_GRAB" Value="0020000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_LADDER" Value="0040000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_LADDER_TOP" Value="0060000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_VINE" Value="0080000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_CRAWL_A" Value="00A0000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_CRAWL_B" Value="00C0000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_PUSH" Value="00E0000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK08" Value="0100000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK09" Value="0120000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK0A" Value="0140000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK0B" Value="0160000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK0C" Value="0180000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK0D" Value="01A0000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK0E" Value="01C0000000000000"></Flag>
-  <Flag Key="#WALLPROPERTY_UNK0F" Value="01E0000000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_NONE" Name="None" Value="0000000000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_HURT_SPIKES" Name ="Hurt" Value="0000400000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_HURT_LAVA" Name ="Hurt (Lava)" Value="0000600000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_SAND" Name ="Sand" Value="0000800000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_SLIPPERY" Name ="Slippery" Value="0000A00000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_NO_FALL_DAMAGE" Name ="No Fall Damage" Value="0000C00000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_QUICKSAND" Name ="Quicksand" Value="0000E00000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_JABU_WALL" Name ="Jabu Wall" Value="0001000000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_VOID_ON_CONTACT" Name ="Void on Contact" Value="0001200000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_LINK_LOOK_UP" Name ="Look Up" Value="0001400000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_QUICKSAND_EPONA" Name ="Quicksand (Epona Crossable)" Value="0001600000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_UNK01" Name ="Unk1" Value="0000200000000000"></Flag>
+  <Flag Type="3" Key="#FLOORSPECIAL_UNK0C" Name="UnkC" Value="0001800000000000"></Flag>
 
-  <Flag Key="#FLOORSPECIAL_UNK01" Value="0000200000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_HURT_SPIKES" Value="0000400000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_HURT_LAVA" Value="0000600000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_SAND" Value="0000800000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_SLIPPERY" Value="0000A00000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_NO_FALL_DAMAGE" Value="0000C00000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_QUICKSAND" Value="0000E00000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_JABU_WALL" Value="0001000000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_VOID_ON_CONTACT" Value="0001200000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_LINK_LOOK_UP" Value="0001400000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_QUICKSAND_EPONA" Value="0001600000000000"></Flag>
-  <Flag Key="#FLOORSPECIAL_UNK0C" Value="0001800000000000"></Flag>
-
-  <Flag Key="#SFX_0" Value="0000000000000000"></Flag>
-  <Flag Key="#SFX_1" Value="0000000000000001"></Flag>
-  <Flag Key="#SFX_2" Value="0000000000000002"></Flag>
-  <Flag Key="#SFX_3" Value="0000000000000003"></Flag>
-  <Flag Key="#SFX_4" Value="0000000000000004"></Flag>
-  <Flag Key="#SFX_5" Value="0000000000000005"></Flag>
-  <Flag Key="#SFX_6" Value="0000000000000006"></Flag>
-  <Flag Key="#SFX_7" Value="0000000000000007"></Flag>
-  <Flag Key="#SFX_8" Value="0000000000000008"></Flag>
-  <Flag Key="#SFX_9" Value="0000000000000009"></Flag>
-  <Flag Key="#SFX_A" Value="000000000000000A"></Flag>
-  <Flag Key="#SFX_B" Value="000000000000000B"></Flag>
-  <Flag Key="#SFX_C" Value="000000000000000C"></Flag>
-  <Flag Key="#SFX_D" Value="000000000000000D"></Flag>
-  <Flag Key="#SFX_F" Value="000000000000000E"></Flag>
-  <Flag Key="#SFX_E" Value="000000000000000F"></Flag>
 
 </Table>

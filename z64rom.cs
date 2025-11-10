@@ -18,6 +18,7 @@ public class rom64 {
     public static float SceneRenderVersion = 1.0f;
     public static float CutsceneHookVersion = 1.0f;
     public static float PlayVersion = 1.0f;
+    public static float BGCheckVersion = 1.0f;
     public static bool MMTitleCards = false;
     public static int MaxObjects = 19; 
     static public bool isSet() {

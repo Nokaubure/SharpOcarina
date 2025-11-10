@@ -116,13 +116,13 @@ namespace SharpOcarina
                 case "I4":
                 {
                     float linesize = Texture.Width / 16.0f;
-                    NImageUtil.I4((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
+                    NImageUtil.I4((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result, false);
                     break;
                 }
                 case "I8":
                 {
                     float linesize = Texture.Width / 8.0f;
-                    NImageUtil.I8((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result);
+                    NImageUtil.I8((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result, false);
                     break;
                 }
                 case "IA4":

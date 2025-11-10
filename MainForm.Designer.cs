@@ -474,6 +474,22 @@ namespace SharpOcarina
             this.label41 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.tabCollision = new System.Windows.Forms.TabPage();
+            this.CollisionBoundsGroupBox = new System.Windows.Forms.GroupBox();
+            this.CollisionBoundsViewButton = new System.Windows.Forms.Button();
+            this.CollisionSubdivisionsAuto = new System.Windows.Forms.CheckBox();
+            this.CollisionBoundsAuto = new System.Windows.Forms.CheckBox();
+            this.CollisionSubdivisionsZ = new SharpOcarina.NumericUpDownEx();
+            this.CollisionSubdivisionsY = new SharpOcarina.NumericUpDownEx();
+            this.CollisionSubdivisionsX = new SharpOcarina.NumericUpDownEx();
+            this.label155 = new System.Windows.Forms.Label();
+            this.CollisionMaxBoundsZ = new SharpOcarina.NumericUpDownEx();
+            this.CollisionMaxBoundsY = new SharpOcarina.NumericUpDownEx();
+            this.CollisionMaxBoundsX = new SharpOcarina.NumericUpDownEx();
+            this.label151 = new System.Windows.Forms.Label();
+            this.label150 = new System.Windows.Forms.Label();
+            this.CollisionMinBoundsZ = new SharpOcarina.NumericUpDownEx();
+            this.CollisionMinBoundsY = new SharpOcarina.NumericUpDownEx();
+            this.CollisionMinBoundsX = new SharpOcarina.NumericUpDownEx();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.AddexitButton = new System.Windows.Forms.Button();
             this.DeleteexitButton = new System.Windows.Forms.Button();
@@ -494,20 +510,18 @@ namespace SharpOcarina
             this.ExitList = new System.Windows.Forms.ListBox();
             this.groupBoxCollisionPolytype = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label149 = new System.Windows.Forms.Label();
+            this.CollisionSound = new System.Windows.Forms.ComboBox();
+            this.label148 = new System.Windows.Forms.Label();
+            this.CollisionSpecialFlags = new System.Windows.Forms.ComboBox();
+            this.label147 = new System.Windows.Forms.Label();
+            this.CollisionWallFlags = new System.Windows.Forms.ComboBox();
+            this.label146 = new System.Windows.Forms.Label();
+            this.CollisionFloorFlags = new System.Windows.Forms.ComboBox();
             this.PolytypeExitLabel = new System.Windows.Forms.Label();
             this.BlockEponaCheckBox = new System.Windows.Forms.CheckBox();
             this.Lower1UnitChecbox = new System.Windows.Forms.CheckBox();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.AutograbClimbRadioButton = new System.Windows.Forms.RadioButton();
-            this.DiveRadioButton = new System.Windows.Forms.RadioButton();
-            this.SmallVoidRadioButton = new System.Windows.Forms.RadioButton();
-            this.NoLedgeJumpRadio = new System.Windows.Forms.RadioButton();
-            this.NoMiscRadioButton = new System.Windows.Forms.RadioButton();
-            this.VoidCheckBox = new System.Windows.Forms.RadioButton();
             this.WallDamageCheck = new System.Windows.Forms.CheckBox();
-            this.label92 = new System.Windows.Forms.Label();
-            this.label91 = new System.Windows.Forms.Label();
-            this.niceLine12 = new SharpOcarina.NiceLine();
             this.GroupDetectionB8 = new System.Windows.Forms.CheckBox();
             this.label90 = new System.Windows.Forms.Label();
             this.GroupDetectionB4 = new System.Windows.Forms.CheckBox();
@@ -521,34 +535,14 @@ namespace SharpOcarina
             this.GroupDetectionA8 = new System.Windows.Forms.CheckBox();
             this.GroupDetectionA4 = new System.Windows.Forms.CheckBox();
             this.GroupDetectionA2 = new System.Windows.Forms.CheckBox();
-            this.niceLine7 = new SharpOcarina.NiceLine();
             this.CameraAngleNumeric = new SharpOcarina.NumericUpDownEx();
             this.CameraAngleLabel = new System.Windows.Forms.Label();
             this.HookshotableCheckbox = new System.Windows.Forms.CheckBox();
             this.ExitNumber = new SharpOcarina.NumericUpDownEx();
             this.label17 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.IceRadioButton = new System.Windows.Forms.RadioButton();
-            this.KillingQuicksand2Radio = new System.Windows.Forms.RadioButton();
-            this.JabuJabuRadio = new System.Windows.Forms.RadioButton();
-            this.NoFallDamageRadio = new System.Windows.Forms.RadioButton();
-            this.KillingLavaRadioButton = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.NoLedgeClimbRadio = new System.Windows.Forms.RadioButton();
-            this.CrawlSpaceRadio = new System.Windows.Forms.RadioButton();
-            this.LadderTopRadioButton = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.SteepterrainCheckbox = new System.Windows.Forms.CheckBox();
             this.TerrainType = new SharpOcarina.NumericUpDownEx();
             this.label15 = new System.Windows.Forms.Label();
-            this.GroundType = new SharpOcarina.NumericUpDownEx();
-            this.label16 = new System.Windows.Forms.Label();
             this.EnvironmentType = new SharpOcarina.NumericUpDownEx();
             this.label14 = new System.Windows.Forms.Label();
             this.EchoRange = new SharpOcarina.NumericUpDownEx();
@@ -861,6 +855,7 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.TextEditorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -971,6 +966,16 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.TimeMinute)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeHour)).BeginInit();
             this.tabCollision.SuspendLayout();
+            this.CollisionBoundsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionSubdivisionsZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionSubdivisionsY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionSubdivisionsX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMaxBoundsZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMaxBoundsY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMaxBoundsX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMinBoundsZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMinBoundsY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMinBoundsX)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.ExitGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExitHeaderIndex)).BeginInit();
@@ -980,16 +985,12 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.ExitFadeIn)).BeginInit();
             this.groupBoxCollisionPolytype.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk1)).BeginInit();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraAngleNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitNumber)).BeginInit();
-            this.panel5.SuspendLayout();
-            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TerrainType)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroundType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvironmentType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EchoRange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PolygonSelect)).BeginInit();
@@ -2164,6 +2165,7 @@ namespace SharpOcarina
             this.dEBUGCustomActorDatabasetoolStripMenuItem,
             this.imageTocArrayToolStripMenuItem,
             this.ZobjCopyToolMenuItem3,
+            this.TextEditorMenuItem,
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem,
             this.objectTableEditorToolStripMenuItem,
             this.replaceSceneTitleCardTextureToolStripMenuItem,
@@ -7192,6 +7194,7 @@ namespace SharpOcarina
             // 
             // tabCollision
             // 
+            this.tabCollision.Controls.Add(this.CollisionBoundsGroupBox);
             this.tabCollision.Controls.Add(this.groupBox6);
             this.tabCollision.Controls.Add(this.groupBoxCollisionPolytype);
             this.tabCollision.Location = new System.Drawing.Point(4, 40);
@@ -7201,6 +7204,362 @@ namespace SharpOcarina
             this.tabCollision.Text = "Collision & Exits";
             this.tabCollision.UseVisualStyleBackColor = true;
             this.tabCollision.Click += new System.EventHandler(this.tabCollision_Click);
+            // 
+            // CollisionBoundsGroupBox
+            // 
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionBoundsViewButton);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionSubdivisionsAuto);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionBoundsAuto);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionSubdivisionsZ);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionSubdivisionsY);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionSubdivisionsX);
+            this.CollisionBoundsGroupBox.Controls.Add(this.label155);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionMaxBoundsZ);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionMaxBoundsY);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionMaxBoundsX);
+            this.CollisionBoundsGroupBox.Controls.Add(this.label151);
+            this.CollisionBoundsGroupBox.Controls.Add(this.label150);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionMinBoundsZ);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionMinBoundsY);
+            this.CollisionBoundsGroupBox.Controls.Add(this.CollisionMinBoundsX);
+            this.CollisionBoundsGroupBox.Location = new System.Drawing.Point(6, 414);
+            this.CollisionBoundsGroupBox.Name = "CollisionBoundsGroupBox";
+            this.CollisionBoundsGroupBox.Size = new System.Drawing.Size(400, 112);
+            this.CollisionBoundsGroupBox.TabIndex = 114;
+            this.CollisionBoundsGroupBox.TabStop = false;
+            this.CollisionBoundsGroupBox.Text = "Bounds and Subdivisions";
+            // 
+            // CollisionBoundsViewButton
+            // 
+            this.CollisionBoundsViewButton.Enabled = false;
+            this.CollisionBoundsViewButton.Image = global::SharpOcarina.Properties.Resources.eye;
+            this.CollisionBoundsViewButton.Location = new System.Drawing.Point(325, 14);
+            this.CollisionBoundsViewButton.Name = "CollisionBoundsViewButton";
+            this.CollisionBoundsViewButton.Size = new System.Drawing.Size(68, 28);
+            this.CollisionBoundsViewButton.TabIndex = 82;
+            this.CollisionBoundsViewButton.Text = "View";
+            this.CollisionBoundsViewButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.CollisionBoundsViewButton.UseVisualStyleBackColor = true;
+            this.CollisionBoundsViewButton.Click += new System.EventHandler(this.CollisionBoundsViewButton_Click);
+            // 
+            // CollisionSubdivisionsAuto
+            // 
+            this.CollisionSubdivisionsAuto.AutoSize = true;
+            this.CollisionSubdivisionsAuto.Checked = true;
+            this.CollisionSubdivisionsAuto.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CollisionSubdivisionsAuto.Location = new System.Drawing.Point(327, 86);
+            this.CollisionSubdivisionsAuto.Name = "CollisionSubdivisionsAuto";
+            this.CollisionSubdivisionsAuto.Size = new System.Drawing.Size(48, 17);
+            this.CollisionSubdivisionsAuto.TabIndex = 81;
+            this.CollisionSubdivisionsAuto.Text = "Auto";
+            this.EnvironmentControlTooltip.SetToolTip(this.CollisionSubdivisionsAuto, "Room model will be used as collision");
+            this.CollisionSubdivisionsAuto.UseVisualStyleBackColor = true;
+            this.CollisionSubdivisionsAuto.CheckedChanged += new System.EventHandler(this.CollisionSubdivisionsAuto_CheckedChanged);
+            // 
+            // CollisionBoundsAuto
+            // 
+            this.CollisionBoundsAuto.AutoSize = true;
+            this.CollisionBoundsAuto.Checked = true;
+            this.CollisionBoundsAuto.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CollisionBoundsAuto.Location = new System.Drawing.Point(327, 50);
+            this.CollisionBoundsAuto.Name = "CollisionBoundsAuto";
+            this.CollisionBoundsAuto.Size = new System.Drawing.Size(48, 17);
+            this.CollisionBoundsAuto.TabIndex = 80;
+            this.CollisionBoundsAuto.Text = "Auto";
+            this.EnvironmentControlTooltip.SetToolTip(this.CollisionBoundsAuto, "Room model will be used as collision");
+            this.CollisionBoundsAuto.UseVisualStyleBackColor = true;
+            this.CollisionBoundsAuto.CheckedChanged += new System.EventHandler(this.CollisionBoundsAuto_CheckedChanged);
+            // 
+            // CollisionSubdivisionsZ
+            // 
+            this.CollisionSubdivisionsZ.AlwaysFireValueChanged = false;
+            this.CollisionSubdivisionsZ.DisplayDigits = 1;
+            this.CollisionSubdivisionsZ.DoValueRollover = false;
+            this.CollisionSubdivisionsZ.Enabled = false;
+            this.CollisionSubdivisionsZ.IncrementMouseWheel = 1;
+            this.CollisionSubdivisionsZ.Location = new System.Drawing.Point(259, 83);
+            this.CollisionSubdivisionsZ.Maximum = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsZ.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsZ.Name = "CollisionSubdivisionsZ";
+            this.CollisionSubdivisionsZ.ShiftMultiplier = 20;
+            this.CollisionSubdivisionsZ.Size = new System.Drawing.Size(51, 20);
+            this.CollisionSubdivisionsZ.TabIndex = 30;
+            this.CollisionSubdivisionsZ.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsZ.ValueChanged += new System.EventHandler(this.CollisionSubdivisionsZ_ValueChanged);
+            // 
+            // CollisionSubdivisionsY
+            // 
+            this.CollisionSubdivisionsY.AlwaysFireValueChanged = false;
+            this.CollisionSubdivisionsY.DisplayDigits = 1;
+            this.CollisionSubdivisionsY.DoValueRollover = false;
+            this.CollisionSubdivisionsY.Enabled = false;
+            this.CollisionSubdivisionsY.IncrementMouseWheel = 1;
+            this.CollisionSubdivisionsY.Location = new System.Drawing.Point(202, 83);
+            this.CollisionSubdivisionsY.Maximum = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsY.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsY.Name = "CollisionSubdivisionsY";
+            this.CollisionSubdivisionsY.ShiftMultiplier = 20;
+            this.CollisionSubdivisionsY.Size = new System.Drawing.Size(51, 20);
+            this.CollisionSubdivisionsY.TabIndex = 29;
+            this.CollisionSubdivisionsY.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsY.ValueChanged += new System.EventHandler(this.CollisionSubdivisionsY_ValueChanged);
+            // 
+            // CollisionSubdivisionsX
+            // 
+            this.CollisionSubdivisionsX.AlwaysFireValueChanged = false;
+            this.CollisionSubdivisionsX.DisplayDigits = 1;
+            this.CollisionSubdivisionsX.DoValueRollover = false;
+            this.CollisionSubdivisionsX.Enabled = false;
+            this.CollisionSubdivisionsX.IncrementMouseWheel = 1;
+            this.CollisionSubdivisionsX.Location = new System.Drawing.Point(145, 83);
+            this.CollisionSubdivisionsX.Maximum = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsX.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsX.Name = "CollisionSubdivisionsX";
+            this.CollisionSubdivisionsX.ShiftMultiplier = 20;
+            this.CollisionSubdivisionsX.Size = new System.Drawing.Size(51, 20);
+            this.CollisionSubdivisionsX.TabIndex = 28;
+            this.CollisionSubdivisionsX.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionSubdivisionsX.ValueChanged += new System.EventHandler(this.CollisionSubdivisionsX_ValueChanged);
+            // 
+            // label155
+            // 
+            this.label155.AutoSize = true;
+            this.label155.Enabled = false;
+            this.label155.Location = new System.Drawing.Point(9, 49);
+            this.label155.Name = "label155";
+            this.label155.Size = new System.Drawing.Size(93, 13);
+            this.label155.TabIndex = 27;
+            this.label155.Text = "Max Bounds XYZ:";
+            // 
+            // CollisionMaxBoundsZ
+            // 
+            this.CollisionMaxBoundsZ.AlwaysFireValueChanged = false;
+            this.CollisionMaxBoundsZ.DisplayDigits = 1;
+            this.CollisionMaxBoundsZ.DoValueRollover = false;
+            this.CollisionMaxBoundsZ.Enabled = false;
+            this.CollisionMaxBoundsZ.IncrementMouseWheel = 1;
+            this.CollisionMaxBoundsZ.Location = new System.Drawing.Point(250, 47);
+            this.CollisionMaxBoundsZ.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CollisionMaxBoundsZ.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CollisionMaxBoundsZ.Name = "CollisionMaxBoundsZ";
+            this.CollisionMaxBoundsZ.ShiftMultiplier = 20;
+            this.CollisionMaxBoundsZ.Size = new System.Drawing.Size(63, 20);
+            this.CollisionMaxBoundsZ.TabIndex = 26;
+            this.CollisionMaxBoundsZ.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionMaxBoundsZ.ValueChanged += new System.EventHandler(this.CollisionMaxBoundsZ_ValueChanged);
+            // 
+            // CollisionMaxBoundsY
+            // 
+            this.CollisionMaxBoundsY.AlwaysFireValueChanged = false;
+            this.CollisionMaxBoundsY.DisplayDigits = 1;
+            this.CollisionMaxBoundsY.DoValueRollover = false;
+            this.CollisionMaxBoundsY.Enabled = false;
+            this.CollisionMaxBoundsY.IncrementMouseWheel = 1;
+            this.CollisionMaxBoundsY.Location = new System.Drawing.Point(181, 47);
+            this.CollisionMaxBoundsY.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CollisionMaxBoundsY.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CollisionMaxBoundsY.Name = "CollisionMaxBoundsY";
+            this.CollisionMaxBoundsY.ShiftMultiplier = 20;
+            this.CollisionMaxBoundsY.Size = new System.Drawing.Size(63, 20);
+            this.CollisionMaxBoundsY.TabIndex = 25;
+            this.CollisionMaxBoundsY.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionMaxBoundsY.ValueChanged += new System.EventHandler(this.CollisionMaxBoundsY_ValueChanged);
+            // 
+            // CollisionMaxBoundsX
+            // 
+            this.CollisionMaxBoundsX.AlwaysFireValueChanged = false;
+            this.CollisionMaxBoundsX.DisplayDigits = 1;
+            this.CollisionMaxBoundsX.DoValueRollover = false;
+            this.CollisionMaxBoundsX.Enabled = false;
+            this.CollisionMaxBoundsX.IncrementMouseWheel = 1;
+            this.CollisionMaxBoundsX.Location = new System.Drawing.Point(111, 47);
+            this.CollisionMaxBoundsX.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CollisionMaxBoundsX.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CollisionMaxBoundsX.Name = "CollisionMaxBoundsX";
+            this.CollisionMaxBoundsX.ShiftMultiplier = 20;
+            this.CollisionMaxBoundsX.Size = new System.Drawing.Size(63, 20);
+            this.CollisionMaxBoundsX.TabIndex = 23;
+            this.CollisionMaxBoundsX.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionMaxBoundsX.ValueChanged += new System.EventHandler(this.CollisionMaxBoundsX_ValueChanged);
+            // 
+            // label151
+            // 
+            this.label151.AutoSize = true;
+            this.label151.Enabled = false;
+            this.label151.Location = new System.Drawing.Point(7, 85);
+            this.label151.Name = "label151";
+            this.label151.Size = new System.Drawing.Size(136, 13);
+            this.label151.TabIndex = 20;
+            this.label151.Text = "Subdivisions XYZ (z64rom):";
+            // 
+            // label150
+            // 
+            this.label150.AutoSize = true;
+            this.label150.Enabled = false;
+            this.label150.Location = new System.Drawing.Point(12, 26);
+            this.label150.Name = "label150";
+            this.label150.Size = new System.Drawing.Size(90, 13);
+            this.label150.TabIndex = 19;
+            this.label150.Text = "Min Bounds XYZ:";
+            // 
+            // CollisionMinBoundsZ
+            // 
+            this.CollisionMinBoundsZ.AlwaysFireValueChanged = false;
+            this.CollisionMinBoundsZ.DisplayDigits = 1;
+            this.CollisionMinBoundsZ.DoValueRollover = false;
+            this.CollisionMinBoundsZ.Enabled = false;
+            this.CollisionMinBoundsZ.IncrementMouseWheel = 1;
+            this.CollisionMinBoundsZ.Location = new System.Drawing.Point(250, 24);
+            this.CollisionMinBoundsZ.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CollisionMinBoundsZ.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CollisionMinBoundsZ.Name = "CollisionMinBoundsZ";
+            this.CollisionMinBoundsZ.ShiftMultiplier = 20;
+            this.CollisionMinBoundsZ.Size = new System.Drawing.Size(63, 20);
+            this.CollisionMinBoundsZ.TabIndex = 18;
+            this.CollisionMinBoundsZ.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionMinBoundsZ.ValueChanged += new System.EventHandler(this.CollisionMinBoundsZ_ValueChanged);
+            // 
+            // CollisionMinBoundsY
+            // 
+            this.CollisionMinBoundsY.AlwaysFireValueChanged = false;
+            this.CollisionMinBoundsY.DisplayDigits = 1;
+            this.CollisionMinBoundsY.DoValueRollover = false;
+            this.CollisionMinBoundsY.Enabled = false;
+            this.CollisionMinBoundsY.IncrementMouseWheel = 1;
+            this.CollisionMinBoundsY.Location = new System.Drawing.Point(181, 24);
+            this.CollisionMinBoundsY.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CollisionMinBoundsY.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CollisionMinBoundsY.Name = "CollisionMinBoundsY";
+            this.CollisionMinBoundsY.ShiftMultiplier = 20;
+            this.CollisionMinBoundsY.Size = new System.Drawing.Size(63, 20);
+            this.CollisionMinBoundsY.TabIndex = 17;
+            this.CollisionMinBoundsY.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionMinBoundsY.ValueChanged += new System.EventHandler(this.CollisionMinBoundsY_ValueChanged);
+            // 
+            // CollisionMinBoundsX
+            // 
+            this.CollisionMinBoundsX.AlwaysFireValueChanged = false;
+            this.CollisionMinBoundsX.DisplayDigits = 1;
+            this.CollisionMinBoundsX.DoValueRollover = false;
+            this.CollisionMinBoundsX.Enabled = false;
+            this.CollisionMinBoundsX.IncrementMouseWheel = 1;
+            this.CollisionMinBoundsX.Location = new System.Drawing.Point(111, 24);
+            this.CollisionMinBoundsX.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.CollisionMinBoundsX.Minimum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            -2147483648});
+            this.CollisionMinBoundsX.Name = "CollisionMinBoundsX";
+            this.CollisionMinBoundsX.ShiftMultiplier = 20;
+            this.CollisionMinBoundsX.Size = new System.Drawing.Size(63, 20);
+            this.CollisionMinBoundsX.TabIndex = 15;
+            this.CollisionMinBoundsX.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CollisionMinBoundsX.ValueChanged += new System.EventHandler(this.CollisionMinBoundsX_ValueChanged);
             // 
             // groupBox6
             // 
@@ -7499,7 +7858,7 @@ namespace SharpOcarina
             this.groupBoxCollisionPolytype.Controls.Add(this.PolygonSelect);
             this.groupBoxCollisionPolytype.Location = new System.Drawing.Point(6, 6);
             this.groupBoxCollisionPolytype.Name = "groupBoxCollisionPolytype";
-            this.groupBoxCollisionPolytype.Size = new System.Drawing.Size(400, 514);
+            this.groupBoxCollisionPolytype.Size = new System.Drawing.Size(400, 408);
             this.groupBoxCollisionPolytype.TabIndex = 2;
             this.groupBoxCollisionPolytype.TabStop = false;
             this.groupBoxCollisionPolytype.Text = "Polygon Types";
@@ -7509,14 +7868,18 @@ namespace SharpOcarina
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.label149);
+            this.panel2.Controls.Add(this.CollisionSound);
+            this.panel2.Controls.Add(this.label148);
+            this.panel2.Controls.Add(this.CollisionSpecialFlags);
+            this.panel2.Controls.Add(this.label147);
+            this.panel2.Controls.Add(this.CollisionWallFlags);
+            this.panel2.Controls.Add(this.label146);
+            this.panel2.Controls.Add(this.CollisionFloorFlags);
             this.panel2.Controls.Add(this.PolytypeExitLabel);
             this.panel2.Controls.Add(this.BlockEponaCheckBox);
             this.panel2.Controls.Add(this.Lower1UnitChecbox);
-            this.panel2.Controls.Add(this.panel8);
             this.panel2.Controls.Add(this.WallDamageCheck);
-            this.panel2.Controls.Add(this.label92);
-            this.panel2.Controls.Add(this.label91);
-            this.panel2.Controls.Add(this.niceLine12);
             this.panel2.Controls.Add(this.GroupDetectionB8);
             this.panel2.Controls.Add(this.label90);
             this.panel2.Controls.Add(this.GroupDetectionB4);
@@ -7527,19 +7890,14 @@ namespace SharpOcarina
             this.panel2.Controls.Add(this.label88);
             this.panel2.Controls.Add(this.label87);
             this.panel2.Controls.Add(this.panel7);
-            this.panel2.Controls.Add(this.niceLine7);
             this.panel2.Controls.Add(this.CameraAngleNumeric);
             this.panel2.Controls.Add(this.CameraAngleLabel);
             this.panel2.Controls.Add(this.HookshotableCheckbox);
             this.panel2.Controls.Add(this.ExitNumber);
             this.panel2.Controls.Add(this.label17);
-            this.panel2.Controls.Add(this.panel5);
-            this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.SteepterrainCheckbox);
             this.panel2.Controls.Add(this.TerrainType);
             this.panel2.Controls.Add(this.label15);
-            this.panel2.Controls.Add(this.GroundType);
-            this.panel2.Controls.Add(this.label16);
             this.panel2.Controls.Add(this.EnvironmentType);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.EchoRange);
@@ -7551,8 +7909,88 @@ namespace SharpOcarina
             this.panel2.Controls.Add(this.niceLine11);
             this.panel2.Location = new System.Drawing.Point(3, 58);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(391, 509);
+            this.panel2.Size = new System.Drawing.Size(391, 344);
             this.panel2.TabIndex = 22;
+            // 
+            // label149
+            // 
+            this.label149.AutoSize = true;
+            this.label149.Location = new System.Drawing.Point(143, 139);
+            this.label149.Name = "label149";
+            this.label149.Size = new System.Drawing.Size(38, 13);
+            this.label149.TabIndex = 112;
+            this.label149.Text = "Sound";
+            // 
+            // CollisionSound
+            // 
+            this.CollisionSound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CollisionSound.FormattingEnabled = true;
+            this.CollisionSound.Location = new System.Drawing.Point(194, 136);
+            this.CollisionSound.Name = "CollisionSound";
+            this.CollisionSound.Size = new System.Drawing.Size(187, 21);
+            this.CollisionSound.TabIndex = 113;
+            this.CollisionSound.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.CollisionSound.SelectionChangeCommitted += new System.EventHandler(this.CollisionSound_SelectionChangeCommitted);
+            // 
+            // label148
+            // 
+            this.label148.AutoSize = true;
+            this.label148.Location = new System.Drawing.Point(143, 220);
+            this.label148.Name = "label148";
+            this.label148.Size = new System.Drawing.Size(45, 13);
+            this.label148.TabIndex = 110;
+            this.label148.Text = "Special:";
+            // 
+            // CollisionSpecialFlags
+            // 
+            this.CollisionSpecialFlags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CollisionSpecialFlags.FormattingEnabled = true;
+            this.CollisionSpecialFlags.Location = new System.Drawing.Point(194, 217);
+            this.CollisionSpecialFlags.Name = "CollisionSpecialFlags";
+            this.CollisionSpecialFlags.Size = new System.Drawing.Size(187, 21);
+            this.CollisionSpecialFlags.TabIndex = 111;
+            this.CollisionSpecialFlags.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.CollisionSpecialFlags.SelectionChangeCommitted += new System.EventHandler(this.CollisionSpecialFlags_SelectionChangeCommitted);
+            // 
+            // label147
+            // 
+            this.label147.AutoSize = true;
+            this.label147.Location = new System.Drawing.Point(143, 193);
+            this.label147.Name = "label147";
+            this.label147.Size = new System.Drawing.Size(31, 13);
+            this.label147.TabIndex = 108;
+            this.label147.Text = "Wall:";
+            // 
+            // CollisionWallFlags
+            // 
+            this.CollisionWallFlags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CollisionWallFlags.FormattingEnabled = true;
+            this.CollisionWallFlags.Location = new System.Drawing.Point(194, 190);
+            this.CollisionWallFlags.Name = "CollisionWallFlags";
+            this.CollisionWallFlags.Size = new System.Drawing.Size(187, 21);
+            this.CollisionWallFlags.TabIndex = 109;
+            this.CollisionWallFlags.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.CollisionWallFlags.SelectionChangeCommitted += new System.EventHandler(this.CollisionWallFlags_SelectionChangeCommitted);
+            // 
+            // label146
+            // 
+            this.label146.AutoSize = true;
+            this.label146.Location = new System.Drawing.Point(143, 166);
+            this.label146.Name = "label146";
+            this.label146.Size = new System.Drawing.Size(33, 13);
+            this.label146.TabIndex = 106;
+            this.label146.Text = "Floor:";
+            // 
+            // CollisionFloorFlags
+            // 
+            this.CollisionFloorFlags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CollisionFloorFlags.FormattingEnabled = true;
+            this.CollisionFloorFlags.Location = new System.Drawing.Point(194, 163);
+            this.CollisionFloorFlags.Name = "CollisionFloorFlags";
+            this.CollisionFloorFlags.Size = new System.Drawing.Size(187, 21);
+            this.CollisionFloorFlags.TabIndex = 107;
+            this.CollisionFloorFlags.DropDown += new System.EventHandler(this.AdjustWidthComboBox_DropDown);
+            this.CollisionFloorFlags.SelectionChangeCommitted += new System.EventHandler(this.CollisionFloorFlags_SelectionChangeCommitted);
             // 
             // PolytypeExitLabel
             // 
@@ -7566,7 +8004,7 @@ namespace SharpOcarina
             // BlockEponaCheckBox
             // 
             this.BlockEponaCheckBox.AutoSize = true;
-            this.BlockEponaCheckBox.Location = new System.Drawing.Point(197, 136);
+            this.BlockEponaCheckBox.Location = new System.Drawing.Point(6, 182);
             this.BlockEponaCheckBox.Name = "BlockEponaCheckBox";
             this.BlockEponaCheckBox.Size = new System.Drawing.Size(87, 17);
             this.BlockEponaCheckBox.TabIndex = 105;
@@ -7577,7 +8015,7 @@ namespace SharpOcarina
             // Lower1UnitChecbox
             // 
             this.Lower1UnitChecbox.AutoSize = true;
-            this.Lower1UnitChecbox.Location = new System.Drawing.Point(107, 136);
+            this.Lower1UnitChecbox.Location = new System.Drawing.Point(6, 159);
             this.Lower1UnitChecbox.Name = "Lower1UnitChecbox";
             this.Lower1UnitChecbox.Size = new System.Drawing.Size(57, 17);
             this.Lower1UnitChecbox.TabIndex = 104;
@@ -7585,92 +8023,10 @@ namespace SharpOcarina
             this.Lower1UnitChecbox.UseVisualStyleBackColor = true;
             this.Lower1UnitChecbox.CheckedChanged += new System.EventHandler(this.Lower1UnitChecbox_CheckedChanged);
             // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.AutograbClimbRadioButton);
-            this.panel8.Controls.Add(this.DiveRadioButton);
-            this.panel8.Controls.Add(this.SmallVoidRadioButton);
-            this.panel8.Controls.Add(this.NoLedgeJumpRadio);
-            this.panel8.Controls.Add(this.NoMiscRadioButton);
-            this.panel8.Controls.Add(this.VoidCheckBox);
-            this.panel8.Location = new System.Drawing.Point(6, 158);
-            this.panel8.Margin = new System.Windows.Forms.Padding(0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(382, 44);
-            this.panel8.TabIndex = 91;
-            // 
-            // AutograbClimbRadioButton
-            // 
-            this.AutograbClimbRadioButton.AutoSize = true;
-            this.AutograbClimbRadioButton.Location = new System.Drawing.Point(53, 24);
-            this.AutograbClimbRadioButton.Name = "AutograbClimbRadioButton";
-            this.AutograbClimbRadioButton.Size = new System.Drawing.Size(115, 17);
-            this.AutograbClimbRadioButton.TabIndex = 94;
-            this.AutograbClimbRadioButton.Text = "Autograb climbable";
-            this.AutograbClimbRadioButton.UseVisualStyleBackColor = true;
-            this.AutograbClimbRadioButton.CheckedChanged += new System.EventHandler(this.AutograbClimbRadioButton_CheckedChanged);
-            // 
-            // DiveRadioButton
-            // 
-            this.DiveRadioButton.AutoSize = true;
-            this.DiveRadioButton.Location = new System.Drawing.Point(0, 24);
-            this.DiveRadioButton.Name = "DiveRadioButton";
-            this.DiveRadioButton.Size = new System.Drawing.Size(47, 17);
-            this.DiveRadioButton.TabIndex = 93;
-            this.DiveRadioButton.Text = "Dive";
-            this.DiveRadioButton.UseVisualStyleBackColor = true;
-            this.DiveRadioButton.CheckedChanged += new System.EventHandler(this.DiveRadioButton_CheckedChanged);
-            // 
-            // SmallVoidRadioButton
-            // 
-            this.SmallVoidRadioButton.AutoSize = true;
-            this.SmallVoidRadioButton.Location = new System.Drawing.Point(171, 3);
-            this.SmallVoidRadioButton.Name = "SmallVoidRadioButton";
-            this.SmallVoidRadioButton.Size = new System.Drawing.Size(78, 17);
-            this.SmallVoidRadioButton.TabIndex = 92;
-            this.SmallVoidRadioButton.Text = "Void (small)";
-            this.SmallVoidRadioButton.UseVisualStyleBackColor = true;
-            this.SmallVoidRadioButton.CheckedChanged += new System.EventHandler(this.SmallVoidRadioButton_CheckedChanged);
-            // 
-            // NoLedgeJumpRadio
-            // 
-            this.NoLedgeJumpRadio.AutoSize = true;
-            this.NoLedgeJumpRadio.Location = new System.Drawing.Point(65, 3);
-            this.NoLedgeJumpRadio.Name = "NoLedgeJumpRadio";
-            this.NoLedgeJumpRadio.Size = new System.Drawing.Size(100, 17);
-            this.NoLedgeJumpRadio.TabIndex = 86;
-            this.NoLedgeJumpRadio.Text = "No Ledge Jump";
-            this.NoLedgeJumpRadio.UseVisualStyleBackColor = true;
-            this.NoLedgeJumpRadio.CheckedChanged += new System.EventHandler(this.NoLedgeJumpRadio_CheckedChanged);
-            // 
-            // NoMiscRadioButton
-            // 
-            this.NoMiscRadioButton.AutoSize = true;
-            this.NoMiscRadioButton.Checked = true;
-            this.NoMiscRadioButton.Location = new System.Drawing.Point(0, 3);
-            this.NoMiscRadioButton.Name = "NoMiscRadioButton";
-            this.NoMiscRadioButton.Size = new System.Drawing.Size(59, 17);
-            this.NoMiscRadioButton.TabIndex = 81;
-            this.NoMiscRadioButton.TabStop = true;
-            this.NoMiscRadioButton.Text = "Default";
-            this.NoMiscRadioButton.UseVisualStyleBackColor = true;
-            this.NoMiscRadioButton.CheckedChanged += new System.EventHandler(this.NoMiscRadioButton_CheckedChanged);
-            // 
-            // VoidCheckBox
-            // 
-            this.VoidCheckBox.AutoSize = true;
-            this.VoidCheckBox.Location = new System.Drawing.Point(255, 3);
-            this.VoidCheckBox.Name = "VoidCheckBox";
-            this.VoidCheckBox.Size = new System.Drawing.Size(78, 17);
-            this.VoidCheckBox.TabIndex = 91;
-            this.VoidCheckBox.Text = "Void (large)";
-            this.VoidCheckBox.UseVisualStyleBackColor = true;
-            this.VoidCheckBox.CheckedChanged += new System.EventHandler(this.VoidCheckBox_CheckedChanged);
-            // 
             // WallDamageCheck
             // 
             this.WallDamageCheck.AutoSize = true;
-            this.WallDamageCheck.Location = new System.Drawing.Point(293, 136);
+            this.WallDamageCheck.Location = new System.Drawing.Point(6, 205);
             this.WallDamageCheck.Name = "WallDamageCheck";
             this.WallDamageCheck.Size = new System.Drawing.Size(90, 17);
             this.WallDamageCheck.TabIndex = 103;
@@ -7678,36 +8034,10 @@ namespace SharpOcarina
             this.WallDamageCheck.UseVisualStyleBackColor = true;
             this.WallDamageCheck.CheckedChanged += new System.EventHandler(this.WallDamageCheck_CheckedChanged);
             // 
-            // label92
-            // 
-            this.label92.AutoSize = true;
-            this.label92.Location = new System.Drawing.Point(3, 202);
-            this.label92.Name = "label92";
-            this.label92.Size = new System.Drawing.Size(42, 13);
-            this.label92.TabIndex = 102;
-            this.label92.Text = "Actions";
-            // 
-            // label91
-            // 
-            this.label91.AutoSize = true;
-            this.label91.Location = new System.Drawing.Point(4, 260);
-            this.label91.Name = "label91";
-            this.label91.Size = new System.Drawing.Size(54, 13);
-            this.label91.TabIndex = 101;
-            this.label91.Text = "Properties";
-            // 
-            // niceLine12
-            // 
-            this.niceLine12.Location = new System.Drawing.Point(3, 261);
-            this.niceLine12.Name = "niceLine12";
-            this.niceLine12.Size = new System.Drawing.Size(385, 15);
-            this.niceLine12.TabIndex = 100;
-            this.niceLine12.TabStop = false;
-            // 
             // GroupDetectionB8
             // 
             this.GroupDetectionB8.AutoSize = true;
-            this.GroupDetectionB8.Location = new System.Drawing.Point(168, 431);
+            this.GroupDetectionB8.Location = new System.Drawing.Point(301, 325);
             this.GroupDetectionB8.Name = "GroupDetectionB8";
             this.GroupDetectionB8.Size = new System.Drawing.Size(76, 17);
             this.GroupDetectionB8.TabIndex = 97;
@@ -7718,7 +8048,7 @@ namespace SharpOcarina
             // label90
             // 
             this.label90.AutoSize = true;
-            this.label90.Location = new System.Drawing.Point(6, 388);
+            this.label90.Location = new System.Drawing.Point(5, 300);
             this.label90.Name = "label90";
             this.label90.Size = new System.Drawing.Size(57, 13);
             this.label90.TabIndex = 98;
@@ -7727,7 +8057,7 @@ namespace SharpOcarina
             // GroupDetectionB4
             // 
             this.GroupDetectionB4.AutoSize = true;
-            this.GroupDetectionB4.Location = new System.Drawing.Point(80, 431);
+            this.GroupDetectionB4.Location = new System.Drawing.Point(301, 308);
             this.GroupDetectionB4.Name = "GroupDetectionB4";
             this.GroupDetectionB4.Size = new System.Drawing.Size(79, 17);
             this.GroupDetectionB4.TabIndex = 96;
@@ -7742,7 +8072,7 @@ namespace SharpOcarina
             this.PolytypeUnk2.DoValueRollover = true;
             this.PolytypeUnk2.Hexadecimal = true;
             this.PolytypeUnk2.IncrementMouseWheel = 3;
-            this.PolytypeUnk2.Location = new System.Drawing.Point(169, 405);
+            this.PolytypeUnk2.Location = new System.Drawing.Point(168, 317);
             this.PolytypeUnk2.Maximum = new decimal(new int[] {
             7,
             0,
@@ -7768,7 +8098,7 @@ namespace SharpOcarina
             // GroupDetectionB2
             // 
             this.GroupDetectionB2.AutoSize = true;
-            this.GroupDetectionB2.Location = new System.Drawing.Point(12, 431);
+            this.GroupDetectionB2.Location = new System.Drawing.Point(220, 318);
             this.GroupDetectionB2.Name = "GroupDetectionB2";
             this.GroupDetectionB2.Size = new System.Drawing.Size(59, 17);
             this.GroupDetectionB2.TabIndex = 95;
@@ -7779,7 +8109,7 @@ namespace SharpOcarina
             // label89
             // 
             this.label89.AutoSize = true;
-            this.label89.Location = new System.Drawing.Point(122, 407);
+            this.label89.Location = new System.Drawing.Point(121, 319);
             this.label89.Name = "label89";
             this.label89.Size = new System.Drawing.Size(41, 13);
             this.label89.TabIndex = 96;
@@ -7792,7 +8122,7 @@ namespace SharpOcarina
             this.PolytypeUnk1.DoValueRollover = true;
             this.PolytypeUnk1.Hexadecimal = true;
             this.PolytypeUnk1.IncrementMouseWheel = 3;
-            this.PolytypeUnk1.Location = new System.Drawing.Point(64, 405);
+            this.PolytypeUnk1.Location = new System.Drawing.Point(63, 317);
             this.PolytypeUnk1.Maximum = new decimal(new int[] {
             63,
             0,
@@ -7818,7 +8148,7 @@ namespace SharpOcarina
             // label88
             // 
             this.label88.AutoSize = true;
-            this.label88.Location = new System.Drawing.Point(6, 407);
+            this.label88.Location = new System.Drawing.Point(5, 319);
             this.label88.Name = "label88";
             this.label88.Size = new System.Drawing.Size(52, 13);
             this.label88.TabIndex = 94;
@@ -7827,7 +8157,7 @@ namespace SharpOcarina
             // label87
             // 
             this.label87.AutoSize = true;
-            this.label87.Location = new System.Drawing.Point(4, 341);
+            this.label87.Location = new System.Drawing.Point(3, 253);
             this.label87.Name = "label87";
             this.label87.Size = new System.Drawing.Size(113, 13);
             this.label87.TabIndex = 92;
@@ -7838,7 +8168,7 @@ namespace SharpOcarina
             this.panel7.Controls.Add(this.GroupDetectionA8);
             this.panel7.Controls.Add(this.GroupDetectionA4);
             this.panel7.Controls.Add(this.GroupDetectionA2);
-            this.panel7.Location = new System.Drawing.Point(10, 358);
+            this.panel7.Location = new System.Drawing.Point(9, 270);
             this.panel7.Margin = new System.Windows.Forms.Padding(0);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(382, 28);
@@ -7858,7 +8188,7 @@ namespace SharpOcarina
             // GroupDetectionA4
             // 
             this.GroupDetectionA4.AutoSize = true;
-            this.GroupDetectionA4.Location = new System.Drawing.Point(71, 3);
+            this.GroupDetectionA4.Location = new System.Drawing.Point(68, 3);
             this.GroupDetectionA4.Name = "GroupDetectionA4";
             this.GroupDetectionA4.Size = new System.Drawing.Size(154, 17);
             this.GroupDetectionA4.TabIndex = 93;
@@ -7876,14 +8206,6 @@ namespace SharpOcarina
             this.GroupDetectionA2.Text = "Camera";
             this.GroupDetectionA2.UseVisualStyleBackColor = true;
             this.GroupDetectionA2.CheckedChanged += new System.EventHandler(this.GroupDetectionA2_CheckedChanged);
-            // 
-            // niceLine7
-            // 
-            this.niceLine7.Location = new System.Drawing.Point(6, 202);
-            this.niceLine7.Name = "niceLine7";
-            this.niceLine7.Size = new System.Drawing.Size(385, 15);
-            this.niceLine7.TabIndex = 90;
-            this.niceLine7.TabStop = false;
             // 
             // CameraAngleNumeric
             // 
@@ -7974,214 +8296,14 @@ namespace SharpOcarina
             this.label17.TabIndex = 86;
             this.label17.Text = "Exit ID:";
             // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.IceRadioButton);
-            this.panel5.Controls.Add(this.KillingQuicksand2Radio);
-            this.panel5.Controls.Add(this.JabuJabuRadio);
-            this.panel5.Controls.Add(this.NoFallDamageRadio);
-            this.panel5.Controls.Add(this.KillingLavaRadioButton);
-            this.panel5.Controls.Add(this.radioButton7);
-            this.panel5.Controls.Add(this.radioButton6);
-            this.panel5.Controls.Add(this.radioButton5);
-            this.panel5.Controls.Add(this.radioButton4);
-            this.panel5.Location = new System.Drawing.Point(6, 273);
-            this.panel5.Margin = new System.Windows.Forms.Padding(0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(382, 68);
-            this.panel5.TabIndex = 85;
-            // 
-            // IceRadioButton
-            // 
-            this.IceRadioButton.AutoSize = true;
-            this.IceRadioButton.Location = new System.Drawing.Point(0, 43);
-            this.IceRadioButton.Name = "IceRadioButton";
-            this.IceRadioButton.Size = new System.Drawing.Size(40, 17);
-            this.IceRadioButton.TabIndex = 8;
-            this.IceRadioButton.Text = "Ice";
-            this.IceRadioButton.UseVisualStyleBackColor = true;
-            this.IceRadioButton.CheckedChanged += new System.EventHandler(this.IceRadioButton_CheckedChanged);
-            // 
-            // KillingQuicksand2Radio
-            // 
-            this.KillingQuicksand2Radio.AutoSize = true;
-            this.KillingQuicksand2Radio.Location = new System.Drawing.Point(190, 21);
-            this.KillingQuicksand2Radio.Name = "KillingQuicksand2Radio";
-            this.KillingQuicksand2Radio.Size = new System.Drawing.Size(104, 17);
-            this.KillingQuicksand2Radio.TabIndex = 7;
-            this.KillingQuicksand2Radio.Text = "Kill-sand no jump";
-            this.KillingQuicksand2Radio.UseVisualStyleBackColor = true;
-            this.KillingQuicksand2Radio.CheckedChanged += new System.EventHandler(this.KillingQuicksand2Radio_CheckedChanged);
-            // 
-            // JabuJabuRadio
-            // 
-            this.JabuJabuRadio.AutoSize = true;
-            this.JabuJabuRadio.Location = new System.Drawing.Point(305, 22);
-            this.JabuJabuRadio.Name = "JabuJabuRadio";
-            this.JabuJabuRadio.Size = new System.Drawing.Size(74, 17);
-            this.JabuJabuRadio.TabIndex = 6;
-            this.JabuJabuRadio.Text = "Jabu-Jabu";
-            this.JabuJabuRadio.UseVisualStyleBackColor = true;
-            this.JabuJabuRadio.CheckedChanged += new System.EventHandler(this.JabuJabuRadio_CheckedChanged);
-            // 
-            // NoFallDamageRadio
-            // 
-            this.NoFallDamageRadio.AutoSize = true;
-            this.NoFallDamageRadio.Location = new System.Drawing.Point(83, 22);
-            this.NoFallDamageRadio.Name = "NoFallDamageRadio";
-            this.NoFallDamageRadio.Size = new System.Drawing.Size(110, 17);
-            this.NoFallDamageRadio.TabIndex = 5;
-            this.NoFallDamageRadio.Text = "No falling damage";
-            this.NoFallDamageRadio.UseVisualStyleBackColor = true;
-            this.NoFallDamageRadio.CheckedChanged += new System.EventHandler(this.NoFallDamageRadio_CheckedChanged);
-            // 
-            // KillingLavaRadioButton
-            // 
-            this.KillingLavaRadioButton.AutoSize = true;
-            this.KillingLavaRadioButton.Location = new System.Drawing.Point(0, 22);
-            this.KillingLavaRadioButton.Name = "KillingLavaRadioButton";
-            this.KillingLavaRadioButton.Size = new System.Drawing.Size(79, 17);
-            this.KillingLavaRadioButton.TabIndex = 4;
-            this.KillingLavaRadioButton.Text = "Killing Lava";
-            this.KillingLavaRadioButton.UseVisualStyleBackColor = true;
-            this.KillingLavaRadioButton.CheckedChanged += new System.EventHandler(this.KillingLavaRadioButton_CheckedChanged);
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Checked = true;
-            this.radioButton7.Location = new System.Drawing.Point(0, 3);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(59, 17);
-            this.radioButton7.TabIndex = 3;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "Default";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            this.radioButton7.CheckedChanged += new System.EventHandler(this.radioButton7_CheckedChanged);
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(291, 3);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(91, 17);
-            this.radioButton6.TabIndex = 2;
-            this.radioButton6.Text = "Floor Damage";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(187, 3);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(106, 17);
-            this.radioButton5.TabIndex = 1;
-            this.radioButton5.Text = "Killing Quicksand";
-            this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(65, 3);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(116, 17);
-            this.radioButton4.TabIndex = 0;
-            this.radioButton4.Text = "Shallow Quicksand";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.NoLedgeClimbRadio);
-            this.panel4.Controls.Add(this.CrawlSpaceRadio);
-            this.panel4.Controls.Add(this.LadderTopRadioButton);
-            this.panel4.Controls.Add(this.radioButton1);
-            this.panel4.Controls.Add(this.radioButton3);
-            this.panel4.Controls.Add(this.radioButton2);
-            this.panel4.Location = new System.Drawing.Point(9, 220);
-            this.panel4.Margin = new System.Windows.Forms.Padding(0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(382, 44);
-            this.panel4.TabIndex = 84;
-            // 
-            // NoLedgeClimbRadio
-            // 
-            this.NoLedgeClimbRadio.AutoSize = true;
-            this.NoLedgeClimbRadio.Location = new System.Drawing.Point(86, 24);
-            this.NoLedgeClimbRadio.Name = "NoLedgeClimbRadio";
-            this.NoLedgeClimbRadio.Size = new System.Drawing.Size(100, 17);
-            this.NoLedgeClimbRadio.TabIndex = 87;
-            this.NoLedgeClimbRadio.Text = "No Ledge Climb";
-            this.NoLedgeClimbRadio.UseVisualStyleBackColor = true;
-            this.NoLedgeClimbRadio.CheckedChanged += new System.EventHandler(this.NoLedgeClimbRadio_CheckedChanged);
-            // 
-            // CrawlSpaceRadio
-            // 
-            this.CrawlSpaceRadio.AutoSize = true;
-            this.CrawlSpaceRadio.Location = new System.Drawing.Point(0, 24);
-            this.CrawlSpaceRadio.Name = "CrawlSpaceRadio";
-            this.CrawlSpaceRadio.Size = new System.Drawing.Size(85, 17);
-            this.CrawlSpaceRadio.TabIndex = 85;
-            this.CrawlSpaceRadio.Text = "Crawl Space";
-            this.CrawlSpaceRadio.UseVisualStyleBackColor = true;
-            this.CrawlSpaceRadio.CheckedChanged += new System.EventHandler(this.CrawlSpaceRadio_CheckedChanged);
-            // 
-            // LadderTopRadioButton
-            // 
-            this.LadderTopRadioButton.AutoSize = true;
-            this.LadderTopRadioButton.Location = new System.Drawing.Point(135, 3);
-            this.LadderTopRadioButton.Name = "LadderTopRadioButton";
-            this.LadderTopRadioButton.Size = new System.Drawing.Size(80, 17);
-            this.LadderTopRadioButton.TabIndex = 84;
-            this.LadderTopRadioButton.Text = "Ladder Top";
-            this.LadderTopRadioButton.UseVisualStyleBackColor = true;
-            this.LadderTopRadioButton.CheckedChanged += new System.EventHandler(this.LadderTopRadioButton_CheckedChanged);
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(0, 3);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(62, 17);
-            this.radioButton1.TabIndex = 81;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Nothing";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(221, 3);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(110, 17);
-            this.radioButton3.TabIndex = 83;
-            this.radioButton3.Text = "Climbable Surface";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(71, 3);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(58, 17);
-            this.radioButton2.TabIndex = 82;
-            this.radioButton2.Text = "Ladder";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
-            // 
             // SteepterrainCheckbox
             // 
             this.SteepterrainCheckbox.AutoSize = true;
-            this.SteepterrainCheckbox.Location = new System.Drawing.Point(135, 111);
+            this.SteepterrainCheckbox.Location = new System.Drawing.Point(6, 228);
             this.SteepterrainCheckbox.Name = "SteepterrainCheckbox";
-            this.SteepterrainCheckbox.Size = new System.Drawing.Size(60, 17);
+            this.SteepterrainCheckbox.Size = new System.Drawing.Size(54, 17);
             this.SteepterrainCheckbox.TabIndex = 33;
-            this.SteepterrainCheckbox.Text = "Steep?";
+            this.SteepterrainCheckbox.Text = "Steep";
             this.SteepterrainCheckbox.UseVisualStyleBackColor = true;
             this.SteepterrainCheckbox.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
@@ -8223,45 +8345,6 @@ namespace SharpOcarina
             this.label15.Size = new System.Drawing.Size(70, 13);
             this.label15.TabIndex = 31;
             this.label15.Text = "Terrain Type:";
-            // 
-            // GroundType
-            // 
-            this.GroundType.AlwaysFireValueChanged = false;
-            this.GroundType.DisplayDigits = 1;
-            this.GroundType.DoValueRollover = true;
-            this.GroundType.Hexadecimal = true;
-            this.GroundType.IncrementMouseWheel = 3;
-            this.GroundType.Location = new System.Drawing.Point(324, 108);
-            this.GroundType.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.GroundType.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.GroundType.Name = "GroundType";
-            this.GroundType.ShiftMultiplier = 1;
-            this.GroundType.Size = new System.Drawing.Size(40, 20);
-            this.GroundType.TabIndex = 80;
-            this.EnvironmentControlTooltip.SetToolTip(this.GroundType, resources.GetString("GroundType.ToolTip"));
-            this.GroundType.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.GroundType.ValueChanged += new System.EventHandler(this.numericUpDownEx9_ValueChanged);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(238, 112);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(72, 13);
-            this.label16.TabIndex = 29;
-            this.label16.Text = "Ground Type:";
             // 
             // EnvironmentType
             // 
@@ -8374,15 +8457,15 @@ namespace SharpOcarina
             // 
             // niceLine10
             // 
-            this.niceLine10.Location = new System.Drawing.Point(7, 339);
+            this.niceLine10.Location = new System.Drawing.Point(6, 251);
             this.niceLine10.Name = "niceLine10";
-            this.niceLine10.Size = new System.Drawing.Size(385, 15);
+            this.niceLine10.Size = new System.Drawing.Size(384, 15);
             this.niceLine10.TabIndex = 93;
             this.niceLine10.TabStop = false;
             // 
             // niceLine11
             // 
-            this.niceLine11.Location = new System.Drawing.Point(6, 384);
+            this.niceLine11.Location = new System.Drawing.Point(5, 296);
             this.niceLine11.Name = "niceLine11";
             this.niceLine11.Size = new System.Drawing.Size(385, 15);
             this.niceLine11.TabIndex = 99;
@@ -12829,6 +12912,13 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // TextEditorMenuItem
+            // 
+            this.TextEditorMenuItem.Name = "TextEditorMenuItem";
+            this.TextEditorMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.TextEditorMenuItem.Text = "Text Editor (OoT/MM/z64rom)";
+            this.TextEditorMenuItem.Click += new System.EventHandler(this.TextEditorMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -12992,6 +13082,17 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.TimeMinute)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TimeHour)).EndInit();
             this.tabCollision.ResumeLayout(false);
+            this.CollisionBoundsGroupBox.ResumeLayout(false);
+            this.CollisionBoundsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionSubdivisionsZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionSubdivisionsY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionSubdivisionsX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMaxBoundsZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMaxBoundsY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMaxBoundsX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMinBoundsZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMinBoundsY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CollisionMinBoundsX)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.ExitGroupBox.ResumeLayout(false);
@@ -13004,20 +13105,13 @@ namespace SharpOcarina
             this.groupBoxCollisionPolytype.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel8.ResumeLayout(false);
-            this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PolytypeUnk1)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CameraAngleNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitNumber)).EndInit();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TerrainType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroundType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvironmentType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EchoRange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PolygonSelect)).EndInit();
@@ -13242,20 +13336,9 @@ namespace SharpOcarina
         private System.Windows.Forms.Label label14;
         private NumericUpDownEx EchoRange;
         private System.Windows.Forms.Label label13;
-        private NumericUpDownEx GroundType;
-        private System.Windows.Forms.Label label16;
         private NumericUpDownEx TerrainType;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.CheckBox SteepterrainCheckbox;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton7;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button AddexitButton;
         private System.Windows.Forms.Button DeleteexitButton;
@@ -13380,15 +13463,8 @@ namespace SharpOcarina
         private CheckBox UnusedCommandCheckBox;
         private CheckBox GroupAnimated;
         private ToolStripMenuItem setRoomsToUseEnvironment1ToolStripMenuItem;
-        private RadioButton KillingLavaRadioButton;
-        private RadioButton LadderTopRadioButton;
         private NumericUpDownEx CameraAngleNumeric;
         private Label CameraAngleLabel;
-        private RadioButton CrawlSpaceRadio;
-        private RadioButton NoFallDamageRadio;
-        private RadioButton JabuJabuRadio;
-        private NiceLine niceLine7;
-        private RadioButton VoidCheckBox;
         private ToolStripMenuItem showControlsToolStripMenuItem;
         private Label WaterboxRoomLabel;
         private ToolStripMenuItem autoplaceDoorsToolStripMenuItem;
@@ -13573,17 +13649,10 @@ namespace SharpOcarina
         private Label label90;
         private CheckBox GroupDetectionB4;
         private CheckBox GroupDetectionB2;
-        private RadioButton KillingQuicksand2Radio;
         private NiceLine niceLine11;
-        private Label label92;
-        private Label label91;
-        private NiceLine niceLine12;
-        private RadioButton IceRadioButton;
         private ToolStripMenuItem triplicateCollisionBoundsToolStripMenuItem;
         private ToolStripMenuItem addEmptySpaceInSceneHeaderToolStripMenuItem;
         private CheckBox WallDamageCheck;
-        private RadioButton NoLedgeClimbRadio;
-        private RadioButton NoLedgeJumpRadio;
         private ToolStripMenuItem fileCreationEditorToolStripMenuItem;
         private CheckBox ReverseLightCheckBox;
         private Label label93;
@@ -13611,11 +13680,6 @@ namespace SharpOcarina
         private ToolStripMenuItem importCamerasAndWaterboxFromzsceneToolStripMenuItem;
         private CheckBox GroupPixelated;
         private ToolStripMenuItem showRotationValuesAsHexadecimalToolStripMenuItem;
-        private Panel panel8;
-        private RadioButton NoMiscRadioButton;
-        private RadioButton AutograbClimbRadioButton;
-        private RadioButton DiveRadioButton;
-        private RadioButton SmallVoidRadioButton;
         private CheckBox BlockEponaCheckBox;
         private CheckBox Lower1UnitChecbox;
         private Label labelcamerapos;
@@ -13983,6 +14047,31 @@ namespace SharpOcarina
         private Button PathwayPasteButton;
         private CheckBox MultiRoomCollisionCheckBox;
         private ToolStripMenuItem UseFixedCollisionWriteMenuItem;
+        private Label label148;
+        private ComboBox CollisionSpecialFlags;
+        private Label label147;
+        private ComboBox CollisionWallFlags;
+        private Label label146;
+        private ComboBox CollisionFloorFlags;
+        private Label label149;
+        private ComboBox CollisionSound;
+        private GroupBox CollisionBoundsGroupBox;
+        private Label label151;
+        private Label label150;
+        private NumericUpDownEx CollisionMinBoundsZ;
+        private NumericUpDownEx CollisionMinBoundsY;
+        private NumericUpDownEx CollisionMinBoundsX;
+        private Button CollisionBoundsViewButton;
+        private CheckBox CollisionSubdivisionsAuto;
+        private CheckBox CollisionBoundsAuto;
+        private NumericUpDownEx CollisionSubdivisionsZ;
+        private NumericUpDownEx CollisionSubdivisionsY;
+        private NumericUpDownEx CollisionSubdivisionsX;
+        private Label label155;
+        private NumericUpDownEx CollisionMaxBoundsZ;
+        private NumericUpDownEx CollisionMaxBoundsY;
+        private NumericUpDownEx CollisionMaxBoundsX;
+        private ToolStripMenuItem TextEditorMenuItem;
     }
     }
 

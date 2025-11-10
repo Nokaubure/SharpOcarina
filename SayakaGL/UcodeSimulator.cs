@@ -263,7 +263,9 @@ namespace SharpOcarina.SayakaGL
             public int ColorAnimation;
             public int Billboard;
             public short midX, midY, midZ;
-
+            public Vector2h Texture0;
+            public Vector2h Texture1;
+            public float Tex0Width; 
 
             public Color4 PickColor;
 
@@ -576,8 +578,23 @@ namespace SharpOcarina.SayakaGL
                     ThisDL.midY = (short)((command.w1 & 0xFFFF0000) >> 16);
                     ThisDL.midZ = (short)((command.w1 & 0x0000FFFF));
                 }
-            }
+                if (command.ID == 0xF2) //settilesize
+                {
+                    if ((command.w1 & 0xFF000000) != 0)
+                    {
 
+                        ThisDL.Texture1 = new Vector2h(
+                            (ushort)((((command.w1 & 0x00FFF000) >> 12) + 4) / 4),
+                            (ushort)((((command.w1 & 0x00000FFF))) + 4) / 4);
+                    }
+                    else
+                    {
+                        ThisDL.Texture0 = new Vector2h(
+                            (ushort)((((command.w1 & 0x00FFF000) >> 12) + 4) / 4),
+                            (ushort)((((command.w1 & 0x00000FFF))) + 4) / 4);
+                    }
+                }
+            }
 
 
 
@@ -599,24 +616,31 @@ namespace SharpOcarina.SayakaGL
             GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, NGraphics.PrimColor.Color.R, NGraphics.PrimColor.Color.G, NGraphics.PrimColor.Color.B, NGraphics.PrimColor.Color.A);
             GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 1, NGraphics.EnvColor.R, NGraphics.EnvColor.G, NGraphics.EnvColor.B, NGraphics.EnvColor.A);
 
+       
             // For temporary access by other functions
             CurrentDLists = DLists;
 
             // Loop through each Display List for parsing
-            foreach (DisplayListStruct ThisDL in CurrentDLists)
+            for(int i=0; i< CurrentDLists.Count; i++)
             {
 
                 
 
                 // Again, for temporary access
-                CurrentDL = ThisDL;
+                CurrentDL = CurrentDLists[i];
 
                 // Begin new OpenGL Display List
-                GL.NewList(ThisDL.GLID, ListMode.CompileAndExecute);
+                GL.NewList(CurrentDL.GLID, ListMode.CompileAndExecute);
 
                 // Parse all commands of the Display List
               
                 ParseDL(CurrentDL);
+
+                // for texture scrolling
+                DisplayListStruct targetdlist = DLists[i];
+
+               // ret.Add(NGraphics.Textures);
+
 
                 // If the current Display List is supposed to be highlighted, parse its essential commands once more
                 if (CurrentDL.Highlight == true && ParseMode != 2)
@@ -633,6 +657,7 @@ namespace SharpOcarina.SayakaGL
 
             }
         }
+
 
         // Used for macro detection
         private static bool CompareBytes(byte[] b1, byte[] b2)
@@ -756,7 +781,6 @@ namespace SharpOcarina.SayakaGL
                     // if (ThisDL.InFileNumber == 0x03) DebugConsole.WriteLine(ThisDL.Commands[i].w0.ToString("X8") + " " + ThisDL.Commands[i].w1.ToString("X8"));
                 }
             }
-
 
 
             return;
@@ -1473,10 +1497,7 @@ namespace SharpOcarina.SayakaGL
                 GL.ActiveTexture(TextureUnit.Texture0);
                 GL.Enable(EnableCap.Texture2D);
                 GL.BindTexture(TextureTarget.Texture2D, CheckTextureCache(0));
-
-
-        //        GL.BindTexture(TextureTarget.Texture2D, UcodeSimulator.NGraphics.Textures[0].GLID);
-
+                
 
                 if (NGraphics.IsMultiTexture == true)
                 {
@@ -1734,7 +1755,8 @@ namespace SharpOcarina.SayakaGL
                     NGraphics.Textures[ActiveTexture].Width,
                     NGraphics.Textures[ActiveTexture].Height,
                     NGraphics.Textures[ActiveTexture].LineSize,
-                    NGraphics.Palette);
+                    NGraphics.Palette,
+                    CurrentDL.IsTransparent);
             }
             else if (TextureSegment >= 8 && textureoffsets[TextureSegment] != 0)
             {
