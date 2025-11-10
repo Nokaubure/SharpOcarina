@@ -36,6 +36,7 @@ using TgaDecoderTest;
 using Microsoft.VisualBasic;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using Tommy;
+using System.Web;
 
 namespace SharpOcarina
 {
@@ -21017,33 +21018,38 @@ namespace SharpOcarina
         {
             string ToolDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Tools/Zelda64TextEditor/");
             string exefile = ToolDirectory + "Zelda64 Text Editor.exe";
-            string updatefileurl = "https://raw.githubusercontent.com/Nokaubure/SharpOcarina/Updates/externalupdate.xml";
-            string updatefile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\externalupdate.xml");
+
             string zippath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/z64texteditor.zip");
-            WebClient client = null;
+            
             float latestversion = 0f;
             string website = "";
-            if (!File.Exists(updatefile))
-                client = Helpers.DownloadTemporalFile(updatefileurl);
 
-            if (client != null)
+            try
             {
-                XmlDocument doc = new XmlDocument();
-                FileStream fs = new FileStream(updatefile, FileMode.Open, FileAccess.Read);
-                doc.Load(fs);
-                XmlNodeList nodes = doc.SelectNodes("TextEditor");
-                XmlAttributeCollection nodeAtt = nodes[0].Attributes;
-                latestversion = Convert.ToSingle(nodeAtt["version"].Value);
-                website = nodes[0].SelectNodes("Url")[0].Value;
-                fs.Close();
-            
+                string url = "https://api.github.com/repos/skawo/Zelda64-Text-Editor/releases/latest";
+
+                string json = Helpers.GetHttpJson(url);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    latestversion = Convert.ToSingle(Helpers.ExtractJsonValue(json, "\"tag_name\"").Replace("v.", ""), CultureInfo.InvariantCulture);
+                    website = Helpers.ExtractJsonValue(json, "\"browser_download_url\"");
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+
+            if (website != "")
+            {
 
                 if ((!Directory.Exists(ToolDirectory) || !File.Exists(ToolDirectory + "Zelda64 Text Editor.exe")))
                 {
-                    if (MessageBox.Show("Download zelda64 text editor? (this is only required once)", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    if (MessageBox.Show("Download zelda64 text editor? (this is only required once)", "Download", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         if (File.Exists(zippath)) File.Delete(zippath);
-
+                        Helpers.DeleteDirectory(ToolDirectory);
                         Directory.CreateDirectory(ToolDirectory);
                         PleaseWait pleasewait = new PleaseWait(website, zippath, ToolDirectory, true);
                         pleasewait.ShowDialog();
@@ -21060,13 +21066,13 @@ namespace SharpOcarina
                 {
                     //check for updates
                     FileVersionInfo info = FileVersionInfo.GetVersionInfo(exefile);
-                    float version = Convert.ToSingle(info.FileVersion);
+                    float version = Convert.ToSingle(info.FileVersion, CultureInfo.InvariantCulture) - 0.01f;
                     if (latestversion > version)
                     {
-                        if (MessageBox.Show("Version " + latestversion + " available, update Text Editor to new version?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        if (MessageBox.Show("Version " + latestversion + " available, update Text Editor to new version?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                         {
                             if (File.Exists(zippath)) File.Delete(zippath);
-
+                            Helpers.DeleteDirectory(ToolDirectory);
                             Directory.CreateDirectory(ToolDirectory);
                             PleaseWait pleasewait = new PleaseWait(website, zippath, ToolDirectory, true);
                             pleasewait.ShowDialog();
@@ -21090,6 +21096,25 @@ namespace SharpOcarina
             }
             
         }
+
+        // use for later
+        //string updatefileurl = "https://raw.githubusercontent.com/Nokaubure/SharpOcarina/refs/heads/main/Updates/externalupdate.xml";
+        //string updatefile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\externalupdate.xml");
+        //WebClient client = null;
+        /*
+        if (!File.Exists(updatefile))
+            client = Helpers.DownloadTemporalFile(updatefileurl);
+            */
+        /*
+        XmlDocument doc = new XmlDocument();
+        FileStream fs = new FileStream(updatefile, FileMode.Open, FileAccess.Read);
+        doc.Load(fs);
+        XmlNodeList nodes = doc.SelectNodes("TextEditor");
+        XmlAttributeCollection nodeAtt = nodes[0].Attributes;
+        latestversion = Convert.ToSingle(nodeAtt["version"].Value);
+        website = nodes[0].SelectNodes("Url")[0].InnerText;
+        fs.Close();
+        */
 
         public void EasterEggPhaseOne()
         {

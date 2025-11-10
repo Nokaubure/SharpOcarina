@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Net;
 
 namespace SharpOcarina
 {
@@ -509,7 +510,65 @@ namespace SharpOcarina
             Directory.Delete(target_dir, false);
         }
 
+        public static WebClient DownloadTemporalFile(string website)
+        {
+            string tempw = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\");
+            if (!Directory.Exists(tempw)) Directory.CreateDirectory(tempw);
 
+            WebClient client = new WebClient();
+
+            try
+            {
+                using (client)
+                {
+                    System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+                    client.DownloadFile(website, tempw + Path.GetFileName(website));
+
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Couldn't download file " + website, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+            return client;
+        }
+
+        public static string GetHttpJson(string url)
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+                request.UserAgent = "request"; // Required by GitHub
+                request.Accept = "application/json";
+
+                using (var response = (HttpWebResponse)request.GetResponse())
+                using (var reader = new StreamReader(response.GetResponseStream()))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            catch (WebException ex)
+            {
+                Console.WriteLine("HTTP error: " + ex.Message);
+                return null;
+            }
+        }
+
+        public static string ExtractJsonValue(string json, string key)
+        {
+            int i = json.IndexOf(key);
+            if (i < 0) return null;
+            i = json.IndexOf(':', i);
+            if (i < 0) return null;
+            int start = json.IndexOf('"', i + 1);
+            if (start < 0) return null;
+            int end = json.IndexOf('"', start + 1);
+            if (end < 0) return null;
+            return json.Substring(start + 1, end - start - 1);
+        }
     }
 
     public static class StringExtensionsClass
