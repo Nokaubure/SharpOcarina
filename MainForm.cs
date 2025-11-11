@@ -222,6 +222,8 @@ namespace SharpOcarina
 
         public bool pathwayactorpreview = false;
 
+        string texteditorwebsite = "";
+
         //test
 
         // public static List<SayakaGL.UcodeSimulator.DisplayListStruct> zobj_cache = new List<SayakaGL.UcodeSimulator.DisplayListStruct>();
@@ -1953,9 +1955,9 @@ namespace SharpOcarina
                         for (int i = 0; i < Room.ZActors.Count; i++)
                         {
                             DrawActorModel(Room.ZActors[i],
-                                (i == actorEditControl1.ActorNumber ? Color.FromArgb(0, 255, 0) : Color.FromArgb(192, 255, 192)),
+                                (i == actorEditControl.ActorNumber ? Color.FromArgb(0, 255, 0) : Color.FromArgb(192, 255, 192)),
                                 ActorCubeGLID,
-                                i == actorEditControl1.ActorNumber, true, actorpick == _Actor_);
+                                i == actorEditControl.ActorNumber, true, actorpick == _Actor_);
                         }
                         /* Render room additional lights... */
                         for (int i = 0; i < Room.AdditionalLights.Count; i++)
@@ -1980,16 +1982,16 @@ namespace SharpOcarina
                 GL.Disable(EnableCap.Texture2D);
                 for (int i = 0; i < CurrentScene.SpawnPoints.Count; i++)
                     DrawActorModel(CurrentScene.SpawnPoints[i],
-                        (i == actorEditControl3.ActorNumber ? Color.FromArgb(0, 0, 255) : Color.FromArgb(192, 192, 255)),
+                        (i == spawnerEditControl.ActorNumber ? Color.FromArgb(0, 0, 255) : Color.FromArgb(192, 192, 255)),
                         ActorPyramidGLID,
-                        Convert.ToBoolean(i == actorEditControl3.ActorNumber), true, actorpick == _Spawn_);
+                        Convert.ToBoolean(i == spawnerEditControl.ActorNumber), true, actorpick == _Spawn_);
 
                 /* Render transition actors... */
                 for (int i = 0; i < CurrentScene.Transitions.Count; i++)
                     DrawActorModel(CurrentScene.Transitions[i],
-                        (i == actorEditControl2.ActorNumber ? Color.FromArgb(255, 0, 0) : Color.FromArgb(255, 192, 192)),
+                        (i == transitionEditControl.ActorNumber ? Color.FromArgb(255, 0, 0) : Color.FromArgb(255, 192, 192)),
                         ActorPyramidGLID,
-                        Convert.ToBoolean(i == actorEditControl2.ActorNumber), true, actorpick == _Transition_);
+                        Convert.ToBoolean(i == transitionEditControl.ActorNumber), true, actorpick == _Transition_);
 
                 /* Render pathways */
                 if ((settings.OnlyRenderPathwaysInTab && tabControl1.SelectedIndex == 6) 
@@ -2887,6 +2889,7 @@ namespace SharpOcarina
 
         void glControl1_KeyDown(object sender, KeyEventArgs e)
         {
+            bool keyG = KeysDown[(int)Keys.G];
             KeysDown[(int)(e.KeyCode & Keys.KeyCode)] = true;
 
             if (e.KeyCode == Keys.F && CurrentScene != null && CurrentScene.Rooms.Count > 0)
@@ -2894,11 +2897,11 @@ namespace SharpOcarina
 
                 Vector3d truepos = new Vector3d(-99999,-99999,-99999);
                 if (actorpick == _Actor_ && CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0)
-                    truepos = new Vector3d(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].XPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].YPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].ZPos);
+                    truepos = new Vector3d(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorNumber].XPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorNumber].YPos, CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorNumber].ZPos);
                 else if (actorpick == _Transition_ && CurrentScene.Transitions.Count > 0)
-                    truepos = new Vector3d(CurrentScene.Transitions[actorEditControl2.ActorNumber].XPos, CurrentScene.Transitions[actorEditControl2.ActorNumber].YPos, CurrentScene.Transitions[actorEditControl2.ActorNumber].ZPos);
+                    truepos = new Vector3d(CurrentScene.Transitions[transitionEditControl.ActorNumber].XPos, CurrentScene.Transitions[transitionEditControl.ActorNumber].YPos, CurrentScene.Transitions[transitionEditControl.ActorNumber].ZPos);
                 else if (actorpick == _Spawn_ && CurrentScene.SpawnPoints.Count > 0)
-                    truepos = new Vector3d(CurrentScene.SpawnPoints[actorEditControl3.ActorNumber].XPos, CurrentScene.SpawnPoints[actorEditControl3.ActorNumber].YPos, CurrentScene.SpawnPoints[actorEditControl3.ActorNumber].ZPos);
+                    truepos = new Vector3d(CurrentScene.SpawnPoints[spawnerEditControl.ActorNumber].XPos, CurrentScene.SpawnPoints[spawnerEditControl.ActorNumber].YPos, CurrentScene.SpawnPoints[spawnerEditControl.ActorNumber].ZPos);
                 else if (actorpick == _Pathway_ && PathwayListBox.SelectedIndex != -1)
                     truepos = new Vector3d(CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].X, CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Y, CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex].Z);
                 else if (actorpick == _Waterbox_ && CurrentScene.Waterboxes.Count > 0)
@@ -2946,22 +2949,22 @@ namespace SharpOcarina
                 }
             }
            
-            if (KeysDown[(int)Keys.Z] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !Mouse.MDown)
+            if (KeysDown[(int)Keys.Z] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !GrabDown())
             {
                 Undo();
             }
-            if (KeysDown[(int)Keys.Y] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !Mouse.MDown)
+            if (KeysDown[(int)Keys.Y] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !GrabDown())
             {
                 Undo(true);
             }
             if (KeysDown[(int)Keys.Delete] && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
                 if (actorpick == _Actor_)
-                    actorEditControl1.DeleteActor();
+                    actorEditControl.DeleteActor();
                 else if (actorpick == _Transition_)
-                    actorEditControl2.DeleteActor();
+                    transitionEditControl.DeleteActor();
                 else if (actorpick == _Spawn_)
-                    actorEditControl3.DeleteActor();
+                    spawnerEditControl.DeleteActor();
                 else if (actorpick == _Pathway_)
                     DeletePathwayPoint();
                 else if (actorpick == _Waterbox_)
@@ -2977,13 +2980,37 @@ namespace SharpOcarina
 
                 actorpick = -1;
             }
+            if (!keyG && KeysDown[(int)Keys.G] && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+            {
+                Point mousePos = Control.MousePosition;
+                Point relPos = glControl1.PointToClient(mousePos);
+                Mouse.Center = new Vector2d(relPos.X, relPos.Y);
+            }
         }
 
         void glControl1_KeyUp(object sender, KeyEventArgs e)
         {
             KeysDown[(int)(e.KeyCode & Keys.KeyCode)] = false;
+            if (e.KeyCode == Keys.G && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+            {
+               
+                int tmp = actorpick;
+
+                if (prevactorpick != -1)
+                {
+                    actorpick = prevactorpick;
+                    prevactorpick = -1;
+                }
+
+                if (tmp == _Actor_) actorEditControl.UpdateActorEdit();
+                else if (tmp == _Transition_) transitionEditControl.UpdateActorEdit();
+                else if (tmp == _Spawn_) spawnerEditControl.UpdateActorEdit();
+                UpdateForm();
+                
+            }
 
         }
+
 
         void glControl1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -2996,7 +3023,7 @@ namespace SharpOcarina
 
             Mouse.Center = new Vector2d(e.X, e.Y);
 
-            if (Mouse.LDown && !Mouse.MDown)
+            if (Mouse.LDown && !GrabDown())
             {
                 if (Mouse.Center != Mouse.Move)
                     Camera.MouseMove(Mouse.Move);
@@ -3023,7 +3050,7 @@ namespace SharpOcarina
 
                     for (int i = 0; i < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count; i++)
                     {
-                        if (i != actorEditControl1.ActorNumber || actorpick != _Actor_)
+                        if (i != actorEditControl.ActorNumber || actorpick != _Actor_)
                         {
                             DrawActorModel(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[i],
                             Color.FromArgb(192, 255, 192),
@@ -3038,8 +3065,8 @@ namespace SharpOcarina
                             if (pixel[0] == 192)
                             {
                                 selected = true;
-                                actorEditControl1.ActorComboBox.SelectedIndex = i;
-                                actorEditControl1.UpdateActorEdit();
+                                actorEditControl.ActorComboBox.SelectedIndex = i;
+                                actorEditControl.UpdateActorEdit();
                                 actorpick = _Actor_;
                                 break;
                             }
@@ -3054,7 +3081,7 @@ namespace SharpOcarina
                         /* Render transition actors... */
                         for (int i = 0; i < CurrentScene.Transitions.Count; i++)
                         {
-                            if (i != actorEditControl2.ActorNumber || actorpick != _Transition_)
+                            if (i != transitionEditControl.ActorNumber || actorpick != _Transition_)
                             {
                                 DrawActorModel(CurrentScene.Transitions[i],
                                 Color.FromArgb(255, 192, 192),
@@ -3067,8 +3094,8 @@ namespace SharpOcarina
                                 if (pixel[0] == 255)
                                 {
                                     selected = true;
-                                    actorEditControl2.ActorComboBox.SelectedIndex = i;
-                                    actorEditControl2.UpdateActorEdit();
+                                    transitionEditControl.ActorComboBox.SelectedIndex = i;
+                                    transitionEditControl.UpdateActorEdit();
                                     actorpick = _Transition_;
                                     break;
                                 }
@@ -3083,7 +3110,7 @@ namespace SharpOcarina
                         /* Render spawn points... */
                         for (int i = 0; i < CurrentScene.SpawnPoints.Count; i++)
                         {
-                            if (i != actorEditControl3.ActorNumber || actorpick != _Spawn_)
+                            if (i != spawnerEditControl.ActorNumber || actorpick != _Spawn_)
                             {
                                 DrawActorModel(CurrentScene.SpawnPoints[i],
                                 Color.FromArgb(192, 192, 255),
@@ -3096,8 +3123,8 @@ namespace SharpOcarina
                                 if (pixel[0] == 192)
                                 {
                                     selected = true;
-                                    actorEditControl3.ActorComboBox.SelectedIndex = i;
-                                    actorEditControl3.UpdateActorEdit();
+                                    spawnerEditControl.ActorComboBox.SelectedIndex = i;
+                                    spawnerEditControl.UpdateActorEdit();
                                     actorpick = _Spawn_;
                                     break;
                                 }
@@ -3434,9 +3461,13 @@ namespace SharpOcarina
 
 
             }
+            GrabingActor(sender,e);
 
+        }
 
-            if (Mouse.MDown && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+        void GrabingActor(object sender, MouseEventArgs e)
+        {
+            if (GrabDown() && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
                 byte[] pixel = new byte[4];
                 int[] viewport = new int[4];
@@ -3448,9 +3479,9 @@ namespace SharpOcarina
 
                 actorpick = -1;
 
-                if (CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0 && actorEditControl1.ActorNumber != -1)
+                if (CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0 && actorEditControl.ActorNumber != -1)
                 {
-                    DrawActorModel(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber],
+                    DrawActorModel(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorNumber],
                         Color.FromArgb(255, 0, 0),
                         ActorCubeGLID,
                         false, false);
@@ -3464,9 +3495,9 @@ namespace SharpOcarina
                     }
                 }
 
-                if (actorpick == -1 && CurrentScene.Transitions.Count > 0 && actorEditControl2.ActorNumber != -1)
+                if (actorpick == -1 && CurrentScene.Transitions.Count > 0 && transitionEditControl.ActorNumber != -1)
                 {
-                    DrawActorModel(CurrentScene.Transitions[actorEditControl2.ActorNumber],
+                    DrawActorModel(CurrentScene.Transitions[transitionEditControl.ActorNumber],
                         Color.FromArgb(255, 0, 0),
                         ActorPyramidGLID,
                         false, false);
@@ -3482,9 +3513,9 @@ namespace SharpOcarina
 
                 }
 
-                if (actorpick == -1 && CurrentScene.SpawnPoints.Count > 0 && actorEditControl3.ActorNumber != -1)
+                if (actorpick == -1 && CurrentScene.SpawnPoints.Count > 0 && spawnerEditControl.ActorNumber != -1)
                 {
-                    DrawActorModel(CurrentScene.SpawnPoints[actorEditControl3.ActorNumber],
+                    DrawActorModel(CurrentScene.SpawnPoints[spawnerEditControl.ActorNumber],
                         Color.FromArgb(255, 0, 0),
                         ActorPyramidGLID,
                         false, false);
@@ -3641,7 +3672,7 @@ namespace SharpOcarina
                 if (e.Button != MouseButtons.Left)
                     Mouse.LDown = false;
             }
-            if (Mouse.MDown && CurrentScene != null && CurrentScene.Rooms.Count > 0 && actorpick != -1)
+            if (GrabDown() && CurrentScene != null && CurrentScene.Rooms.Count > 0 && actorpick != -1)
             {
 
                 //I adapted the function from scenenavi...
@@ -3662,12 +3693,12 @@ namespace SharpOcarina
                 double CamYRotd = Camera.Rot.Y * (double)(Math.PI / 180);
 
                 Object target = null;
-                if (actorpick == _Actor_ && actorEditControl1.ActorNumber > -1 && actorEditControl1.ActorNumber < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count)
-                    target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber];
+                if (actorpick == _Actor_ && actorEditControl.ActorNumber > -1 && actorEditControl.ActorNumber < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count)
+                    target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorNumber];
                 else if (actorpick == _Transition_)
-                    target = CurrentScene.Transitions[actorEditControl2.ActorNumber];
+                    target = CurrentScene.Transitions[transitionEditControl.ActorNumber];
                 else if (actorpick == _Spawn_)
-                    target = CurrentScene.SpawnPoints[actorEditControl3.ActorNumber];
+                    target = CurrentScene.SpawnPoints[spawnerEditControl.ActorNumber];
                 else if (actorpick == _Pathway_ && PathwayListBox.SelectedIndex != -1)
                     target = CurrentScene.Pathways[(int)PathwayNumber.Value].Points[PathwayListBox.SelectedIndex];
                 else if (actorpick == _Waterbox_)
@@ -4033,6 +4064,8 @@ namespace SharpOcarina
             GL.LineWidth(1.0f); 
         }
 
+
+
         void glControl1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -4043,7 +4076,7 @@ namespace SharpOcarina
                 Mouse.MDown = false;
             if (e.Button == MouseButtons.Middle && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
-                Mouse.MDown = false;
+                int tmp = actorpick;
 
                 if (prevactorpick != -1)
                 {
@@ -4051,9 +4084,9 @@ namespace SharpOcarina
                     prevactorpick = -1;
                 }
 
-                actorEditControl1.UpdateActorEdit();
-                actorEditControl2.UpdateActorEdit();
-                actorEditControl3.UpdateActorEdit();
+                if (tmp == _Actor_) actorEditControl.UpdateActorEdit();
+                else if (tmp == _Transition_) transitionEditControl.UpdateActorEdit();
+                else if (tmp == _Spawn_) spawnerEditControl.UpdateActorEdit();
                 UpdateForm();
             }
         }
@@ -4562,8 +4595,8 @@ namespace SharpOcarina
                     SceneSettingsComboBox.Enabled = !settings.command1AOoT;
                     SceneFunctionLabel.Enabled = !settings.command1AOoT;
 
-                    actorEditControl2.Enabled = true;
-                    actorEditControl3.Enabled = true;
+                    transitionEditControl.Enabled = true;
+                    spawnerEditControl.Enabled = true;
 
                     groupBox6.Enabled = true;
                     // UpdateExitEdit();
@@ -4757,7 +4790,7 @@ namespace SharpOcarina
                     if (RoomList.SelectedItem != null)
                     {
                         ObjectTabMenu.Enabled = true;
-                        actorEditControl1.Enabled = true;
+                        actorEditControl.Enabled = true;
                         RefreshRoomObjectDescription();
                         RefreshSceneObjectDescription();
 
@@ -4780,7 +4813,7 @@ namespace SharpOcarina
                     else
                     {
                         ObjectTabMenu.Enabled = false;
-                        actorEditControl1.Enabled = false;
+                        actorEditControl.Enabled = false;
                     }
 
                     if (RoomList.Items.Count == 0 || RoomList.SelectedIndex == -1)
@@ -5018,9 +5051,9 @@ namespace SharpOcarina
                     targetback.Add(new UndoRedo(undoredo.datatype, target, undoredo.room));
                     CurrentScene.Rooms[undoredo.room].ZActors = ((List<ZActor>)undoredo.data).ConvertAll(actor => (actor.Clone()));
 
-                    actorEditControl1.SetActors(ref CurrentScene.Rooms[undoredo.room].ZActors);
+                    actorEditControl.SetActors(ref CurrentScene.Rooms[undoredo.room].ZActors);
 
-                    actorEditControl1.UpdateActorEdit();
+                    actorEditControl.UpdateActorEdit();
                 }
                 else if (undoredo.datatype == _Transition_)
                 {
@@ -5028,9 +5061,9 @@ namespace SharpOcarina
                     targetback.Add(new UndoRedo(undoredo.datatype, target, undoredo.room));
                     CurrentScene.Transitions = ((List<ZActor>)undoredo.data).ConvertAll(actor => (actor.Clone()));
 
-                    actorEditControl2.SetActors(ref CurrentScene.Transitions);
+                    transitionEditControl.SetActors(ref CurrentScene.Transitions);
 
-                    actorEditControl2.UpdateActorEdit();
+                    transitionEditControl.UpdateActorEdit();
                 }
                 else if (undoredo.datatype == _Spawn_)
                 {
@@ -5038,9 +5071,9 @@ namespace SharpOcarina
                     targetback.Add(new UndoRedo(undoredo.datatype, target, undoredo.room));
                     CurrentScene.SpawnPoints = ((List<ZActor>)undoredo.data).ConvertAll(actor => (actor.Clone()));
 
-                    actorEditControl3.SetActors(ref CurrentScene.SpawnPoints);
+                    spawnerEditControl.SetActors(ref CurrentScene.SpawnPoints);
 
-                    actorEditControl3.UpdateActorEdit();
+                    spawnerEditControl.UpdateActorEdit();
                 }
                 else if (undoredo.datatype == _Pathway_)
                 {
@@ -6608,11 +6641,11 @@ namespace SharpOcarina
 
             if (RoomList.SelectedItem != null)
             {
-                actorEditControl1.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
-                if (!CurrentScene.PregeneratedMesh) actorEditControl1.CenterPoint = GetCenterPoint(CurrentScene.Rooms[RoomList.SelectedIndex].ObjModel.Vertices);
+                actorEditControl.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
+                if (!CurrentScene.PregeneratedMesh) actorEditControl.CenterPoint = GetCenterPoint(CurrentScene.Rooms[RoomList.SelectedIndex].ObjModel.Vertices);
             }
             else
-                actorEditControl1.ClearActors();
+                actorEditControl.ClearActors();
 
             GroupList.DisplayMember = "DisplayName";
             GroupList.EndUpdate();
@@ -6794,24 +6827,24 @@ namespace SharpOcarina
             RoomList.DisplayMember = "ModelShortFilename";
 
             ActorEditControl.UpdateFormDelegate TempDelegate = new ActorEditControl.UpdateFormDelegate(UpdateForm);
-            actorEditControl1.SetUpdateDelegate(TempDelegate);
-            actorEditControl1.SetLabels("Actor", "Actors");
-            actorEditControl1.mainform = this;
-            actorEditControl1.SetSize();
+            actorEditControl.SetUpdateDelegate(TempDelegate);
+            actorEditControl.SetLabels("Actor", "Actors");
+            actorEditControl.mainform = this;
+            actorEditControl.SetSize();
 
-            actorEditControl2.SetUpdateDelegate(TempDelegate);
-            actorEditControl2.SetLabels("Transition", "Transitions");
-            actorEditControl2.IsTransitionActor = true;
-            actorEditControl2.SetSize();
-            actorEditControl2.SetActors(ref CurrentScene.Transitions);
-            actorEditControl2.mainform = this;
+            transitionEditControl.SetUpdateDelegate(TempDelegate);
+            transitionEditControl.SetLabels("Transition", "Transitions");
+            transitionEditControl.IsTransitionActor = true;
+            transitionEditControl.SetSize();
+            transitionEditControl.SetActors(ref CurrentScene.Transitions);
+            transitionEditControl.mainform = this;
 
-            actorEditControl3.SetUpdateDelegate(TempDelegate);
-            actorEditControl3.SetLabels("Spawn", "Spawn Points");
-            actorEditControl3.IsSpawnActor = true;
-            actorEditControl3.SetSize();
-            actorEditControl3.SetActors(ref CurrentScene.SpawnPoints);
-            actorEditControl3.mainform = this;
+            spawnerEditControl.SetUpdateDelegate(TempDelegate);
+            spawnerEditControl.SetLabels("Spawn", "Spawn Points");
+            spawnerEditControl.IsSpawnActor = true;
+            spawnerEditControl.SetSize();
+            spawnerEditControl.SetActors(ref CurrentScene.SpawnPoints);
+            spawnerEditControl.mainform = this;
 
             PathwayListBox.Items.Clear();
 
@@ -7774,22 +7807,22 @@ namespace SharpOcarina
 
 
             ActorEditControl.UpdateFormDelegate TempDelegate = new ActorEditControl.UpdateFormDelegate(UpdateForm);
-            actorEditControl1.SetUpdateDelegate(TempDelegate);
-            actorEditControl1.SetLabels("Actor", "Actors");
-            actorEditControl1.mainform = this;
+            actorEditControl.SetUpdateDelegate(TempDelegate);
+            actorEditControl.SetLabels("Actor", "Actors");
+            actorEditControl.mainform = this;
 
 
-            actorEditControl2.SetUpdateDelegate(TempDelegate);
-            actorEditControl2.SetLabels("Transition", "Transitions");
-            actorEditControl2.IsTransitionActor = true;
-            actorEditControl2.SetActors(ref CurrentScene.Transitions);
-            actorEditControl2.mainform = this;
+            transitionEditControl.SetUpdateDelegate(TempDelegate);
+            transitionEditControl.SetLabels("Transition", "Transitions");
+            transitionEditControl.IsTransitionActor = true;
+            transitionEditControl.SetActors(ref CurrentScene.Transitions);
+            transitionEditControl.mainform = this;
 
-            actorEditControl3.SetUpdateDelegate(TempDelegate);
-            actorEditControl3.SetLabels("Spawn", "Spawn Points");
-            actorEditControl3.IsSpawnActor = true;
-            actorEditControl3.SetActors(ref CurrentScene.SpawnPoints);
-            actorEditControl3.mainform = this;
+            spawnerEditControl.SetUpdateDelegate(TempDelegate);
+            spawnerEditControl.SetLabels("Spawn", "Spawn Points");
+            spawnerEditControl.IsSpawnActor = true;
+            spawnerEditControl.SetActors(ref CurrentScene.SpawnPoints);
+            spawnerEditControl.mainform = this;
 
             if (CurrentScene.version == 0)
             {
@@ -9878,7 +9911,7 @@ namespace SharpOcarina
                 EasterEggToolStripMenuItem.Text = "Bombiwas";
 
                 UpdateForm();
-                actorEditControl1.UpdateActorEdit();
+                actorEditControl.UpdateActorEdit();
 
                 settings.RenderActors = true;
                 if (!SimulateN64CheckBox.Checked)
@@ -9900,7 +9933,7 @@ namespace SharpOcarina
             }
 
             UpdateForm();
-            actorEditControl1.UpdateActorEdit();
+            actorEditControl.UpdateActorEdit();
 
 
         }
@@ -9977,7 +10010,7 @@ namespace SharpOcarina
 
 
             UpdateForm();
-            actorEditControl1.UpdateActorEdit();
+            actorEditControl.UpdateActorEdit();
 
 
         }
@@ -11087,27 +11120,27 @@ namespace SharpOcarina
         {
             if (CurrentScene != null)
             {
-                if (actorpick == _Actor_ && CurrentScene.Rooms.Count > 0 && actorEditControl1.ActorComboBox.SelectedIndex > -1 && actorEditControl1.ActorComboBox.SelectedIndex < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count)
+                if (actorpick == _Actor_ && CurrentScene.Rooms.Count > 0 && actorEditControl.ActorComboBox.SelectedIndex > -1 && actorEditControl.ActorComboBox.SelectedIndex < CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count)
                 {
                     StoreUndo(_Actor_);
-                    CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorComboBox.SelectedIndex].Number = number;
-                    CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorComboBox.SelectedIndex].Variable = variable;
-                    actorEditControl1.UpdateActorEdit();
+                    CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorComboBox.SelectedIndex].Number = number;
+                    CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorComboBox.SelectedIndex].Variable = variable;
+                    actorEditControl.UpdateActorEdit();
 
                 }
-                else if (actorpick == _Transition_ && actorEditControl2.ActorComboBox.SelectedIndex  > -1 && actorEditControl2.ActorComboBox.SelectedIndex < CurrentScene.Transitions.Count)
+                else if (actorpick == _Transition_ && transitionEditControl.ActorComboBox.SelectedIndex  > -1 && transitionEditControl.ActorComboBox.SelectedIndex < CurrentScene.Transitions.Count)
                 {
                     StoreUndo(_Transition_);
-                    CurrentScene.Transitions[actorEditControl2.ActorComboBox.SelectedIndex].Number = number;
-                    CurrentScene.Transitions[actorEditControl2.ActorComboBox.SelectedIndex].Variable = variable;
-                    actorEditControl2.UpdateActorEdit();
+                    CurrentScene.Transitions[transitionEditControl.ActorComboBox.SelectedIndex].Number = number;
+                    CurrentScene.Transitions[transitionEditControl.ActorComboBox.SelectedIndex].Variable = variable;
+                    transitionEditControl.UpdateActorEdit();
                 }
-                else if (actorpick == _Spawn_ && actorEditControl3.ActorComboBox.SelectedIndex > -1 && actorEditControl3.ActorComboBox.SelectedIndex < CurrentScene.SpawnPoints.Count)
+                else if (actorpick == _Spawn_ && spawnerEditControl.ActorComboBox.SelectedIndex > -1 && spawnerEditControl.ActorComboBox.SelectedIndex < CurrentScene.SpawnPoints.Count)
                 {
                     StoreUndo(_Spawn_);
-                    CurrentScene.SpawnPoints[actorEditControl3.ActorComboBox.SelectedIndex].Number = number;
-                    CurrentScene.SpawnPoints[actorEditControl3.ActorComboBox.SelectedIndex].Variable = variable;
-                    actorEditControl3.UpdateActorEdit();
+                    CurrentScene.SpawnPoints[spawnerEditControl.ActorComboBox.SelectedIndex].Number = number;
+                    CurrentScene.SpawnPoints[spawnerEditControl.ActorComboBox.SelectedIndex].Variable = variable;
+                    spawnerEditControl.UpdateActorEdit();
                 }
             }
         }
@@ -12097,19 +12130,19 @@ namespace SharpOcarina
             if (doorcount == 0) MessageBox.Show("No doors has been added, are you using the #Door tag in your collision file? (or you pressed this option 2 times)", "Message", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else MessageBox.Show("Doors added: " + doorcount + "!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-            actorEditControl2.UpdateActorEdit();
+            transitionEditControl.UpdateActorEdit();
             UpdateForm();
         }
 
         private void glControl1_MouseWheel(object sender, MouseEventArgs e)
         {
             Object target = null;
-            if (actorpick == 1 && actorEditControl1.ActorNumber != -1)
-                target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber];
-            else if (actorpick == 2 && actorEditControl2.ActorNumber != -1)
-                target = CurrentScene.Transitions[actorEditControl2.ActorNumber];
-            else if (actorpick == 3 && actorEditControl3.ActorNumber != -1)
-                target = CurrentScene.SpawnPoints[actorEditControl3.ActorNumber];
+            if (actorpick == 1 && actorEditControl.ActorNumber != -1)
+                target = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorNumber];
+            else if (actorpick == 2 && transitionEditControl.ActorNumber != -1)
+                target = CurrentScene.Transitions[transitionEditControl.ActorNumber];
+            else if (actorpick == 3 && spawnerEditControl.ActorNumber != -1)
+                target = CurrentScene.SpawnPoints[spawnerEditControl.ActorNumber];
             else if (actorpick == 5 && CurrentScene.Waterboxes.Count > 0)
                 target = CurrentScene.Waterboxes[(int)WaterboxSelect.Value];
             else if (actorpick == _CutsceneActor_ && CurrentScene.Cutscene.Count > 0 && CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors.Count > 0)
@@ -12122,9 +12155,9 @@ namespace SharpOcarina
                 else if (newrot > 32767) newrot = -32767;
                 ((ZActor)target).YRot = newrot;
                 
-                actorEditControl1.UpdateActorEdit_Faster();
-                actorEditControl2.UpdateActorEdit_Faster();
-                actorEditControl3.UpdateActorEdit_Faster();
+                actorEditControl.UpdateActorEdit_Faster();
+                transitionEditControl.UpdateActorEdit_Faster();
+                spawnerEditControl.UpdateActorEdit_Faster();
             }
             else if (actorpick == 5 && target != null)
             {
@@ -12186,12 +12219,12 @@ namespace SharpOcarina
 
             UpdateForm();
 
-            actorEditControl1.cacheId = 0xFEFE;
-            actorEditControl2.cacheId = 0xFEFE;
-            actorEditControl3.cacheId = 0xFEFE;
-            actorEditControl1.UpdateActorEdit();
-            actorEditControl2.UpdateActorEdit();
-            actorEditControl3.UpdateActorEdit();
+            actorEditControl.cacheId = 0xFEFE;
+            transitionEditControl.cacheId = 0xFEFE;
+            spawnerEditControl.cacheId = 0xFEFE;
+            actorEditControl.UpdateActorEdit();
+            transitionEditControl.UpdateActorEdit();
+            spawnerEditControl.UpdateActorEdit();
         }
 
 
@@ -12637,12 +12670,12 @@ namespace SharpOcarina
             UpdateAlternateSceneHeaders();
 
             SceneHeaderList.Value = CurrentScene.SceneHeaders.Count;
-            actorEditControl1.SetActors(ref NormalHeader.Rooms[RoomList.SelectedIndex].ZActors);
-            actorEditControl1.UpdateActorEdit();
-            actorEditControl2.SetActors(ref NormalHeader.Transitions);
-            actorEditControl2.UpdateActorEdit();
-            actorEditControl3.SetActors(ref NormalHeader.SpawnPoints);
-            actorEditControl3.UpdateActorEdit();
+            actorEditControl.SetActors(ref NormalHeader.Rooms[RoomList.SelectedIndex].ZActors);
+            actorEditControl.UpdateActorEdit();
+            transitionEditControl.SetActors(ref NormalHeader.Transitions);
+            transitionEditControl.UpdateActorEdit();
+            spawnerEditControl.SetActors(ref NormalHeader.SpawnPoints);
+            spawnerEditControl.UpdateActorEdit();
             UpdateEnvironmentData();
             UpdateForm();
         }
@@ -13543,9 +13576,9 @@ namespace SharpOcarina
                         MessageBox.Show("Imported actors: " + CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count + "\n" +
                             "Imported objects: " + CurrentScene.Rooms[RoomList.SelectedIndex].ZObjects.Count, "Import", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                        
-                        actorEditControl1.UpdateActorEdit();
-                        actorEditControl2.UpdateActorEdit();
-                        actorEditControl3.UpdateActorEdit();
+                        actorEditControl.UpdateActorEdit();
+                        transitionEditControl.UpdateActorEdit();
+                        spawnerEditControl.UpdateActorEdit();
                         UpdateForm();
                         break;
                     }
@@ -13586,12 +13619,12 @@ namespace SharpOcarina
             }
 
             SetSceneHeader((int)SceneHeaderSelector.Value);
-            if (RoomList.SelectedIndex != -1) actorEditControl1.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
-            actorEditControl1.UpdateActorEdit();
-            actorEditControl2.SetActors(ref CurrentScene.Transitions);
-            actorEditControl2.UpdateActorEdit();
-            actorEditControl3.SetActors(ref CurrentScene.SpawnPoints);
-            actorEditControl3.UpdateActorEdit();
+            if (RoomList.SelectedIndex != -1) actorEditControl.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
+            actorEditControl.UpdateActorEdit();
+            transitionEditControl.SetActors(ref CurrentScene.Transitions);
+            transitionEditControl.UpdateActorEdit();
+            spawnerEditControl.SetActors(ref CurrentScene.SpawnPoints);
+            spawnerEditControl.UpdateActorEdit();
             UpdateObjectEdit();
             UpdateEnvironmentEdit();
             UpdateForm();
@@ -14649,9 +14682,9 @@ namespace SharpOcarina
             CutsceneActorXRot.Hexadecimal = settings.HexRotations;
             CutsceneActorYRot.Hexadecimal = settings.HexRotations;
             CutsceneActorZRot.Hexadecimal = settings.HexRotations;
-            actorEditControl1.UpdateActorEdit();
-            actorEditControl2.UpdateActorEdit();
-            actorEditControl3.UpdateActorEdit();
+            actorEditControl.UpdateActorEdit();
+            transitionEditControl.UpdateActorEdit();
+            spawnerEditControl.UpdateActorEdit();
         }
 
         private void Lower1UnitChecbox_CheckedChanged(object sender, EventArgs e)
@@ -15140,9 +15173,9 @@ namespace SharpOcarina
                         MessageBox.Show("Imported transitions: " + CurrentScene.Transitions.Count + "\n" +
                             "Imported spawns: " + CurrentScene.SpawnPoints.Count, "Import", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         
-                        actorEditControl1.UpdateActorEdit();
-                        actorEditControl2.UpdateActorEdit();
-                        actorEditControl3.UpdateActorEdit();
+                        actorEditControl.UpdateActorEdit();
+                        transitionEditControl.UpdateActorEdit();
+                        spawnerEditControl.UpdateActorEdit();
                         UpdateForm();
                         break;
                     }
@@ -16105,12 +16138,12 @@ namespace SharpOcarina
                     RefreshExitCache();
                     RefreshActorCache();
                     RefreshObjectCache();
-                    actorEditControl1.cacheId = 0xFEFE;
-                    actorEditControl2.cacheId = 0xFEFE;
-                    actorEditControl3.cacheId = 0xFEFE;
-                    actorEditControl1.UpdateActorEdit();
-                    actorEditControl2.UpdateActorEdit();
-                    actorEditControl3.UpdateActorEdit();
+                    actorEditControl.cacheId = 0xFEFE;
+                    transitionEditControl.cacheId = 0xFEFE;
+                    spawnerEditControl.cacheId = 0xFEFE;
+                    actorEditControl.UpdateActorEdit();
+                    transitionEditControl.UpdateActorEdit();
+                    spawnerEditControl.UpdateActorEdit();
                     UpdateForm();
                 }
 
@@ -16190,12 +16223,12 @@ namespace SharpOcarina
                     RefreshSFXList();
                 }
 
-                actorEditControl1.cacheId = 0xFEFE;
-                actorEditControl2.cacheId = 0xFEFE;
-                actorEditControl3.cacheId = 0xFEFE;
-                actorEditControl1.UpdateActorEdit();
-                actorEditControl2.UpdateActorEdit();
-                actorEditControl3.UpdateActorEdit();
+                actorEditControl.cacheId = 0xFEFE;
+                transitionEditControl.cacheId = 0xFEFE;
+                spawnerEditControl.cacheId = 0xFEFE;
+                actorEditControl.UpdateActorEdit();
+                transitionEditControl.UpdateActorEdit();
+                spawnerEditControl.UpdateActorEdit();
                 UpdateForm();
             }
         }
@@ -16790,12 +16823,12 @@ namespace SharpOcarina
                 ActorCache.Clear();
                 UpdateForm();
 
-                actorEditControl1.cacheId = 0xFEFE;
-                actorEditControl2.cacheId = 0xFEFE;
-                actorEditControl3.cacheId = 0xFEFE;
-                actorEditControl1.UpdateActorEdit();
-                actorEditControl2.UpdateActorEdit();
-                actorEditControl3.UpdateActorEdit();
+                actorEditControl.cacheId = 0xFEFE;
+                transitionEditControl.cacheId = 0xFEFE;
+                spawnerEditControl.cacheId = 0xFEFE;
+                actorEditControl.UpdateActorEdit();
+                transitionEditControl.UpdateActorEdit();
+                spawnerEditControl.UpdateActorEdit();
             }
         }
 
@@ -17685,12 +17718,12 @@ namespace SharpOcarina
             SetSceneHeader(0);
             SelectRoom(0);
             UpdateAlternateSceneHeaders();
-            actorEditControl1.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
-            actorEditControl2.SetActors(ref CurrentScene.Transitions);
-            actorEditControl3.SetActors(ref CurrentScene.SpawnPoints);
-            actorEditControl1.UpdateActorEdit();
-            actorEditControl2.UpdateActorEdit();
-            actorEditControl3.UpdateActorEdit();
+            actorEditControl.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
+            transitionEditControl.SetActors(ref CurrentScene.Transitions);
+            spawnerEditControl.SetActors(ref CurrentScene.SpawnPoints);
+            actorEditControl.UpdateActorEdit();
+            transitionEditControl.UpdateActorEdit();
+            spawnerEditControl.UpdateActorEdit();
             UpdateForm();
             if (ExitList.Items.Count > 0) SelectExit(0);
 
@@ -18719,9 +18752,9 @@ namespace SharpOcarina
 
             UpdateForm();
 
-            actorEditControl1.UpdateActorEdit();
-            actorEditControl2.UpdateActorEdit();
-            actorEditControl3.UpdateActorEdit();
+            actorEditControl.UpdateActorEdit();
+            transitionEditControl.UpdateActorEdit();
+            spawnerEditControl.UpdateActorEdit();
         }
 
         private void CameraUnk12_ValueChanged(object sender, EventArgs e)
@@ -19840,9 +19873,9 @@ namespace SharpOcarina
 
         private void convertSelectedActorXMLEntryTotomlToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (CurrentScene != null & CurrentScene.Rooms.Count > 0 & CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0 && actorEditControl3.ActorComboBox.SelectedIndex != -1)
+            if (CurrentScene != null & CurrentScene.Rooms.Count > 0 & CurrentScene.Rooms[RoomList.SelectedIndex].ZActors.Count > 0 && spawnerEditControl.ActorComboBox.SelectedIndex != -1)
             {
-                tomlconversionID = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl3.ActorComboBox.SelectedIndex].Number;
+                tomlconversionID = CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[spawnerEditControl.ActorComboBox.SelectedIndex].Number;
                 if (tomlconversionID != 0)
                 {
                     ReloadXMLs();
@@ -20067,6 +20100,11 @@ namespace SharpOcarina
                 CDILink.Image = Properties.Resources.cdilink;
                 CDILink.Image.Tag = "";
             }
+        }
+
+        private bool GrabDown()
+        {
+            return Mouse.MDown || KeysDown[(int)Keys.G];
         }
 
         private void postInstallOperationsz64romToolStripMenuItem_Click(object sender, EventArgs e)
@@ -20406,9 +20444,9 @@ namespace SharpOcarina
                             //StoreUndo(_Actor_);
                             StoreUndo(_Actor_,targetroom);
 
-                            CurrentScene.Rooms[targetroom].ZActors.Add(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl1.ActorNumber].Clone());
-                            actorEditControl1.DeleteActor();
-                            actorEditControl1.UpdateActorEdit();
+                            CurrentScene.Rooms[targetroom].ZActors.Add(CurrentScene.Rooms[RoomList.SelectedIndex].ZActors[actorEditControl.ActorNumber].Clone());
+                            actorEditControl.DeleteActor();
+                            actorEditControl.UpdateActorEdit();
                             UpdateForm();
 
                             
@@ -20670,12 +20708,12 @@ namespace SharpOcarina
                         if (window.transitions)
                         {
                             CurrentScene.Transitions = TargetScene.Transitions.ConvertAll(x => (x.Clone()));
-                            actorEditControl2.SetActors(ref CurrentScene.Transitions);
+                            transitionEditControl.SetActors(ref CurrentScene.Transitions);
                         }
                         if (window.spawns)
                         {
                             CurrentScene.SpawnPoints = TargetScene.SpawnPoints.ConvertAll(x => (x.Clone()));
-                            actorEditControl3.SetActors(ref CurrentScene.SpawnPoints);
+                            spawnerEditControl.SetActors(ref CurrentScene.SpawnPoints);
                         }
                         if (window.environments)
                         {
@@ -20694,7 +20732,7 @@ namespace SharpOcarina
                             else
                                 CurrentScene.Rooms[RoomList.SelectedIndex].ZActors = TargetScene.Rooms[window.room].ZActors.ConvertAll(x => (x.Clone()));
 
-                            actorEditControl1.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
+                            actorEditControl.SetActors(ref CurrentScene.Rooms[RoomList.SelectedIndex].ZActors);
                         }
                         if (window.objects)
                         {
@@ -20775,9 +20813,9 @@ namespace SharpOcarina
 
                         }
 
-                        actorEditControl1.UpdateActorEdit();
-                        actorEditControl2.UpdateActorEdit();
-                        actorEditControl3.UpdateActorEdit();
+                        actorEditControl.UpdateActorEdit();
+                        transitionEditControl.UpdateActorEdit();
+                        spawnerEditControl.UpdateActorEdit();
                         UpdateForm();
 
                     }
@@ -21022,26 +21060,28 @@ namespace SharpOcarina
             string zippath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/z64texteditor.zip");
             
             float latestversion = 0f;
-            string website = "";
 
-            try
+            if (texteditorwebsite == "")
             {
-                string url = "https://api.github.com/repos/skawo/Zelda64-Text-Editor/releases/latest";
-
-                string json = Helpers.GetHttpJson(url);
-                if (!string.IsNullOrEmpty(json))
+                try
                 {
-                    latestversion = Convert.ToSingle(Helpers.ExtractJsonValue(json, "\"tag_name\"").Replace("v.", ""), CultureInfo.InvariantCulture);
-                    website = Helpers.ExtractJsonValue(json, "\"browser_download_url\"");
+                    string url = "https://api.github.com/repos/skawo/Zelda64-Text-Editor/releases/latest";
+
+                    string json = Helpers.GetHttpJson(url);
+                    if (!string.IsNullOrEmpty(json))
+                    {
+                        latestversion = Convert.ToSingle(Helpers.ExtractJsonValue(json, "\"tag_name\"").Replace("v.", ""), CultureInfo.InvariantCulture);
+                        texteditorwebsite = Helpers.ExtractJsonValue(json, "\"browser_download_url\"");
+                    }
+
                 }
-
+                catch (Exception ex)
+                {
+                }
             }
-            catch (Exception ex)
-            {
-            }
 
 
-            if (website != "")
+            if (texteditorwebsite != "")
             {
 
                 if ((!Directory.Exists(ToolDirectory) || !File.Exists(ToolDirectory + "Zelda64 Text Editor.exe")))
@@ -21049,9 +21089,10 @@ namespace SharpOcarina
                     if (MessageBox.Show("Download zelda64 text editor? (this is only required once)", "Download", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         if (File.Exists(zippath)) File.Delete(zippath);
+
                         Helpers.DeleteDirectory(ToolDirectory);
                         Directory.CreateDirectory(ToolDirectory);
-                        PleaseWait pleasewait = new PleaseWait(website, zippath, ToolDirectory, true);
+                        PleaseWait pleasewait = new PleaseWait(texteditorwebsite, zippath, ToolDirectory, true);
                         pleasewait.ShowDialog();
 
                     }
@@ -21072,9 +21113,20 @@ namespace SharpOcarina
                         if (MessageBox.Show("Version " + latestversion + " available, update Text Editor to new version?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                         {
                             if (File.Exists(zippath)) File.Delete(zippath);
-                            Helpers.DeleteDirectory(ToolDirectory);
+
+                            string[] files = Directory.GetFiles(ToolDirectory);
+
+                            foreach (string file in files)
+                            {
+                                if (file.Contains(".exe") || file.Contains(".dll"))
+                                {
+                                    File.SetAttributes(file, FileAttributes.Normal);
+                                    File.Delete(file);
+                                }
+                            }
+
                             Directory.CreateDirectory(ToolDirectory);
-                            PleaseWait pleasewait = new PleaseWait(website, zippath, ToolDirectory, true);
+                            PleaseWait pleasewait = new PleaseWait(texteditorwebsite, zippath, ToolDirectory, true, ExtractExistingFileAction.DoNotOverwrite);
                             pleasewait.ShowDialog();
 
                         }
@@ -21096,6 +21148,8 @@ namespace SharpOcarina
             }
             
         }
+
+
 
         // use for later
         //string updatefileurl = "https://raw.githubusercontent.com/Nokaubure/SharpOcarina/refs/heads/main/Updates/externalupdate.xml";

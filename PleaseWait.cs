@@ -19,17 +19,18 @@ namespace SharpOcarina
         string downloadlocation = "";
         string unziplocation = "";
         bool delete = true;
-
+        ExtractExistingFileAction unzipaction = ExtractExistingFileAction.Throw;
         public PleaseWait()
         {
             Init();
         }
-        public PleaseWait(string _website, string _downloadlocation, string _unziplocation = "", bool _delete = false)
+        public PleaseWait(string _website, string _downloadlocation, string _unziplocation = "", bool _delete = false, ExtractExistingFileAction _unzipaction = ExtractExistingFileAction.Throw)
         {
             website = _website;
             downloadlocation = _downloadlocation;
             unziplocation = _unziplocation;
             delete = _delete;
+            unzipaction = _unzipaction;
             Init();
         }
 
@@ -84,7 +85,7 @@ namespace SharpOcarina
                                     }
                                 };
                                 
-                                zip.ExtractAll(unziplocation, ExtractExistingFileAction.Throw);
+                                zip.ExtractAll(unziplocation, unzipaction);
                             }
                             if (delete)
                                 File.Delete(downloadlocation);

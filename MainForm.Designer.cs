@@ -172,6 +172,7 @@ namespace SharpOcarina
             this.dEBUGCustomActorDatabasetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageTocArrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ZobjCopyToolMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.TextEditorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertSelectedActorXMLEntryTotomlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectTableEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSceneTitleCardTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -557,8 +558,8 @@ namespace SharpOcarina
             this.AddpolygonButton = new System.Windows.Forms.Button();
             this.PolygonSelect = new SharpOcarina.NumericUpDownEx();
             this.tabTransitions = new System.Windows.Forms.TabPage();
-            this.actorEditControl3 = new SharpOcarina.ActorEditControl();
-            this.actorEditControl2 = new SharpOcarina.ActorEditControl();
+            this.spawnerEditControl = new SharpOcarina.ActorEditControl();
+            this.transitionEditControl = new SharpOcarina.ActorEditControl();
             this.tabPathways = new System.Windows.Forms.TabPage();
             this.ActorCutsceneGroupBox = new System.Windows.Forms.GroupBox();
             this.label143 = new System.Windows.Forms.Label();
@@ -625,7 +626,7 @@ namespace SharpOcarina
             this.SceneObjectDeleteButton = new System.Windows.Forms.Button();
             this.SceneObjectAddButton = new System.Windows.Forms.Button();
             this.RoomObjectSpace = new System.Windows.Forms.Label();
-            this.actorEditControl1 = new SharpOcarina.ActorEditControl();
+            this.actorEditControl = new SharpOcarina.ActorEditControl();
             this.tabCutscene = new System.Windows.Forms.TabPage();
             this.CutsceneTableEntryLabel = new System.Windows.Forms.Label();
             this.CutsceneFlagLabel = new System.Windows.Forms.Label();
@@ -855,7 +856,6 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.TextEditorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -2318,6 +2318,13 @@ namespace SharpOcarina
             this.ZobjCopyToolMenuItem3.Size = new System.Drawing.Size(314, 22);
             this.ZobjCopyToolMenuItem3.Text = "Copy data between .zobjs (OoT/MM/z64rom)";
             this.ZobjCopyToolMenuItem3.Click += new System.EventHandler(this.ZobjCopyToolMenuItem3_Click);
+            // 
+            // TextEditorMenuItem
+            // 
+            this.TextEditorMenuItem.Name = "TextEditorMenuItem";
+            this.TextEditorMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.TextEditorMenuItem.Text = "Text Editor (OoT/MM/z64rom)";
+            this.TextEditorMenuItem.Click += new System.EventHandler(this.TextEditorMenuItem_Click);
             // 
             // convertSelectedActorXMLEntryTotomlToolStripMenuItem
             // 
@@ -8530,8 +8537,8 @@ namespace SharpOcarina
             // 
             // tabTransitions
             // 
-            this.tabTransitions.Controls.Add(this.actorEditControl3);
-            this.tabTransitions.Controls.Add(this.actorEditControl2);
+            this.tabTransitions.Controls.Add(this.spawnerEditControl);
+            this.tabTransitions.Controls.Add(this.transitionEditControl);
             this.tabTransitions.Location = new System.Drawing.Point(4, 40);
             this.tabTransitions.Name = "tabTransitions";
             this.tabTransitions.Padding = new System.Windows.Forms.Padding(3);
@@ -8540,23 +8547,23 @@ namespace SharpOcarina
             this.tabTransitions.Text = "Transitions & Spawns";
             this.tabTransitions.UseVisualStyleBackColor = true;
             // 
-            // actorEditControl3
+            // spawnerEditControl
             // 
-            this.actorEditControl3.ActorNumber = -1;
-            this.actorEditControl3.Enabled = false;
-            this.actorEditControl3.Location = new System.Drawing.Point(3, 337);
-            this.actorEditControl3.Name = "actorEditControl3";
-            this.actorEditControl3.Size = new System.Drawing.Size(402, 333);
-            this.actorEditControl3.TabIndex = 1;
+            this.spawnerEditControl.ActorNumber = -1;
+            this.spawnerEditControl.Enabled = false;
+            this.spawnerEditControl.Location = new System.Drawing.Point(3, 337);
+            this.spawnerEditControl.Name = "spawnerEditControl";
+            this.spawnerEditControl.Size = new System.Drawing.Size(402, 333);
+            this.spawnerEditControl.TabIndex = 1;
             // 
-            // actorEditControl2
+            // transitionEditControl
             // 
-            this.actorEditControl2.ActorNumber = -1;
-            this.actorEditControl2.Enabled = false;
-            this.actorEditControl2.Location = new System.Drawing.Point(3, 3);
-            this.actorEditControl2.Name = "actorEditControl2";
-            this.actorEditControl2.Size = new System.Drawing.Size(402, 333);
-            this.actorEditControl2.TabIndex = 0;
+            this.transitionEditControl.ActorNumber = -1;
+            this.transitionEditControl.Enabled = false;
+            this.transitionEditControl.Location = new System.Drawing.Point(3, 3);
+            this.transitionEditControl.Name = "transitionEditControl";
+            this.transitionEditControl.Size = new System.Drawing.Size(402, 333);
+            this.transitionEditControl.TabIndex = 0;
             // 
             // tabPathways
             // 
@@ -9335,7 +9342,7 @@ namespace SharpOcarina
             // 
             this.tabActors.Controls.Add(this.ObjectTabMenu);
             this.tabActors.Controls.Add(this.RoomObjectSpace);
-            this.tabActors.Controls.Add(this.actorEditControl1);
+            this.tabActors.Controls.Add(this.actorEditControl);
             this.tabActors.Location = new System.Drawing.Point(4, 40);
             this.tabActors.Name = "tabActors";
             this.tabActors.Padding = new System.Windows.Forms.Padding(3);
@@ -9469,15 +9476,15 @@ namespace SharpOcarina
             this.RoomObjectSpace.TabIndex = 27;
             this.RoomObjectSpace.Text = "ObjectSpace";
             // 
-            // actorEditControl1
+            // actorEditControl
             // 
-            this.actorEditControl1.ActorNumber = -1;
-            this.actorEditControl1.Enabled = false;
-            this.actorEditControl1.Location = new System.Drawing.Point(3, 163);
-            this.actorEditControl1.Name = "actorEditControl1";
-            this.actorEditControl1.Size = new System.Drawing.Size(405, 383);
-            this.actorEditControl1.TabIndex = 3;
-            this.actorEditControl1.Load += new System.EventHandler(this.actorEditControl1_Load);
+            this.actorEditControl.ActorNumber = -1;
+            this.actorEditControl.Enabled = false;
+            this.actorEditControl.Location = new System.Drawing.Point(3, 163);
+            this.actorEditControl.Name = "actorEditControl";
+            this.actorEditControl.Size = new System.Drawing.Size(405, 383);
+            this.actorEditControl.TabIndex = 3;
+            this.actorEditControl.Load += new System.EventHandler(this.actorEditControl1_Load);
             // 
             // tabCutscene
             // 
@@ -12912,13 +12919,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // TextEditorMenuItem
-            // 
-            this.TextEditorMenuItem.Name = "TextEditorMenuItem";
-            this.TextEditorMenuItem.Size = new System.Drawing.Size(314, 22);
-            this.TextEditorMenuItem.Text = "Text Editor (OoT/MM/z64rom)";
-            this.TextEditorMenuItem.Click += new System.EventHandler(this.TextEditorMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13309,9 +13309,9 @@ namespace SharpOcarina
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem applyEnvironmentLightingToolStripMenuItem;
         private System.Windows.Forms.Label label33;
-        private ActorEditControl actorEditControl1;
-        private ActorEditControl actorEditControl3;
-        private ActorEditControl actorEditControl2;
+        private ActorEditControl actorEditControl;
+        private ActorEditControl spawnerEditControl;
+        private ActorEditControl transitionEditControl;
         private System.Windows.Forms.ToolStripMenuItem consecutiveRoomInjectionToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ComboBox comboBox1;
