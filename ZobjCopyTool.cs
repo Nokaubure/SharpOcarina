@@ -1537,7 +1537,7 @@ namespace SharpOcarina
                 if (offset == 0)
                     continue;
 
-                Console.WriteLine("Overwritting " + Helpers.Read32(newdata, (int)(offset)).ToString("X8") + " with " + ((0x00000000 | (TargetBank << 24)) + (int)(Helpers.Read24(newdata, (int)(offset + 1)) + endoffset)).ToString("X8"));
+                DebugConsole.WriteLine("Overwritting " + Helpers.Read32(newdata, (int)(offset)).ToString("X8") + " with " + ((0x00000000 | (TargetBank << 24)) + (int)(Helpers.Read24(newdata, (int)(offset + 1)) + endoffset)).ToString("X8"));
                 Helpers.Overwrite32(ref newdata, (int) (offset), (uint)((0x00000000 | (TargetBank << 24)) + (int)(Helpers.Read24(newdata, (int)(offset + 1)) + endoffset)));
 
             }

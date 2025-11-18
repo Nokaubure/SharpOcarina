@@ -552,7 +552,7 @@ namespace SharpOcarina
             }
             catch (WebException ex)
             {
-                Console.WriteLine("HTTP error: " + ex.Message);
+                DebugConsole.WriteLine("HTTP error: " + ex.Message);
                 return null;
             }
         }

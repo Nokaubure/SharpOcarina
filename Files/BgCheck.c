@@ -1,6 +1,5 @@
 #include <uLib.h>
 #include "code/z_bgcheck.h"
-#include "variables.h"
 #include <uLib_vector.h>
 //Version: 1.1
 /*This version value is used by SharpOcarina to determine if it needs to update the BgCheck.c of an old project

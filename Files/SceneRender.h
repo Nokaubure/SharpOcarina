@@ -150,6 +150,19 @@ typedef struct {
     void* data;                /* data              */
 } AnimInfo;
 
+// scene overlay, for zovl's inside scenes
+struct SceneOvl
+{
+    // offsets are relative to the start of scene file in ram
+    u32       start;           // start of overlay
+    u32       end;             // end of overlay
+    union
+    {
+        u32   main;            // entry point within overlay
+        void  (*exec)(void*);  // main routine after relocating
+    } u;
+};
+
 typedef struct {
     Flag flag;                 /* flag structure    */
     u8   cameratype;           /* camera type  */

@@ -4381,10 +4381,14 @@ namespace SharpOcarina
                 polyflagsB = (ushort)(((Group.Name.ToLower().Contains("#speed") || Group.Name.ToLower().Contains("#direction")) && !Group.Name.ToLower().Contains("#waterstream") ? 0x2000 : 0));
                 if (Group.Name.ToLower().Contains("#polytype"))
                 {
+                    string polytypetag = Group.Name.ToLower();
+                    polytypetag = polytypetag.Substring(polytypetag.IndexOf("#polytype") + 9);
+                    polytypetag = polytypetag.Substring2(0, polytypetag.IndexOf('#'));
+
                     int polytypenumber = 0;
                     try
                     {
-                        if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#polytype") + 9, 2), out polytypenumber))
+                        if (!Int32.TryParse(polytypetag, out polytypenumber) && !Int32.TryParse(polytypetag.Substring2(0,2), out polytypenumber))
                         {
                             MessageBox.Show("Bad usage of #Polytype tag, expected #PolytypeXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             continue;

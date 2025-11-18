@@ -2630,7 +2630,7 @@ namespace SharpOcarina
 
                                 float lerpamount = 0f;
                                 if (curSeg.Duration > 0)
-                                    lerpamount = relativeframe / curSeg.Duration;
+                                    lerpamount = (float)relativeframe / (float)curSeg.Duration;
 
                                 if (float.IsNaN(lerpamount)) lerpamount = 0f;
                                 lerpamount = Math.Max(0f, Math.Min(1f, lerpamount));
@@ -11368,14 +11368,13 @@ namespace SharpOcarina
                 {
                     if (rom64.CutsceneHookVersion < 1.1f)
                     {
-                        UpdateCutsceneHook(1.1f, true);
-                        rom64.CutsceneHookVersion = CutsceneHookVersion;
+                        UpdateCutsceneHook(CutsceneHookVersion, true);
 
                         
                     }
                     if (rom64.PlayVersion < 1.1f)
                     {
-                        if (UpdatePlay(1.1f, true));
+                        if (UpdatePlay(PlayVersion, true));
                         {
                             AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR", "#endif"); //TODO slow to do this everytime...
                             Helpers.GetDefineBoolAddIfNotExists("MOTION_BLUR", rom64.getPath() + @"\src\lib_user\uLib.h", "#define motionBlurAlpha unk_12428[0]");
@@ -16307,10 +16306,11 @@ namespace SharpOcarina
 
         public void UpdateSceneRender(float version, bool ask)
         {
-            UpdateZ64romFile(new string[]{
+            if (UpdateZ64romFile(new string[]{
                             rom64.getPath() +  @"\src\lib_user\library\SceneRender.c" ,
                             rom64.getPath() +  @"\src\lib_user\library\SceneRender.h"
-                            }, version, ask);
+                            }, version, ask))
+                rom64.SceneRenderVersion = version;
         }
 
         public bool UpdatePlay(float version, bool ask)
@@ -16323,17 +16323,19 @@ namespace SharpOcarina
 
         public void UpdateCutsceneHook(float version, bool ask)
         {
-            UpdateZ64romFile(new string[]{
+            if (UpdateZ64romFile(new string[]{
                             rom64.getPath() +  @"\src\lib_user\library\Cutscene.c",
                             rom64.getPath() +  @"\src\lib_user\library\PreRender.c"
-                            }, version, ask);
+                            }, version, ask))
+                rom64.CutsceneHookVersion = version;
         }
 
         public void UpdateBGCheck(float version, bool ask)
         {
-            UpdateZ64romFile(new string[]{
+            if (UpdateZ64romFile(new string[]{
                             rom64.getPath() +  @"\src\lib_user\vanilla\BgCheck.c"
-                            }, version, ask);
+                            }, version, ask))
+                rom64.BGCheckVersion = version;
         }
 
         public void RefreshBGMCache()
@@ -18459,7 +18461,7 @@ namespace SharpOcarina
 
                 if ((addedfunction.Type == ZTextureAnim.condition || addedfunction.Type == ZTextureAnim.blending || addedfunction.Type == ZTextureAnim.polyswap) && rom64.isSet() && rom64.SceneRenderVersion < 1.3f)
                 {
-                    UpdateSceneRender(1.3f, true);
+                    UpdateSceneRender(SceneRenderVersion, true);
                 }
 
                 UpdateRenderFunctionEdit();
