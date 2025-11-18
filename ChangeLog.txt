@@ -6,6 +6,7 @@
 
 - Updated SharpOcarina plugin to 1.1.4 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_so_3.0.zip)
 	- #Pivot tag will be replaced on export with the coordinates of the object's origin. So far it only affects billboards in latest SO, it will have more uses in the future.
+	- Added #Polytype property, this is used to link a collision material to Collision tab in SO (main purpose being the new Polytype Swap)
 	- Fixed an issue where Mass Initialize would sometimes fail to import fast64 collision
 
 - Updated Objex2 plugin to 2.6.4 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_objex2.zip)
