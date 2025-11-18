@@ -112,6 +112,7 @@ namespace SharpOcarina
                 public bool[] ScaledNormals = new bool[1];
                 public bool[] TexPointerPlus1 = new bool[1];
                 public bool[] Vibrant = new bool[1];
+                public Vector3s[] PivotPoint = new Vector3s[1];
 
                 [XmlIgnore]
                 public string[] groupname = new string[1];
@@ -161,6 +162,7 @@ namespace SharpOcarina
                 CustomDL[indexA, 3] = B.CustomDL[index, 3];
                 ScaledNormals[indexA] = B.ScaledNormals[index];
                 TexPointerPlus1[indexA] = B.TexPointerPlus1[index];
+                PivotPoint[indexA] = B.PivotPoint[index];
                 }
             }
 
@@ -267,6 +269,9 @@ namespace SharpOcarina
 
         [XmlIgnore]
         private uint cachecutsceneoffset = 0;
+
+        [XmlIgnore]
+        private Dictionary<int, List<ushort>> polytypetris;
 
         public List<ZRoom> Rooms
         {
@@ -464,7 +469,7 @@ namespace SharpOcarina
             NewRoom.GroupSettings.CustomDL = new ulong[groupcount,4];
             NewRoom.GroupSettings.ScaledNormals = new bool[groupcount];
             NewRoom.GroupSettings.TexPointerPlus1 = new bool[groupcount];
-
+            NewRoom.GroupSettings.PivotPoint = new Vector3s[groupcount];
             for (int i = 0; i < groupcount; i++)
             {
                 NewRoom.GroupSettings.TintAlpha[i] = 0xFFFFFFFF;
@@ -503,6 +508,7 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.CustomDL[i, 1] = 0;
                 NewRoom.GroupSettings.CustomDL[i, 2] = 0;
                 NewRoom.GroupSettings.CustomDL[i, 3] = 0;
+                NewRoom.GroupSettings.PivotPoint[i] = new Vector3s(32767, 32767, 32767);
                 //dungen
 
                 ObjFile.Group group = NewRoom.TrueGroups[i];
@@ -732,6 +738,21 @@ namespace SharpOcarina
                 group.LOD = true;
                 NewRoom.GroupSettings.LodDistance[i] = animatednum;
                 group.LodDistance = animatednum;
+            }
+            if (group.Name.ToLower().Contains("#pivot"))
+            {
+                string pivottag = group.Name.ToLower();
+                pivottag = pivottag.Substring(group.Name.IndexOf("#pivot") + 6);
+                pivottag = pivottag.Substring2(0, pivottag.IndexOf('#'));
+                string[] pivotvalues = pivottag.Split(',');
+                Vector3s pivotdata = new Vector3s(32767, 32767, 32767);
+                if (pivotvalues.Length != 3 || !Int16.TryParse(pivotvalues[0], out pivotdata.X) || !Int16.TryParse(pivotvalues[1], out pivotdata.Y) || !Int16.TryParse(pivotvalues[2], out pivotdata.Z))
+                {
+                    MessageBox.Show("Bad usage of Pivot tag. It should be #PivotX,X,X#", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                NewRoom.GroupSettings.PivotPoint[i] = pivotdata;
+                group.PivotPoint = pivotdata;
             }
             if (group.Name.ToLower().Contains("#tint"))
             {
@@ -2958,7 +2979,10 @@ namespace SharpOcarina
                                 {
                                     TextureAnim.TempType = 0x10;
                                 }
-
+                                else if (TextureAnim.Type == ZTextureAnim.polyswap)
+                                {
+                                    TextureAnim.TempType = 0x11;
+                                }
                                 lastbyteoffset = SceneData.Count;
                                 Helpers.Append32(ref SceneData, (uint)((uint)(0x00000000 | (uint)(segmentid + 1) << 24) | TextureAnim.TempType << 0));
                                 updateoffsets.Add((uint)SceneData.Count);
@@ -3009,7 +3033,7 @@ namespace SharpOcarina
                                 }
 
 
-                                if (TextureAnim.TempType == 0x08 || TextureAnim.TempType == 0x07 || TextureAnim.TempType == 0x0C || TextureAnim.TempType == 0x0E || TextureAnim.TempType == 0x0A || TextureAnim.TempType == 0x0F || TextureAnim.TempType == 0x10) // flag stuff
+                                if (TextureAnim.TempType == 0x08 || TextureAnim.TempType == 0x07 || TextureAnim.TempType == 0x0C || TextureAnim.TempType == 0x0E || TextureAnim.TempType == 0x0A || TextureAnim.TempType == 0x0F || TextureAnim.TempType == 0x10 || TextureAnim.TempType == 0x11) // flag stuff
                                 {
                                     Helpers.Append32(ref SceneData, TextureAnim.FlagValue);
                                     Helpers.Append32(ref SceneData, TextureAnim.FlagBitwise);
@@ -3081,18 +3105,19 @@ namespace SharpOcarina
 
                                 }
 
-                                if (TextureAnim.TempType == 0x09 || TextureAnim.TempType == 0x0A)
+                                if (TextureAnim.TempType == 0x09 || TextureAnim.TempType == 0x0A) //color blend
                                 {
-                                    SceneData.Add(1); // interpolate prim color
-                                    SceneData.Add(0);
-
                                     ushort duration = 0;
+                                    bool hasprimlod = false;
 
                                     foreach (ZTextureAnimColor color in TextureAnim.ColorList)
                                     {
                                         duration += color.Duration;
+                                        if (color.EnvAlpha != -1) hasprimlod = true;
                                     }
 
+                                    SceneData.Add((byte)(hasprimlod ? 3 : 1)); // interpolate prim color and env alpha
+                                    SceneData.Add(0);
 
                                     Helpers.Append16(ref SceneData, duration);
 
@@ -3103,8 +3128,9 @@ namespace SharpOcarina
                                         // DebugConsole.WriteLine(" a " + (color.C1C.ToArgb() << 8).ToString("X8"));
 
                                         Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
-                                        Helpers.Append32(ref SceneData, (uint)(color.C1C.ToArgb() << 8) + color.C1C.A);
-                                        Helpers.Append16(ref SceneData, 0);
+                                        Helpers.Append32(ref SceneData, (uint)((uint)(0xFFFFFF00) + (uint)(color.EnvAlpha)));
+                                        SceneData.Add(0);
+                                        SceneData.Add(0);
                                         Helpers.Append16(ref SceneData, color.Duration);
                                     }
                                     Helpers.Append32(ref SceneData, 0);
@@ -3118,6 +3144,42 @@ namespace SharpOcarina
                                     SceneData.Add(TextureAnim.CameraEffect);
                                     SceneData.Add(0);
                                     Helpers.Append16(ref SceneData, 0); //padding
+                                }
+
+                                if (TextureAnim.TempType == 0x11) //polytype swap
+                                {
+                                    SceneData.Add(TextureAnim.InactivePolytypeID);
+                                    SceneData.Add(TextureAnim.ActivePolytypeID);
+
+                                    byte InactiveVertexFlags = (byte)((byte)(PolyTypes[TextureAnim.InactivePolytypeID].PolyFlagA >> 12) | (byte)(PolyTypes[TextureAnim.InactivePolytypeID].PolyFlagB >> 8));
+                                    byte ActiveVertexFlags = (byte)((byte)(PolyTypes[TextureAnim.ActivePolytypeID].PolyFlagA >> 12) | (byte)(PolyTypes[TextureAnim.ActivePolytypeID].PolyFlagB >> 8));
+                                    SceneData.Add(InactiveVertexFlags);
+                                    SceneData.Add(ActiveVertexFlags);
+
+                                    Helpers.Append16(ref SceneData, TextureAnim.PolytypeStateTimer);
+                                    Helpers.Append16(ref SceneData, 0); //curTimer
+                                    Helpers.Append64(ref SceneData, PolyTypes[TextureAnim.InactivePolytypeID].Raw);
+                                    Helpers.Append64(ref SceneData, PolyTypes[TextureAnim.ActivePolytypeID].Raw);
+
+                                    if (InactiveVertexFlags == 0 && ActiveVertexFlags == 0)
+                                    {
+                                        Helpers.Append16(ref SceneData, 0xFFFF);
+                                        Helpers.Append16(ref SceneData, 0xFFFF);
+                                    }
+                                    else
+                                    {
+                                        List<ushort> triangleIDs = new List<ushort>();
+                                        if(polytypetris.ContainsKey(TextureAnim.InactivePolytypeID)) triangleIDs.AddRange(polytypetris[TextureAnim.InactivePolytypeID]);
+                                        triangleIDs.Add(0xFFFF);
+                                        if (polytypetris.ContainsKey(TextureAnim.ActivePolytypeID)) triangleIDs.AddRange(polytypetris[TextureAnim.ActivePolytypeID]);
+                                        triangleIDs.Add(0xFFFF);
+                                        foreach(ushort tri in triangleIDs)
+                                        {
+                                            Helpers.Append16(ref SceneData, tri);
+                                        }
+                                    }
+
+                                    
                                 }
 
                                 AddPadding(ref SceneData, 4);
@@ -4258,6 +4320,7 @@ namespace SharpOcarina
                 CollisionOffset = Data.Count;
             }
 
+            polytypetris = new Dictionary<int, List<ushort>>();
 
 
             /* Prepare variables */
@@ -4307,11 +4370,13 @@ namespace SharpOcarina
             ulong polytype;
             ushort polyflags, polyflagsB;
             ushort polytypeID = 0;
+            bool containsnonroomtag = false;
  
             foreach (ObjFile.Group Group in ColModel.Groups)
             {
                 Group.Name = Group.Name.Replace("TAG_", "#");
                 polytype = 0;
+                containsnonroomtag = Group.Name.ToLower().Replace("#room", "").Contains("#");
                 polyflags = (ushort) ((Group.Name.ToLower().Contains("#ignorecamera") ? 0x2000 : 0) + (Group.Name.ToLower().Contains("#ignoreactors") ? 0x4000 : 0) + (Group.Name.ToLower().Contains("#ignoreprojectiles") ? 0x8000 : 0));
                 polyflagsB = (ushort)(((Group.Name.ToLower().Contains("#speed") || Group.Name.ToLower().Contains("#direction")) && !Group.Name.ToLower().Contains("#waterstream") ? 0x2000 : 0));
                 if (Group.Name.ToLower().Contains("#polytype"))
@@ -4319,7 +4384,7 @@ namespace SharpOcarina
                     int polytypenumber = 0;
                     try
                     {
-                        if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#polytype") + 9, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytypenumber))
+                        if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#polytype") + 9, 2), out polytypenumber))
                         {
                             MessageBox.Show("Bad usage of #Polytype tag, expected #PolytypeXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             continue;
@@ -4335,7 +4400,7 @@ namespace SharpOcarina
                     while (polytypeID + 1 > MainForm.CurrentScene.PolyTypes.Count)
                         MainForm.CurrentScene.PolyTypes.Add(new ZColPolyType(0));
                 }
-                else if (Group.Name.ToLower().Replace("#room", "").Contains("#"))
+                else if (containsnonroomtag)
                 {
                     if (Group.Name.ToLower().Contains("#raw"))
                     {
@@ -4364,9 +4429,6 @@ namespace SharpOcarina
                                         continue;
                                     }
                                 }
-                                
-
-
                                 exitnum++;
                                 polytype = (ulong)(polytype | ((ulong)exitnum << 40));
                                 while (exitnum > MainForm.CurrentScene.ExitList.Count)
@@ -4444,7 +4506,7 @@ namespace SharpOcarina
                         }
                     }
 
-                    if (polytype != 0 || polyflags != 0)
+                    if (polytype != 0 || polyflags != 0 || containsnonroomtag)
                     {
 
                         int polyid = PolyTypes.FindIndex(x => x.Raw == polytype && x.PolyFlagA == polyflags && x.PolyFlagB == polyflagsB);
@@ -4531,11 +4593,18 @@ namespace SharpOcarina
                         Helpers.Append16(ref Data, (ushort)(ni[1] & 0xFFFF));
                         Helpers.Append16(ref Data, (ushort)(ni[2] & 0xFFFF));
                         Helpers.Append16(ref Data, (ushort)(dn & 0xFFFF));                    /* Distance from origin */
+
+                        //dic used solely for the polytype swap tex anim
+                        if (!polytypetris.ContainsKey(polytypeID))
+                        {
+                            polytypetris.Add(polytypeID,new List<ushort>());
+                        }
+                        polytypetris[polytypeID].Add((ushort)TriangleTotal);
+
+                        TriangleTotal++;
                     }
-                    else TriangleTotal--;
                 }
 
-                TriangleTotal += Group.Triangles.Count;
             }
             Helpers.Overwrite32(ref Data, CmdPolygonArray, (uint)(TriangleTotal << 16));
             Helpers.Overwrite32(ref Data, CmdPolygonArray + 4, (uint)(0x00000000 | bank << 24 | PolygonArrayOffset));

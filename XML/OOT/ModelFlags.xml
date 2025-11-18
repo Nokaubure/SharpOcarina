@@ -9,7 +9,7 @@
   <!-- Flag Key="#NoCollision" usage: Doesn't write collision, no need to use if #BlackPlane tag is set -->
   
   <!-- ID tags -->
-  <Flag Key="#Polytype" Value="0"></Flag><!-- usage: #Polytype0, where 0 is polytype ID in SO, OVERRIDES ALL THE TAGS BELOW-->
+  <Flag Key="#Polytype" Value="00"></Flag><!-- usage: #Polytype00, where 0 is polytype ID in SO, OVERRIDES ALL THE COLLISION TAGS BELOW-->
   <Flag Key="#Exit" Value="00"></Flag><!-- usage: #Exit00, where 00 is exit ID (hex) in SO-->
   <Flag Key="#Camera" Value="0"></Flag><!-- usage: #Camera0, where 0 is camera ID (hex) in SO-->
   <Flag Key="#Environment" Value="0"></Flag><!-- usage: #Environment0, where 0 is Environment ID (hex) in SO in groups of 4 (0 = envs 0-3, 1 = envs 4-7...) -->
@@ -24,6 +24,8 @@
   <!-- Flag Key="#IgnoreCamera" usage: Camera goes through this collision -->
   <!-- Flag Key="#IgnoreActors" usage: Actors goes through this collision -->
   <!-- Flag Key="#IgnoreProjectiles" usage: Projectiles goes through this collision -->
+
+  <!-- Flag Key="#Pivot" usage: Sets pivot point origin -->
   
   <!-- Sound flags -->
   <Flag Key="#Dirt" Value="0000000000000000"></Flag>

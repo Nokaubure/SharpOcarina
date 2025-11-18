@@ -612,6 +612,19 @@ namespace SharpOcarina
             }
 
         }
+        public static int LastIndexOrMax(this string s, char value)
+        {
+
+            try
+            {
+                return s.LastIndexOf(value);
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                return s.Length;
+            }
+
+        }
         public static string SubstringTill(this string s, int startIndex, char value)
         {
 

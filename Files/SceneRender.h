@@ -54,6 +54,18 @@ typedef struct  {
     Flag      flag;
 } TexScrollFlag;
 
+typedef struct  {
+    Flag flag;
+    u8 polytypeID[2];
+    u8 polytypeVFlags[2];
+    u16 maxTimer;
+    u16 curTimer;
+    u32 polytype1Data[2];   
+    u32 polytype2Data[2];         
+    u16 triangleIDs[];
+
+} PolytypeSwap;
+
 typedef enum  {
     COLORKEY_PRIM     = 1 << 0,
     COLORKEY_ENV      = 1 << 1,

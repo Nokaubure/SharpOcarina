@@ -112,7 +112,9 @@ namespace SharpOcarina
             this.showReadmeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installUpdateBlenderPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iGotACrashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateExeFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quickTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -745,6 +747,7 @@ namespace SharpOcarina
             this.CutsceneSetFlagType = new System.Windows.Forms.ComboBox();
             this.label104 = new System.Windows.Forms.Label();
             this.CutsceneSetFlagValue = new SharpOcarina.NumericUpDownEx();
+            this.SwapPolytype = new System.Windows.Forms.TabPage();
             this.label51 = new System.Windows.Forms.Label();
             this.MarkerTypeLabel = new System.Windows.Forms.Label();
             this.MarkerType = new System.Windows.Forms.ComboBox();
@@ -799,6 +802,7 @@ namespace SharpOcarina
             this.FunctionTextureScrollHeight = new SharpOcarina.NumericUpDownEx();
             this.label110 = new System.Windows.Forms.Label();
             this.tabColorBlending = new System.Windows.Forms.TabPage();
+            this.label152 = new System.Windows.Forms.Label();
             this.label125 = new System.Windows.Forms.Label();
             this.FunctionColorBlendColor = new System.Windows.Forms.PictureBox();
             this.label119 = new System.Windows.Forms.Label();
@@ -807,6 +811,7 @@ namespace SharpOcarina
             this.FunctionColorBlendUp = new System.Windows.Forms.Button();
             this.FunctionColorBlendDelete = new System.Windows.Forms.Button();
             this.FunctionColorBlendAdd = new System.Windows.Forms.Button();
+            this.FunctionColorBlendEnvAlpha = new SharpOcarina.NumericUpDownEx();
             this.FunctionColorBlendAlpha = new SharpOcarina.NumericUpDownEx();
             this.FunctionColorBlendFrames = new SharpOcarina.NumericUpDownEx();
             this.FunctionColorBlendList = new System.Windows.Forms.ListBox();
@@ -831,6 +836,13 @@ namespace SharpOcarina
             this.FunctionCameraEffectDropdown = new System.Windows.Forms.ComboBox();
             this.label120 = new System.Windows.Forms.Label();
             this.tabConditionalDraw = new System.Windows.Forms.TabPage();
+            this.tabSwapPolytype = new System.Windows.Forms.TabPage();
+            this.FunctionPolytypeSwapStateTimer = new SharpOcarina.NumericUpDownEx();
+            this.label92 = new System.Windows.Forms.Label();
+            this.label91 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.FunctionPolytypeSwapEnabledID = new SharpOcarina.NumericUpDownEx();
+            this.FunctionPolytypeSwapDisabledID = new SharpOcarina.NumericUpDownEx();
             this.label135 = new System.Windows.Forms.Label();
             this.RenderFunctionType = new System.Windows.Forms.ComboBox();
             this.RenderFunctionDown = new System.Windows.Forms.Button();
@@ -1078,6 +1090,7 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureScrollHeight)).BeginInit();
             this.tabColorBlending.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendEnvAlpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendAlpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendFrames)).BeginInit();
             this.tabTextureSwap.SuspendLayout();
@@ -1087,6 +1100,10 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationDuration)).BeginInit();
             this.tabCameraEffect.SuspendLayout();
+            this.tabSwapPolytype.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionPolytypeSwapStateTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionPolytypeSwapEnabledID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionPolytypeSwapDisabledID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).BeginInit();
@@ -1782,6 +1799,8 @@ namespace SharpOcarina
             this.showReadmeToolStripMenuItem,
             this.aboutToolStripMenuItem,
             this.showControlsToolStripMenuItem,
+            this.installUpdateBlenderPluginsToolStripMenuItem,
+            this.updateExeFilesToolStripMenuItem,
             this.iGotACrashToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -1790,31 +1809,47 @@ namespace SharpOcarina
             // showReadmeToolStripMenuItem
             // 
             this.showReadmeToolStripMenuItem.Name = "showReadmeToolStripMenuItem";
-            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.showReadmeToolStripMenuItem.Text = "&Show Readme";
             this.showReadmeToolStripMenuItem.Click += new System.EventHandler(this.showReadmeToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // showControlsToolStripMenuItem
             // 
             this.showControlsToolStripMenuItem.Name = "showControlsToolStripMenuItem";
-            this.showControlsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.showControlsToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.showControlsToolStripMenuItem.Text = "Show Controls";
             this.showControlsToolStripMenuItem.Click += new System.EventHandler(this.showControlsToolStripMenuItem_Click);
+            // 
+            // installUpdateBlenderPluginsToolStripMenuItem
+            // 
+            this.installUpdateBlenderPluginsToolStripMenuItem.Name = "installUpdateBlenderPluginsToolStripMenuItem";
+            this.installUpdateBlenderPluginsToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.installUpdateBlenderPluginsToolStripMenuItem.Text = "Update/Install Blender Plugins";
+            this.installUpdateBlenderPluginsToolStripMenuItem.Click += new System.EventHandler(this.installUpdateBlenderPluginsToolStripMenuItem_Click);
             // 
             // iGotACrashToolStripMenuItem
             // 
             this.iGotACrashToolStripMenuItem.Name = "iGotACrashToolStripMenuItem";
-            this.iGotACrashToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.iGotACrashToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.iGotACrashToolStripMenuItem.Text = "Getting crashes? go here";
             this.iGotACrashToolStripMenuItem.ToolTipText = "Only for binary!";
+            this.iGotACrashToolStripMenuItem.Visible = false;
             this.iGotACrashToolStripMenuItem.Click += new System.EventHandler(this.iGotACrashToolStripMenuItem_Click);
+            // 
+            // updateExeFilesToolStripMenuItem
+            // 
+            this.updateExeFilesToolStripMenuItem.Name = "updateExeFilesToolStripMenuItem";
+            this.updateExeFilesToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.updateExeFilesToolStripMenuItem.Text = "Update z64convert/z64rom .exe files";
+            this.updateExeFilesToolStripMenuItem.Visible = false;
+            this.updateExeFilesToolStripMenuItem.Click += new System.EventHandler(this.updateExeFilesToolStripMenuItem_Click);
             // 
             // extraToolStripMenuItem
             // 
@@ -5248,6 +5283,9 @@ namespace SharpOcarina
             this.GroupPolygonType.ShiftMultiplier = 1;
             this.GroupPolygonType.Size = new System.Drawing.Size(80, 20);
             this.GroupPolygonType.TabIndex = 13;
+            this.EnvironmentControlTooltip.SetToolTip(this.GroupPolygonType, "No effect unless mesh and collision use identical groups and no collision tags ar" +
+        "e used. Highly suggested to just use #PolytypeXX tag in the collision instead if" +
+        " you need to set this.");
             this.GroupPolygonType.Value = new decimal(new int[] {
             0,
             0,
@@ -9606,6 +9644,7 @@ namespace SharpOcarina
             this.CutsceneTabs.Controls.Add(this.MotionBlur);
             this.CutsceneTabs.Controls.Add(this.PlaySound);
             this.CutsceneTabs.Controls.Add(this.SetFlag);
+            this.CutsceneTabs.Controls.Add(this.SwapPolytype);
             this.CutsceneTabs.ItemSize = new System.Drawing.Size(96, 7);
             this.CutsceneTabs.Location = new System.Drawing.Point(6, 229);
             this.CutsceneTabs.Multiline = true;
@@ -11374,6 +11413,15 @@ namespace SharpOcarina
             0});
             this.CutsceneSetFlagValue.ValueChanged += new System.EventHandler(this.CutsceneSetFlagValue_ValueChanged);
             // 
+            // SwapPolytype
+            // 
+            this.SwapPolytype.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.SwapPolytype.Location = new System.Drawing.Point(4, 41);
+            this.SwapPolytype.Name = "SwapPolytype";
+            this.SwapPolytype.Size = new System.Drawing.Size(383, 288);
+            this.SwapPolytype.TabIndex = 12;
+            this.SwapPolytype.Text = "SwapPolytype";
+            // 
             // label51
             // 
             this.label51.AutoSize = true;
@@ -11881,6 +11929,7 @@ namespace SharpOcarina
             this.RenderFunctionTabs.Controls.Add(this.tabTextureSwapFrames);
             this.RenderFunctionTabs.Controls.Add(this.tabCameraEffect);
             this.RenderFunctionTabs.Controls.Add(this.tabConditionalDraw);
+            this.RenderFunctionTabs.Controls.Add(this.tabSwapPolytype);
             this.RenderFunctionTabs.ItemSize = new System.Drawing.Size(96, 7);
             this.RenderFunctionTabs.Location = new System.Drawing.Point(6, 229);
             this.RenderFunctionTabs.Multiline = true;
@@ -11912,10 +11961,10 @@ namespace SharpOcarina
             this.tabTextureScroll.Controls.Add(this.niceLine16);
             this.tabTextureScroll.Controls.Add(this.FunctionTextureScrollHeight);
             this.tabTextureScroll.Controls.Add(this.label110);
-            this.tabTextureScroll.Location = new System.Drawing.Point(4, 21);
+            this.tabTextureScroll.Location = new System.Drawing.Point(4, 31);
             this.tabTextureScroll.Name = "tabTextureScroll";
             this.tabTextureScroll.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTextureScroll.Size = new System.Drawing.Size(383, 173);
+            this.tabTextureScroll.Size = new System.Drawing.Size(383, 163);
             this.tabTextureScroll.TabIndex = 0;
             this.tabTextureScroll.Text = "Texture Scroll";
             // 
@@ -12252,6 +12301,7 @@ namespace SharpOcarina
             // tabColorBlending
             // 
             this.tabColorBlending.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tabColorBlending.Controls.Add(this.label152);
             this.tabColorBlending.Controls.Add(this.label125);
             this.tabColorBlending.Controls.Add(this.FunctionColorBlendColor);
             this.tabColorBlending.Controls.Add(this.label119);
@@ -12260,14 +12310,25 @@ namespace SharpOcarina
             this.tabColorBlending.Controls.Add(this.FunctionColorBlendUp);
             this.tabColorBlending.Controls.Add(this.FunctionColorBlendDelete);
             this.tabColorBlending.Controls.Add(this.FunctionColorBlendAdd);
+            this.tabColorBlending.Controls.Add(this.FunctionColorBlendEnvAlpha);
             this.tabColorBlending.Controls.Add(this.FunctionColorBlendAlpha);
             this.tabColorBlending.Controls.Add(this.FunctionColorBlendFrames);
             this.tabColorBlending.Controls.Add(this.FunctionColorBlendList);
-            this.tabColorBlending.Location = new System.Drawing.Point(4, 21);
+            this.tabColorBlending.Location = new System.Drawing.Point(4, 31);
             this.tabColorBlending.Name = "tabColorBlending";
-            this.tabColorBlending.Size = new System.Drawing.Size(383, 173);
+            this.tabColorBlending.Size = new System.Drawing.Size(383, 163);
             this.tabColorBlending.TabIndex = 1;
             this.tabColorBlending.Text = "Color Blend";
+            // 
+            // label152
+            // 
+            this.label152.AutoSize = true;
+            this.label152.Enabled = false;
+            this.label152.Location = new System.Drawing.Point(206, 116);
+            this.label152.Name = "label152";
+            this.label152.Size = new System.Drawing.Size(76, 13);
+            this.label152.TabIndex = 93;
+            this.label152.Text = "Multitex Alpha:";
             // 
             // label125
             // 
@@ -12349,6 +12410,36 @@ namespace SharpOcarina
             this.FunctionColorBlendAdd.UseVisualStyleBackColor = true;
             this.FunctionColorBlendAdd.Click += new System.EventHandler(this.FunctionColorBlendAdd_Click);
             // 
+            // FunctionColorBlendEnvAlpha
+            // 
+            this.FunctionColorBlendEnvAlpha.AlwaysFireValueChanged = false;
+            this.FunctionColorBlendEnvAlpha.DisplayDigits = 1;
+            this.FunctionColorBlendEnvAlpha.DoValueRollover = false;
+            this.FunctionColorBlendEnvAlpha.Enabled = false;
+            this.FunctionColorBlendEnvAlpha.IncrementMouseWheel = 1;
+            this.FunctionColorBlendEnvAlpha.Location = new System.Drawing.Point(289, 114);
+            this.FunctionColorBlendEnvAlpha.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionColorBlendEnvAlpha.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.FunctionColorBlendEnvAlpha.Name = "FunctionColorBlendEnvAlpha";
+            this.FunctionColorBlendEnvAlpha.ShiftMultiplier = 1;
+            this.FunctionColorBlendEnvAlpha.Size = new System.Drawing.Size(44, 20);
+            this.FunctionColorBlendEnvAlpha.TabIndex = 92;
+            this.EnvironmentControlTooltip.SetToolTip(this.FunctionColorBlendEnvAlpha, "-1 = disabled, the original multitexture alpha will be unmodified");
+            this.FunctionColorBlendEnvAlpha.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.FunctionColorBlendEnvAlpha.ValueChanged += new System.EventHandler(this.FunctionColorBlendEnvAlpha_ValueChanged);
+            // 
             // FunctionColorBlendAlpha
             // 
             this.FunctionColorBlendAlpha.AlwaysFireValueChanged = false;
@@ -12356,7 +12447,7 @@ namespace SharpOcarina
             this.FunctionColorBlendAlpha.DoValueRollover = false;
             this.FunctionColorBlendAlpha.Enabled = false;
             this.FunctionColorBlendAlpha.IncrementMouseWheel = 1;
-            this.FunctionColorBlendAlpha.Location = new System.Drawing.Point(273, 88);
+            this.FunctionColorBlendAlpha.Location = new System.Drawing.Point(289, 88);
             this.FunctionColorBlendAlpha.Maximum = new decimal(new int[] {
             255,
             0,
@@ -12426,9 +12517,9 @@ namespace SharpOcarina
             this.tabTextureSwap.Controls.Add(this.FunctionTextureSwapTextureID2);
             this.tabTextureSwap.Controls.Add(this.label115);
             this.tabTextureSwap.Controls.Add(this.FunctionTextureSwapTextureID);
-            this.tabTextureSwap.Location = new System.Drawing.Point(4, 21);
+            this.tabTextureSwap.Location = new System.Drawing.Point(4, 31);
             this.tabTextureSwap.Name = "tabTextureSwap";
-            this.tabTextureSwap.Size = new System.Drawing.Size(383, 173);
+            this.tabTextureSwap.Size = new System.Drawing.Size(383, 163);
             this.tabTextureSwap.TabIndex = 2;
             this.tabTextureSwap.Text = "tabTextureSwap";
             // 
@@ -12500,9 +12591,9 @@ namespace SharpOcarina
             this.tabTextureSwapFrames.Controls.Add(this.FunctionTextureSwapAnimationAdd);
             this.tabTextureSwapFrames.Controls.Add(this.FunctionTextureSwapAnimationDuration);
             this.tabTextureSwapFrames.Controls.Add(this.FunctionTextureSwapAnimationList);
-            this.tabTextureSwapFrames.Location = new System.Drawing.Point(4, 21);
+            this.tabTextureSwapFrames.Location = new System.Drawing.Point(4, 31);
             this.tabTextureSwapFrames.Name = "tabTextureSwapFrames";
-            this.tabTextureSwapFrames.Size = new System.Drawing.Size(383, 173);
+            this.tabTextureSwapFrames.Size = new System.Drawing.Size(383, 163);
             this.tabTextureSwapFrames.TabIndex = 3;
             this.tabTextureSwapFrames.Text = "tabPage1";
             // 
@@ -12618,9 +12709,9 @@ namespace SharpOcarina
             this.tabCameraEffect.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.tabCameraEffect.Controls.Add(this.FunctionCameraEffectDropdown);
             this.tabCameraEffect.Controls.Add(this.label120);
-            this.tabCameraEffect.Location = new System.Drawing.Point(4, 21);
+            this.tabCameraEffect.Location = new System.Drawing.Point(4, 31);
             this.tabCameraEffect.Name = "tabCameraEffect";
-            this.tabCameraEffect.Size = new System.Drawing.Size(383, 173);
+            this.tabCameraEffect.Size = new System.Drawing.Size(383, 163);
             this.tabCameraEffect.TabIndex = 4;
             this.tabCameraEffect.Text = "tabPage1";
             // 
@@ -12645,12 +12736,139 @@ namespace SharpOcarina
             // 
             // tabConditionalDraw
             // 
-            this.tabConditionalDraw.Location = new System.Drawing.Point(4, 21);
+            this.tabConditionalDraw.Location = new System.Drawing.Point(4, 31);
             this.tabConditionalDraw.Name = "tabConditionalDraw";
-            this.tabConditionalDraw.Size = new System.Drawing.Size(383, 173);
+            this.tabConditionalDraw.Size = new System.Drawing.Size(383, 163);
             this.tabConditionalDraw.TabIndex = 5;
             this.tabConditionalDraw.Text = "tabPage1";
             this.tabConditionalDraw.UseVisualStyleBackColor = true;
+            // 
+            // tabSwapPolytype
+            // 
+            this.tabSwapPolytype.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tabSwapPolytype.Controls.Add(this.FunctionPolytypeSwapStateTimer);
+            this.tabSwapPolytype.Controls.Add(this.label92);
+            this.tabSwapPolytype.Controls.Add(this.label91);
+            this.tabSwapPolytype.Controls.Add(this.label16);
+            this.tabSwapPolytype.Controls.Add(this.FunctionPolytypeSwapEnabledID);
+            this.tabSwapPolytype.Controls.Add(this.FunctionPolytypeSwapDisabledID);
+            this.tabSwapPolytype.Location = new System.Drawing.Point(4, 31);
+            this.tabSwapPolytype.Name = "tabSwapPolytype";
+            this.tabSwapPolytype.Size = new System.Drawing.Size(383, 163);
+            this.tabSwapPolytype.TabIndex = 6;
+            this.tabSwapPolytype.Text = "SwapPolytype";
+            // 
+            // FunctionPolytypeSwapStateTimer
+            // 
+            this.FunctionPolytypeSwapStateTimer.AlwaysFireValueChanged = false;
+            this.FunctionPolytypeSwapStateTimer.DisplayDigits = 1;
+            this.FunctionPolytypeSwapStateTimer.DoValueRollover = false;
+            this.FunctionPolytypeSwapStateTimer.IncrementMouseWheel = 1;
+            this.FunctionPolytypeSwapStateTimer.Location = new System.Drawing.Point(120, 84);
+            this.FunctionPolytypeSwapStateTimer.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapStateTimer.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapStateTimer.Name = "FunctionPolytypeSwapStateTimer";
+            this.FunctionPolytypeSwapStateTimer.ShiftMultiplier = 1;
+            this.FunctionPolytypeSwapStateTimer.Size = new System.Drawing.Size(84, 20);
+            this.FunctionPolytypeSwapStateTimer.TabIndex = 92;
+            this.EnvironmentControlTooltip.SetToolTip(this.FunctionPolytypeSwapStateTimer, "20 frames = 1 second");
+            this.FunctionPolytypeSwapStateTimer.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapStateTimer.ValueChanged += new System.EventHandler(this.FunctionPolytypeSwapStateTimer_ValueChanged);
+            // 
+            // label92
+            // 
+            this.label92.AutoSize = true;
+            this.label92.Location = new System.Drawing.Point(6, 86);
+            this.label92.Name = "label92";
+            this.label92.Size = new System.Drawing.Size(112, 13);
+            this.label92.TabIndex = 91;
+            this.label92.Text = "Delay between states:";
+            // 
+            // label91
+            // 
+            this.label91.AutoSize = true;
+            this.label91.Location = new System.Drawing.Point(6, 50);
+            this.label91.Name = "label91";
+            this.label91.Size = new System.Drawing.Size(106, 13);
+            this.label91.TabIndex = 89;
+            this.label91.Text = "Enabled Polytype ID:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 15);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(108, 13);
+            this.label16.TabIndex = 87;
+            this.label16.Text = "Disabled Polytype ID:";
+            // 
+            // FunctionPolytypeSwapEnabledID
+            // 
+            this.FunctionPolytypeSwapEnabledID.AlwaysFireValueChanged = false;
+            this.FunctionPolytypeSwapEnabledID.DisplayDigits = 1;
+            this.FunctionPolytypeSwapEnabledID.DoValueRollover = false;
+            this.FunctionPolytypeSwapEnabledID.IncrementMouseWheel = 1;
+            this.FunctionPolytypeSwapEnabledID.Location = new System.Drawing.Point(120, 48);
+            this.FunctionPolytypeSwapEnabledID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapEnabledID.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapEnabledID.Name = "FunctionPolytypeSwapEnabledID";
+            this.FunctionPolytypeSwapEnabledID.ShiftMultiplier = 1;
+            this.FunctionPolytypeSwapEnabledID.Size = new System.Drawing.Size(84, 20);
+            this.FunctionPolytypeSwapEnabledID.TabIndex = 90;
+            this.FunctionPolytypeSwapEnabledID.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapEnabledID.ValueChanged += new System.EventHandler(this.FunctionPolytypeSwapEnabledID_ValueChanged);
+            // 
+            // FunctionPolytypeSwapDisabledID
+            // 
+            this.FunctionPolytypeSwapDisabledID.AlwaysFireValueChanged = false;
+            this.FunctionPolytypeSwapDisabledID.DisplayDigits = 1;
+            this.FunctionPolytypeSwapDisabledID.DoValueRollover = false;
+            this.FunctionPolytypeSwapDisabledID.IncrementMouseWheel = 1;
+            this.FunctionPolytypeSwapDisabledID.Location = new System.Drawing.Point(120, 13);
+            this.FunctionPolytypeSwapDisabledID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapDisabledID.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapDisabledID.Name = "FunctionPolytypeSwapDisabledID";
+            this.FunctionPolytypeSwapDisabledID.ShiftMultiplier = 1;
+            this.FunctionPolytypeSwapDisabledID.Size = new System.Drawing.Size(84, 20);
+            this.FunctionPolytypeSwapDisabledID.TabIndex = 88;
+            this.FunctionPolytypeSwapDisabledID.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FunctionPolytypeSwapDisabledID.ValueChanged += new System.EventHandler(this.FunctionPolytypeSwapDisabledID_ValueChanged);
             // 
             // label135
             // 
@@ -13223,6 +13441,7 @@ namespace SharpOcarina
             this.tabColorBlending.ResumeLayout(false);
             this.tabColorBlending.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendEnvAlpha)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendAlpha)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FunctionColorBlendFrames)).EndInit();
             this.tabTextureSwap.ResumeLayout(false);
@@ -13235,6 +13454,11 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.FunctionTextureSwapAnimationDuration)).EndInit();
             this.tabCameraEffect.ResumeLayout(false);
             this.tabCameraEffect.PerformLayout();
+            this.tabSwapPolytype.ResumeLayout(false);
+            this.tabSwapPolytype.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionPolytypeSwapStateTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionPolytypeSwapEnabledID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FunctionPolytypeSwapDisabledID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RoomSelector)).EndInit();
@@ -14072,6 +14296,18 @@ namespace SharpOcarina
         private NumericUpDownEx CollisionMaxBoundsY;
         private NumericUpDownEx CollisionMaxBoundsX;
         private ToolStripMenuItem TextEditorMenuItem;
+        private TabPage SwapPolytype;
+        private TabPage tabSwapPolytype;
+        private NumericUpDownEx FunctionPolytypeSwapStateTimer;
+        private Label label92;
+        private Label label91;
+        private NumericUpDownEx FunctionPolytypeSwapEnabledID;
+        private Label label16;
+        private NumericUpDownEx FunctionPolytypeSwapDisabledID;
+        private Label label152;
+        private NumericUpDownEx FunctionColorBlendEnvAlpha;
+        private ToolStripMenuItem installUpdateBlenderPluginsToolStripMenuItem;
+        private ToolStripMenuItem updateExeFilesToolStripMenuItem;
     }
     }
 

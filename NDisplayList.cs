@@ -558,9 +558,18 @@ namespace SharpOcarina
             ushort midX = 0, midY = 0, midZ = 0;
             if ((Billboard || TwoAxisBillboard ))
             {
-                midX = (ushort)(MinCoordinate.X + ((MaxCoordinate.X - MinCoordinate.X) / 2));
-                midY = (ushort) ((!TwoAxisBillboard) ? (MinCoordinate.Y + ((MaxCoordinate.Y - MinCoordinate.Y) / 2)) : MinCoordinate.Y);
-                midZ = (ushort)(MinCoordinate.Z + ((MaxCoordinate.Z - MinCoordinate.Z) / 2));
+                if (Group.PivotPoint.X != 32767 && Group.PivotPoint.Y != 32767 && Group.PivotPoint.Z != 32767)
+                {
+                    midX = (ushort)Group.PivotPoint.X;
+                    midY = (ushort)Group.PivotPoint.Y;
+                    midZ = (ushort)Group.PivotPoint.Z;
+                }
+                else
+                {
+                    midX = (ushort)(MinCoordinate.X + ((MaxCoordinate.X - MinCoordinate.X) / 2));
+                    midY = (ushort)((!TwoAxisBillboard) ? (MinCoordinate.Y + ((MaxCoordinate.Y - MinCoordinate.Y) / 2)) : MinCoordinate.Y + 5f);
+                    midZ = (ushort)(MinCoordinate.Z + ((MaxCoordinate.Z - MinCoordinate.Z) / 2));
+                }
             }
 
             //textureless material
@@ -1290,10 +1299,17 @@ namespace SharpOcarina
 
                 if (HasBlendingAnimation)
                 {
-
                     if (!DEplaced) Helpers.Append64(ref DList, 0xDE00000000000000 | (ulong)(AnimationBank << 24));
-                    Helpers.Append64(ref DList, SetEnvColor(MultitextureAlpha));
-                    if (MainForm.n64preview) Helpers.Append64(ref DList, 0x0000000012345600 | (ulong)(AnimationBank));
+                    if (!MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].BlendingHasMultitexAlpha())
+                        Helpers.Append64(ref DList, SetEnvColor(MultitextureAlpha));
+                    if (MainForm.n64preview)
+                    {
+                        if (IsTranslucent)
+                            Helpers.Append64(ref DList, 0x0000000012345100 | (ulong)(AnimationBank));
+                        else
+                            Helpers.Append64(ref DList, 0x0000000012345000 | (ulong)(AnimationBank));
+                    }
+                    
 
                 }
                 else

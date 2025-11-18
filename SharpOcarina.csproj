@@ -134,6 +134,12 @@
       <DependentUpon>ExtraMoveActorToRoom.cs</DependentUpon>
     </Compile>
     <Compile Include="LinkedFile.cs" />
+    <Compile Include="PickBlenderVersion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PickBlenderVersion.Designer.cs">
+      <DependentUpon>PickBlenderVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransparentPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -369,6 +375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AutoHooker.resx">
       <DependentUpon>AutoHooker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PickBlenderVersion.resx">
+      <DependentUpon>PickBlenderVersion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ZobjCopyTool.resx">
       <DependentUpon>ZobjCopyTool.cs</DependentUpon>

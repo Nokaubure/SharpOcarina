@@ -13,7 +13,7 @@ namespace SharpOcarina
     public class ZTextureAnim
     {
         [XmlIgnore]
-        public const int scroll = 1, blending = 2, texswap = 3, texframe = 4, camera = 5, condition = 6;
+        public const int scroll = 1, blending = 2, texswap = 3, texframe = 4, camera = 5, condition = 6, polyswap = 7;
         [XmlIgnore]
         private byte _Width1, _Width2, _Height1, _Height2;
         [XmlIgnore]
@@ -44,7 +44,12 @@ namespace SharpOcarina
         private bool _FreezeAtEnd;
         [XmlIgnore]
         private byte _CameraEffect;
-
+        [XmlIgnore]
+        private byte _ActivePolytypeID;
+        [XmlIgnore]
+        private byte _InactivePolytypeID;
+        [XmlIgnore]
+        private ushort _PolytypeStateTimer;
 
         public ZTextureAnim()
         {
@@ -206,7 +211,27 @@ namespace SharpOcarina
             get { return _CameraEffect; }
             set { _CameraEffect = value; }
         }
-        
+
+        public byte ActivePolytypeID
+        {
+            get { return _ActivePolytypeID; }
+            set { _ActivePolytypeID = value; }
+        }
+
+        public byte InactivePolytypeID
+        {
+            get { return _InactivePolytypeID; }
+            set { _InactivePolytypeID = value; }
+        }
+
+        public ushort PolytypeStateTimer
+        {
+            get { return _PolytypeStateTimer; }
+            set { _PolytypeStateTimer = value; }
+        }
+
+
+
         public ZTextureAnim Clone()
         {
             ZTextureAnim clone = (ZTextureAnim)this.MemberwiseClone();
@@ -253,6 +278,11 @@ namespace SharpOcarina
             return _Functions.Exists(x => x.Type == ZTextureAnim.condition);
         }
 
+        public bool BlendingHasMultitexAlpha()
+        {
+            return _Functions.Exists(x => x.Type == ZTextureAnim.blending && x.ColorList.Exists(y => y.EnvAlpha != -1));
+        }
+
     }
 
     public class ZTextureAnimImage
@@ -293,12 +323,15 @@ namespace SharpOcarina
         private ushort _Duration;
         [XmlIgnore]
         private ColorWrapper _Color;
+        [XmlIgnore]
+        private short _PrimLod = -1;
 
         public ZTextureAnimColor()
         {
             _Duration = 1;
             _Color = new ColorWrapper();
             C1C = System.Drawing.Color.Black;
+            _PrimLod = -1;
         }
 
         public ushort Duration
@@ -318,6 +351,12 @@ namespace SharpOcarina
         {
             get { return _Color.Color; }
             set { _Color.Color = value; }
+        }
+
+        public short EnvAlpha
+        {
+            get { return _PrimLod; }
+            set { _PrimLod = value; }
         }
 
         public ZTextureAnimColor Clone()

@@ -37,6 +37,7 @@ using Microsoft.VisualBasic;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using Tommy;
 using System.Web;
+using static SharpOcarina.ZScene;
 
 namespace SharpOcarina
 {
@@ -185,6 +186,14 @@ namespace SharpOcarina
         public const int _CutsceneActor_ = 8;
         public const int _Camera_ = 9;
 
+        public const int ZKey = 0;
+        public const int XKey = 1;
+        public const int CKey = 2;
+        public const int BKey = 3;
+        public const int VKey = 4;
+        public const int YKey = 5;
+        public const int GKey = 6;
+
         public double skyboxangle = 0;
 
         public static bool Is1April = false;
@@ -206,7 +215,7 @@ namespace SharpOcarina
 
         public Stopwatch stopwatch = new Stopwatch();
 
-        public const float SceneRenderVersion = 1.2f;
+        public const float SceneRenderVersion = 1.3f;
 
         public const float CutsceneHookVersion = 1.1f;
 
@@ -251,14 +260,18 @@ namespace SharpOcarina
             switch (Program.KeyboardLayout)
             {
                 case "AZERTY":
-                    ActorControlKeys = new Keys[] { Keys.W, Keys.X, Keys.C, Keys.B, Keys.V }; break;
+                    ActorControlKeys = new Keys[] { Keys.W, Keys.X, Keys.C, Keys.B, Keys.V, Keys.Y, Keys.G };
+                    break;
                 case "DVORAK":
-                    ActorControlKeys = new Keys[] { Keys.OemSemicolon, Keys.Q, Keys.J, Keys.X, Keys.OemPeriod }; break;
-                default:
-                    ActorControlKeys = new Keys[] { Keys.Z, Keys.X, Keys.C, Keys.B, Keys.V }; break;
+                    ActorControlKeys = new Keys[] { Keys.OemSemicolon, Keys.Q, Keys.J, Keys.X, Keys.P, Keys.G, Keys.I };
+                    break;
+                default: // QWERTY
+                    ActorControlKeys = new Keys[] { Keys.Z, Keys.X, Keys.C, Keys.B, Keys.V, Keys.Y, Keys.G };
+                    break;
             }
 
             globalframestart = DateTime.Now;
+
 
             DummyMaterial.Name = "(none)";
 
@@ -271,7 +284,7 @@ namespace SharpOcarina
 
             Helpers.DeleteDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Temp\\"));
             Helpers.DeleteDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempw\\"));
-
+            Helpers.DeleteDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempu\\"));
 #if DEBUG
             dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Visible = true;
@@ -592,8 +605,9 @@ namespace SharpOcarina
                 new SongItem {Text = "Animated Color Blending", Value = 0x02},
                 new SongItem {Text = "Single Texture Swap", Value = 0x03},
                 new SongItem {Text = "Multiple Texture Swap With Frames", Value = 0x04},
-                new SongItem {Text = "Camera effect", Value = 0x05},
-                new SongItem {Text = "Conditional draw", Value = 0x06},
+                new SongItem {Text = "Camera Effect", Value = 0x05},
+                new SongItem {Text = "Conditional Draw", Value = 0x06},
+                new SongItem {Text = "Polytype Swap", Value = 0x07},
             };
             RenderFunctionType.Items.AddRange(objs);
 
@@ -2544,6 +2558,7 @@ namespace SharpOcarina
 
                 GL.PushMatrix();
 
+                //TODO inaccurate
 
                 GL.ActiveTexture(TextureUnit.Texture0);
                 GL.Translate(-(NormalHeader.TextureAnims[DL.Animation - 8].XVelocity1 / 80f * (20f / NormalHeader.TextureAnims[DL.Animation - 8].Width1)) * globalframe, (NormalHeader.TextureAnims[DL.Animation - 8].YVelocity1 / 80f * (20f / NormalHeader.TextureAnims[DL.Animation - 8].Height1)) * globalframe, 0);
@@ -2586,6 +2601,10 @@ namespace SharpOcarina
                         int tempframe = 0;
                         Color currentcolorC = new Color();
                         Color targetcolorC = new Color();
+                        short currentenvA = 0;
+                        short targetenvA = 0;
+                        bool usesenvA = TargetScene.SegmentFunctions[DL.ColorAnimation - 8].BlendingHasMultitexAlpha();
+
 
                         foreach (ZTextureAnimColor col in targetfunction.ColorList)
                         {
@@ -2600,35 +2619,33 @@ namespace SharpOcarina
                             tempframe += targetfunction.ColorList[i].Duration;
                             if (currentframe < tempframe)
                             {
-                                targetcolorC = targetfunction.ColorList[i].C1C;
+                                ZTextureAnimColor curSeg = targetfunction.ColorList[i];
+                                ZTextureAnimColor nextSeg = (i + 1 < targetfunction.ColorList.Count) ? targetfunction.ColorList[i + 1] : targetfunction.ColorList[0];
 
-                                if (targetfunction.ColorList.Count == 1)
-                                {
-                                    currentcolorC = targetcolorC;
-                                }
-                                else
-                                {
-                                    if (i == 0)
-                                    {
-                                       currentcolorC = targetfunction.ColorList[targetfunction.ColorList.Count - 1].C1C;
-                                    }
-                                    else
-                                    {
-                                      currentcolorC = targetfunction.ColorList[i - 1].C1C;
-                                    }
-                                }
+                                currentcolorC = curSeg.C1C;
+                                targetcolorC = nextSeg.C1C;
+
+                                currentenvA = curSeg.EnvAlpha;
+                                targetenvA = nextSeg.EnvAlpha;
+
                                 float lerpamount = 0f;
+                                if (curSeg.Duration > 0)
+                                    lerpamount = relativeframe / curSeg.Duration;
 
-                                if ((relativeframe) != 0) lerpamount = (1.0f / targetfunction.ColorList[i].Duration) * (relativeframe);
+                                if (float.IsNaN(lerpamount)) lerpamount = 0f;
+                                lerpamount = Math.Max(0f, Math.Min(1f, lerpamount));
 
-                                if (float.IsNaN(lerpamount))
-                                {
-                                    lerpamount = 1f;
-
-                                }
                                 Color resultC = Interpolate(currentcolorC, targetcolorC, lerpamount);
 
-                                GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, resultC.R / 255f, resultC.G / 255f, resultC.B / 255f, resultC.A / 255f);
+                                GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0,
+                                    resultC.R / 255f, resultC.G / 255f, resultC.B / 255f, resultC.A / 255f);
+
+                                if (usesenvA)
+                                {
+                                    short resultA = (short)Interpolate(currentenvA, targetenvA, lerpamount);
+                                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 1,
+                                        0xFF, 0xFF, 0xFF, resultA / 255f);
+                                }
 
                                 break;
                             }
@@ -2949,11 +2966,11 @@ namespace SharpOcarina
                 }
             }
            
-            if (KeysDown[(int)Keys.Z] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !GrabDown())
+            if (KeysDown[(int)ActorControlKeys[ZKey]] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !GrabDown())
             {
                 Undo();
             }
-            if (KeysDown[(int)Keys.Y] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !GrabDown())
+            if (KeysDown[(int)ActorControlKeys[YKey]] && Control.ModifierKeys == Keys.Control && CurrentScene != null && CurrentScene.Rooms.Count > 0 && !GrabDown())
             {
                 Undo(true);
             }
@@ -2980,18 +2997,22 @@ namespace SharpOcarina
 
                 actorpick = -1;
             }
-            if (!keyG && KeysDown[(int)Keys.G] && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+            if (!keyG && KeysDown[(int)ActorControlKeys[GKey]])
             {
                 Point mousePos = Control.MousePosition;
                 Point relPos = glControl1.PointToClient(mousePos);
                 Mouse.Center = new Vector2d(relPos.X, relPos.Y);
+            }
+            if (!keyG && KeysDown[(int)ActorControlKeys[GKey]] && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+            {
+                GrabingActor();
             }
         }
 
         void glControl1_KeyUp(object sender, KeyEventArgs e)
         {
             KeysDown[(int)(e.KeyCode & Keys.KeyCode)] = false;
-            if (e.KeyCode == Keys.G && CurrentScene != null && CurrentScene.Rooms.Count > 0)
+            if (e.KeyCode == ActorControlKeys[GKey] && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
                
                 int tmp = actorpick;
@@ -3461,12 +3482,14 @@ namespace SharpOcarina
 
 
             }
-            GrabingActor(sender,e);
+            GrabingActor();
 
         }
 
-        void GrabingActor(object sender, MouseEventArgs e)
+        void GrabingActor()
         {
+            Point mousePos = Control.MousePosition;
+            Point e = glControl1.PointToClient(mousePos);
             if (GrabDown() && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
                 byte[] pixel = new byte[4];
@@ -3831,7 +3854,7 @@ namespace SharpOcarina
                         //objpos.Z += ((Math.Sin(CamYRotd) * pickObjDisplacement.X));
                         objpos.Y = MoveToCollision(new Vector3((float)objpos.X, (float)objpos.Y - 50, (float)objpos.Z), new Vector3(0, 30000, 0)).Y;
                     }
-                    else if (KeysDown[(int)ActorControlKeys[2]]) // C
+                    else if (KeysDown[(int)ActorControlKeys[CKey]]) // C
                     {
                         float maxdist = 9999.9f;
                         Vector3d newpos = objpos;
@@ -3856,7 +3879,7 @@ namespace SharpOcarina
                         }
                         if (maxdist < 50.0f) objpos = newpos;
                     }
-                    else if ((KeysDown[(int)ActorControlKeys[4]])) //V
+                    else if ((KeysDown[(int)ActorControlKeys[VKey]])) //V
                     {
                         float maxdist = 9999.9f;
                         Vector3d newpos = objpos;
@@ -3900,7 +3923,7 @@ namespace SharpOcarina
 
                         }
                     }
-                    else if ((KeysDown[(int)ActorControlKeys[3]])) //B
+                    else if ((KeysDown[(int)ActorControlKeys[BKey]])) //B
                     {
                         float maxdist = 9999.9f;
                         Vector3d newpos = objpos;
@@ -4316,6 +4339,12 @@ namespace SharpOcarina
                         GSet.CustomDL[m, n] = 0;
                     }
                 }
+            }
+
+            if (GSet.PivotPoint.Length != GroupCount)
+            {
+                GSet.PivotPoint = new Vector3s[GroupCount];
+                GSet.PivotPoint.Fill(new Vector3s[] { new Vector3s(32767, 32767, 32767) });
             }
         }
 
@@ -6392,13 +6421,15 @@ namespace SharpOcarina
 
                     FunctionColorBlendDelete.Enabled = (FunctionColorBlendList.Items.Count > 0);
 
+                    FunctionColorBlendEnvAlpha.Enabled = (FunctionColorBlendList.Items.Count > 0);
+
                     if (FunctionColorBlendList.Items.Count > 0)
                     {
                         FunctionColorBlendColor.BackColor = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].ColorList[FunctionColorBlendList.SelectedIndex].C1C;
                         FunctionColorBlendColor.BackColor = (Color)new Color4(FunctionColorBlendColor.BackColor.R, FunctionColorBlendColor.BackColor.G, FunctionColorBlendColor.BackColor.B, 0xFF);
                         FunctionColorBlendFrames.Value = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].ColorList[FunctionColorBlendList.SelectedIndex].Duration;
                         FunctionColorBlendAlpha.Value = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].ColorList[FunctionColorBlendList.SelectedIndex].C1C.A;
-
+                        FunctionColorBlendEnvAlpha.Value = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].ColorList[FunctionColorBlendList.SelectedIndex].EnvAlpha;
                     }
 
                 }
@@ -6412,6 +6443,31 @@ namespace SharpOcarina
 
 
                     FunctionCameraEffectDropdown.SelectedIndex = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].CameraEffect;
+
+                }
+                #endregion
+
+
+                #region polytypeswap
+                if (CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions.Count != 0 && CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].Type == ZTextureAnim.polyswap)
+                {
+                    foreach (Control Ctrl in RenderFunctionTabs.SelectedTab.Controls)
+                        Ctrl.Enabled = true;
+
+                    FunctionPolytypeSwapDisabledID.Value = Clamp<Decimal>(FunctionPolytypeSwapDisabledID.Value, 1, CurrentScene.PolyTypes.Count);
+                    FunctionPolytypeSwapEnabledID.Value = Clamp<Decimal>(FunctionPolytypeSwapEnabledID.Value, 1, CurrentScene.PolyTypes.Count);
+
+                    FunctionPolytypeSwapDisabledID.Minimum = 0;
+                    FunctionPolytypeSwapDisabledID.Maximum = CurrentScene.PolyTypes.Count-1;
+
+                    FunctionPolytypeSwapEnabledID.Minimum = 0;
+                    FunctionPolytypeSwapEnabledID.Maximum = CurrentScene.PolyTypes.Count - 1;
+
+
+                    FunctionPolytypeSwapDisabledID.Value = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].InactivePolytypeID;
+                    FunctionPolytypeSwapEnabledID.Value = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].ActivePolytypeID;
+                    FunctionPolytypeSwapStateTimer.Value = CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].PolytypeStateTimer;
+
 
                 }
                 #endregion
@@ -7909,6 +7965,7 @@ namespace SharpOcarina
                 CurrentScene.Rooms[i].TrueGroups[j].Custom = CurrentScene.Rooms[i].GroupSettings.Custom[j];
                 CurrentScene.Rooms[i].TrueGroups[j].ScaledNormals = CurrentScene.Rooms[i].GroupSettings.ScaledNormals[j];
                 CurrentScene.Rooms[i].TrueGroups[j].TexPointerPlus1 = CurrentScene.Rooms[i].GroupSettings.TexPointerPlus1[j];
+                CurrentScene.Rooms[i].TrueGroups[j].PivotPoint = CurrentScene.Rooms[i].GroupSettings.PivotPoint[j];
             }
         }
 
@@ -8955,50 +9012,50 @@ namespace SharpOcarina
         {
             if (CurrentScene.PolyTypes.Count != 0)
             {
-                PolygonSelect.Minimum = 1;
-                PolygonSelect.Maximum = CurrentScene.PolyTypes.Count;
+                PolygonSelect.Minimum = 0;
+                PolygonSelect.Maximum = CurrentScene.PolyTypes.Count - 1;
                 PolygonSelect.Enabled = true;
-                if (PolygonSelect.Value == 0) PolygonSelect.Value = 1;
+                if (PolygonSelect.Value < 0) PolygonSelect.Value = 0;
 
                 int MaxExit = settings.EnableNewExitFormat ? CurrentScene.ExitListV2.Count : CurrentScene.ExitList.Count;
 
-                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber >= MaxExit)
-                    CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber = MaxExit;
-                ExitNumber.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber;
+                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value].ExitNumber >= MaxExit)
+                    CurrentScene.PolyTypes[(int)PolygonSelect.Value].ExitNumber = MaxExit;
+                ExitNumber.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].ExitNumber;
                 //  ExitNumber.Maximum = 0xFF;
 
-                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EnvNumber >= CurrentScene.Environments.Count)
-                    CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EnvNumber = CurrentScene.Environments.Count;
-                EnvironmentType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EnvNumber;
+                if (CurrentScene.PolyTypes[(int)PolygonSelect.Value].EnvNumber >= CurrentScene.Environments.Count)
+                    CurrentScene.PolyTypes[(int)PolygonSelect.Value].EnvNumber = CurrentScene.Environments.Count;
+                EnvironmentType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].EnvNumber;
                 // EnvironmentType.Maximum = 0xF;
 
-                CameraAngleNumeric.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].CameraAngle;
+                CameraAngleNumeric.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].CameraAngle;
 
-                EchoRange.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EchoRange;
-                TerrainType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].TerrainType;
-                SteepterrainCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsSteep;
-                HookshotableCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsHookshotable;
-                PolytypeUnk1.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk1;
-                PolytypeUnk2.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk2;
-                WallDamageCheck.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsWallDamage;
-                Lower1UnitChecbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Lower1Unit;
-                BlockEponaCheckBox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EponaBlock;
+                EchoRange.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].EchoRange;
+                TerrainType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].TerrainType;
+                SteepterrainCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsSteep;
+                HookshotableCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsHookshotable;
+                PolytypeUnk1.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].Unk1;
+                PolytypeUnk2.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].Unk2;
+                WallDamageCheck.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsWallDamage;
+                Lower1UnitChecbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].Lower1Unit;
+                BlockEponaCheckBox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].EponaBlock;
 
 
 
                 nocheckevent = true;
-                GroupDetectionA2.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA & 0x2000) != 0);
-                GroupDetectionA4.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA & 0x4000) != 0);
-                GroupDetectionA8.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA & 0x8000) != 0);
+                GroupDetectionA2.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagA & 0x2000) != 0);
+                GroupDetectionA4.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagA & 0x4000) != 0);
+                GroupDetectionA8.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagA & 0x8000) != 0);
 
-                GroupDetectionB2.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB & 0x2000) != 0);
-                GroupDetectionB4.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB & 0x4000) != 0);
-                GroupDetectionB8.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB & 0x8000) != 0);
+                GroupDetectionB2.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagB & 0x2000) != 0);
+                GroupDetectionB4.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagB & 0x4000) != 0);
+                GroupDetectionB8.Checked = ((CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagB & 0x8000) != 0);
                 nocheckevent = false;
 
-                int[] flags = { CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SoundEffect, CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FloorFlags, CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].WallFlags, CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SpecialFlags };
+                int[] flags = { CurrentScene.PolyTypes[(int)PolygonSelect.Value].SoundEffect, CurrentScene.PolyTypes[(int)PolygonSelect.Value].FloorFlags, CurrentScene.PolyTypes[(int)PolygonSelect.Value].WallFlags, CurrentScene.PolyTypes[(int)PolygonSelect.Value].SpecialFlags };
                 ComboBox[] ComboBoxes = { CollisionSound, CollisionFloorFlags, CollisionWallFlags, CollisionSpecialFlags };
-                var polyType = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1];
+                var polyType = CurrentScene.PolyTypes[(int)PolygonSelect.Value];
                 Action<int>[] setval = {v => polyType.SoundEffect = v,v => polyType.FloorFlags = v,v => polyType.WallFlags = v, v => polyType.SpecialFlags = v};
 
                 for (int i = 0; i < flags.Length; i++)
@@ -9023,7 +9080,7 @@ namespace SharpOcarina
                 }
 
 
-                PolygonRawdata.Text = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Raw.ToString("X16");
+                PolygonRawdata.Text = CurrentScene.PolyTypes[(int)PolygonSelect.Value].Raw.ToString("X16");
 
                 foreach (Control Ctrl in panel2.Controls)
                     Ctrl.Enabled = true;
@@ -9084,15 +9141,15 @@ namespace SharpOcarina
             if (CurrentScene != null && CurrentScene.ColModel != null)
             {
 
-                EchoRange.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EchoRange;
-                TerrainType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].TerrainType;
-                SteepterrainCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsSteep;
-                HookshotableCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsHookshotable;
-                PolytypeUnk1.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk1;
-                PolytypeUnk2.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk2;
-                WallDamageCheck.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsWallDamage;
-                Lower1UnitChecbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Lower1Unit;
-                BlockEponaCheckBox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EponaBlock;
+                EchoRange.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].EchoRange;
+                TerrainType.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].TerrainType;
+                SteepterrainCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsSteep;
+                HookshotableCheckbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsHookshotable;
+                PolytypeUnk1.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].Unk1;
+                PolytypeUnk2.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].Unk2;
+                WallDamageCheck.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsWallDamage;
+                Lower1UnitChecbox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].Lower1Unit;
+                BlockEponaCheckBox.Checked = CurrentScene.PolyTypes[(int)PolygonSelect.Value].EponaBlock;
 
                 CollisionBoundsAuto.Checked = CurrentScene.AutomaticCollisionBounds;
                 CollisionSubdivisionsAuto.Checked = CurrentScene.AutomaticSubdivisions;
@@ -9160,7 +9217,7 @@ namespace SharpOcarina
         {
             if (e.KeyCode == Keys.Enter)
             {
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Raw = ulong.Parse(PolygonRawdata.Text, System.Globalization.NumberStyles.HexNumber);
+                CurrentScene.PolyTypes[(int)PolygonSelect.Value].Raw = ulong.Parse(PolygonRawdata.Text, System.Globalization.NumberStyles.HexNumber);
                 UpdatePolyTypeEdit();
             }
         }
@@ -9173,13 +9230,14 @@ namespace SharpOcarina
         private void button5_Click(object sender, EventArgs e)
         {
             CurrentScene.PolyTypes.Add(new ZColPolyType());
-            UpdatePolyTypeEdit();
+            PolygonSelect.Maximum = CurrentScene.PolyTypes.Count - 1;
             PolygonSelect.Value = PolygonSelect.Maximum;
+            UpdatePolyTypeEdit();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ZColPolyType DelPT = CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1];
+            ZColPolyType DelPT = CurrentScene.PolyTypes[(int)PolygonSelect.Value];
             CurrentScene.PolyTypes.Remove(DelPT);
             UpdatePolyTypeEdit();
         }
@@ -9209,12 +9267,12 @@ namespace SharpOcarina
         {
             if (GroupList.SelectedItem != null && CurrentScene.ColModel != null)
             {
-                ((ObjFile.Group)GroupList.SelectedItem).PolyType = ((int)GroupPolygonType.Value - 1);
+                ((ObjFile.Group)GroupList.SelectedItem).PolyType = ((int)GroupPolygonType.Value);
 
                 foreach (ObjFile.Group Grp in CurrentScene.ColModel.Groups)
                 {
                     if (Grp.Name == ((ObjFile.Group)GroupList.SelectedItem).Name)
-                        Grp.PolyType = ((int)GroupPolygonType.Value - 1);
+                        Grp.PolyType = ((int)GroupPolygonType.Value);
                 }
 
                 int Index = CurrentScene.Rooms[RoomList.SelectedIndex].TrueGroups.FindIndex(x => x.Name == ((ObjFile.Group)GroupList.SelectedItem).Name);
@@ -9227,37 +9285,37 @@ namespace SharpOcarina
 
         private void numericUpDownEx10_ValueChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].ExitNumber = (int)ExitNumber.Value;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].ExitNumber = (int)ExitNumber.Value;
             UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx3_ValueChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EchoRange = (int)EchoRange.Value;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].EchoRange = (int)EchoRange.Value;
             UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx7_ValueChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EnvNumber = (int)EnvironmentType.Value;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].EnvNumber = (int)EnvironmentType.Value;
             UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx8_ValueChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].TerrainType = (int)TerrainType.Value;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].TerrainType = (int)TerrainType.Value;
             UpdatePolyTypeEdit();
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsSteep = SteepterrainCheckbox.Checked;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsSteep = SteepterrainCheckbox.Checked;
             UpdatePolyTypeEdit();
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsHookshotable = HookshotableCheckbox.Checked;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsHookshotable = HookshotableCheckbox.Checked;
             UpdatePolyTypeEdit();
         }
 
@@ -10643,7 +10701,7 @@ namespace SharpOcarina
 
         private void CameraAngleNumeric_ValueChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].CameraAngle = (long)CameraAngleNumeric.Value;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].CameraAngle = (long)CameraAngleNumeric.Value;
             UpdateForm();
         }
 
@@ -10656,21 +10714,27 @@ namespace SharpOcarina
         private void ShowControls(bool firsttime)
         {
             int layout = Program.KeyboardLayout == "AZERTY" ? 1 : (Program.KeyboardLayout == "DVORAK" ? 2 : 0);
-            MessageBox.Show( ((firsttime) ? "You can check this window at any time in Help tab!" + Environment.NewLine + Environment.NewLine : "") +
+            //KeysConverter kc = new KeysConverter();
+            //string a = kc.ConvertToString(ActorControlKeys[0]);
+
+            MessageBox.Show(((firsttime) ? "You can check this window at any time in Help tab!" + Environment.NewLine + Environment.NewLine : "") +
          "Camera view: " + Environment.NewLine +
          "- Left click (hold): Rotate the camera " + Environment.NewLine +
          "- " + (new[] { "WASD", "ZQSD", ",AOE" })[layout] + " keys: Move the camera to the sides and front" + Environment.NewLine +
-         "- " + (new[] { "QE", "AE", "'." })[layout] + " keys: Move the camera up and down" + Environment.NewLine +
+         "- " + (new[] { "QE", "AE", "'P" })[layout] + " keys: Move the camera up and down" + Environment.NewLine +
          "-    +Shift (hold): Move slower" + Environment.NewLine +
          "-    +Space (hold): Move faster" + Environment.NewLine +
          "- F key: Focuses the camera on the active actor" + Environment.NewLine +
          "- Right click: Select instances" + Environment.NewLine +
-         "- Middle click (hold) inside the instance: Move the instance in 2D axis" + Environment.NewLine +
-         "-    +Shift (hold): Move the instance in a depth axis" + Environment.NewLine + Environment.NewLine +
+         "- Middle click (hold) or " + $"{ActorControlKeys[GKey].ToString()}" + " Key inside the instance: Move the instance in 2D axis" + Environment.NewLine +
+         "-    +Shift (hold): Move the instance in a depth axis" + Environment.NewLine +
+         "-    +Ctrl (hold): Mouse can be positioned anywhere when moving the instance" + Environment.NewLine + Environment.NewLine +
          "Instances: " + Environment.NewLine +
          "- Shift (hold) while increasing/decreasing position or waterbox size: Increases it by 20 units" + Environment.NewLine +
-         " - " + (new[] { "Z/X", "W/X", ";Q" })[layout] + " while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
-         " - Mouse wheel after selecting a waterbox: Increase/decrease waterbox size"
+         " - " + $"{ActorControlKeys[ZKey].ToString()}/{ActorControlKeys[XKey].ToString()}" + " while moving an actor: Stick to ground/ceiling" + Environment.NewLine +
+         " - " + $"{ActorControlKeys[CKey].ToString()}/{ActorControlKeys[VKey].ToString()}/{ActorControlKeys[BKey].ToString()}" + " while moving an actor: Stick to nearby vertex/edge center/edge" + Environment.NewLine +
+         " - Mouse wheel after selecting a waterbox: Increase/decrease waterbox size" + Environment.NewLine +
+         " - Ctrl+" + $"{ActorControlKeys[ZKey].ToString()}/{ActorControlKeys[YKey].ToString()}" + " while on the viewport: Undo/Redo (experimental)"
          , "Controls", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -11112,7 +11176,7 @@ namespace SharpOcarina
 
         private void PolygonRawdata_Leave(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Raw = ulong.Parse(PolygonRawdata.Text, System.Globalization.NumberStyles.HexNumber);
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].Raw = ulong.Parse(PolygonRawdata.Text, System.Globalization.NumberStyles.HexNumber);
             UpdateForm();
         }
 
@@ -13644,7 +13708,7 @@ namespace SharpOcarina
         {
             if (!nocheckevent)
             {
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
+                CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
                 UpdatePolyTypeEdit();
             }
         }
@@ -13653,7 +13717,7 @@ namespace SharpOcarina
         {
             if (!nocheckevent)
             {
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
+                CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
                 UpdatePolyTypeEdit();
             }
         }
@@ -13662,7 +13726,7 @@ namespace SharpOcarina
         {
             if (!nocheckevent)
             {
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
+                CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagA = (ushort)((0x0000 | ((GroupDetectionA2.Checked ? 1 : 0) << 13) | (GroupDetectionA4.Checked ? 1 : 0) << 14) | ((GroupDetectionA8.Checked ? 1 : 0) << 15));
                 UpdatePolyTypeEdit();
             }
         }
@@ -13674,13 +13738,13 @@ namespace SharpOcarina
 
         private void numericUpDownEx1_ValueChanged_1(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk1 = (int)PolytypeUnk1.Value;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].Unk1 = (int)PolytypeUnk1.Value;
             UpdatePolyTypeEdit();
         }
 
         private void numericUpDownEx2_ValueChanged_1(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Unk2 = (int)PolytypeUnk2.Value;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].Unk2 = (int)PolytypeUnk2.Value;
             UpdatePolyTypeEdit();
         }
 
@@ -13688,7 +13752,7 @@ namespace SharpOcarina
         {
             if (!nocheckevent)
             {
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
+                CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
                 UpdatePolyTypeEdit();
             }
         }
@@ -13697,7 +13761,7 @@ namespace SharpOcarina
         {
             if (!nocheckevent)
             {
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
+                CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
                 UpdatePolyTypeEdit();
             }
         }
@@ -13706,7 +13770,7 @@ namespace SharpOcarina
         {
             if (!nocheckevent)
             {
-                CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
+                CurrentScene.PolyTypes[(int)PolygonSelect.Value].PolyFlagB = (ushort)((0x0000 | ((GroupDetectionB2.Checked ? 1 : 0) << 13) | (GroupDetectionB4.Checked ? 1 : 0) << 14) | ((GroupDetectionB8.Checked ? 1 : 0) << 15));
                 UpdatePolyTypeEdit();
             }
         }
@@ -13738,7 +13802,7 @@ namespace SharpOcarina
 
         private void WallDamageCheck_CheckedChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].IsWallDamage = WallDamageCheck.Checked;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].IsWallDamage = WallDamageCheck.Checked;
             UpdateForm();
         }
 
@@ -14689,13 +14753,13 @@ namespace SharpOcarina
 
         private void Lower1UnitChecbox_CheckedChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].Lower1Unit = Lower1UnitChecbox.Checked;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].Lower1Unit = Lower1UnitChecbox.Checked;
             UpdatePolyTypeEdit();
         }
 
         private void BlockEponaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].EponaBlock = BlockEponaCheckBox.Checked;
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].EponaBlock = BlockEponaCheckBox.Checked;
             UpdatePolyTypeEdit();
         }
 
@@ -15058,6 +15122,7 @@ namespace SharpOcarina
                 room.GroupSettings.AlphaMask[i] = false;
                 room.GroupSettings.Custom[i] = false;
                 room.GroupSettings.ScaledNormals[i] = false;
+                room.GroupSettings.PivotPoint[i] = new Vector3s(32767, 32767, 32767);
 
                 room.TrueGroups[i].TintAlpha = 0xFFFFFFFF;
                 room.TrueGroups[i].MultiTexAlpha = 0xFFFFFFFF;
@@ -15083,12 +15148,13 @@ namespace SharpOcarina
                 room.TrueGroups[i].AnimationBank = 8;
                 room.TrueGroups[i].LodGroup = 0;
                 room.TrueGroups[i].LodDistance = 0;
-                room.GroupSettings.LOD[i] = false;
-                room.GroupSettings.RenderLast[i] = false;
-                room.GroupSettings.VertexNormals[i] = false;
-                room.GroupSettings.AlphaMask[i] = false;
-                room.GroupSettings.Custom[i] = false;
-                room.GroupSettings.ScaledNormals[i] = false;
+                room.TrueGroups[i].LOD = false;
+                room.TrueGroups[i].RenderLast = false;
+                room.TrueGroups[i].VertexNormals = false;
+                room.TrueGroups[i].AlphaMask = false;
+                room.TrueGroups[i].Custom = false;
+                room.TrueGroups[i].ScaledNormals = false;
+                room.TrueGroups[i].PivotPoint = new Vector3s(32767, 32767, 32767);
             }
 
 
@@ -16095,6 +16161,7 @@ namespace SharpOcarina
                 clearSceneDmatableToolStripMenuItem.Visible = true;
                 removeAllRomScenesToolStripMenuItem.Visible = true;
                 toolStripSeparator10.Visible = false;
+                updateExeFilesToolStripMenuItem.Visible = false;
 
                 SetTitlecard.Visible = true;
                 TitlecardTextbox.Visible = false;
@@ -16174,7 +16241,9 @@ namespace SharpOcarina
                 convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Visible = true;
                 createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = true;
                 AutoHookerMenuItem.Visible = true;
-                
+                updateExeFilesToolStripMenuItem.Visible = true;
+
+
                 rebuildDmaTableallToolStripMenuItem.Visible = false;
                 decompressROMToolStripMenuItem.Visible = false;
                 dEBUGCustomActorDatabasetoolStripMenuItem.Visible = true;
@@ -16230,6 +16299,9 @@ namespace SharpOcarina
                 transitionEditControl.UpdateActorEdit();
                 spawnerEditControl.UpdateActorEdit();
                 UpdateForm();
+
+                if (rom64.BGCheckVersion < BGCheckVersion)
+                    UpdateBGCheck(BGCheckVersion, true);
             }
         }
 
@@ -18385,9 +18457,9 @@ namespace SharpOcarina
                     addedfunction.Preview = false;
                 }
 
-                if ((addedfunction.Type == ZTextureAnim.condition || addedfunction.Type == ZTextureAnim.blending) && rom64.isSet() && rom64.SceneRenderVersion < 1.2f)
+                if ((addedfunction.Type == ZTextureAnim.condition || addedfunction.Type == ZTextureAnim.blending || addedfunction.Type == ZTextureAnim.polyswap) && rom64.isSet() && rom64.SceneRenderVersion < 1.3f)
                 {
-                    UpdateSceneRender(1.2f, true);
+                    UpdateSceneRender(1.3f, true);
                 }
 
                 UpdateRenderFunctionEdit();
@@ -20104,7 +20176,7 @@ namespace SharpOcarina
 
         private bool GrabDown()
         {
-            return Mouse.MDown || KeysDown[(int)Keys.G];
+            return Mouse.MDown || KeysDown[(int)ActorControlKeys[GKey]];
         }
 
         private void postInstallOperationsz64romToolStripMenuItem_Click(object sender, EventArgs e)
@@ -20885,25 +20957,25 @@ namespace SharpOcarina
 
         private void CollisionSound_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SoundEffect = Convert.ToByte((CollisionSound.SelectedItem as SongItem).Value);
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].SoundEffect = Convert.ToByte((CollisionSound.SelectedItem as SongItem).Value);
             UpdatePolyTypeEdit();
         }
 
         private void CollisionFloorFlags_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].FloorFlags = Convert.ToByte((CollisionFloorFlags.SelectedItem as SongItem).Value);
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].FloorFlags = Convert.ToByte((CollisionFloorFlags.SelectedItem as SongItem).Value);
             UpdatePolyTypeEdit();
         }
 
         private void CollisionWallFlags_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].WallFlags = Convert.ToByte((CollisionWallFlags.SelectedItem as SongItem).Value);
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].WallFlags = Convert.ToByte((CollisionWallFlags.SelectedItem as SongItem).Value);
             UpdatePolyTypeEdit();
         }
 
         private void CollisionSpecialFlags_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            CurrentScene.PolyTypes[(int)PolygonSelect.Value - 1].SpecialFlags = Convert.ToByte((CollisionSpecialFlags.SelectedItem as SongItem).Value);
+            CurrentScene.PolyTypes[(int)PolygonSelect.Value].SpecialFlags = Convert.ToByte((CollisionSpecialFlags.SelectedItem as SongItem).Value);
             UpdatePolyTypeEdit();
         }
 
@@ -21031,8 +21103,7 @@ namespace SharpOcarina
             {
                 if (rom64.isSet())
                 {
-                    if (rom64.BGCheckVersion < 1.1f)
-                        UpdateBGCheck(1.1f, true);
+                    
                     CurrentScene.AutomaticSubdivisions = CollisionSubdivisionsAuto.Checked;
                     UpdateCollisionBoundsEdit();
                 }
@@ -21147,6 +21218,80 @@ namespace SharpOcarina
                 Process.Start(startInfo);
             }
             
+        }
+
+
+
+        private void FunctionPolytypeSwapDisabledID_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.SegmentFunctions[(int)(RenderFunctionID.Value - 8)].Functions[RenderFunctionSelect.SelectedIndex].InactivePolytypeID = (byte)FunctionPolytypeSwapDisabledID.Value;
+
+            UpdateRenderFunctionEdit();
+        }
+
+        private void FunctionPolytypeSwapEnabledID_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.SegmentFunctions[(int)(RenderFunctionID.Value - 8)].Functions[RenderFunctionSelect.SelectedIndex].ActivePolytypeID = (byte)FunctionPolytypeSwapEnabledID.Value;
+
+            UpdateRenderFunctionEdit();
+        }
+
+        private void FunctionPolytypeSwapStateTimer_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.SegmentFunctions[(int)(RenderFunctionID.Value - 8)].Functions[RenderFunctionSelect.SelectedIndex].PolytypeStateTimer = (ushort)FunctionPolytypeSwapStateTimer.Value;
+
+            UpdateRenderFunctionEdit();
+        }
+
+        private void FunctionColorBlendEnvAlpha_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentScene.SegmentFunctions[(int)(RenderFunctionID.Value - 8)].Functions[RenderFunctionSelect.SelectedIndex].ColorList[FunctionColorBlendList.SelectedIndex].EnvAlpha = (short)FunctionColorBlendEnvAlpha.Value;
+            UpdateRenderFunctionEdit();
+        }
+
+        private void installUpdateBlenderPluginsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (PickBlenderVersion blenderversion = new PickBlenderVersion())
+            {
+                if (blenderversion.ShowDialog() == DialogResult.OK)
+                {
+                    if (blenderversion.path == "") return;
+
+                    string BlenderAddonPath = blenderversion.path + "/scripts/addons/";
+                    string[] Plugins = { Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BlenderScripts/io_export_objex2.zip"),
+                   
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BlenderScripts/io_export_so_3.0.zip")};
+
+                    foreach (string Plugin in Plugins)
+                    {
+                        //if (Directory.Exists(BlenderAddonPath + Plugin))
+                        //    Directory.CreateDirectory(BlenderAddonPath + Plugin);
+                        using (var zip = ZipFile.Read(Plugin))
+                        {
+                            zip.ExtractAll(BlenderAddonPath, ExtractExistingFileAction.OverwriteSilently);
+                        }
+                    }
+                    MessageBox.Show("SharpOcarina and Objex plugins updated!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void updateExeFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string tmppath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempu\\");
+            Directory.CreateDirectory(tmppath);
+
+            PleaseWait pleasewait = new PleaseWait("https://github.com/z64dev/z64rom/releases/latest/download/z64rom.zip", tmppath + "z64rom.zip", tmppath, true);
+            pleasewait.ShowDialog();
+
+            DeleteZ64romFile(rom64.getPath() + "/z64rom.exe");
+            DeleteZ64romFile(rom64.getPath() + "/tools/z64convert.exe");
+            File.Copy(tmppath + "/z64rom.exe", rom64.getPath() + "/z64rom.exe");
+            File.Copy(tmppath + "/tools/z64convert.exe", rom64.getPath() + "/tools/z64convert.exe");
+
+            Helpers.DeleteDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempu\\"));
+
+            MessageBox.Show("z64rom.exe and z64convert.exe updated!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 

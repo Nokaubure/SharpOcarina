@@ -4,11 +4,38 @@
 ---1.63
 --------------
 
-- Added subdivision and collision bounds editor in collision tab, z64rom only. Since this feature is still not in z64rom, click the "auto" checkbox next to subdivisions to download the patch into your project.
+- Updated SharpOcarina plugin to 1.1.4 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_so_3.0.zip)
+	- #Pivot tag will be replaced on export with the coordinates of the object's origin. So far it only affects billboards in latest SO, it will have more uses in the future.
+	- Fixed an issue where Mass Initialize would sometimes fail to import fast64 collision
 
-- Redesigned collision tab so it now uses dropdowns instead of radio buttons
+- Updated Objex2 plugin to 2.6.4 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_objex2.zip)
+	- Now creates a config.toml on export if it doesnt exists, you still need to configure it via notepad
+	- Mass Initialize can now convert fast64 flipbooks to objex format
+	- Simplified fold/unfold tab, now you just need to add a pose and click switch. It also locks the armature into rest pose while unfolded.
+	- Fixed an issue where Mass Initialize would sometimes fail to import fast64 collision
+	- Improved names and descriptions of f3dzex2 tab
+
+- Added subdivision and collision bounds editor in collision tab, z64rom only. A prompt asking to update bgcheck file will show up on project load, to update existing projects
+
+- Added new texture anim command: Polytype Swap, this lets swaping polytypes ingame, based on flag. For this you must use #Polytype00 tags and configure the collision inside SO.
+
+- Added multitexture alpha in texture anim color commands
+
+- Redesigned collision tab so it now uses dropdowns instead of radio buttons, ID now starts from 0 instead of 1
 
 - Added Zelda64 Text Editor (Skawo fork) in Tools tab. It will download the latest version in Tools folder and check for updates automatically.
+
+- Pressing G on the viewport acts identically to middle mouse button (alternate bind for touchpad users)
+
+- Updated the "Show Controls" window with new bindings from last updates
+
+- Added #Pivot tag, as of now the only use of this tag is to set the pivot point of billboards. Simply put #Pivot tag on a group in blender for its pivot point to transfer into the exported .obj. New SO plugin required.
+
+- #Polytype00 tag now uses decimal numbers for the ID instead of hexadecimal
+
+- Added Help > Update/Install Blender Plugins to easily update them, note that it will fail if your blender appdata is not in your main disk drive
+
+- Added Help > Update z64convert/z64rom .exe files (z64rom mode), as the name says it partially updates the current project with new exe files, this doesnt fully update an old project ()
 
 - Slightly performance boost
 
@@ -21,6 +48,16 @@
 - Fixed an issue where transparent I4/I8 textures werent being rendered in SO viewport (reminder, for an I4/I8 texture to be considered transparent, the group needs to have less than 255 alpha)
 
 - Fixed an issue where all vertex in the object file were taken into account when calculating the collision bounds, instead of only the collision vertex
+
+- Fixed an issue where the pivot point of 2D billboards was missplaced by 5 units vertically
+
+- Fixed an issue where collision window would not refresh properly when creating a polytype
+
+- Fixed an issue where color blending animations with transparent dlists werent rendered correctly inside SO
+
+- Fixed an issue where color blending animations were rendered in backwards order
+
+- Removed "Help > Getting crashes? go here" as the guide was too ancient and barely applicable to modern standards
 
 --------------
 ---1.62

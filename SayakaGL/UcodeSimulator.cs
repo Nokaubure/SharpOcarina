@@ -560,9 +560,11 @@ namespace SharpOcarina.SayakaGL
 
 
                 }
-                if (ThisDL.ColorAnimation == 0 && command.ID == 0x00 && (command.w1 & 0xFFFFFF00) == 0x12345600 )
+                if (ThisDL.ColorAnimation == 0 && command.ID == 0x00 && (command.w1 & 0xFFFFF000) == 0x12345000 )
                 {
                     ThisDL.ColorAnimation = (int)((command.w1 & 0x000000FF));
+                    if ((command.w1 & 0x00000F00) == 0x00000100)
+                        ThisDL.IsTransparent = true;
                 }
                 if (ThisDL.Billboard == 0 && command.ID == 0xDA && command.w1 == 0x01000000)
                 {

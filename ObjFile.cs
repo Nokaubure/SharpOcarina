@@ -26,6 +26,7 @@ using OpenTK.Platform;
 
 using TexLib;
 using TgaDecoderTest;
+using static SharpOcarina.ZScene;
 
 namespace SharpOcarina
 {
@@ -318,6 +319,7 @@ namespace SharpOcarina
             public bool ScaledNormals = false;
             [XmlIgnore]
             public bool TexPointerPlus1 = false;
+            public Vector3s PivotPoint = new Vector3s(32767, 32767, 32767);
 
             private List<Triangle> _Tris = new List<Triangle>();
             

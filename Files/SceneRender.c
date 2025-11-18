@@ -1,6 +1,7 @@
 #include "uLib.h"
+#include "variables.h"
 #include "SceneRender.h"
-//Version: 1.2
+//Version: 1.3
 /*This version value is used by SharpOcarina to determine if it needs to update the SceneRender.c of an old project
 to use newly added features. Put a high value like 99 to stop SharpOcarina from ever asking to update it again.
 */
@@ -129,7 +130,7 @@ static ColorKey* SceneAnim_GetNextColorKey(ColorList* list, ColorKey* key) {
 }
 
 static s32 SceneAnim_Ease_s32(s32 from, s32 to, float factor) {
-    return from + (to - from) * factor;
+    return LERP(from, to, factor);
 }
 
 static s32 SceneAnim_Ease_s8(s32 from, s32 to, float factor) {
@@ -274,9 +275,11 @@ static void SceneAnim_Color_LoopFlag(PlayState* play, Gfx** disp, ColorListFlag*
     
     key = &gSceneAnimCtx.Pcolorkey;
     
-    if (SceneAnim_Flag(play, &c->flag) && (!(f->freeze & FreezeFlag_StopAtEnd) || 
+    if (active && (!(f->freeze & FreezeFlag_StopAtEnd) || 
         ((f->freeze & FreezeFlag_StopAtEnd) && c->flag.frames < list->dur-SceneAnim_GetNextColorKey(list, &list->key[0])->next)))
         c->flag.frames++;
+    if (!active && (f->freeze & FreezeFlag_StopAtEnd) && c->flag.frames > 0)
+        c->flag.frames--;
     u32 frame = c->flag.frames;
     
     /* if cross fading or flag is active, compute colors */
@@ -477,6 +480,66 @@ static s32 SceneAnim_DrawCondition(PlayState* play, Gfx** disp, DrawCondition* _
     return 1;
 }
 
+const u8 Poly[2][2] = {{0,1},{1,0}};
+
+static void SceneAnim_PolytypeSwapSetData(PlayState* play, PolytypeSwap* data, u8 active) {
+
+    play->colCtx.colHeader->surfaceTypeList[data->polytypeID[Poly[active][0]]].data[Poly[active][0]] = data->polytype1Data[Poly[active][0]];
+    play->colCtx.colHeader->surfaceTypeList[data->polytypeID[Poly[active][0]]].data[Poly[active][1]] = data->polytype1Data[Poly[active][1]];
+    play->colCtx.colHeader->surfaceTypeList[data->polytypeID[Poly[active][1]]].data[Poly[active][0]] = data->polytype2Data[Poly[active][0]];
+    play->colCtx.colHeader->surfaceTypeList[data->polytypeID[Poly[active][1]]].data[Poly[active][1]] = data->polytype2Data[Poly[active][1]];
+
+    u16 triID = data->triangleIDs[0];
+    u16 c = 0;
+
+    for(int i = 0; i<2; i++)
+    {
+        u16 flagsA = ((data->polytypeVFlags[Poly[active][i]] & 0x0F) << 12);
+        u16 flagsB = ((data->polytypeVFlags[Poly[active][i]] & 0xF0) << 8);
+        while(triID != 0xFFFF)
+        {
+            play->colCtx.colHeader->polyList[triID].flags_vIA = (play->colCtx.colHeader->polyList[triID].flags_vIA & 0x1FFF) + flagsA;
+            play->colCtx.colHeader->polyList[triID].flags_vIB = (play->colCtx.colHeader->polyList[triID].flags_vIB & 0x1FFF) + flagsB;
+            c++;
+            triID = data->triangleIDs[c];
+        }
+    }
+}
+
+/* changes a polytype when flag is set */
+static s32 SceneAnim_PolytypeSwap(PlayState* play, Gfx** disp, PolytypeSwap* data) {
+
+    if (!SceneAnim_Flag(play, &data->flag))
+    {
+        if (data->curTimer > 1)
+        {
+            data->curTimer--;
+        }
+        else if (data->curTimer == 1)
+        {
+            data->curTimer = 0;
+
+            SceneAnim_PolytypeSwapSetData(play,data,0);
+        }
+    }
+    else
+    {
+        if (data->curTimer < data->maxTimer)
+        {
+            data->curTimer++;
+        }
+        else if (data->curTimer == data->maxTimer)
+        {
+            data->curTimer = data->maxTimer+1;
+
+            SceneAnim_PolytypeSwapSetData(play,data,1);
+        }
+    }
+    
+    return 1;
+}
+
+
 static AnimInfo* SceneAnim_GetSceneAnimCommand(void* _scene) {
     SceneCmd* cmd = _scene;
     
@@ -655,6 +718,10 @@ void SceneAnim_Update(PlayState* play) {
                 
             case 0x0010:
                 SceneAnim_DrawCondition(play, &disp, data, seg);
+                break;
+
+            case 0x0011:
+                SceneAnim_PolytypeSwap(play, &disp, data);
                 break;
                 
             default:
