@@ -113,8 +113,8 @@ namespace SharpOcarina
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installUpdateBlenderPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.iGotACrashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateExeFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iGotACrashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quickTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -868,6 +868,7 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.betterCrashDebuggerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1834,6 +1835,14 @@ namespace SharpOcarina
             this.installUpdateBlenderPluginsToolStripMenuItem.Text = "Update/Install Blender Plugins";
             this.installUpdateBlenderPluginsToolStripMenuItem.Click += new System.EventHandler(this.installUpdateBlenderPluginsToolStripMenuItem_Click);
             // 
+            // updateExeFilesToolStripMenuItem
+            // 
+            this.updateExeFilesToolStripMenuItem.Name = "updateExeFilesToolStripMenuItem";
+            this.updateExeFilesToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.updateExeFilesToolStripMenuItem.Text = "Update z64convert/z64rom .exe files";
+            this.updateExeFilesToolStripMenuItem.Visible = false;
+            this.updateExeFilesToolStripMenuItem.Click += new System.EventHandler(this.updateExeFilesToolStripMenuItem_Click);
+            // 
             // iGotACrashToolStripMenuItem
             // 
             this.iGotACrashToolStripMenuItem.Name = "iGotACrashToolStripMenuItem";
@@ -1842,14 +1851,6 @@ namespace SharpOcarina
             this.iGotACrashToolStripMenuItem.ToolTipText = "Only for binary!";
             this.iGotACrashToolStripMenuItem.Visible = false;
             this.iGotACrashToolStripMenuItem.Click += new System.EventHandler(this.iGotACrashToolStripMenuItem_Click);
-            // 
-            // updateExeFilesToolStripMenuItem
-            // 
-            this.updateExeFilesToolStripMenuItem.Name = "updateExeFilesToolStripMenuItem";
-            this.updateExeFilesToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.updateExeFilesToolStripMenuItem.Text = "Update z64convert/z64rom .exe files";
-            this.updateExeFilesToolStripMenuItem.Visible = false;
-            this.updateExeFilesToolStripMenuItem.Click += new System.EventHandler(this.updateExeFilesToolStripMenuItem_Click);
             // 
             // extraToolStripMenuItem
             // 
@@ -2209,7 +2210,8 @@ namespace SharpOcarina
             this.toolStripSeparator10,
             this.addLinkAnimationsz64romToolStripMenuItem,
             this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem,
-            this.createDMAFilesFromFoldersz64romToolStripMenuItem});
+            this.createDMAFilesFromFoldersz64romToolStripMenuItem,
+            this.betterCrashDebuggerMenuItem});
             this.nokaToolStripMenuItem.Name = "nokaToolStripMenuItem";
             this.nokaToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.nokaToolStripMenuItem.Text = "Tools";
@@ -13137,6 +13139,14 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // betterCrashDebuggerMenuItem
+            // 
+            this.betterCrashDebuggerMenuItem.Name = "betterCrashDebuggerMenuItem";
+            this.betterCrashDebuggerMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.betterCrashDebuggerMenuItem.Text = "Better Crash Debugger (z64rom)";
+            this.betterCrashDebuggerMenuItem.Visible = false;
+            this.betterCrashDebuggerMenuItem.Click += new System.EventHandler(this.betterCrashDebuggerMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -14308,6 +14318,7 @@ namespace SharpOcarina
         private NumericUpDownEx FunctionColorBlendEnvAlpha;
         private ToolStripMenuItem installUpdateBlenderPluginsToolStripMenuItem;
         private ToolStripMenuItem updateExeFilesToolStripMenuItem;
+        private ToolStripMenuItem betterCrashDebuggerMenuItem;
     }
     }
 

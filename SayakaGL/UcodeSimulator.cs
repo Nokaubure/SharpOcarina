@@ -1361,7 +1361,7 @@ namespace SharpOcarina.SayakaGL
 
         private static void Ucode_F3DEX2_MTX(UInt32 w0, UInt32 w1)
         {
-           
+
             if (limbtransformations.Count == 0) return;
             if (limbID != -1)
             {

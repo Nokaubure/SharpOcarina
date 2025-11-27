@@ -156,6 +156,7 @@
       <DependentUpon>AutoHooker.cs</DependentUpon>
     </Compile>
     <Compile Include="FaroresPlugin.cs" />
+    <Compile Include="XML\MM\Class1.cs" />
     <Compile Include="ZobjCopyTool.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,7 +187,7 @@
     <Compile Include="AutoUpdater\RedCell.Diagnostics.Update\Updater.cs" />
     <Compile Include="AutoUpdater\RedCell.Net\Fetch.cs" />
     <Compile Include="AutoUpdater\RedCell.Net\FetchStream.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="ElfSymbols.cs" />
     <Compile Include="ComboBoxWBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1684,6 +1685,12 @@
     <Content Include="Files\0x27-TitleScreen\scene.zscene">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Files\DBGMQ_CrashDebugger.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\DBGMQ_CrashDebuggerActors.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\debugsave_SO.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1706,6 +1713,9 @@
     <None Include="Resources\titlescreenOOT.bin" />
     <None Include="XML\FOT-ChiaroStd-BWin7.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="XML\MM\DBGMQ_CrashDebugger.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

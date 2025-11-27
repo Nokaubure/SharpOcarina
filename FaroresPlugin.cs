@@ -344,6 +344,256 @@ namespace SharpOcarina
                 return "Done! DMA files added: " + DMAfiles;
             }
         }
+        public static string BuildFunctionNamesArray(string basedir, List<DatabaseActor> Database)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            long curtime = 0;
+            stopwatch.Start();
+            
+            List<FunctionName> GlobalNames = new List<FunctionName>();
+            List<FunctionName> LibUserNames = new List<FunctionName>();
+            List<FunctionName> PlayerNames = new List<FunctionName>();
+            List<FunctionName> PauseNames = new List<FunctionName>();
+            //Dictionary<ushort, List<FunctionName>> ActorNames = new Dictionary<ushort, List<FunctionName>>();
+            Dictionary<ushort, List<byte>> ActorData = new Dictionary<ushort, List<byte>>();
+            int maxactorID = 0;
+
+           
+
+            LibUserNames = ElfSymbols.Start(rom64.getPath() + @"\rom\lib_user\z_lib_user.elf", 0x80700000);
+            //LibUserNames.RemoveAll(x => x.StartAddress < 0x80700000);
+            //string[] files = Directory.GetFiles(rom64.getPath() + @"\rom\lib_user\", "*.o", SearchOption.AllDirectories);
+            //files.ForEach(x => LibUserNames.AddRange(ElfSymbols.Start(x)));
+            //LibUserNames.ForEach(x => { x.StartAddress += 0x80700000; x.EndAddress += 0x80700000; });
+
+            DebugConsole.WriteLine("z_lib_user.elf: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
+            curtime = stopwatch.ElapsedMilliseconds;
+
+            List<byte> GlobalNamesBin = File.ReadAllBytes( Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/DBGMQ_CrashDebugger.bin")).ToList();
+            for(int i = 0; i < GlobalNamesBin.Count-40; i+= 40)
+            {
+                
+                string Name = Helpers.ReadString(GlobalNamesBin, i + 8, 32).Replace("\0","");
+                if (LibUserNames.FindIndex(x => x.Name == Name) == -1)
+                {
+                    uint StartAddress = Helpers.Read32(GlobalNamesBin, i);
+                    uint EndAddress = Helpers.Read32(GlobalNamesBin, i + 4);
+                    GlobalNames.Add(new FunctionName(StartAddress, EndAddress, Name));
+                }
+                
+
+            }
+            DebugConsole.WriteLine("GlobalNamesBin files: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
+            curtime = stopwatch.ElapsedMilliseconds;
+            GlobalNames.AddRange(LibUserNames);
+            //GlobalNames.Sort((x, y) => x.StartAddress.CompareTo(y.StartAddress));
+
+            /*
+            files = Directory.GetFiles(rom64.getPath() + @"\rom\system\kaleido\0x01-Player\","*.o",SearchOption.AllDirectories);
+            files.ForEach(x => PlayerNames.AddRange(ElfSymbols.Start(x)));
+
+            files = Directory.GetFiles(rom64.getPath() + @"\rom\system\kaleido\0x00-StartMenu\", "*.o", SearchOption.AllDirectories);
+            files.ForEach(x => PauseNames.AddRange(ElfSymbols.Start(x)));*/
+
+            PlayerNames = ElfSymbols.Start(rom64.getPath() + @"\rom\system\kaleido\0x01-Player\file.elf", 0x80800000);
+            PauseNames = ElfSymbols.Start(rom64.getPath() + @"\rom\system\kaleido\0x00-StartMenu\file.elf", 0x80800000);
+            PlayerNames.ForEach(x => { x.StartAddress -= 0x80800000; x.EndAddress -= 0x80800000; });
+            PauseNames.ForEach(x => { x.StartAddress -= 0x80800000; x.EndAddress -= 0x80800000; });
+            DebugConsole.WriteLine("Elf symbols: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
+            curtime = stopwatch.ElapsedMilliseconds;
+
+
+            List<byte> ActorNamesBin = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/DBGMQ_CrashDebuggerActors.bin")).ToList();
+            for (int i = 0; ; i += 4)
+            {
+                uint Offset = Helpers.Read32(ActorNamesBin, i);
+                ushort actorID = (ushort)(i / 4);
+                if (Offset == 0xFFFFFFFF) break;
+                if (Offset == 0) continue;
+                maxactorID++;
+                List<byte> actorfuncs = new List<byte>();
+                for (int y = (int)Offset; y < ActorNamesBin.Count; y += 4)
+                {
+                    uint tmp = Helpers.Read32(ActorNamesBin, y);
+                    if (tmp == 0xFFFFFFFF) break;
+                    Helpers.Append32(ref ActorNamesBin, tmp);
+                }
+                ActorData.Add(actorID, actorfuncs);
+            }
+
+            List<String> actors = rom64.getList("rom\\actor\\");
+
+            foreach (String str in actors)
+            {
+                string basename = "";
+                ushort index = 0;
+
+                if (!rom64.getNameAndIndex(str, ref basename, ref index))
+                    continue;
+
+                if (index+1 > maxactorID) maxactorID = index+1;
+
+                string[] files = Directory.GetFiles(str, "*.o", SearchOption.AllDirectories);
+                List<FunctionName> actorfuncs = new List<FunctionName>();
+                files.ForEach(x => actorfuncs.AddRange(ElfSymbols.Start(x)));
+                List<byte> actordata = new List<byte>();
+                actorfuncs.ForEach(x => x.Write(ref actordata));
+                ActorData[index] = actordata;
+
+            }
+
+
+
+            List<byte> data = new List<byte>();
+            data.AddRange(new byte[4 * 3]);
+            data.AddRange(new byte[4 * maxactorID]);
+            Helpers.Append32(ref data, 0xFFFFFFFF);
+            Helpers.Overwrite32(ref data, 0, (uint)data.Count);/*
+            for (int i = 1; i < GlobalNames.Count; i++)
+            {
+                GlobalNames[i - 1].EndAddress = GlobalNames[i].StartAddress - 1;
+            }*/
+            /* struct
+            0 - Functions
+            1 - Player
+            2 - Pause
+            3 - Actors
+            */
+            GlobalNames.ForEach(x => x.Write(ref data));
+            Helpers.Append32(ref data, 0xFFFFFFFF);
+            Helpers.Overwrite32(ref data, 4 * 1, (uint)data.Count);
+            PlayerNames.ForEach(x => x.Write(ref data));
+            Helpers.Append32(ref data, 0xFFFFFFFF);
+            Helpers.Overwrite32(ref data, 4 * 2, (uint)data.Count);
+            PauseNames.ForEach(x => x.Write(ref data));
+            Helpers.Append32(ref data, 0xFFFFFFFF);
+            foreach (KeyValuePair<ushort,List<byte>> kp in ActorData)
+            {
+                Helpers.Overwrite32(ref data, (kp.Key + 3) * 4, (uint)data.Count);
+                data.AddRange(kp.Value);
+                Helpers.Append32(ref data, 0xFFFFFFFF);
+
+            }
+            
+
+            string DMAfilepath = rom64.getPath() + "/rom/FunctionNames.bin";
+            if (File.Exists(DMAfilepath))
+                File.Delete(DMAfilepath);
+            File.WriteAllBytes(DMAfilepath, data.ToArray());
+
+            /*
+            for(int i = 1; i < FunctionNames.Count; i++)
+            {
+            FunctionNames[i - 1].EndAddress = FunctionNames[i].StartAddress - 1;
+            }
+            string output = "#include <uLib.h>\n" +
+            "typedef struct {\n"+
+            "u32 StartAddress;\n"+
+            "u32 EndAddress;\n"+
+            "char Name[32];\n"+
+            "}FunctionName;\n"+ 
+        "const FunctionName FunctionNames[] = {";
+            foreach(FunctionName function in FunctionNames)
+            {
+                
+                output += function.ToString() + "\n";
+            }
+            output += "};";
+            File.WriteAllText(basedir+"/src/lib_user/library/CrashScreen.h", output);
+            */
+            /*
+                       string[] GlobalLinkerFiles = { basedir + "/include/z64hdr/oot_mq_debug/sym_src.ld"};
+                       foreach (string file in GlobalLinkerFiles)
+                       {
+                           string[] lines = File.ReadAllLines(file);
+                           foreach(string line in lines)
+                           {
+                               string trimmedline = line.Trim();
+                               if (trimmedline.Contains("="))
+                               {
+                                   string[] split = trimmedline.Split('=');
+                                   if (split.Length != 2) continue;
+                                   string Name = split[0].Replace(" ", "");
+                                   if (Name.Contains("__vanilla_hook_"))
+                                   {
+                                       Name = (Name.Replace("__vanilla_hook_", "").Substring2(0, 25)) + "(Hook)";
+                                   }
+                                   else Name = Name.Substring2(0, 32);
+                                   uint StartAddress = Convert.ToUInt32(split[1].SubstringTill(0,';').Replace("0x","").Replace(";","").Trim(),16);
+                                   if (StartAddress < 0x80000000) continue;
+                                   if (Name.StartsWith("s") || Name.StartsWith("g") || Name.StartsWith("_") || Name.StartsWith("DL_") || Name.StartsWith("D_")) continue;
+                                   GlobalNames.Add(new FunctionName(StartAddress, 0, Name));
+                               }
+                           }
+                       }*/
+
+            int maxKey = AddDMAEntry(basedir, 0x1F, "rom/FunctionNames.bin", false);
+
+            Helpers.ReplaceLine("#define FUNCTIONNAMES_DMAID", "#define FUNCTIONNAMES_DMAID 0x" + maxKey.ToString("X2"), rom64.getPath() + "/src/lib_user/library/CrashScreen.c");
+            Helpers.ReplaceLine("#define FUNCTIONNAMES_MAXACTORS", "#define FUNCTIONNAMES_MAXACTORS 0x" + maxactorID.ToString("X4"), rom64.getPath() + "/src/lib_user/library/CrashScreen.c");
+            stopwatch.Stop();
+
+            return "Done!";
+        }
+
+        //used by dev only
+        public static void BuildCrashDebuggerActors(string basedir, List<DatabaseActor> Database)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            long curtime = 0;
+            stopwatch.Start();
+            
+            Dictionary<ushort, List<FunctionName>> ActorNames = new Dictionary<ushort, List<FunctionName>>();
+            int maxactorID = 0;
+            string[] files = Directory.GetFiles(@"Z:\cygwin64\home\Noka\OoTdecomp\build\src\overlays\actors\", "*.o", SearchOption.AllDirectories); 
+            foreach(string file in files)
+            {
+                if (file.Contains("_reloc.o")) continue;
+                string debugname = Path.GetFileNameWithoutExtension(file).ToLower();
+                if (debugname == "z_player") continue;
+                debugname = debugname.Substring(2);
+                DatabaseActor actor = Database.Find(x => x.DebugName.ToLower() == debugname);
+                ushort actorID = 0xFFFF;
+                if (actor != null)
+                {
+                    actorID = Database.Find(x => x.DebugName.ToLower() == debugname).Value;
+                }
+                else
+                {
+                    DebugConsole.WriteLine($"Actor {debugname} not found!");
+                    continue;
+                }
+                if (ActorNames.ContainsKey(actorID))
+                {
+                    DebugConsole.WriteLine($"Actor {debugname}-{actorID.ToString("X4")} already exists!");
+                    continue;
+                }
+                else
+                {
+                    ActorNames.Add(actorID, ElfSymbols.Start(file));
+                    if (actorID > maxactorID) maxactorID = actorID;
+                }
+                
+
+            }
+            List<byte> temp = new List<byte>();
+            temp.AddRange(new byte[4 * maxactorID]);
+            Helpers.Append32(ref temp, 0xFFFFFFFF);
+            for (ushort i = 0; i < maxactorID; i++)
+            {
+                if (ActorNames.ContainsKey(i))
+                {
+                    Helpers.Overwrite32(ref temp, 4 * i, (uint)temp.Count);
+                    ActorNames[i].ForEach(x => x.Write(ref temp));
+                }
+                Helpers.Append32(ref temp, 0xFFFFFFFF);
+
+            }
+
+            File.WriteAllBytes(rom64.getPath() + "/DBGMQ_CrashDebuggerActors", temp.ToArray());
+
+            return;
+        }
 
         public static int AddDMAEntry(string basedir, int maxKey, string file, bool compress)
         {
@@ -408,6 +658,34 @@ namespace SharpOcarina
                 input = "_" + input;
 
             return input;
+        }
+
+        public class FunctionName
+        {
+            public uint StartAddress;
+            public uint EndAddress;
+            public string Name;
+            public int type;
+            public const int GLOBAL = 0;
+            public const int PLAYER = 1;
+            public const int PAUSE = 2;
+            public const int ACTOR = 3;
+            public FunctionName(uint StartAddress, uint EndAddress, string Name)
+            {
+                this.StartAddress = StartAddress;
+                this.EndAddress = EndAddress;
+                this.Name = Name.Replace("__vanilla_hook_","");
+            }
+            public override string ToString()
+            {
+                return $"{{0x{StartAddress.ToString("X8")},0x{EndAddress.ToString("X8")},\"{Name}\"}},";
+            }
+            public void Write(ref List<byte> data)
+            {
+                Helpers.Append32(ref data, StartAddress);
+                Helpers.Append32(ref data, EndAddress);
+                Helpers.AppendString(ref data, Name, 32);
+            }
         }
 
     }

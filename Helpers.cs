@@ -51,6 +51,20 @@ namespace SharpOcarina
             return (int)(Data[Offset] << 24 | Data[Offset + 1] << 16 | Data[Offset + 2] << 8 | Data[Offset + 3]);
         }
 
+        public static string ReadString(List<byte> data, int offset, int length)
+        {
+            if (offset + length > data.Count)
+                throw new ArgumentException("Offset + length exceed the data size.");
+
+            byte[] buffer = new byte[length];
+            for (int i = 0; i < length; i++)
+            {
+                buffer[i] = data[offset + i];
+            }
+
+            return Encoding.ASCII.GetString(buffer);
+        }
+
         public static void Append16(ref List<byte> Data, ushort Value)
         {
             AppendXX(ref Data, Value, 1);
@@ -433,6 +447,22 @@ namespace SharpOcarina
             return imageParts;
         }
 
+        public static void AppendString(ref List<byte> buffer, string value, int maxSize)
+        {
+            if (buffer == null)
+                buffer = new List<byte>();
+
+            byte[] stringBytes = Encoding.UTF8.GetBytes(value ?? string.Empty);
+
+            int bytesToWrite = Math.Min(stringBytes.Length, maxSize);
+
+            for (int i = 0; i < bytesToWrite; i++)
+                buffer.Add(stringBytes[i]);
+
+            for (int i = bytesToWrite; i < maxSize; i++)
+                buffer.Add(0);
+        }
+
         public static Bitmap NewBitmap(string filename)
         {
             using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
@@ -568,6 +598,17 @@ namespace SharpOcarina
             int end = json.IndexOf('"', start + 1);
             if (end < 0) return null;
             return json.Substring(start + 1, end - start - 1);
+        }
+
+        public static void DeleteZ64romFile(string file)
+        {
+            string trashdir = rom64.getPath() + "\\Trashbin";
+            if (!Directory.Exists(trashdir))
+                Directory.CreateDirectory(trashdir);
+            string newfile = trashdir + "\\" + Path.GetFileName(file);
+            if (File.Exists(newfile))
+                newfile = trashdir + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + DateTime.Now.Ticks.ToString() + Path.GetExtension(file);
+            File.Move(file, newfile);
         }
     }
 

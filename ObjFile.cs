@@ -25,7 +25,6 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
 
 using TexLib;
-using TgaDecoderTest;
 using static SharpOcarina.ZScene;
 
 namespace SharpOcarina

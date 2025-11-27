@@ -32,12 +32,12 @@ using System.Xml.Linq;
 using Ionic.Zip;
 using RedCell.Diagnostics.Update;
 using TexLib;
-using TgaDecoderTest;
 using Microsoft.VisualBasic;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using Tommy;
 using System.Web;
 using static SharpOcarina.ZScene;
+using static ElfSymbols;
 
 namespace SharpOcarina
 {
@@ -16150,6 +16150,7 @@ namespace SharpOcarina
                 addLinkAnimationsz64romToolStripMenuItem.Visible = false;
                 convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Visible = false;
                 createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = false;
+                betterCrashDebuggerMenuItem.Visible = false;
                 AutoHookerMenuItem.Visible = false;
                 rebuildDmaTableallToolStripMenuItem.Visible = true;
                 decompressROMToolStripMenuItem.Visible = true;
@@ -16239,6 +16240,7 @@ namespace SharpOcarina
                 addLinkAnimationsz64romToolStripMenuItem.Visible = true;
                 convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem.Visible = true;
                 createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = true;
+                betterCrashDebuggerMenuItem.Visible = true;
                 AutoHookerMenuItem.Visible = true;
                 updateExeFilesToolStripMenuItem.Visible = true;
 
@@ -19658,16 +19660,7 @@ namespace SharpOcarina
 
         }
 
-        private void DeleteZ64romFile(string file)
-        {
-            string trashdir = rom64.getPath() + "\\Trashbin";
-            if (!Directory.Exists(trashdir))
-                Directory.CreateDirectory(trashdir);
-            string newfile = trashdir + "\\" + Path.GetFileName(file);
-            if (File.Exists(newfile))
-                newfile = trashdir + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + DateTime.Now.Ticks.ToString() + Path.GetExtension(file);
-            File.Move(file,newfile);
-        }
+        
 
         private bool UpdateZ64romFile(string[] files, float version, bool ask)
         {
@@ -19680,7 +19673,7 @@ namespace SharpOcarina
                 for (int i = 0; i < files.Length; i++)
                 {
                     if (File.Exists(files[i]))
-                        DeleteZ64romFile(files[i]);
+                        Helpers.DeleteZ64romFile(files[i]);
                     
                     File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\" + Path.GetFileName(files[i])), files[i]);
                 }
@@ -20260,7 +20253,11 @@ namespace SharpOcarina
 
         private void dEBUGTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR", "#endif");
+            //ElfSymbols.Start(rom64.getPath() + @"\rom\system\kaleido\0x01-Player\Player.o");
+
+
+            //FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
+            //AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR", "#endif");
         }
 
         private void TitlecardTextbox_Leave(object sender, EventArgs e)
@@ -21286,14 +21283,32 @@ namespace SharpOcarina
             PleaseWait pleasewait = new PleaseWait("https://github.com/z64dev/z64rom/releases/latest/download/z64rom.zip", tmppath + "z64rom.zip", tmppath, true);
             pleasewait.ShowDialog();
 
-            DeleteZ64romFile(rom64.getPath() + "/z64rom.exe");
-            DeleteZ64romFile(rom64.getPath() + "/tools/z64convert.exe");
+            Helpers.DeleteZ64romFile(rom64.getPath() + "/z64rom.exe");
+            Helpers.DeleteZ64romFile(rom64.getPath() + "/tools/z64convert.exe");
             File.Copy(tmppath + "/z64rom.exe", rom64.getPath() + "/z64rom.exe");
             File.Copy(tmppath + "/tools/z64convert.exe", rom64.getPath() + "/tools/z64convert.exe");
 
             Helpers.DeleteDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tempu\\"));
 
             MessageBox.Show("z64rom.exe and z64convert.exe updated!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void betterCrashDebuggerMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (actordatabase == null)
+            {
+                GenerateActorDatabase();
+                reloaddatabase = false;
+            }
+            //FaroresPlugin.BuildCrashDebuggerActors(rom64.getPath(), Database);
+            //return;
+
+            string result = FaroresPlugin.BuildFunctionNamesArray(rom64.getPath(), Database); 
+            if (result.Contains("Done!"))
+            {
+                MessageBox.Show(result, "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
 
