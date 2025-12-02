@@ -50,6 +50,7 @@
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(496, 23);
             this.ProgressBar.TabIndex = 1;
+            this.ProgressBar.UseWaitCursor = true;
             // 
             // PleaseWait
             // 
@@ -60,6 +61,8 @@
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.DownloadLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximumSize = new System.Drawing.Size(536, 107);
+            this.MinimumSize = new System.Drawing.Size(536, 107);
             this.Name = "PleaseWait";
             this.Text = "Please wait...";
             this.TopMost = true;

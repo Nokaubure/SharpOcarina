@@ -173,6 +173,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximumSize = new System.Drawing.Size(278, 208);
+            this.MinimumSize = new System.Drawing.Size(278, 208);
             this.Name = "PickCustomActorID";
             this.Text = "Pick Actor ID";
             ((System.ComponentModel.ISupportInitialize)(this.ActorIDNumeric)).EndInit();

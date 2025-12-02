@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Net;
+using System.Security.Cryptography;
+using System.Collections;
 
 namespace SharpOcarina
 {
@@ -609,6 +611,23 @@ namespace SharpOcarina
             if (File.Exists(newfile))
                 newfile = trashdir + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + DateTime.Now.Ticks.ToString() + Path.GetExtension(file);
             File.Move(file, newfile);
+        }
+
+        public static bool SameFileHash(string file1, string file2)
+        {
+            if (!File.Exists(file1) || !File.Exists(file2)) return false;
+            var sha = SHA256.Create();
+
+            var fs1 = File.OpenRead(file1);
+            var fs2 = File.OpenRead(file2);
+
+            var hash1 = sha.ComputeHash(fs1);
+            var hash2 = sha.ComputeHash(fs2);
+
+            fs1.Close();
+            fs2.Close();
+
+            return StructuralComparisons.StructuralEqualityComparer.Equals(hash1, hash2);
         }
     }
 

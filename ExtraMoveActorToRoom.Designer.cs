@@ -101,6 +101,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(318, 143);
+            this.MinimumSize = new System.Drawing.Size(318, 143);
             this.Name = "MoveActorToRoom";
             this.Text = "Move Actor to Room";
             ((System.ComponentModel.ISupportInitialize)(this.RoomID)).EndInit();

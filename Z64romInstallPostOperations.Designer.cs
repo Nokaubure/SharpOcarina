@@ -211,6 +211,9 @@
             this.Controls.Add(this.RemoveLogoCheckBox);
             this.Controls.Add(this.RemoveAllScenesCheckBox);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(323, 346);
+            this.MinimumSize = new System.Drawing.Size(323, 346);
             this.Name = "Z64romInstallPostOperations";
             this.Text = "Post Installation Options";
             this.ResumeLayout(false);

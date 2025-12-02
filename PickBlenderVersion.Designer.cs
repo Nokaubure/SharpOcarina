@@ -81,6 +81,8 @@
             this.Controls.Add(this.BlenderVersionComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
+            this.MaximumSize = new System.Drawing.Size(300, 246);
+            this.MinimumSize = new System.Drawing.Size(300, 246);
             this.Name = "PickBlenderVersion";
             this.Text = "Pick Blender Version";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PickBlenderVersion_FormClosed);

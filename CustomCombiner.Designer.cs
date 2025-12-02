@@ -1091,6 +1091,9 @@
             this.Controls.Add(this.DefaultButton);
             this.Controls.Add(this.PreviewCheckbox);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(568, 328);
+            this.MinimumSize = new System.Drawing.Size(568, 328);
             this.Name = "CustomCombiner";
             this.Text = "Custom combiner";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CustomCombiner_FormClosed);

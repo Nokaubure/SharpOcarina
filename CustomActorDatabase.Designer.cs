@@ -48,6 +48,7 @@
             // 
             // InstallButton
             // 
+            this.InstallButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.InstallButton.Enabled = false;
             this.InstallButton.Location = new System.Drawing.Point(49, 499);
             this.InstallButton.Name = "InstallButton";
@@ -59,6 +60,7 @@
             // 
             // CloseButton
             // 
+            this.CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CloseButton.Location = new System.Drawing.Point(220, 499);
             this.CloseButton.Name = "CloseButton";
             this.CloseButton.Size = new System.Drawing.Size(75, 23);
@@ -85,6 +87,8 @@
             // 
             // ActorView
             // 
+            this.ActorView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.ActorView.HideSelection = false;
             this.ActorView.Location = new System.Drawing.Point(12, 49);
             this.ActorView.Name = "ActorView";
@@ -105,6 +109,8 @@
             // 
             // ActorDescription
             // 
+            this.ActorDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.ActorDescription.Location = new System.Drawing.Point(351, 183);
             this.ActorDescription.Name = "ActorDescription";
             this.ActorDescription.ReadOnly = true;
@@ -207,7 +213,9 @@
             this.Controls.Add(this.FilterTextBox);
             this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.InstallButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximumSize = new System.Drawing.Size(727, 2570);
+            this.MinimumSize = new System.Drawing.Size(727, 570);
             this.Name = "CustomActorDatabase";
             this.Text = "Custom Actor Database";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CustomActorDatabase_FormClosed);

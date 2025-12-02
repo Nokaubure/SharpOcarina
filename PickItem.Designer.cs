@@ -69,6 +69,9 @@
             this.Controls.Add(this.PickItemComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(300, 139);
+            this.MinimumSize = new System.Drawing.Size(300, 139);
             this.Name = "PickItem";
             this.Text = "Pick Item ID";
             this.ResumeLayout(false);

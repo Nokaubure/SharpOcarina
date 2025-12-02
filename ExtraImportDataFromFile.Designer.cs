@@ -392,6 +392,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(298, 494);
+            this.MinimumSize = new System.Drawing.Size(298, 494);
             this.Name = "ImportDataFromFile";
             this.Text = "Import data from";
             ((System.ComponentModel.ISupportInitialize)(this.RoomID)).EndInit();

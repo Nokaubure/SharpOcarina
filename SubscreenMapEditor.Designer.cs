@@ -767,6 +767,8 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximumSize = new System.Drawing.Size(912, 626);
+            this.MinimumSize = new System.Drawing.Size(912, 626);
             this.Name = "SubscreenMapEditor";
             this.Text = "Subscreen Map Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SubscreenMapEditor_FormClosed);

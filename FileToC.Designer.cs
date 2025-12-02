@@ -105,6 +105,9 @@
             // 
             // TextureBox
             // 
+            this.TextureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TextureBox.BackColor = System.Drawing.Color.Aqua;
             this.TextureBox.Location = new System.Drawing.Point(329, 61);
             this.TextureBox.Name = "TextureBox";
@@ -254,6 +257,8 @@
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.SourceButton);
             this.Controls.Add(this.SourceFilename);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(622, 372);
             this.Name = "FileToC";
             this.Text = "Convert File to C array";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FileToC_FormClosed);

@@ -46,8 +46,8 @@
             this.XPos = new System.Windows.Forms.NumericUpDown();
             this.YPos = new System.Windows.Forms.NumericUpDown();
             this.GenerateGroupBox = new System.Windows.Forms.GroupBox();
-            this.NewSaveButton = new System.Windows.Forms.Button();
             this.EnableGenerator = new System.Windows.Forms.CheckBox();
+            this.NewSaveButton = new System.Windows.Forms.Button();
             this.RemoveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TextureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FontSize)).BeginInit();
@@ -304,16 +304,6 @@
             this.GenerateGroupBox.TabIndex = 18;
             this.GenerateGroupBox.TabStop = false;
             // 
-            // NewSaveButton
-            // 
-            this.NewSaveButton.Location = new System.Drawing.Point(61, 275);
-            this.NewSaveButton.Name = "NewSaveButton";
-            this.NewSaveButton.Size = new System.Drawing.Size(75, 23);
-            this.NewSaveButton.TabIndex = 19;
-            this.NewSaveButton.Text = "Save";
-            this.NewSaveButton.UseVisualStyleBackColor = true;
-            this.NewSaveButton.Click += new System.EventHandler(this.NewSaveButton_Click);
-            // 
             // EnableGenerator
             // 
             this.EnableGenerator.AutoSize = true;
@@ -324,6 +314,16 @@
             this.EnableGenerator.Text = "Enable Title Card Generator";
             this.EnableGenerator.UseVisualStyleBackColor = true;
             this.EnableGenerator.CheckedChanged += new System.EventHandler(this.EnableGenerator_CheckedChanged);
+            // 
+            // NewSaveButton
+            // 
+            this.NewSaveButton.Location = new System.Drawing.Point(61, 275);
+            this.NewSaveButton.Name = "NewSaveButton";
+            this.NewSaveButton.Size = new System.Drawing.Size(75, 23);
+            this.NewSaveButton.TabIndex = 19;
+            this.NewSaveButton.Text = "Save";
+            this.NewSaveButton.UseVisualStyleBackColor = true;
+            this.NewSaveButton.Click += new System.EventHandler(this.NewSaveButton_Click);
             // 
             // RemoveButton
             // 
@@ -351,6 +351,8 @@
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SaveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(373, 347);
+            this.MinimumSize = new System.Drawing.Size(373, 347);
             this.Name = "TitleCardReplacer";
             this.Text = "Title Card Replacer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TitleCardReplacer_FormClosed);

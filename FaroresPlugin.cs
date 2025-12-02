@@ -344,7 +344,7 @@ namespace SharpOcarina
                 return "Done! DMA files added: " + DMAfiles;
             }
         }
-        public static string BuildFunctionNamesArray(string basedir, List<DatabaseActor> Database)
+        public static string BuildFunctionNamesArray(string basedir)
         {
             Stopwatch stopwatch = new Stopwatch();
             long curtime = 0;
@@ -360,14 +360,14 @@ namespace SharpOcarina
 
            
 
-            LibUserNames = ElfSymbols.Start(rom64.getPath() + @"\rom\lib_user\z_lib_user.elf", 0x80700000);
+            LibUserNames = ElfSymbols.Start(basedir + @"\rom\lib_user\z_lib_user.elf", 0x80700000);
             //LibUserNames.RemoveAll(x => x.StartAddress < 0x80700000);
-            //string[] files = Directory.GetFiles(rom64.getPath() + @"\rom\lib_user\", "*.o", SearchOption.AllDirectories);
+            //string[] files = Directory.GetFiles(basedir + @"\rom\lib_user\", "*.o", SearchOption.AllDirectories);
             //files.ForEach(x => LibUserNames.AddRange(ElfSymbols.Start(x)));
             //LibUserNames.ForEach(x => { x.StartAddress += 0x80700000; x.EndAddress += 0x80700000; });
 
-            DebugConsole.WriteLine("z_lib_user.elf: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
-            curtime = stopwatch.ElapsedMilliseconds;
+            //DebugConsole.WriteLine("z_lib_user.elf: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
+            //curtime = stopwatch.ElapsedMilliseconds;
 
             List<byte> GlobalNamesBin = File.ReadAllBytes( Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/DBGMQ_CrashDebugger.bin")).ToList();
             for(int i = 0; i < GlobalNamesBin.Count-40; i+= 40)
@@ -383,24 +383,24 @@ namespace SharpOcarina
                 
 
             }
-            DebugConsole.WriteLine("GlobalNamesBin files: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
-            curtime = stopwatch.ElapsedMilliseconds;
+            //DebugConsole.WriteLine("GlobalNamesBin files: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
+            //curtime = stopwatch.ElapsedMilliseconds;
             GlobalNames.AddRange(LibUserNames);
             //GlobalNames.Sort((x, y) => x.StartAddress.CompareTo(y.StartAddress));
 
             /*
-            files = Directory.GetFiles(rom64.getPath() + @"\rom\system\kaleido\0x01-Player\","*.o",SearchOption.AllDirectories);
+            files = Directory.GetFiles(basedir + @"\rom\system\kaleido\0x01-Player\","*.o",SearchOption.AllDirectories);
             files.ForEach(x => PlayerNames.AddRange(ElfSymbols.Start(x)));
 
-            files = Directory.GetFiles(rom64.getPath() + @"\rom\system\kaleido\0x00-StartMenu\", "*.o", SearchOption.AllDirectories);
+            files = Directory.GetFiles(basedir + @"\rom\system\kaleido\0x00-StartMenu\", "*.o", SearchOption.AllDirectories);
             files.ForEach(x => PauseNames.AddRange(ElfSymbols.Start(x)));*/
 
-            PlayerNames = ElfSymbols.Start(rom64.getPath() + @"\rom\system\kaleido\0x01-Player\file.elf", 0x80800000);
-            PauseNames = ElfSymbols.Start(rom64.getPath() + @"\rom\system\kaleido\0x00-StartMenu\file.elf", 0x80800000);
+            PlayerNames = ElfSymbols.Start(basedir + @"\rom\system\kaleido\0x01-Player\file.elf", 0x80800000);
+            PauseNames = ElfSymbols.Start(basedir + @"\rom\system\kaleido\0x00-StartMenu\file.elf", 0x80800000);
             PlayerNames.ForEach(x => { x.StartAddress -= 0x80800000; x.EndAddress -= 0x80800000; });
             PauseNames.ForEach(x => { x.StartAddress -= 0x80800000; x.EndAddress -= 0x80800000; });
-            DebugConsole.WriteLine("Elf symbols: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
-            curtime = stopwatch.ElapsedMilliseconds;
+            //DebugConsole.WriteLine("Elf symbols: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
+            //curtime = stopwatch.ElapsedMilliseconds;
 
 
             List<byte> ActorNamesBin = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files/DBGMQ_CrashDebuggerActors.bin")).ToList();
@@ -416,7 +416,7 @@ namespace SharpOcarina
                 {
                     uint tmp = Helpers.Read32(ActorNamesBin, y);
                     if (tmp == 0xFFFFFFFF) break;
-                    Helpers.Append32(ref ActorNamesBin, tmp);
+                    Helpers.Append32(ref actorfuncs, tmp);
                 }
                 ActorData.Add(actorID, actorfuncs);
             }
@@ -476,11 +476,18 @@ namespace SharpOcarina
             }
             
 
-            string DMAfilepath = rom64.getPath() + "/rom/FunctionNames.bin";
-            if (File.Exists(DMAfilepath))
-                File.Delete(DMAfilepath);
-            File.WriteAllBytes(DMAfilepath, data.ToArray());
+            string DMAfilepath = basedir + "/rom/FunctionNames.bin";
+            string DMAfilepath2 = basedir + "/rom/FunctionNames_temp.bin";
+            File.WriteAllBytes(DMAfilepath2, data.ToArray());
+            if (!Helpers.SameFileHash(DMAfilepath, DMAfilepath2))
+            {
+                if (File.Exists(DMAfilepath))
+                    File.Delete(DMAfilepath);
 
+                File.Move(DMAfilepath2, DMAfilepath);
+            }
+            else
+                File.Delete(DMAfilepath2);
             /*
             for(int i = 1; i < FunctionNames.Count; i++)
             {
@@ -527,10 +534,32 @@ namespace SharpOcarina
                            }
                        }*/
 
+
+            string newfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\CrashScreen.c");
+            string oldfile = basedir + @"\src\lib_user\library\CrashScreen.c";
+            string tmpfile = basedir + @"\src\lib_user\library\CrashScreen_2.c";
+            if (File.Exists(tmpfile))
+                File.Delete(tmpfile);
+
+            File.Copy(newfile, tmpfile);
+
             int maxKey = AddDMAEntry(basedir, 0x1F, "rom/FunctionNames.bin", false);
 
-            Helpers.ReplaceLine("#define FUNCTIONNAMES_DMAID", "#define FUNCTIONNAMES_DMAID 0x" + maxKey.ToString("X2"), rom64.getPath() + "/src/lib_user/library/CrashScreen.c");
-            Helpers.ReplaceLine("#define FUNCTIONNAMES_MAXACTORS", "#define FUNCTIONNAMES_MAXACTORS 0x" + maxactorID.ToString("X4"), rom64.getPath() + "/src/lib_user/library/CrashScreen.c");
+            Helpers.ReplaceLine("#define FUNCTIONNAMES_DMAID", "#define FUNCTIONNAMES_DMAID 0x" + maxKey.ToString("X2"), tmpfile);
+            Helpers.ReplaceLine("#define FUNCTIONNAMES_MAXACTORS", "#define FUNCTIONNAMES_MAXACTORS 0x" + maxactorID.ToString("X4"), tmpfile);
+
+
+            if (!Helpers.SameFileHash(oldfile, tmpfile))
+            {
+                if (File.Exists(oldfile))
+                    File.Delete(oldfile);
+
+                File.Move(tmpfile, oldfile);
+            }
+            else
+                File.Delete(tmpfile);
+            DebugConsole.WriteLine("Time elapsed: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
+
             stopwatch.Stop();
 
             return "Done!";

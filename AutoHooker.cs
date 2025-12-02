@@ -107,7 +107,15 @@ namespace SharpOcarina
 
 
             }
-        
+
+            /*
+            var vanillafunctionSource = new AutoCompleteStringCollection();
+            vanillafunctionSource.AddRange(VanillaFunctions.Select(h => h.Name).ToArray());
+            FunctionNameTextbox.AutoCompleteCustomSource = vanillafunctionSource;
+            */
+            FunctionNameTextbox.SetAutoCompleteItems(VanillaFunctions.Select(h => h.Name));
+
+
 
             RefreshLibUser();
 
@@ -297,7 +305,7 @@ namespace SharpOcarina
             int index = FunctionHooks.FindIndex(x => x.Name == functionname);
             if (index != -1)
             {
-                if (warning) MessageBox.Show("This function is already hooked in file: " + FunctionHooks[index].Name, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if (warning) MessageBox.Show("This function is already hooked in file: " + FunctionHooks[index].FileName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 DebugConsole.WriteLine("Function " + functionname + " is already hooked!");
                 return "";
             }
@@ -345,20 +353,32 @@ namespace SharpOcarina
                 bool inStruct = false;
                 bool inVariable = false;
                 bool inFunction = false;
+                bool inPredeclaration = false;
                 int block = 0;
                 foreach (CFile file in Files)
                 {
-                    string[] lines = File.ReadAllLines(file.FileName);
+                    string text = File.ReadAllText(file.FileName);
+                    text = Regex.Replace(text, @"(?m)^((?:(?:(?!//).)*)),\r?\n", "$1@#?");
+                    text = Regex.Replace(text, @"(?m)^((?:(?:(?!//).)*))(?<!\*)\\\r?\n", "$1@#!");
+                    var lineslist = new List<string>();
+                    using (var reader = new StringReader(text))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                            lineslist.Add(line);
+                    }
+                    string[] lines = lineslist.ToArray();
                     inMultiLineComment = false;
                     inStruct = false;
                     inVariable = false;
                     inFunction = false;
+                    inPredeclaration = false;
                     block = 0;
                     int cline = 1;
                     List<string> references = new List<string>();
                     foreach (string rawline in lines)
                     {
-                        if (warning) DebugConsole.WriteLine($"{cline} - inVariable: {inVariable}, inFunction: {inFunction}, inStruct: {inStruct} ,inMultiLineComment: {inMultiLineComment}, block {block}");
+                        if (warning) DebugConsole.WriteLine($"{cline} - inVariable: {inVariable}, inFunction: {inFunction}, inStruct: {inStruct} ,inMultiLineComment: {inMultiLineComment}, inPredeclaration: {inPredeclaration}, block {block}");
                         cline++;
                         string line = rawline.Trim();
                         if (line.StartsWith("/*"))
@@ -466,7 +486,7 @@ namespace SharpOcarina
                             inStruct = true;
                             file.structs.Add(new CData("", rawline));
                         }
-                        else if (line.Contains(");") && line.SubstringTill(0,'(').Contains(" "))
+                        else if (line.Contains(");") && line.SubstringTill(0, '(').Contains(" ") && !line.Contains("=")) 
                         {
                             string predeclaration = line.Substring(line.IndexOf(' ') + 1, line.IndexOf('(') - line.IndexOf(' ') - 1);
                             while (predeclaration.Contains(' '))
@@ -513,6 +533,10 @@ namespace SharpOcarina
                 {
                     foreach (CData include in sourcelists[i])
                     {
+                        if (i == 5 && include.name.Contains("BgCheck_CheckWallImpl"))
+                        {
+                            int a = 0;
+                        }
                         if (i != 5 || (i == 5 && include.name == functionname))
                             if (targetlists[i].FindIndex(x => x.name == include.name) == -1)
                             {
@@ -531,14 +555,14 @@ namespace SharpOcarina
                 {
 #if !DEBUG
 
-                    MessageBox.Show("An error occured and the hook has not been set! " + functionname, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("An error occured and the hook has not been set! " + functionname + " in " + vanillafile.FileName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 #endif
                     DebugConsole.WriteLine(functionname + $" has NOT been set! inVariable: {inVariable}, inFunction: {inFunction}, inStruct: {inStruct} ,inMultiLineComment: {inMultiLineComment}, block {block}");
                 }
                 else
                 {
                     DebugConsole.WriteLine(functionname + " +");
-                    File.WriteAllText(targetfile.FileName, output);
+                    File.WriteAllText(targetfile.FileName, output.Replace("@#?",",\n").Replace("@#!", "\\\n"));
                     return targetfile.FileName;
                 }
                 return "";
@@ -556,19 +580,18 @@ namespace SharpOcarina
 
         private void OpenFile(string FileName = "")
         {
-            if (FunctionHooks.Count != 0)
+           
+            if (FileName == "" && FunctionHooks.Count != 0)
             {
-                if (FileName == "")
-                {
-                    int index = HookGrid.CurrentRow.Index;
-                    if (index > -1 && index < FunctionHooks.Count)
-                        System.Diagnostics.Process.Start(FunctionHooks[index].FileName);
-                }
-                else
-                {
-                    System.Diagnostics.Process.Start(FileName);
-                }
+                int index = HookGrid.CurrentRow.Index;
+                if (index > -1 && index < FunctionHooks.Count)
+                    System.Diagnostics.Process.Start(FunctionHooks[index].FileName);
             }
+            else if(FileName != "")
+            {
+                System.Diagnostics.Process.Start(FileName);
+            }
+            
         }
 
         private void HookGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -1038,6 +1061,19 @@ namespace SharpOcarina
                 if (MessageBox.Show("Done! created directory in " + destination + "\nOpen directory in explorer?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     Process.Start(destination);
+                }
+            }
+        }
+
+        private void OpenActorDirectoryButton_Click(object sender, EventArgs e)
+        {
+            if (VanillaActorList.SelectedIndex != -1)
+            {
+                HookActor target = (VanillaActorList.SelectedItem as HookActor);
+                string z64ootpath = rom64.getPath() + "\\z64oot\\src\\overlays\\actors\\ovl_" + target.DebugName + "\\";
+                if (Directory.Exists(z64ootpath))
+                {
+                    Process.Start(z64ootpath);
                 }
             }
         }

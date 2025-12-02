@@ -581,6 +581,8 @@ namespace SharpOcarina
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximumSize = new System.Drawing.Size(523, 435);
+            this.MinimumSize = new System.Drawing.Size(523, 435);
             this.Name = "RandomDropTableEditor";
             this.Text = "Random Drop Table Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RandomDropTableEditor_FormClosed);

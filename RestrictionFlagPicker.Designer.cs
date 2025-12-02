@@ -203,6 +203,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Restriction0);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(300, 210);
+            this.MinimumSize = new System.Drawing.Size(300, 210);
             this.Name = "RestrictionFlagPicker";
             this.Text = "Set Restriction Flags";
             this.ResumeLayout(false);

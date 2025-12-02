@@ -153,6 +153,7 @@ namespace SharpOcarina
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DebugRenameStructsByXMLMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nokaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patchROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,6 +185,7 @@ namespace SharpOcarina
             this.addLinkAnimationsz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertAllincpngFilesInTheProjectToBinaryz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createDMAFilesFromFoldersz64romToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.betterCrashDebuggerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.MultiRoomCollisionCheckBox = new System.Windows.Forms.CheckBox();
@@ -868,7 +870,6 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.betterCrashDebuggerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1872,6 +1873,7 @@ namespace SharpOcarina
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem,
+            this.DebugRenameStructsByXMLMenuItem3,
             this.dEBUGTestToolStripMenuItem});
             this.extraToolStripMenuItem.Enabled = false;
             this.extraToolStripMenuItem.Name = "extraToolStripMenuItem";
@@ -2176,6 +2178,14 @@ namespace SharpOcarina
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Visible = false;
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Click += new System.EventHandler(this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem_Click);
             // 
+            // DebugRenameStructsByXMLMenuItem3
+            // 
+            this.DebugRenameStructsByXMLMenuItem3.Name = "DebugRenameStructsByXMLMenuItem3";
+            this.DebugRenameStructsByXMLMenuItem3.Size = new System.Drawing.Size(450, 22);
+            this.DebugRenameStructsByXMLMenuItem3.Text = "[DEBUG] Rename structs by XML (z64rom)";
+            this.DebugRenameStructsByXMLMenuItem3.Visible = false;
+            this.DebugRenameStructsByXMLMenuItem3.Click += new System.EventHandler(this.DebugRenameStructsByXMLMenuItem3_Click);
+            // 
             // dEBUGTestToolStripMenuItem
             // 
             this.dEBUGTestToolStripMenuItem.Name = "dEBUGTestToolStripMenuItem";
@@ -2435,6 +2445,14 @@ namespace SharpOcarina
             this.createDMAFilesFromFoldersz64romToolStripMenuItem.Text = "Create DMA files from folders (z64rom)";
             this.createDMAFilesFromFoldersz64romToolStripMenuItem.Visible = false;
             this.createDMAFilesFromFoldersz64romToolStripMenuItem.Click += new System.EventHandler(this.createDMAFilesFromFoldersz64romToolStripMenuItem_Click);
+            // 
+            // betterCrashDebuggerMenuItem
+            // 
+            this.betterCrashDebuggerMenuItem.Name = "betterCrashDebuggerMenuItem";
+            this.betterCrashDebuggerMenuItem.Size = new System.Drawing.Size(314, 22);
+            this.betterCrashDebuggerMenuItem.Text = "Better Crash Debugger (z64rom)";
+            this.betterCrashDebuggerMenuItem.Visible = false;
+            this.betterCrashDebuggerMenuItem.Click += new System.EventHandler(this.betterCrashDebuggerMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -5099,6 +5117,8 @@ namespace SharpOcarina
             this.ReverseLightCheckBox.Size = new System.Drawing.Size(103, 17);
             this.ReverseLightCheckBox.TabIndex = 24;
             this.ReverseLightCheckBox.Text = "Use vertex color";
+            this.EnvironmentControlTooltip.SetToolTip(this.ReverseLightCheckBox, "Disable Lights A/B in Scene Env if you want the entire Scene to use vertex colors" +
+        " instead of enabling this on all groups!");
             this.ReverseLightCheckBox.UseVisualStyleBackColor = true;
             this.ReverseLightCheckBox.CheckedChanged += new System.EventHandler(this.ReverseLightCheckBox_CheckedChanged);
             // 
@@ -13139,14 +13159,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // betterCrashDebuggerMenuItem
-            // 
-            this.betterCrashDebuggerMenuItem.Name = "betterCrashDebuggerMenuItem";
-            this.betterCrashDebuggerMenuItem.Size = new System.Drawing.Size(314, 22);
-            this.betterCrashDebuggerMenuItem.Text = "Better Crash Debugger (z64rom)";
-            this.betterCrashDebuggerMenuItem.Visible = false;
-            this.betterCrashDebuggerMenuItem.Click += new System.EventHandler(this.betterCrashDebuggerMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13171,7 +13183,7 @@ namespace SharpOcarina
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(1094, 568);
+            this.MinimumSize = new System.Drawing.Size(1177, 798);
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -14319,6 +14331,7 @@ namespace SharpOcarina
         private ToolStripMenuItem installUpdateBlenderPluginsToolStripMenuItem;
         private ToolStripMenuItem updateExeFilesToolStripMenuItem;
         private ToolStripMenuItem betterCrashDebuggerMenuItem;
+        private ToolStripMenuItem DebugRenameStructsByXMLMenuItem3;
     }
     }
 

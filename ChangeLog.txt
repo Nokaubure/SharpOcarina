@@ -1,6 +1,30 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.64
+--------------
+
+- Added better crash debugger, installable on z64rom projects via Tools tab. Features:
+	- Now displays the stack trace on first page
+	- Displays the function names of: Code (Global), Hooks, Actors, Link, Pause menu
+	- Can resume the game after an ASSERT
+	- Removed unhelpful pages
+Note: You need to click it in tools tab to update the function names database everytime. Enable "Options -> Run SO additional tasks when building" 
+to do this automatically whenever you run the game via SO.
+
+- Auto-hook window: 
+	- Added button to open vanilla actor folder and renamed some buttons
+	- Added auto-completion on the hook function box
+	- Window can now be resized properly
+	- Fixed an issue where adding a hook to an existing would also write again all function declarations and structures
+	- Fixed an issue where trying to hook an existing function would not report its filename correctly
+	- Fixed an issue where multiline includes wouldnt behave correctly
+
+- Adjusted the scale of some windows when maximizing them
+
+- Fixed an object  issue where actors with skeletons couldnt make use of the ScaleArray feature
+
+--------------
 ---1.63
 --------------
 

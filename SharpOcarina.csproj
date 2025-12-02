@@ -115,6 +115,9 @@
     <Reference Include="windowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoCompleteTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ExtraImportDataFromFile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,7 +159,6 @@
       <DependentUpon>AutoHooker.cs</DependentUpon>
     </Compile>
     <Compile Include="FaroresPlugin.cs" />
-    <Compile Include="XML\MM\Class1.cs" />
     <Compile Include="ZobjCopyTool.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1667,6 +1669,9 @@
     <Content Include="Files\BgCheck.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\CrashScreen.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Cutscene.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1713,9 +1718,6 @@
     <None Include="Resources\titlescreenOOT.bin" />
     <None Include="XML\FOT-ChiaroStd-BWin7.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="XML\MM\DBGMQ_CrashDebugger.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

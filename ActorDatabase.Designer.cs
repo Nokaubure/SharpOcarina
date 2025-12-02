@@ -44,6 +44,7 @@
             // 
             // SetActorButton
             // 
+            this.SetActorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SetActorButton.Enabled = false;
             this.SetActorButton.Location = new System.Drawing.Point(49, 629);
             this.SetActorButton.Name = "SetActorButton";
@@ -55,6 +56,7 @@
             // 
             // CancelButton
             // 
+            this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CancelButton.Location = new System.Drawing.Point(220, 629);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
@@ -82,6 +84,8 @@
             // 
             // ActorView
             // 
+            this.ActorView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.ActorView.HideSelection = false;
             this.ActorView.Location = new System.Drawing.Point(12, 49);
             this.ActorView.Name = "ActorView";
@@ -102,6 +106,7 @@
             // 
             // NotesTextBox
             // 
+            this.NotesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.NotesTextBox.Location = new System.Drawing.Point(12, 417);
             this.NotesTextBox.Name = "NotesTextBox";
             this.NotesTextBox.ReadOnly = true;
@@ -137,6 +142,7 @@
             // 
             // AutoSetCheckbox
             // 
+            this.AutoSetCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AutoSetCheckbox.AutoSize = true;
             this.AutoSetCheckbox.Location = new System.Drawing.Point(49, 606);
             this.AutoSetCheckbox.Name = "AutoSetCheckbox";
@@ -148,6 +154,7 @@
             // 
             // DebugNamesCheckbox
             // 
+            this.DebugNamesCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.DebugNamesCheckbox.AutoSize = true;
             this.DebugNamesCheckbox.Location = new System.Drawing.Point(175, 606);
             this.DebugNamesCheckbox.Name = "DebugNamesCheckbox";
@@ -172,7 +179,9 @@
             this.Controls.Add(this.FilterTextBox);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SetActorButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximumSize = new System.Drawing.Size(373, 2080);
+            this.MinimumSize = new System.Drawing.Size(373, 703);
             this.Name = "ActorDatabase";
             this.Text = "Actor Database";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ActorDatabase_FormClosed);

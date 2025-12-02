@@ -33,15 +33,17 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.OpenFileButton = new System.Windows.Forms.Button();
+            this.ViewFileButton = new System.Windows.Forms.Button();
+            this.ExtraVanillaActorGoButton = new System.Windows.Forms.Button();
+            this.OpenActorFileButton = new System.Windows.Forms.Button();
             this.RefreshListButton = new System.Windows.Forms.Button();
             this.HookButton = new System.Windows.Forms.Button();
-            this.FunctionNameTextbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.FileNameOriginalRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.FileNameCustomRadioButton = new System.Windows.Forms.RadioButton();
             this.FileNameFunctionRadioButton = new System.Windows.Forms.RadioButton();
-            this.OpenFileButton = new System.Windows.Forms.Button();
             this.HookGrid = new System.Windows.Forms.DataGridView();
             this.Function = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,25 +51,24 @@
             this.CustomFileName = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Hooks = new System.Windows.Forms.TabPage();
-            this.ViewFileButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.Extra = new System.Windows.Forms.TabPage();
+            this.CreateActorButton = new System.Windows.Forms.Button();
+            this.CreateActorTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.VanillaActorListFilter = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.VanillaActorSort = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.ExtraConsole = new System.Windows.Forms.TextBox();
-            this.ExtraVanillaActorGoButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.VanillaActorList = new System.Windows.Forms.ListBox();
             this.ExtraGoButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.CreateActorTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.CreateActorButton = new System.Windows.Forms.Button();
+            this.FunctionNameTextbox = new SharpOcarina.AutoCompleteTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HookGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -79,8 +80,54 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // OpenFileButton
+            // 
+            this.OpenFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.OpenFileButton.Location = new System.Drawing.Point(211, 467);
+            this.OpenFileButton.Name = "OpenFileButton";
+            this.OpenFileButton.Size = new System.Drawing.Size(95, 23);
+            this.OpenFileButton.TabIndex = 17;
+            this.OpenFileButton.Text = "Open Row File";
+            this.toolTip1.SetToolTip(this.OpenFileButton, "Open selected row file");
+            this.OpenFileButton.UseVisualStyleBackColor = true;
+            this.OpenFileButton.Click += new System.EventHandler(this.OpenFileButton_Click);
+            // 
+            // ViewFileButton
+            // 
+            this.ViewFileButton.Location = new System.Drawing.Point(200, 64);
+            this.ViewFileButton.Name = "ViewFileButton";
+            this.ViewFileButton.Size = new System.Drawing.Size(106, 23);
+            this.ViewFileButton.TabIndex = 21;
+            this.ViewFileButton.Text = "Open Function File";
+            this.toolTip1.SetToolTip(this.ViewFileButton, "Open file where this function is located");
+            this.ViewFileButton.UseVisualStyleBackColor = true;
+            this.ViewFileButton.Click += new System.EventHandler(this.ViewFileButton_Click);
+            // 
+            // ExtraVanillaActorGoButton
+            // 
+            this.ExtraVanillaActorGoButton.Location = new System.Drawing.Point(222, 359);
+            this.ExtraVanillaActorGoButton.Name = "ExtraVanillaActorGoButton";
+            this.ExtraVanillaActorGoButton.Size = new System.Drawing.Size(83, 23);
+            this.ExtraVanillaActorGoButton.TabIndex = 20;
+            this.ExtraVanillaActorGoButton.Text = "Copy&&Edit";
+            this.toolTip1.SetToolTip(this.ExtraVanillaActorGoButton, "Copies the vanilla actor to your project and makes it editable");
+            this.ExtraVanillaActorGoButton.UseVisualStyleBackColor = true;
+            this.ExtraVanillaActorGoButton.Click += new System.EventHandler(this.ExtraVanillaActorGoButton_Click);
+            // 
+            // OpenActorFileButton
+            // 
+            this.OpenActorFileButton.Location = new System.Drawing.Point(107, 359);
+            this.OpenActorFileButton.Name = "OpenActorFileButton";
+            this.OpenActorFileButton.Size = new System.Drawing.Size(109, 23);
+            this.OpenActorFileButton.TabIndex = 30;
+            this.OpenActorFileButton.Text = "Open Actor Folder";
+            this.toolTip1.SetToolTip(this.OpenActorFileButton, "Open the vanilla actor folder");
+            this.OpenActorFileButton.UseVisualStyleBackColor = true;
+            this.OpenActorFileButton.Click += new System.EventHandler(this.OpenActorDirectoryButton_Click);
+            // 
             // RefreshListButton
             // 
+            this.RefreshListButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RefreshListButton.Location = new System.Drawing.Point(424, 467);
             this.RefreshListButton.Name = "RefreshListButton";
             this.RefreshListButton.Size = new System.Drawing.Size(83, 23);
@@ -98,13 +145,6 @@
             this.HookButton.Text = "Hook!";
             this.HookButton.UseVisualStyleBackColor = true;
             this.HookButton.Click += new System.EventHandler(this.HookButton_Click);
-            // 
-            // FunctionNameTextbox
-            // 
-            this.FunctionNameTextbox.Location = new System.Drawing.Point(8, 26);
-            this.FunctionNameTextbox.Name = "FunctionNameTextbox";
-            this.FunctionNameTextbox.Size = new System.Drawing.Size(332, 20);
-            this.FunctionNameTextbox.TabIndex = 12;
             // 
             // label1
             // 
@@ -159,18 +199,10 @@
             this.FileNameFunctionRadioButton.Text = "Use function name as filename";
             this.FileNameFunctionRadioButton.UseVisualStyleBackColor = true;
             // 
-            // OpenFileButton
-            // 
-            this.OpenFileButton.Location = new System.Drawing.Point(211, 467);
-            this.OpenFileButton.Name = "OpenFileButton";
-            this.OpenFileButton.Size = new System.Drawing.Size(83, 23);
-            this.OpenFileButton.TabIndex = 17;
-            this.OpenFileButton.Text = "Open File";
-            this.OpenFileButton.UseVisualStyleBackColor = true;
-            this.OpenFileButton.Click += new System.EventHandler(this.OpenFileButton_Click);
-            // 
             // HookGrid
             // 
+            this.HookGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.HookGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
@@ -226,10 +258,11 @@
             // 
             this.tabControl1.Controls.Add(this.Hooks);
             this.tabControl1.Controls.Add(this.Extra);
-            this.tabControl1.Location = new System.Drawing.Point(0, 2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(739, 538);
+            this.tabControl1.Size = new System.Drawing.Size(737, 542);
             this.tabControl1.TabIndex = 20;
             // 
             // Hooks
@@ -247,34 +280,27 @@
             this.Hooks.Location = new System.Drawing.Point(4, 22);
             this.Hooks.Name = "Hooks";
             this.Hooks.Padding = new System.Windows.Forms.Padding(3);
-            this.Hooks.Size = new System.Drawing.Size(731, 512);
+            this.Hooks.Size = new System.Drawing.Size(729, 516);
             this.Hooks.TabIndex = 0;
             this.Hooks.Text = "Hooks";
             this.Hooks.UseVisualStyleBackColor = true;
             // 
-            // ViewFileButton
-            // 
-            this.ViewFileButton.Location = new System.Drawing.Point(211, 64);
-            this.ViewFileButton.Name = "ViewFileButton";
-            this.ViewFileButton.Size = new System.Drawing.Size(83, 23);
-            this.ViewFileButton.TabIndex = 21;
-            this.ViewFileButton.Text = "View File";
-            this.ViewFileButton.UseVisualStyleBackColor = true;
-            this.ViewFileButton.Click += new System.EventHandler(this.ViewFileButton_Click);
-            // 
             // button2
             // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.BackColor = System.Drawing.Color.White;
             this.button2.Location = new System.Drawing.Point(607, 467);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(83, 23);
             this.button2.TabIndex = 20;
-            this.button2.Text = "Test";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Text = "-";
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Extra
             // 
+            this.Extra.Controls.Add(this.OpenActorFileButton);
             this.Extra.Controls.Add(this.CreateActorButton);
             this.Extra.Controls.Add(this.CreateActorTextBox);
             this.Extra.Controls.Add(this.label7);
@@ -294,10 +320,46 @@
             this.Extra.Location = new System.Drawing.Point(4, 22);
             this.Extra.Name = "Extra";
             this.Extra.Padding = new System.Windows.Forms.Padding(3);
-            this.Extra.Size = new System.Drawing.Size(731, 512);
+            this.Extra.Size = new System.Drawing.Size(729, 516);
             this.Extra.TabIndex = 1;
             this.Extra.Text = "Actors&Extra";
             this.Extra.UseVisualStyleBackColor = true;
+            // 
+            // CreateActorButton
+            // 
+            this.CreateActorButton.Location = new System.Drawing.Point(98, 463);
+            this.CreateActorButton.Name = "CreateActorButton";
+            this.CreateActorButton.Size = new System.Drawing.Size(83, 23);
+            this.CreateActorButton.TabIndex = 29;
+            this.CreateActorButton.Text = "Create";
+            this.CreateActorButton.UseVisualStyleBackColor = true;
+            this.CreateActorButton.Click += new System.EventHandler(this.CreateActorButton_Click);
+            // 
+            // CreateActorTextBox
+            // 
+            this.CreateActorTextBox.Location = new System.Drawing.Point(48, 437);
+            this.CreateActorTextBox.Name = "CreateActorTextBox";
+            this.CreateActorTextBox.Size = new System.Drawing.Size(201, 20);
+            this.CreateActorTextBox.TabIndex = 28;
+            this.CreateActorTextBox.TextChanged += new System.EventHandler(this.CreateActorTextBox_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(10, 440);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.TabIndex = 27;
+            this.label7.Text = "Name:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 413);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(96, 13);
+            this.label6.TabIndex = 26;
+            this.label6.Text = "Create empty actor";
             // 
             // VanillaActorListFilter
             // 
@@ -349,16 +411,6 @@
             this.ExtraConsole.Size = new System.Drawing.Size(100, 408);
             this.ExtraConsole.TabIndex = 21;
             this.ExtraConsole.Visible = false;
-            // 
-            // ExtraVanillaActorGoButton
-            // 
-            this.ExtraVanillaActorGoButton.Location = new System.Drawing.Point(166, 359);
-            this.ExtraVanillaActorGoButton.Name = "ExtraVanillaActorGoButton";
-            this.ExtraVanillaActorGoButton.Size = new System.Drawing.Size(83, 23);
-            this.ExtraVanillaActorGoButton.TabIndex = 20;
-            this.ExtraVanillaActorGoButton.Text = "Copy";
-            this.ExtraVanillaActorGoButton.UseVisualStyleBackColor = true;
-            this.ExtraVanillaActorGoButton.Click += new System.EventHandler(this.ExtraVanillaActorGoButton_Click);
             // 
             // label4
             // 
@@ -418,41 +470,14 @@
             this.label2.Text = "Function/Structure Name:";
             this.label2.Visible = false;
             // 
-            // label6
+            // FunctionNameTextbox
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 413);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(96, 13);
-            this.label6.TabIndex = 26;
-            this.label6.Text = "Create empty actor";
-            // 
-            // CreateActorTextBox
-            // 
-            this.CreateActorTextBox.Location = new System.Drawing.Point(48, 437);
-            this.CreateActorTextBox.Name = "CreateActorTextBox";
-            this.CreateActorTextBox.Size = new System.Drawing.Size(201, 20);
-            this.CreateActorTextBox.TabIndex = 28;
-            this.CreateActorTextBox.TextChanged += new System.EventHandler(this.CreateActorTextBox_TextChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 440);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 13);
-            this.label7.TabIndex = 27;
-            this.label7.Text = "Name:";
-            // 
-            // CreateActorButton
-            // 
-            this.CreateActorButton.Location = new System.Drawing.Point(98, 463);
-            this.CreateActorButton.Name = "CreateActorButton";
-            this.CreateActorButton.Size = new System.Drawing.Size(83, 23);
-            this.CreateActorButton.TabIndex = 29;
-            this.CreateActorButton.Text = "Create";
-            this.CreateActorButton.UseVisualStyleBackColor = true;
-            this.CreateActorButton.Click += new System.EventHandler(this.CreateActorButton_Click);
+            this.FunctionNameTextbox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.FunctionNameTextbox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.FunctionNameTextbox.Location = new System.Drawing.Point(8, 26);
+            this.FunctionNameTextbox.Name = "FunctionNameTextbox";
+            this.FunctionNameTextbox.Size = new System.Drawing.Size(332, 20);
+            this.FunctionNameTextbox.TabIndex = 12;
             // 
             // AutoHookerForm
             // 
@@ -460,7 +485,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(737, 542);
             this.Controls.Add(this.tabControl1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(753, 581);
             this.Name = "AutoHookerForm";
             this.Text = "Auto-Hook&Actors";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AutoHookerForm_FormClosed);
@@ -482,7 +508,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button RefreshListButton;
         private System.Windows.Forms.Button HookButton;
-        private System.Windows.Forms.TextBox FunctionNameTextbox;
+        private AutoCompleteTextBox FunctionNameTextbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton FileNameOriginalRadioButton;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -515,5 +541,6 @@
         private System.Windows.Forms.TextBox CreateActorTextBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button OpenActorFileButton;
     }
 }

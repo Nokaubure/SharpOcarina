@@ -142,6 +142,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(318, 174);
+            this.MinimumSize = new System.Drawing.Size(318, 174);
             this.Name = "PushCutsceneCommands";
             this.Text = "Move Cutscene Commands";
             ((System.ComponentModel.ISupportInitialize)(this.StartFrameVal)).EndInit();

@@ -129,6 +129,8 @@
             // 
             // SourceListBox
             // 
+            this.SourceListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.SourceListBox.FormattingEnabled = true;
             this.SourceListBox.HorizontalExtent = 1;
             this.SourceListBox.HorizontalScrollbar = true;
@@ -142,6 +144,8 @@
             // 
             // TargetListBox
             // 
+            this.TargetListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.TargetListBox.FormattingEnabled = true;
             this.TargetListBox.HorizontalExtent = 1;
             this.TargetListBox.HorizontalScrollbar = true;
@@ -154,6 +158,7 @@
             // 
             // SaveButton
             // 
+            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SaveButton.Enabled = false;
             this.SaveButton.Location = new System.Drawing.Point(220, 612);
             this.SaveButton.Name = "SaveButton";
@@ -165,6 +170,7 @@
             // 
             // SaveAsButton
             // 
+            this.SaveAsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SaveAsButton.Enabled = false;
             this.SaveAsButton.Location = new System.Drawing.Point(301, 612);
             this.SaveAsButton.Name = "SaveAsButton";
@@ -270,6 +276,7 @@
             // 
             // SourceTextureFormatComboBox
             // 
+            this.SourceTextureFormatComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SourceTextureFormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SourceTextureFormatComboBox.Enabled = false;
             this.SourceTextureFormatComboBox.FormattingEnabled = true;
@@ -281,6 +288,7 @@
             // 
             // ImageFormatLabel
             // 
+            this.ImageFormatLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ImageFormatLabel.AutoSize = true;
             this.ImageFormatLabel.Location = new System.Drawing.Point(20, 542);
             this.ImageFormatLabel.Name = "ImageFormatLabel";
@@ -290,6 +298,7 @@
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(38, 566);
             this.label7.Name = "label7";
@@ -299,6 +308,7 @@
             // 
             // GenerateLdButton
             // 
+            this.GenerateLdButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.GenerateLdButton.Enabled = false;
             this.GenerateLdButton.Location = new System.Drawing.Point(390, 612);
             this.GenerateLdButton.Name = "GenerateLdButton";
@@ -328,6 +338,7 @@
             // 
             // AutomaticallyUpdateLDCheckbox
             // 
+            this.AutomaticallyUpdateLDCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AutomaticallyUpdateLDCheckbox.AutoSize = true;
             this.AutomaticallyUpdateLDCheckbox.Checked = true;
             this.AutomaticallyUpdateLDCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -342,6 +353,7 @@
             // 
             // UnderscoreCheckBox
             // 
+            this.UnderscoreCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.UnderscoreCheckBox.AutoSize = true;
             this.UnderscoreCheckBox.Location = new System.Drawing.Point(479, 626);
             this.UnderscoreCheckBox.Name = "UnderscoreCheckBox";
@@ -426,6 +438,7 @@
             // SourceTextureHeight
             // 
             this.SourceTextureHeight.AlwaysFireValueChanged = false;
+            this.SourceTextureHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SourceTextureHeight.DisplayDigits = 1;
             this.SourceTextureHeight.DoValueRollover = true;
             this.SourceTextureHeight.Enabled = false;
@@ -455,6 +468,7 @@
             // SourceTextureWidth
             // 
             this.SourceTextureWidth.AlwaysFireValueChanged = false;
+            this.SourceTextureWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SourceTextureWidth.DisplayDigits = 1;
             this.SourceTextureWidth.DoValueRollover = true;
             this.SourceTextureWidth.Enabled = false;
@@ -483,6 +497,7 @@
             // 
             // AlsoUpdateHfileCheckbox
             // 
+            this.AlsoUpdateHfileCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AlsoUpdateHfileCheckbox.AutoSize = true;
             this.AlsoUpdateHfileCheckbox.Checked = true;
             this.AlsoUpdateHfileCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -555,7 +570,9 @@
             this.Controls.Add(this.SourceFilename);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximumSize = new System.Drawing.Size(705, 2048);
+            this.MinimumSize = new System.Drawing.Size(705, 686);
             this.Name = "ZobjCopyToolForm";
             this.Text = "Copy data between .zobj\'s";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CopyAnimationsForm_FormClosed);

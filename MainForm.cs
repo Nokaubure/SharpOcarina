@@ -38,6 +38,8 @@ using Tommy;
 using System.Web;
 using static SharpOcarina.ZScene;
 using static ElfSymbols;
+using System.Security.Cryptography;
+using System.Collections;
 
 namespace SharpOcarina
 {
@@ -290,6 +292,7 @@ namespace SharpOcarina
             dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem.Visible = true;
             dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem.Visible = true;
             dEBUGTestToolStripMenuItem.Visible = true;
+            DebugRenameStructsByXMLMenuItem3.Visible = true;
             createPathwaysForEachBoundingBoxToolStripMenuItem.Visible = true;
 #else
             if ((int)System.DateTime.Now.Day == 1 && (int)System.DateTime.Now.Month == 4)
@@ -1041,6 +1044,7 @@ namespace SharpOcarina
             ushort ActorID = !MainForm.settings.MajorasMask ? Actor.Number : (ushort)(Actor.Number & 0x0FFF);
             int render = FindActorRender((ushort)((ActorID == 0 && settings.RenderChildLink) ? 0xFFFF : ActorID), Actor.Variable);
             float animroty = (render != -1) ? zobj_cache[render].RotY * globalframe : 0.0f;
+            float scale = 0.1f;
 
             Vector3 position = new Vector3(Actor.XPos,Actor.YPos,Actor.ZPos);
             if (ActorCache.ContainsKey(Actor.Number) && ActorCache[Actor.Number].pathwayID != null && tabControl1.SelectedIndex == 6 && pathwayactorpreview)
@@ -1100,6 +1104,28 @@ namespace SharpOcarina
                     GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 2, 0, 0, 0, 0);
                 }
 
+                //sets the scale
+                if (zobj_cache[render].ScaleArray.Length > 0)
+                {
+                    int scaleid = 0;
+                    if (zobj_cache[render].ScaleTarget == "Var")
+                        scaleid = (Actor.Variable & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+                    else if (zobj_cache[render].ScaleTarget == "XRot")
+                        scaleid = ((ushort)Actor.XRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+                    else if (zobj_cache[render].ScaleTarget == "YRot")
+                        scaleid = ((ushort)Actor.YRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+                    else if (zobj_cache[render].ScaleTarget == "ZRot")
+                        scaleid = ((ushort)Actor.ZRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
+
+                    if (scaleid >= zobj_cache[render].ScaleArray.Length) scaleid = 0;
+
+                    scale = zobj_cache[render].ScaleArray[scaleid];
+                }
+                else
+                {
+                    scale = zobj_cache[render].scale;
+                }
+
                 if (zobj_cache[render].Limbs.Count == 0)
                 {
                     GL.PushMatrix();
@@ -1132,38 +1158,12 @@ namespace SharpOcarina
                         GL.Rotate(zrot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                     }
 
-                    if (zobj_cache[render].ScaleArray.Length > 0)
-                    {
-                        int scaleid = 0;
-                        if (zobj_cache[render].ScaleTarget == "Var")
-                            scaleid = (Actor.Variable & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
-                        else if (zobj_cache[render].ScaleTarget == "XRot")
-                            scaleid = ((ushort)Actor.XRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
-                        else if (zobj_cache[render].ScaleTarget == "YRot")
-                            scaleid = ((ushort)Actor.YRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
-                        else if (zobj_cache[render].ScaleTarget == "ZRot")
-                            scaleid = ((ushort)Actor.ZRot & zobj_cache[render].ScaleMask) >> zobj_cache[render].ScalePosition;
-
-                        if (scaleid >= zobj_cache[render].ScaleArray.Length) scaleid = 0;
-
-                        GL.Scale(zobj_cache[render].ScaleArray[scaleid], zobj_cache[render].ScaleArray[scaleid], zobj_cache[render].ScaleArray[scaleid]);
-                    }
-                    else
-                    {
-                        GL.Scale(zobj_cache[render].scale, zobj_cache[render].scale, zobj_cache[render].scale);
-                    }
-
-
-
-
+                    GL.Scale(scale, scale, scale);
 
                     foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in zobj_cache[render].DLists)
                     {
-
-
                         if (DL.IsTransparent == transparency)
                         {
-
                             GL.CallList(DL.GLID);
                         }
                     }
@@ -1183,7 +1183,7 @@ namespace SharpOcarina
                     GL.Translate(0, (float)zobj_cache[render].Yoff, 0);
                     GL.PushAttrib(AttribMask.AllAttribBits);
                     GL.Enable(EnableCap.Light0);
-                    DrawBone(zobj_cache[render].Limbs, 0, Actor, render, zobj_cache[render].scale, transparency);
+                    DrawBone(zobj_cache[render].Limbs, 0, Actor, render, scale, transparency);
                     GL.PopAttrib();
                     GL.PopMatrix();
                 }
@@ -16640,11 +16640,11 @@ namespace SharpOcarina
                                 tbl["Target"].AsString,
                                 tbl.HasKey("Decimal") ? tbl["Decimal"].AsBoolean : false
                             );
-
+                            /*
                             DebugConsole.WriteLine("Name: " + p.Name);
                             DebugConsole.WriteLine("Mask: " + tbl["Mask"].AsInteger.Value.ToString("X4"));
                             DebugConsole.WriteLine("Max:  " + p.Max.ToString("X4"));
-
+                            */
                             if (tbl.HasKey("Dropdown"))
                             {
                                 TomlArray droparr = tbl["Dropdown"].AsArray;
@@ -19349,6 +19349,7 @@ namespace SharpOcarina
                     FaroresPlugin.AddLinkAnimations(rom64.getPath(),true);
                     FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
                     FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
+                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
                 }
 
                 if (ExecuteZ64Rom("--no-wait") && launch) LaunchRom(rom64.getPath() + "\\build-dev.z64");
@@ -19364,6 +19365,7 @@ namespace SharpOcarina
                     FaroresPlugin.AddLinkAnimations(rom64.getPath(), true);
                     FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
                     FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
+                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
                 }
                 savechanges = true;
                 injectToROMToolStripMenuItem_Click(sender, e);
@@ -20629,6 +20631,7 @@ namespace SharpOcarina
                     FaroresPlugin.AddLinkAnimations(rom64.getPath(), true);
                     FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
                     FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
+                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
                 }
 
                 if (ExecuteZ64Rom("--no-wait --force") && MessageBox.Show("Done! Launch rom?", "Message",
@@ -20673,6 +20676,7 @@ namespace SharpOcarina
                     FaroresPlugin.AddLinkAnimations(rom64.getPath(), true);
                     FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
                     FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
+                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
                 }
 
                 if (ExecuteZ64Rom("--no-wait --release" + (compress ? " --yaz" : "")) && MessageBox.Show("Done! Launch rom?", "Message",
@@ -21295,20 +21299,115 @@ namespace SharpOcarina
 
         private void betterCrashDebuggerMenuItem_Click(object sender, EventArgs e)
         {
-
+            /*
             if (actordatabase == null)
             {
                 GenerateActorDatabase();
                 reloaddatabase = false;
-            }
+            }*/
             //FaroresPlugin.BuildCrashDebuggerActors(rom64.getPath(), Database);
             //return;
 
-            string result = FaroresPlugin.BuildFunctionNamesArray(rom64.getPath(), Database); 
+            string result = FaroresPlugin.BuildFunctionNamesArray(rom64.getPath()); 
             if (result.Contains("Done!"))
             {
                 MessageBox.Show(result, "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        
+
+        private void DebugRenameStructsByXMLMenuItem3_Click(object sender, EventArgs e)
+        {
+            string offsetfile;
+            string[] cfile = new string[2];
+            Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+            openFileDialog1.FileName = "Open XML file";
+            openFileDialog1.Filter = "XML File (*.xml)|*.xml|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                offsetfile = openFileDialog1.FileName;
+
+            }
+            else return;
+
+            openFileDialog1.FileName = "Open C file";
+            openFileDialog1.Filter = "C File (*.c)|*.c|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                cfile[0] = openFileDialog1.FileName;
+                cfile[1] = openFileDialog1.FileName.Replace(".c", ".h");
+
+            }
+            else return;
+
+            if (Path.GetExtension(offsetfile).ToLower() == ".xml")
+            {
+                //using .xml
+                XmlDocument doc = new XmlDocument();
+                FileStream fs = new FileStream(offsetfile, FileMode.Open, FileAccess.Read);
+                doc.Load(fs);
+                XmlNodeList filenodes = doc.SelectNodes("Root/File");
+                if (filenodes.Count == 0)
+                {
+                    MessageBox.Show("Invalid xml! must be an xml from decomp's assets/xml/objects", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    foreach (XmlNode filenode in filenodes)
+                    {
+                        if (filenode.NodeType == XmlNodeType.Comment) continue;
+                        foreach (XmlNode node in filenode.ChildNodes)
+                        {
+                            if (node.NodeType == XmlNodeType.Comment) continue;
+
+                            ZobjType type = ZobjType.BINARY;
+                            XmlAttributeCollection nodeAtt = node.Attributes;
+                            XmlAttributeCollection filenodeAtt = filenode.Attributes;
+                            string name = (nodeAtt["Name"] != null) ? nodeAtt["Name"].Value : "Unk";
+                            uint offset = (nodeAtt["Offset"] != null) ? Convert.ToUInt32(nodeAtt["Offset"].Value, 16) : 9;
+                            if (offset == 9 || nodeAtt["Name"] == null) continue;
+                            byte bank = (byte)((filenodeAtt["Segment"] != null) ? Convert.ToByte(filenodeAtt["Segment"].Value, 16) : 6);
+                            replacements.Add($"0x{bank.ToString("X2")}{offset.ToString("X6")}",name);
+
+                        }
+                    }
+                    //
+                }
+            }
+
+            int c = 0;
+            foreach(string file in cfile)
+            {
+                if (!File.Exists(file)) continue;
+                string text = File.ReadAllText(file);
+                foreach(KeyValuePair<string,string> kp in replacements)
+                {
+                    text = text.Replace(kp.Key, kp.Value).Replace(kp.Key.ToLower(), kp.Value);
+                }
+                if (c == 1) //.h file
+                {
+                    string defines = "";
+                    foreach (KeyValuePair<string, string> kp in replacements)
+                    {
+                        defines += $"#define {kp.Value} {kp.Key}\n";
+                    }
+                    int place = text.LastIndexOf("#endif");
+
+                    if (place == -1)
+                        text = text.Insert(text.Length - 1, defines);
+                    else text = text.Insert(place, defines);
+                }
+                File.WriteAllText(file, text);
+                c++;
+            }
+
         }
 
 

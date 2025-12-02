@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntranceTableEditor));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.EntranceGrid = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Scene = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,26 +55,28 @@
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendToZ64romProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NumEntrancesLabel = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.Save = new System.Windows.Forms.Button();
-            this.sendToZ64romProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.EntranceGrid)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // EntranceGrid
             // 
+            this.EntranceGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.EntranceGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.EntranceGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.EntranceGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.EntranceGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.EntranceGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
@@ -99,10 +101,10 @@
             // 
             // ID
             // 
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle11.Format = "X04";
-            dataGridViewCellStyle11.NullValue = "0";
-            this.ID.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle2.Format = "X04";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.ID.DefaultCellStyle = dataGridViewCellStyle2;
             this.ID.FillWeight = 68.52792F;
             this.ID.HeaderText = "ID";
             this.ID.MaxInputLength = 4;
@@ -112,9 +114,9 @@
             // 
             // Scene
             // 
-            dataGridViewCellStyle12.Format = "X02";
-            dataGridViewCellStyle12.NullValue = "00";
-            this.Scene.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Format = "X02";
+            dataGridViewCellStyle3.NullValue = "00";
+            this.Scene.DefaultCellStyle = dataGridViewCellStyle3;
             this.Scene.FillWeight = 75F;
             this.Scene.HeaderText = "Scene";
             this.Scene.MaxInputLength = 2;
@@ -123,9 +125,9 @@
             // 
             // Entrance
             // 
-            dataGridViewCellStyle13.Format = "X02";
-            dataGridViewCellStyle13.NullValue = "00";
-            this.Entrance.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle4.Format = "X02";
+            dataGridViewCellStyle4.NullValue = "00";
+            this.Entrance.DefaultCellStyle = dataGridViewCellStyle4;
             this.Entrance.FillWeight = 75F;
             this.Entrance.HeaderText = "Entrance";
             this.Entrance.MaxInputLength = 2;
@@ -135,9 +137,9 @@
             // 
             // Variable
             // 
-            dataGridViewCellStyle14.Format = "X01";
-            dataGridViewCellStyle14.NullValue = "0";
-            this.Variable.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle5.Format = "X01";
+            dataGridViewCellStyle5.NullValue = "0";
+            this.Variable.DefaultCellStyle = dataGridViewCellStyle5;
             this.Variable.FillWeight = 75F;
             this.Variable.HeaderText = "Play Music";
             this.Variable.MaxInputLength = 1;
@@ -147,9 +149,9 @@
             // 
             // Fadein_Animation
             // 
-            dataGridViewCellStyle15.Format = "X02";
-            dataGridViewCellStyle15.NullValue = "00";
-            this.Fadein_Animation.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle6.Format = "X02";
+            dataGridViewCellStyle6.NullValue = "00";
+            this.Fadein_Animation.DefaultCellStyle = dataGridViewCellStyle6;
             this.Fadein_Animation.HeaderText = "Fade-in Animation";
             this.Fadein_Animation.MaxInputLength = 2;
             this.Fadein_Animation.Name = "Fadein_Animation";
@@ -157,9 +159,9 @@
             // 
             // Fadeout_Animation
             // 
-            dataGridViewCellStyle16.Format = "X02";
-            dataGridViewCellStyle16.NullValue = "00";
-            this.Fadeout_Animation.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle7.Format = "X02";
+            dataGridViewCellStyle7.NullValue = "00";
+            this.Fadeout_Animation.DefaultCellStyle = dataGridViewCellStyle7;
             this.Fadeout_Animation.HeaderText = "Fade-out Animation";
             this.Fadeout_Animation.MaxInputLength = 2;
             this.Fadeout_Animation.Name = "Fadeout_Animation";
@@ -167,9 +169,9 @@
             // 
             // Unknown
             // 
-            dataGridViewCellStyle17.Format = "X01";
-            dataGridViewCellStyle17.NullValue = "0";
-            this.Unknown.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle8.Format = "X01";
+            dataGridViewCellStyle8.NullValue = "0";
+            this.Unknown.DefaultCellStyle = dataGridViewCellStyle8;
             this.Unknown.FillWeight = 75F;
             this.Unknown.HeaderText = "Title Card";
             this.Unknown.MaxInputLength = 1;
@@ -178,8 +180,8 @@
             // 
             // Debug_Name
             // 
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.Gray;
-            this.Debug_Name.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Gray;
+            this.Debug_Name.DefaultCellStyle = dataGridViewCellStyle9;
             this.Debug_Name.FillWeight = 300F;
             this.Debug_Name.HeaderText = "Scene Name";
             this.Debug_Name.Name = "Debug_Name";
@@ -187,6 +189,7 @@
             // 
             // Close
             // 
+            this.Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Close.Location = new System.Drawing.Point(399, 361);
             this.Close.Name = "Close";
             this.Close.Size = new System.Drawing.Size(75, 23);
@@ -221,14 +224,14 @@
             // OpenRomToolStripMenuItem
             // 
             this.OpenRomToolStripMenuItem.Name = "OpenRomToolStripMenuItem";
-            this.OpenRomToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.OpenRomToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.OpenRomToolStripMenuItem.Text = "Open ROM...";
             this.OpenRomToolStripMenuItem.Click += new System.EventHandler(this.OpenRomToolStripMenuItem_Click);
             // 
             // saveROMToolStripMenuItem
             // 
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.saveROMToolStripMenuItem.Text = "Save ROM...";
             this.saveROMToolStripMenuItem.Visible = false;
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveROMToolStripMenuItem_Click);
@@ -236,7 +239,7 @@
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.openFileToolStripMenuItem.Text = "Open ZTables File...";
             this.openFileToolStripMenuItem.Visible = false;
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
@@ -244,7 +247,7 @@
             // saveFileToolStripMenuItem
             // 
             this.saveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
-            this.saveFileToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.saveFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.saveFileToolStripMenuItem.Text = "Save ZTables File...";
             this.saveFileToolStripMenuItem.Visible = false;
             this.saveFileToolStripMenuItem.Click += new System.EventHandler(this.saveFileToolStripMenuItem_Click);
@@ -252,12 +255,20 @@
             // saveBinaryToolStripMenuItem
             // 
             this.saveBinaryToolStripMenuItem.Name = "saveBinaryToolStripMenuItem";
-            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.saveBinaryToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.saveBinaryToolStripMenuItem.Text = "Save binary...";
             this.saveBinaryToolStripMenuItem.Click += new System.EventHandler(this.saveBinaryToolStripMenuItem_Click);
             // 
+            // sendToZ64romProjectToolStripMenuItem
+            // 
+            this.sendToZ64romProjectToolStripMenuItem.Name = "sendToZ64romProjectToolStripMenuItem";
+            this.sendToZ64romProjectToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.sendToZ64romProjectToolStripMenuItem.Text = "Send to z64rom";
+            this.sendToZ64romProjectToolStripMenuItem.Click += new System.EventHandler(this.sendToZ64romProjectToolStripMenuItem_Click);
+            // 
             // NumEntrancesLabel
             // 
+            this.NumEntrancesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.NumEntrancesLabel.AutoSize = true;
             this.NumEntrancesLabel.Location = new System.Drawing.Point(608, 341);
             this.NumEntrancesLabel.Name = "NumEntrancesLabel";
@@ -275,6 +286,7 @@
             // 
             // Save
             // 
+            this.Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Save.Location = new System.Drawing.Point(290, 361);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(75, 23);
@@ -282,13 +294,6 @@
             this.Save.Text = "Save";
             this.Save.UseVisualStyleBackColor = true;
             this.Save.Click += new System.EventHandler(this.Save_Click);
-            // 
-            // sendToZ64romProjectToolStripMenuItem
-            // 
-            this.sendToZ64romProjectToolStripMenuItem.Name = "sendToZ64romProjectToolStripMenuItem";
-            this.sendToZ64romProjectToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.sendToZ64romProjectToolStripMenuItem.Text = "Send to z64rom";
-            this.sendToZ64romProjectToolStripMenuItem.Click += new System.EventHandler(this.sendToZ64romProjectToolStripMenuItem_Click);
             // 
             // EntranceTableEditor
             // 
@@ -300,8 +305,10 @@
             this.Controls.Add(this.Close);
             this.Controls.Add(this.EntranceGrid);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximumSize = new System.Drawing.Size(772, 2435);
+            this.MinimumSize = new System.Drawing.Size(772, 435);
             this.Name = "EntranceTableEditor";
             this.Text = "Entrance Table Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EntranceTableEditor_FormClosed);

@@ -69,6 +69,9 @@
             this.Controls.Add(this.SceneSettingComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(300, 246);
+            this.MinimumSize = new System.Drawing.Size(300, 246);
             this.Name = "PickSceneSetting";
             this.Text = "Pick Scene Setting";
             this.ResumeLayout(false);
