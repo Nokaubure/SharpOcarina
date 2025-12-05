@@ -547,14 +547,14 @@ namespace SharpOcarina.SayakaGL
 
                 }*/
 
-                if (ThisDL.Animation == 0 && command.ID == 0xDE && ((command.w1 & 0xFF000000) >> 24) >= 8 && ((command.w1 & 0xFF000000) >> 24) <= 0xE)
+                if (ThisDL.Animation == 0 && command.ID == 0xDE && ((command.w1 & 0xFF000000) >> 24) >= 8 && ((command.w1 & 0xFF000000) >> 24) <= 0xF)
                 {
                     ThisDL.Animation = (int) ((command.w1 & 0xFF000000) >> 24);
 
                     
                 }
 
-                if (ThisDL.TextureAnimation == 0 && command.ID == 0xFD && ((command.w1 & 0xFF000000) >> 24) >= 8 && ((command.w1 & 0xFF000000) >> 24) <= 0xE)
+                if (ThisDL.TextureAnimation == 0 && command.ID == 0xFD && ((command.w1 & 0xFF000000) >> 24) >= 8 && ((command.w1 & 0xFF000000) >> 24) <= 0xF)
                 {
                     ThisDL.TextureAnimation = (int)((command.w1 & 0xFF000000) >> 24);
 

@@ -9,8 +9,8 @@
 	- Displays the function names of: Code (Global), Hooks, Actors, Link, Pause menu
 	- Can resume the game after an ASSERT
 	- Removed unhelpful pages
-Note: You need to click it in tools tab to update the function names database everytime. Enable "Options -> Run SO additional tasks when building" 
-to do this automatically whenever you run the game via SO.
+Note: You need to click it in tools tab to update the function names database after building once. Enable "Options -> Run SO additional tasks when building" 
+to do this automatically whenever you build/run the game via SO.
 
 - Auto-hook window: 
 	- Added button to open vanilla actor folder and renamed some buttons
@@ -22,7 +22,15 @@ to do this automatically whenever you run the game via SO.
 
 - Adjusted the scale of some windows when maximizing them
 
-- Fixed an object  issue where actors with skeletons couldnt make use of the ScaleArray feature
+- Fixed an object rendering issue where actors with skeletons couldnt make use of the ScaleArray feature
+
+- [1.64.1] Fixed a logical issue where better crash debugger would update the function list before z64rom built, sometimes resulting in outdated function offsets (this fix will not apply to --force and --release however) 
+
+- [1.64.1] Fixed an issue where better crash debugger would override any custom change in CrashScreen.c
+
+- [1.64.1] Fixed an issue where new link animations would make player.c recompile everytime even if no new changes were made
+
+- [1.64.1] Fixed an issue where texture animations in segment F couldnt be previewed
 
 --------------
 ---1.63

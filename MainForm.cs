@@ -19349,10 +19349,23 @@ namespace SharpOcarina
                     FaroresPlugin.AddLinkAnimations(rom64.getPath(),true);
                     FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
                     FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
-                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
+                    
                 }
 
-                if (ExecuteZ64Rom("--no-wait") && launch) LaunchRom(rom64.getPath() + "\\build-dev.z64");
+                if (ExecuteZ64Rom("--no-wait"))
+                {
+                    string output = (settings.SOBuildOperations) ? FaroresPlugin.BuildFunctionNamesArray(rom64.getPath()) : "";
+
+                    if (output == "Done!")
+                    {
+                        ExecuteZ64Rom("--no-wait");
+                    }
+
+                    if (launch)
+                    {
+                        LaunchRom(rom64.getPath() + "\\build-dev.z64");
+                    }
+                }
             }
         }
 
@@ -19365,13 +19378,21 @@ namespace SharpOcarina
                     FaroresPlugin.AddLinkAnimations(rom64.getPath(), true);
                     FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
                     FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
-                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
                 }
                 savechanges = true;
                 injectToROMToolStripMenuItem_Click(sender, e);
 
                 if (ExecuteZ64Rom("--no-wait --instant " + CurrentScene.SceneNumber + " 0 " + " 0xF " + (settings.RenderChildLink ? "1" : "0")))
+                {
+                    string output = (settings.SOBuildOperations) ? FaroresPlugin.BuildFunctionNamesArray(rom64.getPath()) : "";
+
+                    if (output == "Done!")
+                    {
+                        ExecuteZ64Rom("--no-wait --instant " + CurrentScene.SceneNumber + " 0 " + " 0xF " + (settings.RenderChildLink ? "1" : "0"));
+                    }
+
                     LaunchRom(rom64.getPath() + "\\build-dev.z64");
+                }
             }
         }
 
@@ -21310,6 +21331,10 @@ namespace SharpOcarina
 
             string result = FaroresPlugin.BuildFunctionNamesArray(rom64.getPath()); 
             if (result.Contains("Done!"))
+            {
+                MessageBox.Show("Function names updated!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
             {
                 MessageBox.Show(result, "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

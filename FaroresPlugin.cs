@@ -58,8 +58,38 @@ namespace SharpOcarina
             }
             string newanimheaderpath = basedir + @"\src\system\kaleido\0x01-Player\NewAnimHeader.h";
             string newlinkanimspath = basedir + @"\rom\NewLinkAnims.bin";
-            File.WriteAllText(newanimheaderpath, headerfile);
-            File.WriteAllBytes(newlinkanimspath, FullData.ToArray());
+            string newanimheaderpath_temp = basedir + @"\src\system\kaleido\0x01-Player\NewAnimHeader_2.h";
+            string newlinkanimspath_temp = basedir + @"\rom\NewLinkAnims_2.bin";
+
+            if (File.Exists(newanimheaderpath_temp))
+                File.Delete(newanimheaderpath_temp);
+            if (File.Exists(newlinkanimspath_temp))
+                File.Delete(newlinkanimspath_temp);
+
+            File.WriteAllText(newanimheaderpath_temp, headerfile);
+            File.WriteAllBytes(newlinkanimspath_temp, FullData.ToArray());
+
+            if (!Helpers.SameFileHash(newanimheaderpath, newanimheaderpath_temp))
+            {
+                if (File.Exists(newanimheaderpath))
+                    File.Delete(newanimheaderpath);
+
+                File.Move(newanimheaderpath_temp, newanimheaderpath);
+            }
+            else
+                File.Delete(newanimheaderpath_temp);
+
+
+            if (!Helpers.SameFileHash(newlinkanimspath, newlinkanimspath_temp))
+            {
+                if (File.Exists(newlinkanimspath))
+                    File.Delete(newlinkanimspath);
+
+                File.Move(newlinkanimspath_temp, newlinkanimspath);
+            }
+            else
+                File.Delete(newlinkanimspath_temp);
+
 
             string libcodepatch = basedir + @"\src\lib_code\!std\dma\AnimationContext_SetLoadFrame.c";
             File.Delete(libcodepatch);
@@ -86,17 +116,15 @@ namespace SharpOcarina
             string newfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\NewLinkAnims.c");
             string oldfile = basedir + @"\src\lib_user\library\NewLinkAnims.c";
 
-            for (int i = 0; i < files.Length; i++)
-            {
-                if (File.Exists(oldfile))
-                    File.Delete(oldfile);
+           
+            if (!File.Exists(oldfile))
                 File.Copy(newfile, oldfile);
-            }
+            
 
             //DMA entry
             int maxKey = AddDMAEntry(basedir, 0x1F, "rom/NewLinkAnims.bin", false);
 
-            if (maxKey != 0x20)
+            if (maxKey != -1)
             {
                 Helpers.ReplaceLine("#define NEWLINKANIMS_DMAID", "#define NEWLINKANIMS_DMAID 0x" + maxKey.ToString("X2"), oldfile);
             }
@@ -346,9 +374,10 @@ namespace SharpOcarina
         }
         public static string BuildFunctionNamesArray(string basedir)
         {
-            Stopwatch stopwatch = new Stopwatch();
+            //Stopwatch stopwatch = new Stopwatch();
             long curtime = 0;
-            stopwatch.Start();
+            bool updated = false;
+            //stopwatch.Start();
             
             List<FunctionName> GlobalNames = new List<FunctionName>();
             List<FunctionName> LibUserNames = new List<FunctionName>();
@@ -358,8 +387,8 @@ namespace SharpOcarina
             Dictionary<ushort, List<byte>> ActorData = new Dictionary<ushort, List<byte>>();
             int maxactorID = 0;
 
-           
-
+            if (!File.Exists(basedir + @"\rom\lib_user\z_lib_user.elf"))
+                return "Error! z_lib_user.elf not found";
             LibUserNames = ElfSymbols.Start(basedir + @"\rom\lib_user\z_lib_user.elf", 0x80700000);
             //LibUserNames.RemoveAll(x => x.StartAddress < 0x80700000);
             //string[] files = Directory.GetFiles(basedir + @"\rom\lib_user\", "*.o", SearchOption.AllDirectories);
@@ -485,6 +514,7 @@ namespace SharpOcarina
                     File.Delete(DMAfilepath);
 
                 File.Move(DMAfilepath2, DMAfilepath);
+                updated = true;
             }
             else
                 File.Delete(DMAfilepath2);
@@ -540,8 +570,10 @@ namespace SharpOcarina
             string tmpfile = basedir + @"\src\lib_user\library\CrashScreen_2.c";
             if (File.Exists(tmpfile))
                 File.Delete(tmpfile);
-
-            File.Copy(newfile, tmpfile);
+            if (File.Exists(oldfile))
+                File.Copy(oldfile, tmpfile);
+            else
+                File.Copy(newfile, tmpfile);
 
             int maxKey = AddDMAEntry(basedir, 0x1F, "rom/FunctionNames.bin", false);
 
@@ -555,14 +587,19 @@ namespace SharpOcarina
                     File.Delete(oldfile);
 
                 File.Move(tmpfile, oldfile);
+                updated = true;
             }
             else
                 File.Delete(tmpfile);
+            /*
             DebugConsole.WriteLine("Time elapsed: " + (stopwatch.ElapsedMilliseconds - curtime) + " ms");
 
-            stopwatch.Stop();
+            stopwatch.Stop();*/
 
-            return "Done!";
+            if (!updated)
+                return "Unchanged";
+            else
+                return "Done!";
         }
 
         //used by dev only
@@ -645,12 +682,12 @@ namespace SharpOcarina
                 if (int.TryParse(key.Replace("0x", ""), NumberStyles.HexNumber, null, out int numericKey))
                 {
                     maxKey = Math.Max(maxKey, numericKey);
-                    if (animExists) return maxKey;
+                    if (animExists) return -1;
                     
                 }
             }
             if (animExists)
-                return maxKey;
+                return -1;
             else
             {
                 TomlTable newSection = new TomlTable
