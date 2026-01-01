@@ -1,5 +1,22 @@
 ﻿///CHANGELOG///
 
+
+--------------
+---1.65
+--------------
+
+- Added Options > Export .h files with offsets (z64rom), this generates a header file with all display list offsets of each room, good for coding purposes
+
+- Playing cutscene cameras now properly resizes the window to 4:3 aspect ratio and centers it instead of staying in top left corner
+
+- Added button in custom combiner to copy the 3 commands to the clipboard, you can then paste it in the group's name in blender to store them more effectively
+
+- Fixed an issue where attempting to preview texture animations on alternate headers with "inherit from main header" would potentially error out
+
+- Fixed major issues regarding alternate headers when viewing vanilla scenes or importing data from scenes, such as not being able to import cutscenes (bug present since 1.62)
+
+- Fixed an issue where billboard display lists would corrupt the render ingame if they had more than 1 material assigned
+
 --------------
 ---1.64
 --------------

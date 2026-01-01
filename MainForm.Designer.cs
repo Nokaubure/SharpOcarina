@@ -96,6 +96,7 @@ namespace SharpOcarina
             this.CheckEmptyOffsetItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UseFixedCollisionWriteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printOffsetsOnInjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportHeaderFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateCRCMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.triplicateCollisionBoundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1388,6 +1389,7 @@ namespace SharpOcarina
             this.CheckEmptyOffsetItem,
             this.UseFixedCollisionWriteMenuItem,
             this.printOffsetsOnInjectToolStripMenuItem,
+            this.ExportHeaderFileMenuItem,
             this.AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem,
             this.updateCRCMenuItem,
             this.triplicateCollisionBoundsToolStripMenuItem,
@@ -1693,8 +1695,16 @@ namespace SharpOcarina
             this.printOffsetsOnInjectToolStripMenuItem.CheckOnClick = true;
             this.printOffsetsOnInjectToolStripMenuItem.Name = "printOffsetsOnInjectToolStripMenuItem";
             this.printOffsetsOnInjectToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
-            this.printOffsetsOnInjectToolStripMenuItem.Text = "Print Offsets on Inject";
+            this.printOffsetsOnInjectToolStripMenuItem.Text = "Print Cutscene Offsets on Inject";
             this.printOffsetsOnInjectToolStripMenuItem.Click += new System.EventHandler(this.printOffsetsOnInjectToolStripMenuItem_Click);
+            // 
+            // ExportHeaderFileMenuItem
+            // 
+            this.ExportHeaderFileMenuItem.CheckOnClick = true;
+            this.ExportHeaderFileMenuItem.Name = "ExportHeaderFileMenuItem";
+            this.ExportHeaderFileMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.ExportHeaderFileMenuItem.Text = "Export .h file with offsets (z64rom)";
+            this.ExportHeaderFileMenuItem.Click += new System.EventHandler(this.ExportHeaderFileMenuItem_Click);
             // 
             // AlwaysGenerateCustomDMATableOnInjectToolStripMenuItem
             // 
@@ -5005,8 +5015,8 @@ namespace SharpOcarina
             this.Group2AxisBillboard.Size = new System.Drawing.Size(99, 17);
             this.Group2AxisBillboard.TabIndex = 31;
             this.Group2AxisBillboard.Text = "2-axis billboard*";
-            this.EnvironmentControlTooltip.SetToolTip(this.Group2AxisBillboard, "Majoras Mask only. For debug Rom, apply the patch in Tools. Other OoT Roms are un" +
-        "supported.\r\nThe group has to face -Y axis for billboard effect to work!");
+            this.EnvironmentControlTooltip.SetToolTip(this.Group2AxisBillboard, "Requires either Majora's Mask or Z64rom. For binary OoT debug Rom, apply the patch in Tools." +
+        "\r\nThe group has to face -Y axis for billboard effect to work!");
             this.Group2AxisBillboard.UseVisualStyleBackColor = true;
             this.Group2AxisBillboard.CheckedChanged += new System.EventHandler(this.Group2AxisBillboard_CheckedChanged);
             // 
@@ -14332,6 +14342,7 @@ namespace SharpOcarina
         private ToolStripMenuItem updateExeFilesToolStripMenuItem;
         private ToolStripMenuItem betterCrashDebuggerMenuItem;
         private ToolStripMenuItem DebugRenameStructsByXMLMenuItem3;
+        private ToolStripMenuItem ExportHeaderFileMenuItem;
     }
     }
 

@@ -711,7 +711,7 @@ namespace SharpOcarina
             
         }
 
-        static string ToValidCVariableName(string input)
+        public static string ToValidCVariableName(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
                 return "_"; // Default to underscore if input is empty

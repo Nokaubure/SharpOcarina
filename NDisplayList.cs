@@ -1,14 +1,15 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Platform;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Platform;
+using static SharpOcarina.ZScene;
 
 namespace SharpOcarina
 {
@@ -18,6 +19,7 @@ namespace SharpOcarina
 
         public byte[] Data;
         public uint Offset = 0;
+        public int VertexCount = 0;
 
         public float Scale;
         public uint TintAlpha;
@@ -617,22 +619,22 @@ namespace SharpOcarina
                     {
                         //DebugConsole.WriteLine("animated: " + Mat.Name);
                         try {
-                            if (MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].HasPointer())
+                            if (MainForm.GetSegmentFunction(TexturePointerBank - 8).HasPointer())
                             {
-                                int search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap);
+                                int search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.GetSegmentFunction(TexturePointerBank - 8).Functions.Find(x => x.Type == 0x03).TextureSwap);
                                 if (search != -1)
                                 {
-                                    if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap).Name == Mat.Name)
+                                    if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.GetSegmentFunction(TexturePointerBank - 8).Functions.Find(x => x.Type == 0x03).TextureSwap).Name == Mat.Name)
                                     {
                                         Surf.Triangles.Add(Tri);
                                     }
                                 }
                                 else
                                 {
-                                    search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
+                                    search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.GetSegmentFunction(TexturePointerBank - 8).Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
                                     if (search != -1)
                                     {
-                                        if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture).Name == Mat.Name)
+                                        if (MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.GetSegmentFunction(TexturePointerBank - 8).Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture).Name == Mat.Name)
                                         {
                                             Surf.Triangles.Add(Tri);
                                         }
@@ -681,7 +683,7 @@ namespace SharpOcarina
                 Helpers.Append64(ref DList, 0xD9FCFFFF00000000);
 
 
-                if (!firsttime && MainForm.settings.DListCulling && !Surf.textureless && !Billboard && !TwoAxisBillboard && !(MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional()))
+                if (!firsttime && MainForm.settings.DListCulling && !Surf.textureless && !Billboard && !TwoAxisBillboard && !(MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.GetSegmentFunction(AnimationBank - 8).HasConditional()))
                 {
                     culloffset = DList.Count;
                     Helpers.Append64(ref DList, 0x0000000000000000); //vtx command for culling
@@ -689,7 +691,7 @@ namespace SharpOcarina
                    // Helpers.Append64(ref DList, 0x0300000E0000000E); //cull command
                 }
 
-                if (Billboard || TwoAxisBillboard)
+                if (!firsttime && (Billboard || TwoAxisBillboard))
                 {
                     mtxoffset = DList.Count;
 
@@ -844,17 +846,17 @@ namespace SharpOcarina
                         {
 
 
-                        if (MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasPointer())
+                        if (MainForm.GetSegmentFunction(AnimationBank - 8).HasPointer())
                         {
-                            int search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap);
+                            int search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.GetSegmentFunction(AnimationBank - 8).Functions.Find(x => x.Type == 0x03).TextureSwap);
                             if (search != -1)
-                                targetmat = MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == 0x03).TextureSwap);
+                                targetmat = MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.GetSegmentFunction(AnimationBank - 8).Functions.Find(x => x.Type == 0x03).TextureSwap);
                             
                             else
                             {
-                                search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
+                                search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.GetSegmentFunction(AnimationBank - 8).Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
                                 if (search != -1)
-                                    targetmat = MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
+                                    targetmat = MainForm.CurrentScene.AdditionalTextures.Find(y => y.DisplayName == MainForm.GetSegmentFunction(AnimationBank - 8).Functions.Find(x => x.Type == ZTextureAnim.texframe).TextureSwapList[0].Texture);
 
                             }
 
@@ -895,7 +897,7 @@ namespace SharpOcarina
                     }
                     else if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask)
                     {
-                        if (MainForm.CurrentScene.SegmentFunctions[TexturePointerBank - 8].HasPointer())
+                        if (MainForm.GetSegmentFunction(TexturePointerBank - 8).HasPointer())
                         {
                             Bank = TexturePointerBank;
                             ThisTexture.TexOffset = 0;
@@ -963,7 +965,7 @@ namespace SharpOcarina
                 //
 
                 bool HasBlendingAnimation = (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask
-                    && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasBlending());
+                    && MainForm.GetSegmentFunction(AnimationBank - 8).HasBlending());
 
                 bool WritePrim = (TintAlpha != 0xFFFFFFFF || IsTranslucent || hasalphavertex || HasBlendingAnimation || Group.MultiTexMaterialName != "" || AlphaMask);
 
@@ -1288,7 +1290,7 @@ namespace SharpOcarina
                     Helpers.Append64(ref DList, 0xDE00000000000000 | (ulong) (AnimationBank << 24));
                 else if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask)
                 {
-                    if (MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasScroll() || MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional())
+                    if (MainForm.GetSegmentFunction(AnimationBank - 8).HasScroll() || MainForm.GetSegmentFunction(AnimationBank - 8).HasConditional())
                     {
                         Helpers.Append64(ref DList, 0xDE00000000000000 | (ulong)(AnimationBank << 24));
                         DEplaced = true;
@@ -1300,7 +1302,7 @@ namespace SharpOcarina
                 if (HasBlendingAnimation)
                 {
                     if (!DEplaced) Helpers.Append64(ref DList, 0xDE00000000000000 | (ulong)(AnimationBank << 24));
-                    if (!MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].BlendingHasMultitexAlpha())
+                    if (!MainForm.GetSegmentFunction(AnimationBank - 8).BlendingHasMultitexAlpha())
                         Helpers.Append64(ref DList, SetEnvColor(MultitextureAlpha));
                     if (MainForm.n64preview)
                     {
@@ -1327,7 +1329,7 @@ namespace SharpOcarina
                     Helpers.Append64(ref DList, SetEnvColor(0xFFFFFFFF));
                 */
 
-                if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional())
+                if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && MainForm.GetSegmentFunction(AnimationBank - 8).HasConditional())
                 {
 
                     if (!MainForm.n64preview)
@@ -1339,7 +1341,6 @@ namespace SharpOcarina
                     }
                     
                 }
-
 
                 /* Parse triangles, generate VTX and TRI commands */
                 /* Very heavily based on code from spinout's .obj importer r13 */
@@ -1402,6 +1403,7 @@ namespace SharpOcarina
                                 Helpers.Append16(ref VertData, 0);
                                 Helpers.Append16S(ref VertData, (short)(VertList[j].TexCoord.X * 1024.0f));
                                 Helpers.Append16S(ref VertData, (short)(VertList[j].TexCoord.Y * 1024.0f));
+                                VertexCount++;
                             }
                             catch(System.OverflowException e)
                             {
@@ -1461,7 +1463,7 @@ namespace SharpOcarina
                         //  DebugConsole.WriteLine(MinCoordinate);
                         // DebugConsole.WriteLine(MaxCoordinate);
 
-                        if (!firsttime && MainForm.settings.DListCulling && !Billboard && !TwoAxisBillboard && !(MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional()))
+                        if (!firsttime && MainForm.settings.DListCulling && !Billboard && !TwoAxisBillboard && !(MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.GetSegmentFunction(AnimationBank - 8).HasConditional()))
                         {
 
 
@@ -1538,11 +1540,11 @@ namespace SharpOcarina
 
 
 
-                        if (MainForm.settings.DListCulling && !Billboard && !TwoAxisBillboard && !(MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional())) Helpers.Overwrite64(ref DList, culloffset, ((ulong)0x0100801000000000 | (ulong) (Bank << 24) | BaseOffset + (uint)VertData.Count));
+                        if (MainForm.settings.DListCulling && !Billboard && !TwoAxisBillboard && !(MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.GetSegmentFunction(AnimationBank - 8).HasConditional())) Helpers.Overwrite64(ref DList, culloffset, ((ulong)0x0100801000000000 | (ulong) (Bank << 24) | BaseOffset + (uint)VertData.Count));
 
                         if (Billboard || TwoAxisBillboard) Helpers.Overwrite32(ref DList, mtxoffset+4, ((uint)0x00000000 | (uint)(Bank << 24) | BaseOffset + (uint)VertData.Count + (uint)VertCull.Count));
 
-                      //  if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional() && !MainForm.n64preview) Helpers.Overwrite32(ref DList, conditionoffset + 4, ((uint)0x00000000 | (uint)(Bank << 24) | BaseOffset + (uint)VertData.Count + (uint)VertCull.Count + (uint)VertMtx.Count));
+                      //  if (Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && MainForm.GetSegmentFunction(AnimationBank - 8).HasConditional() && !MainForm.n64preview) Helpers.Overwrite32(ref DList, conditionoffset + 4, ((uint)0x00000000 | (uint)(Bank << 24) | BaseOffset + (uint)VertData.Count + (uint)VertCull.Count + (uint)VertMtx.Count));
 
                         firsttime = true;
 
@@ -1561,7 +1563,7 @@ namespace SharpOcarina
             {
                 Helpers.Append64(ref DList, 0xD838000200000040);
             }
-            if ((MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.CurrentScene.SegmentFunctions[AnimationBank - 8].HasConditional()) && !MainForm.n64preview)
+            if ((MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && AnimationBank >= 8 && MainForm.GetSegmentFunction(AnimationBank - 8).HasConditional()) && !MainForm.n64preview)
             {
                 Helpers.Append64(ref DList, 0xD838000200000040);
 

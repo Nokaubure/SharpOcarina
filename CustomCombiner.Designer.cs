@@ -111,6 +111,7 @@
             this.G_ZBUFFER = new System.Windows.Forms.CheckBox();
             this.CompiledD9 = new SharpOcarina.NumericTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.ToClipboardButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.FC.SuspendLayout();
             this.E2.SuspendLayout();
@@ -119,7 +120,7 @@
             // 
             // Ok
             // 
-            this.Ok.Location = new System.Drawing.Point(183, 254);
+            this.Ok.Location = new System.Drawing.Point(117, 254);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 0;
@@ -472,7 +473,7 @@
             // 
             // DefaultButton
             // 
-            this.DefaultButton.Location = new System.Drawing.Point(273, 254);
+            this.DefaultButton.Location = new System.Drawing.Point(207, 254);
             this.DefaultButton.Name = "DefaultButton";
             this.DefaultButton.Size = new System.Drawing.Size(109, 23);
             this.DefaultButton.TabIndex = 45;
@@ -1082,11 +1083,22 @@
             this.CompiledD9.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompiledD9_KeyDown);
             this.CompiledD9.Leave += new System.EventHandler(this.CompiledD9_Leave);
             // 
+            // ToClipboardButton
+            // 
+            this.ToClipboardButton.Location = new System.Drawing.Point(331, 254);
+            this.ToClipboardButton.Name = "ToClipboardButton";
+            this.ToClipboardButton.Size = new System.Drawing.Size(89, 23);
+            this.ToClipboardButton.TabIndex = 51;
+            this.ToClipboardButton.Text = "To Clipboard";
+            this.ToClipboardButton.UseVisualStyleBackColor = true;
+            this.ToClipboardButton.Click += new System.EventHandler(this.ToClipboardButton_Click);
+            // 
             // CustomCombiner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(552, 289);
+            this.Controls.Add(this.ToClipboardButton);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.DefaultButton);
             this.Controls.Add(this.PreviewCheckbox);
@@ -1192,5 +1204,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox G_MDSFT_ALPHACOMPARE;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button ToClipboardButton;
     }
 }

@@ -85,6 +85,10 @@ namespace SharpOcarina
 
         public static List<String> InjectMessages = new List<string>();
 
+        public static List<List<String>> RoomHeaderMessages = new List<List<String>>();
+
+        public static List<String> HeaderMessages = new List<String>();
+
         public ushort[] datatemplate;
 
         public bool previewcamerapoints = false;
@@ -372,29 +376,67 @@ namespace SharpOcarina
             }
             else
             {
+                /*
                 if ((glControl1.Size.Width != prevwidth || glControl1.Size.Height != prevheight) && !(previewscenecamera && CurrentScene.prerenderimages.Count > 0))
                 {
                     glControl1.Size = new Size(prevwidth, prevheight);
                     FormBorderStyle = FormBorderStyle.Sizable;
-                }
+                }*/
             }
         }
 
+
         public void SetViewport(int VPWidth, int VPHeight)
         {
+            float fov = !fovOverrideFlag ? (float)ViewportFOV.Value : fovOverride;
+            fov = Clamp<float>(fov, 1f, 179f);
+
             Matrix4 PerspMatrix;
             GL.Viewport(0, 0, VPWidth, VPHeight);
             GL.Viewport(0, 0, VPWidth, VPHeight);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            if (!fovOverrideFlag)
-                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)ViewportFOV.Value), (float)VPWidth / (float)VPHeight, 0.1f, 10000.0f);
-            else
-                PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fovOverride), (float)VPWidth / (float)VPHeight, 0.1f, 10000.0f);
+            PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fov), (float)VPWidth / (float)VPHeight, 0.1f, 10000.0f);
             GL.MultMatrix(ref PerspMatrix);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
+        }
+        public void Set43Viewport()
+        {
+            Matrix4 PerspMatrix;
+            int newWidth = 0, newHeight = 0;
+            for (int height = glControl1.Height; height > 0; height--)
+            {
+                if (height % 3 == 0)
+                {
+                    int width = (4 * height) / 3;
+
+                    if (width <= glControl1.Width)
+                    {
+                        newWidth = width;
+                        newHeight = height;
+                        break;
+                    }
+                }
+            }
+
+            float fov = !fovOverrideFlag ? (float)ViewportFOV.Value : fovOverride;
+            fov = Clamp<float>(fov, 1f, 179f);
+
+            int[] vp = new int[4];
+            /*
+            GL.GetInteger(GetPName.Viewport, vp);
+            if (vp[2] != (newWidth + ((glControl1.Width - newWidth))) || vp[3] != (newHeight + ((glControl1.Height - newHeight)))) //failsafe
+            */
+            GL.Viewport(((glControl1.Width - newWidth) / 2), ((glControl1.Height - newHeight) / 2), newWidth, newHeight);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            PerspMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fov), (float)newWidth / newHeight, 0.1f, 10000.0f);
+            GL.LoadMatrix(ref PerspMatrix);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            
         }
 
         private void glControl1_Load(object sender, EventArgs e)
@@ -1825,13 +1867,16 @@ namespace SharpOcarina
             {
                 //TODO
 
-
+                
                 if (!notresize)
                 {
                     notresize = true;
 
+                    Set43Viewport();
+
+                    /*
                     glControl1.Size = new Size(prevwidth, (int)(prevheight * 0.75));
-                    FormBorderStyle = FormBorderStyle.FixedDialog;
+                    FormBorderStyle = FormBorderStyle.FixedDialog;*/
 
                 }
 
@@ -1888,7 +1933,7 @@ namespace SharpOcarina
                 GL.Enable(EnableCap.DepthTest);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-                SetViewport(glControl1.Width, glControl1.Height);
+                //SetViewport(glControl1.Width, glControl1.Height);
 
                 Camera.Position();
                 GL.Scale(0.005f, 0.005f, 0.005f);
@@ -4545,6 +4590,7 @@ namespace SharpOcarina
                     AdvancedTextureAnimationsMenuItem.Checked = settings.command1AOoT;
                     AutoReload.Checked = settings.AutoReload;
                     UseFixedCollisionWriteMenuItem.Checked = settings.FixedCollisionWrite;
+                    ExportHeaderFileMenuItem.Checked = settings.ExportHeaderFile;
 
                     RenderWaterboxesMenuItem.Checked = settings.OnlyRenderWaterboxesGeneral;
                     ColorBlindMenuItem.Checked = settings.colorblindaxis;
@@ -4998,7 +5044,7 @@ namespace SharpOcarina
                 {
                     ExitListLabel.Text = "";
                 }
-                else
+                else if (CurrentScene.ExitList.Count > ExitList.SelectedIndex)
                 {
                     if (ExitCache.ContainsKey(CurrentScene.ExitList[ExitList.SelectedIndex].Value) && CurrentScene.ExitList.Count != 0)
                         ExitListLabel.Text = ExitCache[CurrentScene.ExitList[ExitList.SelectedIndex].Value];
@@ -5927,15 +5973,16 @@ namespace SharpOcarina
                 return;
             }
 
-#if DEBUG
-#else
             if (!notresize)
             {
                 notresize = true;
-                glControl1.Size = new Size(prevwidth, (int)(prevheight * 0.75));
-                FormBorderStyle = FormBorderStyle.FixedDialog;
+
+                Set43Viewport();
+
+                /*
+                glControl1.Size = new Size(newWidth, newHeight);
+                FormBorderStyle = FormBorderStyle.FixedDialog;*/
             }
-#endif
 
             if (cutsceneplaycamerakeyframe + 4 < playcamerapointscache.Count)
             {
@@ -6008,7 +6055,7 @@ namespace SharpOcarina
                     cutsceneplaymod -= 1.0f;
                 }
 
-                SetViewport(glControl1.Width, glControl1.Height);
+                //SetViewport(glControl1.Width, glControl1.Height);
             }
         }
 
@@ -11793,7 +11840,7 @@ namespace SharpOcarina
 
         }
 
-        private void importCutscene(List<byte> CutsceneBinaryData, int start)
+        private void importCutscene(List<byte> CutsceneBinaryData, int start, ref ZScene TargetScene)
         {
 
 
@@ -11865,7 +11912,7 @@ namespace SharpOcarina
                     if (addpoints) CameraCommands.Add(cutscene);
                     else
                     {
-                        CurrentScene.Cutscene.Add(cutscene);
+                        TargetScene.Cutscene.Add(cutscene);
                         CameraCommands.RemoveAt(0); 
 
                     }
@@ -11926,7 +11973,7 @@ namespace SharpOcarina
                     if (addpoints) CameraCommands.Add(cutscene);
                     else
                     {
-                        CurrentScene.Cutscene.Add(cutscene);
+                        TargetScene.Cutscene.Add(cutscene);
                         CameraCommands.RemoveAt(0);
 
                     }
@@ -11946,7 +11993,7 @@ namespace SharpOcarina
                     cutscene.EndFrame = (ushort)(cutscene.StartFrame + 1);
                     cutscene.Data[0] = CutsceneBinaryData[offset + 10];
                     cutscene.Data[1] = CutsceneBinaryData[offset + 11];
-                    CurrentScene.Cutscene.Add(cutscene);
+                    TargetScene.Cutscene.Add(cutscene);
 
                     offset += 4 + (12 * Helpers.Read16(CutsceneBinaryData, offset + 2));
 
@@ -11959,7 +12006,7 @@ namespace SharpOcarina
                     cutscene.StartFrame = Helpers.Read16(CutsceneBinaryData, offset + 6);
                     cutscene.EndFrame = Helpers.Read16(CutsceneBinaryData, offset + 8);
 
-                    CurrentScene.Cutscene.Add(cutscene);
+                    TargetScene.Cutscene.Add(cutscene);
 
                     offset += 12;
                 }
@@ -11998,7 +12045,7 @@ namespace SharpOcarina
 
                     }
 
-                    CurrentScene.Cutscene.Add(cutscene);
+                    TargetScene.Cutscene.Add(cutscene);
 
                 }
                 else
@@ -12053,7 +12100,7 @@ namespace SharpOcarina
 
                     }
 
-                    CurrentScene.Cutscene.Add(cutscene);
+                    TargetScene.Cutscene.Add(cutscene);
                 }
 
 
@@ -12072,7 +12119,7 @@ namespace SharpOcarina
 
                 CurrentScene.Cutscene.Clear();
 
-                importCutscene(CutsceneBinaryData, 0);
+                importCutscene(CutsceneBinaryData, 0, ref CurrentScene);
 
                 UpdateForm();
 
@@ -12646,14 +12693,14 @@ namespace SharpOcarina
             }
         }
 
-        public ZScene SetSceneHeader(int id, ZScene zscene, ZScene normalheader)
+        public ZScene SetSceneHeader(int id, ZScene zscene, ref ZScene normalheader)
         {
             if (normalheader == null) normalheader = zscene;
 
             if (id > 0)
             {
-                SetSceneHeader(0,zscene,normalheader);
-                normalheader = zscene;
+                zscene = SetSceneHeader(0, zscene, ref normalheader);
+                //normalheader = zscene;
                 zscene = normalheader.SceneHeaders[id - 1].Scene;
                 TransferSceneValues(normalheader, zscene);
 
@@ -17135,6 +17182,7 @@ namespace SharpOcarina
             uint zsceneoffset = 0, zsceneendoffset = 0;
             ZScene returnScene = new ZScene();
             ZScene normalHeader = null;
+            ZScene curHeader = null;
 
             returnScene.Scale = 1.0f;
             returnScene.version = Program.ApplicationVersion;
@@ -17225,7 +17273,7 @@ namespace SharpOcarina
 
                 if (cnt == 0 || headeroffset != 0)
                 {
-                    SetSceneHeader(cnt, returnScene,normalHeader);
+                    returnScene = SetSceneHeader(cnt, returnScene,ref normalHeader);
 
                     for (int y = (int)headeroffset; y < data.Count; y += 4)
                     {
@@ -17265,7 +17313,7 @@ namespace SharpOcarina
                         //cutscene
                         if (returnScene.Cutscene.Count == 0 && ((test & 0xFFFFFFFF) == 0x17000000 && data[y + 4] == 0x02))
                         {
-                            importCutscene(data, (int)Helpers.Read24S(data, y + 5));
+                            importCutscene(data, (int)Helpers.Read24S(data, y + 5), ref returnScene);
                         }
 
                         //music settings
@@ -17280,7 +17328,7 @@ namespace SharpOcarina
                         }
 
                         //exits
-                        if ((!command13 && ((test & 0xFFFFFFFF) == 0x13000000 && data[y + 4] == 0x02)) || (collision && exitcommandoffset > 0 && !command13))
+                        if (((!command13 && ((test & 0xFFFFFFFF) == 0x13000000 && data[y + 4] == 0x02)) || (collision && exitcommandoffset > 0 && !command13)) && returnScene.cloneid == 0)
                         {
                             if (exitcommandoffset == 0) exitcommandoffset = y;
 
@@ -17430,7 +17478,7 @@ namespace SharpOcarina
 
             for (int r = 0; r < roomcount; r++)
             {
-                SetSceneHeader(0,returnScene,normalHeader);
+                returnScene = SetSceneHeader(0,returnScene,ref normalHeader);
                 if (sceneid == -1)
                 {
 
@@ -17530,7 +17578,7 @@ namespace SharpOcarina
 
                     if (cnt == 0 || headeroffset != 0)
                     {
-                        SetSceneHeader(cnt,returnScene,normalHeader);
+                        returnScene = SetSceneHeader(cnt,returnScene,ref normalHeader);
 
                         for (int y = (int)headeroffset; y < data.Count; y += 4)
                         {
@@ -17766,6 +17814,7 @@ namespace SharpOcarina
                     cnt++;
                 }
             }
+            returnScene = SetSceneHeader(0, returnScene,ref normalHeader);
 
             return returnScene;
 
@@ -21435,6 +21484,11 @@ namespace SharpOcarina
 
         }
 
+        private void ExportHeaderFileMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.ExportHeaderFile = ExportHeaderFileMenuItem.Checked;
+        }
+
 
 
         // use for later
@@ -21846,7 +21900,19 @@ namespace SharpOcarina
             //  MainForm.ActiveForm.BackColor = scheme.FormBG;
         }
 
-
+        public static ZSegmentFunction GetSegmentFunction(int index)
+        {
+            if (CurrentScene == null)
+                return null;
+            else
+            {
+                if (CurrentScene.inherittextureanims)
+                {
+                    return NormalHeader.SegmentFunctions[index];
+                }
+                else return CurrentScene.SegmentFunctions[index];
+            }
+        }
     }
 
     #region Extensions
@@ -22025,6 +22091,7 @@ namespace SharpOcarina
         public bool FullCameraRotation = true;
         public bool FixedMeshWrite = true;
         public bool FixedCollisionWrite = true;
+        public bool ExportHeaderFile = false;
     }
 
     public class UndoRedo

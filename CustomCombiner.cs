@@ -658,6 +658,14 @@ namespace SharpOcarina
             if (!E2lock) PackOtherModeL();
         }
 
+        private void ToClipboardButton_Click(object sender, EventArgs e)
+        {
+            string outputmsg = "#FD" + CombinerCommand.ToString("X14")
+                + "#E2" + E2Command.ToString("X14")
+                + "#D9" + D9Command.ToString("X14");
+            Clipboard.SetText(outputmsg);
+        }
+
         private void AdjustWidthComboBox_DropDown(object sender, System.EventArgs e)
         {
             ComboBox senderComboBox = (ComboBox)sender;

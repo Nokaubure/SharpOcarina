@@ -1993,8 +1993,8 @@ class ImportZ64(bpy.types.Operator, ImportHelper):
         enableShadelessMaterials = self.enableShadelessMaterials
         global scaleFactor
         if self.originalObjectScale == 0:
-            if fext.lower() == '.zmap':
-                scaleFactor = 1 # maps are actually stored 1:1
+            if fext.lower() in ('.zmap', '.zroom'):
+                scaleFactor = 1  # maps and rooms are stored 1:1
             else:
                 scaleFactor = 1 / 100
         else:
@@ -2055,7 +2055,7 @@ class ImportZ64(bpy.types.Operator, ImportHelper):
                 else:
                     log.debug('No file found to load segment 0x%02X from', i)
 
-        if fext.lower() == '.zmap':
+        if fext.lower() in ('.zmap', '.zroom'):
             log.debug('Importing map')
             f3dzex.loadSegment(0x03, self.filepath)
             f3dzex.importMap()
@@ -2065,7 +2065,7 @@ class ImportZ64(bpy.types.Operator, ImportHelper):
             f3dzex.importObj()
 
         #Noka here
-        if fext.lower() == '.zmap' and self.setView3dParameters:
+        if fext.lower() in ('.zmap', '.zroom') and self.setView3dParameters:
             for screen in bpy.data.screens:
                 for area in screen.areas:
                     if area.type == 'VIEW_3D':
@@ -2116,7 +2116,7 @@ class ImportZ64(bpy.types.Operator, ImportHelper):
             l.prop(self, 'logging_logfile_path')
 
 def menu_func_import(self, context):
-    self.layout.operator(ImportZ64.bl_idname, text="Zelda64 (.zobj;.zmap)")
+    self.layout.operator(ImportZ64.bl_idname, text="Zelda64 (.zobj;.zmap;.zroom)")
 
 
 def register():

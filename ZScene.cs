@@ -1,23 +1,24 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using SharpOcarina.Properties;
+using SharpOcarina.SayakaGL;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Imaging;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Xml;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using SharpOcarina.SayakaGL;
+using System.Xml.Serialization;
 using Tommy;
 
 namespace SharpOcarina
@@ -1209,6 +1210,8 @@ namespace SharpOcarina
         public void ConvertSave(string Filepath, bool ConsecutiveRoomInject, bool ForceRGBATextures, int zzrp)
         {
             string game = (!MainForm.settings.MajorasMask) ? "OOT" : "MM";
+            MainForm.RoomHeaderMessages = new List<List<String>>();
+            MainForm.HeaderMessages = new List<string>();
 
             if (zzrp > 0 && zzrp != 4)
             {
@@ -1318,12 +1321,14 @@ namespace SharpOcarina
                 }
             }
 
-            if (zzrp == 3) //if z64rom, we delete all zroom files first
+            if (zzrp == 3) //if z64rom, we delete all zroom and zovl files first
             {
                 string[] files = Directory.GetFiles(Filepath);
                 for (int f = 0; f < files.Length; f++)
                 {
                     if (Path.GetExtension(files[f]) == ".zroom")
+                        File.Delete(files[f]);
+                    if (MainForm.settings.ExportHeaderFile && Path.GetExtension(files[f]) == ".zovl")
                         File.Delete(files[f]);
                 }
 
@@ -1358,7 +1363,9 @@ namespace SharpOcarina
                     BinaryWriter BWR = new BinaryWriter(File.OpenWrite(SaveRoomTo));
                     BWR.Write(_Rooms[i].RoomData.ToArray());
                     BWR.Close();
+
                 }
+                
                 string SaveSceneTo = "";
                 if (zzrp > 0)
                     SaveSceneTo = Filepath + "scene.zscene";
@@ -1423,7 +1430,27 @@ namespace SharpOcarina
                                  "[enables]\r\n" + restrictiontext);
                     }
                     sw.Close();
-                
+
+                    if (MainForm.settings.ExportHeaderFile)
+                    {
+                        string roomheaderfile = Filepath + "scene.h";
+                        if (File.Exists(roomheaderfile)) File.Delete(roomheaderfile);
+
+                        string outputmsg = "#include <uLib.h>\n\n";
+                        
+                        while (MainForm.HeaderMessages.Count != 0)
+                        {
+                            outputmsg += MainForm.HeaderMessages[0] + "\n";
+                            MainForm.HeaderMessages.RemoveAt(0);
+                        }
+
+                        File.WriteAllText(roomheaderfile, outputmsg);
+
+                        /*
+                        MessageBox.Show("Done! \n" + outputmsg + "\nClose this window to copy this to your clipboard", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Clipboard.SetText(outputmsg);*/
+                    }
+
 
                 }
                 
@@ -1444,8 +1471,10 @@ namespace SharpOcarina
                     }
                 }
 
+                
+
             }
-            else
+            else //decomp
             {
                 StreamWriter sw = File.CreateText(Filepath + Name + "_scene.c");
 
@@ -1946,7 +1975,7 @@ namespace SharpOcarina
                 if (MainForm.skyboxdlists[i].Count == 0)
                 {
 
-                    List<byte> skybox = new List<byte>(File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"F3DEX2\" + skyboxfiles[i])));
+                    List<byte> skybox = new List<byte>(File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"F3DEX2/" + skyboxfiles[i])));
 
                     UcodeSimulator.currentfilename = skyboxfiles[i];
 
@@ -2288,7 +2317,7 @@ namespace SharpOcarina
                         }
                     }
                     uint bank;
-                    string file = "F3DEX2/" + node.InnerText + ".zobj";
+                    string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "F3DEX2/" + node.InnerText + ".zobj");
 
                     if (node.InnerText == "gameplay_keep") bank = 0x04;
                     else if (node.InnerText == "gameplay_field_keep" || node.InnerText == "gameplay_dangeon_keep") bank = 0x05;
@@ -3321,7 +3350,7 @@ namespace SharpOcarina
 
                         if (Room.TrueGroups[j].Name.ToLower().Contains("#nomesh") || Room.TrueGroups[j].Name.Contains("TAG_NoMesh")) continue;
 
-                        if (Room.TrueGroups[j].Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && (MainForm.CurrentScene.SegmentFunctions[Room.TrueGroups[j].AnimationBank - 8].Functions.Count == 0) && !MainForm.n64preview)
+                        if (Room.TrueGroups[j].Animated && MainForm.settings.command1AOoT && !MainForm.settings.MajorasMask && (MainForm.GetSegmentFunction(Room.TrueGroups[j].AnimationBank - 8).Functions.Count == 0) && !MainForm.n64preview)
                         {
                                 MessageBox.Show("Animation segment " + Room.TrueGroups[j].AnimationBank + " is empty...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
@@ -3332,7 +3361,19 @@ namespace SharpOcarina
                         {
                             //if (Prerendered && j != Room.TrueGroups.Count -1) Array.Resize(ref DList.Data,DList.Data.Length-8);
                             if (!Prerendered)
+                            {
+                                if (MainForm.settings.ExportHeaderFile)
+                                {
+                                        string groupname = Room.TrueGroups[j].Name;
+                                        if (groupname.IndexOf('#') == 0) groupname = groupname.Substring(1);
+                                        groupname = groupname.SubstringTill(0, '#');
+                                        groupname = FaroresPlugin.ToValidCVariableName(groupname);
+                                        MainForm.HeaderMessages.Add("#define Room" + RoomIndex + "_" + groupname + " 0x" + (Room.RoomData.Count + DList.Vertoffset + 0x03000000).ToString("X8"));
+                                        MainForm.HeaderMessages.Add("#define Room" + RoomIndex + "_" + groupname + "_Vtx 0x" + (Room.RoomData.Count + 0x03000000).ToString("X8"));
+                                        MainForm.HeaderMessages.Add("#define Room" + RoomIndex + "_" + groupname + "_Vtx_Num " + DList.VertexCount);
+                                }
                                 Room.RoomData.AddRange(DList.Data);
+                            }
                             else
                             {
                                 DListOffset.Add((int)(DList.Offset));
@@ -3643,21 +3684,20 @@ namespace SharpOcarina
             int RoomInjectOffset = MainHeader._Rooms[0].InjectOffset;
             RoomInjectOffset = InjectOffset + SceneData.Count;
             int counter = 0;
-            foreach (ZRoom Room in MainHeader._Rooms)
-            {
-                Room.FullDataLength = Room.RoomData.ToArray().Length;
+                foreach (ZRoom Room in MainHeader._Rooms)
+                {
+                    Room.FullDataLength = Room.RoomData.ToArray().Length;
 
-                DebugConsole.WriteLine("inject offset: " + RoomInjectOffset.ToString("X"));
-                DebugConsole.WriteLine("full data length: " + Room.FullDataLength.ToString("X"));
+                    DebugConsole.WriteLine("inject offset: " + RoomInjectOffset.ToString("X"));
+                    DebugConsole.WriteLine("full data length: " + Room.FullDataLength.ToString("X"));
 
                     Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + counter, (uint)RoomInjectOffset);
                     Helpers.Overwrite32(ref SceneData, MainHeader.RoomOffsets + 4 + counter, (uint)(RoomInjectOffset + Room.FullDataLength));
                     RoomInjectOffset += Room.FullDataLength;
                     counter += 8;
                 
+                }
             }
-            }
-
 
 
             // AddPadding(ref SceneData, 8);
