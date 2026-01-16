@@ -5,17 +5,29 @@
 ---1.65
 --------------
 
+- Added Cullable Room setting (Type 2) in Room Env. This is used by the game to cull groups that are behind others, however due how SO is built, hitting the 64 DList cap is quite easy, this will be improved in 1.66
+
 - Added Options > Export .h files with offsets (z64rom), this generates a header file with all display list offsets of each room, good for coding purposes
 
 - Playing cutscene cameras now properly resizes the window to 4:3 aspect ratio and centers it instead of staying in top left corner
 
 - Added button in custom combiner to copy the 3 commands to the clipboard, you can then paste it in the group's name in blender to store them more effectively
 
+- Fixed a critical issue where the new crash debugger would stop working on consecutive usages
+
 - Fixed an issue where attempting to preview texture animations on alternate headers with "inherit from main header" would potentially error out
 
 - Fixed major issues regarding alternate headers when viewing vanilla scenes or importing data from scenes, such as not being able to import cutscenes (bug present since 1.62)
 
 - Fixed an issue where billboard display lists would corrupt the render ingame if they had more than 1 material assigned
+
+- Fixed an issue where autoadd objects would add Link objects to the scene if custom actors used them
+
+- Fixed an issue where creating a custom actor would not put ACT_ in front of the header define, causing conflicts with objects of the same name
+
+- Fixed an issue where polytype field in groups didnt behaved correctly and could potentially crash the app since 1.63
+
+- Due vertex optimization, it wasn't possible to separate triangles for the metallic effect. As a temporal measure, groups with #Metallic tag are now ignored during optimization.
 
 --------------
 ---1.64

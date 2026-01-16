@@ -344,13 +344,15 @@ Z ROTATION 0x3F = Switch Flag to spawn chest.
     <Variable Var="0002"> Swimming, Reacts to Link</Variable>
     <Variable Var="FFFF"> Swimming, Flees</Variable>
   </Actor>
-  <Actor Key="0023" Name="Room Changing Black Plane" DebugName="En_Holl" Category="10">
+  <Actor Key="0023" Name="Room Changing Black Plane" DebugName="En_Holl" Properties="003F" PropertiesNames="Switch Flag" Category="10">
     <Variable Var="0000">Vertical, two way, fades black when approached</Variable>
     <Variable Var="0040">Up/Down, one-way, fades black when approached</Variable>
     <Variable Var="0080">Up/Down, two-way, no fade</Variable>
     <Variable Var="00C0">Vertical, enabled on switch flag, fades black when approached</Variable>
     <Variable Var="0100">Vertical, two-way, no fade</Variable>
     <Variable Var="0140">Up/Down, two-way, fades black when approached</Variable>
+    <Variable Var="0180">Two-Way Vertical Plane, no fade //FIXME: Used in Water Temple, why is this different? Uses 200.0 instead of 100.0 for a calculation</Variable>
+    <Notes>+003F = Switch Flag //Used by type 03 (00C0) only</Notes>
   </Actor>
   <Actor Key="0024" Object="0040" Name="(Unknown scene change)" DebugName="En_Scene_Change" Category="6">
   </Actor>

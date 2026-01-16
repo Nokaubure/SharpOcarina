@@ -871,6 +871,7 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.RoomType2CheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -5015,8 +5016,8 @@ namespace SharpOcarina
             this.Group2AxisBillboard.Size = new System.Drawing.Size(99, 17);
             this.Group2AxisBillboard.TabIndex = 31;
             this.Group2AxisBillboard.Text = "2-axis billboard*";
-            this.EnvironmentControlTooltip.SetToolTip(this.Group2AxisBillboard, "Requires either Majora's Mask or Z64rom. For binary OoT debug Rom, apply the patch in Tools." +
-        "\r\nThe group has to face -Y axis for billboard effect to work!");
+            this.EnvironmentControlTooltip.SetToolTip(this.Group2AxisBillboard, "Requires either Majora\'s Mask or Z64rom. For binary OoT debug Rom, apply the patc" +
+        "h in Tools.\r\nThe group has to face -Y axis for billboard effect to work!");
             this.Group2AxisBillboard.UseVisualStyleBackColor = true;
             this.Group2AxisBillboard.CheckedChanged += new System.EventHandler(this.Group2AxisBillboard_CheckedChanged);
             // 
@@ -6434,6 +6435,7 @@ namespace SharpOcarina
             // 
             // tabRoomEnv
             // 
+            this.tabRoomEnv.Controls.Add(this.RoomType2CheckBox);
             this.tabRoomEnv.Controls.Add(this.Roomaffectedpointlightscheckbox);
             this.tabRoomEnv.Controls.Add(this.groupBox12);
             this.tabRoomEnv.Controls.Add(this.groupBox11);
@@ -13169,6 +13171,18 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // RoomType2CheckBox
+            // 
+            this.RoomType2CheckBox.AutoSize = true;
+            this.RoomType2CheckBox.Location = new System.Drawing.Point(14, 492);
+            this.RoomType2CheckBox.Name = "RoomType2CheckBox";
+            this.RoomType2CheckBox.Size = new System.Drawing.Size(251, 17);
+            this.RoomType2CheckBox.TabIndex = 45;
+            this.RoomType2CheckBox.Text = "Room groups cull behind other groups (Type 2)*";
+            this.EnvironmentControlTooltip.SetToolTip(this.RoomType2CheckBox, resources.GetString("RoomType2CheckBox.ToolTip"));
+            this.RoomType2CheckBox.UseVisualStyleBackColor = true;
+            this.RoomType2CheckBox.CheckedChanged += new System.EventHandler(this.RoomType2CheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -14343,6 +14357,7 @@ namespace SharpOcarina
         private ToolStripMenuItem betterCrashDebuggerMenuItem;
         private ToolStripMenuItem DebugRenameStructsByXMLMenuItem3;
         private ToolStripMenuItem ExportHeaderFileMenuItem;
+        private CheckBox RoomType2CheckBox;
     }
     }
 

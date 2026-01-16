@@ -4786,6 +4786,7 @@ namespace SharpOcarina
                         InvisibleActorsCheckBox.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].ShowInvisibleActors;
                         WarpsongsCheckBox.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].DisableWarpSongs;
                         Roomaffectedpointlightscheckbox.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].AffectedByPointLight;
+                        RoomType2CheckBox.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].Type2;
                         UpdateAdditionalLightEdit();
                         RenderFunctionInherit.Checked = CurrentScene.inherittextureanims;
                         RenderFunctionInherit.Visible = (CurrentScene != NormalHeader);
@@ -6638,8 +6639,8 @@ namespace SharpOcarina
 
                 /* ---- Multitex stuff END ---- */
 
-                GroupPolygonType.Minimum = 1;
-                GroupPolygonType.Maximum = CurrentScene.PolyTypes.Count;
+                GroupPolygonType.Minimum = 0;
+                GroupPolygonType.Maximum = CurrentScene.PolyTypes.Count-1;
 
                 GroupAnimatedBank.Enabled = GroupAnimated.Checked;
                 GroupLODDIstance.Enabled = GroupLod.Checked;
@@ -6655,7 +6656,7 @@ namespace SharpOcarina
                 GroupMultitextureAlpha.Value = (((ObjFile.Group)GroupList.SelectedItem).MultiTexAlpha >> 24);
                 comboBox1.SelectedIndex = ((ObjFile.Group)GroupList.SelectedItem).TileS;
                 comboBox2.SelectedIndex = ((ObjFile.Group)GroupList.SelectedItem).TileT;
-                GroupPolygonType.Value = ((ObjFile.Group)GroupList.SelectedItem).PolyType + 1;
+                GroupPolygonType.Value = ((ObjFile.Group)GroupList.SelectedItem).PolyType;
                 BackFaceCulling.Checked = ((ObjFile.Group)GroupList.SelectedItem).BackfaceCulling;
                 GroupAnimated.Checked = ((ObjFile.Group)GroupList.SelectedItem).Animated;
                 GroupMetallic.Checked = ((ObjFile.Group)GroupList.SelectedItem).Metallic;
@@ -7359,7 +7360,7 @@ namespace SharpOcarina
                             //DebugConsole.WriteLine("after " + actorgroups.ToString("X4"));
                             foreach (int actorobject in actorobjects)
                             {
-                                if (actorobject > 0x0003 && !room.ZObjects.Exists(x => x.Value == actorobject) && !CurrentScene.ZObjects.Exists(x => x.Value == actorobject))
+                                if (actorobject > 0x0003 && actorobject != 0x0014 && actorobject != 0x0015 && !room.ZObjects.Exists(x => x.Value == actorobject) && !CurrentScene.ZObjects.Exists(x => x.Value == actorobject))
                                 {
                                     ZScene.ZUShort newgroup = new ZScene.ZUShort((ushort)actorobject);
                                     room.ZObjects.Add(newgroup);
@@ -7885,6 +7886,18 @@ namespace SharpOcarina
                             }
                         }
                     }
+                    //We fix the polytype index being +1 in old scenes
+                    /*
+                    if (CurrentScene.version <= 0x1640)
+                    {
+                        for (int y = 0; y < CurrentScene.Rooms[i].TrueGroups.Count; y++)
+                        {
+                            if (CurrentScene.Rooms[i].TrueGroups[y].PolyType != 0)
+                            {
+                                CurrentScene.Rooms[i].TrueGroups[y].PolyType--;
+                            }
+                        }
+                    }*/
 
 
                     SetTrueGroupsToGroupSettings(i);
@@ -10451,6 +10464,7 @@ namespace SharpOcarina
                         room.ShowInvisibleActors = CurrentScene.Rooms[0].ShowInvisibleActors;
                         room.DisableWarpSongs = CurrentScene.Rooms[0].DisableWarpSongs;
                         room.AffectedByPointLight = CurrentScene.Rooms[0].AffectedByPointLight;
+                        room.Type2 = CurrentScene.Rooms[0].Type2;
                     }
                     incr++;
                 }
@@ -21514,6 +21528,14 @@ namespace SharpOcarina
         {
             EasterEggToolStripMenuItem.Enabled = true;
             EasterEggToolStripMenuItem.Text = "Wtf is this?";
+        }
+
+        private void RoomType2CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentScene.Rooms.Count > 0)
+            {
+                CurrentScene.Rooms[RoomList.SelectedIndex].Type2 = RoomType2CheckBox.Checked;
+            }
         }
 
         public void AddCallToUlibGameplay(string function, string call, string prefix = "", string suffix = "")

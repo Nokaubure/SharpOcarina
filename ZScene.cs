@@ -44,6 +44,7 @@ namespace SharpOcarina
             public bool DisableWarpSongs = false;
             public byte Echo = 0x00;
             public bool AffectedByPointLight = false;
+            public bool Type2 = false;
             public List<ZAdditionalLight> AdditionalLights = new List<ZAdditionalLight>();
        
             [XmlIgnore]
@@ -3235,6 +3236,7 @@ namespace SharpOcarina
                 {
                     if (!Prerendered)
                     {
+                        //Type 0 and 2
                         MeshHeaderOffset = Room.MeshHeaderOffset = Room.RoomData.Count;
                         Helpers.Append32(ref Room.RoomData, 0);  /* Mesh type X, Y meshes */
                         Helpers.Append32(ref Room.RoomData, 0);  /* Start address */
@@ -3242,6 +3244,7 @@ namespace SharpOcarina
                     }
                     else 
                     {
+                        //Type 1
                         MeshHeaderOffset = Room.MeshHeaderOffset = Room.RoomData.Count;
                        
 
@@ -3303,9 +3306,18 @@ namespace SharpOcarina
 
                     for (int j = 0; j < Room.TrueGroups.Count; j++)
                     {
-                        Helpers.Append64(ref Room.RoomData, 0);
-                        Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 1 */
-                        Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 2 */
+                            //TODO is this correct?
+                            if (!Room.Type2)
+                            {
+                                Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 1 */
+                                Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 2 */
+                            }
+                            else
+                            {
+                                Helpers.Append64(ref Room.RoomData, 0);
+                                Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 1 */
+                                Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 2 */
+                            }
                     }
                     AddPadding(ref Room.RoomData, 8);
 
@@ -3597,6 +3609,13 @@ namespace SharpOcarina
 
                     }
 
+
+
+                if (Room.Type2 && Room.DLists.Count > 64)
+                {
+                    MessageBox.Show($"Your room has {Room.DLists.Count} DLists while only a maximum of 64 DLists are allowed on Type2 Rooms", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 /* Fix room header and add missing data */
                 FixRoomHeader(Room);
@@ -5013,39 +5032,93 @@ namespace SharpOcarina
                     int numEntries = Math.Max(opaqueLists.Count, translucentLists.Count);
 
                     if (!Prerendered)
-
                     {
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x00000000 | (numEntries << 16)));
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset + 12));
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | (MeshHeaderOffset + 12) + (numEntries * 8)));
+                        if (!Room.Type2)
+                        {
+                            //Type 0
+                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x00000000 | (numEntries << 16)));
+                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset + 12));
+                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | (MeshHeaderOffset + 12) + (numEntries * 8)));
+                        }
+                        else
+                        {
+                            //Type 2
+                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x02000000 | ((opaqueLists.Count + translucentLists.Count) << 16)));
+                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset + 12));
+                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | (MeshHeaderOffset + 12) + ((opaqueLists.Count + translucentLists.Count) * 16)));
+                        }
                         MeshHeaderOffset += 12;
                     }
                     else
                     {
-                        //Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x00opaqueLists000000 | (numEntries << 16)));
-                        // Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset + 32));
-                        // Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | (MeshHeaderOffset + 32) + (numEntries * 8)));
+                        //Type 1
                         MeshHeaderOffset += 32;
                     }
 
 
                     if (!Prerendered)
                     {
-                        for (int i = 0; i < numEntries; i++)
+                        if (!Room.Type2)
                         {
-                            if (i < opaqueLists.Count)
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x03000000 | opaqueLists[i].Offset));
-                            else
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, 0);
+                            //Type 0
+                            for (int i = 0; i < numEntries; i++)
+                            {
+                                if (i < opaqueLists.Count)
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x03000000 | opaqueLists[i].Offset));
+                                else
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, 0);
 
-                            MeshHeaderOffset += 4;
+                                MeshHeaderOffset += 4;
 
-                            if (i < translucentLists.Count)
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x03000000 | translucentLists[i].Offset));
-                            else
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, 0);
+                                if (i < translucentLists.Count)
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x03000000 | translucentLists[i].Offset));
+                                else
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, 0);
 
-                            MeshHeaderOffset += 4;
+                                MeshHeaderOffset += 4;
+                            }
+                        }
+                        else
+                        {
+                            //Type 2
+
+
+                            for (int i = 0; i < opaqueLists.Count; i++)
+                            {
+
+                                ushort midX = (ushort)(opaqueLists[i].MinCoordinate.X + ((opaqueLists[i].MaxCoordinate.X - opaqueLists[i].MinCoordinate.X) / 2));
+                                ushort midY = (ushort)(opaqueLists[i].MinCoordinate.Y + ((opaqueLists[i].MaxCoordinate.Y - opaqueLists[i].MinCoordinate.Y) / 2));
+                                ushort midZ = (ushort)(opaqueLists[i].MinCoordinate.Z + ((opaqueLists[i].MaxCoordinate.Z - opaqueLists[i].MinCoordinate.Z) / 2));
+
+                                var diagonal = opaqueLists[i].MaxCoordinate - opaqueLists[i].MinCoordinate;
+                                ushort radius = (ushort)((diagonal.Length / 2.0) + 1);
+
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset, midX); //X
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 2, midY); //Y
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 4, midZ); //Z
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 6, radius); //bounding sphere radius
+                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | opaqueLists[i].Offset));
+                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 12, 0);
+                                MeshHeaderOffset += 16;
+                            }
+                            for (int i = 0; i < translucentLists.Count; i++)
+                            {
+
+                                ushort midX = (ushort)(translucentLists[i].MinCoordinate.X + ((translucentLists[i].MaxCoordinate.X - translucentLists[i].MinCoordinate.X) / 2));
+                                ushort midY = (ushort)(translucentLists[i].MinCoordinate.Y + ((translucentLists[i].MaxCoordinate.Y - translucentLists[i].MinCoordinate.Y) / 2));
+                                ushort midZ = (ushort)(translucentLists[i].MinCoordinate.Z + ((translucentLists[i].MaxCoordinate.Z - translucentLists[i].MinCoordinate.Z) / 2));
+
+                                var diagonal = translucentLists[i].MaxCoordinate - translucentLists[i].MinCoordinate;
+                                ushort radius = (ushort)((diagonal.Length / 2.0) + 1);
+
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset, midX); //X
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 2, midY); //Y
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 4, midZ); //Z
+                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 6, radius); //bounding sphere radius
+                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, 0);
+                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 12, (uint)(0x03000000 | translucentLists[i].Offset));
+                                MeshHeaderOffset += 16;
+                            }
                         }
                     }
 

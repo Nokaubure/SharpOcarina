@@ -122,7 +122,7 @@ namespace SharpOcarina
             
 
             //DMA entry
-            int maxKey = AddDMAEntry(basedir, 0x1F, "rom/NewLinkAnims.bin", false);
+            int maxKey = AddDMAEntry(basedir, 0x1F, "rom/NewLinkAnims.bin", false, false);
 
             if (maxKey != -1)
             {
@@ -360,7 +360,7 @@ namespace SharpOcarina
                         }
                         File.WriteAllText(includeDMA + DMAname + ".h",header);
 
-                        AddDMAEntry(basedir, 0x1F, "rom/system/DMA/" + DMAname + ".bin", false);
+                        AddDMAEntry(basedir, 0x1F, "rom/system/DMA/" + DMAname + ".bin", false, false);
 
                         DebugConsole.WriteLine("Added DMA file " + romDMA + DMAname + ".bin");
                         DMAfiles++;
@@ -575,7 +575,7 @@ namespace SharpOcarina
             else
                 File.Copy(newfile, tmpfile);
 
-            int maxKey = AddDMAEntry(basedir, 0x1F, "rom/FunctionNames.bin", false);
+            int maxKey = AddDMAEntry(basedir, 0x1F, "rom/FunctionNames.bin", false, true);
 
             Helpers.ReplaceLine("#define FUNCTIONNAMES_DMAID", "#define FUNCTIONNAMES_DMAID 0x" + maxKey.ToString("X2"), tmpfile);
             Helpers.ReplaceLine("#define FUNCTIONNAMES_MAXACTORS", "#define FUNCTIONNAMES_MAXACTORS 0x" + maxactorID.ToString("X4"), tmpfile);
@@ -661,7 +661,7 @@ namespace SharpOcarina
             return;
         }
 
-        public static int AddDMAEntry(string basedir, int maxKey, string file, bool compress)
+        public static int AddDMAEntry(string basedir, int maxKey, string file, bool compress, bool returnKey)
         {
             string dmapath = basedir + @"\dma.toml";
 
@@ -682,12 +682,12 @@ namespace SharpOcarina
                 if (int.TryParse(key.Replace("0x", ""), NumberStyles.HexNumber, null, out int numericKey))
                 {
                     maxKey = Math.Max(maxKey, numericKey);
-                    if (animExists) return -1;
-                    
+                    if (animExists) return returnKey ? maxKey : -1;
+
                 }
             }
             if (animExists)
-                return -1;
+                return returnKey ? maxKey : -1;
             else
             {
                 TomlTable newSection = new TomlTable

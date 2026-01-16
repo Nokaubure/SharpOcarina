@@ -133,6 +133,11 @@ namespace SharpOcarina
             OverwriteXX(ref Data, Offset, Value, 1);
         }
 
+        public static void Overwrite16S(ref List<byte> Data, int Offset, short Value)
+        {
+            OverwriteXX(ref Data, Offset, (ushort)Value, 1);
+        }
+
         public static void Overwrite32(ref List<byte> Data, int Offset, uint Value)
         {
             OverwriteXX(ref Data, Offset, Value, 3);

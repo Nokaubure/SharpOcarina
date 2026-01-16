@@ -126,6 +126,12 @@
   <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>571, 17</value>
   </metadata>
+  <data name="RoomType2CheckBox.ToolTip" xml:space="preserve">
+    <value>Used in scenes like Hyrule Field to not render groups that are behind other groups. Make sure to split the map into several small groups if you want to take advantage of this feature. Not recommended for small spaces.</value>
+  </data>
+  <metadata name="EnvironmentControlTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>571, 17</value>
+  </metadata>
   <data name="GroupAlphaMask.ToolTip" xml:space="preserve">
     <value>Erase alpha from the first texture based on the alpha of the second. Use IA4, IA8 or IA16 formats on the second texture. You need to manually specify the texture formats with the new SO plugin, or use texture tags in the texture filename such as #IA8 or enable the option "Don't convert multitextures to RGBA"</value>
   </data>
@@ -183,6 +189,18 @@ F: Ambient light dims slightly with a bit of red</value>
   </metadata>
   <metadata name="PathwayXPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>771, 17</value>
+  </metadata>
+  <metadata name="PathwayZPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 56</value>
+  </metadata>
+  <metadata name="PathwayYPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>920, 17</value>
+  </metadata>
+  <metadata name="PathwayXPosStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>771, 17</value>
+  </metadata>
+  <metadata name="RenderFunctionFlagPresetToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>166, 3</value>
   </metadata>
   <metadata name="RenderFunctionFlagPresetToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>166, 3</value>

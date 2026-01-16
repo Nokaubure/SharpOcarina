@@ -705,13 +705,18 @@ namespace SharpOcarina
             {
                 foreach (ObjFile.Group group in _Groups)
                 {
+                    bool isMetallic = group.Name.ToLower().Contains("#metallic") && !IgnoreMaterials;
+                    if (isMetallic)
+                    {
+                        int a = 0;
+                    }
                     foreach (ObjFile.Triangle tri in group.Triangles)
                     {
                         for (int i = 0; i <= 2; i++)
                         {
-                            if (!usedvertex.ContainsKey(_Verts[tri.VertIndex[i]].ToVector3dRounded()))
+                            if (isMetallic || !usedvertex.ContainsKey(_Verts[tri.VertIndex[i]].ToVector3dRounded()))
                             {
-                                usedvertex.Add(_Verts[tri.VertIndex[i]].ToVector3dRounded(), cnt);
+                                if (!isMetallic) usedvertex.Add(_Verts[tri.VertIndex[i]].ToVector3dRounded(), cnt);
                                 newvertex.Add(_Verts[tri.VertIndex[i]].Clone());
                                 tri.VertIndex[i] = cnt;
                                 cnt++;
@@ -731,14 +736,14 @@ namespace SharpOcarina
                 {
                     foreach (ObjFile.Group group in _Groups)
                     {
-
+                        bool isMetallic = group.Name.ToLower().Contains("#Metallic") && !IgnoreMaterials;
                         foreach (ObjFile.Triangle tri in group.Triangles)
                         {
                             for (int i = 0; i <= 2; i++)
                             {
-                                if (!usedtexcoord.ContainsKey(_TexCoords[tri.TexCoordIndex[i]].ToVector2dRounded()))
+                                if (isMetallic || !usedtexcoord.ContainsKey(_TexCoords[tri.TexCoordIndex[i]].ToVector2dRounded()))
                                 {
-                                    usedtexcoord.Add(_TexCoords[tri.TexCoordIndex[i]].ToVector2dRounded(), cnt);
+                                    if (!isMetallic) usedtexcoord.Add(_TexCoords[tri.TexCoordIndex[i]].ToVector2dRounded(), cnt);
                                     nextexcoord.Add(_TexCoords[tri.TexCoordIndex[i]].Clone());
                                     tri.TexCoordIndex[i] = cnt;
                                     cnt++;

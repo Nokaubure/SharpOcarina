@@ -1037,7 +1037,7 @@ namespace SharpOcarina
                 newfileCtxt = newfileCtxt.Replace("[[OBJECT_ID_PLACEHOLDER]]", ".objectId     = 0x" + ObjectID.ToString("X4") + ",");
                 newfileCtxt = newfileCtxt.Replace("EnActor", CreateActorTextBox.Text);
                 newfileCtxt = newfileCtxt.Replace("ActorTemplate.h", CreateActorTextBox.Text + ".h");
-                newfileHtxt = newfileHtxt.Replace("__EN_ACTOR_H__", "__" + CreateActorTextBox.Text.ToUpper().Replace("-","") + "_H__");
+                newfileHtxt = newfileHtxt.Replace("__EN_ACTOR_H__", "__ACT_" + CreateActorTextBox.Text.ToUpper().Replace("-","") + "_H__");
                 newfileHtxt = newfileHtxt.Replace("EnActor", CreateActorTextBox.Text);
 
                 File.WriteAllText(newfileC,newfileCtxt);
