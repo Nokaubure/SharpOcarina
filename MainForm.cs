@@ -762,8 +762,23 @@ namespace SharpOcarina
             CameraMovementComboBox.Items.Clear();
             CameraMovementComboBox.Items.AddRange(XMLreader.getXMLItems("Miscelaneous", "Camera"));
 
+            XmlNodeList camnodes = XMLreader.getXMLNodes("CameraTypes", "Camera");
+
+            int incr = 0;
+            CameraItem[] camoutput = new CameraItem[camnodes.Count];
+            if (camnodes != null)
+                foreach (XmlNode node in camnodes)
+                {
+                    XmlAttributeCollection nodeAtt = node.Attributes;
+                    camoutput[incr] = new CameraItem();
+                    camoutput[incr].Text = nodeAtt["Key"].Value + " - " + node.InnerText;
+                    camoutput[incr].Value = Convert.ToInt64(nodeAtt["Key"].Value, 16);
+                    camoutput[incr].HasFov = nodeAtt["FOV"] != null;
+                    incr++;
+                }
             CameraType.Items.Clear();
-            CameraType.Items.AddRange(XMLreader.getXMLItems("CameraTypes", "Camera"));
+            CameraType.Items.AddRange(camoutput);
+
 
             if (settings.MajorasMask)
 
@@ -781,7 +796,7 @@ namespace SharpOcarina
 
             XmlNodeList animnodes = XMLreader.getXMLNodes("SceneAnimations", "Function");
 
-            int incr = 0;
+            incr = 0;
             AnimationItem[] animoutput = new AnimationItem[animnodes.Count];
             if (animnodes != null)
                 foreach (XmlNode node in animnodes)
@@ -1076,7 +1091,101 @@ namespace SharpOcarina
 
             GL.PopMatrix();
             GL.PopAttrib();
+            /*
+            // text on screen, TODO for a future version maybe
+            try
+            {
+                // Texto a mostrar: nombre desde ActorCache si existe, sino ID en hex
+                ushort displayID = !MainForm.settings.MajorasMask ? Actor.Number : (ushort)(Actor.Number & 0x0FFF);
+                string labelText = (ActorCache != null && ActorCache.ContainsKey(displayID)) ?
+                    ActorCache[displayID].name :
+                    ("0x" + Actor.Number.ToString("X4"));
 
+                var labelWorldX = Actor.XPos;
+                var labelWorldY = Actor.YPos + 30.0f;
+                var labelWorldZ = Actor.ZPos;
+
+                Vector3d camPos = GetTrueCameraPosition();
+                double dx = camPos.X - labelWorldX;
+                double dy = camPos.Y - labelWorldY;
+                double dz = camPos.Z - labelWorldZ;
+                double dist = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+                float scaleFactor = (float)(Math.Max(0.5, dist) * 0.01f); //adjust
+
+                Font drawFont = zeldafont ?? SystemFonts.DefaultFont;
+                Size textSize;
+                using (var measureBmp = new Bitmap(1, 1))
+                using (var g = Graphics.FromImage(measureBmp))
+                {
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                    var sf = g.MeasureString(labelText, drawFont);
+                    textSize = new Size((int)Math.Ceiling(sf.Width), (int)Math.Ceiling(sf.Height));
+                    if (textSize.Width < 1) textSize.Width = 1;
+                    if (textSize.Height < 1) textSize.Height = 1;
+                }
+
+                using (var bmp = new Bitmap(textSize.Width, textSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                    g.Clear(Color.FromArgb(0, 0, 0, 0));
+                    using (Brush b = new SolidBrush(Color.White))
+                        g.DrawString(labelText, drawFont, b, new PointF(0, 0));
+                    g.Flush();
+
+                    int textTex = TexLib.TexUtil.CreateTextureFromBitmap(bmp);
+
+                    bool depthWasEnabled = GL.IsEnabled(EnableCap.DepthTest);
+
+                    GL.Disable(EnableCap.DepthTest);
+                    GL.Enable(EnableCap.Blend);
+                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                    GL.PushMatrix();
+
+                    GL.Translate(labelWorldX, labelWorldY, labelWorldZ);
+                    try
+                    {
+                        // Camera.Rot está usado en el proyecto (valores en grados)
+                        GL.Rotate(-(float)Camera.Rot.Y, 0f, 1f, 0f);
+                        GL.Rotate(-(float)Camera.Rot.X, 1f, 0f, 0f);
+                    }
+                    catch
+                    {
+                        // Si no está accesible, no aplicamos rotación (seguirá funcionando aunque no perfect billboarding)
+                    }
+
+                    float pixelToWorld = 0.25f; // tweak this
+                    float w = textSize.Width * pixelToWorld;
+                    float h = textSize.Height * pixelToWorld;
+                    GL.Scale(scaleFactor, scaleFactor, scaleFactor);
+
+                    GL.Enable(EnableCap.Texture2D);
+                    GL.BindTexture(TextureTarget.Texture2D, textTex);
+                    GL.Color4(Color.White);
+
+                    GL.Begin(BeginMode.Quads);
+                    GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(-w / 2.0f, 0.0f, 0.0f);
+                    GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(w / 2.0f, 0.0f, 0.0f);
+                    GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(w / 2.0f, h, 0.0f);
+                    GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(-w / 2.0f, h, 0.0f);
+                    GL.End();
+
+                    GL.BindTexture(TextureTarget.Texture2D, 0);
+                    GL.Disable(EnableCap.Texture2D);
+
+                    GL.PopMatrix();
+
+                    if (depthWasEnabled) GL.Enable(EnableCap.DepthTest);
+                    else GL.Disable(EnableCap.DepthTest);
+
+                    GL.DeleteTexture(textTex);
+                }
+            }
+            catch
+            {
+                // No interrumpir render si falla la etiqueta
+            }
+            */
 
         }
 
@@ -1872,7 +1981,7 @@ namespace SharpOcarina
                 {
                     notresize = true;
 
-                    Set43Viewport();
+                    //Set43Viewport();
 
                     /*
                     glControl1.Size = new Size(prevwidth, (int)(prevheight * 0.75));
@@ -1933,7 +2042,7 @@ namespace SharpOcarina
                 GL.Enable(EnableCap.DepthTest);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-                //SetViewport(glControl1.Width, glControl1.Height);
+                Set43Viewport();
 
                 Camera.Position();
                 GL.Scale(0.005f, 0.005f, 0.005f);
@@ -3479,10 +3588,13 @@ namespace SharpOcarina
 
 
                     /* Render groups... */
+                    //TODO optimize?
                     for (int i = 0; i < CurrentScene.Rooms.Count; i++)
                     {
                         for (int y = 0; y < CurrentScene.Rooms[i].TrueGroups.Count; y++)
                         {
+                            
+                            //if (CurrentScene.Rooms[i].TrueGroups[y].Name.ToLower().Contains("#nomesh")) continue;
                             int green = y;
                             int red = 0;
                             while (green > 254) { green -= 254; red += 1; }
@@ -3739,6 +3851,8 @@ namespace SharpOcarina
 
                 if (e.Button != MouseButtons.Left)
                     Mouse.LDown = false;
+
+                if (previewscenecamera) ToggleSceneCameraView(false);
             }
             if (GrabDown() && CurrentScene != null && CurrentScene.Rooms.Count > 0 && actorpick != -1)
             {
@@ -9198,7 +9312,7 @@ namespace SharpOcarina
 
         private void UpdateCollisionBoundsEdit(bool refreshbounds = false)
         {
-            if (CurrentScene != null && CurrentScene.ColModel != null)
+            if (CurrentScene != null && CurrentScene.ColModel != null && CurrentScene.PolyTypes.Count > 0)
             {
 
                 EchoRange.Value = CurrentScene.PolyTypes[(int)PolygonSelect.Value].EchoRange;
@@ -9577,7 +9691,7 @@ namespace SharpOcarina
                 CameraCopyViewport.Enabled = false;
                 CameraView.Enabled = false;
 
-                previewscenecamera = false;
+                if (previewscenecamera) ToggleSceneCameraView(false);
             }
 
             CameraView.BackColor = (previewscenecamera) ? Color.LawnGreen : Color.LightGray;
@@ -9877,7 +9991,8 @@ namespace SharpOcarina
                             int y = 0;
                             foreach(ObjFile.Material mat in MultiTextureComboBox.Items)
                             {
-                                if (mat.map_Kd == material.map_Ks) multitextindex = mat.Name;
+                                //TODO this is checking for filename not relative path, may cause issues
+                                if (Path.GetFileName(mat.map_Kd) == Path.GetFileName(material.map_Ks)) multitextindex = mat.Name;
                                 y++;
                             }
                             if (multitextindex == "") break;
@@ -12442,15 +12557,7 @@ namespace SharpOcarina
         private void CameraSelect_ValueChanged(object sender, EventArgs e)
         {
             actorpick = _Camera_;
-            UpdateCameraEdit();
-
-            if (previewscenecamera)
-            {
-                Camera.Pos = ConvertToCameraPosition((Vector3d)CurrentScene.Cameras[(int)CameraSelect.Value].Position);
-                Camera.Rot.X = CurrentScene.Cameras[(int)CameraSelect.Value].XRot / 182.04444444444444444444444444444f;
-                Camera.Rot.Y = -CurrentScene.Cameras[(int)CameraSelect.Value].YRot / 182.04444444444444444444444444444f + 180;
-                Camera.Rot.Z = CurrentScene.Cameras[(int)CameraSelect.Value].ZRot / 182.04444444444444444444444444444f;
-            }
+            ToggleSceneCameraView(previewscenecamera);
         }
 
 
@@ -14873,7 +14980,10 @@ namespace SharpOcarina
 
         private void CutscenePositionViewMode_Click(object sender, EventArgs e)
         {
+            if (previewscenecamera) ToggleSceneCameraView(false);
+
             CameraPreview_Toggle();
+            
 
             if (previewcamerapoints)
                 CutscenePreview_Clear();
@@ -15552,11 +15662,11 @@ namespace SharpOcarina
                 i = _i;
             }
 
-            public void processEntry(FlagEntryInfo match, bool actorcontrol = false)
+            public void processEntry(FlagEntryInfo match, bool actorcontrol = false, bool switchflagnames = false)
             {
                 if (!has_printed && !actorcontrol)
                 {
-                    message += @"\par \b" + " " + i.ToString("X2") + ": " + @"\b0";
+                    message += @"\par \b" + " " + i.ToString("X2") + ((switchflagnames & CurrentScene.SwitchFlagNames.ContainsKey(i)) ? " - " + CurrentScene.SwitchFlagNames[i] : "") + ": " + @"\b0";
                     has_printed = true;
                 }
 
@@ -15655,7 +15765,7 @@ namespace SharpOcarina
                 FlagLogInfo flag = new FlagLogInfo(i);
 
                 foreach (FlagEntryInfo match in switchflags.FindAll(x => x.ID == i))
-                    flag.processEntry(match);
+                    flag.processEntry(match, false, true);
 
                 message += flag.getMsg();
             }
@@ -17482,10 +17592,19 @@ namespace SharpOcarina
             {
                 if (openFileDialog1.FileName.Contains("_scene"))
                     basestr = (openFileDialog1.FileName).Substring(0, (openFileDialog1.FileName).IndexOf("_scene")) + "_";
-                else
+                else if (openFileDialog1.FileName.Contains("scene.zscene"))
                 {
                     isz64rom = true;
                     basestr = (openFileDialog1.FileName).Substring(0, (openFileDialog1.FileName).IndexOf("scene.zscene"));
+                }
+                else if (openFileDialog1.FileName.Contains(".zscene"))
+                {
+                    basestr = (openFileDialog1.FileName).Substring(0, (openFileDialog1.FileName).IndexOf(".zscene"));
+                }
+                else
+                {
+                    MessageBox.Show("Not a valid .zscene filename", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
                 }
             }
 
@@ -17868,8 +17987,7 @@ namespace SharpOcarina
 
             if (CurrentScene.prerenderimages.Count > 0)
             {
-                ViewportFOV.Value = 45;
-                previewscenecamera = true;
+                ToggleSceneCameraView(true);
             }
 
             SimulateN64Gfx = true;
@@ -17915,21 +18033,43 @@ namespace SharpOcarina
             UpdateCameraEdit();
         }
 
-        private void CameraView_Click(object sender, EventArgs e)
+        public void ToggleSceneCameraView(bool state)
         {
-            previewscenecamera = !previewscenecamera;
-
-            if (previewscenecamera)
+            previewscenecamera = state;
+            if (state)
             {
+                if (Convert.ToBoolean((CameraType.SelectedItem as CameraItem).HasFov))
+                {
+                    fovOverrideFlag = true;
+                    float camfov = CurrentScene.Cameras[(int)CameraSelect.Value].Fov;
+                    float fov = camfov > 1000 ? camfov / 100.0f : camfov;
+                    //ViewportFOV.Value = (decimal)Clamp<float>(fov, 1.00f, 179.99f);
+                    fovOverride = (float)fov;
 
-                Camera.Pos = ConvertToCameraPosition((Vector3d)CurrentScene.Cameras[(int)CameraSelect.Value].Position);
-                Camera.Rot.X = CurrentScene.Cameras[(int)CameraSelect.Value].XRot / 182.04444444444444444444444444444f;
-                Camera.Rot.Y = -CurrentScene.Cameras[(int)CameraSelect.Value].YRot / 182.04444444444444444444444444444f + 180;
-                Camera.Rot.Z = CurrentScene.Cameras[(int)CameraSelect.Value].ZRot / 182.04444444444444444444444444444f;
+                    Camera.Pos = ConvertToCameraPosition((Vector3d)CurrentScene.Cameras[(int)CameraSelect.Value].Position);
+                    Camera.Rot.X = CurrentScene.Cameras[(int)CameraSelect.Value].XRot / 182.04444444444444444444444444444f;
+                    Camera.Rot.Y = -CurrentScene.Cameras[(int)CameraSelect.Value].YRot / 182.04444444444444444444444444444f + 180;
+                    Camera.Rot.Z = CurrentScene.Cameras[(int)CameraSelect.Value].ZRot / 182.04444444444444444444444444444f;
+                    
+                }
+                else
+                {
+                    fovOverrideFlag = false;
+                }
+
 
             }
-
+            else
+            {
+                fovOverrideFlag = false;
+            }
+            SetViewport(glControl1.Width, glControl1.Height);
             UpdateCameraEdit();
+        }
+
+        private void CameraView_Click(object sender, EventArgs e)
+        {
+            ToggleSceneCameraView(!previewscenecamera);
         }
 
         private void PrerenderedList_ValueChanged(object sender, EventArgs e)
@@ -19767,7 +19907,7 @@ namespace SharpOcarina
             }
             else
             {
-                if (MessageBox.Show("Never ask again in this project?", "SceneRender z64rom",
+                if (MessageBox.Show("Never ask again in this project?", "BGCheck z64rom",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     string file = File.ReadAllText(files[0]);
@@ -21538,6 +21678,87 @@ namespace SharpOcarina
             }
         }
 
+        private void rebuildForceCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rom64.isSet())
+            {
+                if (MessageBox.Show("This will rebuild all code files in the project, recommended if it randomly stoped working for no reason. It is recommended to have a backup or version control. May not work on old z64rom installations. Continue?", "Warning",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                if (settings.SOBuildOperations)
+                {
+                    FaroresPlugin.AddLinkAnimations(rom64.getPath(), true);
+                    FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
+                    FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
+                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
+                }
+
+                if (ExecuteZ64Rom("--no-wait --force-code") && MessageBox.Show("Done! Launch rom?", "Message",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    LaunchRom(rom64.getPath() + "\\build-dev.z64");
+                }
+
+            }
+        }
+
+        private void rebuildForceAudioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rom64.isSet())
+            {
+                if (MessageBox.Show("This will rebuild all audio files in the project, recommended if it randomly stoped working for no reason. It is recommended to have a backup or version control. May not work on old z64rom installations. Continue?", "Warning",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                if (settings.SOBuildOperations)
+                {
+                    FaroresPlugin.AddLinkAnimations(rom64.getPath(), true);
+                    FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
+                    FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
+                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
+                }
+
+                if (ExecuteZ64Rom("--no-wait --force-audio") && MessageBox.Show("Done! Launch rom?", "Message",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    LaunchRom(rom64.getPath() + "\\build-dev.z64");
+                }
+
+            }
+        }
+
+        private void rebuildCleanStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rom64.isSet())
+            {
+                if (MessageBox.Show("This will cleanup all compiled files and headers as long as their source exists in the project, specially useful if you deleted hook files. Continue?", "Warning",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                if (settings.SOBuildOperations)
+                {
+                    FaroresPlugin.AddLinkAnimations(rom64.getPath(), true);
+                    FaroresPlugin.ConvertAllIncPngFiles(rom64.getPath());
+                    FaroresPlugin.CustomDMAEntries(rom64.getPath(), true);
+                    FaroresPlugin.BuildFunctionNamesArray(rom64.getPath());
+                }
+
+                if (ExecuteZ64Rom("--no-wait --clean") && MessageBox.Show("Done! Launch rom?", "Message",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    LaunchRom(rom64.getPath() + "\\build-dev.z64");
+                }
+
+            }
+        }
+
         public void AddCallToUlibGameplay(string function, string call, string prefix = "", string suffix = "")
         {
             string filepath = rom64.getPath() + "\\src\\lib_user\\uLib_gameplay.c";
@@ -21978,6 +22199,16 @@ namespace SharpOcarina
     {
         public string Text { get; set; }
         public object Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
+    }
+
+    public partial class CameraItem : SongItem
+    {
+        public bool HasFov { get; set; }
 
         public override string ToString()
         {

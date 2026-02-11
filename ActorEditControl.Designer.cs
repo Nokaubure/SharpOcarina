@@ -33,10 +33,20 @@
             this.ActorComboBox = new System.Windows.Forms.ComboBox();
             this.DuplicateButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.ActorPropertyRenameFlag = new System.Windows.Forms.Button();
+            this.ActorPropertyFlagName = new System.Windows.Forms.Label();
+            this.ActorPropertyBool = new System.Windows.Forms.CheckBox();
             this.ActorCopyButton = new System.Windows.Forms.Button();
             this.ActorPasteButton = new System.Windows.Forms.Button();
+            this.BackCamBox = new SharpOcarina.NumericUpDownEx();
+            this.BackSwitchBox = new SharpOcarina.NumericUpDownEx();
+            this.FrontCamBox = new SharpOcarina.NumericUpDownEx();
+            this.FrontSwitchBox = new SharpOcarina.NumericUpDownEx();
+            this.ActorVariableBox = new SharpOcarina.NumericUpDownEx();
+            this.ActorNumberBox = new SharpOcarina.NumericUpDownEx();
             this.PresetDropdown = new System.Windows.Forms.ComboBox();
             this.ActorPropertyLabel = new System.Windows.Forms.Label();
+            this.ActorListBoxValue = new SharpOcarina.NumericUpDownEx();
             this.ActorVariableListBox = new System.Windows.Forms.ListBox();
             this.DatabaseButton = new System.Windows.Forms.Button();
             this.ZPosStrip = new System.Windows.Forms.ToolStrip();
@@ -56,36 +66,26 @@
             this.label3 = new System.Windows.Forms.Label();
             this.FrontRoomLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.ActorZPos = new SharpOcarina.NumericUpDownEx();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.ActorXRot = new SharpOcarina.NumericUpDownEx();
+            this.ActorYPos = new SharpOcarina.NumericUpDownEx();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.ActorZRot = new SharpOcarina.NumericUpDownEx();
+            this.ActorYRot = new SharpOcarina.NumericUpDownEx();
+            this.ActorXPos = new SharpOcarina.NumericUpDownEx();
             this.label15 = new System.Windows.Forms.Label();
             this.ActorTextBox = new System.Windows.Forms.RichTextBox();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
-            this.ToolTipHelper = new System.Windows.Forms.ToolTip(this.components);
-            this.BackCamBox = new SharpOcarina.NumericUpDownEx();
-            this.BackSwitchBox = new SharpOcarina.NumericUpDownEx();
-            this.FrontCamBox = new SharpOcarina.NumericUpDownEx();
-            this.FrontSwitchBox = new SharpOcarina.NumericUpDownEx();
-            this.ActorVariableBox = new SharpOcarina.NumericUpDownEx();
-            this.ActorNumberBox = new SharpOcarina.NumericUpDownEx();
-            this.ActorListBoxValue = new SharpOcarina.NumericUpDownEx();
-            this.ActorZPos = new SharpOcarina.NumericUpDownEx();
-            this.ActorXRot = new SharpOcarina.NumericUpDownEx();
-            this.ActorYPos = new SharpOcarina.NumericUpDownEx();
-            this.ActorZRot = new SharpOcarina.NumericUpDownEx();
-            this.ActorYRot = new SharpOcarina.NumericUpDownEx();
-            this.ActorXPos = new SharpOcarina.NumericUpDownEx();
             this.niceLine1 = new SharpOcarina.NiceLine();
+            this.ToolTipHelper = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox3.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.ZPosStrip.SuspendLayout();
-            this.YPosStrip.SuspendLayout();
-            this.XPosStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BackCamBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BackSwitchBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FrontCamBox)).BeginInit();
@@ -93,6 +93,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ActorVariableBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorNumberBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorListBoxValue)).BeginInit();
+            this.ZPosStrip.SuspendLayout();
+            this.YPosStrip.SuspendLayout();
+            this.XPosStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ActorZPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorXRot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorYPos)).BeginInit();
@@ -147,6 +150,9 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.ActorPropertyRenameFlag);
+            this.panel2.Controls.Add(this.ActorPropertyFlagName);
+            this.panel2.Controls.Add(this.ActorPropertyBool);
             this.panel2.Controls.Add(this.ActorCopyButton);
             this.panel2.Controls.Add(this.ActorPasteButton);
             this.panel2.Controls.Add(this.BackCamBox);
@@ -188,6 +194,42 @@
             this.panel2.Size = new System.Drawing.Size(392, 262);
             this.panel2.TabIndex = 21;
             // 
+            // ActorPropertyRenameFlag
+            // 
+            this.ActorPropertyRenameFlag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ActorPropertyRenameFlag.BackgroundImage = global::SharpOcarina.Properties.Resources.icon_edit;
+            this.ActorPropertyRenameFlag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ActorPropertyRenameFlag.Location = new System.Drawing.Point(250, 152);
+            this.ActorPropertyRenameFlag.Name = "ActorPropertyRenameFlag";
+            this.ActorPropertyRenameFlag.Size = new System.Drawing.Size(22, 22);
+            this.ActorPropertyRenameFlag.TabIndex = 105;
+            this.ToolTipHelper.SetToolTip(this.ActorPropertyRenameFlag, "Rename this flag");
+            this.ActorPropertyRenameFlag.UseVisualStyleBackColor = true;
+            this.ActorPropertyRenameFlag.Visible = false;
+            this.ActorPropertyRenameFlag.Click += new System.EventHandler(this.ActorPropertyRenameFlag_Click);
+            // 
+            // ActorPropertyFlagName
+            // 
+            this.ActorPropertyFlagName.AutoSize = true;
+            this.ActorPropertyFlagName.Enabled = false;
+            this.ActorPropertyFlagName.Location = new System.Drawing.Point(270, 156);
+            this.ActorPropertyFlagName.Name = "ActorPropertyFlagName";
+            this.ActorPropertyFlagName.Size = new System.Drawing.Size(97, 13);
+            this.ActorPropertyFlagName.TabIndex = 104;
+            this.ActorPropertyFlagName.Text = "Actor Property Flag";
+            // 
+            // ActorPropertyBool
+            // 
+            this.ActorPropertyBool.AutoSize = true;
+            this.ActorPropertyBool.Location = new System.Drawing.Point(179, 155);
+            this.ActorPropertyBool.Name = "ActorPropertyBool";
+            this.ActorPropertyBool.Size = new System.Drawing.Size(65, 17);
+            this.ActorPropertyBool.TabIndex = 103;
+            this.ActorPropertyBool.Text = "Enabled";
+            this.ActorPropertyBool.UseVisualStyleBackColor = true;
+            this.ActorPropertyBool.Visible = false;
+            this.ActorPropertyBool.CheckedChanged += new System.EventHandler(this.ActorPropertyBool_CheckedChanged);
+            // 
             // ActorCopyButton
             // 
             this.ActorCopyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -214,6 +256,188 @@
             this.ActorPasteButton.Visible = false;
             this.ActorPasteButton.Click += new System.EventHandler(this.ActorPasteButton_Click);
             // 
+            // BackCamBox
+            // 
+            this.BackCamBox.AlwaysFireValueChanged = false;
+            this.BackCamBox.DisplayDigits = 1;
+            this.BackCamBox.DoValueRollover = false;
+            this.BackCamBox.Enabled = false;
+            this.BackCamBox.Hexadecimal = true;
+            this.BackCamBox.IncrementMouseWheel = 1;
+            this.BackCamBox.Location = new System.Drawing.Point(340, 107);
+            this.BackCamBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.BackCamBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackCamBox.Name = "BackCamBox";
+            this.BackCamBox.ShiftMultiplier = 20;
+            this.BackCamBox.Size = new System.Drawing.Size(37, 20);
+            this.BackCamBox.TabIndex = 37;
+            this.BackCamBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackCamBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // BackSwitchBox
+            // 
+            this.BackSwitchBox.AlwaysFireValueChanged = false;
+            this.BackSwitchBox.DisplayDigits = 1;
+            this.BackSwitchBox.DoValueRollover = false;
+            this.BackSwitchBox.Enabled = false;
+            this.BackSwitchBox.Hexadecimal = true;
+            this.BackSwitchBox.IncrementMouseWheel = 1;
+            this.BackSwitchBox.Location = new System.Drawing.Point(260, 107);
+            this.BackSwitchBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.BackSwitchBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackSwitchBox.Name = "BackSwitchBox";
+            this.BackSwitchBox.ShiftMultiplier = 20;
+            this.BackSwitchBox.Size = new System.Drawing.Size(37, 20);
+            this.BackSwitchBox.TabIndex = 36;
+            this.BackSwitchBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.BackSwitchBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // FrontCamBox
+            // 
+            this.FrontCamBox.AlwaysFireValueChanged = false;
+            this.FrontCamBox.DisplayDigits = 1;
+            this.FrontCamBox.DoValueRollover = false;
+            this.FrontCamBox.Enabled = false;
+            this.FrontCamBox.Hexadecimal = true;
+            this.FrontCamBox.IncrementMouseWheel = 1;
+            this.FrontCamBox.Location = new System.Drawing.Point(147, 107);
+            this.FrontCamBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FrontCamBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontCamBox.Name = "FrontCamBox";
+            this.FrontCamBox.ShiftMultiplier = 20;
+            this.FrontCamBox.Size = new System.Drawing.Size(37, 20);
+            this.FrontCamBox.TabIndex = 35;
+            this.FrontCamBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontCamBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // FrontSwitchBox
+            // 
+            this.FrontSwitchBox.AlwaysFireValueChanged = false;
+            this.FrontSwitchBox.DisplayDigits = 1;
+            this.FrontSwitchBox.DoValueRollover = false;
+            this.FrontSwitchBox.Enabled = false;
+            this.FrontSwitchBox.Hexadecimal = true;
+            this.FrontSwitchBox.IncrementMouseWheel = 1;
+            this.FrontSwitchBox.Location = new System.Drawing.Point(67, 107);
+            this.FrontSwitchBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.FrontSwitchBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontSwitchBox.Name = "FrontSwitchBox";
+            this.FrontSwitchBox.ShiftMultiplier = 20;
+            this.FrontSwitchBox.Size = new System.Drawing.Size(37, 20);
+            this.FrontSwitchBox.TabIndex = 34;
+            this.FrontSwitchBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.FrontSwitchBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // ActorVariableBox
+            // 
+            this.ActorVariableBox.AlwaysFireValueChanged = false;
+            this.ActorVariableBox.DisplayDigits = 4;
+            this.ActorVariableBox.DoValueRollover = false;
+            this.ActorVariableBox.Enabled = false;
+            this.ActorVariableBox.Hexadecimal = true;
+            this.ActorVariableBox.IncrementMouseWheel = 1;
+            this.ActorVariableBox.Location = new System.Drawing.Point(267, 3);
+            this.ActorVariableBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ActorVariableBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorVariableBox.Name = "ActorVariableBox";
+            this.ActorVariableBox.ShiftMultiplier = 20;
+            this.ActorVariableBox.Size = new System.Drawing.Size(100, 20);
+            this.ActorVariableBox.TabIndex = 33;
+            this.ToolTipHelper.SetToolTip(this.ActorVariableBox, "Hold middleclick on the actor in the viewport to move it with the mouse");
+            this.ActorVariableBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorVariableBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
+            // ActorNumberBox
+            // 
+            this.ActorNumberBox.AlwaysFireValueChanged = false;
+            this.ActorNumberBox.DisplayDigits = 4;
+            this.ActorNumberBox.DoValueRollover = false;
+            this.ActorNumberBox.Enabled = false;
+            this.ActorNumberBox.Hexadecimal = true;
+            this.ActorNumberBox.IncrementMouseWheel = 1;
+            this.ActorNumberBox.Location = new System.Drawing.Point(74, 3);
+            this.ActorNumberBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ActorNumberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorNumberBox.Name = "ActorNumberBox";
+            this.ActorNumberBox.ShiftMultiplier = 20;
+            this.ActorNumberBox.Size = new System.Drawing.Size(100, 20);
+            this.ActorNumberBox.TabIndex = 32;
+            this.ToolTipHelper.SetToolTip(this.ActorNumberBox, "Hold middleclick on the actor in the viewport to move it with the mouse");
+            this.ActorNumberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorNumberBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
+            // 
             // PresetDropdown
             // 
             this.PresetDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -234,6 +458,36 @@
             this.ActorPropertyLabel.Size = new System.Drawing.Size(37, 13);
             this.ActorPropertyLabel.TabIndex = 31;
             this.ActorPropertyLabel.Text = "Value:";
+            // 
+            // ActorListBoxValue
+            // 
+            this.ActorListBoxValue.AlwaysFireValueChanged = false;
+            this.ActorListBoxValue.DisplayDigits = 1;
+            this.ActorListBoxValue.DoValueRollover = true;
+            this.ActorListBoxValue.Enabled = false;
+            this.ActorListBoxValue.Hexadecimal = true;
+            this.ActorListBoxValue.IncrementMouseWheel = 3;
+            this.ActorListBoxValue.Location = new System.Drawing.Point(177, 154);
+            this.ActorListBoxValue.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.ActorListBoxValue.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            -2147483648});
+            this.ActorListBoxValue.Name = "ActorListBoxValue";
+            this.ActorListBoxValue.ShiftMultiplier = 10;
+            this.ActorListBoxValue.Size = new System.Drawing.Size(67, 20);
+            this.ActorListBoxValue.TabIndex = 30;
+            this.ActorListBoxValue.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ActorListBoxValue.ValueChanged += new System.EventHandler(this.ActorListBoxValue_ValueChanged);
             // 
             // ActorVariableListBox
             // 
@@ -437,321 +691,6 @@
             this.label1.TabIndex = 19;
             this.label1.Text = "Back Room:";
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Enabled = false;
-            this.label13.Location = new System.Drawing.Point(3, 83);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(57, 13);
-            this.label13.TabIndex = 11;
-            this.label13.Text = "Z Position:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Enabled = false;
-            this.label12.Location = new System.Drawing.Point(3, 57);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(57, 13);
-            this.label12.TabIndex = 9;
-            this.label12.Text = "Y Position:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Enabled = false;
-            this.label14.Location = new System.Drawing.Point(196, 83);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(60, 13);
-            this.label14.TabIndex = 17;
-            this.label14.Text = "Z Rotation:";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Enabled = false;
-            this.label16.Location = new System.Drawing.Point(196, 31);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(60, 13);
-            this.label16.TabIndex = 13;
-            this.label16.Text = "X Rotation:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Enabled = false;
-            this.label9.Location = new System.Drawing.Point(3, 6);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(21, 13);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "ID:";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Enabled = false;
-            this.label11.Location = new System.Drawing.Point(3, 31);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(57, 13);
-            this.label11.TabIndex = 7;
-            this.label11.Text = "X Position:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Enabled = false;
-            this.label15.Location = new System.Drawing.Point(196, 57);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(60, 13);
-            this.label15.TabIndex = 15;
-            this.label15.Text = "Y Rotation:";
-            // 
-            // ActorTextBox
-            // 
-            this.ActorTextBox.Location = new System.Drawing.Point(177, 180);
-            this.ActorTextBox.Name = "ActorTextBox";
-            this.ActorTextBox.ReadOnly = true;
-            this.ActorTextBox.Size = new System.Drawing.Size(210, 73);
-            this.ActorTextBox.TabIndex = 102;
-            this.ActorTextBox.Text = "";
-            this.ActorTextBox.Visible = false;
-            // 
-            // DeleteButton
-            // 
-            this.DeleteButton.Enabled = false;
-            this.DeleteButton.Location = new System.Drawing.Point(309, 17);
-            this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(80, 23);
-            this.DeleteButton.TabIndex = 19;
-            this.DeleteButton.Text = "Delete";
-            this.DeleteButton.UseVisualStyleBackColor = true;
-            this.DeleteButton.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // AddButton
-            // 
-            this.AddButton.Enabled = false;
-            this.AddButton.Location = new System.Drawing.Point(130, 17);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(80, 23);
-            this.AddButton.TabIndex = 18;
-            this.AddButton.Text = "Add";
-            this.ToolTipHelper.SetToolTip(this.AddButton, "Hold SHIFT to add in front of camera");
-            this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
-            // 
-            // BackCamBox
-            // 
-            this.BackCamBox.AlwaysFireValueChanged = false;
-            this.BackCamBox.DisplayDigits = 1;
-            this.BackCamBox.DoValueRollover = false;
-            this.BackCamBox.Enabled = false;
-            this.BackCamBox.Hexadecimal = true;
-            this.BackCamBox.IncrementMouseWheel = 1;
-            this.BackCamBox.Location = new System.Drawing.Point(340, 107);
-            this.BackCamBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.BackCamBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.BackCamBox.Name = "BackCamBox";
-            this.BackCamBox.ShiftMultiplier = 20;
-            this.BackCamBox.Size = new System.Drawing.Size(37, 20);
-            this.BackCamBox.TabIndex = 37;
-            this.BackCamBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.BackCamBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // BackSwitchBox
-            // 
-            this.BackSwitchBox.AlwaysFireValueChanged = false;
-            this.BackSwitchBox.DisplayDigits = 1;
-            this.BackSwitchBox.DoValueRollover = false;
-            this.BackSwitchBox.Enabled = false;
-            this.BackSwitchBox.Hexadecimal = true;
-            this.BackSwitchBox.IncrementMouseWheel = 1;
-            this.BackSwitchBox.Location = new System.Drawing.Point(260, 107);
-            this.BackSwitchBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.BackSwitchBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.BackSwitchBox.Name = "BackSwitchBox";
-            this.BackSwitchBox.ShiftMultiplier = 20;
-            this.BackSwitchBox.Size = new System.Drawing.Size(37, 20);
-            this.BackSwitchBox.TabIndex = 36;
-            this.BackSwitchBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.BackSwitchBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // FrontCamBox
-            // 
-            this.FrontCamBox.AlwaysFireValueChanged = false;
-            this.FrontCamBox.DisplayDigits = 1;
-            this.FrontCamBox.DoValueRollover = false;
-            this.FrontCamBox.Enabled = false;
-            this.FrontCamBox.Hexadecimal = true;
-            this.FrontCamBox.IncrementMouseWheel = 1;
-            this.FrontCamBox.Location = new System.Drawing.Point(147, 107);
-            this.FrontCamBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.FrontCamBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FrontCamBox.Name = "FrontCamBox";
-            this.FrontCamBox.ShiftMultiplier = 20;
-            this.FrontCamBox.Size = new System.Drawing.Size(37, 20);
-            this.FrontCamBox.TabIndex = 35;
-            this.FrontCamBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FrontCamBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // FrontSwitchBox
-            // 
-            this.FrontSwitchBox.AlwaysFireValueChanged = false;
-            this.FrontSwitchBox.DisplayDigits = 1;
-            this.FrontSwitchBox.DoValueRollover = false;
-            this.FrontSwitchBox.Enabled = false;
-            this.FrontSwitchBox.Hexadecimal = true;
-            this.FrontSwitchBox.IncrementMouseWheel = 1;
-            this.FrontSwitchBox.Location = new System.Drawing.Point(67, 107);
-            this.FrontSwitchBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.FrontSwitchBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FrontSwitchBox.Name = "FrontSwitchBox";
-            this.FrontSwitchBox.ShiftMultiplier = 20;
-            this.FrontSwitchBox.Size = new System.Drawing.Size(37, 20);
-            this.FrontSwitchBox.TabIndex = 34;
-            this.FrontSwitchBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.FrontSwitchBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // ActorVariableBox
-            // 
-            this.ActorVariableBox.AlwaysFireValueChanged = false;
-            this.ActorVariableBox.DisplayDigits = 4;
-            this.ActorVariableBox.DoValueRollover = false;
-            this.ActorVariableBox.Enabled = false;
-            this.ActorVariableBox.Hexadecimal = true;
-            this.ActorVariableBox.IncrementMouseWheel = 1;
-            this.ActorVariableBox.Location = new System.Drawing.Point(267, 3);
-            this.ActorVariableBox.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.ActorVariableBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorVariableBox.Name = "ActorVariableBox";
-            this.ActorVariableBox.ShiftMultiplier = 20;
-            this.ActorVariableBox.Size = new System.Drawing.Size(100, 20);
-            this.ActorVariableBox.TabIndex = 33;
-            this.ToolTipHelper.SetToolTip(this.ActorVariableBox, "Hold middleclick on the actor in the viewport to move it with the mouse");
-            this.ActorVariableBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorVariableBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // ActorNumberBox
-            // 
-            this.ActorNumberBox.AlwaysFireValueChanged = false;
-            this.ActorNumberBox.DisplayDigits = 4;
-            this.ActorNumberBox.DoValueRollover = false;
-            this.ActorNumberBox.Enabled = false;
-            this.ActorNumberBox.Hexadecimal = true;
-            this.ActorNumberBox.IncrementMouseWheel = 1;
-            this.ActorNumberBox.Location = new System.Drawing.Point(74, 3);
-            this.ActorNumberBox.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.ActorNumberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorNumberBox.Name = "ActorNumberBox";
-            this.ActorNumberBox.ShiftMultiplier = 20;
-            this.ActorNumberBox.Size = new System.Drawing.Size(100, 20);
-            this.ActorNumberBox.TabIndex = 32;
-            this.ToolTipHelper.SetToolTip(this.ActorNumberBox, "Hold middleclick on the actor in the viewport to move it with the mouse");
-            this.ActorNumberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorNumberBox.ValueChanged += new System.EventHandler(this.GenericTextbox_Leave);
-            // 
-            // ActorListBoxValue
-            // 
-            this.ActorListBoxValue.AlwaysFireValueChanged = false;
-            this.ActorListBoxValue.DisplayDigits = 1;
-            this.ActorListBoxValue.DoValueRollover = true;
-            this.ActorListBoxValue.Enabled = false;
-            this.ActorListBoxValue.Hexadecimal = true;
-            this.ActorListBoxValue.IncrementMouseWheel = 3;
-            this.ActorListBoxValue.Location = new System.Drawing.Point(177, 154);
-            this.ActorListBoxValue.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.ActorListBoxValue.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            -2147483648});
-            this.ActorListBoxValue.Name = "ActorListBoxValue";
-            this.ActorListBoxValue.ShiftMultiplier = 10;
-            this.ActorListBoxValue.Size = new System.Drawing.Size(85, 20);
-            this.ActorListBoxValue.TabIndex = 30;
-            this.ActorListBoxValue.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ActorListBoxValue.ValueChanged += new System.EventHandler(this.ActorListBoxValue_ValueChanged);
-            // 
             // ActorZPos
             // 
             this.ActorZPos.AlwaysFireValueChanged = false;
@@ -781,6 +720,26 @@
             0,
             0});
             this.ActorZPos.ValueChanged += new System.EventHandler(this.ActorPosZ_ValueChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Enabled = false;
+            this.label13.Location = new System.Drawing.Point(3, 83);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(57, 13);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "Z Position:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Enabled = false;
+            this.label12.Location = new System.Drawing.Point(3, 57);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(57, 13);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "Y Position:";
             // 
             // ActorXRot
             // 
@@ -846,6 +805,46 @@
             0,
             0});
             this.ActorYPos.ValueChanged += new System.EventHandler(this.ActorPosY_ValueChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Enabled = false;
+            this.label14.Location = new System.Drawing.Point(196, 83);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(60, 13);
+            this.label14.TabIndex = 17;
+            this.label14.Text = "Z Rotation:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Enabled = false;
+            this.label16.Location = new System.Drawing.Point(196, 31);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(60, 13);
+            this.label16.TabIndex = 13;
+            this.label16.Text = "X Rotation:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Enabled = false;
+            this.label9.Location = new System.Drawing.Point(3, 6);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(21, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "ID:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Enabled = false;
+            this.label11.Location = new System.Drawing.Point(3, 31);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(57, 13);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "X Position:";
             // 
             // ActorZRot
             // 
@@ -948,6 +947,49 @@
             0});
             this.ActorXPos.ValueChanged += new System.EventHandler(this.ActorPosX_ValueChanged);
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Enabled = false;
+            this.label15.Location = new System.Drawing.Point(196, 57);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(60, 13);
+            this.label15.TabIndex = 15;
+            this.label15.Text = "Y Rotation:";
+            // 
+            // ActorTextBox
+            // 
+            this.ActorTextBox.Location = new System.Drawing.Point(177, 180);
+            this.ActorTextBox.Name = "ActorTextBox";
+            this.ActorTextBox.ReadOnly = true;
+            this.ActorTextBox.Size = new System.Drawing.Size(210, 73);
+            this.ActorTextBox.TabIndex = 102;
+            this.ActorTextBox.Text = "";
+            this.ActorTextBox.Visible = false;
+            // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Enabled = false;
+            this.DeleteButton.Location = new System.Drawing.Point(309, 17);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(80, 23);
+            this.DeleteButton.TabIndex = 19;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // AddButton
+            // 
+            this.AddButton.Enabled = false;
+            this.AddButton.Location = new System.Drawing.Point(130, 17);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(80, 23);
+            this.AddButton.TabIndex = 18;
+            this.AddButton.Text = "Add";
+            this.ToolTipHelper.SetToolTip(this.AddButton, "Hold SHIFT to add in front of camera");
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            // 
             // niceLine1
             // 
             this.niceLine1.Location = new System.Drawing.Point(9, 46);
@@ -966,12 +1008,6 @@
             this.groupBox3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.ZPosStrip.ResumeLayout(false);
-            this.ZPosStrip.PerformLayout();
-            this.YPosStrip.ResumeLayout(false);
-            this.YPosStrip.PerformLayout();
-            this.XPosStrip.ResumeLayout(false);
-            this.XPosStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BackCamBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BackSwitchBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FrontCamBox)).EndInit();
@@ -979,6 +1015,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ActorVariableBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorNumberBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorListBoxValue)).EndInit();
+            this.ZPosStrip.ResumeLayout(false);
+            this.ZPosStrip.PerformLayout();
+            this.YPosStrip.ResumeLayout(false);
+            this.YPosStrip.PerformLayout();
+            this.XPosStrip.ResumeLayout(false);
+            this.XPosStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ActorZPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorXRot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActorYPos)).EndInit();
@@ -1043,5 +1085,8 @@
         private System.Windows.Forms.Button ActorCopyButton;
         private System.Windows.Forms.Button ActorPasteButton;
         private System.Windows.Forms.RichTextBox ActorTextBox;
+        private System.Windows.Forms.CheckBox ActorPropertyBool;
+        private System.Windows.Forms.Button ActorPropertyRenameFlag;
+        private System.Windows.Forms.Label ActorPropertyFlagName;
     }
 }

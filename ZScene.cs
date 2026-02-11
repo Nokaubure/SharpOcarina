@@ -20,6 +20,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Xml;
 using System.Xml.Serialization;
 using Tommy;
+using static SharpOcarina.ZScene.ZRoom;
 
 namespace SharpOcarina
 {
@@ -71,11 +72,31 @@ namespace SharpOcarina
             public ObjFile ObjModel = null;
             [XmlIgnore]
             public List<NDisplayList> DLists = null;
+            [XmlIgnore]
+            public List<Type2Group> Type2Groups = new List<Type2Group>();
+
+
+
 
             public string ModelShortFilename
             {
                 get { return _ModelShortFilename; }
                 set { _ModelShortFilename = value; }
+            }
+
+            public class Type2Group
+            {
+                public int TagIndex;
+                public Vector3d MinCoordinate = new Vector3d(999999,999999,999999);
+                public Vector3d MaxCoordinate = new Vector3d(-999999, -999999, -999999);
+                public List<uint> OpaOffsets = new List<uint>();
+                public List<uint> XluOffsets = new List<uint>();
+                public List<NDisplayList> DisplayLists = new List<NDisplayList>();
+
+                public Type2Group(int tagindex)
+                {
+                    TagIndex = tagindex;
+                }
             }
 
             public class ZGroupSettings
@@ -268,6 +289,7 @@ namespace SharpOcarina
         public byte[] TitleCard = new byte[]{};
         public string MMTitleCard = "";
         public bool AutoCollision = false;
+        public Dictionary<int, string> SwitchFlagNames = new Dictionary<int, string>();
 
         [XmlIgnore]
         private uint cachecutsceneoffset = 0;
@@ -337,7 +359,7 @@ namespace SharpOcarina
         [XmlIgnore]
         private int CmdMeshHeaderOffset = -1, CmdObjectOffset = -1, CmdActorOffset = -1, CmdExtraLightOffset = -1, CmdAlternateRoomHeader = -1, PrerenderedFixOffset = -1;
         [XmlIgnore]
-        private int MeshHeaderOffset, ObjectOffset, ActorOffset, ExtraLightOffset;
+        private int MeshHeaderOffset, ObjectOffset, ActorOffset, ExtraLightOffset, Type2MeshHeaderOffset, Type2Entries;
         [XmlIgnore]
         private List<NTexture> Textures;
 
@@ -808,7 +830,29 @@ namespace SharpOcarina
                 NewRoom.GroupSettings.Custom[i] = true;
                 group.Custom = true;
             }
+            if (group.Name.ToLower().Contains("#group"))
+            {
+                string grouptag = group.Name.ToLower();
+                grouptag = grouptag.Substring(grouptag.IndexOf("#group") + 6);
+                grouptag = grouptag.Substring2(0, grouptag.IndexOf('#'));
 
+                int groupnumber = 0;
+                try
+                {
+                    if (!Int32.TryParse(grouptag, out groupnumber) && !Int32.TryParse(grouptag.Substring2(0, 3), out groupnumber))
+                    {
+                        MessageBox.Show("Bad usage of #Group tag, expected #GroupXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        group.Type2Group = groupnumber;
+                    }
+                }
+                catch (System.ArgumentOutOfRangeException)
+                {
+                    MessageBox.Show("Bad usage of #Group tag, expected #GroupXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
 
         }
 
@@ -2800,7 +2844,10 @@ namespace SharpOcarina
 
                 /* Create new room file, DList offset list and texture list */
                 if (cloneid == 0)
+                {
                     Room.RoomData = new List<byte>();
+                    Room.Type2Groups.Clear();
+                }
                 else
                 {
                     Room.RoomData = MainHeader.Rooms[i].RoomData;
@@ -3367,7 +3414,7 @@ namespace SharpOcarina
                                 MessageBox.Show("Animation segment " + Room.TrueGroups[j].AnimationBank + " is empty...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
-                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].TexPointerPlus1, Room.TrueGroups[j].AnimationBank, 3);
+                        NDisplayList DList = new NDisplayList(Scale, Room.TrueGroups[j].TintAlpha, Room.TrueGroups[j].MultiTexAlpha, 1.0f, (Room.TrueGroups[j].ReverseLight) ? !OutdoorLight : OutdoorLight, Room.TrueGroups[j].BackfaceCulling, Room.TrueGroups[j].Animated, Room.TrueGroups[j].Metallic, Room.TrueGroups[j].Decal, Room.TrueGroups[j].Pixelated, Room.TrueGroups[j].Billboard, Room.TrueGroups[j].TwoAxisBillboard, Room.TrueGroups[j].IgnoreFog, Room.TrueGroups[j].SmoothRGBAEdges, Room.TrueGroups[j].EnvColor, Room.TrueGroups[j].AlphaMask, Room.TrueGroups[j].RenderLast, Room.TrueGroups[j].VertexNormals, Room.AffectedByPointLight, Room.TrueGroups[j].ScaledNormals, Room.TrueGroups[j].TexPointerPlus1, Room.TrueGroups[j].Type2Group, Room.TrueGroups[j].AnimationBank, 3);
                         DList.Convert(Room.ObjModel, Room.TrueGroups[j], Textures, (!Prerendered) ? (uint)Room.RoomData.Count : (uint)(Room.RoomData.Count + DListData.Count), SceneSettings, AdditionalTextures);
                         if (DList.Data != null)
                         {
@@ -3385,6 +3432,19 @@ namespace SharpOcarina
                                         MainForm.HeaderMessages.Add("#define Room" + RoomIndex + "_" + groupname + "_Vtx_Num " + DList.VertexCount);
                                 }
                                 Room.RoomData.AddRange(DList.Data);
+
+                                //type2 builds the Type2Groups
+                                if (Room.TrueGroups[j].Type2Group != -1)
+                                {
+                                    if (Room.Type2Groups.FindIndex(x => x.TagIndex == Room.TrueGroups[j].Type2Group) == -1)
+                                    {
+                                        ZRoom.Type2Group newt2 = new ZRoom.Type2Group(Room.TrueGroups[j].Type2Group);
+                                        newt2.DisplayLists.Add(DList);
+                                        Room.Type2Groups.Add(newt2);
+                                    }
+                                    else
+                                        Room.Type2Groups.Find(x => x.TagIndex == Room.TrueGroups[j].Type2Group).DisplayLists.Add(DList);
+                                }
                             }
                             else
                             {
@@ -3610,12 +3670,6 @@ namespace SharpOcarina
                     }
 
 
-
-                if (Room.Type2 && Room.DLists.Count > 64)
-                {
-                    MessageBox.Show($"Your room has {Room.DLists.Count} DLists while only a maximum of 64 DLists are allowed on Type2 Rooms", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
                 /* Fix room header and add missing data */
                 FixRoomHeader(Room);
@@ -5043,9 +5097,7 @@ namespace SharpOcarina
                         else
                         {
                             //Type 2
-                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x02000000 | ((opaqueLists.Count + translucentLists.Count) << 16)));
-                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset + 12));
-                            Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | (MeshHeaderOffset + 12) + ((opaqueLists.Count + translucentLists.Count) * 16)));
+                            Type2MeshHeaderOffset = MeshHeaderOffset;
                         }
                         MeshHeaderOffset += 12;
                     }
@@ -5082,43 +5134,112 @@ namespace SharpOcarina
                         {
                             //Type 2
 
+                            int Type2Entries = 0;
 
-                            for (int i = 0; i < opaqueLists.Count; i++)
+                            for (int i = 0; i < Room.Type2Groups.Count; i++)
                             {
+                                double minX = Room.Type2Groups[i].DisplayLists.Min(x => x.MinCoordinate.X);
+                                double minY = Room.Type2Groups[i].DisplayLists.Min(x => x.MinCoordinate.Y);
+                                double minZ = Room.Type2Groups[i].DisplayLists.Min(x => x.MinCoordinate.Z);
+                                double maxX = Room.Type2Groups[i].DisplayLists.Max(x => x.MaxCoordinate.X);
+                                double maxY = Room.Type2Groups[i].DisplayLists.Max(x => x.MaxCoordinate.Y);
+                                double maxZ = Room.Type2Groups[i].DisplayLists.Max(x => x.MaxCoordinate.Z);
+                                ushort midX = (ushort)(minX + ((maxX - minX) / 2));
+                                ushort midY = (ushort)(minY + ((maxY - minY) / 2));
+                                ushort midZ = (ushort)(minZ + ((maxZ - minZ) / 2));
 
-                                ushort midX = (ushort)(opaqueLists[i].MinCoordinate.X + ((opaqueLists[i].MaxCoordinate.X - opaqueLists[i].MinCoordinate.X) / 2));
-                                ushort midY = (ushort)(opaqueLists[i].MinCoordinate.Y + ((opaqueLists[i].MaxCoordinate.Y - opaqueLists[i].MinCoordinate.Y) / 2));
-                                ushort midZ = (ushort)(opaqueLists[i].MinCoordinate.Z + ((opaqueLists[i].MaxCoordinate.Z - opaqueLists[i].MinCoordinate.Z) / 2));
-
-                                var diagonal = opaqueLists[i].MaxCoordinate - opaqueLists[i].MinCoordinate;
+                                var diagonal = new Vector3d(maxX, maxY, maxZ) - new Vector3d(minX, minY, minZ);
                                 ushort radius = (ushort)((diagonal.Length / 2.0) + 1);
+
+                                List<NDisplayList> opaLists = Room.Type2Groups[i].DisplayLists.FindAll(DL => (DL.TintAlpha >> 24) == 255 && !Room.LODdlists.Contains(DL));
+                                List<NDisplayList> xluLists = Room.Type2Groups[i].DisplayLists.FindAll(DL => (DL.TintAlpha >> 24) != 255 && !Room.LODdlists.Contains(DL));
+
+                                uint opaoffset = 0;
+                                uint xluoffset = 0;
+                                if (opaLists.Count != 0)
+                                {
+                                    opaoffset = (uint)Room.RoomData.Count;
+                                    for (int y = 0; y < opaLists.Count; y++)
+                                    {
+                                        Helpers.Append32(ref Room.RoomData, 0xDE000000);
+                                        Helpers.Append32(ref Room.RoomData, (uint)(0x03000000 | opaLists[y].Offset));
+                                    }
+                                    Helpers.Append64(ref Room.RoomData, 0xDF00000000000000);
+                                }
+                                if (xluLists.Count != 0)
+                                {
+                                    xluoffset = (uint)Room.RoomData.Count;
+                                    for (int y = 0; y < xluLists.Count; y++)
+                                    {
+                                        Helpers.Append32(ref Room.RoomData, 0xDE000000);
+                                        Helpers.Append32(ref Room.RoomData, (uint)(0x03000000 | xluLists[y].Offset));
+                                    }
+                                    Helpers.Append64(ref Room.RoomData, 0xDF00000000000000);
+                                }
+
 
                                 Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset, midX); //X
                                 Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 2, midY); //Y
                                 Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 4, midZ); //Z
                                 Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 6, radius); //bounding sphere radius
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | opaqueLists[i].Offset));
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 12, 0);
+                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, opaoffset == 0 ? 0 : (uint)(0x03000000 | opaoffset));
+                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 12, xluoffset == 0 ? 0 : (uint)(0x03000000 | xluoffset));
                                 MeshHeaderOffset += 16;
+                                Type2Entries++;
+                            }
+                            for (int i = 0; i < opaqueLists.Count; i++)
+                            {
+                                if (opaqueLists[i].Type2Group == -1)
+                                {
+                                    ushort midX = (ushort)(opaqueLists[i].MinCoordinate.X + ((opaqueLists[i].MaxCoordinate.X - opaqueLists[i].MinCoordinate.X) / 2));
+                                    ushort midY = (ushort)(opaqueLists[i].MinCoordinate.Y + ((opaqueLists[i].MaxCoordinate.Y - opaqueLists[i].MinCoordinate.Y) / 2));
+                                    ushort midZ = (ushort)(opaqueLists[i].MinCoordinate.Z + ((opaqueLists[i].MaxCoordinate.Z - opaqueLists[i].MinCoordinate.Z) / 2));
+
+                                    var diagonal = opaqueLists[i].MaxCoordinate - opaqueLists[i].MinCoordinate;
+                                    ushort radius = (ushort)((diagonal.Length / 2.0) + 1);
+
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset, midX); //X
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 2, midY); //Y
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 4, midZ); //Z
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 6, radius); //bounding sphere radius
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | opaqueLists[i].Offset));
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 12, 0);
+                                    MeshHeaderOffset += 16;
+                                    Type2Entries++;
+                                }
                             }
                             for (int i = 0; i < translucentLists.Count; i++)
                             {
+                                if (translucentLists[i].Type2Group == -1)
+                                {
+                                    ushort midX = (ushort)(translucentLists[i].MinCoordinate.X + ((translucentLists[i].MaxCoordinate.X - translucentLists[i].MinCoordinate.X) / 2));
+                                    ushort midY = (ushort)(translucentLists[i].MinCoordinate.Y + ((translucentLists[i].MaxCoordinate.Y - translucentLists[i].MinCoordinate.Y) / 2));
+                                    ushort midZ = (ushort)(translucentLists[i].MinCoordinate.Z + ((translucentLists[i].MaxCoordinate.Z - translucentLists[i].MinCoordinate.Z) / 2));
 
-                                ushort midX = (ushort)(translucentLists[i].MinCoordinate.X + ((translucentLists[i].MaxCoordinate.X - translucentLists[i].MinCoordinate.X) / 2));
-                                ushort midY = (ushort)(translucentLists[i].MinCoordinate.Y + ((translucentLists[i].MaxCoordinate.Y - translucentLists[i].MinCoordinate.Y) / 2));
-                                ushort midZ = (ushort)(translucentLists[i].MinCoordinate.Z + ((translucentLists[i].MaxCoordinate.Z - translucentLists[i].MinCoordinate.Z) / 2));
+                                    var diagonal = translucentLists[i].MaxCoordinate - translucentLists[i].MinCoordinate;
+                                    ushort radius = (ushort)((diagonal.Length / 2.0) + 1);
 
-                                var diagonal = translucentLists[i].MaxCoordinate - translucentLists[i].MinCoordinate;
-                                ushort radius = (ushort)((diagonal.Length / 2.0) + 1);
-
-                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset, midX); //X
-                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 2, midY); //Y
-                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 4, midZ); //Z
-                                Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 6, radius); //bounding sphere radius
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, 0);
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 12, (uint)(0x03000000 | translucentLists[i].Offset));
-                                MeshHeaderOffset += 16;
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset, midX); //X
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 2, midY); //Y
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 4, midZ); //Z
+                                    Helpers.Overwrite16(ref Room.RoomData, MeshHeaderOffset + 6, radius); //bounding sphere radius
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, 0);
+                                    Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 12, (uint)(0x03000000 | translucentLists[i].Offset));
+                                    MeshHeaderOffset += 16;
+                                    Type2Entries++;
+                                }
                             }
+
+                            if (Type2Entries > 64)
+                            {
+                                MessageBox.Show($"Your room has {Type2Entries} DList groups while only a maximum of 64 are allowed on Type2 Rooms (DList groups require SharpOcarina export 1.1.5, update it via Help tab if needed)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+
+                            Helpers.Overwrite32(ref Room.RoomData, Type2MeshHeaderOffset, (uint)(0x02000000 | ((Type2Entries) << 16)));
+                            Helpers.Overwrite32(ref Room.RoomData, Type2MeshHeaderOffset + 4, (uint)(0x03000000 | Type2MeshHeaderOffset + 12));
+                            Helpers.Overwrite32(ref Room.RoomData, Type2MeshHeaderOffset + 8, (uint)(0x03000000 | (Type2MeshHeaderOffset + 12) + ((Type2Entries) * 16)));
                         }
                     }
 

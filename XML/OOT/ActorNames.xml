@@ -652,11 +652,10 @@ Out-of-bounds Plane (typ.)</Notes>
     <Variable Var="000A"> Red warp, disappears</Variable>
     <Variable Var="000B"> Area fails to load</Variable>
   </Actor>
-  <Actor Key="005E" Object="00A4" Name="Torch" DebugName="Obj_Syokudai" Properties="003F,03C0" PropertiesNames="Switch Flag,# of Torches" Category="6">
+  <Actor Key="005E" Object="00A4" Name="Torch" DebugName="Obj_Syokudai" Properties="003F,03C0,0400" PropertiesNames="Switch Flag,# of Torches,Is Lit" Category="6">
     <Variable Var="0000"> Golden Torch</Variable>
     <Variable Var="1000"> Timed Torch</Variable>
     <Variable Var="2000"> Unlit Wooden Torch</Variable>
-    <Variable Var="2400"> Lit Wooden Torch</Variable>
     <Notes>+0x3C0 = Torches to light to solve puzzle (Timed Torch)
 	+0x3F = Switch Flag</Notes>
   </Actor>
@@ -1570,8 +1569,8 @@ Z ROTATION +0xFF = Spawn Item Trigger //Type 03 only
   <Actor Key="0116" Object="010A" Name="Skullkid's Needle" DebugName="En_Skjneedle" Category="5">
   </Actor>
   <Actor Key="0117" Name="Silver Rupee/Large Rotating Pot" DebugName="En_G_Switch" Properties="003F,0FC0" PropertiesNames="Switch Flag,Count" Category="6">
-    <Variable Var="0000"> Rupee Chain</Variable>
-    <Variable Var="1000"> Silver Rupee //Check SharpOcarina fill with... example for how to use this puzzle</Variable>
+    <Variable Var="0000"> Silver Rupee control //Invisible, used to set the Count, which is the amount of silver rupees (var 1000) you need to collect to set flag</Variable>
+    <Variable Var="1000"> Silver Rupee //Set count to 3F, to define the real count use type 0000</Variable>
     <Variable Var="2000"> Horseback Archery Pot</Variable>
     <Notes>+0x0FC0 = Count
 +0x003F = Switch Flag</Notes>

@@ -1,5 +1,36 @@
 ﻿///CHANGELOG///
 
+--------------
+---1.66
+--------------
+
+- Updated SharpOcarina plugin to 1.1.5 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_so_3.0.zip)
+	- Groups are now kept together with a new #Group tag that its exported automatically, necessary for type 2 rooms (cullable room type) to work properly
+
+- Updated Objex2 plugin to 2.6.5 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_objex2.zip)
+	- Added a button to automatically fix the vertex assigned to various groups of the selected model by only keeping those with the highest weight
+
+- Cullable Rooms (Type 2) now properly group dlists by how the groups are defined in blender, so this feature is now fully functional. You need to update the SO plugin to 1.1.5 else the group data is lost on export.
+
+- Groups with #NoMesh tag no longer appear in the room tab, they're no longer rendered in non-N64 preview and they cant be selected via ctrl+rightclick. This is a big optimization change so it may lead to new bugs, let me know if you find any.
+
+- Values that can only be 0 or 1 are now displayed as checkboxes in actor settings
+
+- Switch flags can now be given a name in the scene, this has 0 impact ingame and its only for organization purposes. Name will also be displayed in the flag log.
+
+- Fog distance in environments is now displayed in decimal
+
+- Prerendered scenes are now accurately aligned to ingame resolution when previewing cameras, as well as the fov
+
+- FOV value is now displayed in decimals, and fixed cameras will be previewed with their fov value, as long as its indicated that they make use of the FOV
+
+- Added --force-code, --force-audio and --clean in advanced z64rom builds tab
+
+- Fixed a rendering issue with prerendered scenes (present since 1.65)
+
+- Fixed an issue where multitexture slot failed to be match Blender's in certain cases when pressing Reload button
+
+- Fixed an issue where the tags of a multitexture would not get updated on reload
 
 --------------
 ---1.65

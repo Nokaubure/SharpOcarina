@@ -429,6 +429,7 @@ namespace SharpOcarina
             this.EnvironmentSelect = new SharpOcarina.NumericUpDownEx();
             this.niceLine3 = new SharpOcarina.NiceLine();
             this.tabRoomEnv = new System.Windows.Forms.TabPage();
+            this.RoomType2CheckBox = new System.Windows.Forms.CheckBox();
             this.Roomaffectedpointlightscheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -871,7 +872,9 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.RoomType2CheckBox = new System.Windows.Forms.CheckBox();
+            this.rebuildForceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rebuildForceAudioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rebuildCleanStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1286,6 +1289,9 @@ namespace SharpOcarina
             // 
             this.advancedBuildToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rebuildAllFilesforceToolStripMenuItem,
+            this.rebuildForceCodeToolStripMenuItem,
+            this.rebuildForceAudioToolStripMenuItem,
+            this.rebuildCleanStripMenuItem,
             this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem});
             this.advancedBuildToolStripMenuItem.Enabled = false;
             this.advancedBuildToolStripMenuItem.Name = "advancedBuildToolStripMenuItem";
@@ -2873,6 +2879,8 @@ namespace SharpOcarina
             this.CameraFov.ShiftMultiplier = 1;
             this.CameraFov.Size = new System.Drawing.Size(100, 20);
             this.CameraFov.TabIndex = 20;
+            this.EnvironmentControlTooltip.SetToolTip(this.CameraFov, "If this value is higher than 1000 and its being used as FOV, it will be divided b" +
+        "y 100 and use the last 2 digits as decimals");
             this.CameraFov.Value = new decimal(new int[] {
             0,
             0,
@@ -6254,7 +6262,6 @@ namespace SharpOcarina
             this.FogDistance.DisplayDigits = 1;
             this.FogDistance.DoValueRollover = false;
             this.FogDistance.Enabled = false;
-            this.FogDistance.Hexadecimal = true;
             this.FogDistance.IncrementMouseWheel = 1;
             this.FogDistance.Location = new System.Drawing.Point(85, 107);
             this.FogDistance.Maximum = new decimal(new int[] {
@@ -6271,7 +6278,7 @@ namespace SharpOcarina
             this.FogDistance.ShiftMultiplier = 20;
             this.FogDistance.Size = new System.Drawing.Size(80, 20);
             this.FogDistance.TabIndex = 22;
-            this.EnvironmentControlTooltip.SetToolTip(this.FogDistance, "Max value is 3E4, the lower the closer the fog is to the camera");
+            this.EnvironmentControlTooltip.SetToolTip(this.FogDistance, "Max value is 996, the lower the value the closer the fog is to the camera");
             this.FogDistance.Value = new decimal(new int[] {
             0,
             0,
@@ -6447,6 +6454,18 @@ namespace SharpOcarina
             this.tabRoomEnv.TabIndex = 8;
             this.tabRoomEnv.Text = "Room Env.";
             this.tabRoomEnv.UseVisualStyleBackColor = true;
+            // 
+            // RoomType2CheckBox
+            // 
+            this.RoomType2CheckBox.AutoSize = true;
+            this.RoomType2CheckBox.Location = new System.Drawing.Point(14, 492);
+            this.RoomType2CheckBox.Name = "RoomType2CheckBox";
+            this.RoomType2CheckBox.Size = new System.Drawing.Size(251, 17);
+            this.RoomType2CheckBox.TabIndex = 45;
+            this.RoomType2CheckBox.Text = "Room groups cull behind other groups (Type 2)*";
+            this.EnvironmentControlTooltip.SetToolTip(this.RoomType2CheckBox, resources.GetString("RoomType2CheckBox.ToolTip"));
+            this.RoomType2CheckBox.UseVisualStyleBackColor = true;
+            this.RoomType2CheckBox.CheckedChanged += new System.EventHandler(this.RoomType2CheckBox_CheckedChanged);
             // 
             // Roomaffectedpointlightscheckbox
             // 
@@ -9784,16 +9803,17 @@ namespace SharpOcarina
             // CutsceneAbsolutePositionAngleView
             // 
             this.CutsceneAbsolutePositionAngleView.AlwaysFireValueChanged = false;
+            this.CutsceneAbsolutePositionAngleView.DecimalPlaces = 2;
             this.CutsceneAbsolutePositionAngleView.DisplayDigits = 1;
             this.CutsceneAbsolutePositionAngleView.DoValueRollover = false;
             this.CutsceneAbsolutePositionAngleView.Enabled = false;
             this.CutsceneAbsolutePositionAngleView.IncrementMouseWheel = 1;
             this.CutsceneAbsolutePositionAngleView.Location = new System.Drawing.Point(98, 250);
             this.CutsceneAbsolutePositionAngleView.Maximum = new decimal(new int[] {
-            179,
+            17999,
             0,
             0,
-            0});
+            131072});
             this.CutsceneAbsolutePositionAngleView.Minimum = new decimal(new int[] {
             1,
             0,
@@ -13102,15 +13122,16 @@ namespace SharpOcarina
             // 
             this.ViewportFOV.AlwaysFireValueChanged = false;
             this.ViewportFOV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ViewportFOV.DecimalPlaces = 2;
             this.ViewportFOV.DisplayDigits = 1;
             this.ViewportFOV.DoValueRollover = false;
             this.ViewportFOV.IncrementMouseWheel = 1;
             this.ViewportFOV.Location = new System.Drawing.Point(878, 4);
             this.ViewportFOV.Maximum = new decimal(new int[] {
-            179,
+            17999,
             0,
             0,
-            0});
+            131072});
             this.ViewportFOV.Minimum = new decimal(new int[] {
             1,
             0,
@@ -13171,17 +13192,26 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // RoomType2CheckBox
+            // rebuildForceCodeToolStripMenuItem
             // 
-            this.RoomType2CheckBox.AutoSize = true;
-            this.RoomType2CheckBox.Location = new System.Drawing.Point(14, 492);
-            this.RoomType2CheckBox.Name = "RoomType2CheckBox";
-            this.RoomType2CheckBox.Size = new System.Drawing.Size(251, 17);
-            this.RoomType2CheckBox.TabIndex = 45;
-            this.RoomType2CheckBox.Text = "Room groups cull behind other groups (Type 2)*";
-            this.EnvironmentControlTooltip.SetToolTip(this.RoomType2CheckBox, resources.GetString("RoomType2CheckBox.ToolTip"));
-            this.RoomType2CheckBox.UseVisualStyleBackColor = true;
-            this.RoomType2CheckBox.CheckedChanged += new System.EventHandler(this.RoomType2CheckBox_CheckedChanged);
+            this.rebuildForceCodeToolStripMenuItem.Name = "rebuildForceCodeToolStripMenuItem";
+            this.rebuildForceCodeToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.rebuildForceCodeToolStripMenuItem.Text = "Rebuild only code files (--force-code)";
+            this.rebuildForceCodeToolStripMenuItem.Click += new System.EventHandler(this.rebuildForceCodeToolStripMenuItem_Click);
+            // 
+            // rebuildForceAudioToolStripMenuItem
+            // 
+            this.rebuildForceAudioToolStripMenuItem.Name = "rebuildForceAudioToolStripMenuItem";
+            this.rebuildForceAudioToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.rebuildForceAudioToolStripMenuItem.Text = "Rebuild only audio files (--force-audio)";
+            this.rebuildForceAudioToolStripMenuItem.Click += new System.EventHandler(this.rebuildForceAudioToolStripMenuItem_Click);
+            // 
+            // rebuildCleanStripMenuItem
+            // 
+            this.rebuildCleanStripMenuItem.Name = "rebuildCleanStripMenuItem";
+            this.rebuildCleanStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.rebuildCleanStripMenuItem.Text = "Clean project to remove deleted references (--clean)";
+            this.rebuildCleanStripMenuItem.Click += new System.EventHandler(this.rebuildCleanStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -14358,6 +14388,9 @@ namespace SharpOcarina
         private ToolStripMenuItem DebugRenameStructsByXMLMenuItem3;
         private ToolStripMenuItem ExportHeaderFileMenuItem;
         private CheckBox RoomType2CheckBox;
+        private ToolStripMenuItem rebuildForceAudioToolStripMenuItem;
+        private ToolStripMenuItem rebuildForceCodeToolStripMenuItem;
+        private ToolStripMenuItem rebuildCleanStripMenuItem;
     }
     }
 

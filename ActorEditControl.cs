@@ -1,14 +1,15 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Audio.OpenAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using OpenTK;
 
 namespace SharpOcarina
 {
@@ -349,6 +350,7 @@ namespace SharpOcarina
                     if (ActorVariableListBox.SelectedIndex < 0) ActorVariableListBox.SelectedIndex = 0;
                     ActorProperty prop = (ActorVariableListBox.Items[ActorVariableListBox.SelectedIndex] as ActorProperty);
                     ActorListBoxValue.Enabled = true;
+                    ActorPropertyBool.Enabled = true;
                     ActorVariableListBox.Enabled = true;
                     ActorPropertyLabel.Enabled = true;
                     PresetDropdown.Enabled = PresetDropdown.Visible = (prop.DropdItems != null && prop.DropdItems.Count != null && prop.DropdItems.Count > 0);
@@ -358,16 +360,40 @@ namespace SharpOcarina
                     // SetNumericUpDownValue(ActorListBoxValue, (Actors[ActorComboBox.SelectedIndex].Variable & prop.Mask) >> prop.Position);
                     ActorListBoxValue.Maximum = 0xFFFF;
 
-                    ActorListBoxValue.Value = Actors[ActorComboBox.SelectedIndex].GetPropertyValue(prop);
+                    int propvalue = Actors[ActorComboBox.SelectedIndex].GetPropertyValue(prop); 
+                    ActorListBoxValue.Value = propvalue;
 
                     ActorListBoxValue.Maximum = prop.Max;
                     ActorListBoxValue.Hexadecimal = !prop.Decimal;
+
+                    ActorListBoxValue.Visible = (ActorListBoxValue.Maximum > 1);
+
+                    ActorPropertyBool.Visible = (prop.Max == 1 && prop.DropdItems.Count == 0);
+
+                    ActorPropertyBool.Checked = (propvalue & 1) == 1;
+
+                    bool HasSwitchFlag = prop.Name.ToLower().Contains("switch flag");
+                    bool HasChestFlag = prop.Name.ToLower().Contains("chest flag");
+                    bool HasCollectibleFlag = prop.Name.ToLower().Contains("collectible flag");
+                    bool HasPathway = prop.Name.ToLower().Contains("path id") || prop.Name.ToLower().Contains("pathway id");
+
+                    if (HasSwitchFlag)
+                    {
+                        ActorPropertyFlagName.Visible = true;
+                        ActorPropertyRenameFlag.Visible = true;
+                        ActorPropertyFlagName.Text = MainForm.CurrentScene.SwitchFlagNames.ContainsKey(propvalue) ? MainForm.CurrentScene.SwitchFlagNames[propvalue] : "";
+                    }
+                    else
+                    {
+                        ActorPropertyFlagName.Visible = false;
+                        ActorPropertyRenameFlag.Visible = false;
+                    }
 
                     if (prop.DropdItems.Count > 0)
                     {
                         PresetDropdown.Items.AddRange(prop.DropdItems.ToArray());
                         PresetDropdown.SelectedIndex = 0;
-                        
+
                         foreach (SongItem preset in PresetDropdown.Items)
                         {
                             if (Convert.ToUInt16(preset.Value) == ActorListBoxValue.Value && (preset.Text != "Unknown"))
@@ -379,7 +405,7 @@ namespace SharpOcarina
 
                         }
                     }
-                    if (prop.DropdItems.Count == 0 && (prop.Name.ToLower().Contains("switch flag") || prop.Name.ToLower().Contains("chest flag") || prop.Name.ToLower().Contains("collectible flag") || prop.Name.ToLower().Contains("path id") || prop.Name.ToLower().Contains("pathway id")))
+                    if (prop.DropdItems.Count == 0 && (HasSwitchFlag || HasChestFlag || HasCollectibleFlag || HasPathway))
                     {
                         int entryIndex = 0;
                         int roomIndex = 0;
@@ -388,10 +414,10 @@ namespace SharpOcarina
 
                         int cachepropid = -1;
                         string propname = "";
-                        if (prop.Name.ToLower().Contains("switch flag")) { cachepropid = 0; propname = "Switch Flag "; }
-                        else if (prop.Name.ToLower().Contains("chest flag")) { cachepropid = 1; propname = "Chest Flag "; }
-                        else if (prop.Name.ToLower().Contains("collectible flag")) { cachepropid = 2; propname = "Collectible Flag "; }
-                        else if (prop.Name.ToLower().Contains("path id") || prop.Name.ToLower().Contains("pathway id")) { cachepropid = 3; propname = "Pathway ID "; }
+                        if (HasSwitchFlag) { cachepropid = 0; propname = "Switch Flag "; }
+                        else if (HasChestFlag) { cachepropid = 1; propname = "Chest Flag "; }
+                        else if (HasCollectibleFlag) { cachepropid = 2; propname = "Collectible Flag "; }
+                        else if (HasPathway) { cachepropid = 3; propname = "Pathway ID "; }
 
                         foreach (ZScene.ZRoom room in MainForm.CurrentScene.Rooms)
                         {
@@ -476,8 +502,11 @@ namespace SharpOcarina
                     ActorListBoxValue.Enabled = false;
                     ActorVariableListBox.Enabled = false;
                     ActorPropertyLabel.Enabled = false;
+                    ActorPropertyBool.Enabled = ActorPropertyBool.Visible = false;
                     ActorListBoxValue.Value = 0;
                     PresetDropdown.Enabled = PresetDropdown.Visible = false;
+                    ActorPropertyFlagName.Visible = false;
+                    ActorPropertyRenameFlag.Visible = false;
 
                 }
                 ActorTextBox.Visible = (ActorTextBox.Text != "");
@@ -892,20 +921,27 @@ namespace SharpOcarina
         {
                if (ActorVariableListBox.Items.Count > 0)
                {
+                    ActorProperty_SetValue((ushort)(ActorListBoxValue.Value));
+               }
+        }
+
+        private void ActorProperty_SetValue(ushort val)
+        {
+            if (ActorVariableListBox.Items.Count > 0)
+            {
                 ActorProperty prop = (ActorVariableListBox.Items[ActorVariableListBox.SelectedIndex] as ActorProperty);
-               // Actors[ActorComboBox.SelectedIndex].Variable = (ushort) ((Actors[ActorComboBox.SelectedIndex].Variable & (0xFFFF - prop.Mask)) | ((ushort)(ActorListBoxValue.Value) << prop.Position));
 
                 if (prop.Target == "Var")
-                    Actors[ActorComboBox.SelectedIndex].Variable = (ushort)((Actors[ActorComboBox.SelectedIndex].Variable & (0xFFFF - prop.Mask)) | ((ushort)(ActorListBoxValue.Value) << prop.Position));
+                    Actors[ActorComboBox.SelectedIndex].Variable = (ushort)((Actors[ActorComboBox.SelectedIndex].Variable & (0xFFFF - prop.Mask)) | (val << prop.Position));
                 else if (prop.Target == "XRot")
-                    Actors[ActorComboBox.SelectedIndex].XRot = (short)(((ushort)Actors[ActorComboBox.SelectedIndex].XRot & (0xFFFF - prop.Mask)) | ((ushort)(ActorListBoxValue.Value) << prop.Position));
+                    Actors[ActorComboBox.SelectedIndex].XRot = (short)(((ushort)Actors[ActorComboBox.SelectedIndex].XRot & (0xFFFF - prop.Mask)) | (val << prop.Position));
                 else if (prop.Target == "YRot")
-                    Actors[ActorComboBox.SelectedIndex].YRot = (short)(((ushort)Actors[ActorComboBox.SelectedIndex].YRot & (0xFFFF - prop.Mask)) | ((ushort)(ActorListBoxValue.Value) << prop.Position));
+                    Actors[ActorComboBox.SelectedIndex].YRot = (short)(((ushort)Actors[ActorComboBox.SelectedIndex].YRot & (0xFFFF - prop.Mask)) | (val << prop.Position));
                 else if (prop.Target == "ZRot")
-                    Actors[ActorComboBox.SelectedIndex].ZRot = (short)(((ushort)Actors[ActorComboBox.SelectedIndex].ZRot & (0xFFFF - prop.Mask)) | ((ushort)(ActorListBoxValue.Value) << prop.Position));
+                    Actors[ActorComboBox.SelectedIndex].ZRot = (short)(((ushort)Actors[ActorComboBox.SelectedIndex].ZRot & (0xFFFF - prop.Mask)) | (val << prop.Position));
 
                 UpdateActorEdit();
-               }
+            }
         }
 
         private void SetNumericUpDownValue(NumericUpDown control, decimal value)
@@ -1002,6 +1038,33 @@ namespace SharpOcarina
         private void ActorVariableListBox_KeyDown(object sender, KeyEventArgs e)
         {
             UpdateActorEdit();
+        }
+
+        private void ActorPropertyBool_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActorVariableListBox.Items.Count > 0 && ActorListBoxValue.Maximum == 1)
+            {
+                ActorProperty_SetValue((ushort)(ActorPropertyBool.Checked ? 1 : 0));
+            }
+        }
+
+        private void ActorPropertyRenameFlag_Click(object sender, EventArgs e)
+        {
+            ActorProperty prop = (ActorVariableListBox.Items[ActorVariableListBox.SelectedIndex] as ActorProperty);
+            int propvalue = Actors[ActorComboBox.SelectedIndex].GetPropertyValue(prop);
+
+            if (!MainForm.CurrentScene.SwitchFlagNames.ContainsKey(propvalue))
+                MainForm.CurrentScene.SwitchFlagNames.Add(propvalue, "");
+
+            using (PickString pickstring = new PickString("Set name of switch flag " + propvalue, MainForm.CurrentScene.SwitchFlagNames[propvalue]))
+            {
+                if (pickstring.ShowDialog() == DialogResult.OK)
+                {
+                    MainForm.CurrentScene.SwitchFlagNames[propvalue] = pickstring.result;
+                    ActorPropertyFlagName.Text = pickstring.result;
+                }
+            }
+
         }
     }
 

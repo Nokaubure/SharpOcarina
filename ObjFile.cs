@@ -318,6 +318,8 @@ namespace SharpOcarina
             public bool ScaledNormals = false;
             [XmlIgnore]
             public bool TexPointerPlus1 = false;
+            [XmlIgnore]
+            public int Type2Group = -1;
             public Vector3s PivotPoint = new Vector3s(32767, 32767, 32767);
 
             private List<Triangle> _Tris = new List<Triangle>();
@@ -1198,7 +1200,12 @@ namespace SharpOcarina
         {
             if (IgnoreMaterials && GroupToAdd.Name.ToLower().Contains("#nocollision"))
             {
-                DebugConsole.WriteLine("Skipping #NoCollision!");
+                //DebugConsole.WriteLine("Skipping #NoCollision!");
+                return;
+            }
+            else if (!IgnoreMaterials && GroupToAdd.Name.ToLower().Contains("#nomesh"))
+            {
+                //DebugConsole.WriteLine("Skipping #NoMesh!");
                 return;
             }
             CalculateVertexNormals(ref GroupToAdd);
@@ -1341,15 +1348,25 @@ namespace SharpOcarina
                 //if (MatToAdd.map_Ka != null && MatToAdd.map_Kd != null)
                 Materials.Add(MatToAdd);
 
-                if (MatToAdd.map_Ks != null && AdditionalTextures.Find(x => x.map_Kd == MatToAdd.map_Ks) == null)
+                
+
+                if (MatToAdd.map_Ks != null)
                 {
-                    string LoadPath = Path.IsPathRooted(MatToAdd.map_Ks) == true ? MatToAdd.map_Ks :  _BasePath + MatToAdd.map_Ks;
-                    MatToAdd.map_Ks = Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileName(LoadPath);
-                    Material mat = new Material();
-                    mat.map_Kd = mat.Name = MatToAdd.map_Ks;
-                    mat.tags = MatToAdd.tags_1;
-                    MatToAdd.tags_1 = "";
-                    AdditionalTextures.Add(mat);
+                    Material texel1mat = AdditionalTextures.Find(x => x.map_Kd == MatToAdd.map_Ks);
+                    if (texel1mat == null)
+                    {
+                        string LoadPath = Path.IsPathRooted(MatToAdd.map_Ks) == true ? MatToAdd.map_Ks : _BasePath + MatToAdd.map_Ks;
+                        MatToAdd.map_Ks = Path.GetDirectoryName(LoadPath) + Path.DirectorySeparatorChar + Path.GetFileName(LoadPath);
+                        Material mat = new Material();
+                        mat.map_Kd = mat.Name = MatToAdd.map_Ks;
+                        mat.tags = MatToAdd.tags_1;
+                        MatToAdd.tags_1 = "";
+                        AdditionalTextures.Add(mat);
+                    }
+                    else
+                    {
+                        texel1mat.tags = MatToAdd.tags_1;
+                    }
                 }
 
                 MaterialIsOpen = false;

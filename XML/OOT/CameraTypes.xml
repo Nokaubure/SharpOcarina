@@ -20,22 +20,22 @@
   <Camera Key="11">Default, far</Camera>
   <Camera Key="12">Default, zoomed, high Y-Axis, weird rotation</Camera>
   <Camera Key="13">Default, zoomed, high Y-Axis, weird rotation but to the opposite direction as 12</Camera>
-  <Camera Key="14">Fixed camera, no rotation</Camera>
-  <Camera Key="15">Fixed camera, no rotation</Camera>
-  <Camera Key="16">Fixed camera, focuses on link</Camera>
-  <Camera Key="17">??? black bars appear, camera points at random rotation</Camera>
+  <Camera Key="14" FOV="1">Fixed camera, no rotation, uses FOV</Camera>
+  <Camera Key="15" FOV="1">Fixed camera, no rotation, uses FOV</Camera>
+  <Camera Key="16" FOV="1">Fixed camera, focuses on link, uses FOV</Camera>
+  <Camera Key="17" FOV="1">??? black bars appear, camera points at random rotation, uses FOV</Camera>
   <Camera Key="18">Fixed camera, farther than 16, focuses on link</Camera>
-  <Camera Key="19">Fixed camera, no rotation, instant transition</Camera>
+  <Camera Key="19" FOV="1">Fixed camera, no rotation, instant transition, uses FOV</Camera>
   <Camera Key="1A">Fixed camera, disables the rest of the cameras once triggered, focuses on link</Camera>
-  <Camera Key="1B">Fixed camera, position updates towards east/west of the camera when link moves</Camera>
+  <Camera Key="1B" FOV="1">Fixed camera, position updates towards east/west of the camera when link moves, uses FOV</Camera>
   <Camera Key="1C">Fixed camera, door transition, black bars, transitions when player moves</Camera>
   <Camera Key="1D">CRASH</Camera>
   <Camera Key="1E">Crawlspace camera</Camera>
-  <Camera Key="1F">Fixed camera, no rotation, instant transition, resets with camera type 00</Camera>
-  <Camera Key="20">Fixed camera, no rotation, instant transition, disables the rest of the cameras once triggered</Camera>
+  <Camera Key="1F" FOV="1">Fixed camera, no rotation, instant transition, resets with camera type 00, uses FOV</Camera>
+  <Camera Key="20" FOV="1">Fixed camera, no rotation, instant transition, disables the rest of the cameras once triggered, uses FOV</Camera>
   <Camera Key="21">Camera position and rotation freezes until another camera type is triggered</Camera>
   <Camera Key="22">Same as 21</Camera>
-  <Camera Key="23">Fixed camera, focuses on link, instant transition</Camera>
+  <Camera Key="23" FOV="1">Fixed camera, focuses on link, instant transition, uses FOV</Camera>
   <Camera Key="24">???, focuses on link, behavior changes depending on which camera type you had before?</Camera>
   <Camera Key="25">CRASH</Camera>
   <Camera Key="26">Same as 21</Camera>

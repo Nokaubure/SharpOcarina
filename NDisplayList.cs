@@ -45,6 +45,7 @@ namespace SharpOcarina
         public bool PointLight;
         public bool ScaledNormals;
         public bool TexPointerPlus1;
+        public int Type2Group = -1;
 
         public short blackvertexypos;
 
@@ -119,7 +120,7 @@ namespace SharpOcarina
             Animated = false;
         }
 
-        public NDisplayList(float _Scale, uint _TintAlpha, uint _MultitextureAlpha, float _TexScale, bool outdoorLight, bool _Culling, bool _Animated, bool _Metallic, bool _Decal, bool _Pixelated, bool _Billboard, bool _TwoAxisBillboard, bool _IgnoreFog, bool _SmoothRGBAEdges, bool _EnvColor, bool _AlphaMask, bool _renderLast, bool _vertexNormals, bool _PointLight, bool _scaledNormals, bool _texPointerPlus1, int _AnimationBank,  int _bank = 0x03)
+        public NDisplayList(float _Scale, uint _TintAlpha, uint _MultitextureAlpha, float _TexScale, bool outdoorLight, bool _Culling, bool _Animated, bool _Metallic, bool _Decal, bool _Pixelated, bool _Billboard, bool _TwoAxisBillboard, bool _IgnoreFog, bool _SmoothRGBAEdges, bool _EnvColor, bool _AlphaMask, bool _renderLast, bool _vertexNormals, bool _PointLight, bool _scaledNormals, bool _texPointerPlus1, int _Type2Group, int _AnimationBank,  int _bank = 0x03)
         {
             Scale = _Scale;
             TintAlpha = _TintAlpha;
@@ -144,6 +145,7 @@ namespace SharpOcarina
             PointLight = _PointLight;
             ScaledNormals = _scaledNormals;
             TexPointerPlus1 = _texPointerPlus1;
+            Type2Group = _Type2Group;
         }
 
         #endregion

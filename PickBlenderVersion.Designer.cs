@@ -81,6 +81,7 @@
             this.Controls.Add(this.BlenderVersionComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximumSize = new System.Drawing.Size(300, 246);
             this.MinimumSize = new System.Drawing.Size(300, 246);
             this.Name = "PickBlenderVersion";
