@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Manifest version="1.65">
+<Manifest version="1.66">
   <CheckInterval>99999999</CheckInterval>
   <RemoteConfigUri>https://raw.githubusercontent.com/Nokaubure/SharpOcarina/refs/heads/main/Updates/update.xml</RemoteConfigUri>
   <SecurityToken>FEF0FEF0-A1A2-B3B4-C5C6-AA15DDDD15AB</SecurityToken>
   <BaseUri>https://raw.githubusercontent.com/Nokaubure/SharpOcarina/refs/heads/main/Updates/</BaseUri>
-  <Payload>1.65.zip</Payload>
+  <Payload>1.66.zip</Payload>
 </Manifest>
