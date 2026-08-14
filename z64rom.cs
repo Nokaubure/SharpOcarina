@@ -50,7 +50,7 @@ public class rom64 {
         List<String> fileList = new List<String>();
         string fullpath = pathRomDir + "\\" + path;
 
-        DebugConsole.WriteLine("Walk: " + fullpath);
+        //DebugConsole.WriteLine("Walk: " + fullpath);
         foreach (string f in Directory.GetDirectories(fullpath)) {
             fileList.Add(f);
         }

@@ -302,9 +302,8 @@ namespace SharpOcarina
                         /* Convert to IA */
                         if (ColorCount <= 64 && AlphaCount <= 16 && (Material.Width*Material.Height) <= 4096) 
                         {
-#if DEBUG
+
                             DebugConsole.WriteLine("IA 8-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " grayshades");
-#endif
 
                             ConvertTexture("IA8", Material, Raw);
 
@@ -313,9 +312,8 @@ namespace SharpOcarina
                         }
                         else if (ColorCount <= 256 && Material.Width * Material.Height <= 2048)
                         {
-#if DEBUG
+
                             DebugConsole.WriteLine("IA 16-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " grayshades");
-#endif
 
                             ConvertTexture("IA16", Material, Raw);
 
@@ -323,9 +321,8 @@ namespace SharpOcarina
                         }
                         else if (UniqueColors.Count <= 256 && Material.Width * Material.Height <= 4096)
                         {
-#if DEBUG
+
                             DebugConsole.WriteLine("I 8-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " grayshades");
-#endif
 
                             ConvertTexture("I8", Material, Raw);
 
@@ -335,9 +332,8 @@ namespace SharpOcarina
                         /* Convert to I */
                         else if (UniqueColors.Count <= 16)
                         {
-    #if DEBUG
-                            DebugConsole.WriteLine("I 4-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " grayshades");
-    #endif
+    
+                            DebugConsole.WriteLine("I 4-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " grayshades");   
 
                             ConvertTexture("I4", Material, Raw);
 
@@ -355,9 +351,8 @@ namespace SharpOcarina
                     /* Convert to CI */
                     if (UniqueColors.Count <= 16 && Material.Width * Material.Height <= 4096 && Material.ForceRGBA == false)
                     {
-#if DEBUG
+
                         DebugConsole.WriteLine("CI 4-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " unique colors");
-#endif
 
                         ConvertTexture("CI4", Material, Raw, UniqueColors);
 
@@ -367,9 +362,9 @@ namespace SharpOcarina
                     }
                     else if (UniqueColors.Count <= 256 && Material.Width * Material.Height <= 2048 && Material.ForceRGBA == false)
                     {
-#if DEBUG
+
                         DebugConsole.WriteLine("CI 8-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " unique colors");
-#endif
+
                         ConvertTexture("CI8", Material, Raw, UniqueColors);
 
 
@@ -377,33 +372,33 @@ namespace SharpOcarina
                     else if (AlphaCount > 2 && Material.Width * Material.Height <= 1024 && Material.ForceRGBA == false && !MainForm.settings.DisableRGBA32)
                     {
                         /* Convert to RGBA */
-#if DEBUG
+
                         DebugConsole.WriteLine("RGBA 32-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString());
-#endif
+
                         ConvertTexture("RGBA32", Material, Raw);
 
 
                     }
                     else if (UniqueColors.Count <= 16 && IsGrayscale == true && Material.ForceRGBA == false)
                     {
-#if DEBUG
+
                         DebugConsole.WriteLine("I 4-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " grayshades");
-#endif
+
                         ConvertTexture("I4",Material, Raw);
                     }
                     else if (UniqueColors.Count <= 256 && IsGrayscale == true && Material.Width * Material.Height <= 4096 && Material.ForceRGBA == false)
                     {
-#if DEBUG
+
                         DebugConsole.WriteLine("I 8-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString() + ", " + UniqueColors.Count.ToString() + " grayshades");
-#endif
+
                         ConvertTexture("I8", Material, Raw);
                     }
                     else
                     {
                         /* Convert to RGBA */
-#if DEBUG
-                        DebugConsole.WriteLine("RGBA 16-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString());
-#endif
+
+                       DebugConsole.WriteLine("RGBA 16-bit <- " + Material.Name + ", " + Material.Width.ToString() + "*" + Material.Height.ToString());
+
                        ConvertTexture("RGBA16", Material, Raw);
                     }
                 }

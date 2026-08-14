@@ -557,7 +557,7 @@ namespace SharpOcarina
                 int alphanum = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#alpha") + 6, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out alphanum))
                 {
-                    MessageBox.Show("Bad usage of alpha tag. It should be #AlphaXX (XX = amount in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of alpha tag. It should be #AlphaXX (XX = amount in hex) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 //int alphanum = Convert.ToInt32(group.Name.ToLower().Substring(group.Name.IndexOf("#alpha") + 6, 2), 16);
@@ -569,7 +569,7 @@ namespace SharpOcarina
                 int animatednum = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#animated") + 9, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out animatednum))
                 {
-                    MessageBox.Show("Bad usage of animated tag. It should be #AnimatedX (X = bank in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of animated tag. It should be #AnimatedX (X = bank in hex) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 animatednum = MainForm.Clamp(animatednum, 8, 0xF);
@@ -585,7 +585,7 @@ namespace SharpOcarina
                 int alphanum = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#multialpha") + 11, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out alphanum))
                 {
-                    MessageBox.Show("Bad usage of multialpha tag. It should be #MultiAlphaXX (XX = amount in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of multialpha tag. It should be #MultiAlphaXX (XX = amount in hex) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -599,7 +599,7 @@ namespace SharpOcarina
 
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#shifts") + 7, 2), out shift))
                 {
-                    MessageBox.Show("Bad usage of shiftS tag. It should be #ShiftSXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of shiftS tag. It should be #ShiftSXX (XX = amount in decimal) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 shift = MainForm.Clamp(shift, -9, 9);
@@ -611,7 +611,7 @@ namespace SharpOcarina
                 int shift = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#shiftt") + 7, 2), out shift))
                 {
-                    MessageBox.Show("Bad usage of shiftT tag. It should be #ShiftTXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of shiftT tag. It should be #ShiftTXX (XX = amount in decimal) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 shift = MainForm.Clamp(shift, -9, 9);
@@ -623,7 +623,7 @@ namespace SharpOcarina
                 int shift = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#multishifts") + 12, 2), out shift))
                 {
-                    MessageBox.Show("Bad usage of multishiftS tag. It should be #MultiShiftSXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of multishiftS tag. It should be #MultiShiftSXX (XX = amount in decimal) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 shift = MainForm.Clamp(shift, -9, 9);
@@ -635,7 +635,7 @@ namespace SharpOcarina
                 int shift = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#multishiftt") + 12, 2), out shift))
                 {
-                    MessageBox.Show("Bad usage of multishiftT tag. It should be #MultiShiftTXX (XX = amount in decimal) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of multishiftT tag. It should be #MultiShiftTXX (XX = amount in decimal) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 shift = MainForm.Clamp(shift, -9, 9);
@@ -742,7 +742,7 @@ namespace SharpOcarina
                 int animatednum = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#lodgroup") + 9, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out animatednum))
                 {
-                    MessageBox.Show("Bad usage of lodgroup tag. It should be #LODGroupX (X = group in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of lodgroup tag. It should be #LODGroupX (X = group in hex) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 NewRoom.GroupSettings.LOD[i] = true;
@@ -755,7 +755,7 @@ namespace SharpOcarina
                 int animatednum = 0;
                 if (!Int32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#loddistance") + 12, 4), out animatednum))
                 {
-                    MessageBox.Show("Bad usage of loddistance tag. It should be #LODDistanceXXXX (XXXX = distance in dec,) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of loddistance tag. It should be #LODDistanceXXXX (XXXX = distance in dec,) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 NewRoom.GroupSettings.LOD[i] = true;
@@ -772,7 +772,7 @@ namespace SharpOcarina
                 Vector3s pivotdata = new Vector3s(32767, 32767, 32767);
                 if (pivotvalues.Length != 3 || !Int16.TryParse(pivotvalues[0], out pivotdata.X) || !Int16.TryParse(pivotvalues[1], out pivotdata.Y) || !Int16.TryParse(pivotvalues[2], out pivotdata.Z))
                 {
-                    MessageBox.Show("Bad usage of Pivot tag. It should be #PivotX,X,X#", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of Pivot tag. It should be #PivotX,X,X#", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 NewRoom.GroupSettings.PivotPoint[i] = pivotdata;
@@ -783,7 +783,7 @@ namespace SharpOcarina
                 uint tintnum = 0;
                 if (!UInt32.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#tint") + 5, 6), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out tintnum))
                 {
-                    MessageBox.Show("Bad usage of Tint tag. It should be #TintXXXXXX (XXXXXX = RRGGBB in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of Tint tag. It should be #TintXXXXXX (XXXXXX = RRGGBB in hex) ", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 tintnum = (uint)((NewRoom.GroupSettings.TintAlpha[i] & 0xFF000000) + tintnum);
@@ -796,7 +796,7 @@ namespace SharpOcarina
                 ulong command = 0;
                 if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#fc") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
-                    MessageBox.Show("Bad usage of FC tag. It should be #FCXXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of FC tag. It should be #FCXXXXXXXXXXXXXX", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 NewRoom.GroupSettings.CustomDL[i,0] = command;
@@ -809,7 +809,7 @@ namespace SharpOcarina
                 ulong command = 0;
                 if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#d9") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
-                    MessageBox.Show("Bad usage of D9 tag. It should be #D9XXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of D9 tag. It should be #D9XXXXXXXXXXXXXX", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 NewRoom.GroupSettings.CustomDL[i, 1] = command;
@@ -822,7 +822,7 @@ namespace SharpOcarina
                 ulong command = 0;
                 if (!UInt64.TryParse(group.Name.Substring2(group.Name.ToLower().IndexOf("#e2") + 3, 14), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out command))
                 {
-                    MessageBox.Show("Bad usage of E2 tag. It should be #E2XXXXXXXXXXXXXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of E2 tag. It should be #E2XXXXXXXXXXXXXX", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 NewRoom.GroupSettings.CustomDL[i, 2] = command;
@@ -841,7 +841,7 @@ namespace SharpOcarina
                 {
                     if (!Int32.TryParse(grouptag, out groupnumber) && !Int32.TryParse(grouptag.Substring2(0, 3), out groupnumber))
                     {
-                        MessageBox.Show("Bad usage of #Group tag, expected #GroupXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Bad usage of #Group tag, expected #GroupXX where XX is the ID", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
@@ -850,7 +850,7 @@ namespace SharpOcarina
                 }
                 catch (System.ArgumentOutOfRangeException)
                 {
-                    MessageBox.Show("Bad usage of #Group tag, expected #GroupXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad usage of #Group tag, expected #GroupXX where XX is the ID", $"Error in {group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -1141,10 +1141,10 @@ namespace SharpOcarina
                             if (texture.Name != null && texture.Name.ToLower().Contains("#special"))
                             {
                                 int key = 0;
-                                string s = texture.Name.Substring(texture.Name.ToLower().IndexOf("#special") + 8, 1);
+                                string s = texture.Name.Substring2(texture.Name.ToLower().IndexOf("#special") + 8, 1);
                                 if (!Int32.TryParse(s, out key))
                                 {
-                                    MessageBox.Show("Bad usage of texture tag. It should be #SpecialX where X is the number following an order. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Bad usage of texture tag. It should be #SpecialX where X is the number following an order. ", $"Error in {texture.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     break;
                                 }
                                 if (!specialtextures.ContainsKey(key))
@@ -1270,13 +1270,16 @@ namespace SharpOcarina
                     if (zzrp == 1)
                     {
                         newdir = Filepath + @"Scene\" + SceneNumber + " - " + Helpers.MakeValidFileName(Name);
-                        //Directory.CreateDirectory(Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name));
                     }
 
                     else if (zzrp == 2)
                     {
                         newdir = Filepath + @"Scene\0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name);
-                        //Directory.CreateDirectory(Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name));
+                    }
+
+                    else if (zzrp == 5)
+                    {
+                        newdir = Filepath + @"src\scene\" + SceneNumber.ToString("000") + "-" + Helpers.MakeValidFileName(Name);
                     }
                 }
                 else
@@ -1322,7 +1325,9 @@ namespace SharpOcarina
                             Directory.Move(target, Filepath + "Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name));
                         else if (zzrp == 2)
                             Directory.Move(target, Filepath + "Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name));
-                        else
+                        else if (zzrp == 5)
+                            Directory.Move(target, Filepath + "src/scene" + SceneNumber.ToString("000") + "-" + Helpers.MakeValidFileName(Name));
+                        else //z64rom
                             Directory.Move(target, Filepath + "rom/scene/0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name));
                     }
                     catch (Exception ex)
@@ -1333,7 +1338,9 @@ namespace SharpOcarina
                         target = Filepath + @"Scene/" + SceneNumber + " - " + Helpers.MakeValidFileName(Name);
                     else if (zzrp == 2)
                         target = Filepath + @"Scene/0x" + SceneNumber.ToString("X2") + " - " + Helpers.MakeValidFileName(Name);
-                    else
+                    else if (zzrp == 5)
+                        target = Filepath + @"src/scene" + SceneNumber.ToString("000") + "-" + Helpers.MakeValidFileName(Name);
+                    else //z64rom
                         target = Filepath + @"rom/scene/0x" + SceneNumber.ToString("X2") + "-" + Helpers.MakeValidFileName(Name);
                 }
                 Filepath = target + Path.DirectorySeparatorChar;
@@ -1436,7 +1443,7 @@ namespace SharpOcarina
                     uint restriction = RestrictionFlags;
 
                 
-                    string filenameconf = (zzrp != 3) ? "conf.txt" : "config.toml";
+                    string filenameconf = (zzrp != 3 && zzrp != 5) ? "conf.txt" : "config.toml";
 
                     if (File.Exists(Filepath + filenameconf)) File.Delete(Filepath + filenameconf);
 
@@ -1787,6 +1794,8 @@ namespace SharpOcarina
             Array.Copy(textureoffsets, UcodeSimulator.textureoffsets, textureoffsets.Length);
             SayakaGL.GameHandler.LoadToRAM(ClearBlock.ToArray(), (int) bank);
 
+
+
             if (animated)
             {
                 byte[] zobj = ClearBlock.ToArray();
@@ -1798,10 +1807,11 @@ namespace SharpOcarina
                 {
                     if (zobj[i] == bank && (zobj[i + 3] & 3) == 0 && zobj[i + 4] != 0 && zobj[i + 5] == 0x00 && zobj[i + 6] == 0x00 && zobj[i + 7] == 0x00)
                     {
+                        List<byte> zobjlist = new List<byte>(zobj);
                         if (Helpers.Read24(zobj.ToList(), i + 1) > zobj.Length) continue;
-                        
-                        int check = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i + 1], zobj[i + 2], zobj[i + 3]), 16);
-                        int check_prev = Convert.ToInt32(string.Format("{0:X2}{1:X2}{2:X2}", zobj[i - 3], zobj[i - 2], zobj[i - 1]), 16);
+
+                        int check = Helpers.Read24S(zobj.ToList(),i + 1);
+                        int check_prev = Helpers.Read24S(zobj.ToList(), i - 3);
                         if (check - check_prev != 0x0C && check - check_prev != 0x10)
                             continue;
                         
@@ -1813,11 +1823,13 @@ namespace SharpOcarina
                         }
                             
                             
-                        List<byte> zobjlist = new List<byte>(zobj);
+                        
                         limb_count = zobjlist[i+4];
                         offset = (uint) Helpers.Read24S(zobjlist, i + 1);
+                        int maxframes = 0;
                         int animrotvaloffset = 0x00;
                         int animrotindexoffset = 0x00;
+                        int limit = 0;
 
                         for (int ii = 0; ii < zobj.Length; ii += 4)
                         {
@@ -1829,8 +1841,10 @@ namespace SharpOcarina
 
                                     if (animationfound == animation || animationfound == 1)
                                     {
+                                        maxframes = Helpers.Read16(zobjlist, ii);
                                         animrotvaloffset = Helpers.Read24S(zobjlist, ii + 5);
                                         animrotindexoffset = Helpers.Read24S(zobjlist, ii + 9);
+                                        limit = Helpers.Read16(zobjlist, ii + 12);
 
                                         if (animationfound == animation)
                                                 break;
@@ -1842,6 +1856,7 @@ namespace SharpOcarina
                         
                         int counter = 0;
                         short[] prevlimb = new short[] { 0, 0, 0 };
+
                         while (counter != limb_count)
                         {
                             Limb limb = new Limb();
@@ -1856,6 +1871,7 @@ namespace SharpOcarina
                             limb.rotation.X = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 6 + 6 * counter))), 0, zobjlist.Count - 2));
                             limb.rotation.Y = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 8 + 6 * counter))),0,zobjlist.Count-2));
                             limb.rotation.Z = Helpers.Read16(zobjlist, MainForm.Clamp(animrotvaloffset + 2 * (Helpers.Read16(zobjlist, (int)(animrotindexoffset + 10 + 6 * counter))), 0, zobjlist.Count - 2));
+                            limb.parent = -1;
 
                             if ((uint)Helpers.Read24S(zobjlist, limboffset + 9) != 0x000000) //if limb has dlist
                             {
@@ -1874,10 +1890,9 @@ namespace SharpOcarina
                                 prevlimb = new short[] { 0, 0, 0 };
 
                                 SayakaGL.UcodeSimulator.ReadDL((int) bank, Helpers.Read32(zobjlist, limboffset + 8), ref limb.DList);
-                                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in limb.DList)
-                                    SayakaGL.UcodeSimulator.ParseDL(DL);
 
                                 SayakaGL.UcodeSimulator.ParseAllDLs(ref limb.DList);
+
                             }
                             else
                             {
@@ -1892,6 +1907,22 @@ namespace SharpOcarina
 
                             counter++;
 
+                        }
+
+                        for (int b = 0; b < objrender.Limbs.Count; b++)
+                        {
+                            if (objrender.Limbs[b].firstchild != -1)
+                            {
+                                Limb tmplimb = objrender.Limbs[objrender.Limbs[b].firstchild];
+                                tmplimb.parent = (sbyte)b;
+                                objrender.Limbs[objrender.Limbs[b].firstchild] = tmplimb;
+                            }
+                            if (objrender.Limbs[b].nextchild != -1)
+                            {
+                                Limb tmplimb = objrender.Limbs[objrender.Limbs[b].nextchild];
+                                tmplimb.parent = (sbyte)b;
+                                objrender.Limbs[objrender.Limbs[b].nextchild] = tmplimb;
+                            }
                         }
 
                         MainForm.zobj_cache.Add(objrender);
@@ -2284,7 +2315,7 @@ namespace SharpOcarina
                                     }
 
                                     if (file != "" && (offset != 0 || animated || offsets.Length > 0)) {
-#if DEBUG
+                                        /*
                                         DebugConsole.WriteLine("Register Actor Preview: " + file);
                                         DebugConsole.WriteLine("key:    " + index.ToString("X04"));
                                         DebugConsole.WriteLine("scale:  " + scale);
@@ -2293,8 +2324,9 @@ namespace SharpOcarina
                                         DebugConsole.WriteLine("offset: " + offset.ToString("X08"));
                                         DebugConsole.WriteLine("bank:   " + bank.ToString("X02"));
                                         DebugConsole.WriteLine("textureoffsets:   " + textureoffsets.ToString());
-#endif
+                                        */
 
+                                        
                                         RegisterActorPreview(
                                             key, offset, offsets, textureoffsets,
                                             scale, dlistcount, animated, 
@@ -3946,7 +3978,7 @@ namespace SharpOcarina
                     /* See if we've got a CI-format texture... */
                     int Format = ((Texture.Type & 0xE0) >> 5);
 
-                    DebugConsole.WriteLine("Texture format N64: " + Format.ToString("X2"));
+                   // DebugConsole.WriteLine("Texture format N64: " + Format.ToString("X2"));
 
                     if (Format == GBI.G_IM_FMT_CI)
                     {
@@ -4200,20 +4232,33 @@ namespace SharpOcarina
                 }
                 else if ((Game == "OOT" && cutscene.Marker == 0x13) || (Game == "MM" && cutscene.Marker == 0xA))
                 {
-                    int textboxframes = 0;
+                    int lastendframe = 0;
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append16(ref data, 0x0000);
-                    Helpers.Append16(ref data, (ushort)cutscene.Textboxes.Count);
+                    int textboxcountoffset = data.Count;
+                    ushort textboxcount = (ushort)cutscene.Textboxes.Count;
+                    Helpers.Append16(ref data, textboxcount);
                     foreach (ZTextbox textbox in cutscene.Textboxes)
                     {
+                        if (textbox.StartFrame > lastendframe)
+                        {
+                            Helpers.Append16(ref data, 0xFFFF);
+                            Helpers.Append16(ref data, (ushort)(lastendframe));
+                            Helpers.Append16(ref data, (ushort)(cutscene.StartFrame));
+                            Helpers.Append16(ref data, (ushort)(0));
+                            Helpers.Append16(ref data, (ushort)(0x088B));
+                            Helpers.Append16(ref data, (ushort)(0xFFFF));
+                            textboxcount++;
+                        }
                         Helpers.Append16(ref data, textbox.Message);
-                        Helpers.Append16(ref data, (ushort)(cutscene.StartFrame + textboxframes));
-                        Helpers.Append16(ref data, (ushort)(cutscene.StartFrame + textboxframes + textbox.Frames));
+                        Helpers.Append16(ref data, (ushort)(textbox.StartFrame));
+                        Helpers.Append16(ref data, (ushort)(textbox.StartFrame + textbox.Frames));
                         Helpers.Append16(ref data, (ushort)(textbox.Type));
                         Helpers.Append16(ref data, (ushort)(textbox.Type < 2 ? textbox.TopMessage : 0x088B));
                         Helpers.Append16(ref data, (ushort)(textbox.Type < 2 ? textbox.BottomMessage : 0xFFFF));
-                        textboxframes += textbox.Frames;
+                        lastendframe = textbox.StartFrame + textbox.Frames;
                     }
+                    Helpers.Overwrite16(ref data, textboxcountoffset, textboxcount);
                 }
                 else if ((Game == "OOT" && cutscene.Marker == 0x2D) || (Game == "MM" && cutscene.Marker == 0x98)) //transitions
                 {
@@ -4503,13 +4548,13 @@ namespace SharpOcarina
                     {
                         if (!Int32.TryParse(polytypetag, out polytypenumber) && !Int32.TryParse(polytypetag.Substring2(0,2), out polytypenumber))
                         {
-                            MessageBox.Show("Bad usage of #Polytype tag, expected #PolytypeXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Bad usage of #Polytype tag, expected #PolytypeXX where XX is the ID", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             continue;
                         }
                     }
                     catch (System.ArgumentOutOfRangeException)
                     {
-                        MessageBox.Show("Bad usage of #Polytype tag, expected #PolytypeXX where XX is the ID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Bad usage of #Polytype tag, expected #PolytypeXX where XX is the ID", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         continue;
                     }
              
@@ -4522,9 +4567,9 @@ namespace SharpOcarina
                     if (Group.Name.ToLower().Contains("#raw"))
                     {
                         polytype = 0;
-                        if (!UInt64.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#raw") + 4, 16), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytype))
+                        if (!UInt64.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#raw") + 4, 16), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out polytype))
                         {
-                            MessageBox.Show("Bad usage of Raw tag. It should be #RawXXXXXXXXXXXXXXXX (XXXXXXXXXXXXXXX = polytype raw data in Hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Bad usage of Raw tag. It should be #RawXXXXXXXXXXXXXXXX (XXXXXXXXXXXXXXX = polytype raw data in Hex) ", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             continue;
                         }
                    //     polytype = Convert.ToUInt64(Group.Name.Substring(Group.Name.IndexOf("#Raw") + 4, 16), 16);
@@ -4538,11 +4583,11 @@ namespace SharpOcarina
                             {
                                 int exitnum = 0;
 
-                                if (Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#exit")).Length < 7 || !Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#exit") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
+                                if (Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#exit")).Length < 7 || !Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#exit") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
                                 {
-                                    if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#exit") + 5, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
+                                    if (!Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#exit") + 5, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out exitnum))
                                     {
-                                        MessageBox.Show("Bad usage of Exit tag. It should be #ExitXX (XX = exit ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show("Bad usage of Exit tag. It should be #ExitXX (XX = exit ID in hex) ", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         continue;
                                     }
                                 }
@@ -4554,9 +4599,9 @@ namespace SharpOcarina
                             else if (kp.Key == "#Camera")
                             {
                                 int cameranum = 0;
-                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#camera") + 7, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out cameranum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#camera") + 7, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out cameranum))
                                 {
-                                    MessageBox.Show("Bad usage of Camera tag. It should be #CameraX (X = camera ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Bad usage of Camera tag. It should be #CameraX (X = camera ID in hex) ", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
                                 }
                                 polytype = (ulong)(polytype | ((ulong)cameranum << 32));
@@ -4566,9 +4611,9 @@ namespace SharpOcarina
                             else if (kp.Key == "#Environment")
                             {
                                 int envnum = 0;
-                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#environment") + 12, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#environment") + 12, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
                                 {
-                                    MessageBox.Show("Bad usage of Environment tag. It should be #EnvironmentX (X = environment ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Bad usage of Environment tag. It should be #EnvironmentX (X = environment ID in hex) ", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
                                 }
                              
@@ -4577,9 +4622,9 @@ namespace SharpOcarina
                             else if (kp.Key == "#IndoorEnv")
                             {
                                 int envnum = 0;
-                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#indoorenv") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#indoorenv") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out envnum))
                                 {
-                                    MessageBox.Show("Bad usage of Environment tag. It should be #IndoorEnvXX (XX = environment ID in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Bad usage of Environment tag. It should be #IndoorEnvXX (XX = environment ID in hex) ", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
                                 }
                              
@@ -4588,9 +4633,9 @@ namespace SharpOcarina
                             else if (kp.Key == "#Direction")
                             {
                                 int dirnum = 0;
-                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#direction") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out dirnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#direction") + 10, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out dirnum))
                                 {
-                                    MessageBox.Show("Bad usage of Direction tag. It should be #DirectionXX (XX = direction in hex) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Bad usage of Direction tag. It should be #DirectionXX (XX = direction in hex) ", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
                                 }
                     
@@ -4599,9 +4644,9 @@ namespace SharpOcarina
                             else if (kp.Key == "#Speed")
                             {
                                 int spdnum = 0;
-                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#speed") + 6, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out spdnum))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#speed") + 6, 1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out spdnum))
                                 {
-                                    MessageBox.Show("Bad usage of Speed tag. It should be #SpeedX (X = 1 slow, 2 mid, 3 fast, 4 preserves previous speed) ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Bad usage of Speed tag. It should be #SpeedX (X = 1 slow, 2 mid, 3 fast, 4 preserves previous speed) ", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
                                 }
 
@@ -4610,9 +4655,9 @@ namespace SharpOcarina
                             else if (kp.Key == "#Echo")
                             {
                                 int echo = 0;
-                                if (!Int32.TryParse(Group.Name.ToLower().Substring(Group.Name.ToLower().IndexOf("#echo") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out echo))
+                                if (!Int32.TryParse(Group.Name.ToLower().Substring2(Group.Name.ToLower().IndexOf("#echo") + 5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out echo))
                                 {
-                                    MessageBox.Show("Bad usage of Echo tag. It should be #EchoXX", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Bad usage of Echo tag. It should be #EchoXX", $"Error in {Group.Name}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     continue;
                                 }
 
@@ -5511,6 +5556,7 @@ namespace SharpOcarina
             public short z;
             public SByte firstchild;
             public SByte nextchild;
+            public SByte parent; //Added to make things easier
             public Vector3 rotation;
             public List<SayakaGL.UcodeSimulator.DisplayListStruct> DList;
 
@@ -5598,8 +5644,37 @@ namespace SharpOcarina
             {
                 return $"({X}, {Y}, {Z})";
             }
+
+            public static explicit operator Vector3(Vector3s v)
+            {
+                return new Vector3(v.X, v.Y, v.Z);
+            }
         }
 
-       
+        public struct Vector3b
+        {
+            public byte X;
+            public byte Y;
+            public byte Z;
+
+            public Vector3b(byte x, byte y, byte z)
+            {
+                X = x;
+                Y = y;
+                Z = z;
+            }
+
+            public Vector3b Clone()
+            {
+                return this;
+            }
+
+            public override string ToString()
+            {
+                return $"({X}, {Y}, {Z})";
+            }
+        }
+
+
     }
 }

@@ -87,12 +87,14 @@ namespace SharpOcarina
             ObjFile.Material Mat = new ObjFile.Material();
             Mat.ForcedFormat = ImageFormatComboBox.Text;
             Mat.TexImage = Helpers.NewBitmap(SourceFilename.Text);
+            
             Mat.Name = Path.GetFileNameWithoutExtension(SourceFilename.Text);
             Mat.Width = Mat.TexImage.Width;
             Mat.Height = Mat.TexImage.Height;
+
             NTexture Texture = new NTexture();
             Texture.Convert(Mat);
-            ConvertedData = Texture.Data.ToList();
+            //ConvertedData = Texture.Data.ToList();
 
             ConvertedData = Helpers.ConvertImageToData(SourceFilename.Text, ImageFormatComboBox.Text);
             
@@ -116,13 +118,13 @@ namespace SharpOcarina
                 case "I4":
                 {
                     float linesize = Texture.Width / 16.0f;
-                    NImageUtil.I4((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result, false);
+                    NImageUtil.I4((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result, true);
                     break;
                 }
                 case "I8":
                 {
                     float linesize = Texture.Width / 8.0f;
-                    NImageUtil.I8((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result, false);
+                    NImageUtil.I8((uint)Texture.Width, (uint)Texture.Height, linesize, Texture.Data, 0, ref Result, true);
                     break;
                 }
                 case "IA4":

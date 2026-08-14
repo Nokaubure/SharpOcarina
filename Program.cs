@@ -16,13 +16,15 @@ namespace SharpOcarina
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        public static string ApplicationTitle = "SharpOcarina 1.66";
-        public static int ApplicationVersion = 0x1660;
+        public static string ApplicationTitle = "SharpOcarina 1.67 (beta)";
+        public static int ApplicationVersion = 0x1670;
 
         public static MainForm MF;
         public static bool QuitProgram = false;
 
         public static string KeyboardLayout = "";
+
+        public static bool exportMode = false;
 
         [STAThread]
         static void Main(string[] args)
@@ -34,26 +36,34 @@ namespace SharpOcarina
                 foreach (string arg in args)
                 {
                     if (arg.ToLower() == "--z64romtasks") z64romtasks = true;
-                    else
-                    if (Path.GetExtension(arg).ToLower() == ".toml")
+                    else if (arg.ToLower() == "--export") exportMode = true;
+                    else if (Path.GetExtension(arg).ToLower() == ".toml")
                     {
                         toml = arg;
                     }
                 }
             }
-            if(z64romtasks && toml != "")
+            if ((z64romtasks || exportMode) && toml != "")
             {
                 if (!File.Exists(toml))
                 {
-                    MessageBox.Show("z64project.toml not found","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("z64project.toml not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+            }
+            if(z64romtasks && toml != "")
+            {
                 FaroresPlugin.AddLinkAnimations(Path.GetDirectoryName(toml), true);
                 FaroresPlugin.ConvertAllIncPngFiles(Path.GetDirectoryName(toml));
                 FaroresPlugin.CustomDMAEntries(Path.GetDirectoryName(toml), true);
                 FaroresPlugin.BuildFunctionNamesArray(Path.GetDirectoryName(toml));
                 return;
             }
+            if(exportMode && toml == "")
+            {
+                exportMode = false;
+            }
+
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -96,6 +106,7 @@ namespace SharpOcarina
             MF.BringToFront();
             do
             {
+                
                 MF.ProgramMainLoop();
                 Application.DoEvents();
 

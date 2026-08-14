@@ -979,15 +979,17 @@ namespace SharpOcarina.SayakaGL
             int VSegment = (int)(w1 >> 24);
             UInt32 VOffset = (w1 & 0x00FFFFFF);
 
-            double[] modifier = new double[] { 0, 0, 0 };
-            
-            
+            double[] modifier = new double[] { 1, 1, 1 };
+
+            /*
             if (limbID != -1 && limbtransformations.Count > 0) modifier = new double[]
             {
                 -limbtransformations[limbtransformations.Count - 1][0] ,
                 -limbtransformations[limbtransformations.Count - 1][1] ,
                 -limbtransformations[limbtransformations.Count - 1][2]
-            };
+            };*/
+
+            if (limbID != -1 && limbtransformations.Count > 0) modifier = new double[] { 0, 0,0 };
 
 
 
@@ -995,7 +997,7 @@ namespace SharpOcarina.SayakaGL
             {
                 CurrentVertices[V0 + i] = (new VertexStruct()
                 {
-                    Position = new Vector3d((double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset) + modifier[0], (double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 2) + modifier[1], (double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 4) + modifier[2]),
+                    Position = new Vector3d((double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset) * modifier[0], (double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 2) * modifier[1], (double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 4) * modifier[2]),
                     TexCoord = new Vector2d(GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 8), GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 10)),
                     Colors = new Color4(GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 12), GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 13), GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 14), GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 15)),
                     Normals = new Vector3d((double)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 12), (double)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 13), (double)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 14)),
@@ -1041,7 +1043,7 @@ namespace SharpOcarina.SayakaGL
 
         private static void Ucode_F3DEX2_ENDDL(UInt32 w0, UInt32 w1)
         {
-            //
+            limbID = -1;
         }
 
         private static void Ucode_F3DEX2_TEXTURE(UInt32 w0, UInt32 w1)

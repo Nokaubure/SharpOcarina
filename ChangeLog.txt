@@ -1,6 +1,43 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.67
+--------------
+
+- You can now preview multiple cutscene camera commands in a row with play all
+  - Cameras will behave very close to ingame: a previewed camera never plays again, when 2 cameras overlap the one that is lower in the list takes priority, etc
+  - Textboxes are also rendered, slow text display is not supported but their Fade timer and End Frame duration is. For textboxes that require you to press A button, its instead "Z" or left click in the viewport.
+  (other commands will be previewed in future updates)
+
+- Reworked cutscene textboxes
+  - Start frame is now disabled, instead you set it per textbox. This avoids having to make FFFF textboxes to stall the command, as its done by SO automatically.
+  - You cannot have more than 1 textbox command per cutscene (its how all vanilla cutscenes work)
+  - Opening an old scene will make SO convert the textbox command to the new format, and merge multiple commands if necessary
+  - You can preview textboxes in Global ROM and z64rom modes
+
+- Changed the way the listbox data is displayed in camera, actors and textbox cutscene commands
+
+- Added an option to render only the selected room
+
+- Selecting an OoT 1.0 U or 1.2 U rom during z64rom installation now makes SO download a patch and apply it to turn a copy of the rom into a mq debug rom
+
+- Small performance boost when pressing N64 render for the first time and when loading/reloading z64rom projects
+
+- Small performance boost when adding/deleting/editing environments
+
+- Improved slightly how models with joints appear (I actually tried to make them to properly render, but failed, maybe next update...)
+
+- Added duplicate button on environments
+
+- View zscene from rom now automatically sets SO to global rom mode
+
+- Fixed an issue where an error would show up on invalid tags without digits. Additionally, SO will now report the name of the group that is causing that issue.
+
+- Fixed an inconvenience where cutscene actor points would be rendered during a cutscene preview, potentially clustering the view
+
+- Fixed an issue where some actors would cause the ones rendered afterwards to have different colors, or unload textures in "View .zscene" mode.
+
+--------------
 ---1.66
 --------------
 

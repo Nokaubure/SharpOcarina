@@ -50,6 +50,9 @@ namespace SharpOcarina
             this.buildAndLaunchZ64romWarpToSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedBuildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rebuildAllFilesforceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rebuildForceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rebuildForceAudioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rebuildCleanStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.NewZ64romProject = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +84,7 @@ namespace SharpOcarina
             this.dontConvertMultitextureToRGBAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableRGBA32ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderSelectedCutsceneCommandsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RenderSelectedRoomMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderWaterboxesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderPathwaystoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableTextureWarningsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -398,6 +402,7 @@ namespace SharpOcarina
             this.label3 = new System.Windows.Forms.Label();
             this.SongComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.DuplicateEnvironmentButton = new System.Windows.Forms.Button();
             this.UnusedCommandCheckBox = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
@@ -424,8 +429,8 @@ namespace SharpOcarina
             this.LightingA = new System.Windows.Forms.PictureBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
+            this.DeleteEnvironmentButton = new System.Windows.Forms.Button();
+            this.AddEnvironmentButton = new System.Windows.Forms.Button();
             this.EnvironmentSelect = new SharpOcarina.NumericUpDownEx();
             this.niceLine3 = new SharpOcarina.NiceLine();
             this.tabRoomEnv = new System.Windows.Forms.TabPage();
@@ -639,6 +644,10 @@ namespace SharpOcarina
             this.CutsceneSpawnLabel = new System.Windows.Forms.Label();
             this.CutsceneEntranceLabel = new System.Windows.Forms.Label();
             this.CutsceneGroupBox = new System.Windows.Forms.GroupBox();
+            this.cutsceneTestLabel = new System.Windows.Forms.Label();
+            this.cutsceneTextboxEndFrameLabel = new System.Windows.Forms.Label();
+            this.CurrentFrameLabel = new System.Windows.Forms.Label();
+            this.CutscenePlayAll = new System.Windows.Forms.Button();
             this.CutsceneStartFrameOfSelectedLabel = new System.Windows.Forms.Label();
             this.MarkerEndFrame = new SharpOcarina.NumericTextBox();
             this.CutsceneTabs = new System.Windows.Forms.TabControl();
@@ -676,6 +685,8 @@ namespace SharpOcarina
             this.CutsceneSetTimeMinutes = new SharpOcarina.NumericUpDownEx();
             this.Unknown = new System.Windows.Forms.TabPage();
             this.Textbox = new System.Windows.Forms.TabPage();
+            this.CutsceneTextboxFFFFWarningLabel = new System.Windows.Forms.Label();
+            this.label153 = new System.Windows.Forms.Label();
             this.CutsceneTextboxDown = new System.Windows.Forms.Button();
             this.CutsceneTextboxUp = new System.Windows.Forms.Button();
             this.label63 = new System.Windows.Forms.Label();
@@ -685,10 +696,11 @@ namespace SharpOcarina
             this.CutsceneTextboxMessageIdLabel = new System.Windows.Forms.Label();
             this.CutsceneDeleteTextbox = new System.Windows.Forms.Button();
             this.CutsceneAddTextbox = new System.Windows.Forms.Button();
-            this.CutsceneTextboxBottomMessageID = new SharpOcarina.NumericTextBox();
+            this.CutsceneTextboxBottomMessageID = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneTextboxTopMessageID = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneTextboxMessageId = new SharpOcarina.NumericUpDownEx();
+            this.CutsceneTextboxStartFrame = new SharpOcarina.NumericUpDownEx();
             this.CutsceneTextboxFrames = new SharpOcarina.NumericUpDownEx();
-            this.CutsceneTextboxTopMessageID = new SharpOcarina.NumericTextBox();
-            this.CutsceneTextboxMessageId = new SharpOcarina.NumericTextBox();
             this.CutsceneTextboxList = new System.Windows.Forms.ListBox();
             this.TransitionEffect = new System.Windows.Forms.TabPage();
             this.label70 = new System.Windows.Forms.Label();
@@ -872,9 +884,6 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.rebuildForceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rebuildForceAudioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rebuildCleanStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1050,6 +1059,10 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetTimeHours)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetTimeMinutes)).BeginInit();
             this.Textbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxBottomMessageID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxTopMessageID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxMessageId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxStartFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxFrames)).BeginInit();
             this.TransitionEffect.SuspendLayout();
             this.AsmExecution.SuspendLayout();
@@ -1306,6 +1319,27 @@ namespace SharpOcarina
             this.rebuildAllFilesforceToolStripMenuItem.Text = "Rebuild all files to fix a broken project (--force)";
             this.rebuildAllFilesforceToolStripMenuItem.Click += new System.EventHandler(this.rebuildAllFilesforceToolStripMenuItem_Click);
             // 
+            // rebuildForceCodeToolStripMenuItem
+            // 
+            this.rebuildForceCodeToolStripMenuItem.Name = "rebuildForceCodeToolStripMenuItem";
+            this.rebuildForceCodeToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.rebuildForceCodeToolStripMenuItem.Text = "Rebuild only code files (--force-code)";
+            this.rebuildForceCodeToolStripMenuItem.Click += new System.EventHandler(this.rebuildForceCodeToolStripMenuItem_Click);
+            // 
+            // rebuildForceAudioToolStripMenuItem
+            // 
+            this.rebuildForceAudioToolStripMenuItem.Name = "rebuildForceAudioToolStripMenuItem";
+            this.rebuildForceAudioToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.rebuildForceAudioToolStripMenuItem.Text = "Rebuild only audio files (--force-audio)";
+            this.rebuildForceAudioToolStripMenuItem.Click += new System.EventHandler(this.rebuildForceAudioToolStripMenuItem_Click);
+            // 
+            // rebuildCleanStripMenuItem
+            // 
+            this.rebuildCleanStripMenuItem.Name = "rebuildCleanStripMenuItem";
+            this.rebuildCleanStripMenuItem.Size = new System.Drawing.Size(351, 22);
+            this.rebuildCleanStripMenuItem.Text = "Clean project to remove deleted references (--clean)";
+            this.rebuildCleanStripMenuItem.Click += new System.EventHandler(this.rebuildCleanStripMenuItem_Click);
+            // 
             // publicReleaseDebugFeaturesOffreleaseToolStripMenuItem
             // 
             this.publicReleaseDebugFeaturesOffreleaseToolStripMenuItem.Name = "publicReleaseDebugFeaturesOffreleaseToolStripMenuItem";
@@ -1381,6 +1415,7 @@ namespace SharpOcarina
             this.dontConvertMultitextureToRGBAToolStripMenuItem,
             this.DisableRGBA32ToolStrip,
             this.RenderSelectedCutsceneCommandsMenuItem,
+            this.RenderSelectedRoomMenuItem,
             this.RenderWaterboxesMenuItem,
             this.RenderPathwaystoolStripMenuItem3,
             this.DisableTextureWarningsMenuItem,
@@ -1582,6 +1617,14 @@ namespace SharpOcarina
             this.RenderSelectedCutsceneCommandsMenuItem.Size = new System.Drawing.Size(327, 22);
             this.RenderSelectedCutsceneCommandsMenuItem.Text = "Only render selected cutscene commands";
             this.RenderSelectedCutsceneCommandsMenuItem.Click += new System.EventHandler(this.RenderSelectedCutsceneCommandsMenuItem_Click);
+            // 
+            // RenderSelectedRoomMenuItem
+            // 
+            this.RenderSelectedRoomMenuItem.CheckOnClick = true;
+            this.RenderSelectedRoomMenuItem.Name = "RenderSelectedRoomMenuItem";
+            this.RenderSelectedRoomMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.RenderSelectedRoomMenuItem.Text = "Only render selected room";
+            this.RenderSelectedRoomMenuItem.Click += new System.EventHandler(this.RenderSelectedRoomMenuItem_Click);
             // 
             // RenderWaterboxesMenuItem
             // 
@@ -5904,10 +5947,11 @@ namespace SharpOcarina
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.DuplicateEnvironmentButton);
             this.groupBox5.Controls.Add(this.UnusedCommandCheckBox);
             this.groupBox5.Controls.Add(this.panel3);
-            this.groupBox5.Controls.Add(this.button11);
-            this.groupBox5.Controls.Add(this.button12);
+            this.groupBox5.Controls.Add(this.DeleteEnvironmentButton);
+            this.groupBox5.Controls.Add(this.AddEnvironmentButton);
             this.groupBox5.Controls.Add(this.EnvironmentSelect);
             this.groupBox5.Controls.Add(this.niceLine3);
             this.groupBox5.Location = new System.Drawing.Point(10, 218);
@@ -5916,6 +5960,16 @@ namespace SharpOcarina
             this.groupBox5.TabIndex = 29;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Environment Settings";
+            // 
+            // DuplicateEnvironmentButton
+            // 
+            this.DuplicateEnvironmentButton.Location = new System.Drawing.Point(197, 19);
+            this.DuplicateEnvironmentButton.Name = "DuplicateEnvironmentButton";
+            this.DuplicateEnvironmentButton.Size = new System.Drawing.Size(86, 23);
+            this.DuplicateEnvironmentButton.TabIndex = 41;
+            this.DuplicateEnvironmentButton.Text = "Duplicate Env";
+            this.DuplicateEnvironmentButton.UseVisualStyleBackColor = true;
+            this.DuplicateEnvironmentButton.Click += new System.EventHandler(this.DuplicateEnvironmentButton_Click);
             // 
             // UnusedCommandCheckBox
             // 
@@ -6383,25 +6437,25 @@ namespace SharpOcarina
             this.label19.TabIndex = 0;
             this.label19.Text = "Env Color:";
             // 
-            // button11
+            // DeleteEnvironmentButton
             // 
-            this.button11.Location = new System.Drawing.Point(250, 19);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(120, 23);
-            this.button11.TabIndex = 18;
-            this.button11.Text = "Delete Environment";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.DeleteEnvironmentButton_Click);
+            this.DeleteEnvironmentButton.Location = new System.Drawing.Point(290, 19);
+            this.DeleteEnvironmentButton.Name = "DeleteEnvironmentButton";
+            this.DeleteEnvironmentButton.Size = new System.Drawing.Size(86, 23);
+            this.DeleteEnvironmentButton.TabIndex = 18;
+            this.DeleteEnvironmentButton.Text = "Delete Env";
+            this.DeleteEnvironmentButton.UseVisualStyleBackColor = true;
+            this.DeleteEnvironmentButton.Click += new System.EventHandler(this.DeleteEnvironmentButton_Click);
             // 
-            // button12
+            // AddEnvironmentButton
             // 
-            this.button12.Location = new System.Drawing.Point(124, 19);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(120, 23);
-            this.button12.TabIndex = 17;
-            this.button12.Text = "Add Environment";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.AddEnvironmentButton_Click);
+            this.AddEnvironmentButton.Location = new System.Drawing.Point(105, 19);
+            this.AddEnvironmentButton.Name = "AddEnvironmentButton";
+            this.AddEnvironmentButton.Size = new System.Drawing.Size(86, 23);
+            this.AddEnvironmentButton.TabIndex = 17;
+            this.AddEnvironmentButton.Text = "Add Env";
+            this.AddEnvironmentButton.UseVisualStyleBackColor = true;
+            this.AddEnvironmentButton.Click += new System.EventHandler(this.AddEnvironmentButton_Click);
             // 
             // EnvironmentSelect
             // 
@@ -9636,6 +9690,10 @@ namespace SharpOcarina
             // 
             // CutsceneGroupBox
             // 
+            this.CutsceneGroupBox.Controls.Add(this.cutsceneTestLabel);
+            this.CutsceneGroupBox.Controls.Add(this.cutsceneTextboxEndFrameLabel);
+            this.CutsceneGroupBox.Controls.Add(this.CurrentFrameLabel);
+            this.CutsceneGroupBox.Controls.Add(this.CutscenePlayAll);
             this.CutsceneGroupBox.Controls.Add(this.CutsceneStartFrameOfSelectedLabel);
             this.CutsceneGroupBox.Controls.Add(this.MarkerEndFrame);
             this.CutsceneGroupBox.Controls.Add(this.CutsceneTabs);
@@ -9656,8 +9714,57 @@ namespace SharpOcarina
             this.CutsceneGroupBox.Size = new System.Drawing.Size(403, 593);
             this.CutsceneGroupBox.TabIndex = 0;
             this.CutsceneGroupBox.TabStop = false;
-            this.CutsceneGroupBox.Text = "Entrance Cutscene";
+            this.CutsceneGroupBox.Text = "Cutscene";
             this.CutsceneGroupBox.Enter += new System.EventHandler(this.CutsceneGroupBox_Enter);
+            // 
+            // cutsceneTestLabel
+            // 
+            this.cutsceneTestLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cutsceneTestLabel.AutoSize = true;
+            this.cutsceneTestLabel.Location = new System.Drawing.Point(246, 6);
+            this.cutsceneTestLabel.Name = "cutsceneTestLabel";
+            this.cutsceneTestLabel.Size = new System.Drawing.Size(13, 13);
+            this.cutsceneTestLabel.TabIndex = 78;
+            this.cutsceneTestLabel.Text = "0";
+            this.cutsceneTestLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.cutsceneTestLabel.Visible = false;
+            // 
+            // cutsceneTextboxEndFrameLabel
+            // 
+            this.cutsceneTextboxEndFrameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cutsceneTextboxEndFrameLabel.AutoSize = true;
+            this.cutsceneTextboxEndFrameLabel.Location = new System.Drawing.Point(180, 6);
+            this.cutsceneTextboxEndFrameLabel.Name = "cutsceneTextboxEndFrameLabel";
+            this.cutsceneTextboxEndFrameLabel.Size = new System.Drawing.Size(13, 13);
+            this.cutsceneTextboxEndFrameLabel.TabIndex = 77;
+            this.cutsceneTextboxEndFrameLabel.Text = "0";
+            this.cutsceneTextboxEndFrameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.cutsceneTextboxEndFrameLabel.Visible = false;
+            // 
+            // CurrentFrameLabel
+            // 
+            this.CurrentFrameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CurrentFrameLabel.AutoSize = true;
+            this.CurrentFrameLabel.Location = new System.Drawing.Point(210, 26);
+            this.CurrentFrameLabel.Name = "CurrentFrameLabel";
+            this.CurrentFrameLabel.Size = new System.Drawing.Size(49, 13);
+            this.CurrentFrameLabel.TabIndex = 76;
+            this.CurrentFrameLabel.Text = "Curframe";
+            this.CurrentFrameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.CurrentFrameLabel.Visible = false;
+            // 
+            // CutscenePlayAll
+            // 
+            this.CutscenePlayAll.Enabled = false;
+            this.CutscenePlayAll.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CutscenePlayAll.Location = new System.Drawing.Point(260, 22);
+            this.CutscenePlayAll.Name = "CutscenePlayAll";
+            this.CutscenePlayAll.Size = new System.Drawing.Size(68, 23);
+            this.CutscenePlayAll.TabIndex = 75;
+            this.CutscenePlayAll.Text = "► Play All";
+            this.CutscenePlayAll.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.CutscenePlayAll.UseVisualStyleBackColor = true;
+            this.CutscenePlayAll.Click += new System.EventHandler(this.CutscenePlayAll_Click);
             // 
             // CutsceneStartFrameOfSelectedLabel
             // 
@@ -10281,6 +10388,8 @@ namespace SharpOcarina
             // Textbox
             // 
             this.Textbox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Textbox.Controls.Add(this.CutsceneTextboxFFFFWarningLabel);
+            this.Textbox.Controls.Add(this.label153);
             this.Textbox.Controls.Add(this.CutsceneTextboxDown);
             this.Textbox.Controls.Add(this.CutsceneTextboxUp);
             this.Textbox.Controls.Add(this.label63);
@@ -10291,9 +10400,10 @@ namespace SharpOcarina
             this.Textbox.Controls.Add(this.CutsceneDeleteTextbox);
             this.Textbox.Controls.Add(this.CutsceneAddTextbox);
             this.Textbox.Controls.Add(this.CutsceneTextboxBottomMessageID);
-            this.Textbox.Controls.Add(this.CutsceneTextboxFrames);
             this.Textbox.Controls.Add(this.CutsceneTextboxTopMessageID);
             this.Textbox.Controls.Add(this.CutsceneTextboxMessageId);
+            this.Textbox.Controls.Add(this.CutsceneTextboxStartFrame);
+            this.Textbox.Controls.Add(this.CutsceneTextboxFrames);
             this.Textbox.Controls.Add(this.CutsceneTextboxList);
             this.Textbox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Textbox.Location = new System.Drawing.Point(4, 41);
@@ -10301,6 +10411,26 @@ namespace SharpOcarina
             this.Textbox.Size = new System.Drawing.Size(383, 288);
             this.Textbox.TabIndex = 4;
             this.Textbox.Text = "Textbox";
+            // 
+            // CutsceneTextboxFFFFWarningLabel
+            // 
+            this.CutsceneTextboxFFFFWarningLabel.AutoSize = true;
+            this.CutsceneTextboxFFFFWarningLabel.ForeColor = System.Drawing.Color.Red;
+            this.CutsceneTextboxFFFFWarningLabel.Location = new System.Drawing.Point(181, 155);
+            this.CutsceneTextboxFFFFWarningLabel.Name = "CutsceneTextboxFFFFWarningLabel";
+            this.CutsceneTextboxFFFFWarningLabel.Size = new System.Drawing.Size(195, 13);
+            this.CutsceneTextboxFFFFWarningLabel.TabIndex = 102;
+            this.CutsceneTextboxFFFFWarningLabel.Text = "FFFF textboxes aren\'t required anymore!";
+            this.CutsceneTextboxFFFFWarningLabel.Visible = false;
+            // 
+            // label153
+            // 
+            this.label153.AutoSize = true;
+            this.label153.Location = new System.Drawing.Point(6, 231);
+            this.label153.Name = "label153";
+            this.label153.Size = new System.Drawing.Size(61, 13);
+            this.label153.TabIndex = 96;
+            this.label153.Text = "Start frame:";
             // 
             // CutsceneTextboxDown
             // 
@@ -10335,11 +10465,11 @@ namespace SharpOcarina
             // 
             this.CutsceneTextboxFramesLabel.AutoSize = true;
             this.CutsceneTextboxFramesLabel.Enabled = false;
-            this.CutsceneTextboxFramesLabel.Location = new System.Drawing.Point(6, 242);
+            this.CutsceneTextboxFramesLabel.Location = new System.Drawing.Point(6, 257);
             this.CutsceneTextboxFramesLabel.Name = "CutsceneTextboxFramesLabel";
-            this.CutsceneTextboxFramesLabel.Size = new System.Drawing.Size(80, 13);
+            this.CutsceneTextboxFramesLabel.Size = new System.Drawing.Size(70, 13);
             this.CutsceneTextboxFramesLabel.TabIndex = 68;
-            this.CutsceneTextboxFramesLabel.Text = "Frame duration:";
+            this.CutsceneTextboxFramesLabel.Text = "End duration:";
             // 
             // label61
             // 
@@ -10392,15 +10522,119 @@ namespace SharpOcarina
             // 
             // CutsceneTextboxBottomMessageID
             // 
-            this.CutsceneTextboxBottomMessageID.AllowHex = true;
-            this.CutsceneTextboxBottomMessageID.Digits = 4;
-            this.CutsceneTextboxBottomMessageID.Location = new System.Drawing.Point(283, 121);
-            this.CutsceneTextboxBottomMessageID.MaxLength = 255;
+            this.CutsceneTextboxBottomMessageID.AlwaysFireValueChanged = false;
+            this.CutsceneTextboxBottomMessageID.DisplayDigits = 4;
+            this.CutsceneTextboxBottomMessageID.DoValueRollover = false;
+            this.CutsceneTextboxBottomMessageID.Hexadecimal = true;
+            this.CutsceneTextboxBottomMessageID.IncrementMouseWheel = 1;
+            this.CutsceneTextboxBottomMessageID.Location = new System.Drawing.Point(283, 120);
+            this.CutsceneTextboxBottomMessageID.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxBottomMessageID.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.CutsceneTextboxBottomMessageID.Name = "CutsceneTextboxBottomMessageID";
+            this.CutsceneTextboxBottomMessageID.ShiftMultiplier = 1;
             this.CutsceneTextboxBottomMessageID.Size = new System.Drawing.Size(91, 20);
-            this.CutsceneTextboxBottomMessageID.TabIndex = 70;
-            this.CutsceneTextboxBottomMessageID.Text = "00";
-            this.CutsceneTextboxBottomMessageID.Leave += new System.EventHandler(this.CutsceneTextboxBottomMessageID_Leave);
+            this.CutsceneTextboxBottomMessageID.TabIndex = 101;
+            this.CutsceneTextboxBottomMessageID.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxBottomMessageID.ValueChanged += new System.EventHandler(this.CutsceneTextboxBottomMessageID_Leave);
+            // 
+            // CutsceneTextboxTopMessageID
+            // 
+            this.CutsceneTextboxTopMessageID.AlwaysFireValueChanged = false;
+            this.CutsceneTextboxTopMessageID.DisplayDigits = 4;
+            this.CutsceneTextboxTopMessageID.DoValueRollover = false;
+            this.CutsceneTextboxTopMessageID.Hexadecimal = true;
+            this.CutsceneTextboxTopMessageID.IncrementMouseWheel = 1;
+            this.CutsceneTextboxTopMessageID.Location = new System.Drawing.Point(283, 94);
+            this.CutsceneTextboxTopMessageID.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxTopMessageID.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxTopMessageID.Name = "CutsceneTextboxTopMessageID";
+            this.CutsceneTextboxTopMessageID.ShiftMultiplier = 1;
+            this.CutsceneTextboxTopMessageID.Size = new System.Drawing.Size(91, 20);
+            this.CutsceneTextboxTopMessageID.TabIndex = 100;
+            this.CutsceneTextboxTopMessageID.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxTopMessageID.ValueChanged += new System.EventHandler(this.CutsceneTextboxTopMessageID_Leave);
+            // 
+            // CutsceneTextboxMessageId
+            // 
+            this.CutsceneTextboxMessageId.AlwaysFireValueChanged = false;
+            this.CutsceneTextboxMessageId.DisplayDigits = 4;
+            this.CutsceneTextboxMessageId.DoValueRollover = false;
+            this.CutsceneTextboxMessageId.Hexadecimal = true;
+            this.CutsceneTextboxMessageId.IncrementMouseWheel = 1;
+            this.CutsceneTextboxMessageId.Location = new System.Drawing.Point(283, 68);
+            this.CutsceneTextboxMessageId.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxMessageId.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxMessageId.Name = "CutsceneTextboxMessageId";
+            this.CutsceneTextboxMessageId.ShiftMultiplier = 1;
+            this.CutsceneTextboxMessageId.Size = new System.Drawing.Size(91, 20);
+            this.CutsceneTextboxMessageId.TabIndex = 99;
+            this.CutsceneTextboxMessageId.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxMessageId.ValueChanged += new System.EventHandler(this.CutsceneTextboxMessageId_Leave);
+            // 
+            // CutsceneTextboxStartFrame
+            // 
+            this.CutsceneTextboxStartFrame.AlwaysFireValueChanged = false;
+            this.CutsceneTextboxStartFrame.DisplayDigits = 1;
+            this.CutsceneTextboxStartFrame.DoValueRollover = false;
+            this.CutsceneTextboxStartFrame.Enabled = false;
+            this.CutsceneTextboxStartFrame.IncrementMouseWheel = 1;
+            this.CutsceneTextboxStartFrame.Location = new System.Drawing.Point(92, 229);
+            this.CutsceneTextboxStartFrame.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxStartFrame.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxStartFrame.Name = "CutsceneTextboxStartFrame";
+            this.CutsceneTextboxStartFrame.ShiftMultiplier = 1;
+            this.CutsceneTextboxStartFrame.Size = new System.Drawing.Size(72, 20);
+            this.CutsceneTextboxStartFrame.TabIndex = 97;
+            this.CutsceneTextboxStartFrame.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CutsceneTextboxStartFrame.ValueChanged += new System.EventHandler(this.CutsceneTextboxStartFrame_ValueChanged);
             // 
             // CutsceneTextboxFrames
             // 
@@ -10409,14 +10643,14 @@ namespace SharpOcarina
             this.CutsceneTextboxFrames.DoValueRollover = false;
             this.CutsceneTextboxFrames.Enabled = false;
             this.CutsceneTextboxFrames.IncrementMouseWheel = 1;
-            this.CutsceneTextboxFrames.Location = new System.Drawing.Point(92, 240);
+            this.CutsceneTextboxFrames.Location = new System.Drawing.Point(92, 255);
             this.CutsceneTextboxFrames.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.CutsceneTextboxFrames.Minimum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
@@ -10424,36 +10658,15 @@ namespace SharpOcarina
             this.CutsceneTextboxFrames.ShiftMultiplier = 1;
             this.CutsceneTextboxFrames.Size = new System.Drawing.Size(72, 20);
             this.CutsceneTextboxFrames.TabIndex = 69;
+            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneTextboxFrames, "This determines the amount of frames the textbox will stall the cutscene after it" +
+        " has been closed. However if this value is smaller than 2, the textbox will not " +
+        "stall the cutscene at all.");
             this.CutsceneTextboxFrames.Value = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
             this.CutsceneTextboxFrames.ValueChanged += new System.EventHandler(this.CutsceneTextboxFrames_ValueChanged);
-            // 
-            // CutsceneTextboxTopMessageID
-            // 
-            this.CutsceneTextboxTopMessageID.AllowHex = true;
-            this.CutsceneTextboxTopMessageID.Digits = 4;
-            this.CutsceneTextboxTopMessageID.Location = new System.Drawing.Point(283, 93);
-            this.CutsceneTextboxTopMessageID.MaxLength = 255;
-            this.CutsceneTextboxTopMessageID.Name = "CutsceneTextboxTopMessageID";
-            this.CutsceneTextboxTopMessageID.Size = new System.Drawing.Size(91, 20);
-            this.CutsceneTextboxTopMessageID.TabIndex = 66;
-            this.CutsceneTextboxTopMessageID.Text = "00";
-            this.CutsceneTextboxTopMessageID.Leave += new System.EventHandler(this.CutsceneTextboxTopMessageID_Leave);
-            // 
-            // CutsceneTextboxMessageId
-            // 
-            this.CutsceneTextboxMessageId.AllowHex = true;
-            this.CutsceneTextboxMessageId.Digits = 4;
-            this.CutsceneTextboxMessageId.Location = new System.Drawing.Point(283, 65);
-            this.CutsceneTextboxMessageId.MaxLength = 255;
-            this.CutsceneTextboxMessageId.Name = "CutsceneTextboxMessageId";
-            this.CutsceneTextboxMessageId.Size = new System.Drawing.Size(91, 20);
-            this.CutsceneTextboxMessageId.TabIndex = 60;
-            this.CutsceneTextboxMessageId.Text = "00";
-            this.CutsceneTextboxMessageId.Leave += new System.EventHandler(this.CutsceneTextboxMessageId_Leave);
             // 
             // CutsceneTextboxList
             // 
@@ -10461,7 +10674,7 @@ namespace SharpOcarina
             this.CutsceneTextboxList.IntegralHeight = false;
             this.CutsceneTextboxList.Location = new System.Drawing.Point(9, 6);
             this.CutsceneTextboxList.Name = "CutsceneTextboxList";
-            this.CutsceneTextboxList.Size = new System.Drawing.Size(155, 228);
+            this.CutsceneTextboxList.Size = new System.Drawing.Size(155, 206);
             this.CutsceneTextboxList.TabIndex = 57;
             this.CutsceneTextboxList.Click += new System.EventHandler(this.CutsceneTextboxList_Click);
             // 
@@ -13192,27 +13405,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // rebuildForceCodeToolStripMenuItem
-            // 
-            this.rebuildForceCodeToolStripMenuItem.Name = "rebuildForceCodeToolStripMenuItem";
-            this.rebuildForceCodeToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
-            this.rebuildForceCodeToolStripMenuItem.Text = "Rebuild only code files (--force-code)";
-            this.rebuildForceCodeToolStripMenuItem.Click += new System.EventHandler(this.rebuildForceCodeToolStripMenuItem_Click);
-            // 
-            // rebuildForceAudioToolStripMenuItem
-            // 
-            this.rebuildForceAudioToolStripMenuItem.Name = "rebuildForceAudioToolStripMenuItem";
-            this.rebuildForceAudioToolStripMenuItem.Size = new System.Drawing.Size(351, 22);
-            this.rebuildForceAudioToolStripMenuItem.Text = "Rebuild only audio files (--force-audio)";
-            this.rebuildForceAudioToolStripMenuItem.Click += new System.EventHandler(this.rebuildForceAudioToolStripMenuItem_Click);
-            // 
-            // rebuildCleanStripMenuItem
-            // 
-            this.rebuildCleanStripMenuItem.Name = "rebuildCleanStripMenuItem";
-            this.rebuildCleanStripMenuItem.Size = new System.Drawing.Size(351, 22);
-            this.rebuildCleanStripMenuItem.Text = "Clean project to remove deleted references (--clean)";
-            this.rebuildCleanStripMenuItem.Click += new System.EventHandler(this.rebuildCleanStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13236,6 +13428,7 @@ namespace SharpOcarina
             this.Controls.Add(this.glControl1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1177, 798);
             this.Name = "MainForm";
@@ -13245,6 +13438,7 @@ namespace SharpOcarina
             this.Text = "---";
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -13457,6 +13651,10 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneSetTimeMinutes)).EndInit();
             this.Textbox.ResumeLayout(false);
             this.Textbox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxBottomMessageID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxTopMessageID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxMessageId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxStartFrame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CutsceneTextboxFrames)).EndInit();
             this.TransitionEffect.ResumeLayout(false);
             this.TransitionEffect.PerformLayout();
@@ -13672,8 +13870,8 @@ namespace SharpOcarina
         private PictureBox LightingA;
         private Label label26;
         private Label label19;
-        private Button button11;
-        private Button button12;
+        private Button DeleteEnvironmentButton;
+        private Button AddEnvironmentButton;
         private NiceLine niceLine3;
         private GroupBox groupBox7;
         private CheckBox SkyboxCheckBox;
@@ -13812,13 +14010,10 @@ namespace SharpOcarina
         private Button CutsceneDeleteTextbox;
         private Button CutsceneAddTextbox;
         private ListBox CutsceneTextboxList;
-        private NumericTextBox CutsceneTextboxMessageId;
         private Label CutsceneTextboxMessageIdLabel;
-        private NumericTextBox CutsceneTextboxBottomMessageID;
         private Label label63;
         private Label CutsceneTextboxFramesLabel;
         private NumericUpDownEx CutsceneTextboxFrames;
-        private NumericTextBox CutsceneTextboxTopMessageID;
         private Label label61;
         private ComboBox CutsceneTextboxType;
         private ToolStripMenuItem entranceTableEditorToolStripMenuItem;
@@ -14391,6 +14586,18 @@ namespace SharpOcarina
         private ToolStripMenuItem rebuildForceAudioToolStripMenuItem;
         private ToolStripMenuItem rebuildForceCodeToolStripMenuItem;
         private ToolStripMenuItem rebuildCleanStripMenuItem;
+        private Button CutscenePlayAll;
+        private ToolStripMenuItem RenderSelectedRoomMenuItem;
+        private Label CurrentFrameLabel;
+        private Button DuplicateEnvironmentButton;
+        private Label label153;
+        private NumericUpDownEx CutsceneTextboxStartFrame;
+        private NumericUpDownEx CutsceneTextboxMessageId;
+        private NumericUpDownEx CutsceneTextboxBottomMessageID;
+        private NumericUpDownEx CutsceneTextboxTopMessageID;
+        private Label CutsceneTextboxFFFFWarningLabel;
+        private Label cutsceneTestLabel;
+        private Label cutsceneTextboxEndFrameLabel;
     }
     }
 

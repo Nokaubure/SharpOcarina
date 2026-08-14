@@ -113,6 +113,9 @@
       <HintPath>packages\Tommy.3.1.2\lib\net35\Tommy.dll</HintPath>
     </Reference>
     <Reference Include="windowsBase" />
+    <Reference Include="ZeldaMsgPreview">
+      <HintPath>..\..\..\..\..\OoTmodding\zelda\SkawoTextEditor\ZeldaMsgPreview.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoCompleteTextBox.cs">
@@ -124,6 +127,7 @@
     <Compile Include="ExtraImportDataFromFile.Designer.cs">
       <DependentUpon>ExtraImportDataFromFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="ZText.cs" />
     <Compile Include="PickString.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1767,6 +1771,9 @@
     </Content>
     <None Include="Resources\play.bmp" />
     <None Include="Resources\play.png" />
+    <Content Include="ndec\beat.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ndec\z64decompress.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1775,6 +1782,13 @@
     <None Include="Resources\icon_copy.png" />
     <None Include="Resources\icon_paste.png" />
     <None Include="Resources\icon_edit.png" />
+    <None Include="Resources\textbox.png" />
+    <None Include="Resources\SFX_DialogueNext.wav" />
+    <None Include="Resources\SFX_DialogueDone.wav" />
+    <Content Include="XML\OOT\RomPatches.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="XML\OOT\CutsceneFlagTypes.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

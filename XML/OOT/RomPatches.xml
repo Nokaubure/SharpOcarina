@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table KeyType="System.UInt32" ValueType="System.String">
+
+<Patch MD5="1395d3887284081879992bd499c0bfba">ZELOOTMAtoMQDBG</Patch>
+<Patch MD5="5bd1fe107bf8106b2ab6650abecd54d6">1.0toMQDBG</Patch>
+<Patch MD5="57a9719ad547c516342e1a15d5c28c3d">1.2toMQDBG</Patch>
+	
+
+</Table>
+

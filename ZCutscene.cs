@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
@@ -26,6 +27,10 @@ namespace SharpOcarina
         private ushort _StartFrame;
         [XmlIgnore]
         private ushort _EndFrame;
+        [XmlIgnore]
+        public List<ZCutscenePosition> CachePoints;
+        [XmlIgnore]
+        public bool previewed = false;
 
         public uint Marker
         {
@@ -170,11 +175,21 @@ namespace SharpOcarina
         [XmlIgnore]
         private ushort _Frames;
         [XmlIgnore]
+        private ushort _StartFrame;
+        [XmlIgnore]
         private ushort _Message;
         [XmlIgnore]
         private ushort _TopMessage;
         [XmlIgnore]
         private ushort _BottomMessage;
+        [XmlIgnore]
+        public Bitmap[] PreviewImage;
+        [XmlIgnore]
+        public ZeldaMsgPreview.Message MsgPreview;
+        [XmlIgnore]
+        public int[] FadeDuration;
+        [XmlIgnore]
+        public bool previewed;
 
         public byte Type
         {
@@ -187,6 +202,13 @@ namespace SharpOcarina
             get { return _Frames; }
             set { _Frames = value; }
         }
+
+        public ushort StartFrame
+        {
+            get { return _StartFrame; }
+            set { _StartFrame = value; }
+        }
+
 
         public ushort Message
         {
