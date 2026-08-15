@@ -31,6 +31,7 @@ namespace SharpOcarina
         {
             bool z64romtasks = false;
             string toml = "";
+
             if (args.Length > 0)
             {
                 foreach (string arg in args)

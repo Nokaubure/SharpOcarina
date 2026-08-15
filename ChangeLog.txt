@@ -4,6 +4,8 @@
 ---1.67
 --------------
 
+Auto-Update breaks if going from 1.66! manual download: https://github.com/Nokaubure/SharpOcarina/releases/download/v1.67/SharpOcarina1.67.zip
+
 - You can now preview multiple cutscene camera commands in a row with play all
   - Cameras will behave very close to ingame: a previewed camera never plays again, when 2 cameras overlap the one that is lower in the list takes priority, etc
   - Textboxes are also rendered, slow text display is not supported but their Fade timer and End Frame duration is. For textboxes that require you to press A button, its instead "Z" or left click in the viewport.
