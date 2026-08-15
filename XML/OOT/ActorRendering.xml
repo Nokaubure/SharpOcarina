@@ -301,7 +301,7 @@
   <Actor Key="00D1" Var="..20" Scale="0.05" Offset="00002BD0">object_spot08_obj</Actor> <!-- Ice Platform -->
   <Actor Key="00D1" Var="..23" Scale="0.05" Offset="00002BD0">object_spot08_obj</Actor> <!-- Ice Platform -->
   <Actor Key="00D3" Var="...." Scale="0.4" Offsets="000032D8,000030D0">object_dekujr</Actor> <!-- Deku Tree Sprout -->
-  <Actor Key="00E3" Var="...0" Scale="1" Offset="00001300">object_mori_objects</Actor> <!-- Golden Gate -->
+  <Actor Key="00E3" Var="...0" Scale="1" RotY="150" Offset="00001300">object_mori_objects</Actor> <!-- Rotating platforms -->
   <Actor Key="00E3" Var="...1" Scale="1" Offset="00008840">object_mori_objects</Actor> <!-- Golden Gate -->
   <Actor Key="00E4" Var="...." Scale="0.1" Offset="000049D0">object_mori_objects</Actor> <!-- Forest Temple Well Water -->
   <Actor Key="00E5" Var="...." Scale="0.1" Offset="00000FC0">object_efc_doughnut</Actor> <!-- Death Mountain Cloud Ring -->

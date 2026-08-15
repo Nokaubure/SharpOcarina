@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table KeyType="System.UInt16" ValueType="System.String">
 
-  <Link Key="0001">Walk cycle</Link>
-  <Link Key="0002">Brisk walk</Link>
+  <Link Key="0001" Type="1">Walk cycle</Link>
+  <Link Key="0002" Type="1">Brisk walk</Link>
   <Link Key="0003">Shocked </Link>
   <Link Key="0005">Unknown (standing?)</Link>
   <Link Key="0006">Turn around and look up in shock</Link>

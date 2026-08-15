@@ -15,7 +15,9 @@
   - Opening an old scene will make SO convert the textbox command to the new format, and merge multiple commands if necessary
   - You can preview textboxes in Global ROM and z64rom modes
 
-- Changed the way the listbox data is displayed in camera, actors and textbox cutscene commands
+- Changed the way the listbox data is displayed in camera, actors and textbox cutscene commands, as well as in the cutscene command list window
+
+- Cutscene Link command now renders 2 Links on the selected points, to aid in rotation Y adjustment
 
 - Added an option to render only the selected room
 
@@ -25,11 +27,15 @@
 
 - Small performance boost when adding/deleting/editing environments
 
-- Improved slightly how models with joints appear (I actually tried to make them to properly render, but failed, maybe next update...)
+- Improved slightly how objects with joints are rendered (I actually tried to make them to properly render, but failed, maybe next update...)
 
 - Added duplicate button on environments
 
 - View zscene from rom now automatically sets SO to global rom mode
+
+- Updated OpenGL library in an attempt to fix SO for modern windows
+
+- The setting "Only render selected cutscene command" is now On by default (recommended to use if you have it Off)
 
 - Fixed an issue where an error would show up on invalid tags without digits. Additionally, SO will now report the name of the group that is causing that issue.
 

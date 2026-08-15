@@ -91,9 +91,16 @@ namespace SharpOcarina
         public int GetTotalFrames()
         {
             int result = 0;
-            foreach (ZCutscenePosition point in Points) result += point.Frames;
-            foreach (ZTextbox textbox in Textboxes) result += textbox.Frames;
-            foreach (ZCutsceneActor actor in CutsceneActors) result += actor.Frames;
+            if (Marker == 0x13 && Textboxes.Count > 0)
+            {
+                result = Textboxes[Textboxes.Count - 1].StartFrame + Textboxes[Textboxes.Count - 1].Frames - 1;
+            }
+            else
+            {
+                foreach (ZCutscenePosition point in Points) result += point.Frames;
+                foreach (ZTextbox textbox in Textboxes) result += textbox.Frames;
+                foreach (ZCutsceneActor actor in CutsceneActors) result += actor.Frames;
+            }
             if (result == 0) result = EndFrame - StartFrame;
             return result;
         }

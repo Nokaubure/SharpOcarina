@@ -107,6 +107,10 @@ namespace SharpOcarina
 
         public ZTextbox cutscenePreviewTextbox = null;
 
+        public ZCutsceneActor cutscenePreviewLink = null;
+
+        public Vector3 cutscenePreviewLinkPos = new Vector3(0, 0, 0);
+
         public int cutsceneTextboxIndex = 0;
 
         public float cutsceneTextboxFade = 0;
@@ -220,6 +224,7 @@ namespace SharpOcarina
         public const int CS_CAMERARELATIVE = 0x5;
         public const int CS_CAMERARELATIVEFOCUS = 0x6;
         public const int CS_UNK = 0x9;
+        public const int CS_LINK = 0xA;
         public const int CS_TEXTBOX = 0x13;
         public const int CS_TRANSITION = 0x2D;
         public const int CS_ASM = 0x3E8;
@@ -1188,7 +1193,7 @@ namespace SharpOcarina
 
                     GL.Disable(EnableCap.DepthTest);
                     GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     GL.PushMatrix();
 
                     GL.Translate(labelWorldX, labelWorldY, labelWorldZ);
@@ -2081,7 +2086,7 @@ namespace SharpOcarina
             GL.Disable(EnableCap.Texture2D);
             GL.Disable(EnableCap.Normalize);
             GL.Disable(EnableCap.Lighting);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             if (subscreenmode == true)
             {
@@ -2145,7 +2150,7 @@ namespace SharpOcarina
                 GL.Disable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.Blend);
                 GL.Enable(EnableCap.Texture2D);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
                 int textureID;
 
@@ -2185,7 +2190,7 @@ namespace SharpOcarina
                 GL.Disable(EnableCap.Texture2D);
                 GL.Disable(EnableCap.Blend);
                 GL.Enable(EnableCap.DepthTest);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
                 Set43Viewport();
 
@@ -2376,6 +2381,37 @@ namespace SharpOcarina
                                     ActorPyramidGLID,
                                     selected, actorpick == _CutsceneActor_);
 
+                                if (settings.RenderActors && selected != 0 && CurrentScene.Cutscene[i].Marker == CS_LINK) //we draw Link on selected node
+                                {
+                                    ZActor tmpactor = new ZActor();
+                                    ZActor tmpactor2 = new ZActor();
+                                    tmpactor.Variable = 0x0FF0;
+                                    tmpactor.Number = 0;
+                                    tmpactor2.Variable = 0x0FF0;
+                                    tmpactor2.Number = 0;
+
+                                    tmpactor.XPos = CurrentScene.Cutscene[i].CutsceneActors[ii].Position.X;
+                                    tmpactor.YPos = CurrentScene.Cutscene[i].CutsceneActors[ii].Position.Y;
+                                    tmpactor.ZPos = CurrentScene.Cutscene[i].CutsceneActors[ii].Position.Z;
+                                    tmpactor.YRot = CurrentScene.Cutscene[i].CutsceneActors[ii].Rotation.Y;
+                                    
+                                   
+                                    tmpactor2.XPos = CurrentScene.Cutscene[i].CutsceneActors[ii].Position2.X;
+                                    tmpactor2.YPos = CurrentScene.Cutscene[i].CutsceneActors[ii].Position2.Y;
+                                    tmpactor2.ZPos = CurrentScene.Cutscene[i].CutsceneActors[ii].Position2.Z;
+                                    tmpactor2.YRot = (float)((((float)Math.Atan2(tmpactor2.XPos - tmpactor.XPos, tmpactor2.ZPos - tmpactor.ZPos)) * 180.0f / Math.PI) * 182.04444444444444444444444444444f) + 180.0f;
+
+
+
+                                    DrawActorModel2(tmpactor, true, false);
+                                    DrawActorModel2(tmpactor, true, true);
+                                    if (tmpactor2.XPos != tmpactor.XPos || tmpactor2.ZPos != tmpactor.ZPos)
+                                    {
+                                        DrawActorModel2(tmpactor2, true, false);
+                                        DrawActorModel2(tmpactor2, true, true);
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -2549,11 +2585,17 @@ namespace SharpOcarina
                         DrawActorModel2(CurrentScene.Transitions[i], true, true);
                     }
 
-                    for (int i = 0; i < CurrentScene.SpawnPoints.Count; i++)
+                    if (!cutscenePreviewEnabled)
                     {
-                        DrawActorModel2(CurrentScene.SpawnPoints[i], true, false);
-                        DrawActorModel2(CurrentScene.SpawnPoints[i], true, true);
+                        for (int i = 0; i < CurrentScene.SpawnPoints.Count; i++)
+                        {
+                            DrawActorModel2(CurrentScene.SpawnPoints[i], true, false);
+                            DrawActorModel2(CurrentScene.SpawnPoints[i], true, true);
+                        }
+
                     }
+
+
                 }
 
 
@@ -2712,7 +2754,7 @@ namespace SharpOcarina
                     GL.Enable(EnableCap.PolygonOffsetFill);
                     GL.PolygonOffset(-5.0f, -5.0f);
 
-                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     if (tabControl1.SelectedIndex == 1 && settings.RenderSelectedGroup) GL.Color4(1.0f, 0.5f, 0.0f, 0.5f);
                     else
                     {
@@ -2762,7 +2804,7 @@ namespace SharpOcarina
                 GL.Disable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.Blend);
                 GL.Enable(EnableCap.Texture2D);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
                 if (cutscenePreviewEnabled && !settings.DisableCutsceneBlackBars)
                 {
@@ -2906,7 +2948,7 @@ namespace SharpOcarina
                 GL.Enable(EnableCap.Blend);
                 GL.Enable(EnableCap.Texture2D);
 
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.BindTexture(TextureTarget.Texture2D, renderer.Texture);
 
                 GL.Begin(BeginMode.Quads);
@@ -4094,6 +4136,8 @@ namespace SharpOcarina
         {
             Mouse.Move = new Vector2d(e.X, e.Y);
 
+            if (cutscenePreviewEnabled) return;
+
             if (Mouse.LDown == true)
             {
                 if (Mouse.Center != Mouse.Move)
@@ -4508,6 +4552,9 @@ namespace SharpOcarina
                 Mouse.RDown = false;
             else if (e.Button == MouseButtons.Middle)
                 Mouse.MDown = false;
+
+            if (cutscenePreviewEnabled) return;
+
             if (e.Button == MouseButtons.Middle && CurrentScene != null && CurrentScene.Rooms.Count > 0)
             {
                 int tmp = actorpick;
@@ -6150,11 +6197,11 @@ namespace SharpOcarina
 
                 if (!settings.MajorasMask)
                 {
-                    autoendframe = new uint[] { CS_CAMERA, CS_CAMERARELATIVE, CS_TEXTBOX, 0x0A, 0x3E, 0xC000, 0xC003 };
+                    autoendframe = new uint[] { CS_CAMERA, CS_CAMERARELATIVE, CS_TEXTBOX, CS_LINK, 0x3E, 0xC000, 0xC003 };
                 }
                 else
                 {
-                    autoendframe = new uint[] { 0x5A, 0xA, 0xC8 };
+                    autoendframe = new uint[] { 0x5A, CS_LINK, 0xC8 };
                 }
 
                 if (autoendframe.Contains(CurrentScene.Cutscene[MarkerSelect.SelectedIndex].Marker) || CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors.Count > 0)
@@ -6430,7 +6477,7 @@ namespace SharpOcarina
             double cur = time.Subtract(cutsceneplaystarttime).TotalSeconds;
             if (cutscenePreviewTextbox == null && cutsceneTextboxEndFrame <= 0 || (cutscenePreviewTextbox != null && cutscenePreviewTextbox.Frames <= 1))
                 cutsceneplaycurframe += (delta);
-            CurrentFrameLabel.Text = "" + cutsceneplaycurframe;
+            CurrentFrameLabel.Text = "" + (int)cutsceneplaycurframe;
 
             cutsceneplaydeltatime = time;
 
@@ -6611,7 +6658,7 @@ namespace SharpOcarina
                 //SetViewport(glControl1.Width, glControl1.Height);
             }
 
-            //textbox
+            //textbox, link
             bool found2 = false;
             if (!cutscenePreviewOneCommand)
             {
@@ -6651,6 +6698,28 @@ namespace SharpOcarina
                             }
                         }
 
+                    }
+                    else if (CurrentScene.Cutscene[i].Marker == CS_LINK && CurrentScene.Cutscene[i].CutsceneActors.Count > 0)
+                    {
+                        //TODO for 1.68
+                        /*
+                        for (int y = 0; y < CurrentScene.Cutscene[i].CutsceneActors.Count; y++)
+                        {
+                            if (cutsceneplaycurframe >= CurrentScene.Cutscene[i].CutsceneActors[y].StartFrame &&
+                                cutsceneplaycurframe < CurrentScene.Cutscene[i].CutsceneActors[y].StartFrame + CurrentScene.Cutscene[i].CutsceneActors[y].Frames &&
+                                CurrentScene.Cutscene[i].CutsceneActors[y] != cutscenePreviewLink && !CurrentScene.Cutscene[i].CutsceneActors[y].previewed)
+                            {
+
+                                cutscenePreviewLink = CurrentScene.Cutscene[i].CutsceneActors[y];
+                                
+
+                                found2 = true;
+                                CurrentScene.Cutscene[i].CutsceneActors[y].previewed = true;
+
+
+                                break;
+                            }
+                        }*/
                     }
                 }
             }
@@ -8740,7 +8809,7 @@ namespace SharpOcarina
         {
             MessageBox.Show(
                 Program.ApplicationTitle + " - Zelda OoT Scene Development System" + Environment.NewLine + Environment.NewLine +
-                "Revived in 2017-2019 by Nokaubure, started in 2011/2012 by xdaniel; see the Readme for more",
+                "Revived in 2017-2026 by Nokaubure, started in 2011/2012 by xdaniel; see the Readme for more",
                 "About" + Environment.NewLine, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -12644,7 +12713,7 @@ namespace SharpOcarina
 
                 // DebugConsole.WriteLine("marker: " + marker.ToString("X") + " at offset: " + offset.ToString("X"));
 
-                if (marker == 0x0001 || marker == 0x0005)
+                if (marker == CS_CAMERA || marker == CS_CAMERARELATIVE)
                 {
                 
                     ZCutscene cutscene;
@@ -12795,7 +12864,7 @@ namespace SharpOcarina
                 {
                     break;
                 }
-                else if (marker == 0x13)
+                else if (marker == CS_TEXTBOX)
                 {
                     ZCutscene cutscene = new ZCutscene(marker, (ushort[])datatemplate.Clone(), new List<ZCutscenePosition>(), new List<ZTextbox>(), new List<ZCutsceneActor>(), 0, 0);
 
@@ -12883,6 +12952,21 @@ namespace SharpOcarina
                     }
 
                     TargetScene.Cutscene.Add(cutscene);
+                }
+
+                uint[] autoendframe;
+
+                foreach (ZCutscene command in TargetScene.Cutscene)
+                {
+                    if (!settings.MajorasMask)
+                        autoendframe = new uint[] { CS_CAMERA, CS_CAMERARELATIVE, CS_TEXTBOX, CS_LINK, 0x3E, 0xC000, 0xC003 };
+                    else
+                        autoendframe = new uint[] { 0x5A, CS_LINK, 0xC8 };
+                    
+
+                    if (autoendframe.Contains(command.Marker) || command.CutsceneActors.Count > 0)
+                        command.EndFrame = (ushort)(command.StartFrame + command.GetTotalFrames());
+                    
                 }
 
 
@@ -22646,20 +22730,6 @@ namespace SharpOcarina
         }
 
 
-        protected override void WndProc(ref System.Windows.Forms.Message m)
-        {
-            const int WM_LBUTTONDOWN = 0x0201;
-            const int WM_RBUTTONDOWN = 0x0204;
-            const int WM_KEYDOWN = 0x0100;
-
-            if (m.Msg == WM_KEYDOWN && (Keys)m.WParam == Keys.Space)
-            {
-                Console.WriteLine("Space pressed!");
-            }
-
-            base.WndProc(ref m);
-        }
-
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Z && cutscenePreviewEnabled)
@@ -23260,7 +23330,7 @@ namespace SharpOcarina
         public bool CheckEmptyOffset = true;
         public bool RenderChildLink = false;
         public bool IgnoreMMDaySystem = true;
-        public bool DrawSelectedCutsceneCommands = false;
+        public bool DrawSelectedCutsceneCommands = true;
         public bool colorblindaxis = false;
         public bool DisableRGBA32 = false;
         public bool firsttime = true;

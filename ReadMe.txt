@@ -1,6 +1,6 @@
 ﻿------------------------------------------------------
-SharpOcarina v1.64 - Zelda OoT Scene Development System
-             Revived in 2017-2025 by Nokaubure, started in 2011/2012 by xdaniel
+SharpOcarina v1.67 - Zelda OoT Scene Development System
+             Revived in 2017-2026 by Nokaubure, started in 2011/2012 by xdaniel
 Find me on: https://discord.gg/74pHDEU
 ------------------------------------------------------
 
@@ -16,7 +16,7 @@ Credits & Thanks
  Python to C#, but in reality is also the product of numerous people who were involved with
  modifying and documenting the Zelda games for the N64 (spinout, MNGoldenEagle, JSA et al.)
 
- In 2017, Nokaubure followed the development of the tool with the 0.70-1.4x version.
+ In 2017, Nokaubure followed the development of the tool with the 0.70-1.6x version.
 
  Thanks to Arcaith for the models in the demonstration project included with SharpOcarina, and
  to Naxylldritt and Zeth for other testing maps used during development.
@@ -46,6 +46,8 @@ Credits & Thanks
  Thanks to Rankaisija and Skawo for making update 1.40+ possible
 
  Thanks to Thar0 for the Motion Blur implementation
+
+ Thanks to Skawo for making the textbox render library
 
  Also thanks to everyone who reported bugs, asked questions and provided ideas during the program's
  development.

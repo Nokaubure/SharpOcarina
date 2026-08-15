@@ -700,7 +700,7 @@ namespace SharpOcarina.SayakaGL
                     GL.Enable((EnableCap)All.FragmentProgram);
                     GL.Arb.BindProgram(AssemblyProgramTargetArb.FragmentProgram, FPHighlight);
                     GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 }
                 else if (ParseMode == 2)
                 {
@@ -2312,7 +2312,7 @@ namespace SharpOcarina.SayakaGL
             switch (blendmode)
             {
                 default:
-                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     GL.AlphaFunc(AlphaFunction.Greater, 0.5f);
                     break;
             }

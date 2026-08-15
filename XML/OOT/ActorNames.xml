@@ -586,9 +586,9 @@ Out-of-bounds Plane (typ.)</Notes>
     <Notes>+0xFF00 = path Id (Spear Moblins only)</Notes>
   </Actor>
   <Actor Key="004C" Object="0031" Name="Bomb Flower" DebugName="En_Bombf" Category="6">
-    <Variable Var="0000"> Bomb</Variable>
+    <Variable Var="0000"> Lit Bomb</Variable>
     <Variable Var="0001"> Invisible Bomb</Variable>
-    <Variable Var="FFFF"> Default</Variable>
+    <Variable Var="FFFF"> Bomb Flower</Variable>
   </Actor>
   <Actor Key="004D" Object="0060,014E" Name="Adult Zelda (Cutscene)" DebugName="En_Zl2" Category="4">
   </Actor>

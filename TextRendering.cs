@@ -211,14 +211,14 @@ namespace SharpOcarina
         #endregion
 
         #region OnUpdateFrame
-
+        /*
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
             }
-        }
+        }*/
 
         #endregion
 
