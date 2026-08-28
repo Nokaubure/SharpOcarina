@@ -1,15 +1,16 @@
 ﻿///CHANGELOG///
 
 --------------
----1.67
+---1.67 to 1.67.1
 --------------
 
 Auto-Update breaks if going from 1.66! manual download: https://github.com/Nokaubure/SharpOcarina/releases/download/v1.67/SharpOcarina1.67.zip
 
 - You can now preview multiple cutscene camera commands in a row with play all
   - Cameras will behave very close to ingame: a previewed camera never plays again, when 2 cameras overlap the one that is lower in the list takes priority, etc
-  - Textboxes are also rendered, slow text display is not supported but their Fade timer and End Frame duration is. For textboxes that require you to press A button, its instead "Z" or left click in the viewport.
+  - Textboxes are also rendered, slow text display is not supported but their Fade timer and Frame duration is. For textboxes that require you to press A button, its instead "Z" or left click in the viewport.
   (other commands will be previewed in future updates)
+  - [1.67.1] Transition commands are also rendered
 
 - Reworked cutscene textboxes
   - Start frame is now disabled, instead you set it per textbox. This avoids having to make FFFF textboxes to stall the command, as its done by SO automatically.
@@ -44,6 +45,12 @@ Auto-Update breaks if going from 1.66! manual download: https://github.com/Nokau
 - Fixed an inconvenience where cutscene actor points would be rendered during a cutscene preview, potentially clustering the view
 
 - Fixed an issue where some actors would cause the ones rendered afterwards to have different colors, or unload textures in "View .zscene" mode.
+
+- [1.67.1] Improved the accuracy of textbox rendering, renamed textbox end frame to frame duration
+
+- [1.67.1] Fixed an issue where in some situations, any cutscene command placed after a textbox command would have no effect ingame
+
+- [1.67.1] Fixed an issue regarding the fade timer of rendered textboxes
 
 --------------
 ---1.66

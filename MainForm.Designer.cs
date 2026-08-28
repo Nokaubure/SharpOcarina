@@ -10467,9 +10467,9 @@ namespace SharpOcarina
             this.CutsceneTextboxFramesLabel.Enabled = false;
             this.CutsceneTextboxFramesLabel.Location = new System.Drawing.Point(6, 257);
             this.CutsceneTextboxFramesLabel.Name = "CutsceneTextboxFramesLabel";
-            this.CutsceneTextboxFramesLabel.Size = new System.Drawing.Size(70, 13);
+            this.CutsceneTextboxFramesLabel.Size = new System.Drawing.Size(80, 13);
             this.CutsceneTextboxFramesLabel.TabIndex = 68;
-            this.CutsceneTextboxFramesLabel.Text = "End duration:";
+            this.CutsceneTextboxFramesLabel.Text = "Frame duration:";
             // 
             // label61
             // 
@@ -10658,9 +10658,9 @@ namespace SharpOcarina
             this.CutsceneTextboxFrames.ShiftMultiplier = 1;
             this.CutsceneTextboxFrames.Size = new System.Drawing.Size(72, 20);
             this.CutsceneTextboxFrames.TabIndex = 69;
-            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneTextboxFrames, "This determines the amount of frames the textbox will stall the cutscene after it" +
-        " has been closed. However if this value is smaller than 2, the textbox will not " +
-        "stall the cutscene at all.");
+            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneTextboxFrames, "The cutscene will be stalled at 1 frame less than this value since the textbox st" +
+        "arted. However if this value is smaller than 2, the textbox will not stall the c" +
+        "utscene at all.");
             this.CutsceneTextboxFrames.Value = new decimal(new int[] {
             1,
             0,

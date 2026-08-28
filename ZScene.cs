@@ -4240,25 +4240,23 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, textboxcount);
                     foreach (ZTextbox textbox in cutscene.Textboxes)
                     {
-                        if (textbox.StartFrame > lastendframe)
-                        {
-                            Helpers.Append16(ref data, 0xFFFF);
-                            Helpers.Append16(ref data, (ushort)(lastendframe));
-                            Helpers.Append16(ref data, (ushort)(cutscene.StartFrame));
-                            Helpers.Append16(ref data, (ushort)(0));
-                            Helpers.Append16(ref data, (ushort)(0x088B));
-                            Helpers.Append16(ref data, (ushort)(0xFFFF));
-                            textboxcount++;
-                        }
+                        
+                        Helpers.Append16(ref data, 0xFFFF);
+                        Helpers.Append16(ref data, (ushort)(lastendframe));
+                        Helpers.Append16(ref data, (ushort)(textbox.StartFrame));
+                        Helpers.Append16(ref data, (ushort)(0xFFFF));
+                        Helpers.Append32(ref data, 0xFFFFFFFF);
+                        textboxcount++;
+                        
                         Helpers.Append16(ref data, textbox.Message);
                         Helpers.Append16(ref data, (ushort)(textbox.StartFrame));
                         Helpers.Append16(ref data, (ushort)(textbox.StartFrame + textbox.Frames));
                         Helpers.Append16(ref data, (ushort)(textbox.Type));
-                        Helpers.Append16(ref data, (ushort)(textbox.Type < 2 ? textbox.TopMessage : 0x088B));
+                        Helpers.Append16(ref data, (ushort)(textbox.Type < 2 ? textbox.TopMessage : 0xFFFF));
                         Helpers.Append16(ref data, (ushort)(textbox.Type < 2 ? textbox.BottomMessage : 0xFFFF));
                         lastendframe = textbox.StartFrame + textbox.Frames;
                     }
-                    Helpers.Overwrite16(ref data, textboxcountoffset, textboxcount);
+                    Helpers.Overwrite16(ref data, textboxcountoffset, (ushort)(textboxcount));
                 }
                 else if ((Game == "OOT" && cutscene.Marker == 0x2D) || (Game == "MM" && cutscene.Marker == 0x98)) //transitions
                 {

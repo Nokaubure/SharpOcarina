@@ -3,6 +3,8 @@
 Enjoy the mess!
  */
 //new OpenTK.Graphics.GraphicsMode(0, 24)
+using ExtendedXmlSerializer.Core.Sources;
+using ExtendedXmlSerializer.Core.Sprache;
 using Ionic.Zip;
 using Microsoft.VisualBasic;
 using Microsoft.Win32.SafeHandles;
@@ -116,6 +118,10 @@ namespace SharpOcarina
         public float cutsceneTextboxFade = 0;
 
         public float cutsceneTextboxEndFrame = 0;
+
+        public ZCutscene cutscenePreviewTransition = null;
+
+        public CutsceneTransitionItem cutscenePreviewTransitionItem = null;
 
         public bool notresize = false;
 
@@ -954,10 +960,25 @@ namespace SharpOcarina
             CutsceneAsmComboBox.Items.AddRange(XMLreader.getXMLItems("CutsceneAsm", "Command"));
 
             CutsceneTransitionComboBox.Items.Clear();
-            CutsceneTransitionComboBox.Items.AddRange(XMLreader.getXMLItems("CutsceneTransition", "Transition"));
+            XmlNodeList nodes = XMLreader.getXMLNodes("CutsceneTransition", "Transition");
+            foreach (XmlNode node in nodes)
+            {
+                XmlAttributeCollection nodeAtt = node.Attributes;
+                CutsceneTransitionItem item = new CutsceneTransitionItem();
+                item.Text = nodeAtt["Key"].Value + " - " + node.InnerText;
+                item.Value = Convert.ToInt64(nodeAtt["Key"].Value, 16);
+                item.Preview = (nodeAtt["Preview"] != null) ? Convert.ToInt32(nodeAtt["Preview"].Value) : 0;
+                if (item.Preview != 0 && nodeAtt["Color"] != null)
+                {
+                    string[] cvalues = nodeAtt["Color"].Value.Split(',');
+                    item.Color = new Color4(Convert.ToInt32(cvalues[0]), Convert.ToInt32(cvalues[1]), Convert.ToInt32(cvalues[2]),255);
+                }
+
+                CutsceneTransitionComboBox.Items.Add(item);
+            }
 
             CutsceneSetFlagType.Items.Clear();
-            XmlNodeList nodes = XMLreader.getXMLNodes("CutsceneFlagTypes", "FlagType");
+            nodes = XMLreader.getXMLNodes("CutsceneFlagTypes", "FlagType");
             foreach (XmlNode node in nodes)
             {
                 XmlAttributeCollection nodeAtt = node.Attributes;
@@ -2823,6 +2844,25 @@ namespace SharpOcarina
                     GL.Vertex2(ScreenWidth, ScreenHeight);
                     GL.Vertex2(ScreenWidth, ScreenHeight - 32);
                     GL.End();
+                }
+
+                if (cutscenePreviewTransition != null && cutscenePreviewTransitionItem != null)
+                {
+                    float frames = cutsceneplaycurframe - cutscenePreviewTransition.StartFrame;
+                    int alpha = (int)(frames/cutscenePreviewTransition.GetTotalFrames() * 255.0f);
+                    if (cutscenePreviewTransitionItem.Preview == 2) alpha = 255 - alpha;
+                    if (alpha < 0) alpha = 0;
+                    if (alpha > 255) alpha = 255;
+                    //DebugConsole.WriteLine(alpha);
+                    GL.Disable(EnableCap.Texture2D);
+                    GL.Begin(BeginMode.Quads);
+                    GL.Color4((byte)cutscenePreviewTransitionItem.Color.R, (byte)cutscenePreviewTransitionItem.Color.G, (byte)cutscenePreviewTransitionItem.Color.B, (byte)alpha);
+                    GL.Vertex2(0, 32);
+                    GL.Vertex2(0, ScreenHeight-32);
+                    GL.Vertex2(ScreenWidth, ScreenHeight - 32);
+                    GL.Vertex2(ScreenWidth, 32);
+                    GL.End();
+                    GL.Enable(EnableCap.Texture2D);
                 }
 
                 if (drawtextbox || cutscenePreviewTextbox != null)
@@ -6465,6 +6505,8 @@ namespace SharpOcarina
             cutsceneplaymod = 0;
             CurrentFrameLabel.Visible = false;
             cutscenePreviewTextbox = null;
+            cutscenePreviewTransition = null;
+            cutscenePreviewTransitionItem = null;
             Camera.Rot.Z = 0.0f;
             ViewportFOV.Value = cutscenestoredfov;
             SetViewport(glControl1.Width, glControl1.Height);
@@ -6475,15 +6517,15 @@ namespace SharpOcarina
             DateTime time = DateTime.Now;
             float delta = (float)(20.0 / (1.0 / time.Subtract(cutsceneplaydeltatime).TotalSeconds));
             double cur = time.Subtract(cutsceneplaystarttime).TotalSeconds;
-            if (cutscenePreviewTextbox == null && cutsceneTextboxEndFrame <= 0 || (cutscenePreviewTextbox != null && cutscenePreviewTextbox.Frames <= 1))
+            if (cutscenePreviewTextbox == null || (cutscenePreviewTextbox != null && cutscenePreviewTextbox.Frames <= 1) || (cutscenePreviewTextbox != null && cutsceneplaycurframe < (cutscenePreviewTextbox.StartFrame + cutscenePreviewTextbox.Frames - 2)))
                 cutsceneplaycurframe += (delta);
             CurrentFrameLabel.Text = "" + (int)cutsceneplaycurframe;
 
             cutsceneplaydeltatime = time;
-
+            /*
             if (cutscenePreviewTextbox == null)
                 cutsceneTextboxEndFrame -= (delta);
-
+            */
             cutsceneTextboxEndFrameLabel.Text = "" + cutsceneTextboxEndFrame;
             cutsceneTestLabel.Text = "" + cutsceneTextboxFade;
 
@@ -6721,6 +6763,23 @@ namespace SharpOcarina
                             }
                         }*/
                     }
+                    else if (CurrentScene.Cutscene[i].Marker == CS_TRANSITION)
+                    {
+                        if (cutsceneplaycurframe >= CurrentScene.Cutscene[i].StartFrame &&
+                            cutsceneplaycurframe < CurrentScene.Cutscene[i].EndFrame && !CurrentScene.Cutscene[i].previewed)
+                        {
+
+                            cutscenePreviewTransition = CurrentScene.Cutscene[i];
+                            
+                            foreach (SongItem item in CutsceneTransitionComboBox.Items)
+                            {
+                                if (Convert.ToUInt32(item.Value.ToString()) == CurrentScene.Cutscene[i].Data[0]) 
+                                    cutscenePreviewTransitionItem = (CutsceneTransitionItem)(CutsceneTransitionComboBox.Items[CutsceneTransitionComboBox.Items.IndexOf(item)]);
+                            }
+                            CurrentScene.Cutscene[i].previewed = true;
+                            found2 = true;
+                        }
+                    }
                 }
             }
 
@@ -6752,9 +6811,24 @@ namespace SharpOcarina
                 {
                     for (int i = 0; i < tablerecord.Data.Count - 1; i++)
                     {
-                        if (tablerecord.Data[i] == 0xE || tablerecord.Data[i] == 0xC)
+                        if ((new int[]{0x5,0x6,0x13,0x14,0x1E}).Contains(tablerecord.Data[i]))
                         {
-                            textbox.FadeDuration[t] = tablerecord.Data[i+1];
+                            i += 1;
+                            continue;
+                        }
+                        else if (tablerecord.Data[i] == 0x7 || tablerecord.Data[i] == 0x12)
+                        {
+                            i += 2;
+                            continue;
+                        }
+                        else if (tablerecord.Data[i] == 0x15)
+                        {
+                            i += 3;
+                            continue;
+                        }
+                        else if (tablerecord.Data[i] == 0xE || tablerecord.Data[i] == 0xC)
+                        {
+                            textbox.FadeDuration[t] = tablerecord.Data[i + 1];
                             break;
                         }
                     }
@@ -23289,6 +23363,17 @@ namespace SharpOcarina
 
 
 
+    }
+
+    public class CutsceneTransitionItem : SongItem
+    {
+        public int Preview { get; set; }
+        public Color4 Color { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 
 
