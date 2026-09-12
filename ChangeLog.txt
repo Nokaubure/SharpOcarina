@@ -1,6 +1,17 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.68
+--------------
+
+- The app now shows a custom error when there's a .toml parsing error, and it skips rendering that actor
+
+- Fixed an issue where it wasnt possible to preview or load data from .zscene files from z64rom
+
+- Fixed an issue where loading an .obj without #room tags in scene preview mode would always treat the new model as multi room
+
+
+--------------
 ---1.67 to 1.67.1
 --------------
 

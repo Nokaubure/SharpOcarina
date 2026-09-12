@@ -46,8 +46,8 @@ namespace SharpOcarina
             {
                 if (Filename.Contains(".dae"))
                     ParseDae(Filename);
-                else if (Filename.Contains(".zmap"))
-                {}
+                else if (Filename.Contains(".zmap") || Filename.Contains(".zroom"))
+                { }
                 else
                     ParseObj(Filename);
             }
