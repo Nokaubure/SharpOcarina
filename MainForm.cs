@@ -5513,7 +5513,7 @@ namespace SharpOcarina
             {
                 if (ExitNumber.Value == 0)
                     PolytypeExitLabel.Text = "";
-                else if (ExitNumber.Value <= ExitList.Items.Count && ExitNumber.Value >= 0)
+                else if (ExitNumber.Value <= ExitList.Items.Count && ExitNumber.Value >= 0 && ExitList.SelectedIndex < CurrentScene.ExitList.Count)
                 {
                     PolytypeExitLabel.Text = "(Exit " + CurrentScene.ExitList[ExitList.SelectedIndex].Value.ToString("X4") + ")";
                 }
@@ -13829,12 +13829,34 @@ namespace SharpOcarina
                     //SetSceneHeader(0);
                     if (CurrentScene.PregeneratedMesh)
                     {
-                        CurrentScene.NewRoomMode = true;
+                        string file = File.ReadAllText(openFileDialog1.FileName);
+                        if (file.Contains("#room",StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            CurrentScene.NewRoomMode = true;
+                        }
+                        else
+                        {
+                            CurrentScene.NewRoomMode = false;
+                        }
                     }
 
                     if (CurrentScene.NewRoomMode == false)
                     {
                         CurrentScene.Rooms[RoomList.SelectedIndex].ModelFilename = openFileDialog1.FileName;
+                        if (CurrentScene.PregeneratedMesh)
+                        {
+                            CurrentScene.Rooms[RoomList.SelectedIndex].OriginalMeshHeaderOffset = 0;
+                            CurrentScene.Rooms[RoomList.SelectedIndex].OriginalRoomData = null;
+                            foreach (ZSceneHeader header in CurrentScene.SceneHeaders)
+                            {
+                                header.Scene.Rooms[RoomList.SelectedIndex].OriginalMeshHeaderOffset = 0;
+                                header.Scene.Rooms[RoomList.SelectedIndex].OriginalMeshHeaderOffset = 0;
+                                if (CurrentScene.PregeneratedMesh)
+                                {
+                                    header.Scene.Rooms[RoomList.SelectedIndex].OriginalRoomData = null;
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -13862,13 +13884,11 @@ namespace SharpOcarina
                     {
 
                         CurrentScene.OriginalSceneData = null;
-                        CurrentScene.NewRoomMode = true;
                         CurrentScene.PregeneratedMesh = false;
                         foreach(ZSceneHeader header in CurrentScene.SceneHeaders)
                         {
-                            header.Scene.NewRoomMode = true;
+                            header.Scene.NewRoomMode = CurrentScene.NewRoomMode;
                             header.Scene.OriginalSceneData = null;
-                            header.Scene.NewRoomMode = true;
                             header.Scene.PregeneratedMesh = false;
                         }
                     }

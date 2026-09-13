@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Globalization;
-using System.IO;
+using System.Windows.Forms;
+using System.Windows.Interop;
 using Tommy;
 
 
@@ -131,8 +133,17 @@ public class rom64 {
 
     static public TomlTable parseToml(string file) {
         if (File.Exists(file)) {
+            TomlTable t = null;
             StreamReader actor_toml = File.OpenText(file);
-            TomlTable t = TOML.Parse(actor_toml);
+            try
+            {
+                t = TOML.Parse(actor_toml);
+            }
+            catch (TomlParseException e)
+            {
+                MessageBox.Show("Error when parsing " + file + "\n" + e.Message + "\n" + e.SyntaxErrors.ToArray()[0], "TOML Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+            }
             actor_toml.Close();
 
             return t;
