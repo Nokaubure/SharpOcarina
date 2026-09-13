@@ -464,7 +464,10 @@ namespace SharpOcarina
 
                 string[] files = Directory.GetFiles(str, "*.o", SearchOption.AllDirectories);
                 List<FunctionName> actorfuncs = new List<FunctionName>();
-                files.ForEach(x => actorfuncs.AddRange(ElfSymbols.Start(x)));
+                foreach (string file in files)
+                {
+                    actorfuncs.AddRange(ElfSymbols.Start(file));
+                }
                 List<byte> actordata = new List<byte>();
                 actorfuncs.ForEach(x => x.Write(ref actordata));
                 ActorData[index] = actordata;

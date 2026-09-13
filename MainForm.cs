@@ -8882,8 +8882,9 @@ namespace SharpOcarina
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                Program.ApplicationTitle + " - Zelda OoT Scene Development System" + Environment.NewLine + Environment.NewLine +
-                "Revived in 2017-2026 by Nokaubure, started in 2011/2012 by xdaniel; see the Readme for more",
+                Program.ApplicationTitle + " - Zelda64 Scene Development System\n\n" +
+                "Started in 2011/2012 by xdaniel, revived in 2017 and updated thru " + DateTime.Now.Year + " by Nokaubure; see the included README for more.\n\n" +
+                "Current build date: " + DateTime.Now,
                 "About" + Environment.NewLine, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -18330,14 +18331,13 @@ namespace SharpOcarina
                                 }
                             }
 
-                            int entries = (int)(returnScene.PolyTypes.MaxBy(x => x.ExitNumber))[0].ExitNumber;
-
-                            int exitlistoffset = (int)Helpers.Read24(data, exitcommandoffset + 5);
-
-                            for (int i = exitlistoffset; i < exitlistoffset + entries * 2; i += 2)
+                            int maxExitNumber = 0;
+                            foreach (var poly in returnScene.PolyTypes)
                             {
-                                returnScene.ExitList.Add(new ZScene.ZUShort(Helpers.Read16(data, i)));
+                                if (poly.ExitNumber > maxExitNumber)
+                                    maxExitNumber = (int)poly.ExitNumber;
                             }
+                            int entries = maxExitNumber;
 
 
 
@@ -22855,6 +22855,11 @@ namespace SharpOcarina
                     }
                 }
             }
+        }
+
+        private void bindingSource2_CurrentChanged(object sender, EventArgs e)
+        {
+
         }
 
         public void AddCallToUlibGameplay(string function, string call, string prefix = "", string suffix = "")
