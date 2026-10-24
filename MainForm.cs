@@ -1044,8 +1044,13 @@ namespace SharpOcarina
         {
             if (!SimulateN64Gfx) return;
 
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PushMatrix();
+            // The skybox surrounds the camera and must not use the scene's draw distance.
+            UcodeSimulator.ApplyEnvironmentProjection(null, false);
             GL.PushMatrix();
             GL.PushAttrib(AttribMask.AllAttribBits);
+            GL.DepthRange(1.0, 1.0);
             GL.Enable(EnableCap.Light0);
 
             //ABCD
@@ -1085,6 +1090,9 @@ namespace SharpOcarina
 
             GL.PopMatrix();
             GL.PopAttrib();
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+            GL.MatrixMode(MatrixMode.Modelview);
 
 
 
@@ -1267,6 +1275,28 @@ namespace SharpOcarina
         private void DrawActorModel2(ZActor Actor, bool DrawBorder, bool transparency)
         {
             if (!SimulateN64Gfx) return;
+            // Room actors share the room's environment pass; other actors need their own.
+            if (UcodeSimulator.IsEnvironmentActive)
+            {
+                DrawActorModel2Core(Actor, DrawBorder, transparency);
+                return;
+            }
+            ZEnvironment environment = CurrentScene != null && CurrentScene.Environments.Count > 0
+                ? CurrentScene.Environments[Math.Max(0, Math.Min((int)EnvironmentSelect.Value, CurrentScene.Environments.Count - 1))]
+                : null;
+            UcodeSimulator.BeginEnvironment(environment, settings.ApplyEnvLighting);
+            try
+            {
+                DrawActorModel2Core(Actor, DrawBorder, transparency);
+            }
+            finally
+            {
+                UcodeSimulator.EndEnvironment();
+            }
+        }
+
+        private void DrawActorModel2Core(ZActor Actor, bool DrawBorder, bool transparency)
+        {
             ushort ActorID = !MainForm.settings.MajorasMask ? Actor.Number : (ushort)(Actor.Number & 0x0FFF);
             int render = FindActorRender((ushort)((ActorID == 0 && settings.RenderChildLink) ? 0xFFFF : ActorID), Actor.Variable);
             float animroty = (render != -1) ? zobj_cache[render].RotY * globalframe : 0.0f;
@@ -2073,6 +2103,15 @@ namespace SharpOcarina
             return (int)(1.0 / result);
         }
 
+        private void ApplySceneProjection()
+        {
+            ZEnvironment environment = CurrentScene != null && CurrentScene.Environments.Count > 0
+                ? CurrentScene.Environments[Math.Max(0, Math.Min((int)EnvironmentSelect.Value, CurrentScene.Environments.Count - 1))]
+                : null;
+            UcodeSimulator.ApplyEnvironmentProjection(environment,
+                SimulateN64Gfx && settings.ApplyEnvLighting && !subscreenmode);
+        }
+
         public void PaintControl()
         {
             if (IsReady == false)
@@ -2103,6 +2142,8 @@ namespace SharpOcarina
             GL.Enable(EnableCap.DepthTest);
 
             GL.Scale(0.005f, 0.005f, 0.005f);
+
+            ApplySceneProjection();
 
             GL.Disable(EnableCap.Texture2D);
             GL.Disable(EnableCap.Normalize);
@@ -2217,6 +2258,7 @@ namespace SharpOcarina
 
                 Camera.Position();
                 GL.Scale(0.005f, 0.005f, 0.005f);
+                ApplySceneProjection();
 
             }
             else if (!viewCameraPoint)
@@ -2284,6 +2326,11 @@ namespace SharpOcarina
                     GL.Fog(FogParameter.FogEnd, 10f);
                 }
 
+                // Draw the background before editor helpers so its display lists cannot
+                // paint over them, even when they request unconditional depth testing.
+                if (CurrentScene.SkyboxType == 0x01 || CurrentScene.SkyboxType == 0x05 || CurrentScene.SkyboxType == 0x06 || CurrentScene.SkyboxType == 0x0A)
+                    DrawSkybox();
+
                 foreach (ZScene.ZRoom Room in CurrentScene.Rooms)
                 {
                     
@@ -2313,9 +2360,6 @@ namespace SharpOcarina
 
                 }
 
-
-                if (CurrentScene.SkyboxType == 0x01 || CurrentScene.SkyboxType == 0x05 || CurrentScene.SkyboxType == 0x06 || CurrentScene.SkyboxType == 0x0A)
-                    DrawSkybox();
 
                 /* Render spawn points... */
                 GL.Disable(EnableCap.Texture2D);
@@ -2488,103 +2532,115 @@ namespace SharpOcarina
                         else if (Room.N64DLists != null)
                         {//aaa
 
-                            GL.Enable(EnableCap.Light0);
-                            //GL.Enable(EnableCap.Light1);
-
-
-                            // AdditionalTexturesGLID.Clear();
-
-                            //  UpdateAdditionalTextureGLIDs();
-
-
-                            foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in Room.N64DLists)
+                            ZEnvironment renderEnvironment = CurrentScene.Environments.Count > 0
+                                ? CurrentScene.Environments[Math.Max(0, Math.Min((int)EnvironmentSelect.Value, CurrentScene.Environments.Count - 1))]
+                                : null;
+                            UcodeSimulator.BeginEnvironment(renderEnvironment, settings.ApplyEnvLighting);
+                            try
                             {
-                                if (!DL.IsTransparent)
+
+                                GL.Enable(EnableCap.Light0);
+                                //GL.Enable(EnableCap.Light1);
+
+
+                                // AdditionalTexturesGLID.Clear();
+
+                                //  UpdateAdditionalTextureGLIDs();
+
+
+                                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in Room.N64DLists)
                                 {
-
-                                    if (DL.Billboard != 0)
+                                    if (!DL.IsTransparent)
                                     {
 
-                                        GL.PushMatrix();
+                                        if (DL.Billboard != 0)
+                                        {
 
-                                        GL.Translate(DL.midX, DL.midY, DL.midZ);
-                                        GL.Rotate(-Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
-                                        if (DL.Billboard == 1)
-                                            GL.Rotate(-Camera.Rot.X, 1.0f, 0.0f, 0.0f);
-                                    }
-                                    ZScene TargetScene = CurrentScene.inherittextureanims ? NormalHeader : CurrentScene;
-                                    if ((DL.Animation != 0 && DL.Animation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.Animation - 8].HasScroll())
-                                        || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
-                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
-                                        || (DL.Animation != 0 && settings.MajorasMask))
-                                    {
-                                        AdvancedCallList(DL);
-                                    }
-                                    else
-                                    {
-                                        GL.CallList(DL.GLID);
-                                    }
+                                            GL.PushMatrix();
 
-                                    if (DL.Billboard != 0)
-                                    {
+                                            GL.Translate(DL.midX, DL.midY, DL.midZ);
+                                            GL.Rotate(-Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
+                                            if (DL.Billboard == 1)
+                                                GL.Rotate(-Camera.Rot.X, 1.0f, 0.0f, 0.0f);
+                                        }
+                                        ZScene TargetScene = CurrentScene.inherittextureanims ? NormalHeader : CurrentScene;
+                                        if ((DL.Animation != 0 && DL.Animation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.Animation - 8].HasScroll())
+                                            || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
+                                            || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
+                                            || (DL.Animation != 0 && settings.MajorasMask))
+                                        {
+                                            AdvancedCallList(DL);
+                                        }
+                                        else
+                                        {
+                                            GL.CallList(DL.GLID);
+                                        }
+
+                                        if (DL.Billboard != 0)
+                                        {
                             
-                                        GL.PopMatrix();
+                                            GL.PopMatrix();
+                                        }
+                                    }
+
+                                }
+
+
+
+                                if (incr3 == RoomList.SelectedIndex && settings.RenderActors)
+                                {
+
+                                    for (int i = 0; i < CurrentScene.Rooms[incr3].ZActors.Count; i++)
+                                    {
+                                        DrawActorModel2(CurrentScene.Rooms[incr3].ZActors[i], true, false);
                                     }
                                 }
 
-                            }
 
 
 
-                            if (incr3 == RoomList.SelectedIndex && settings.RenderActors)
-                            {
-
-                                for (int i = 0; i < CurrentScene.Rooms[incr3].ZActors.Count; i++)
+                                foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in Room.N64DLists)
                                 {
-                                    DrawActorModel2(CurrentScene.Rooms[incr3].ZActors[i], true, false);
-                                }
-                            }
-
-
-
-
-                            foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in Room.N64DLists)
-                            {
-                                if (DL.IsTransparent)
-                                {
-
-                                    if (DL.Billboard != 0)
+                                    if (DL.IsTransparent)
                                     {
 
-                                        GL.PushMatrix();
+                                        if (DL.Billboard != 0)
+                                        {
 
-                                        GL.Translate(DL.midX, DL.midY, DL.midZ);
-                                        GL.Rotate(-Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
-                                        if (DL.Billboard == 1)
-                                            GL.Rotate(-Camera.Rot.X, 1.0f, 0.0f, 0.0f);
-                                        // GL.Translate(-DL.midX, -DL.midY, -DL.midZ);
+                                            GL.PushMatrix();
+
+                                            GL.Translate(DL.midX, DL.midY, DL.midZ);
+                                            GL.Rotate(-Camera.Rot.Y, 0.0f, 1.0f, 0.0f);
+                                            if (DL.Billboard == 1)
+                                                GL.Rotate(-Camera.Rot.X, 1.0f, 0.0f, 0.0f);
+                                            // GL.Translate(-DL.midX, -DL.midY, -DL.midZ);
                                         
-                                    }
-                                    ZScene TargetScene = CurrentScene.inherittextureanims ? NormalHeader : CurrentScene;
-                                    if ((DL.Animation != 0 && DL.Animation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.Animation - 8].HasScroll())
-                                        || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
-                                        || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
-                                        || (DL.Animation != 0 && settings.MajorasMask))
-                                    {
-                                        AdvancedCallList(DL);
-                                    }
-                                    else
-                                    {
-                                        GL.CallList(DL.GLID);
+                                        }
+                                        ZScene TargetScene = CurrentScene.inherittextureanims ? NormalHeader : CurrentScene;
+                                        if ((DL.Animation != 0 && DL.Animation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.Animation - 8].HasScroll())
+                                            || (DL.TextureAnimation != 0 && DL.TextureAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.TextureAnimation - 8].HasPointer())
+                                            || (DL.ColorAnimation != 0 && DL.ColorAnimation - 8 < TargetScene.SegmentFunctions.Count && TargetScene.SegmentFunctions[DL.ColorAnimation - 8].HasBlending())
+                                            || (DL.Animation != 0 && settings.MajorasMask))
+                                        {
+                                            AdvancedCallList(DL);
+                                        }
+                                        else
+                                        {
+                                            GL.CallList(DL.GLID);
+                                        }
+
+                                        if (DL.Billboard != 0)
+                                        {
+
+                                            GL.PopMatrix();
+                                        }
                                     }
 
-                                    if (DL.Billboard != 0)
-                                    {
-
-                                        GL.PopMatrix();
-                                    }
                                 }
-
+                            }
+                            finally
+                            {
+                                UcodeSimulator.EndEnvironment();
                             }
                         }
                         GL.PopAttrib();

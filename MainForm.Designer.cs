@@ -1567,7 +1567,6 @@ namespace SharpOcarina
             this.applyEnvironmentLightingToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
             this.applyEnvironmentLightingToolStripMenuItem.Text = "&Apply Environment Lighting";
             this.applyEnvironmentLightingToolStripMenuItem.ToolTipText = "Only with simulate N64 graphics disabled";
-            this.applyEnvironmentLightingToolStripMenuItem.Visible = false;
             this.applyEnvironmentLightingToolStripMenuItem.Click += new System.EventHandler(this.applyEnvironmentLightingToolStripMenuItem_Click);
             // 
             // RenderActorstoolStrip

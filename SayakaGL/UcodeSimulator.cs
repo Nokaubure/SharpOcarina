@@ -336,6 +336,167 @@ namespace SharpOcarina.SayakaGL
 
         static bool EnableCombiner = true;
 
+        static int EnvironmentVertexProgram;
+        static uint EnvironmentRenderMode;
+        public static bool IsEnvironmentActive { get; private set; }
+
+        // All geometry sharing a depth buffer must use the same projection, including
+        // unlit editor helpers drawn before or after the N64 environment passes.
+        public static void ApplyEnvironmentProjection(ZEnvironment environment, bool enabled)
+        {
+            double near = 0.1;
+            double far = 10000.0;
+            if (enabled && environment != null)
+            {
+                // The viewport scales game coordinates by 0.005. OoT's projection near is 10.
+                near = 10.0 * 0.005;
+                far = Math.Max(11, (int)environment.DrawDistance) * 0.005;
+            }
+            double[] projection = new double[16];
+            GL.GetDouble(GetPName.ProjectionMatrix, projection);
+            projection[10] = -(far + near) / (far - near);
+            projection[14] = -2 * far * near / (far - near);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(projection);
+            GL.MatrixMode(MatrixMode.Modelview);
+        }
+
+        // Environment values are uploaded outside compiled display lists so edits stay live.
+        public static void BeginEnvironment(ZEnvironment environment, bool enabled)
+        {
+            if (enabled && environment != null && EnvironmentVertexProgram == 0)
+                CreateEnvironmentVertexProgram();
+            GL.PushAttrib(AttribMask.EnableBit);
+            IsEnvironmentActive = true;
+            GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 3, 0f, 0f, 0f, 0f);
+            GL.Disable((EnableCap)All.VertexProgram);
+            if (!enabled || environment == null) return;
+
+            SetEnvironmentColor(0, environment.C1C);
+            SetEnvironmentDirection(1, environment.C2X, environment.C2Y, environment.C2Z);
+            SetEnvironmentColor(2, environment.C3C);
+            SetEnvironmentDirection(3, environment.C4X, environment.C4Y, environment.C4Z);
+            SetEnvironmentColor(4, environment.C5C);
+
+            int fogNear = environment.FogDistance & 0x3FF;
+            int multiplier = 0, offset = 0;
+            if (fogNear >= 997 && fogNear < 1000)
+            {
+                multiplier = 32767;
+                offset = -32512;
+            }
+            else if (fogNear < 997)
+            {
+                multiplier = 128000 / (1000 - fogNear);
+                offset = (500 - fogNear) * 256 / (1000 - fogNear);
+            }
+            GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.VertexProgram, 5,
+                multiplier, offset, 0, 0);
+            Color fog = environment.FogColorC;
+            GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 3,
+                fog.R / 255f, fog.G / 255f, fog.B / 255f, 1f);
+            GL.Arb.BindProgram(AssemblyProgramTargetArb.VertexProgram, EnvironmentVertexProgram);
+            GL.Enable((EnableCap)All.VertexProgram);
+            GL.Disable(EnableCap.Fog);
+        }
+
+        public static void EndEnvironment()
+        {
+            GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 3, 0f, 0f, 0f, 0f);
+            GL.PopAttrib();
+            IsEnvironmentActive = false;
+        }
+
+        static void SetEnvironmentColor(int index, Color color)
+        {
+            GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.VertexProgram, index,
+                color.R / 255f, color.G / 255f, color.B / 255f, 1f);
+        }
+
+        static void SetEnvironmentDirection(int index, byte x, byte y, byte z)
+        {
+            // Directions are stored as unsigned bytes in the editor, signed bytes in the game.
+            Vector3d direction = new Vector3d(unchecked((sbyte)x), unchecked((sbyte)y), unchecked((sbyte)z));
+            double[] view = new double[16];
+            GL.GetDouble(GetPName.ModelviewMatrix, view);
+            direction = new Vector3d(
+                view[0] * direction.X + view[4] * direction.Y + view[8] * direction.Z,
+                view[1] * direction.X + view[5] * direction.Y + view[9] * direction.Z,
+                view[2] * direction.X + view[6] * direction.Y + view[10] * direction.Z);
+            if (direction.LengthSquared > 0) direction.Normalize();
+            GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.VertexProgram, index,
+                (float)direction.X, (float)direction.Y, (float)direction.Z, 0f);
+        }
+
+        static void CreateEnvironmentVertexProgram()
+        {
+            // texcoord[2].xy carries per-vertex G_LIGHTING and material fog flags.
+            // Lighting is evaluated in eye space; directions use the camera matrix only.
+            string source = "!!ARBvp1.0\n" +
+                "PARAM mvp[4] = { state.matrix.mvp };\n" +
+                "PARAM normalMatrix[4] = { state.matrix.modelview.invtrans };\n" +
+                "PARAM texture0[4] = { state.matrix.texture[0] };\n" +
+                "PARAM texture1[4] = { state.matrix.texture[1] };\n" +
+                "TEMP clip, normal, shade, factor, fog;\n" +
+                "DP4 clip.x, mvp[0], vertex.position;\n" +
+                "DP4 clip.y, mvp[1], vertex.position;\n" +
+                "DP4 clip.z, mvp[2], vertex.position;\n" +
+                "DP4 clip.w, mvp[3], vertex.position;\n" +
+                "MOV result.position, clip;\n" +
+                "DP3 normal.x, normalMatrix[0], vertex.normal;\n" +
+                "DP3 normal.y, normalMatrix[1], vertex.normal;\n" +
+                "DP3 normal.z, normalMatrix[2], vertex.normal;\n" +
+                "DP3 factor.x, normal, normal;\n" +
+                "MAX factor.x, factor.x, 0.00000001;\n" +
+                "RSQ factor.x, factor.x;\n" +
+                "MUL normal.xyz, normal, factor.x;\n" +
+                "DP3 factor.x, normal, program.env[1];\n" +
+                "MAX factor.x, factor.x, 0.0;\n" +
+                "MAD shade.xyz, program.env[2], factor.x, program.env[0];\n" +
+                "DP3 factor.x, normal, program.env[3];\n" +
+                "MAX factor.x, factor.x, 0.0;\n" +
+                "MAD shade.xyz, program.env[4], factor.x, shade;\n" +
+                "MIN shade.xyz, shade, 1.0;\n" +
+                "SUB shade.xyz, shade, vertex.color;\n" +
+                "MAD result.color.xyz, shade, vertex.texcoord[2].x, vertex.color;\n" +
+                "MOV result.color.w, vertex.color.w;\n" +
+                // AdvancedCallList animates these matrices independently for both scroll layers.
+                "DP4 result.texcoord[0].x, texture0[0], vertex.texcoord[0];\n" +
+                "DP4 result.texcoord[0].y, texture0[1], vertex.texcoord[0];\n" +
+                "DP4 result.texcoord[0].z, texture0[2], vertex.texcoord[0];\n" +
+                "DP4 result.texcoord[0].w, texture0[3], vertex.texcoord[0];\n" +
+                "DP4 result.texcoord[1].x, texture1[0], vertex.texcoord[1];\n" +
+                "DP4 result.texcoord[1].y, texture1[1], vertex.texcoord[1];\n" +
+                "DP4 result.texcoord[1].z, texture1[2], vertex.texcoord[1];\n" +
+                "DP4 result.texcoord[1].w, texture1[3], vertex.texcoord[1];\n" +
+                "ABS factor.x, clip.w;\n" +
+                "MAX factor.x, factor.x, 0.00000001;\n" +
+                "RCP factor.x, factor.x;\n" +
+                "MUL fog.x, clip.z, factor.x;\n" +
+                "SLT factor.y, clip.w, 0.0;\n" +
+                "ADD factor.z, fog.x, 1.0;\n" +
+                "MAD fog.x, -factor.y, factor.z, fog.x;\n" +
+                "MAD fog.x, fog.x, program.env[5].x, program.env[5].y;\n" +
+                "MAX fog.x, fog.x, 0.0;\n" +
+                "MIN fog.x, fog.x, 255.0;\n" +
+                "MUL fog.x, fog.x, 0.003921568627;\n" +
+                "MUL result.texcoord[2].x, fog.x, vertex.texcoord[2].y;\n" +
+                "END\n";
+            byte[] bytes = Encoding.ASCII.GetBytes(source);
+            GL.Arb.GenProgram(1, out EnvironmentVertexProgram);
+            GL.Arb.BindProgram(AssemblyProgramTargetArb.VertexProgram, EnvironmentVertexProgram);
+            GL.Arb.ProgramString(AssemblyProgramTargetArb.VertexProgram,
+                ArbVertexProgram.ProgramFormatAsciiArb, bytes.Length, bytes);
+            int errorPosition;
+            GL.GetInteger((GetPName)All.ProgramErrorPositionArb, out errorPosition);
+            if (errorPosition != -1)
+            {
+                GL.Arb.DeleteProgram(EnvironmentVertexProgram);
+                EnvironmentVertexProgram = 0;
+                throw new InvalidOperationException("Environment vertex program: " + GL.GetString((StringName)All.ProgramErrorStringArb));
+            }
+        }
+
         static string[] NamesG = Enum.GetNames(typeof(UcodeG));
         static int[] ValuesG = (int[])Enum.GetValues(typeof(UcodeG));
         static string[] NamesF3DEX2 = Enum.GetNames(typeof(UcodeF3DEX2));
@@ -900,6 +1061,13 @@ namespace SharpOcarina.SayakaGL
 
             foreach (int ThisIndex in Indices)
             {
+                // These attributes are compiled with geometry, while environment colors remain live.
+                uint fogAlpha = (EnvironmentRenderMode >> 26) & 3;
+                bool materialFog = (EnvironmentRenderMode >> 30) == 3 &&
+                    (fogAlpha == 1 || fogAlpha == 2);
+                GL.Arb.MultiTexCoord2(TextureUnit.Texture2,
+                    ParseMode == 0 && (NGraphics.GeometryMode & (uint)GeometryMode.LIGHTING) != 0 ? 1f : 0f,
+                    ParseMode == 0 && materialFog && (NGraphics.GeometryMode & (uint)GeometryMode.FOG) != 0 ? 1f : 0f);
                 if (Convert.ToBoolean(NGraphics.GeometryMode & (UInt32)GeometryMode.TEXTURE_GEN) == true)
                 {
                     Vertices[ThisIndex].Normals.Normalize();
@@ -1000,7 +1168,7 @@ namespace SharpOcarina.SayakaGL
                     Position = new Vector3d((double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset) * modifier[0], (double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 2) * modifier[1], (double)GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 4) * modifier[2]),
                     TexCoord = new Vector2d(GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 8), GameHandler.Read16S(GameHandler.RAM[VSegment].Data, VOffset + 10)),
                     Colors = new Color4(GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 12), GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 13), GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 14), GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 15)),
-                    Normals = new Vector3d((double)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 12), (double)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 13), (double)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 14)),
+                    Normals = new Vector3d(unchecked((sbyte)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 12)), unchecked((sbyte)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 13)), unchecked((sbyte)GameHandler.Read8(GameHandler.RAM[VSegment].Data, VOffset + 14))),
                     Address = ((uint)VSegment << 24 | VOffset),
                     InFileNumber = CurrentDL.InFileNumber
                 });
@@ -1256,6 +1424,7 @@ namespace SharpOcarina.SayakaGL
                 case 3:
                     // Render mode
                     {
+                        EnvironmentRenderMode = w1;
                         if (Convert.ToBoolean(w1 & (uint)OtherModeL.ZMODE_DEC) == true)
                         {
                             // Enable decal mode (ex. pathways in Hyrule Field, Kokiri Forest, etc.)
@@ -1907,6 +2076,7 @@ namespace SharpOcarina.SayakaGL
                 "PARAM PrimColor = program.env[0];\n" +
                 "PARAM EnvColor = program.env[1];\n" +
                 "PARAM PrimColorLOD = program.env[2];\n" +
+                "PARAM SceneFog = program.env[3];\n" +
                 "ATTRIB Shade = fragment.color;\n" +
                 "\n" +
                 "OUTPUT Out = result.color;\n" +
@@ -2251,7 +2421,9 @@ namespace SharpOcarina.SayakaGL
                 ProgramString += "MOV aComb.a, aR0;\n\n";
             }
 
-            ProgramString += "MOV Comb.a, aComb.a;\n" +
+            ProgramString += "MUL R0.x, fragment.texcoord[2].x, SceneFog.a;\n" +
+                "LRP Comb.rgb, R0.x, SceneFog, Comb;\n" +
+                "MOV Comb.a, aComb.a;\n" +
                 "MOV Out, Comb;\n" +
                 "END\n";
 
