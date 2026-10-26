@@ -6767,7 +6767,7 @@ namespace SharpOcarina
             // 
             // AdditionalLightNS
             // 
-            this.AdditionalLightNS.AlwaysFireValueChanged = true;
+            this.AdditionalLightNS.AlwaysFireValueChanged = false;
             this.AdditionalLightNS.DisplayDigits = 2;
             this.AdditionalLightNS.DoValueRollover = false;
             this.AdditionalLightNS.Enabled = false;

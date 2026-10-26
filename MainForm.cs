@@ -8444,7 +8444,6 @@ namespace SharpOcarina
             NormalHeader = CurrentScene;
             CurrentScene.BasePath = System.IO.Path.GetDirectoryName(FileName);
             fullpath = Path.GetDirectoryName(FileName) + Path.DirectorySeparatorChar;
-            temppath = CurrentScene.CollisionFilename;
 
 
             while (CurrentScene.SegmentFunctions.Count < 8)
@@ -8452,20 +8451,9 @@ namespace SharpOcarina
                 CurrentScene.SegmentFunctions.Add(new ZSegmentFunction());
             }
 
+            temppath = FindRealPath(CurrentScene.CollisionFilename, fullpath);
+            if (temppath == "-1") return;
 
-
-            if (!File.Exists(temppath))
-            {
-                if (Path.IsPathRooted(temppath))
-                    temppath = fullpath + Path.GetFileName(temppath);
-                else
-                    temppath = fullpath + temppath;
-            }
-            if (!File.Exists(temppath))
-            {
-                MessageBox.Show("File " + temppath + " doesn't exists, fix XML paths before attempting to open it again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             CurrentScene.ColModel = new ObjFile(temppath, true);
             CurrentScene.CollisionFilename = temppath;
 
@@ -8473,17 +8461,9 @@ namespace SharpOcarina
             {
                 if (!CurrentScene.PregeneratedMesh)
                 {
-                    temppath = CurrentScene.Rooms[i].ModelFilename;
-                    if (!File.Exists(temppath))
-                        if (Path.IsPathRooted(temppath))
-                            temppath = fullpath + Path.GetFileName(temppath);
-                        else
-                            temppath = fullpath + temppath;
-                    if (!File.Exists(temppath))
-                    {
-                        MessageBox.Show("File " + temppath + " doesn't exists, fix XML paths before attempting to open it again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    temppath = FindRealPath(CurrentScene.Rooms[i].ModelFilename, fullpath);
+                    if (temppath == "-1") return;
+
                     CurrentScene.Rooms[i].ObjModel = new ObjFile(temppath);
                     CurrentScene.Rooms[i].ModelFilename = temppath;
 
@@ -8542,42 +8522,15 @@ namespace SharpOcarina
 
                 foreach (var multitex in CurrentScene.AdditionalTextures)
                 {
-                    temppath = multitex.map_Kd;
-                    if (!File.Exists(temppath))
-                    {
+                    temppath = FindRealPath(multitex.map_Kd, fullpath);
+                    if (temppath == "-1") continue;
 
-                        if (Path.IsPathRooted(temppath))
-                            temppath = fullpath + Path.GetFileName(temppath);
-                        else
-                            temppath = fullpath + temppath;
+                    multitex.map_Kd = temppath;
+                    multitex.TexImage = new Bitmap(Bitmap.FromFile(multitex.map_Kd));
+                    multitex.GLID = TexUtil.CreateTextureFromBitmap(multitex.TexImage);
+                    multitex.Width = multitex.TexImage.Width;
+                    multitex.Height = multitex.TexImage.Height;
 
-                        //temppath = Path.GetFullPath(temppath);
-                        
-                        if (!File.Exists(temppath))
-                        {
-                            MessageBox.Show("Texture " + temppath + " doesn't exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                        }
-                        else
-                        {
-                            multitex.map_Kd = temppath;
-
-
-                            multitex.TexImage = new Bitmap(Bitmap.FromFile(multitex.map_Kd));
-                            multitex.GLID = TexUtil.CreateTextureFromBitmap(multitex.TexImage);
-                            multitex.Width = multitex.TexImage.Width;
-                            multitex.Height = multitex.TexImage.Height;
-                        }
-
-
-                    }
-                    else
-                    {
-
-                        multitex.TexImage = new Bitmap(Bitmap.FromFile(multitex.map_Kd));
-                        multitex.GLID = TexUtil.CreateTextureFromBitmap(multitex.TexImage);
-                        multitex.Width = multitex.TexImage.Width;
-                        multitex.Height = multitex.TexImage.Height;
-                    }
                 }
 
                 //old jfif format
@@ -8775,6 +8728,31 @@ namespace SharpOcarina
             {
                 CurrentScene.ConvertPreview(settings.ConsecutiveRoomInject, settings.ForceRGBATextures);
             }
+        }
+
+        private string FindRealPath(string path, string fullpath)
+        {
+            string temppath = path;
+            string reltofullpath = Path.GetFullPath(path).Replace(fullpath, "");
+            bool found = false;
+            if (!File.Exists(temppath))
+            {
+                temppath = fullpath + Path.GetFileName(temppath);
+                if (!File.Exists(temppath))
+                {
+                    temppath = fullpath + temppath;
+                    if (!File.Exists(temppath))
+                    {
+                        temppath = fullpath + reltofullpath;
+                        if (!File.Exists(temppath))
+                        {
+                            MessageBox.Show("File " + path + " doesn't exists, fix XML paths before attempting to open it again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return "-1";
+                        }
+                    }
+                }
+            }
+            return temppath;
         }
 
         private void SetTrueGroupsToGroupSettings(int i)
@@ -11468,7 +11446,7 @@ namespace SharpOcarina
         private void AdditionalLightNS_ValueChanged(object sender, EventArgs e)
         {
             CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].NSdirection = (byte)AdditionalLightNS.Value;
-
+            
             UpdateAdditionalLightEdit();
         }
 
@@ -23533,12 +23511,15 @@ namespace SharpOcarina
 
         private void ViewNormalCopyAdditionalLight_Click(object sender, EventArgs e)
         {
-            Vector3d n = RotToNormal(Camera.Rot.X, Camera.Rot.Y);
+            if (CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Count > 0)
+            {
+                Vector3d n = RotToNormal(Camera.Rot.X, Camera.Rot.Y);
 
-            AdditionalLightNS.Value = ViewNormalCopy_NormalToU8(n.X);
-            AdditionalLightY.Value = ViewNormalCopy_NormalToU8(n.Y);
-            AdditionalLightEW.Value = ViewNormalCopy_NormalToU8(n.Z);
-            UpdateAdditionalLightEdit();
+                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].NSdirection = (byte)ViewNormalCopy_NormalToU8(n.X);
+                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].Ydirection = (byte)ViewNormalCopy_NormalToU8(n.Y);
+                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].EWdirection = (byte)ViewNormalCopy_NormalToU8(n.Z);
+                UpdateAdditionalLightEdit();
+            }
         }
 
         private static int UploadSkyTexture(Bitmap bitmap, int texture)

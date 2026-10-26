@@ -30,6 +30,10 @@
 
 - Fixed an issue where loading an .obj without #room tags in scene preview mode would always treat the new model as multi room
 
+- Fixed an issue where switching room while one had an additional light would sometimes crash SO
+
+- Fixed an issue where sometimes SO failed to locate files on the same directory as the xml file
+
 - TODO Fixed #environment tag issue
 
 - TODO Fixed download patch issue
