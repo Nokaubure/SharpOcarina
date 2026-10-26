@@ -21,6 +21,8 @@ namespace SharpOcarina
         [XmlIgnore]
         private byte _NSdirection;
         [XmlIgnore]
+        private byte _Ydirection;
+        [XmlIgnore]
         private byte _EWdirection;
         [XmlIgnore]
         private byte _Radius;
@@ -55,6 +57,12 @@ namespace SharpOcarina
         {
             get { return _NSdirection; }
             set { _NSdirection = value; }
+        }
+
+        public byte Ydirection
+        {
+            get { return _Ydirection; }
+            set { _Ydirection = value; }
         }
 
         public byte EWdirection

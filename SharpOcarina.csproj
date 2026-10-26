@@ -349,9 +349,6 @@
     <Compile Include="ZActor.cs" />
     <Compile Include="NDisplayList.cs" />
     <Compile Include="IO.cs" />
-    <Compile Include="MainForm.Sky.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

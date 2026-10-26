@@ -21,6 +21,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Tommy;
 using static SharpOcarina.ZScene.ZRoom;
+using static SharpOcarina.ZCutscene;
 
 namespace SharpOcarina
 {
@@ -2937,9 +2938,9 @@ namespace SharpOcarina
                         if (!light.PointLight)
                         {
                             Helpers.Append16(ref Room.RoomData, 0x0100);
-                            Helpers.Append16(ref Room.RoomData, (ushort)(0x0000 | (ushort)light.NSdirection << 8));
-                            Helpers.Append16(ref Room.RoomData, (ushort)(light.ColorC.R | (ushort)light.EWdirection << 8));
-                            Helpers.Append16(ref Room.RoomData, (ushort)(light.ColorC.B | (ushort)light.ColorC.G << 8));
+                            Helpers.Append16(ref Room.RoomData, (ushort)(light.Ydirection | light.NSdirection << 8));
+                            Helpers.Append16(ref Room.RoomData, (ushort)(light.ColorC.R | light.EWdirection << 8));
+                            Helpers.Append16(ref Room.RoomData, (ushort)(light.ColorC.B | light.ColorC.G << 8));
                             Helpers.Append16(ref Room.RoomData, 0x0000);
                             Helpers.Append16(ref Room.RoomData, 0x0000);
                             Helpers.Append16(ref Room.RoomData, 0x0000);
@@ -2950,9 +2951,9 @@ namespace SharpOcarina
                             Helpers.Append16(ref Room.RoomData, (ushort)light.XPos);
                             Helpers.Append16(ref Room.RoomData, (ushort)light.YPos);
                             Helpers.Append16(ref Room.RoomData, (ushort)light.ZPos);
-                            Helpers.Append16(ref Room.RoomData, (ushort)(light.ColorC.G | (ushort)light.ColorC.R << 8));
-                            Helpers.Append16(ref Room.RoomData, (ushort)(0x0000 | (ushort)light.ColorC.B << 8));
-                            Helpers.Append16(ref Room.RoomData, (ushort)(0x0000 | (ushort)light.Radius << 8));
+                            Helpers.Append16(ref Room.RoomData, (ushort)(light.ColorC.G | light.ColorC.R << 8));
+                            Helpers.Append16(ref Room.RoomData, (ushort)(0x0000 | light.ColorC.B << 8));
+                            Helpers.Append16(ref Room.RoomData, (ushort)(0x0000 | light.Radius << 8));
                         }
                     }
                     AddPadding(ref Room.RoomData, 8);
@@ -3994,7 +3995,7 @@ namespace SharpOcarina
         public void GenerateCutsceneData(List<Byte> data, string Game)
         {
             int totalframes = 0;
-            Helpers.Append32(ref data, (uint)Cutscene.Count + (uint)Cutscene.FindAll(x => x.Marker == 0x01).Count);
+            Helpers.Append32(ref data, (uint)Cutscene.Count + (uint)Cutscene.FindAll(x => x.Marker == CS_CAMERA).Count);
             int totalframesoffset = data.Count;
             Helpers.Append32(ref data, 0xFEFEFEFE);
             List<ZCutscene> orderedcutscene = new List<ZCutscene>();
@@ -4027,9 +4028,9 @@ namespace SharpOcarina
 
             foreach (ZCutscene cutscene in Cutscene)
             {
-                // if (cutscene.Marker != 0x13) totalframes += cutscene.GetTotalFrames();
+                // if (cutscene.Marker != CS_TEXTBOX) totalframes += cutscene.GetTotalFrames();
                 if (cutscene.StartFrame + cutscene.GetTotalFrames() > totalframes) totalframes = cutscene.StartFrame + cutscene.GetTotalFrames();
-                if (Game == "OOT" && cutscene.Marker == 0x01 || Game == "OOT" && cutscene.Marker == 0x05) //position
+                if (Game == "OOT" && cutscene.Marker == CS_CAMERA || Game == "OOT" && cutscene.Marker == CS_CAMERARELATIVE) //position
                 {
                     if (cutscene.Points.Count == 0)
                     {
@@ -4196,7 +4197,7 @@ namespace SharpOcarina
                     }
 
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0x13) || (Game == "MM" && cutscene.Marker == 0xA))
+                else if ((Game == "OOT" && cutscene.Marker == CS_TEXTBOX) || (Game == "MM" && cutscene.Marker == 0xA))
                 {
                     int lastendframe = 0;
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
@@ -4224,7 +4225,7 @@ namespace SharpOcarina
                     }
                     Helpers.Overwrite16(ref data, textboxcountoffset, (ushort)(textboxcount));
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0x2D) || (Game == "MM" && cutscene.Marker == 0x98)) //transitions
+                else if ((Game == "OOT" && cutscene.Marker == CS_TRANSITION) || (Game == "MM" && cutscene.Marker == 0x98)) //transitions
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
@@ -4233,7 +4234,7 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, cutscene.EndFrame);
                     Helpers.Append16(ref data, cutscene.EndFrame);
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0x3E8) || (Game == "MM" && cutscene.Marker == 0x15E)) //asm
+                else if ((Game == "OOT" && cutscene.Marker == CS_ASM) || (Game == "MM" && cutscene.Marker == 0x15E)) //asm
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
@@ -4242,7 +4243,7 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, cutscene.EndFrame);
                     Helpers.Append16(ref data, cutscene.EndFrame);
                 }
-                else if (Game == "OOT" && (cutscene.Marker == 0x8C)) //set time
+                else if (Game == "OOT" && (cutscene.Marker == CS_TIME)) //set time
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
@@ -4252,7 +4253,7 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, (ushort)(cutscene.Data[0] << 8 | cutscene.Data[1]));
                     Helpers.Append32(ref data, 0x00000000);
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0xC000)) //trigger exit
+                else if ((Game == "OOT" && cutscene.Marker == CS_EXIT)) //trigger exit
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
@@ -4261,7 +4262,7 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, cutscene.StartFrame);
                     
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0xC001)) //motion blur
+                else if ((Game == "OOT" && cutscene.Marker == CS_MOTIONBLUR)) //motion blur
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
@@ -4269,7 +4270,7 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, cutscene.StartFrame);
                     Helpers.Append16(ref data, cutscene.EndFrame);
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0xC002)) //play sound
+                else if ((Game == "OOT" && cutscene.Marker == CS_PLAYSOUND)) //play sound
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);
@@ -4289,7 +4290,7 @@ namespace SharpOcarina
                     Helpers.Append16(ref data, 0); //Z unused
 
                 }
-                else if ((Game == "OOT" && cutscene.Marker == 0xC003)) //set flag
+                else if ((Game == "OOT" && cutscene.Marker == CS_SETFLAG)) //set flag
                 {
                     Helpers.Append32(ref data, (uint)cutscene.Marker);
                     Helpers.Append32(ref data, 0x00000001);

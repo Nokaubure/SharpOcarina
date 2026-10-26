@@ -155,6 +155,7 @@ namespace SharpOcarina
             this.moveSelectedActorToRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveAllItemsOfSelectedCutsceneToolStripMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertCurrentCutsceneTocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -438,6 +439,9 @@ namespace SharpOcarina
             this.Roomaffectedpointlightscheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.AdditionalLightDirectionLabel = new System.Windows.Forms.Label();
+            this.ViewNormalCopyAdditionalLight = new System.Windows.Forms.Button();
+            this.AdditionalLightY = new SharpOcarina.NumericUpDownEx();
             this.PointLightCheckBox = new System.Windows.Forms.CheckBox();
             this.AdditionalLightColor = new System.Windows.Forms.PictureBox();
             this.AdditionalLightDirectionLabel3 = new System.Windows.Forms.Label();
@@ -448,10 +452,8 @@ namespace SharpOcarina
             this.AdditionalLightPointLabel3 = new System.Windows.Forms.Label();
             this.AdditionalLightPointLabel2 = new System.Windows.Forms.Label();
             this.AdditionalLightNS = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightDirectionLabel2 = new System.Windows.Forms.Label();
             this.AdditionalLightYPos = new SharpOcarina.NumericUpDownEx();
             this.AdditionalLightEW = new SharpOcarina.NumericUpDownEx();
-            this.AdditionalLightDirectionLabel1 = new System.Windows.Forms.Label();
             this.AdditionalLightXPos = new SharpOcarina.NumericUpDownEx();
             this.AdditionalLightDelete = new System.Windows.Forms.Button();
             this.AdditionalLightAdd = new System.Windows.Forms.Button();
@@ -885,7 +887,6 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.convertCurrentCutsceneTocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -976,6 +977,7 @@ namespace SharpOcarina
             this.tabRoomEnv.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightRadius)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightZPos)).BeginInit();
@@ -2215,6 +2217,13 @@ namespace SharpOcarina
             this.moveAllItemsOfSelectedCutsceneToolStripMenu.Size = new System.Drawing.Size(450, 22);
             this.moveAllItemsOfSelectedCutsceneToolStripMenu.Text = "Change frame duration of all items in selected cutscene command by...";
             this.moveAllItemsOfSelectedCutsceneToolStripMenu.Click += new System.EventHandler(this.moveAllItemsOfSelectedCutsceneToolStripMenu_Click);
+            // 
+            // convertCurrentCutsceneTocToolStripMenuItem
+            // 
+            this.convertCurrentCutsceneTocToolStripMenuItem.Name = "convertCurrentCutsceneTocToolStripMenuItem";
+            this.convertCurrentCutsceneTocToolStripMenuItem.Size = new System.Drawing.Size(450, 22);
+            this.convertCurrentCutsceneTocToolStripMenuItem.Text = "Convert current cutscene to C";
+            this.convertCurrentCutsceneTocToolStripMenuItem.Click += new System.EventHandler(this.convertCurrentCutsceneTocToolStripMenuItem_Click);
             // 
             // dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem
             // 
@@ -6322,7 +6331,7 @@ namespace SharpOcarina
             this.FogDistance.IncrementMouseWheel = 1;
             this.FogDistance.Location = new System.Drawing.Point(85, 107);
             this.FogDistance.Maximum = new decimal(new int[] {
-            1023,
+            999,
             0,
             0,
             0});
@@ -6548,10 +6557,13 @@ namespace SharpOcarina
             this.groupBox12.Size = new System.Drawing.Size(396, 165);
             this.groupBox12.TabIndex = 42;
             this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Additional lights  (unused)";
+            this.groupBox12.Text = "Additional lights";
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.AdditionalLightDirectionLabel);
+            this.panel6.Controls.Add(this.ViewNormalCopyAdditionalLight);
+            this.panel6.Controls.Add(this.AdditionalLightY);
             this.panel6.Controls.Add(this.PointLightCheckBox);
             this.panel6.Controls.Add(this.AdditionalLightColor);
             this.panel6.Controls.Add(this.AdditionalLightDirectionLabel3);
@@ -6562,16 +6574,66 @@ namespace SharpOcarina
             this.panel6.Controls.Add(this.AdditionalLightPointLabel3);
             this.panel6.Controls.Add(this.AdditionalLightPointLabel2);
             this.panel6.Controls.Add(this.AdditionalLightNS);
-            this.panel6.Controls.Add(this.AdditionalLightDirectionLabel2);
             this.panel6.Controls.Add(this.AdditionalLightYPos);
             this.panel6.Controls.Add(this.AdditionalLightEW);
-            this.panel6.Controls.Add(this.AdditionalLightDirectionLabel1);
             this.panel6.Controls.Add(this.AdditionalLightXPos);
             this.panel6.Location = new System.Drawing.Point(5, 53);
             this.panel6.Margin = new System.Windows.Forms.Padding(0);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(388, 109);
             this.panel6.TabIndex = 21;
+            // 
+            // AdditionalLightDirectionLabel
+            // 
+            this.AdditionalLightDirectionLabel.AutoSize = true;
+            this.AdditionalLightDirectionLabel.Enabled = false;
+            this.AdditionalLightDirectionLabel.Location = new System.Drawing.Point(180, 34);
+            this.AdditionalLightDirectionLabel.Name = "AdditionalLightDirectionLabel";
+            this.AdditionalLightDirectionLabel.Size = new System.Drawing.Size(52, 13);
+            this.AdditionalLightDirectionLabel.TabIndex = 48;
+            this.AdditionalLightDirectionLabel.Text = "Direction:";
+            // 
+            // ViewNormalCopyAdditionalLight
+            // 
+            this.ViewNormalCopyAdditionalLight.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ViewNormalCopyAdditionalLight.Image = global::SharpOcarina.Properties.Resources.eye;
+            this.ViewNormalCopyAdditionalLight.Location = new System.Drawing.Point(348, 30);
+            this.ViewNormalCopyAdditionalLight.Name = "ViewNormalCopyAdditionalLight";
+            this.ViewNormalCopyAdditionalLight.Size = new System.Drawing.Size(26, 22);
+            this.ViewNormalCopyAdditionalLight.TabIndex = 47;
+            this.EnvironmentControlTooltip.SetToolTip(this.ViewNormalCopyAdditionalLight, "Use current viewport camera angle as the direction");
+            this.ViewNormalCopyAdditionalLight.UseVisualStyleBackColor = true;
+            this.ViewNormalCopyAdditionalLight.Click += new System.EventHandler(this.ViewNormalCopyAdditionalLight_Click);
+            // 
+            // AdditionalLightY
+            // 
+            this.AdditionalLightY.AlwaysFireValueChanged = false;
+            this.AdditionalLightY.DisplayDigits = 2;
+            this.AdditionalLightY.DoValueRollover = false;
+            this.AdditionalLightY.Enabled = false;
+            this.AdditionalLightY.Hexadecimal = true;
+            this.AdditionalLightY.IncrementMouseWheel = 1;
+            this.AdditionalLightY.Location = new System.Drawing.Point(273, 31);
+            this.AdditionalLightY.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.AdditionalLightY.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightY.Name = "AdditionalLightY";
+            this.AdditionalLightY.ShiftMultiplier = 20;
+            this.AdditionalLightY.Size = new System.Drawing.Size(39, 20);
+            this.AdditionalLightY.TabIndex = 45;
+            this.AdditionalLightY.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.AdditionalLightY.ValueChanged += new System.EventHandler(this.AdditionalLightY_ValueChanged);
             // 
             // PointLightCheckBox
             // 
@@ -6612,7 +6674,7 @@ namespace SharpOcarina
             this.AdditionalLightRadius.DoValueRollover = false;
             this.AdditionalLightRadius.Enabled = false;
             this.AdditionalLightRadius.IncrementMouseWheel = 1;
-            this.AdditionalLightRadius.Location = new System.Drawing.Point(261, 82);
+            this.AdditionalLightRadius.Location = new System.Drawing.Point(239, 82);
             this.AdditionalLightRadius.Maximum = new decimal(new int[] {
             255,
             0,
@@ -6625,7 +6687,7 @@ namespace SharpOcarina
             0});
             this.AdditionalLightRadius.Name = "AdditionalLightRadius";
             this.AdditionalLightRadius.ShiftMultiplier = 10;
-            this.AdditionalLightRadius.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightRadius.Size = new System.Drawing.Size(63, 20);
             this.AdditionalLightRadius.TabIndex = 18;
             this.AdditionalLightRadius.Value = new decimal(new int[] {
             0,
@@ -6705,12 +6767,13 @@ namespace SharpOcarina
             // 
             // AdditionalLightNS
             // 
-            this.AdditionalLightNS.AlwaysFireValueChanged = false;
-            this.AdditionalLightNS.DisplayDigits = 1;
+            this.AdditionalLightNS.AlwaysFireValueChanged = true;
+            this.AdditionalLightNS.DisplayDigits = 2;
             this.AdditionalLightNS.DoValueRollover = false;
             this.AdditionalLightNS.Enabled = false;
+            this.AdditionalLightNS.Hexadecimal = true;
             this.AdditionalLightNS.IncrementMouseWheel = 1;
-            this.AdditionalLightNS.Location = new System.Drawing.Point(261, 30);
+            this.AdditionalLightNS.Location = new System.Drawing.Point(234, 31);
             this.AdditionalLightNS.Maximum = new decimal(new int[] {
             255,
             0,
@@ -6722,8 +6785,8 @@ namespace SharpOcarina
             0,
             0});
             this.AdditionalLightNS.Name = "AdditionalLightNS";
-            this.AdditionalLightNS.ShiftMultiplier = 1;
-            this.AdditionalLightNS.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightNS.ShiftMultiplier = 20;
+            this.AdditionalLightNS.Size = new System.Drawing.Size(39, 20);
             this.AdditionalLightNS.TabIndex = 13;
             this.AdditionalLightNS.Value = new decimal(new int[] {
             0,
@@ -6731,16 +6794,6 @@ namespace SharpOcarina
             0,
             0});
             this.AdditionalLightNS.ValueChanged += new System.EventHandler(this.AdditionalLightNS_ValueChanged);
-            // 
-            // AdditionalLightDirectionLabel2
-            // 
-            this.AdditionalLightDirectionLabel2.AutoSize = true;
-            this.AdditionalLightDirectionLabel2.Enabled = false;
-            this.AdditionalLightDirectionLabel2.Location = new System.Drawing.Point(190, 58);
-            this.AdditionalLightDirectionLabel2.Name = "AdditionalLightDirectionLabel2";
-            this.AdditionalLightDirectionLabel2.Size = new System.Drawing.Size(59, 13);
-            this.AdditionalLightDirectionLabel2.TabIndex = 17;
-            this.AdditionalLightDirectionLabel2.Text = "East-West:";
             // 
             // AdditionalLightYPos
             // 
@@ -6774,11 +6827,12 @@ namespace SharpOcarina
             // AdditionalLightEW
             // 
             this.AdditionalLightEW.AlwaysFireValueChanged = false;
-            this.AdditionalLightEW.DisplayDigits = 1;
+            this.AdditionalLightEW.DisplayDigits = 2;
             this.AdditionalLightEW.DoValueRollover = false;
             this.AdditionalLightEW.Enabled = false;
+            this.AdditionalLightEW.Hexadecimal = true;
             this.AdditionalLightEW.IncrementMouseWheel = 1;
-            this.AdditionalLightEW.Location = new System.Drawing.Point(261, 56);
+            this.AdditionalLightEW.Location = new System.Drawing.Point(311, 31);
             this.AdditionalLightEW.Maximum = new decimal(new int[] {
             255,
             0,
@@ -6790,8 +6844,8 @@ namespace SharpOcarina
             0,
             0});
             this.AdditionalLightEW.Name = "AdditionalLightEW";
-            this.AdditionalLightEW.ShiftMultiplier = 1;
-            this.AdditionalLightEW.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalLightEW.ShiftMultiplier = 20;
+            this.AdditionalLightEW.Size = new System.Drawing.Size(39, 20);
             this.AdditionalLightEW.TabIndex = 14;
             this.AdditionalLightEW.Value = new decimal(new int[] {
             0,
@@ -6799,16 +6853,6 @@ namespace SharpOcarina
             0,
             0});
             this.AdditionalLightEW.ValueChanged += new System.EventHandler(this.AdditionalLightEW_ValueChanged);
-            // 
-            // AdditionalLightDirectionLabel1
-            // 
-            this.AdditionalLightDirectionLabel1.AutoSize = true;
-            this.AdditionalLightDirectionLabel1.Enabled = false;
-            this.AdditionalLightDirectionLabel1.Location = new System.Drawing.Point(190, 32);
-            this.AdditionalLightDirectionLabel1.Name = "AdditionalLightDirectionLabel1";
-            this.AdditionalLightDirectionLabel1.Size = new System.Drawing.Size(67, 13);
-            this.AdditionalLightDirectionLabel1.TabIndex = 13;
-            this.AdditionalLightDirectionLabel1.Text = "North-South:";
             // 
             // AdditionalLightXPos
             // 
@@ -13422,13 +13466,6 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
-            // convertCurrentCutsceneTocToolStripMenuItem
-            // 
-            this.convertCurrentCutsceneTocToolStripMenuItem.Name = "convertCurrentCutsceneTocToolStripMenuItem";
-            this.convertCurrentCutsceneTocToolStripMenuItem.Size = new System.Drawing.Size(450, 22);
-            this.convertCurrentCutsceneTocToolStripMenuItem.Text = "Convert current cutscene to C";
-            this.convertCurrentCutsceneTocToolStripMenuItem.Click += new System.EventHandler(this.convertCurrentCutsceneTocToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13570,6 +13607,7 @@ namespace SharpOcarina
             this.groupBox12.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightRadius)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AdditionalLightZPos)).EndInit();
@@ -13942,10 +13980,8 @@ namespace SharpOcarina
         private Label AdditionalLightPointLabel3;
         private Label AdditionalLightPointLabel2;
         private NumericUpDownEx AdditionalLightNS;
-        private Label AdditionalLightDirectionLabel2;
         private NumericUpDownEx AdditionalLightYPos;
         private NumericUpDownEx AdditionalLightEW;
-        private Label AdditionalLightDirectionLabel1;
         private NumericUpDownEx AdditionalLightXPos;
         private Button AdditionalLightDelete;
         private Button AdditionalLightAdd;
@@ -14623,6 +14659,9 @@ namespace SharpOcarina
         private Label EnvironmentRenderWarning;
         private Label CutsceneActorRenderingWarning;
         private ToolStripMenuItem convertCurrentCutsceneTocToolStripMenuItem;
+        private Label AdditionalLightDirectionLabel;
+        private Button ViewNormalCopyAdditionalLight;
+        private NumericUpDownEx AdditionalLightY;
     }
     }
 

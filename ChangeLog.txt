@@ -16,11 +16,13 @@
 	- Set Time cutscene command changes the time during cutscene playback. Time speed also gradually changes the time during it.
 	- Partial support for MM. The skybox only draws with day textures, and the regular moon is not rendered.
 
-- [TODO] added ability to export cutscenes as C
+- Added ability to export cutscenes as C (decomp format, based on z64oot repo) into your clipboard
 
 - The app now shows a custom error when there's a .toml parsing error, and it skips rendering that actor
 
 - Auto-hook now uses a stronger parser, which should get rid of all bugs it had before. Additionally, it adds "Custom" suffix in static variable names, so it compiles straight away.
+
+- The direction of additional directional lights is now displayed as X Y Z like environment lights, with autosetup button.
 
 - Fixed an issue where subdivisions defaulted to 16 16 16 which unfortunately caused crashes on certain scenes for unknown reasons.
 
@@ -29,6 +31,8 @@
 - Fixed an issue where loading an .obj without #room tags in scene preview mode would always treat the new model as multi room
 
 - TODO Fixed #environment tag issue
+
+- TODO Fixed download patch issue
 
 - Fixed an issue where the start frame of textbox commands wasnt set to 0 properly in old scenes
 
