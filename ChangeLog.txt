@@ -4,11 +4,33 @@
 ---1.68
 --------------
 
+- Environment light and fog are now rendered (credits to z64viewer source code)
+    - In overworld scenes you can clearly see which environments match each time of the day while selecting them
+	- Set Environment cutscene command changes the environment during cutscene playback (environment transition not rendered)
+    - You can turn it off via Options > Render Environment Light.
+
+- Reworked regular skybox and cutscene skybox rendering:
+	- They now display day/evening/night texture changes in outdoor scenes, when the clock is changed in Scene Env or Set Time cutscene command
+	- Sun and Moon are rendered
+	- They're affected by fog color when fog distance is 980 or less
+	- Set Time cutscene command changes the time during cutscene playback. Time speed also gradually changes the time during it.
+	- Partial support for MM. The skybox only draws with day textures, and the regular moon is not rendered.
+
+- [TODO] added ability to export cutscenes as C
+
 - The app now shows a custom error when there's a .toml parsing error, and it skips rendering that actor
+
+- Auto-hook now uses a stronger parser, which should get rid of all bugs it had before. Additionally, it adds "Custom" suffix in static variable names, so it compiles straight away.
+
+- Fixed an issue where subdivisions defaulted to 16 16 16 which unfortunately caused crashes on certain scenes for unknown reasons.
 
 - Fixed an issue where it wasnt possible to preview or load data from .zscene files from z64rom
 
 - Fixed an issue where loading an .obj without #room tags in scene preview mode would always treat the new model as multi room
+
+- TODO Fixed #environment tag issue
+
+- Fixed an issue where the start frame of textbox commands wasnt set to 0 properly in old scenes
 
 
 --------------

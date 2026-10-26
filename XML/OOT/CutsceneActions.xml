@@ -126,21 +126,21 @@
   <Placeholder Key="0000">???</Placeholder>
 
 
-  <Environment Key="0001">Environment 1</Environment>
-  <Environment Key="0002">Environment 2</Environment>
-  <Environment Key="0003">Environment 3</Environment>
-  <Environment Key="0004">Environment 4</Environment>
-  <Environment Key="0005">Environment 5</Environment>
-  <Environment Key="0006">Environment 6</Environment>
-  <Environment Key="0007">Environment 7</Environment>
-  <Environment Key="0008">Environment 8</Environment>
-  <Environment Key="0009">Environment 9</Environment>
-  <Environment Key="000A">Environment 10</Environment>
-  <Environment Key="000B">Environment 11</Environment>
-  <Environment Key="000C">Environment 12</Environment>
-  <Environment Key="000D">Environment 13</Environment>
-  <Environment Key="000E">Environment 14</Environment>
-  <Environment Key="000F">Environment 15</Environment>
+  <Environment Key="0001">Environment 0</Environment>
+  <Environment Key="0002">Environment 1</Environment>
+  <Environment Key="0003">Environment 2</Environment>
+  <Environment Key="0004">Environment 3</Environment>
+  <Environment Key="0005">Environment 4</Environment>
+  <Environment Key="0006">Environment 5</Environment>
+  <Environment Key="0007">Environment 6</Environment>
+  <Environment Key="0008">Environment 7</Environment>
+  <Environment Key="0009">Environment 8</Environment>
+  <Environment Key="000A">Environment 9</Environment>
+  <Environment Key="000B">Environment 10</Environment>
+  <Environment Key="000C">Environment 11</Environment>
+  <Environment Key="000D">Environment 12</Environment>
+  <Environment Key="000E">Environment 13</Environment>
+  <Environment Key="000F">Environment 14</Environment>
 
   <Rauru Key="0001">Invisible</Rauru>
   <Rauru Key="0003">Raise hands (giving Light Medallion)</Rauru>

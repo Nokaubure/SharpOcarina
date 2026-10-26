@@ -6,6 +6,16 @@ using System.Windows.Forms;
 
 namespace SharpOcarina
 {
+    public class NumericStepEventArgs : EventArgs
+    {
+        public decimal Delta { get; private set; }
+
+        public NumericStepEventArgs(decimal delta)
+        {
+            Delta = delta;
+        }
+    }
+
     public class NumericUpDownEx : NumericUpDown
     {
         int displayDigits = 1;
@@ -23,6 +33,29 @@ namespace SharpOcarina
         public NumericUpDownEx()
         {
             prevval = this.Value;
+        }
+
+        // Opt-in stepping lets related controls carry/borrow together before either
+        // value is clamped. Other numeric controls retain their existing behavior.
+        public event EventHandler<NumericStepEventArgs> UserStep;
+
+        private void Step(decimal delta)
+        {
+            if (UserEdit) ValidateEditText();
+            int multiplier = (ModifierKeys & Keys.Shift) != 0 ? ShiftMultiplier : 1;
+            UserStep(this, new NumericStepEventArgs(delta * multiplier));
+        }
+
+        public override void UpButton()
+        {
+            if (UserStep != null) Step(Increment);
+            else base.UpButton();
+        }
+
+        public override void DownButton()
+        {
+            if (UserStep != null) Step(-Increment);
+            else base.DownButton();
         }
 
         [Category("Appearance")]
@@ -89,6 +122,14 @@ namespace SharpOcarina
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            if (UserStep != null)
+            {
+                int steps = e.Delta / SystemInformation.MouseWheelScrollDelta;
+                if (steps != 0) Step(steps * IncrementMouseWheel);
+                HandledMouseEventArgs handled = e as HandledMouseEventArgs;
+                if (handled != null) handled.Handled = true;
+                return;
+            }
           //  int multiplier = (System.Windows.Forms.Control.ModifierKeys == Keys.Shift) ? this.shiftMultiplier : 1;
             int sign = Helpers.Clamp(e.Delta, -1, 1);
 

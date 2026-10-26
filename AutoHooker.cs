@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
@@ -57,8 +58,7 @@ namespace SharpOcarina
 
             if (!Directory.Exists(rom64.getPath() + "\\z64oot\\src\\"))
             {
-                //MessageBox.Show("Directory " + rom64.getPath() + "\\z64oot\\src\\" + " doesn't exists! download z64oot decomp project from github and place it in that path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
+               
                 string z64ootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\z64oot_optimized.zip");
                 if (!File.Exists(z64ootPath))
                 {
@@ -82,7 +82,6 @@ namespace SharpOcarina
             }
 
             string[] lines = File.ReadAllLines(linker);
-           // string functionstext = File.ReadAllText(functionsh);
 
             string fileName = "";
             string decompPath = rom64.getPath() + "\\z64oot\\src\\";
@@ -108,14 +107,7 @@ namespace SharpOcarina
 
             }
 
-            /*
-            var vanillafunctionSource = new AutoCompleteStringCollection();
-            vanillafunctionSource.AddRange(VanillaFunctions.Select(h => h.Name).ToArray());
-            FunctionNameTextbox.AutoCompleteCustomSource = vanillafunctionSource;
-            */
             FunctionNameTextbox.SetAutoCompleteItems(VanillaFunctions.Select(h => h.Name));
-
-
 
             RefreshLibUser();
 
@@ -178,6 +170,8 @@ namespace SharpOcarina
             string lib_codepath = "rom\\lib_code\\!std";
 
             FunctionHooks.Clear();
+            LibUserFileList.Clear();
+            LibCodeFileList.Clear();
 
             List<string> lib_userdirs = rom64.getList(lib_userpath, false);
             List<string> lib_codedirs = rom64.getList(lib_codepath, false);
@@ -191,42 +185,10 @@ namespace SharpOcarina
                     foreach (string file in files)
                         if (i == 0 && (Path.GetExtension(file) == ".c" || Path.GetExtension(file) == ".h"))
                         {
-                            //HookListBox.Items.Add("[U] " + Path.GetFileName(file));
                             target[i].Add(file);
-                            string[] lines = File.ReadAllLines(file);
-                            bool inMultiLineComment = false;
-                            
-                            foreach (string rawline in lines)
-                            {
-                                string line = rawline.Trim();
-                                if (line.StartsWith("/*"))
-                                {
-                                    inMultiLineComment = true;
-                                }
-                                if (inMultiLineComment)
-                                {
-                                    if (line.Contains("*/"))
-                                    {
-                                        inMultiLineComment = false;
-                                        line = line.SubstringTill(0, "*/");
-                                    }
-                                    else continue;
-                                }
-                                if (line.StartsWith("//"))
-                                {
-                                    continue;
-                                }
-                                if (line.Contains("//"))
-                                    line = line.SubstringTill(0, "//");
-
-                                if (line.Contains("Asm_VanillaHook"))
-                                {
-                                    string funcname = line.SubstringTill(line.IndexOf('(')+1, ')');
-                                    FunctionHooks.Add(new FunctionHook(funcname, file, false));
-                                }
-
-                                
-                            }
+                            string code = AutoHookerParser.Mask(File.ReadAllText(file));
+                            foreach (Match hook in Regex.Matches(code, @"\bAsm_VanillaHook\s*\(\s*([A-Za-z_]\w*)\s*\)"))
+                                FunctionHooks.Add(new FunctionHook(hook.Groups[1].Value, file, false));
                         }
                         else if (i == 1 && Path.GetExtension(file) == ".o")
                         {
@@ -235,11 +197,6 @@ namespace SharpOcarina
                 }
                 
             }
-            /*
-            foreach(FunctionHook hook in FunctionHooks)
-            {
-                HookListBox.Items.Add((hook.isLibCode ? "[C] " : "[U] ") + hook.Name + " - " + Path.GetFileName(hook.FileName));
-            }*/
             HookGrid.Refresh();
         }
 
@@ -313,9 +270,6 @@ namespace SharpOcarina
             {
                 string basepath = rom64.getPath() + Path.DirectorySeparatorChar;
 
-                string srcpath = basepath + "z64oot\\src\\";
-
-
                 int index2 = VanillaFunctions.FindIndex(x => x.Name == functionname);
                 if (index2 == -1)
                 {
@@ -323,249 +277,31 @@ namespace SharpOcarina
                     DebugConsole.WriteLine("Function " + functionname + " doesn't exists!");
                     return "";
                 }
-                List<CFile> Files = new List<CFile>();
-                CFile vanillafile = new CFile();
-                vanillafile.FileName = VanillaFunctions[index2].FileName;
-                vanillafile.includes.Add(new CData("uLib.h", "#include <uLib.h>"));
-                Files.Add(vanillafile);
-
-                CFile targetfile = new CFile();
-
+                string sourceFile = VanillaFunctions[index2].FileName;
+                string targetFile;
                 if (FileNameOriginalRadioButton.Checked)
-                {
-                    targetfile.FileName = basepath + "src\\lib_user\\library\\" + Path.GetFileName(vanillafile.FileName);
-                }
+                    targetFile = basepath + "src\\lib_user\\library\\" + Path.GetFileName(sourceFile);
                 else if (FileNameFunctionRadioButton.Checked)
-                {
-                    targetfile.FileName = basepath + "src\\lib_user\\library\\" + functionname + ".c";
-                }
+                    targetFile = basepath + "src\\lib_user\\library\\" + functionname + ".c";
                 else
+                    targetFile = basepath + "src\\lib_user\\library\\" + CustomFileName.Text + (CustomFileName.Text.EndsWith(".c", StringComparison.OrdinalIgnoreCase) ? "" : ".c");
+
+                try
                 {
-                    targetfile.FileName = basepath + "src\\lib_user\\library\\" + CustomFileName.Text + (CustomFileName.Text.Contains(".c") ? "" : ".c");
-                }
-                if (!File.Exists(targetfile.FileName))
-                {
-                    using (File.Create(targetfile.FileName)) ;
-                }
-
-                Files.Add(targetfile);
-                bool inMultiLineComment = false;
-                bool inStruct = false;
-                bool inVariable = false;
-                bool inFunction = false;
-                bool inPredeclaration = false;
-                int block = 0;
-                foreach (CFile file in Files)
-                {
-                    string text = File.ReadAllText(file.FileName);
-                    text = Regex.Replace(text, @"(?m)^((?:(?:(?!//).)*)),\r?\n", "$1@#?");
-                    text = Regex.Replace(text, @"(?m)^((?:(?:(?!//).)*))(?<!\*)\\\r?\n", "$1@#!");
-                    var lineslist = new List<string>();
-                    using (var reader = new StringReader(text))
-                    {
-                        string line;
-                        while ((line = reader.ReadLine()) != null)
-                            lineslist.Add(line);
-                    }
-                    string[] lines = lineslist.ToArray();
-                    inMultiLineComment = false;
-                    inStruct = false;
-                    inVariable = false;
-                    inFunction = false;
-                    inPredeclaration = false;
-                    block = 0;
-                    int cline = 1;
-                    List<string> references = new List<string>();
-                    foreach (string rawline in lines)
-                    {
-                        if (warning) DebugConsole.WriteLine($"{cline} - inVariable: {inVariable}, inFunction: {inFunction}, inStruct: {inStruct} ,inMultiLineComment: {inMultiLineComment}, inPredeclaration: {inPredeclaration}, block {block}");
-                        cline++;
-                        string line = rawline.Trim();
-                        if (line.StartsWith("/*"))
-                        {
-                            inMultiLineComment = true;
-                        }
-                        if (inMultiLineComment)
-                        {
-                            if (line.Contains("*/"))
-                            {
-                                inMultiLineComment = false;
-                                line = line.SubstringTill(0, "*/");
-                            }
-                            else continue;
-                        }
-                        if (line.StartsWith("//"))
-                        {
-                            continue;
-                        }
-                        if (line.Contains("//"))
-                            line = line.SubstringTill(0, "//");
-
-                        if (line.Contains("Asm_VanillaHook"))
-                        {
-                            continue;
-                        }
-
-                        if (inStruct)
-                        {
-                            file.structs[file.structs.Count - 1].line += "\n" + rawline;
-                            if (inMultiLineComment)
-                            {
-                                continue;
-                            }
-                            if (line.Contains("}") && line.Contains(";"))
-                            {
-                                inStruct = false;
-                            }
-                            continue;
-                        }
-
-                        if (inVariable)
-                        {
-                            file.variables[file.variables.Count - 1].line += "\n" + rawline;
-                            if (inMultiLineComment)
-                            {
-                                continue;
-                            }
-                            if (line.Contains("}") && line.Contains(";"))
-                            {
-                                inVariable = false;
-                            }
-                            continue;
-                        }
-
-                        if (inFunction)
-                        {
-                            int prevblock = block;
-                            file.functions[file.functions.Count - 1].line += "\n" + rawline;
-                            if (inMultiLineComment)
-                            {
-                                continue;
-                            }
-                            //lets find the references
-                            if (line.Contains("("))
-                            {
-                                string testline = line.Replace(")", ") ");
-                                string[] testsplit = testline.Split(' ');
-                                foreach (string split in testsplit)
-                                {
-                                    if (split.Contains("("))
-                                    {
-                                        string reference = split.SubstringTill(0, '(');
-                                        if (VanillaFunctions.FindIndex(x => x.Name == reference) != -1)
-                                        {
-                                            references.Add(reference);
-                                        }
-
-                                    }
-                                }
-                            }
-
-
-                            block += line.Count(x => x == '{') - line.Count(x => x == '}');
-                            if (block == 0 && prevblock != 0)
-                            {
-                                inFunction = false;
-                            }
-                            continue;
-                        }
-
-                        if (line.Contains("#include"))
-                        {
-                            string include = line.Contains('"') ? line.Substring(line.IndexOf('"') + 1, line.LastIndexOf('"') - (line.IndexOf('"') + 1))
-                            : line.Substring(line.IndexOf('<') + 1, line.LastIndexOf('>') - (line.IndexOf('<') + 1));
-                            file.includes.Add(new CData(include, rawline));
-                        }
-                        else if (line.Contains("#define"))
-                        {
-                            string define = line.Replace("#define", "").TrimStart().SubstringTill(0, ' ');
-                            file.defines.Add(new CData(define, rawline));
-                        }
-                        else if (line.Contains("typedef"))
-                        {
-                            inStruct = true;
-                            file.structs.Add(new CData("", rawline));
-                        }
-                        else if (line.Contains(");") && line.SubstringTill(0, '(').Contains(" ") && !line.Contains("=")) 
-                        {
-                            string predeclaration = line.Substring(line.IndexOf(' ') + 1, line.IndexOf('(') - line.IndexOf(' ') - 1);
-                            while (predeclaration.Contains(' '))
-                                predeclaration = predeclaration.Substring(predeclaration.IndexOf(' ') + 1).Trim();
-                            file.predeclarations.Add(new CData(predeclaration, rawline));
-                        }
-                        else if (line.Contains("="))
-                        {
-                            if (!line.Contains("};") && !line.EndsWith(";")) inVariable = true;
-                            string variable = line.SubstringTill(line.IndexOf(' ') + 1, '=').Trim();
-                            while (variable.Contains(' '))
-                                variable = variable.Substring(variable.IndexOf(' ') + 1).Trim();
-                            //string variable = line.Substring(line.IndexOf(' ') + 1).Split(' ')[1];
-                            file.variables.Add(new CData(variable, rawline));
-                        }
-                        else if ((line.Contains("{") || line.EndsWith(",")) && line.Contains("("))
-                        {
-                            inFunction = true;
-                            string function = line.SubstringTill(line.IndexOf(' ') + 1, '(');
-                            while (function.Contains(' '))
-                                function = function.Substring(function.IndexOf(' ') + 1).Trim();
-                            file.functions.Add(new CData(function, rawline));
-                            block = line.Contains("{") ? 1 : 0;
-                        }
-                    }
-                    foreach (string reference in references)
-                    {
-                        CData targetfunc = file.functions.Find(x => x.name == reference);
-                        CData predeclaration = file.predeclarations.Find(x => x.name == reference);
-                        //TODO check if predeclaration exists in other files?
-                        if (predeclaration == null && targetfunc != null)
-                        {
-                            file.predeclarations.Add(new CData(reference, targetfunc.line.SubstringTill(0, ')') + ");"));
-                        }
-                    }
-                }
-                vanillafile = Files[0];
-                targetfile = Files[1];
-                string output = File.ReadAllText(targetfile.FileName);
-                List<CData>[] sourcelists = { vanillafile.includes, vanillafile.defines, vanillafile.predeclarations, vanillafile.structs, vanillafile.variables, vanillafile.functions };
-                List<CData>[] targetlists = { targetfile.includes, targetfile.defines, targetfile.predeclarations, targetfile.structs, targetfile.variables, targetfile.functions };
-                bool hookset = false;
-                for (int i = 0; i < sourcelists.Length; i++)
-                {
-                    foreach (CData include in sourcelists[i])
-                    {
-                        if (i == 5 && include.name.Contains("BgCheck_CheckWallImpl"))
-                        {
-                            int a = 0;
-                        }
-                        if (i != 5 || (i == 5 && include.name == functionname))
-                            if (targetlists[i].FindIndex(x => x.name == include.name) == -1)
-                            {
-                                if (i == 5)
-                                {
-                                    output += "Asm_VanillaHook(" + include.name + ");\n";
-                                    hookset = true;
-                                }
-                                output += include.line + "\n";
-                            }
-                    }
-                    output += "\n";
-                }
-
-                if (!hookset)
-                {
-#if !DEBUG
-
-                    MessageBox.Show("An error occured and the hook has not been set! " + functionname + " in " + vanillafile.FileName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-#endif
-                    DebugConsole.WriteLine(functionname + $" has NOT been set! inVariable: {inVariable}, inFunction: {inFunction}, inStruct: {inStruct} ,inMultiLineComment: {inMultiLineComment}, block {block}");
-                }
-                else
-                {
+                    string output = AutoHookerParser.Copy(File.ReadAllText(sourceFile),
+                        File.Exists(targetFile) ? File.ReadAllText(targetFile) : "", functionname,
+                        VanillaFunctions.Select(x => x.Name));
+                    Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
+                    File.WriteAllText(targetFile, output);
                     DebugConsole.WriteLine(functionname + " +");
-                    File.WriteAllText(targetfile.FileName, output.Replace("@#?",",\n").Replace("@#!", "\\\n"));
-                    return targetfile.FileName;
+                    return targetFile;
                 }
-                return "";
+                catch (FormatException ex)
+                {
+                    DebugConsole.WriteLine(ex.Message);
+                    if (warning) MessageBox.Show(ex.Message, "Hook could not be created", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return "";
+                }
 
                 
 
@@ -658,41 +394,10 @@ namespace SharpOcarina
                                 continue;
                             List<CData> includes = new List<CData>();
 
-                            string[] lines = File.ReadAllLines(file);
                             string text = File.ReadAllText(file);
-                            bool inMultiLineComment = false;
-
-                            foreach (string rawline in lines)
-                            {
-                                string line = rawline.Trim();
-                                if (line.StartsWith("/*"))
-                                {
-                                    inMultiLineComment = true;
-                                }
-                                if (inMultiLineComment)
-                                {
-                                    if (line.Contains("*/"))
-                                    {
-                                        inMultiLineComment = false;
-                                        line = line.SubstringTill(0, "*/");
-                                    }
-                                    else continue;
-                                }
-                                if (line.StartsWith("//"))
-                                {
-                                    continue;
-                                }
-                                if (line.Contains("//"))
-                                    line = line.SubstringTill(0, "//");
-
-                                if (line.Contains("#include") && line.Contains("assets/overlays/"))
-                                {
-                                    string include = line.Contains('"') ? line.Substring(line.IndexOf('"') + 1, line.LastIndexOf('"') - (line.IndexOf('"') + 1))
-                                                                        : line.Substring(line.IndexOf('<') + 1, line.LastIndexOf('>') - (line.IndexOf('<') + 1));
-                                    includes.Add(new CData(include, rawline));
-                                }
-                                
-                            }
+                            string code = AutoHookerParser.Mask(text, false);
+                            foreach (Match include in Regex.Matches(code, @"(?m)^[ \t]*#\s*include[ \t]*[<""](?<path>assets/overlays/[^>""\r\n]+)[>""]"))
+                                includes.Add(new CData(include.Groups["path"].Value, text.Substring(include.Index, include.Length)));
                             if (includes.Count > 0)
                             {
                                 bool exists = false;
@@ -724,7 +429,7 @@ namespace SharpOcarina
                                 {
                                     foreach (CData include in includes)
                                     {
-                                        string includepath = include.line.Replace("#include", "").Replace("\"", "").Trim();
+                                        string includepath = include.name;
                                         string assetpath = Path.GetDirectoryName(rom64.getPath() + "\\z64oot\\" + includepath);
                                         DirectoryInfo assetdirinfo = new DirectoryInfo(assetpath);
 
@@ -783,24 +488,11 @@ namespace SharpOcarina
                         }
                         z64romactors.Add(new CustomActorz64rom(target.Value, target.Name, -1));
 
-                        /*
-                        if (File.Exists(newpath + "\\z_" + target.DebugName + ".c"))
-                        {
-                            if (MessageBox.Show("Done! created directory in " + newpath + "\nOpen .c file?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                            {
-                                Process.Start(newpath + "\\z_" + target.DebugName + ".c");
-                            }
-                        }
-                        else
-                        {*/
                         if (MessageBox.Show("Done! created directory in " + newpath + "\nOpen directory in explorer?", "Done", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                         {
                             Process.Start(newpath);
                         }
-                        //}
 
-
-                        
 
                     }
 
@@ -898,53 +590,6 @@ namespace SharpOcarina
 
             File.WriteAllText(patchpath + "texel.cfg",texelcfg);
 
-
-            //Debug Name add
-
-            /*
-            string[] lines = File.ReadAllLines(@"Z:\rawactortableMM");
-            Dictionary<string,string> DebugNames = new Dictionary<string, string>();
-            foreach (string line in lines)
-            {
-                DebugNames.Add(line.Split('\t')[0], line.Split('\t')[1]);
-            }
-
-            XmlDocument doc = new XmlDocument();
-            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/MM/ActorNames.xml");
-            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.ReadWrite);
-            doc.Load(fs);
-            XmlNodeList nodes = doc.SelectNodes("Table/Actor");
-
-            foreach (XmlNode node in nodes)
-            {
-
-                if (node is XmlElement element && element.HasAttribute("Name"))
-                {
-                    XmlAttributeCollection attributes = element.Attributes;
-                    XmlAttribute nameAttr = attributes["Name"];
-
-                    if (!DebugNames.ContainsKey(attributes["Key"].Value)) continue;
-
-                    string DebugName = DebugNames[attributes["Key"].Value];
-
-                    XmlAttribute newAttr = doc.CreateAttribute("DebugName");
-                    newAttr.Value = DebugName;
-
-                    attributes.InsertAfter(newAttr, nameAttr);
-                }
-
-            }
-
-            doc.Save(@"Z:\ActorNames.xml");
-            */
-
-
-            /*
-            // Hook all functions
-            foreach(FunctionHook func in VanillaFunctions)
-            {
-                HookFunction(func.Name);
-            }*/
         }
 
         private void VanillaActorListFilter_TextChanged(object sender, EventArgs e)
@@ -1136,5 +781,534 @@ namespace SharpOcarina
         }
     }
 
+
+    #region Parser
+    // This scans declarations rather than lines. Original text is retained for output;
+    // comments, literals and directives are masked only while locating C punctuation.
+    internal static class AutoHookerParser
+    {
+        internal sealed class Declaration
+        {
+            public string Kind;
+            public string Name;
+            public string Text;
+            public string Code;
+            public string Signature;
+            public string Conditions;
+            public int ConditionCount;
+            public int Start;
+            public int End;
+
+            public string Key { get { return Kind + "|" + Name + "|" + Conditions; } }
+
+            public string Wrap(string text)
+            {
+                return Conditions + text.Trim() + "\n" + string.Concat(Enumerable.Repeat("#endif\n", ConditionCount));
+            }
+        }
+
+        // Keep offsets and newlines intact so slices always refer to the original text.
+        internal static string Mask(string text, bool maskLiterals = true)
+        {
+            char[] code = text.ToCharArray();
+            int state = 0; // code, block comment, line comment, string, character
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
+                char next = i + 1 < text.Length ? text[i + 1] : '\0';
+                if (state == 0)
+                {
+                    if (c == '/' && (next == '*' || next == '/'))
+                    {
+                        state = next == '*' ? 1 : 2;
+                        code[i] = code[++i] = ' ';
+                    }
+                    else if (c == '"' || c == '\'')
+                    {
+                        state = c == '"' ? 3 : 4;
+                        if (maskLiterals) code[i] = ' ';
+                    }
+                }
+                else
+                {
+                    if ((state < 3 || maskLiterals) && c != '\r' && c != '\n') code[i] = ' ';
+                    if (state == 1 && c == '*' && next == '/')
+                    {
+                        code[++i] = ' ';
+                        state = 0;
+                    }
+                    else if (state == 2 && c == '\n' && (i == 0 || text[i - 1] != '\\') &&
+                             (i < 2 || text[i - 1] != '\r' || text[i - 2] != '\\')) state = 0;
+                    else if (state >= 3 && c == '\\' && i + 1 < text.Length)
+                    {
+                        i++;
+                        if (maskLiterals && text[i] != '\r' && text[i] != '\n') code[i] = ' ';
+                    }
+                    else if ((state == 3 && c == '"') || (state == 4 && c == '\'')) state = 0;
+                }
+            }
+            return new string(code);
+        }
+
+        private static string FunctionName(string header)
+        {
+            // The opening parameter list must follow an identifier, with no initializer.
+            if (header.Contains("=")) return "";
+            Match match = Regex.Match(header, @"\b([A-Za-z_]\w*)\s*\(");
+            if (!match.Success || match.Groups[1].Value == "__attribute__") return "";
+            return match.Groups[1].Value;
+        }
+
+        private static string DeclarationName(string code)
+        {
+            // Names for typedefs, arrays, pointer objects and function-pointer objects.
+            Match pointer = Regex.Match(code, @"\(\s*\*\s*([A-Za-z_]\w*)\s*\)");
+            if (pointer.Success) return pointer.Groups[1].Value;
+            int initializer = code.IndexOf('=');
+            if (initializer >= 0) code = code.Substring(0, initializer);
+            int brace = code.LastIndexOf('}');
+            string tail = brace >= 0 ? code.Substring(brace + 1) : code;
+            tail = Regex.Replace(tail, @"\[[^\]]*\]", " ");
+            int equals = tail.IndexOf('=');
+            if (equals >= 0) tail = tail.Substring(0, equals);
+            MatchCollection names = Regex.Matches(tail, @"\b[A-Za-z_]\w*\b");
+            if (names.Count > 0) return names[names.Count - 1].Value;
+            Match tag = Regex.Match(code, @"\b(?:struct|union|enum)\s+([A-Za-z_]\w*)");
+            return tag.Success ? tag.Groups[1].Value : code.Trim();
+        }
+
+        private static HashSet<string> References(string code, List<Declaration> declarations)
+        {
+            // Member names belong to their struct, not to file-scope declarations.
+            code = Regex.Replace(code, @"(?:->|\.)\s*[A-Za-z_]\w*", " ");
+            var identifiers = new HashSet<string>(Regex.Matches(code, @"\b[A-Za-z_]\w*\b")
+                .Cast<Match>().Select(m => m.Value), StringComparer.Ordinal);
+            var expanded = new HashSet<string>(StringComparer.Ordinal);
+            bool changed;
+            do
+            {
+                changed = false;
+                foreach (Declaration d in declarations.Where(d => d.Kind == "directive"))
+                {
+                    string masked = Mask(d.Text);
+                    Match define = Regex.Match(masked, @"^#\s*define\s+([A-Za-z_]\w*)");
+                    if (!define.Success || !identifiers.Contains(define.Groups[1].Value) || !expanded.Add(d.Key)) continue;
+                    foreach (Match token in Regex.Matches(masked, @"\b[A-Za-z_]\w*\b"))
+                        if (identifiers.Add(token.Value)) changed = true;
+                }
+            }
+            while (changed);
+            return identifiers;
+        }
+
+        private static IEnumerable<string> Symbols(Declaration declaration)
+        {
+            if (declaration.Kind == "condition") yield break;
+            if (declaration.Kind == "directive")
+            {
+                Match macro = Regex.Match(Mask(declaration.Text), @"^#\s*(?:define|undef)\s+([A-Za-z_]\w*)");
+                if (macro.Success) yield return macro.Groups[1].Value;
+                yield break;
+            }
+            yield return declaration.Name;
+            if (declaration.Kind != "type" && declaration.Kind != "variable") yield break;
+            string code = declaration.Code;
+            foreach (Match tag in Regex.Matches(code, @"^\s*(?:typedef\s+)?(?:struct|union|enum)\s+([A-Za-z_]\w*)\s*(?:\{|;)"))
+                if (declaration.Kind == "type") yield return tag.Groups[1].Value;
+            // Enumerators are also exported by their enclosing type declaration.
+            Match enumeration = Regex.Match(code, @"\benum\s*\w*\s*\{(?<body>[^}]*)\}");
+            if (enumeration.Success)
+                foreach (string entry in enumeration.Groups["body"].Value.Split(','))
+                {
+                    Match name = Regex.Match(entry, @"^\s*([A-Za-z_]\w*)");
+                    if (name.Success) yield return name.Groups[1].Value;
+                }
+            // Multiple objects/aliases can share one declaration. Ignore commas inside
+            // initializers, parameter lists, and array bounds when identifying them.
+            int start = 0, depth = 0;
+            for (int i = 0; i < code.Length; i++)
+            {
+                if (code[i] == '(' || code[i] == '[' || code[i] == '{') depth++;
+                if (code[i] == ')' || code[i] == ']' || code[i] == '}') depth--;
+                if (depth == 0 && (code[i] == ',' || code[i] == ';'))
+                {
+                    yield return DeclarationName(code.Substring(start, i - start));
+                    start = i + 1;
+                }
+            }
+        }
+
+        internal static List<Declaration> Parse(string text)
+        {
+            var result = new List<Declaration>();
+            var conditions = new List<string>();
+            char[] code = Mask(text).ToCharArray();
+            int start = -1, braces = 0, parens = 0, brackets = 0;
+            bool function = false;
+            string signature = "", functionName = "";
+            for (int i = 0; i < code.Length; i++)
+            {
+                char c = code[i];
+                // Directives can occur inside declarations too; they must not affect depth.
+                if (c == '#' && (i == 0 || new string(code, text.LastIndexOf('\n', i) + 1,
+                    i - text.LastIndexOf('\n', i) - 1).Trim().Length == 0))
+                {
+                    int end = i;
+                    do
+                    {
+                        int newline = text.IndexOf('\n', end);
+                        end = newline < 0 ? text.Length : newline + 1;
+                    }
+                    while (end < text.Length && text.Substring(i, end - i).TrimEnd('\r', '\n').EndsWith("\\"));
+                    string directive = text.Substring(i, end - i).Trim();
+                    string command = Regex.Match(new string(code, i, end - i), @"#\s*(\w+)").Groups[1].Value;
+                    if (start < 0)
+                    {
+                        bool conditional = command == "if" || command == "ifdef" || command == "ifndef" ||
+                            command == "elif" || command == "else" || command == "endif";
+                        if (conditional)
+                            result.Add(new Declaration { Kind = "condition", Name = directive, Text = directive,
+                                Code = "", Conditions = string.Concat(conditions), ConditionCount = conditions.Count, Start = i, End = end });
+                        if (command == "if" || command == "ifdef" || command == "ifndef") conditions.Add(directive + "\n");
+                        else if (command == "elif" || command == "else")
+                        {
+                            if (conditions.Count == 0) throw new FormatException("Unmatched #" + command);
+                            conditions[conditions.Count - 1] += directive + "\n";
+                        }
+                        else if (command == "endif")
+                        {
+                            if (conditions.Count == 0) throw new FormatException("Unmatched #endif");
+                            conditions.RemoveAt(conditions.Count - 1);
+                        }
+                        else
+                        {
+                            result.Add(new Declaration { Kind = "directive", Name = directive, Text = directive,
+                                Code = "", Conditions = string.Concat(conditions), ConditionCount = conditions.Count, Start = i, End = end });
+                        }
+                    }
+                    for (int j = i; j < end; j++) if (code[j] != '\n' && code[j] != '\r') code[j] = ' ';
+                    i = end - 1;
+                    continue;
+                }
+                if (start < 0)
+                {
+                    if (char.IsWhiteSpace(c)) continue;
+                    start = i;
+                }
+                if (c == '(') parens++;
+                if (c == ')') parens--;
+                if (c == '[') brackets++;
+                if (c == ']') brackets--;
+                if (c == '{')
+                {
+                    if (braces == 0 && parens == 0 && brackets == 0)
+                    {
+                        string header = new string(code, start, i - start);
+                        functionName = FunctionName(header);
+                        function = functionName.Length > 0 && !Regex.IsMatch(header, @"\btypedef\b");
+                        if (function) signature = text.Substring(start, i - start).Trim();
+                    }
+                    braces++;
+                }
+                if (c == '}') braces--;
+                if ((c == ';' || (c == '}' && function)) && braces == 0 && parens == 0 && brackets == 0)
+                {
+                    string parsed = new string(code, start, i - start + 1);
+                    bool type = Regex.IsMatch(parsed, @"^\s*typedef\b") ||
+                        Regex.IsMatch(parsed, @"^\s*(struct|union|enum)\s+\w*\s*\{") &&
+                        parsed.Substring(parsed.LastIndexOf('}') + 1).Trim() == ";";
+                    string prototypeName = FunctionName(parsed);
+                    bool prototype = !function && !type && prototypeName.Length > 0 && !parsed.Contains("{") &&
+                        !Regex.IsMatch(parsed, @"\(\s*\*");
+                    string name = function ? functionName : prototype ? prototypeName : DeclarationName(parsed);
+                    if (name != "Asm_VanillaHook")
+                        result.Add(new Declaration { Kind = function ? "function" : type ? "type" : prototype ? "prototype" : "variable",
+                            Name = name, Text = text.Substring(start, i - start + 1), Code = parsed,
+                            Signature = signature, Conditions = string.Concat(conditions), ConditionCount = conditions.Count, Start = start, End = i + 1 });
+                    start = -1;
+                    function = false;
+                    signature = "";
+                }
+            }
+            if (start >= 0 || braces != 0 || parens != 0 || brackets != 0 || conditions.Count != 0)
+                throw new FormatException("Unterminated C declaration or preprocessor condition.");
+            return result;
+        }
+
+        private static string RenameVariables(string text, Dictionary<string, string> names)
+        {
+            string code = Mask(text);
+            // Struct members have their own namespace, including inline/local structs.
+            char[] identifiers = code.ToCharArray();
+            foreach (Match aggregate in Regex.Matches(code, @"\b(?:struct|union)\s*(?:[A-Za-z_]\w*\s*)?\{"))
+            {
+                int depth = 1;
+                for (int i = aggregate.Index + aggregate.Length; i < code.Length && depth > 0; i++)
+                {
+                    if (code[i] == '{') depth++;
+                    if (code[i] == '}') depth--;
+                    identifiers[i] = ' ';
+                }
+            }
+            var replacements = new List<Match>();
+            foreach (Match token in Regex.Matches(new string(identifiers), @"\b[A-Za-z_]\w*\b"))
+            {
+                if (!names.ContainsKey(token.Value)) continue;
+                string before = code.Substring(0, token.Index).TrimEnd();
+                if (before.EndsWith(".") || before.EndsWith("->")) continue;
+                replacements.Add(token);
+            }
+            var output = new StringBuilder(text);
+            foreach (Match token in replacements.AsEnumerable().Reverse())
+                output.Remove(token.Index, token.Length).Insert(token.Index, names[token.Value]);
+            return output.ToString();
+        }
+
+        private static string RefactorVariables(string text, Dictionary<string, string> names)
+        {
+            // Rewrite code tokens only; preserve strings, comments, includes and member
+            // declarations. References inside function bodies and macro bodies follow
+            // the same rename as the file-scope declaration.
+            var result = new StringBuilder(text);
+            foreach (Declaration d in Parse(text).AsEnumerable().Reverse())
+            {
+                if (d.Kind == "type" || d.Kind == "condition" ||
+                    d.Kind == "directive" && Regex.IsMatch(d.Text, @"^#\s*include\b")) continue;
+                result.Remove(d.Start, d.End - d.Start).Insert(d.Start,
+                    RenameVariables(text.Substring(d.Start, d.End - d.Start), names));
+            }
+            return result.ToString();
+        }
+
+        private sealed class SectionItem
+        {
+            public string Text;
+            public int Section;
+            public List<Declaration> Declarations;
+        }
+
+        private static int Section(Declaration d)
+        {
+            if (d.Kind == "directive") return Regex.IsMatch(d.Text, @"^#\s*include\b") ? 0 : 1;
+            if (d.Kind == "prototype") return 2;
+            if (d.Kind == "type") return 3;
+            if (d.Kind == "variable") return 4;
+            return 5;
+        }
+
+        private static string OrderSections(string text)
+        {
+            List<Declaration> declarations = Parse(text);
+            var items = new List<SectionItem>();
+            int previousEnd = 0;
+            for (int i = 0; i < declarations.Count; i++)
+            {
+                Declaration first = declarations[i];
+                int end = i;
+                // A conditional block or a temporary macro's lifetime is indivisible:
+                // sorting its contents independently would change the generated C.
+                if (first.Kind == "condition")
+                {
+                    int depth = 0;
+                    for (; end < declarations.Count; end++)
+                    {
+                        Declaration d = declarations[end];
+                        if (d.Kind != "condition") continue;
+                        if (Regex.IsMatch(d.Text, @"^#\s*(if|ifdef|ifndef)\b")) depth++;
+                        if (Regex.IsMatch(d.Text, @"^#\s*endif\b") && --depth == 0) break;
+                    }
+                }
+                else if (first.Kind == "directive")
+                {
+                    Match define = Regex.Match(first.Text, @"^#\s*define\s+([A-Za-z_]\w*)");
+                    if (define.Success)
+                        for (int j = i + 1; j < declarations.Count; j++)
+                            if (Regex.IsMatch(declarations[j].Text, @"^#\s*undef\s+" + Regex.Escape(define.Groups[1].Value) + @"\b"))
+                            {
+                                end = j;
+                                break;
+                            }
+                }
+                int section = declarations.Skip(i).Take(end - i + 1).Where(d => d.Kind != "condition").Select(Section).DefaultIfEmpty(1).Max();
+                items.Add(new SectionItem { Section = section, Text = text.Substring(previousEnd, declarations[end].End - previousEnd).Trim(),
+                    Declarations = declarations.Skip(i).Take(end - i + 1).ToList() });
+                previousEnd = declarations[end].End;
+                i = end;
+            }
+            string trailing = text.Substring(previousEnd).Trim();
+            // C requires typedefs used in signatures to precede those prototypes. Move
+            // only such prerequisites ahead of the requested section ordering.
+            var ordered = new List<SectionItem>();
+            var emitted = new HashSet<SectionItem>();
+            var visiting = new HashSet<SectionItem>();
+            Action<SectionItem> append = null;
+            append = item =>
+            {
+                if (emitted.Contains(item) || !visiting.Add(item)) return;
+                if (item.Section == 2 || item.Section == 3)
+                {
+                    var references = References(Mask(item.Text), declarations);
+                    foreach (SectionItem type in items.Where(t => t.Section == 3 && t != item))
+                        if (type.Declarations.Where(d => d.Kind == "type").SelectMany(Symbols).Any(references.Contains)) append(type);
+                }
+                visiting.Remove(item);
+                emitted.Add(item);
+                ordered.Add(item);
+            };
+            // LINQ's stable ordering preserves every existing function's relative order.
+            foreach (SectionItem item in items.OrderBy(item => item.Section)) append(item);
+            var output = new StringBuilder();
+            SectionItem previous = null;
+            foreach (SectionItem item in ordered)
+            {
+                if (previous != null) output.Append(previous.Section == item.Section && item.Section < 3 ? "\n" : "\n\n");
+                output.Append(item.Text);
+                previous = item;
+            }
+            return output + (trailing.Length == 0 ? "\n" : "\n" + trailing + "\n");
+        }
+
+        internal static string Copy(string source, string destination, string requested, IEnumerable<string> vanillaFunctions)
+        {
+            List<Declaration> declarations = Parse(source);
+            List<Declaration> existing = Parse(destination);
+            var globals = new HashSet<string>(vanillaFunctions, StringComparer.Ordinal);
+            if (!declarations.Any(d => d.Kind == "function" && d.Name == requested))
+                throw new FormatException("Could not find the definition of " + requested + ".");
+            if (existing.Any(d => d.Kind == "function" && d.Name == requested))
+                throw new FormatException("The destination already defines " + requested + ".");
+
+            // Start exclusively from the hook, then traverse types, data, macros and
+            // local functions reached by its references. Unrelated declarations must
+            // never become roots merely because they exist in the source file.
+            var symbols = new Dictionary<string, List<Declaration>>(StringComparer.Ordinal);
+            foreach (Declaration d in declarations)
+                foreach (string name in Symbols(d).Distinct())
+                {
+                    List<Declaration> definitions;
+                    if (!symbols.TryGetValue(name, out definitions)) symbols.Add(name, definitions = new List<Declaration>());
+                    definitions.Add(d);
+                }
+            var selected = new HashSet<Declaration>();
+            var pending = new Queue<string>();
+            var visited = new HashSet<string>(StringComparer.Ordinal);
+            Action<Declaration> select = d =>
+            {
+                if (!selected.Add(d)) return;
+                foreach (string reference in References(Mask(d.Text + "\n" + d.Conditions), declarations)) pending.Enqueue(reference);
+            };
+            foreach (Declaration d in declarations.Where(d => d.Kind == "function" && d.Name == requested)) select(d);
+            while (pending.Count > 0)
+            {
+                string reference = pending.Dequeue();
+                if (!visited.Add(reference)) continue;
+                List<Declaration> definitions;
+                if (!symbols.TryGetValue(reference, out definitions)) continue;
+                foreach (Declaration d in definitions)
+                {
+                    if (d.Kind == "function" && globals.Contains(d.Name) && d.Name != requested)
+                    {
+                        // Only the signature's types are dependencies of an external call.
+                        foreach (string name in References(Mask(d.Signature + "\n" + d.Conditions), declarations)) pending.Enqueue(name);
+                    }
+                    else select(d);
+                }
+            }
+
+            // Header contents are provided by the build environment. Keep header
+            // includes, but never pull in another translation unit through an include.
+            foreach (Declaration d in declarations.Where(d => d.Kind == "directive"))
+            {
+                Match include = Regex.Match(Mask(d.Text, false), @"^#\s*include\s*[<""]([^>""]+)[>""]");
+                if (include.Success && !include.Groups[1].Value.EndsWith(".c", StringComparison.OrdinalIgnoreCase)) selected.Add(d);
+            }
+            // Retain only conditional blocks containing selected declarations, keeping
+            // their #elif/#else chain intact so alternatives remain mutually exclusive.
+            var conditionStack = new Stack<List<Declaration>>();
+            foreach (Declaration d in declarations)
+            {
+                if (d.Kind == "condition")
+                {
+                    string command = Regex.Match(d.Text, @"^#\s*(\w+)").Groups[1].Value;
+                    if (command == "if" || command == "ifdef" || command == "ifndef") conditionStack.Push(new List<Declaration>());
+                    conditionStack.Peek().Add(d);
+                    if (command == "endif")
+                    {
+                        List<Declaration> block = conditionStack.Pop();
+                        if (block.Any(selected.Contains))
+                        {
+                            foreach (Declaration condition in block.Where(c => c.Kind == "condition")) selected.Add(condition);
+                            if (conditionStack.Count > 0) conditionStack.Peek().Add(d);
+                        }
+                    }
+                }
+                else if (conditionStack.Count > 0 && selected.Contains(d)) conditionStack.Peek().Add(d);
+            }
+
+            var renames = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (Declaration d in selected.Concat(existing).Where(d => d.Kind == "variable" && !Regex.IsMatch(d.Code, @"^\s*extern\b")))
+                foreach (string name in Symbols(d).Distinct())
+                    if (!name.EndsWith("Custom", StringComparison.Ordinal)) renames[name] = name + "Custom";
+            destination = RefactorVariables(destination, renames);
+            existing = Parse(destination);
+            // Compare identities after renaming, so later hooks reuse existing data.
+            foreach (Declaration d in declarations.Where(selected.Contains))
+            {
+                if (d.Kind == "type" || d.Kind == "condition" || d.Kind == "directive" && Regex.IsMatch(d.Text, @"^#\s*include\b")) continue;
+                d.Text = RenameVariables(d.Text, renames);
+                d.Code = Mask(d.Text);
+                if (renames.ContainsKey(d.Name)) d.Name = renames[d.Name];
+            }
+            var keys = new HashSet<string>(existing.Select(d => d.Key), StringComparer.Ordinal);
+            var output = new StringBuilder(destination);
+            if (output.Length > 0) output.AppendLine();
+            if (!existing.Any(d => d.Kind == "directive" && Regex.IsMatch(d.Text, @"#\s*include\s*[<""]uLib\.h[>""]")))
+                output.AppendLine("#include <uLib.h>");
+
+            // Preserve directive and declaration ordering, including #undef and include
+            // guards. Insert forward declarations at first use, before data callbacks or
+            // mutually recursive functions that need them.
+            var prototypes = new HashSet<string>(existing.Where(d => d.Kind == "prototype" || d.Kind == "function")
+                .Select(d => d.Name + "|" + d.Conditions), StringComparer.Ordinal);
+            var forwards = new HashSet<string>(StringComparer.Ordinal);
+            foreach (Declaration d in declarations)
+            {
+                if (!selected.Contains(d)) continue;
+                if (d.Kind == "condition")
+                {
+                    output.AppendLine(d.Text);
+                    continue;
+                }
+                if (d.Kind == "function")
+                {
+                    if (keys.Contains(d.Key)) continue;
+                }
+                else if (d.Kind == "directive")
+                {
+                    // Includes may be shared, but #define/#undef and pragmas are ordered
+                    // operations. Replaying them keeps macro lifetimes intact on import.
+                    if (Regex.IsMatch(d.Text, @"^#\s*include\b") && !keys.Add(d.Key)) continue;
+                }
+                else if (!keys.Add(d.Key)) continue;
+
+                if (d.Kind == "function" || d.Kind == "variable")
+                {
+                    var references = References(Mask(d.Text), declarations);
+                    foreach (Declaration helper in declarations.Where(h => h.Kind == "function" && references.Contains(h.Name)))
+                    {
+                        if (helper.Name == d.Name || (!selected.Contains(helper) && !globals.Contains(helper.Name))) continue;
+                        if (!prototypes.Contains(helper.Name + "|") && !prototypes.Contains(helper.Name + "|" + d.Conditions) &&
+                            forwards.Add(helper.Name + "|" + d.Conditions + "|" + helper.Conditions))
+                            output.Append(helper.Wrap(helper.Signature + ";"));
+                    }
+                }
+                if (d.Kind == "function" && d.Name == requested) output.AppendLine("Asm_VanillaHook(" + requested + ");");
+                output.AppendLine(d.Text.Trim());
+                if (d.Kind == "prototype" || d.Kind == "function") prototypes.Add(d.Name + "|" + d.Conditions);
+            }
+            return OrderSections(output.ToString());
+        }
+    }
+    #endregion
 
 }

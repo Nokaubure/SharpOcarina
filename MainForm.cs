@@ -227,12 +227,14 @@ namespace SharpOcarina
         public const int CS_CAMERA = 0x1;
         public const int CS_CAMERAFOCUS = 0x2;
         public const int CS_ACTOR = 0x3;
+        public const int CS_ENV = 0x4;
         public const int CS_CAMERARELATIVE = 0x5;
         public const int CS_CAMERARELATIVEFOCUS = 0x6;
         public const int CS_UNK = 0x9;
         public const int CS_LINK = 0xA;
         public const int CS_TEXTBOX = 0x13;
         public const int CS_TRANSITION = 0x2D;
+        public const int CS_TIME = 0x8C;
         public const int CS_ASM = 0x3E8;
 
         public const int ZKey = 0;
@@ -286,7 +288,6 @@ namespace SharpOcarina
 
         // public static List<SayakaGL.UcodeSimulator.DisplayListStruct> zobj_cache = new List<SayakaGL.UcodeSimulator.DisplayListStruct>();
         public static List<ZScene.ZObjRender> zobj_cache = new List<ZScene.ZObjRender>();
-        public static List<List<SayakaGL.UcodeSimulator.DisplayListStruct>> skyboxdlists = new List<List<UcodeSimulator.DisplayListStruct>>();
 
         public struct MouseStruct
         {
@@ -300,6 +301,14 @@ namespace SharpOcarina
         {
             Text = Program.ApplicationTitle;
             InitializeComponent();
+
+            TimeHour.ShiftMultiplier = TimeMinute.ShiftMultiplier = 5;
+            TimeHour.UserStep += RoomTime_UserStep;
+            TimeMinute.UserStep += RoomTime_UserStep;
+            CutsceneSetTimeHours.ShiftMultiplier = CutsceneSetTimeMinutes.ShiftMultiplier = 5;
+            CutsceneSetTimeMinutes.Maximum = 59;
+            CutsceneSetTimeHours.UserStep += CutsceneTime_UserStep;
+            CutsceneSetTimeMinutes.UserStep += CutsceneTime_UserStep;
 
 
             this.args = args;
@@ -324,10 +333,6 @@ namespace SharpOcarina
 
             DummyMaterial.Name = "(none)";
 
-            skyboxdlists.Add(new List<UcodeSimulator.DisplayListStruct>());
-            skyboxdlists.Add(new List<UcodeSimulator.DisplayListStruct>());
-            skyboxdlists.Add(new List<UcodeSimulator.DisplayListStruct>());
-            skyboxdlists.Add(new List<UcodeSimulator.DisplayListStruct>());
             // this.glControl1 = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(0, 24));
             // new OpenTK.GraphicsM
 
@@ -1040,65 +1045,6 @@ namespace SharpOcarina
 
         }
 
-        private void DrawSkybox()
-        {
-            if (!SimulateN64Gfx) return;
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PushMatrix();
-            // The skybox surrounds the camera and must not use the scene's draw distance.
-            UcodeSimulator.ApplyEnvironmentProjection(null, false);
-            GL.PushMatrix();
-            GL.PushAttrib(AttribMask.AllAttribBits);
-            GL.DepthRange(1.0, 1.0);
-            GL.Enable(EnableCap.Light0);
-
-            //ABCD
-            Vector3d campos = GetTrueCameraPosition();
-
-            GL.Translate(campos.X, campos.Y, campos.Z);
-
-
-            skyboxangle -= 0.01;
-            GL.Rotate(skyboxangle, 0.0f, 1.0f, 0.0f);
-            //GL.Rotate(Actor.XRot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
-            // GL.Rotate(Actor.ZRot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
-            GL.Scale(10f, 10f, 10f);
-
-            List<UcodeSimulator.DisplayListStruct> skyboxdls = new List<UcodeSimulator.DisplayListStruct>();
-
-            if (!settings.MajorasMask)
-            {
-                if (CurrentScene.SkyboxType == 0x01 && !CurrentScene.Cloudy)
-                    skyboxdls = skyboxdlists[0];
-                else if (CurrentScene.SkyboxType == 0x01 && CurrentScene.Cloudy)
-                    skyboxdls = skyboxdlists[1];
-                else if (CurrentScene.SkyboxType == 0x05)
-                    skyboxdls = skyboxdlists[2];
-            }
-            else
-            {
-                if (CurrentScene.SkyboxType == 0x06 || CurrentScene.SkyboxType == 0x0A)
-                    skyboxdls = skyboxdlists[3];
-            }
-
-
-            foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in skyboxdls)
-            {
-                GL.CallList(DL.GLID);
-            }
-
-            GL.PopMatrix();
-            GL.PopAttrib();
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
-            GL.MatrixMode(MatrixMode.Modelview);
-
-
-
-
-        }
-
         private void DrawActorModel(ZActor Actor, Color FillColor, int DrawModelGLID, bool DrawAxis, bool DrawBorder, bool Actorpick = false)
         {
             DrawModelGLID = transitionids.Contains(Actor.Number) ? DoorGLID : DrawModelGLID;
@@ -1281,9 +1227,7 @@ namespace SharpOcarina
                 DrawActorModel2Core(Actor, DrawBorder, transparency);
                 return;
             }
-            ZEnvironment environment = CurrentScene != null && CurrentScene.Environments.Count > 0
-                ? CurrentScene.Environments[Math.Max(0, Math.Min((int)EnvironmentSelect.Value, CurrentScene.Environments.Count - 1))]
-                : null;
+            ZEnvironment environment = GetPreviewEnvironment();
             UcodeSimulator.BeginEnvironment(environment, settings.ApplyEnvLighting);
             try
             {
@@ -2105,9 +2049,7 @@ namespace SharpOcarina
 
         private void ApplySceneProjection()
         {
-            ZEnvironment environment = CurrentScene != null && CurrentScene.Environments.Count > 0
-                ? CurrentScene.Environments[Math.Max(0, Math.Min((int)EnvironmentSelect.Value, CurrentScene.Environments.Count - 1))]
-                : null;
+            ZEnvironment environment = GetPreviewEnvironment();
             UcodeSimulator.ApplyEnvironmentProjection(environment,
                 SimulateN64Gfx && settings.ApplyEnvLighting && !subscreenmode);
         }
@@ -2271,10 +2213,11 @@ namespace SharpOcarina
             if (CurrentScene != null && NowLoading == false)
             {
                 /* Rendering base settings... */
+                ZEnvironment previewEnvironment = GetPreviewEnvironment();
                 if (CurrentScene.Environments.Count > 0 && ((!settings.MajorasMask && CurrentScene.SkyboxType == 0x1D) || (settings.MajorasMask && CurrentScene.SkyboxType == 0x08)))
                 {
                     EnvironmentSelect.Value = EnvironmentSelect.Value < 0 ? 0 : EnvironmentSelect.Value;
-                    GL.ClearColor(CurrentScene.Environments[(int)EnvironmentSelect.Value].FogColorC);
+                    GL.ClearColor(previewEnvironment.FogColorC);
                 }
                 else if (CurrentScene.OutdoorLight)
                     GL.ClearColor(Color.FromArgb(255, 51, 128, 179));
@@ -2286,18 +2229,18 @@ namespace SharpOcarina
                     
 
                     GL.Light(LightName.Light0, LightParameter.Diffuse, Color.FromArgb(
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.A,
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.R,
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.G,
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C3C.B));
+                        previewEnvironment.C3C.A,
+                        previewEnvironment.C3C.R,
+                        previewEnvironment.C3C.G,
+                        previewEnvironment.C3C.B));
 
-                    //GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.R / 255f, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.G / 255f, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.B / 255f, CurrentScene.Environments[(int)EnvironmentSelect.Value].C2C.A / 255f);
+                    //GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 0, previewEnvironment.C2C.R / 255f, previewEnvironment.C2C.G / 255f, previewEnvironment.C2C.B / 255f, previewEnvironment.C2C.A / 255f);
                     /*
                     GL.Light(LightName.Light1, LightParameter.Diffuse, Color.FromArgb(
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.A,
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.R,
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.G,
-                        CurrentScene.Environments[(int)EnvironmentSelect.Value].C4C.B));
+                        previewEnvironment.C4C.A,
+                        previewEnvironment.C4C.R,
+                        previewEnvironment.C4C.G,
+                        previewEnvironment.C4C.B));
                         */
 
 
@@ -2305,12 +2248,12 @@ namespace SharpOcarina
                     GL.Hint(HintTarget.FogHint, HintMode.Nicest);
 
                     if (CurrentScene.Environments.Count > 0)
-                        GL.Fog(FogParameter.FogColor, new float[] { CurrentScene.Environments[(int)EnvironmentSelect.Value].FogColorC.R / 255.0f, CurrentScene.Environments[(int)EnvironmentSelect.Value].FogColorC.G / 255.0f, CurrentScene.Environments[(int)EnvironmentSelect.Value].FogColorC.B / 255.0f });
+                        GL.Fog(FogParameter.FogColor, new float[] { previewEnvironment.FogColorC.R / 255.0f, previewEnvironment.FogColorC.G / 255.0f, previewEnvironment.FogColorC.B / 255.0f });
                     else
                         GL.Fog(FogParameter.FogColor, new float[] { 0, 0, 0 });
 
 
-                    float near = CurrentScene.Environments[(int)(EnvironmentSelect.Value)].FogDistance;
+                    float near = previewEnvironment.FogDistance;
                     float far = 1000f;
 
                     float fogMultiply = (500.0f * 256.0f) / (far - near);
@@ -2322,14 +2265,12 @@ namespace SharpOcarina
                     //   GL.Fog(FogParameter.)
 
 
-                    GL.Fog(FogParameter.FogStart, (float)CurrentScene.Environments[(int)(EnvironmentSelect.Value)].FogDistance / 100f);
+                    GL.Fog(FogParameter.FogStart, (float)previewEnvironment.FogDistance / 100f);
                     GL.Fog(FogParameter.FogEnd, 10f);
                 }
 
-                // Draw the background before editor helpers so its display lists cannot
-                // paint over them, even when they request unconditional depth testing.
-                if (CurrentScene.SkyboxType == 0x01 || CurrentScene.SkyboxType == 0x05 || CurrentScene.SkyboxType == 0x06 || CurrentScene.SkyboxType == 0x0A)
-                    DrawSkybox();
+                // Draw the background before scene geometry and editor helpers.
+                DrawSkyBackground();
 
                 foreach (ZScene.ZRoom Room in CurrentScene.Rooms)
                 {
@@ -2532,9 +2473,7 @@ namespace SharpOcarina
                         else if (Room.N64DLists != null)
                         {//aaa
 
-                            ZEnvironment renderEnvironment = CurrentScene.Environments.Count > 0
-                                ? CurrentScene.Environments[Math.Max(0, Math.Min((int)EnvironmentSelect.Value, CurrentScene.Environments.Count - 1))]
-                                : null;
+                            ZEnvironment renderEnvironment = GetPreviewEnvironment();
                             UcodeSimulator.BeginEnvironment(renderEnvironment, settings.ApplyEnvLighting);
                             try
                             {
@@ -3344,10 +3283,9 @@ namespace SharpOcarina
                 }
             }
         }
-
+        /*
         public void UpdateAdditionalTextureGLIDs()
         {
-            return;
             foreach (ObjFile.Material mat in CurrentScene.AdditionalTextures)
             {
                 if (AdditionalTexturesGLID.FindIndex(glid => glid.Filename == mat.DisplayName) == -1)
@@ -3401,7 +3339,7 @@ namespace SharpOcarina
                 }
             }
         }
-
+        */
         public Bitmap TakeScreenshot()
         {
             if (GraphicsContext.CurrentContext == null)
@@ -5065,6 +5003,9 @@ namespace SharpOcarina
                     UpdateLabel.Visible = updateavailable;
                     if (updating) UpdateLabel.Text = "Downloading...";
 
+                    EnvironmentRenderWarning.Visible = !settings.ApplyEnvLighting;
+                    CutsceneActorRenderingWarning.Visible = !settings.ApplyEnvLighting;
+
                     showCollisionModelToolStripMenuItem.Checked = settings.ShowCollisionModel;
                     showRoomModelsToolStripMenuItem.Checked = settings.ShowRoomModels;
                     applyEnvironmentLightingToolStripMenuItem.Checked = settings.ApplyEnvLighting;
@@ -5267,9 +5208,9 @@ namespace SharpOcarina
 
                         DisableStartTime.Checked = CurrentScene.Rooms[RoomList.SelectedIndex].StartTime == 0xFFFF;
 
-                        TimeHour.Enabled = !DisableStartTime.Checked;
+                        TimeHour.Enabled = true;
 
-                        TimeMinute.Enabled = !DisableStartTime.Checked;
+                        TimeMinute.Enabled = true;
 
                         //fix time when importing old scenes
                         if (!DisableStartTime.Checked)
@@ -6445,7 +6386,7 @@ namespace SharpOcarina
 
         private void CutscenePreview_Set(bool onecommand)
         {
-           
+            cutsceneEnvironmentActive = false;
 
             cutsceneplaycurframe = 0;
             
@@ -6482,6 +6423,7 @@ namespace SharpOcarina
                 if (!found) return;
             }
 
+            InitializeCutsceneEnvironment();
             cutsceneplaystarttime = DateTime.Now;
             cutsceneplaydeltatime = DateTime.Now;
 
@@ -6554,6 +6496,7 @@ namespace SharpOcarina
 
         private void CutscenePreview_Clear()
         {
+            cutsceneEnvironmentActive = false;
             fovOverrideFlag = false;
             cutscenePreviewEnabled = false;
             cutscenePreviewOneCommand = false;
@@ -6756,6 +6699,8 @@ namespace SharpOcarina
                 //SetViewport(glControl1.Width, glControl1.Height);
             }
 
+            UpdateCutsceneEnvironment(cutsceneplaycurframe);
+
             //textbox, link
             bool found2 = false;
             if (!cutscenePreviewOneCommand)
@@ -6799,7 +6744,7 @@ namespace SharpOcarina
                     }
                     else if (CurrentScene.Cutscene[i].Marker == CS_LINK && CurrentScene.Cutscene[i].CutsceneActors.Count > 0)
                     {
-                        //TODO for 1.68
+                        //TODO for 1.69
                         /*
                         for (int y = 0; y < CurrentScene.Cutscene[i].CutsceneActors.Count; y++)
                         {
@@ -7822,6 +7767,7 @@ namespace SharpOcarina
         private void applyEnvironmentLightingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             settings.ApplyEnvLighting = applyEnvironmentLightingToolStripMenuItem.Checked;
+            UpdateForm();
         }
 
         private void consecutiveRoomInjectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -8720,6 +8666,8 @@ namespace SharpOcarina
                             }
                         }
                     }
+
+                    
                     //We fix the polytype index being +1 in old scenes
                     /*
                     if (CurrentScene.version <= 0x1640)
@@ -8733,7 +8681,7 @@ namespace SharpOcarina
                         }
                     }*/
 
-                    
+
 
 
                     SetTrueGroupsToGroupSettings(i);
@@ -10109,7 +10057,7 @@ namespace SharpOcarina
                 if (CurrentScene.AutomaticSubdivisions)
                 {
                     CurrentScene.CollisionSubdivisions[0] = 16;
-                    CurrentScene.CollisionSubdivisions[1] = 16;
+                    CurrentScene.CollisionSubdivisions[1] = 4;
                     CurrentScene.CollisionSubdivisions[2] = 16;
                     CollisionSubdivisionsX.Enabled = false;
                     CollisionSubdivisionsY.Enabled = false;
@@ -12328,7 +12276,7 @@ namespace SharpOcarina
                     }
                     if (rom64.PlayVersion < 1.1f)
                     {
-                        if (UpdatePlay(PlayVersion, true));
+                        if (UpdatePlay(PlayVersion, true))
                         {
                             AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR", "#endif"); //TODO slow to do this everytime...
                             Helpers.GetDefineBoolAddIfNotExists("MOTION_BLUR", rom64.getPath() + @"\src\lib_user\uLib.h", "#define motionBlurAlpha unk_12428[0]");
@@ -12397,6 +12345,8 @@ namespace SharpOcarina
                                 frameacumulator += textbox.Frames;
                             }
                         }
+
+                        command.StartFrame = 0;
                     }
                 }
                 if (newtextboxes.Count > 0)
@@ -13499,11 +13449,6 @@ namespace SharpOcarina
             UpdateCameraEdit();
         }
 
-        private void PrerenderedCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void LoadJFIF_Click(object sender, EventArgs e)
         {
             if (CurrentScene.ColModel == null) return;
@@ -14313,6 +14258,18 @@ namespace SharpOcarina
                 CutsceneActorZRot.Value += (CutsceneActorZRot.Value - (decimal)CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation.Z) * 9;
             CurrentScene.Cutscene[MarkerSelect.SelectedIndex].CutsceneActors[CutsceneActorListBox.SelectedIndex].Rotation = new Vector3((float)CutsceneActorXRot.Value, (float)CutsceneActorYRot.Value, (float)CutsceneActorZRot.Value);
 
+            UpdateCutsceneEdit();
+        }
+
+        private void CutsceneTime_UserStep(object sender, NumericStepEventArgs e)
+        {
+            ZCutscene command = GetSelectedSetTimeCommand();
+            if (command == null) return;
+
+            int minutes = StepTimeControls(CutsceneSetTimeHours, CutsceneSetTimeMinutes,
+                (int)e.Delta * (sender == CutsceneSetTimeHours ? 60 : 1));
+            command.Data[0] = (ushort)(minutes / 60);
+            command.Data[1] = (ushort)(minutes % 60);
             UpdateCutsceneEdit();
         }
 
@@ -17493,7 +17450,6 @@ namespace SharpOcarina
                 ROM rom = MainForm.CheckVersion(EntranceTable);
 
 
-                ushort variable;
                 string scenename = "";
 
                 int offset = (int)rom.EntranceTableStart;
@@ -19145,6 +19101,25 @@ namespace SharpOcarina
             }
         }
 
+        private static int StepTimeControls(NumericUpDownEx hours, NumericUpDownEx minutesControl, int delta)
+        {
+            int minutes = ((int)hours.Value * 60 + (int)minutesControl.Value + delta) % (24 * 60);
+            if (minutes < 0) minutes += 24 * 60;
+            hours.Value = minutes / 60;
+            minutesControl.Value = minutes % 60;
+            return minutes;
+        }
+
+        private void RoomTime_UserStep(object sender, NumericStepEventArgs e)
+        {
+            if (CurrentScene == null || RoomList.SelectedIndex < 0 ||
+                RoomList.SelectedIndex >= CurrentScene.Rooms.Count) return;
+
+            int minutes = StepTimeControls(TimeHour, TimeMinute, (int)e.Delta * (sender == TimeHour ? 60 : 1));
+            if (!DisableStartTime.Checked)
+                CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = ((minutes / 60) << 8) | (minutes % 60);
+        }
+
         private void TimeHour_ValueChanged(object sender, EventArgs e)
         {
             if (!DisableStartTime.Checked && CurrentScene.Rooms.Count > 0)
@@ -19168,10 +19143,8 @@ namespace SharpOcarina
                 if (DisableStartTime.Checked)
                 {
                     CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = 0xFFFF;
-                    TimeHour.Enabled = false;
-                    TimeHour.Value = 0;
-                    TimeMinute.Enabled = false;
-                    TimeMinute.Value = 0;
+                    TimeHour.Enabled = true;
+                    TimeMinute.Enabled = true;
                 }
                 else
                 {
@@ -19179,9 +19152,7 @@ namespace SharpOcarina
                     TimeMinute.Enabled = true;
                     if (CurrentScene.Rooms[RoomList.SelectedIndex].StartTime == 0xFFFF)
                     {
-                        CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = 0x0000;
-                        TimeHour.Value = 0;
-                        TimeMinute.Value = 0;
+                        CurrentScene.Rooms[RoomList.SelectedIndex].StartTime = ((int)TimeHour.Value << 8) | (int)TimeMinute.Value;
                     }
                 }
 
@@ -21353,7 +21324,7 @@ namespace SharpOcarina
         private void CDILink_Click(object sender, EventArgs e)
         {
             CDILink.Visible = false;
-            if (CDILink.Image.Tag != "h")
+            if ((string)CDILink.Image.Tag != "h")
             {
                 CDILink.Image = Properties.Resources.harkinian;
                 CDILink.Image.Tag = "h";
@@ -22910,6 +22881,16 @@ namespace SharpOcarina
                         player.Play();
                     }
                 }
+            }
+        }
+
+        private void convertCurrentCutsceneTocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurrentScene != null && CurrentScene.Cutscene.Count > 0)
+            {
+                string C = ""; //TODO
+                MessageBox.Show("Cutscene converted to C! \n Close this window to copy it to your clipboard and paste it somewhere.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Clipboard.SetText(C);
             }
         }
 

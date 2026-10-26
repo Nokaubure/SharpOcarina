@@ -115,6 +115,12 @@ namespace SharpOcarina
             return clone;
         }
 
+        public string ConvertToC()
+        {
+            //TODO
+            return "";
+        }
+
     }
     public class ZCutscenePosition
     {

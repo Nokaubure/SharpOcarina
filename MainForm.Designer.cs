@@ -76,10 +76,10 @@ namespace SharpOcarina
             this.showRoomModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayAxisMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowSelectedGrouptoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ColorBlindMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyEnvironmentLightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderActorstoolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderChildLinkMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ColorBlindMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forceRGBATexturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dontConvertMultitextureToRGBAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisableRGBA32ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -385,7 +385,6 @@ namespace SharpOcarina
             this.AddSceneHeaderButton = new System.Windows.Forms.Button();
             this.SceneHeaderList = new SharpOcarina.NumericUpDownEx();
             this.niceLine9 = new SharpOcarina.NiceLine();
-            this.PrerenderedCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.label45 = new System.Windows.Forms.Label();
             this.WorldMapComboBox = new System.Windows.Forms.ComboBox();
@@ -405,6 +404,7 @@ namespace SharpOcarina
             this.DuplicateEnvironmentButton = new System.Windows.Forms.Button();
             this.UnusedCommandCheckBox = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.EnvironmentRenderWarning = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -709,6 +709,7 @@ namespace SharpOcarina
             this.CutsceneAsmLabel = new System.Windows.Forms.Label();
             this.CutsceneAsmComboBox = new System.Windows.Forms.ComboBox();
             this.ActorCommand = new System.Windows.Forms.TabPage();
+            this.CutsceneActorRenderingWarning = new System.Windows.Forms.Label();
             this.CutsceneActorDown = new System.Windows.Forms.Button();
             this.CutsceneActorUp = new System.Windows.Forms.Button();
             this.label80 = new System.Windows.Forms.Label();
@@ -884,6 +885,7 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.convertCurrentCutsceneTocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1407,10 +1409,10 @@ namespace SharpOcarina
             this.showRoomModelsToolStripMenuItem,
             this.DisplayAxisMenuItem,
             this.ShowSelectedGrouptoolStripMenuItem3,
-            this.ColorBlindMenuItem,
             this.applyEnvironmentLightingToolStripMenuItem,
             this.RenderActorstoolStrip,
             this.RenderChildLinkMenuItem,
+            this.ColorBlindMenuItem,
             this.forceRGBATexturesToolStripMenuItem,
             this.dontConvertMultitextureToRGBAToolStripMenuItem,
             this.DisableRGBA32ToolStrip,
@@ -1552,20 +1554,12 @@ namespace SharpOcarina
             this.ShowSelectedGrouptoolStripMenuItem3.Text = "Show Selected Group Highlight";
             this.ShowSelectedGrouptoolStripMenuItem3.Click += new System.EventHandler(this.ShowSelectedGrouptoolStripMenuItem3_Click);
             // 
-            // ColorBlindMenuItem
-            // 
-            this.ColorBlindMenuItem.CheckOnClick = true;
-            this.ColorBlindMenuItem.Name = "ColorBlindMenuItem";
-            this.ColorBlindMenuItem.Size = new System.Drawing.Size(327, 22);
-            this.ColorBlindMenuItem.Text = "Color Blind Axis";
-            this.ColorBlindMenuItem.Click += new System.EventHandler(this.ColorBlindMenuItem_Click);
-            // 
             // applyEnvironmentLightingToolStripMenuItem
             // 
             this.applyEnvironmentLightingToolStripMenuItem.CheckOnClick = true;
             this.applyEnvironmentLightingToolStripMenuItem.Name = "applyEnvironmentLightingToolStripMenuItem";
             this.applyEnvironmentLightingToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
-            this.applyEnvironmentLightingToolStripMenuItem.Text = "&Apply Environment Lighting";
+            this.applyEnvironmentLightingToolStripMenuItem.Text = "&Render Environment Lighting";
             this.applyEnvironmentLightingToolStripMenuItem.ToolTipText = "Only with simulate N64 graphics disabled";
             this.applyEnvironmentLightingToolStripMenuItem.Click += new System.EventHandler(this.applyEnvironmentLightingToolStripMenuItem_Click);
             // 
@@ -1584,6 +1578,14 @@ namespace SharpOcarina
             this.RenderChildLinkMenuItem.Size = new System.Drawing.Size(327, 22);
             this.RenderChildLinkMenuItem.Text = "Render Child Link instead of Adult";
             this.RenderChildLinkMenuItem.Click += new System.EventHandler(this.RenderChildLinkMenuItem_Click);
+            // 
+            // ColorBlindMenuItem
+            // 
+            this.ColorBlindMenuItem.CheckOnClick = true;
+            this.ColorBlindMenuItem.Name = "ColorBlindMenuItem";
+            this.ColorBlindMenuItem.Size = new System.Drawing.Size(327, 22);
+            this.ColorBlindMenuItem.Text = "Color Blind Axis";
+            this.ColorBlindMenuItem.Click += new System.EventHandler(this.ColorBlindMenuItem_Click);
             // 
             // forceRGBATexturesToolStripMenuItem
             // 
@@ -1929,6 +1931,7 @@ namespace SharpOcarina
             this.moveSelectedActorToRoomToolStripMenuItem,
             this.changeStartFrameOfCutsceneCommandsByToolStripMenuItem,
             this.moveAllItemsOfSelectedCutsceneToolStripMenu,
+            this.convertCurrentCutsceneTocToolStripMenuItem,
             this.dEBUGPrintRoomActorsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintEnvironmentsToClipboardDunGenToolStripMenuItem,
             this.dEBUGPrintRoomActorRenderingToClipboardToolStripMenuItem,
@@ -5553,7 +5556,6 @@ namespace SharpOcarina
             // 
             this.tabSceneEnv.Controls.Add(this.PrerenderedGroupBox);
             this.tabSceneEnv.Controls.Add(this.AlternateHeadersGroupBox);
-            this.tabSceneEnv.Controls.Add(this.PrerenderedCheckbox);
             this.tabSceneEnv.Controls.Add(this.groupBox10);
             this.tabSceneEnv.Controls.Add(this.groupBox7);
             this.tabSceneEnv.Controls.Add(this.groupBox5);
@@ -5769,18 +5771,6 @@ namespace SharpOcarina
             this.niceLine9.TabIndex = 20;
             this.niceLine9.TabStop = false;
             // 
-            // PrerenderedCheckbox
-            // 
-            this.PrerenderedCheckbox.AutoSize = true;
-            this.PrerenderedCheckbox.Location = new System.Drawing.Point(24, 656);
-            this.PrerenderedCheckbox.Name = "PrerenderedCheckbox";
-            this.PrerenderedCheckbox.Size = new System.Drawing.Size(118, 17);
-            this.PrerenderedCheckbox.TabIndex = 40;
-            this.PrerenderedCheckbox.Text = "Prerendered Scene";
-            this.PrerenderedCheckbox.UseVisualStyleBackColor = true;
-            this.PrerenderedCheckbox.Visible = false;
-            this.PrerenderedCheckbox.Click += new System.EventHandler(this.PrerenderedCheckbox_CheckedChanged);
-            // 
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.label45);
@@ -5985,6 +5975,7 @@ namespace SharpOcarina
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.EnvironmentRenderWarning);
             this.panel3.Controls.Add(this.label29);
             this.panel3.Controls.Add(this.label27);
             this.panel3.Controls.Add(this.label21);
@@ -6014,6 +6005,19 @@ namespace SharpOcarina
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(384, 136);
             this.panel3.TabIndex = 21;
+            // 
+            // EnvironmentRenderWarning
+            // 
+            this.EnvironmentRenderWarning.AutoSize = true;
+            this.EnvironmentRenderWarning.Enabled = false;
+            this.EnvironmentRenderWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.EnvironmentRenderWarning.Location = new System.Drawing.Point(192, 10);
+            this.EnvironmentRenderWarning.Name = "EnvironmentRenderWarning";
+            this.EnvironmentRenderWarning.Size = new System.Drawing.Size(110, 13);
+            this.EnvironmentRenderWarning.TabIndex = 36;
+            this.EnvironmentRenderWarning.Text = "Light rendering is OFF";
+            this.EnvironmentControlTooltip.SetToolTip(this.EnvironmentRenderWarning, "Enable with Options > Render Environment Light");
+            this.EnvironmentRenderWarning.Visible = false;
             // 
             // label29
             // 
@@ -10355,7 +10359,7 @@ namespace SharpOcarina
             this.CutsceneSetTimeMinutes.IncrementMouseWheel = 1;
             this.CutsceneSetTimeMinutes.Location = new System.Drawing.Point(78, 38);
             this.CutsceneSetTimeMinutes.Maximum = new decimal(new int[] {
-            60,
+            59,
             0,
             0,
             0});
@@ -10745,6 +10749,7 @@ namespace SharpOcarina
             // ActorCommand
             // 
             this.ActorCommand.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ActorCommand.Controls.Add(this.CutsceneActorRenderingWarning);
             this.ActorCommand.Controls.Add(this.CutsceneActorDown);
             this.ActorCommand.Controls.Add(this.CutsceneActorUp);
             this.ActorCommand.Controls.Add(this.label80);
@@ -10777,6 +10782,19 @@ namespace SharpOcarina
             this.ActorCommand.Size = new System.Drawing.Size(383, 288);
             this.ActorCommand.TabIndex = 7;
             this.ActorCommand.Text = "Actor Command";
+            // 
+            // CutsceneActorRenderingWarning
+            // 
+            this.CutsceneActorRenderingWarning.AutoSize = true;
+            this.CutsceneActorRenderingWarning.Enabled = false;
+            this.CutsceneActorRenderingWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.CutsceneActorRenderingWarning.Location = new System.Drawing.Point(6, 267);
+            this.CutsceneActorRenderingWarning.Name = "CutsceneActorRenderingWarning";
+            this.CutsceneActorRenderingWarning.Size = new System.Drawing.Size(110, 13);
+            this.CutsceneActorRenderingWarning.TabIndex = 94;
+            this.CutsceneActorRenderingWarning.Text = "Light rendering is OFF";
+            this.EnvironmentControlTooltip.SetToolTip(this.CutsceneActorRenderingWarning, "Enable with Options > Render Environment Light");
+            this.CutsceneActorRenderingWarning.Visible = false;
             // 
             // CutsceneActorDown
             // 
@@ -13404,6 +13422,13 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // convertCurrentCutsceneTocToolStripMenuItem
+            // 
+            this.convertCurrentCutsceneTocToolStripMenuItem.Name = "convertCurrentCutsceneTocToolStripMenuItem";
+            this.convertCurrentCutsceneTocToolStripMenuItem.Size = new System.Drawing.Size(450, 22);
+            this.convertCurrentCutsceneTocToolStripMenuItem.Text = "Convert current cutscene to C";
+            this.convertCurrentCutsceneTocToolStripMenuItem.Click += new System.EventHandler(this.convertCurrentCutsceneTocToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -13511,7 +13536,6 @@ namespace SharpOcarina
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabSceneEnv.ResumeLayout(false);
-            this.tabSceneEnv.PerformLayout();
             this.PrerenderedGroupBox.ResumeLayout(false);
             this.PrerenderedGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PrerenderedList)).EndInit();
@@ -14263,7 +14287,6 @@ namespace SharpOcarina
         private NiceLine niceLine15;
         private Label JFIFLabel;
         private Button LoadJFIF;
-        private CheckBox PrerenderedCheckbox;
         private Button CameraCopyViewport;
         private Button CameraView;
         private ToolStripMenuItem AddObjectToAllRoomsMenuItem;
@@ -14597,6 +14620,9 @@ namespace SharpOcarina
         private Label CutsceneTextboxFFFFWarningLabel;
         private Label cutsceneTestLabel;
         private Label cutsceneTextboxEndFrameLabel;
+        private Label EnvironmentRenderWarning;
+        private Label CutsceneActorRenderingWarning;
+        private ToolStripMenuItem convertCurrentCutsceneTocToolStripMenuItem;
     }
     }
 

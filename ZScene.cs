@@ -324,7 +324,7 @@ namespace SharpOcarina
         public List<ZActorCutscene> ActorCutscenes = new List<ZActorCutscene>();
         public Vector3s MinCollisionBounds = new Vector3s(0, 0, 0);
         public Vector3s MaxCollisionBounds = new Vector3s(0, 0, 0);
-        public byte[] CollisionSubdivisions = new byte[3] { 16, 16, 16 };
+        public byte[] CollisionSubdivisions = new byte[3] { 16, 4, 16 };
         public bool AutomaticCollisionBounds = true;
         public bool AutomaticSubdivisions = true;
 
@@ -2041,40 +2041,6 @@ namespace SharpOcarina
 
 
             }
-
-            string[] skyboxfiles = { "skybox01.zobj", "skybox01cloudy.zobj", "skybox05.zobj", "skybox01MM.zobj" };
-            uint[] skyboxoffsets = { 0x06017400, 0x06017020, 0x0601B380, 0x06010B40 };
-
-            for (int i = 0; i < skyboxfiles.Length; i++)
-            {
-
-                if (MainForm.skyboxdlists[i].Count == 0)
-                {
-
-                    List<byte> skybox = new List<byte>(File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"F3DEX2/" + skyboxfiles[i])));
-
-                    UcodeSimulator.currentfilename = skyboxfiles[i];
-
-                    SayakaGL.GameHandler.LoadToRAM(skybox.ToArray(), 0x06);
-
-                    List<UcodeSimulator.DisplayListStruct> templist = new List<UcodeSimulator.DisplayListStruct>();
-
-                    uint asd = SayakaGL.UcodeSimulator.ReadDL((int)0x06, skyboxoffsets[i], ref templist);
-
-                    foreach (SayakaGL.UcodeSimulator.DisplayListStruct DL in templist)
-                    {
-                        SayakaGL.UcodeSimulator.ParseDL(DL);
-                    }
-
-                    SayakaGL.UcodeSimulator.ParseAllDLs(ref templist);
-
-                    MainForm.skyboxdlists[i] = templist;
-
-                    UcodeSimulator.currentfilename = "";
-                }
-            }
-            
-
 
             if (MainForm.zobj_cache.Count == 0 && MainForm.settings.RenderActors)
             {
