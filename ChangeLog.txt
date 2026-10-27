@@ -4,10 +4,11 @@
 ---1.68
 --------------
 
-- Environment light and fog are now rendered (credits to z64viewer source code)
+- Environment light, fog and additional lights are now rendered (credits to z64viewer source code)
     - In overworld scenes you can clearly see which environments match each time of the day while selecting them
 	- Set Environment cutscene command changes the environment during cutscene playback (environment transition not rendered)
     - You can turn it off via Options > Render Environment Light.
+	- Additional lights and point lights are rendered, the later needs both outdoor light and room affected by pointlights.
 
 - Reworked regular skybox and cutscene skybox rendering:
 	- They now display day/evening/night texture changes in outdoor scenes, when the clock is changed in Scene Env or Set Time cutscene command
@@ -34,9 +35,7 @@
 
 - Fixed an issue where sometimes SO failed to locate files on the same directory as the xml file
 
-- TODO Fixed #environment tag issue
-
-- TODO Fixed download patch issue
+- Fixed an issue where z64rom installation failed to download the zelootma, 1.0 and 1.2 patches when those roms were provided
 
 - Fixed an issue where the start frame of textbox commands wasnt set to 0 properly in old scenes
 

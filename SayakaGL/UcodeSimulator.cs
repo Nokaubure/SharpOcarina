@@ -337,6 +337,7 @@ namespace SharpOcarina.SayakaGL
         static bool EnableCombiner = true;
 
         static int EnvironmentVertexProgram;
+        static readonly Dictionary<int, int> EnvironmentLightPrograms = new Dictionary<int, int>();
         static uint EnvironmentRenderMode;
         public static bool IsEnvironmentActive { get; private set; }
 
@@ -364,8 +365,19 @@ namespace SharpOcarina.SayakaGL
         // Environment values are uploaded outside compiled display lists so edits stay live.
         public static void BeginEnvironment(ZEnvironment environment, bool enabled)
         {
-            if (enabled && environment != null && EnvironmentVertexProgram == 0)
-                CreateEnvironmentVertexProgram();
+            BeginEnvironment(environment, enabled, null, false);
+        }
+
+        public static void BeginEnvironment(ZEnvironment environment, bool enabled,
+            IList<ZAdditionalLight> additionalLights, bool affectedByPointLight)
+        {
+            List<ZAdditionalLight> lights = additionalLights == null ? new List<ZAdditionalLight>() :
+                additionalLights.Where(light => !light.PointLight || (affectedByPointLight && light.Radius > 0)).ToList();
+            if (enabled && environment != null && !EnvironmentLightPrograms.TryGetValue(lights.Count, out EnvironmentVertexProgram))
+            {
+                CreateEnvironmentVertexProgram(lights.Count);
+                EnvironmentLightPrograms.Add(lights.Count, EnvironmentVertexProgram);
+            }
             GL.PushAttrib(AttribMask.EnableBit);
             IsEnvironmentActive = true;
             GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 3, 0f, 0f, 0f, 0f);
@@ -377,6 +389,7 @@ namespace SharpOcarina.SayakaGL
             SetEnvironmentColor(2, environment.C3C);
             SetEnvironmentDirection(3, environment.C4X, environment.C4Y, environment.C4Z);
             SetEnvironmentColor(4, environment.C5C);
+            SetAdditionalLights(lights);
 
             int fogNear = environment.FogDistance & 0x3FF;
             int multiplier = 0, offset = 0;
@@ -428,16 +441,47 @@ namespace SharpOcarina.SayakaGL
                 (float)direction.X, (float)direction.Y, (float)direction.Z, 0f);
         }
 
-        static void CreateEnvironmentVertexProgram()
+        static void SetAdditionalLights(IList<ZAdditionalLight> lights)
+        {
+            double[] view = new double[16];
+            GL.GetDouble(GetPName.ModelviewMatrix, view);
+            double scaleSquared = view[0] * view[0] + view[1] * view[1] + view[2] * view[2];
+            for (int i = 0; i < lights.Count; i++)
+            {
+                ZAdditionalLight light = lights[i];
+                int index = 6 + i * 2;
+                float inverseRadiusSquared = 0;
+                if (light.PointLight)
+                {
+                    GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.VertexProgram, index,
+                        (float)(view[0] * light.XPos + view[4] * light.YPos + view[8] * light.ZPos + view[12]),
+                        (float)(view[1] * light.XPos + view[5] * light.YPos + view[9] * light.ZPos + view[13]),
+                        (float)(view[2] * light.XPos + view[6] * light.YPos + view[10] * light.ZPos + view[14]), 1f);
+                    // The room header stores Radius in the high byte of a signed s16.
+                    double radius = unchecked((sbyte)light.Radius) * 256.0;
+                    inverseRadiusSquared = (float)(1.0 / Math.Max(0.00000001, radius * radius * scaleSquared));
+                }
+                else
+                {
+                    SetEnvironmentDirection(index, light.NSdirection, light.Ydirection, light.EWdirection);
+                }
+                Color color = light.ColorC;
+                GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.VertexProgram, index + 1,
+                    color.R / 255f, color.G / 255f, color.B / 255f, inverseRadiusSquared);
+            }
+        }
+
+        static void CreateEnvironmentVertexProgram(int additionalLightCount)
         {
             // texcoord[2].xy carries per-vertex G_LIGHTING and material fog flags.
             // Lighting is evaluated in eye space; directions use the camera matrix only.
             string source = "!!ARBvp1.0\n" +
                 "PARAM mvp[4] = { state.matrix.mvp };\n" +
+                "PARAM modelview[4] = { state.matrix.modelview };\n" +
                 "PARAM normalMatrix[4] = { state.matrix.modelview.invtrans };\n" +
                 "PARAM texture0[4] = { state.matrix.texture[0] };\n" +
                 "PARAM texture1[4] = { state.matrix.texture[1] };\n" +
-                "TEMP clip, normal, shade, factor, fog;\n" +
+                "TEMP clip, normal, shade, factor, fog, eye, light;\n" +
                 "DP4 clip.x, mvp[0], vertex.position;\n" +
                 "DP4 clip.y, mvp[1], vertex.position;\n" +
                 "DP4 clip.z, mvp[2], vertex.position;\n" +
@@ -455,7 +499,29 @@ namespace SharpOcarina.SayakaGL
                 "MAD shade.xyz, program.env[2], factor.x, program.env[0];\n" +
                 "DP3 factor.x, normal, program.env[3];\n" +
                 "MAX factor.x, factor.x, 0.0;\n" +
-                "MAD shade.xyz, program.env[4], factor.x, shade;\n" +
+                "MAD shade.xyz, program.env[4], factor.x, shade;\n";
+            if (additionalLightCount > 0)
+                source += "DP4 eye.x, modelview[0], vertex.position;\n" +
+                    "DP4 eye.y, modelview[1], vertex.position;\n" +
+                    "DP4 eye.z, modelview[2], vertex.position;\n";
+            for (int i = 0; i < additionalLightCount; i++)
+            {
+                int position = 6 + i * 2, color = position + 1;
+                source +=
+                    "MAD light.xyz, -eye, program.env[" + position + "].w, program.env[" + position + "];\n" +
+                    "DP3 factor.x, light, light;\n" +
+                    "MUL factor.y, factor.x, program.env[" + color + "].w;\n" +
+                    "SUB factor.y, 1.0, factor.y;\n" +
+                    "MAX factor.y, factor.y, 0.0;\n" +
+                    "MAX factor.x, factor.x, 0.00000001;\n" +
+                    "RSQ factor.x, factor.x;\n" +
+                    "MUL light.xyz, light, factor.x;\n" +
+                    "DP3 factor.x, normal, light;\n" +
+                    "MAX factor.x, factor.x, 0.0;\n" +
+                    "MUL factor.x, factor.x, factor.y;\n" +
+                    "MAD shade.xyz, program.env[" + color + "], factor.x, shade;\n";
+            }
+            source +=
                 "MIN shade.xyz, shade, 1.0;\n" +
                 "SUB shade.xyz, shade, vertex.color;\n" +
                 "MAD result.color.xyz, shade, vertex.texcoord[2].x, vertex.color;\n" +

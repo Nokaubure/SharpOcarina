@@ -46,7 +46,7 @@ namespace SharpOcarina
             string linker = rom64.getPath() + "\\include\\z64hdr\\oot_mq_debug\\sym_src.ld";
             string functionsh = rom64.getPath() + "\\include\\z64hdr\\include\\functions.h";
 
-            client = new WebClient();
+            //client = new WebClient();
 
             if (!File.Exists(linker))
             {

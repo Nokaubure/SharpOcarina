@@ -77,6 +77,8 @@ namespace SharpOcarina
             this.DisplayAxisMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowSelectedGrouptoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.applyEnvironmentLightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renderFogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accurateRenderDistanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderActorstoolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.RenderChildLinkMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColorBlindMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1559,11 +1561,30 @@ namespace SharpOcarina
             // applyEnvironmentLightingToolStripMenuItem
             // 
             this.applyEnvironmentLightingToolStripMenuItem.CheckOnClick = true;
+            this.applyEnvironmentLightingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renderFogToolStripMenuItem,
+            this.accurateRenderDistanceToolStripMenuItem});
             this.applyEnvironmentLightingToolStripMenuItem.Name = "applyEnvironmentLightingToolStripMenuItem";
             this.applyEnvironmentLightingToolStripMenuItem.Size = new System.Drawing.Size(327, 22);
-            this.applyEnvironmentLightingToolStripMenuItem.Text = "&Render Environment Lighting";
-            this.applyEnvironmentLightingToolStripMenuItem.ToolTipText = "Only with simulate N64 graphics disabled";
+            this.applyEnvironmentLightingToolStripMenuItem.Text = "&Render Environment Lightning && Fog";
+            this.applyEnvironmentLightingToolStripMenuItem.ToolTipText = "With simulate N64 graphics";
             this.applyEnvironmentLightingToolStripMenuItem.Click += new System.EventHandler(this.applyEnvironmentLightingToolStripMenuItem_Click);
+            // 
+            // renderFogToolStripMenuItem
+            // 
+            this.renderFogToolStripMenuItem.CheckOnClick = true;
+            this.renderFogToolStripMenuItem.Name = "renderFogToolStripMenuItem";
+            this.renderFogToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.renderFogToolStripMenuItem.Text = "Render Fog";
+            this.renderFogToolStripMenuItem.Click += new System.EventHandler(this.renderFogToolStripMenuItem_Click);
+            // 
+            // accurateRenderDistanceToolStripMenuItem
+            // 
+            this.accurateRenderDistanceToolStripMenuItem.CheckOnClick = true;
+            this.accurateRenderDistanceToolStripMenuItem.Name = "accurateRenderDistanceToolStripMenuItem";
+            this.accurateRenderDistanceToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.accurateRenderDistanceToolStripMenuItem.Text = "Ingame Render Distance";
+            this.accurateRenderDistanceToolStripMenuItem.Click += new System.EventHandler(this.accurateRenderDistanceToolStripMenuItem_Click);
             // 
             // RenderActorstoolStrip
             // 
@@ -14662,6 +14683,8 @@ namespace SharpOcarina
         private Label AdditionalLightDirectionLabel;
         private Button ViewNormalCopyAdditionalLight;
         private NumericUpDownEx AdditionalLightY;
+        private ToolStripMenuItem renderFogToolStripMenuItem;
+        private ToolStripMenuItem accurateRenderDistanceToolStripMenuItem;
     }
     }
 

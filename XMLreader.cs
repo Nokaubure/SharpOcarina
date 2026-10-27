@@ -410,6 +410,12 @@ namespace SharpOcarina
                     if (File.Exists(file))
                         return file;
                 }
+                if (MainForm.GlobalROM != "")
+                {
+                    file = Path.GetDirectoryName(MainForm.GlobalROM) + "/XML/" + XMLFile + ".xml";
+                    if (File.Exists(file))
+                        return file;
+                }
                 if (MainForm.settings.MajorasMask)
                 {
                     file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"XML/MM/" + XMLFile + ".xml");

@@ -1207,6 +1207,14 @@ namespace SharpOcarina
 
         }
 
+        private void BeginRoomEnvironment(ZEnvironment environment, ZScene.ZRoom room)
+        {
+            bool selected = room != null && RoomList.SelectedIndex >= 0 && RoomList.SelectedIndex < CurrentScene.Rooms.Count &&
+                room == CurrentScene.Rooms[RoomList.SelectedIndex];
+            UcodeSimulator.BeginEnvironment(environment, settings.RenderEnvLighting,
+                selected ? room.AdditionalLights : null, selected && room.AffectedByPointLight);
+        }
+
         private void DrawActorModel2(ZActor Actor, bool DrawBorder, bool transparency)
         {
             if (!SimulateN64Gfx) return;
@@ -1217,7 +1225,9 @@ namespace SharpOcarina
                 return;
             }
             ZEnvironment environment = GetPreviewEnvironment();
-            UcodeSimulator.BeginEnvironment(environment, settings.ApplyEnvLighting);
+            ZScene.ZRoom selectedRoom = RoomList.SelectedIndex >= 0 && RoomList.SelectedIndex < CurrentScene.Rooms.Count
+                ? CurrentScene.Rooms[RoomList.SelectedIndex] : null;
+            BeginRoomEnvironment(environment, selectedRoom);
             try
             {
                 DrawActorModel2Core(Actor, DrawBorder, transparency);
@@ -2040,7 +2050,7 @@ namespace SharpOcarina
         {
             ZEnvironment environment = GetPreviewEnvironment();
             UcodeSimulator.ApplyEnvironmentProjection(environment,
-                SimulateN64Gfx && settings.ApplyEnvLighting && !subscreenmode);
+                SimulateN64Gfx && settings.RenderEnvLighting && !subscreenmode);
         }
 
         public void PaintControl()
@@ -2434,7 +2444,7 @@ namespace SharpOcarina
                             GL.CullFace(CullFaceMode.Back);
 
                             /* Faked environmental lighting... */
-                            if (settings.ApplyEnvLighting)
+                            if (settings.RenderEnvLighting)
                             {
                                 GL.Enable(EnableCap.ColorMaterial);
                                 GL.ColorMaterial(MaterialFace.FrontAndBack, ColorMaterialParameter.Diffuse);
@@ -2463,7 +2473,7 @@ namespace SharpOcarina
                         {//aaa
 
                             ZEnvironment renderEnvironment = GetPreviewEnvironment();
-                            UcodeSimulator.BeginEnvironment(renderEnvironment, settings.ApplyEnvLighting);
+                            BeginRoomEnvironment(renderEnvironment, Room);
                             try
                             {
 
@@ -4992,12 +5002,14 @@ namespace SharpOcarina
                     UpdateLabel.Visible = updateavailable;
                     if (updating) UpdateLabel.Text = "Downloading...";
 
-                    EnvironmentRenderWarning.Visible = !settings.ApplyEnvLighting;
-                    CutsceneActorRenderingWarning.Visible = !settings.ApplyEnvLighting;
+                    EnvironmentRenderWarning.Visible = !settings.RenderEnvLighting;
+                    CutsceneActorRenderingWarning.Visible = !settings.RenderEnvLighting;
 
                     showCollisionModelToolStripMenuItem.Checked = settings.ShowCollisionModel;
                     showRoomModelsToolStripMenuItem.Checked = settings.ShowRoomModels;
-                    applyEnvironmentLightingToolStripMenuItem.Checked = settings.ApplyEnvLighting;
+                    applyEnvironmentLightingToolStripMenuItem.Checked = settings.RenderEnvLighting;
+                    renderFogToolStripMenuItem.Checked = settings.RenderFog;
+                    accurateRenderDistanceToolStripMenuItem.Checked = settings.IngameRenderDistance;
                     consecutiveRoomInjectionToolStripMenuItem.Checked = settings.ConsecutiveRoomInject;
                     forceRGBATexturesToolStripMenuItem.Checked = settings.ForceRGBATextures;
                     DegreesMenuItem.Checked = settings.Degrees;
@@ -7757,7 +7769,7 @@ namespace SharpOcarina
 
         private void applyEnvironmentLightingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            settings.ApplyEnvLighting = applyEnvironmentLightingToolStripMenuItem.Checked;
+            settings.RenderEnvLighting = applyEnvironmentLightingToolStripMenuItem.Checked;
             UpdateForm();
         }
 
@@ -11376,7 +11388,7 @@ namespace SharpOcarina
                 truepos.Y = Clamp(truepos.Y, -32767, 32767);
                 truepos.Z = Clamp(truepos.Z, -32767, 32767);
 
-                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)truepos.X, (short)truepos.Y, (short)truepos.Z, true, 0, 0, 1, Color.Black));
+                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)truepos.X, (short)truepos.Y, (short)truepos.Z, true, 0, 0, 2, Color.Black));
 
             }
             else
@@ -11384,7 +11396,7 @@ namespace SharpOcarina
 
                 Vector3d CenterPoint = GetCenterPoint((CurrentScene.Rooms[RoomList.SelectedIndex]).ObjModel.Vertices);
 
-                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)CenterPoint.X, (short)CenterPoint.Y, (short)CenterPoint.Z, true, 0, 0, 1, Color.Black)
+                CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights.Add(new ZAdditionalLight((short)CenterPoint.X, (short)CenterPoint.Y, (short)CenterPoint.Z, true, 0, 0, 2, Color.Black)
                 );
             }
 
@@ -20700,6 +20712,7 @@ namespace SharpOcarina
                                 string patchpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\Patches\" + patchname + ".bps");
                                 if (!File.Exists(patchpath))
                                 {
+                                    Directory.CreateDirectory(Path.GetDirectoryName(patchpath));
                                     PleaseWait pleasewait2 = new PleaseWait("https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/" + patchname + ".zip", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\Patches\" + patchname + ".zip"), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\Patches\"), true);
                                     pleasewait2.ShowDialog();
                                 }
@@ -23277,6 +23290,18 @@ namespace SharpOcarina
             }
         }
 
+        private void renderFogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.RenderFog = renderFogToolStripMenuItem.Checked;
+            UpdateForm();
+        }
+
+        private void accurateRenderDistanceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.IngameRenderDistance = accurateRenderDistanceToolStripMenuItem.Checked;
+            UpdateForm();
+        }
+
         #region Skybox
 
         private readonly Dictionary<string, int> skyTextures = new Dictionary<string, int>();
@@ -23722,7 +23747,7 @@ namespace SharpOcarina
                     if (!settings.MajorasMask && moonAlpha > 0)
                         DrawCelestialQuad(moonTexture, -sun, 25 - 15 * Math.Max(0, -y / 120), -15, 16, right, up);
                 }
-                if (supported && settings.ApplyEnvLighting && CurrentScene.Environments.Count > 0 && (room == null || !room.DisableSkybox))
+                if (supported && settings.RenderEnvLighting && CurrentScene.Environments.Count > 0 && (room == null || !room.DisableSkybox))
                 {
                     ZEnvironment env = GetPreviewEnvironment();
                     if (env.FogDistance < 980)
@@ -23901,7 +23926,7 @@ namespace SharpOcarina
     {
         public bool ShowCollisionModel = false;
         public bool ShowRoomModels = true;
-        public bool ApplyEnvLighting = false;
+        public bool ApplyEnvLighting = false; //unused
         public bool ConsecutiveRoomInject = true;
         public bool ForceRGBATextures = false;
         public bool Disablewaterboxmovement = false;
@@ -23954,6 +23979,9 @@ namespace SharpOcarina
         public bool FixedCollisionWrite = true;
         public bool ExportHeaderFile = false;
         public bool OnlyRenderSelectedRoom = false;
+        public bool RenderEnvLighting = true;
+        public bool RenderFog = true;
+        public bool IngameRenderDistance = true;
     }
 
     public class UndoRedo
