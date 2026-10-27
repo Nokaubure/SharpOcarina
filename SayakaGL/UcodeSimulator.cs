@@ -371,6 +371,12 @@ namespace SharpOcarina.SayakaGL
         public static void BeginEnvironment(ZEnvironment environment, bool enabled,
             IList<ZAdditionalLight> additionalLights, bool affectedByPointLight)
         {
+            BeginEnvironment(environment, enabled, additionalLights, affectedByPointLight, true);
+        }
+
+        public static void BeginEnvironment(ZEnvironment environment, bool enabled,
+            IList<ZAdditionalLight> additionalLights, bool affectedByPointLight, bool renderFog)
+        {
             List<ZAdditionalLight> lights = additionalLights == null ? new List<ZAdditionalLight>() :
                 additionalLights.Where(light => !light.PointLight || (affectedByPointLight && light.Radius > 0)).ToList();
             if (enabled && environment != null && !EnvironmentLightPrograms.TryGetValue(lights.Count, out EnvironmentVertexProgram))
@@ -404,10 +410,10 @@ namespace SharpOcarina.SayakaGL
                 offset = (500 - fogNear) * 256 / (1000 - fogNear);
             }
             GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.VertexProgram, 5,
-                multiplier, offset, 0, 0);
+                renderFog ? multiplier : 0, renderFog ? offset : 0, 0, 0);
             Color fog = environment.FogColorC;
             GL.Arb.ProgramEnvParameter4(AssemblyProgramTargetArb.FragmentProgram, 3,
-                fog.R / 255f, fog.G / 255f, fog.B / 255f, 1f);
+                fog.R / 255f, fog.G / 255f, fog.B / 255f, renderFog ? 1f : 0f);
             GL.Arb.BindProgram(AssemblyProgramTargetArb.VertexProgram, EnvironmentVertexProgram);
             GL.Enable((EnableCap)All.VertexProgram);
             GL.Disable(EnableCap.Fog);

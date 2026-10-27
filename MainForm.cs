@@ -1211,8 +1211,8 @@ namespace SharpOcarina
         {
             bool selected = room != null && RoomList.SelectedIndex >= 0 && RoomList.SelectedIndex < CurrentScene.Rooms.Count &&
                 room == CurrentScene.Rooms[RoomList.SelectedIndex];
-            UcodeSimulator.BeginEnvironment(environment, settings.RenderEnvLighting,
-                selected ? room.AdditionalLights : null, selected && room.AffectedByPointLight);
+            UcodeSimulator.BeginEnvironment(environment, SimulateN64Gfx && settings.RenderEnvLighting,
+                selected ? room.AdditionalLights : null, selected && room.AffectedByPointLight, settings.RenderFog);
         }
 
         private void DrawActorModel2(ZActor Actor, bool DrawBorder, bool transparency)
@@ -2050,7 +2050,7 @@ namespace SharpOcarina
         {
             ZEnvironment environment = GetPreviewEnvironment();
             UcodeSimulator.ApplyEnvironmentProjection(environment,
-                SimulateN64Gfx && settings.RenderEnvLighting && !subscreenmode);
+                SimulateN64Gfx && settings.RenderEnvLighting && settings.IngameRenderDistance && !subscreenmode);
         }
 
         public void PaintControl()
@@ -2443,21 +2443,9 @@ namespace SharpOcarina
                             GL.Enable(EnableCap.CullFace);
                             GL.CullFace(CullFaceMode.Back);
 
-                            /* Faked environmental lighting... */
-                            if (settings.RenderEnvLighting)
-                            {
-                                GL.Enable(EnableCap.ColorMaterial);
-                                GL.ColorMaterial(MaterialFace.FrontAndBack, ColorMaterialParameter.Diffuse);
-                                GL.Enable(EnableCap.Normalize);
-                                GL.Enable(EnableCap.Lighting);
-                                GL.Enable(EnableCap.Light0);
-                                //GL.Enable(EnableCap.Light1);
-                                GL.Enable(EnableCap.Fog);
-                            }
-                            else
-                            {
-                                GL.Disable(EnableCap.Fog);
-                            }
+                            // N64 rendering disabled: show source vertex colors without environment effects.
+                            GL.Disable(EnableCap.Lighting);
+                            GL.Disable(EnableCap.Fog);
 
                             /* Render groups... */
                             for (int i = 0; i < Room.TrueGroups.Count; i++)
@@ -23476,16 +23464,16 @@ namespace SharpOcarina
         {
             if (cutscenePreviewEnabled && cutsceneEnvironmentActive)
                 return (int)cutsceneDayTime & 65535;
-            if (CurrentScene.OutdoorLight && IsCutsceneTimePreview())
+            if (IsCutsceneTimePreview())
             {
                 ZCutscene command = GetSelectedSetTimeCommand();
                 return (int)((command.Data[0] * 60 + command.Data[1]) / 1440.0 * 65536) & 65535;
             }
             ZScene.ZRoom room = RoomList.SelectedIndex >= 0 && RoomList.SelectedIndex < CurrentScene.Rooms.Count
                 ? CurrentScene.Rooms[RoomList.SelectedIndex] : null;
-            if (CurrentScene.OutdoorLight && tabControl1.SelectedTab == tabRoomEnv && DisableStartTime.Checked)
+            if (tabControl1.SelectedTab == tabRoomEnv && DisableStartTime.Checked)
                 return (int)(((double)TimeHour.Value * 60 + (double)TimeMinute.Value) / 1440 * 65536) & 65535;
-            if (!CurrentScene.OutdoorLight || (tabControl1.SelectedTab == tabRoomEnv && !DisableStartTime.Checked))
+            if (!DisableStartTime.Checked && (!CurrentScene.OutdoorLight || tabControl1.SelectedTab == tabRoomEnv))
             {
                 int time = room == null ? 0xFFFF : room.StartTime;
                 if (time != 0xFFFF)
@@ -23747,7 +23735,7 @@ namespace SharpOcarina
                     if (!settings.MajorasMask && moonAlpha > 0)
                         DrawCelestialQuad(moonTexture, -sun, 25 - 15 * Math.Max(0, -y / 120), -15, 16, right, up);
                 }
-                if (supported && settings.RenderEnvLighting && CurrentScene.Environments.Count > 0 && (room == null || !room.DisableSkybox))
+                if (supported && settings.RenderEnvLighting && settings.RenderFog && CurrentScene.Environments.Count > 0 && (room == null || !room.DisableSkybox))
                 {
                     ZEnvironment env = GetPreviewEnvironment();
                     if (env.FogDistance < 980)
