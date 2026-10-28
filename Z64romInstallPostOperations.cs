@@ -22,6 +22,7 @@ namespace SharpOcarina
         public bool MMBunnyHood = false;
         public string ABButtonColors = "OOT";
         public bool SaveAnywhere = false;
+        public bool Playas = false;
         public Z64romInstallPostOperations(string path, bool defaults)
         {
             InitializeComponent();
@@ -123,5 +124,9 @@ namespace SharpOcarina
 
         }
 
+        private void PlayasCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Playas = PlayasCheckBox.Checked;
+        }
     }
 }

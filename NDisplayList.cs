@@ -621,7 +621,7 @@ namespace SharpOcarina
                     {
                         //DebugConsole.WriteLine("animated: " + Mat.Name);
                         try {
-                            if (MainForm.GetSegmentFunction(TexturePointerBank - 8).HasPointer())
+                            if (MainForm.GetSegmentFunction(TexturePointerBank - 8).HasPointer() && MainForm.GetSegmentFunction(TexturePointerBank - 8).Functions.Find(x => x.Type == ZTextureAnim.texswap) != null)
                             {
                                 int search = MainForm.CurrentScene.AdditionalTextures.FindIndex(y => y.DisplayName == MainForm.GetSegmentFunction(TexturePointerBank - 8).Functions.Find(x => x.Type == ZTextureAnim.texswap).TextureSwap);
                                 if (search != -1)

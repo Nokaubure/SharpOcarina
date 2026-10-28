@@ -889,6 +889,7 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
+            this.ChangeTabWhenSelectingInstancesMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1428,6 +1429,7 @@ namespace SharpOcarina
             this.DisableCutscenePreviewBlackBarsMenuItem,
             this.ResetGroupSettingsReloadMenuItem,
             this.MMTextureScrolltoolStripMenuItem3,
+            this.ChangeTabWhenSelectingInstancesMenuItem3,
             this.toolStripSeparator1,
             this.AutoaddGroupsMenuItem,
             this.noDummyPointsInCutsceneCamerasToolStripMenuItem,
@@ -13487,6 +13489,14 @@ namespace SharpOcarina
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
             // 
+            // ChangeTabWhenSelectingInstancesMenuItem3
+            // 
+            this.ChangeTabWhenSelectingInstancesMenuItem3.CheckOnClick = true;
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Name = "ChangeTabWhenSelectingInstancesMenuItem3";
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Size = new System.Drawing.Size(327, 22);
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Text = "Change tab when selecting instances";
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Click += new System.EventHandler(this.ChangeTabWhenSelectingInstancesMenuItem3_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -14685,6 +14695,7 @@ namespace SharpOcarina
         private NumericUpDownEx AdditionalLightY;
         private ToolStripMenuItem renderFogToolStripMenuItem;
         private ToolStripMenuItem accurateRenderDistanceToolStripMenuItem;
+        private ToolStripMenuItem ChangeTabWhenSelectingInstancesMenuItem3;
     }
     }
 

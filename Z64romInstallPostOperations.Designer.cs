@@ -42,12 +42,13 @@
             this.MMCbuttonColorsCheckBox = new System.Windows.Forms.CheckBox();
             this.WarningLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.PlayasCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Ok
             // 
-            this.Ok.Location = new System.Drawing.Point(106, 283);
+            this.Ok.Location = new System.Drawing.Point(106, 299);
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 0;
@@ -110,7 +111,7 @@
             // MMButtonShadowsCheckBox
             // 
             this.MMButtonShadowsCheckBox.AutoSize = true;
-            this.MMButtonShadowsCheckBox.Location = new System.Drawing.Point(12, 141);
+            this.MMButtonShadowsCheckBox.Location = new System.Drawing.Point(12, 157);
             this.MMButtonShadowsCheckBox.Name = "MMButtonShadowsCheckBox";
             this.MMButtonShadowsCheckBox.Size = new System.Drawing.Size(280, 17);
             this.MMButtonShadowsCheckBox.TabIndex = 5;
@@ -121,7 +122,7 @@
             // MMEntranceTitleCardsCheckBox
             // 
             this.MMEntranceTitleCardsCheckBox.AutoSize = true;
-            this.MMEntranceTitleCardsCheckBox.Location = new System.Drawing.Point(12, 164);
+            this.MMEntranceTitleCardsCheckBox.Location = new System.Drawing.Point(12, 180);
             this.MMEntranceTitleCardsCheckBox.Name = "MMEntranceTitleCardsCheckBox";
             this.MMEntranceTitleCardsCheckBox.Size = new System.Drawing.Size(187, 17);
             this.MMEntranceTitleCardsCheckBox.TabIndex = 6;
@@ -132,7 +133,7 @@
             // MMBunnyHoodCheckBox
             // 
             this.MMBunnyHoodCheckBox.AutoSize = true;
-            this.MMBunnyHoodCheckBox.Location = new System.Drawing.Point(12, 187);
+            this.MMBunnyHoodCheckBox.Location = new System.Drawing.Point(12, 203);
             this.MMBunnyHoodCheckBox.Name = "MMBunnyHoodCheckBox";
             this.MMBunnyHoodCheckBox.Size = new System.Drawing.Size(223, 17);
             this.MMBunnyHoodCheckBox.TabIndex = 7;
@@ -143,7 +144,7 @@
             // SaveAnywhereCheckbox
             // 
             this.SaveAnywhereCheckbox.AutoSize = true;
-            this.SaveAnywhereCheckbox.Location = new System.Drawing.Point(12, 260);
+            this.SaveAnywhereCheckbox.Location = new System.Drawing.Point(12, 276);
             this.SaveAnywhereCheckbox.Name = "SaveAnywhereCheckbox";
             this.SaveAnywhereCheckbox.Size = new System.Drawing.Size(274, 17);
             this.SaveAnywhereCheckbox.TabIndex = 8;
@@ -159,7 +160,7 @@
             "OOT",
             "MM",
             "GC"});
-            this.ABButtonColorsDropdown.Location = new System.Drawing.Point(105, 233);
+            this.ABButtonColorsDropdown.Location = new System.Drawing.Point(105, 249);
             this.ABButtonColorsDropdown.Name = "ABButtonColorsDropdown";
             this.ABButtonColorsDropdown.Size = new System.Drawing.Size(121, 21);
             this.ABButtonColorsDropdown.TabIndex = 9;
@@ -168,7 +169,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 236);
+            this.label1.Location = new System.Drawing.Point(9, 252);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 13);
             this.label1.TabIndex = 10;
@@ -177,7 +178,7 @@
             // MMCbuttonColorsCheckBox
             // 
             this.MMCbuttonColorsCheckBox.AutoSize = true;
-            this.MMCbuttonColorsCheckBox.Location = new System.Drawing.Point(12, 210);
+            this.MMCbuttonColorsCheckBox.Location = new System.Drawing.Point(12, 226);
             this.MMCbuttonColorsCheckBox.Name = "MMCbuttonColorsCheckBox";
             this.MMCbuttonColorsCheckBox.Size = new System.Drawing.Size(169, 17);
             this.MMCbuttonColorsCheckBox.TabIndex = 11;
@@ -188,7 +189,7 @@
             // WarningLabel
             // 
             this.WarningLabel.AutoSize = true;
-            this.WarningLabel.Location = new System.Drawing.Point(10, 309);
+            this.WarningLabel.Location = new System.Drawing.Point(10, 325);
             this.WarningLabel.Name = "WarningLabel";
             this.WarningLabel.Size = new System.Drawing.Size(290, 13);
             this.WarningLabel.TabIndex = 12;
@@ -197,22 +198,34 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.PlayasCheckBox);
             this.groupBox1.Controls.Add(this.RemoveLogoCheckBox);
             this.groupBox1.Controls.Add(this.RemoveAllScenesCheckBox);
             this.groupBox1.Controls.Add(this.ClearCutsceneTableCheckBox);
             this.groupBox1.Controls.Add(this.RemovePrerenderedsCheckBox);
             this.groupBox1.Location = new System.Drawing.Point(6, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(294, 122);
+            this.groupBox1.Size = new System.Drawing.Size(294, 137);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "One-time actions";
+            // 
+            // PlayasCheckBox
+            // 
+            this.PlayasCheckBox.AutoSize = true;
+            this.PlayasCheckBox.Location = new System.Drawing.Point(6, 113);
+            this.PlayasCheckBox.Name = "PlayasCheckBox";
+            this.PlayasCheckBox.Size = new System.Drawing.Size(275, 17);
+            this.PlayasCheckBox.TabIndex = 5;
+            this.PlayasCheckBox.Text = "PlayAs template + both Link forms can equip all items";
+            this.PlayasCheckBox.UseVisualStyleBackColor = true;
+            this.PlayasCheckBox.CheckedChanged += new System.EventHandler(this.PlayasCheckBox_CheckedChanged);
             // 
             // Z64romInstallPostOperations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(307, 347);
+            this.ClientSize = new System.Drawing.Size(307, 367);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.WarningLabel);
             this.Controls.Add(this.MMCbuttonColorsCheckBox);
@@ -224,8 +237,8 @@
             this.Controls.Add(this.MMButtonShadowsCheckBox);
             this.Controls.Add(this.Ok);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MaximumSize = new System.Drawing.Size(323, 386);
-            this.MinimumSize = new System.Drawing.Size(323, 386);
+            this.MaximumSize = new System.Drawing.Size(323, 406);
+            this.MinimumSize = new System.Drawing.Size(323, 406);
             this.Name = "Z64romInstallPostOperations";
             this.Text = "Post Installation Options";
             this.groupBox1.ResumeLayout(false);
@@ -251,5 +264,6 @@
         private System.Windows.Forms.CheckBox MMCbuttonColorsCheckBox;
         private System.Windows.Forms.Label WarningLabel;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox PlayasCheckBox;
     }
 }

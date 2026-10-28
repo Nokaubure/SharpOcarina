@@ -4,6 +4,16 @@
 ---1.68
 --------------
 
+Auto-Update breaks if going from 1.66! manual download: https://github.com/Nokaubure/SharpOcarina/releases/download/v1.68/SharpOcarina1.68.zip
+
+- Updated SharpOcarina plugin to 1.1.6 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_so_3.0.zip)
+	- Fixed an issue where UV coords would warp back to the middle at half the distance of what the N64 actually allows.
+	- Fixed an issue where mirrored textures would display an UV seam where the mirroring happened. This was purely visual and didn't affected the exported model.
+
+- Updated Objex2 plugin to 2.6.6 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_objex2.zip)
+	- The plugin now supports Blender 3.6 LTS. Its recommended to use this blender version as its more stable than the previous 3.4. No blender version about that one has been tested.
+	- Fixed an issue where mirrored textures would display an UV seam where the mirroring happened. This was purely visual and didn't affected the exported model.
+
 - Environment light, fog and additional lights are now rendered (credits to z64viewer source code)
     - In overworld scenes you can clearly see which environments match each time of the day while selecting them
 	- Set Environment cutscene command changes the environment during cutscene playback (environment transition not rendered)
@@ -25,6 +35,10 @@
 
 - The direction of additional directional lights is now displayed as X Y Z like environment lights, with autosetup button.
 
+- Added option to install All Items Playas template when creating a new z64rom project or going to Tools > Post install operations.
+
+- Added option to change tab when selecting instances in the viewport
+
 - Fixed an issue where subdivisions defaulted to 16 16 16 which unfortunately caused crashes on certain scenes for unknown reasons.
 
 - Fixed an issue where it wasnt possible to preview or load data from .zscene files from z64rom
@@ -38,6 +52,8 @@
 - Fixed an issue where z64rom installation failed to download the zelootma, 1.0 and 1.2 patches when those roms were provided
 
 - Fixed an issue where the start frame of textbox commands wasnt set to 0 properly in old scenes
+
+- Fixed an issue where the application could crash when configuring a texture swap animation
 
 
 --------------

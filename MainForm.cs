@@ -3558,6 +3558,8 @@ namespace SharpOcarina
                                 actorEditControl.ActorComboBox.SelectedIndex = i;
                                 actorEditControl.UpdateActorEdit();
                                 actorpick = _Actor_;
+                                if (settings.ChangeTabOnSelect)
+                                    tabControl1.SelectedTab = tabControl1.TabPages["tabActors"];
                                 break;
                             }
                         }
@@ -3587,6 +3589,8 @@ namespace SharpOcarina
                                     transitionEditControl.ActorComboBox.SelectedIndex = i;
                                     transitionEditControl.UpdateActorEdit();
                                     actorpick = _Transition_;
+                                    if (settings.ChangeTabOnSelect)
+                                        tabControl1.SelectedTab = tabControl1.TabPages["tabTransitions"];
                                     break;
                                 }
                             }
@@ -3616,6 +3620,8 @@ namespace SharpOcarina
                                     spawnerEditControl.ActorComboBox.SelectedIndex = i;
                                     spawnerEditControl.UpdateActorEdit();
                                     actorpick = _Spawn_;
+                                    if (settings.ChangeTabOnSelect)
+                                        tabControl1.SelectedTab = tabControl1.TabPages["tabTransitions"];
                                     break;
                                 }
                             }
@@ -3653,7 +3659,9 @@ namespace SharpOcarina
                                         PathwayListBox.SelectedIndex = Clamp(ii,0,PathwayListBox.Items.Count-1);
                                         UpdateForm();
                                         actorpick = _Pathway_;
-                                            pathwayfound = true;
+                                        pathwayfound = true;
+                                        if (settings.ChangeTabOnSelect)
+                                            tabControl1.SelectedTab = tabControl1.TabPages["tabPathways"];
                                         break;
                                     }
                                 }
@@ -3684,6 +3692,8 @@ namespace SharpOcarina
                                     AdditionalLightSelect.Value = i + 1;
                                     UpdateForm();
                                     actorpick = _AddLight_;
+                                    if (settings.ChangeTabOnSelect)
+                                        tabControl1.SelectedTab = tabControl1.TabPages["tabRoomEnv"];
                                     break;
                                 }
                             }
@@ -3835,6 +3845,8 @@ namespace SharpOcarina
                                 UpdateForm();
                                 actorpick = _Camera_;
                                 extrapick = (byte) (pixel[0] - 250);
+                                if (settings.ChangeTabOnSelect)
+                                    tabControl1.SelectedTab = tabControl1.TabPages["tabGeneral"];
                                 break;
                             }
                             
@@ -3873,6 +3885,8 @@ namespace SharpOcarina
                                     //UpdateWaterboxData();
                                     UpdateForm();
                                     actorpick = _Waterbox_;
+                                    if (settings.ChangeTabOnSelect)
+                                        tabControl1.SelectedTab = tabControl1.TabPages["tabGeneral"];
                                     break;
                                 }
 
@@ -3940,6 +3954,8 @@ namespace SharpOcarina
 
                         GroupList.SelectedIndex = groupselect;
                         selectedtimer = 90;
+                        if (settings.ChangeTabOnSelect)
+                            tabControl1.SelectedTab = tabControl1.TabPages["tabRooms"];
                         UpdateForm();
                     }
 
@@ -5039,6 +5055,7 @@ namespace SharpOcarina
                     ResetGroupSettingsReloadMenuItem.Checked = settings.ResetGroupSettingsReload;
                     RenderPathwaystoolStripMenuItem3.Checked = settings.OnlyRenderPathwaysInTab;
                     MMTextureScrolltoolStripMenuItem3.Checked = settings.MMTextureScroll;
+                    ChangeTabWhenSelectingInstancesMenuItem3.Checked = settings.ChangeTabOnSelect;
                     ShowSelectedGrouptoolStripMenuItem3.Checked = settings.RenderSelectedGroup;
                     RenderSelectedRoomMenuItem.Checked = settings.OnlyRenderSelectedRoom;
 
@@ -7188,7 +7205,7 @@ namespace SharpOcarina
 
                         if (FunctionTextureSwapAnimationImage.SelectedIndex == -1) { FunctionTextureSwapAnimationImage.SelectedIndex = 0; }
 
-                        if (CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].TextureSwapList[FunctionTextureSwapAnimationList.SelectedIndex].Texture != "none")
+                        if (CurrentScene.SegmentFunctions[(int)RenderFunctionID.Value - 8].Functions[RenderFunctionSelect.SelectedIndex].TextureSwapList[FunctionTextureSwapAnimationList.SelectedIndex].Texture != "none" && File.Exists((FunctionTextureSwapAnimationImage.SelectedItem as ObjFile.Material).map_Kd))
                         {
                             FunctionTextureSwapAnimationPictureBox.Image = Image.FromFile((FunctionTextureSwapAnimationImage.SelectedItem as ObjFile.Material).map_Kd);
                         }
@@ -7722,6 +7739,8 @@ namespace SharpOcarina
 
             PathwayListBox.Items.Clear();
 
+            if (CurrentScene.Environments.Count > 1 && CurrentScene.OutdoorLight) EnvironmentSelect.Value = 1; //just for mid day preview
+
 
             SetPolyTypesInCollision();
 
@@ -7759,6 +7778,7 @@ namespace SharpOcarina
         {
             settings.RenderEnvLighting = applyEnvironmentLightingToolStripMenuItem.Checked;
             UpdateForm();
+            applyEnvironmentLightingToolStripMenuItem.Owner.Hide();
         }
 
         private void consecutiveRoomInjectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -8519,6 +8539,8 @@ namespace SharpOcarina
                     }
                     env.FogDistance = env.FogDistance.Clamp<ushort>(0, 999);
                 }
+
+                if (CurrentScene.Environments.Count > 1) EnvironmentSelect.Value = 1;
 
                 foreach (var multitex in CurrentScene.AdditionalTextures)
                 {
@@ -13936,7 +13958,9 @@ namespace SharpOcarina
 
                     SelectRoom(0);
                     UpdateGroupSelect();
-                    GroupList.SelectedItem = GroupList.Items[0];
+                    if (GroupList.Items.Count > 0)
+                        GroupList.SelectedItem = GroupList.Items[0];
+                    else GroupList.SelectedItem = null;
                 }
 
 
@@ -21361,6 +21385,47 @@ namespace SharpOcarina
                         }
 
                     }
+                    if (postoperations.Playas)
+                    {
+                        if (defaults || (!defaults && MessageBox.Show("This will replace player.c and both Link objects (old ones will go to the trashbin), continue?",  "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                        {
+                            if (!defaults)
+                            {
+                                string trashdir = rom64.getPath() + "\\Trashbin";
+                                if (!Directory.Exists(trashdir))
+                                    Directory.CreateDirectory(trashdir);
+
+                                if (Directory.Exists(rom64.getPath() + "/src/system/kaleido"))
+                                {
+                                    Directory.Move(rom64.getPath() + "/src/system/kaleido", rom64.getPath() + "/trashbin/kaleido" + "_" + DateTime.Now.Ticks.ToString());
+                                }
+
+                                if (Directory.Exists(rom64.getPath() + "/src/object/0x0014-Adult_link"))
+                                {
+                                    Directory.Move(rom64.getPath() + "/src/object/0x0014-Adult_link", rom64.getPath() + "/trashbin/0x0014-Adult_link" + "_" + DateTime.Now.Ticks.ToString());
+                                }
+
+                                if (Directory.Exists(rom64.getPath() + "/src/object/0x0015-Child_Link"))
+                                {
+                                    Directory.Move(rom64.getPath() + "/src/object/0x0015-Child_Link", rom64.getPath() + "/trashbin/0x0015-Child_Link" + "_" + DateTime.Now.Ticks.ToString());
+                                }
+                            }
+
+                            string playasPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\All_Items_Playas_1.7.2.zip");
+                            if (!File.Exists(playasPath))
+                            {
+                                PleaseWait pleasewait = new PleaseWait("https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/All_Items_Playas_1.7.2.zip", playasPath, rom64.getPath(),true);
+                                pleasewait.ShowDialog();
+                            }
+                            else
+                            {
+                                using (var zip = ZipFile.Read(playasPath))
+                                {
+                                    zip.ExtractAll(rom64.getPath(), ExtractExistingFileAction.OverwriteSilently);
+                                }
+                            }
+                        }
+                    }
                     
                     string ulibfile = path + @"src\lib_user\uLib.h";
                     
@@ -23427,7 +23492,7 @@ namespace SharpOcarina
             int selected = Math.Max(0, Math.Min(playing ? cutsceneEnvironmentIndex : (int)EnvironmentSelect.Value,
                 CurrentScene.Environments.Count - 1));
             if ((playing && cutsceneLightingOverride) || !CurrentScene.OutdoorLight ||
-                (!playing && tabControl1.SelectedTab != tabRoomEnv && !IsCutsceneTimePreview()))
+                (!playing && tabControl1.SelectedTab != tabRoomEnv && !IsCutsceneTimePreview() && !CurrentScene.PregeneratedMesh))
                 return CurrentScene.Environments[selected];
 
             // z_kankyo.c sTimeBasedLightConfigs: blend within the selected group
@@ -23533,6 +23598,11 @@ namespace SharpOcarina
                 CurrentScene.Rooms[RoomList.SelectedIndex].AdditionalLights[(int)AdditionalLightSelect.Value - 1].EWdirection = (byte)ViewNormalCopy_NormalToU8(n.Z);
                 UpdateAdditionalLightEdit();
             }
+        }
+
+        private void ChangeTabWhenSelectingInstancesMenuItem3_Click(object sender, EventArgs e)
+        {
+            settings.ChangeTabOnSelect = ChangeTabWhenSelectingInstancesMenuItem3.Checked;
         }
 
         private static int UploadSkyTexture(Bitmap bitmap, int texture)
@@ -23969,7 +24039,8 @@ namespace SharpOcarina
         public bool OnlyRenderSelectedRoom = false;
         public bool RenderEnvLighting = true;
         public bool RenderFog = true;
-        public bool IngameRenderDistance = true;
+        public bool IngameRenderDistance = false;
+        public bool ChangeTabOnSelect = false;
     }
 
     public class UndoRedo
