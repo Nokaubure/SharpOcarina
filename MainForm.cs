@@ -20789,7 +20789,7 @@ namespace SharpOcarina
                     file.Directory.Create(); //if directory exists, does nothing
                     File.Copy(path + "\\BaseDebugRom.z64", binarydata);
 
-                    PostInstallOperations(path,true);
+                    bool rebuild = PostInstallOperations(path,true);
                     //Last version of SceneRender is mandatory in install
                     string prevdir = rom64.getPath();
                     rom64.pathRomDir = path;
@@ -20806,6 +20806,15 @@ namespace SharpOcarina
                     if (rom64.BGCheckVersion < BGCheckVersion) UpdateBGCheck(BGCheckVersion, false);
                     AddCallToUlibGameplay("z64rom_PostPlayDraw", "Gameplay_DrawMotionBlur", "#if MOTION_BLUR" , "#endif");
 
+                    if (rebuild)
+                    {
+                        pdetail = @"/c """ + path + "\\z64rom.exe\" --no-wait";
+                        pcmd = new ProcessStartInfo("cmd.exe");
+                        pcmd.Arguments = pdetail;
+
+                        cmd = Process.Start(pcmd);
+                        cmd.WaitForExit();
+                    }
 
                     DialogResult dialogResult = MessageBox.Show("Done! Load the project into SharpOcarina?", "Load?", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
@@ -21350,7 +21359,7 @@ namespace SharpOcarina
             
         }
 
-        private void PostInstallOperations(string path, bool defaults)
+        private bool PostInstallOperations(string path, bool defaults)
         {
             using (Z64romInstallPostOperations postoperations = new Z64romInstallPostOperations(path, defaults))
             {
@@ -21391,37 +21400,40 @@ namespace SharpOcarina
                         {
                             if (!defaults)
                             {
-                                string trashdir = rom64.getPath() + "\\Trashbin";
+                                string trashdir = path + "\\Trashbin";
                                 if (!Directory.Exists(trashdir))
                                     Directory.CreateDirectory(trashdir);
 
-                                if (Directory.Exists(rom64.getPath() + "/src/system/kaleido"))
+                                if (Directory.Exists(path + "/src/system/kaleido"))
                                 {
-                                    Directory.Move(rom64.getPath() + "/src/system/kaleido", rom64.getPath() + "/trashbin/kaleido" + "_" + DateTime.Now.Ticks.ToString());
+                                    Directory.Move(path + "/src/system/kaleido", path + "/trashbin/kaleido" + "_" + DateTime.Now.Ticks.ToString());
                                 }
 
-                                if (Directory.Exists(rom64.getPath() + "/src/object/0x0014-Adult_link"))
+                                if (Directory.Exists(path + "/src/object/0x0014-Adult_link"))
                                 {
-                                    Directory.Move(rom64.getPath() + "/src/object/0x0014-Adult_link", rom64.getPath() + "/trashbin/0x0014-Adult_link" + "_" + DateTime.Now.Ticks.ToString());
+                                    Directory.Move(path + "/src/object/0x0014-Adult_link", path + "/trashbin/0x0014-Adult_link" + "_" + DateTime.Now.Ticks.ToString());
                                 }
 
-                                if (Directory.Exists(rom64.getPath() + "/src/object/0x0015-Child_Link"))
+                                if (Directory.Exists(path + "/src/object/0x0015-Child_Link"))
                                 {
-                                    Directory.Move(rom64.getPath() + "/src/object/0x0015-Child_Link", rom64.getPath() + "/trashbin/0x0015-Child_Link" + "_" + DateTime.Now.Ticks.ToString());
+                                    Directory.Move(path + "/src/object/0x0015-Child_Link", path + "/trashbin/0x0015-Child_Link" + "_" + DateTime.Now.Ticks.ToString());
                                 }
+                                Helpers.DeleteZ64romFile(path + "/src/lib_user/Library/z_player_lib.c");
+                                Helpers.DeleteZ64romFile(path + "/src/lib_user/Library/ObjectStatus.c");
+
                             }
 
                             string playasPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\All_Items_Playas.zip");
                             if (!File.Exists(playasPath))
                             {
-                                PleaseWait pleasewait = new PleaseWait("https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/All_Items_Playas.zip", playasPath, rom64.getPath(),true);
+                                PleaseWait pleasewait = new PleaseWait("https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/All_Items_Playas.zip", playasPath, path,true, ExtractExistingFileAction.OverwriteSilently);
                                 pleasewait.ShowDialog();
                             }
                             else
                             {
                                 using (var zip = ZipFile.Read(playasPath))
                                 {
-                                    zip.ExtractAll(rom64.getPath(), ExtractExistingFileAction.OverwriteSilently);
+                                    zip.ExtractAll(path, ExtractExistingFileAction.OverwriteSilently);
                                 }
                             }
                         }
@@ -21447,8 +21459,15 @@ namespace SharpOcarina
                         TitlecardTextbox.Visible = rom64.MMTitleCards;
                         TitlecardTextboxLabel.Visible = rom64.MMTitleCards;
                     }
+
+                    if (postoperations.Playas)
+                    {
+                        return true;
+                    }
                 }
             }
+
+            return false;
         }
 
         private void CutsceneMotionBlurValue_ValueChanged(object sender, EventArgs e)

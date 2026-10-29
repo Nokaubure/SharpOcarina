@@ -1,5 +1,5 @@
 ﻿------------------------------------------------------
-SharpOcarina v1.67 - Zelda OoT Scene Development System
+SharpOcarina v1.68 - Zelda OoT Scene Development System
              Revived in 2017-2026 by Nokaubure, started in 2011/2012 by xdaniel
 Find me on: https://discord.gg/74pHDEU
 ------------------------------------------------------
@@ -37,7 +37,7 @@ Credits & Thanks
 
  Thanks to Killgore52, Airikita and Keilrod for supporting SharpOcarina.
 
- Thanks to z64me to cover billboards and make z64scene
+ Thanks to z64me to cover billboards and make z64scenerender and z64viewer
 
  Thanks to Denofilions for the autoupdater server
 

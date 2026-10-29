@@ -609,6 +609,7 @@ namespace SharpOcarina
 
         public static void DeleteZ64romFile(string file)
         {
+            if (!File.Exists(file)) return;
             string trashdir = rom64.getPath() + "\\Trashbin";
             if (!Directory.Exists(trashdir))
                 Directory.CreateDirectory(trashdir);

@@ -1,11 +1,7 @@
-Blender 3.4 (recommended!)
+Blender 3.6.23 LTS (recommended!)
 
-https://ftp.nluug.nl/pub/graphics/blender/release/Blender3.4/blender-3.4.1-windows-x64.zip
+https://www.blender.org/download/release/Blender3.6/blender-3.6.23-windows-x64.zip
 
 Blender 2.7.9 with vertex alpha
 
 https://mega.nz/file/6FoHjT7I#FYo28fOblr3BzlHPOVGdWDO8zZuVbaaHOqz40dZx2A8
-
-Blender 3.6.5 LTS
-
-https://www.blender.org/download/lts/3-6/
