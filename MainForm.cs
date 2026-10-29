@@ -21411,7 +21411,7 @@ namespace SharpOcarina
                                 }
                             }
 
-                            string playasPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\All_Items_Playas_1.7.2.zip");
+                            string playasPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\All_Items_Playas.zip");
                             if (!File.Exists(playasPath))
                             {
                                 PleaseWait pleasewait = new PleaseWait("https://raw.githubusercontent.com/Nokaubure/SharpOcarina/master/Extra/All_Items_Playas.zip", playasPath, rom64.getPath(),true);

@@ -37,7 +37,9 @@ Auto-Update breaks if going from 1.66! manual download: https://github.com/Nokau
 
 - Added option to install All Items Playas template when creating a new z64rom project or going to Tools > Post install operations.
 
-- Added option to change tab when selecting instances in the viewport
+- Added option to change tab when selecting instances in the viewport (example, selecting an actor switches you to actor tab)
+
+- SO now does an XML folder look up in global rom mode too, not just z64rom mode
 
 - Fixed an issue where subdivisions defaulted to 16 16 16 which unfortunately caused crashes on certain scenes for unknown reasons.
 
