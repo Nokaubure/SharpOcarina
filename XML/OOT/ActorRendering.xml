@@ -314,7 +314,7 @@
   <Actor Key="00FA" Var="...." Scale="0.1" Offset="00012340">object_jya_obj</Actor> <!-- Moving Brick Wall -->
   <Actor Key="00FD" Var="...." Scale="0.1" Offset="0000F000">object_jya_obj</Actor> <!-- Climbable Mesh Wall -->
   <Actor Key="0100" Var="...." Scale="1" Offset="00001CD0">object_spot01_matoyab</Actor> <!-- Death Mountain Trail Gate -->
-  <Actor Key="0102" Var="...." Scale="0.1" Offset="00000100">object_spot01_objects</Actor> <!-- Windmill Sails -->
+  <Actor Key="0102" Var="...." Scale="0.1" RotZ="100" Offset="00000100">object_spot01_objects</Actor> <!-- Windmill Sails -->
   <Actor Key="0103" Var="...." Scale="0.1" Offset="00000420">object_spot01_objects</Actor> <!-- Kakariko Village Well Crossbeams -->
   <Actor Key="0104" Var="...." Scale="0.1" Offset="000007D0">object_spot01_objects</Actor> <!-- Kakariko Well Water -->
   <Actor Key="0117" Var="1..." Scale="0.03" TextureOffsets="000421E0" Yoff="21" RotY="960" Offset="00042440">gameplay_keep</Actor> <!-- Silver Rupee/Large Rotating Pot -->

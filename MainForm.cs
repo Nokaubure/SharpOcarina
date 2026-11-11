@@ -1242,7 +1242,9 @@ namespace SharpOcarina
         {
             ushort ActorID = !MainForm.settings.MajorasMask ? Actor.Number : (ushort)(Actor.Number & 0x0FFF);
             int render = FindActorRender((ushort)((ActorID == 0 && settings.RenderChildLink) ? 0xFFFF : ActorID), Actor.Variable);
+            float animrotx = (render != -1) ? zobj_cache[render].RotX * globalframe : 0.0f;
             float animroty = (render != -1) ? zobj_cache[render].RotY * globalframe : 0.0f;
+            float animrotz = (render != -1) ? zobj_cache[render].RotZ * globalframe : 0.0f;
             float scale = 0.1f;
 
 
@@ -1355,8 +1357,8 @@ namespace SharpOcarina
 
 
                         GL.Rotate((yrot+ animroty) / 182.04444444444444444444444444444f, 0.0f, 1.0f, 0.0f);
-                        GL.Rotate(xrot / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
-                        GL.Rotate(zrot / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
+                        GL.Rotate((xrot + animrotx) / 182.04444444444444444444444444444f, 1.0f, 0.0f, 0.0f);
+                        GL.Rotate((zrot + animrotz) / 182.04444444444444444444444444444f, 0.0f, 0.0f, 1.0f);
                     }
 
                     GL.Scale(scale, scale, scale);

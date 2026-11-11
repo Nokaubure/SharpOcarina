@@ -1,6 +1,12 @@
 ﻿///CHANGELOG///
 
 --------------
+---1.69
+--------------
+
+- Added "RotX" and "RotZ" properties on actor rendering, which do the same as RotY but for X and Z axis
+
+--------------
 ---1.68
 --------------
 

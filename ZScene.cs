@@ -1687,7 +1687,9 @@ namespace SharpOcarina
             string colortarget,
             string[][] envcolorarray,
             string[][] primcolorarray,
+            short rotx,
             short roty,
+            short rotz,
             bool[] ignorerot,
             UInt32 collision,
             string file) {
@@ -1709,7 +1711,9 @@ namespace SharpOcarina
             objrender.ScaleMask = scalemask;
             objrender.ScaleTarget = scaletarget;
             objrender.ScaleArray = scalearray;
+            objrender.RotX = rotx;
             objrender.RotY = roty;
+            objrender.RotZ = rotz;
             objrender.IgnoreRot = ignorerot;
 
             objrender.ColorMask = colormask;
@@ -2082,7 +2086,9 @@ namespace SharpOcarina
                                     string file = rom64.getItem("rom\\object", (int)objectid);
                                     if (file == "") file = rom64.getItem("rom\\object\\.vanilla", (int)objectid);
                                     string dl = node.HasKey("DisplayList") ? node["DisplayList"].AsString.ToString() : "";
+                                    short rotx = (short)(node.HasKey("RotX") ? node["RotX"].AsInteger.Value : 0);
                                     short roty = (short)(node.HasKey("RotY") ? node["RotY"].AsInteger.Value : 0);
+                                    short rotz = (short)(node.HasKey("RotZ") ? node["RotZ"].AsInteger.Value : 0);
                                     int hierarchy = (int)(node.HasKey("Hierarchy") ? node["Hierarchy"].AsInteger.Value : 1);
                                     string[] textureoffsets = new string[0];
                                     string[] env = null;
@@ -2298,7 +2304,7 @@ namespace SharpOcarina
                                             key, offset, offsets, textureoffsets,
                                             scale, dlistcount, animated, 
                                             hierarchy, var, animation, 
-                                            yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, roty, ignorerot, collision, file);
+                                            yoff, bank, color, scalemask, scaletarget, scalearray, colormask, colortarget, envcolorarray, primcolorarray, rotx,roty,rotz, ignorerot, collision, file);
                                     }
                                 }
                             }
@@ -2332,7 +2338,9 @@ namespace SharpOcarina
                     string var = (nodeAtt["Var"] != null) ? Convert.ToString(nodeAtt["Var"].Value) : "....";
                     UInt16 animation = (ushort) ((nodeAtt["Animation"] != null) ? Convert.ToUInt16(nodeAtt["Animation"].Value) : 0);
                     short Yoff = (short)((nodeAtt["Yoff"] != null) ? Convert.ToInt16(nodeAtt["Yoff"].Value) : 0);
+                    short rotx = (short)((nodeAtt["RotX"] != null) ? Convert.ToInt16(nodeAtt["RotX"].Value) : 0);
                     short roty = (short)((nodeAtt["RotY"] != null) ? Convert.ToInt16(nodeAtt["RotY"].Value) : 0);
+                    short rotz = (short)((nodeAtt["RotZ"] != null) ? Convert.ToInt16(nodeAtt["RotZ"].Value) : 0);
                     string[] colors = (nodeAtt["Colors"] != null) ? (nodeAtt["Colors"].Value.Split(',')) : new string[0];
                     ushort scalemask = 0;
                     string scaletarget = "";
@@ -2375,7 +2383,7 @@ namespace SharpOcarina
                         key, offset, offsetsstr, textureoffsetsstr,
                         scale, dlistcount, animated,
                         hierarchy, var, animation,
-                        Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], roty, ignorerot, collision, file);
+                        Yoff, bank, colors, scalemask,scaletarget,scalearray, 0, "", new string[0][], new string[0][], rotx, roty, rotz, ignorerot, collision, file);
                     /*
                     if (MainForm.tomlconversionID != 0)
                     {
@@ -5492,7 +5500,9 @@ namespace SharpOcarina
             public ushort ColorPosition = 0;
             public RGBA8[] EnvColorArray = new RGBA8[0];
             public RGBA8[] PrimColorArray = new RGBA8[0];
+            public short RotX;
             public short RotY;
+            public short RotZ;
             public bool[] IgnoreRot = {false,false,false};
             public ObjFile collision = null;
 
