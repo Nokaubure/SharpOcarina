@@ -4,6 +4,10 @@
 ---1.69
 --------------
 
+[TODO] SO plugin update
+
+[TODO] Added ability to directly save .zscene files
+
 - Added "RotX" and "RotZ" properties on actor rendering, which do the same as RotY but for X and Z axis
 
 --------------

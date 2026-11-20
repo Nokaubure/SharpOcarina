@@ -4985,7 +4985,7 @@ namespace SharpOcarina
                     UnusedCommandCheckBox.Checked = CurrentScene.OutdoorLight;
 
 
-                    saveBinaryToolStripMenuItem.Enabled = !CurrentScene.PregeneratedMesh;
+                    saveBinaryToolStripMenuItem.Enabled = true;
                     exportCArrayMenuItem3.Enabled = !CurrentScene.PregeneratedMesh;
                     saveSceneToolStripMenuItem.Enabled = true;
                     SaveScenetoolStripMenuItem3.Enabled = (LastScene != "");
@@ -18573,6 +18573,8 @@ namespace SharpOcarina
                     if (cnt == 0 || headeroffset != 0)
                     {
                         returnScene = SetSceneHeader(cnt,returnScene,ref normalHeader);
+                        commandA = false;
+                        returnScene.Rooms[r].OriginalRoomData = new List<byte>(data);
 
                         for (int y = (int)headeroffset; y < data.Count; y += 4)
                         {

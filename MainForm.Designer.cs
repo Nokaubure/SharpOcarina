@@ -93,6 +93,7 @@ namespace SharpOcarina
             this.DisableCutscenePreviewBlackBarsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ResetGroupSettingsReloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MMTextureScrolltoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChangeTabWhenSelectingInstancesMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.AutoaddGroupsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noDummyPointsInCutsceneCamerasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -889,7 +890,6 @@ namespace SharpOcarina
             this.ViewportFOV = new SharpOcarina.NumericUpDownEx();
             this.CDILink = new SharpOcarina.TransparentPictureBox();
             this.SceneHeaderSelector = new SharpOcarina.NumericUpDownEx();
-            this.ChangeTabWhenSelectingInstancesMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -1375,14 +1375,14 @@ namespace SharpOcarina
             // 
             this.openZmapToolstrip.Name = "openZmapToolstrip";
             this.openZmapToolstrip.Size = new System.Drawing.Size(324, 22);
-            this.openZmapToolstrip.Text = "View .zscene (beta)";
+            this.openZmapToolstrip.Text = "Open .zscene";
             this.openZmapToolstrip.Click += new System.EventHandler(this.openZmapToolstrip_Click);
             // 
             // OpenSceneFromRomToolStrip
             // 
             this.OpenSceneFromRomToolStrip.Name = "OpenSceneFromRomToolStrip";
             this.OpenSceneFromRomToolStrip.Size = new System.Drawing.Size(324, 22);
-            this.OpenSceneFromRomToolStrip.Text = "View scene from ROM (beta)";
+            this.OpenSceneFromRomToolStrip.Text = "Open scene from ROM / z64rom project";
             this.OpenSceneFromRomToolStrip.Click += new System.EventHandler(this.OpenSceneFromRomToolStrip_Click);
             // 
             // toolStripMenuItem1
@@ -1699,6 +1699,14 @@ namespace SharpOcarina
             this.MMTextureScrolltoolStripMenuItem3.Size = new System.Drawing.Size(327, 22);
             this.MMTextureScrolltoolStripMenuItem3.Text = "Use Majora\'s Mask texture scroll direction";
             this.MMTextureScrolltoolStripMenuItem3.Click += new System.EventHandler(this.MMTextureScrolltoolStripMenuItem3_Click);
+            // 
+            // ChangeTabWhenSelectingInstancesMenuItem3
+            // 
+            this.ChangeTabWhenSelectingInstancesMenuItem3.CheckOnClick = true;
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Name = "ChangeTabWhenSelectingInstancesMenuItem3";
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Size = new System.Drawing.Size(327, 22);
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Text = "Change tab when selecting instances";
+            this.ChangeTabWhenSelectingInstancesMenuItem3.Click += new System.EventHandler(this.ChangeTabWhenSelectingInstancesMenuItem3_Click);
             // 
             // toolStripSeparator1
             // 
@@ -13488,14 +13496,6 @@ namespace SharpOcarina
             0,
             0});
             this.SceneHeaderSelector.ValueChanged += new System.EventHandler(this.SceneHeaderSelector_ValueChanged);
-            // 
-            // ChangeTabWhenSelectingInstancesMenuItem3
-            // 
-            this.ChangeTabWhenSelectingInstancesMenuItem3.CheckOnClick = true;
-            this.ChangeTabWhenSelectingInstancesMenuItem3.Name = "ChangeTabWhenSelectingInstancesMenuItem3";
-            this.ChangeTabWhenSelectingInstancesMenuItem3.Size = new System.Drawing.Size(327, 22);
-            this.ChangeTabWhenSelectingInstancesMenuItem3.Text = "Change tab when selecting instances";
-            this.ChangeTabWhenSelectingInstancesMenuItem3.Click += new System.EventHandler(this.ChangeTabWhenSelectingInstancesMenuItem3_Click);
             // 
             // MainForm
             // 

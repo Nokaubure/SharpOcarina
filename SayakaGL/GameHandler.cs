@@ -68,11 +68,21 @@ namespace SharpOcarina.SayakaGL
 
             UInt32 DL1, DL2;
 
+            // mesh entries may not be directly after the command header (altho its never the case?)
+            if (Offset > RAM[Segment].Data.Length - 8) return DLOffsets;
+            uint entries = Read32(RAM[Segment].Data, Offset + 4);
+            int entryCount = MeshType == 1 ? 1 : MeshTotal;
+            if (entryCount == 0) return DLOffsets;
+            if (!IsAddressValid(entries)) return DLOffsets;
+            Segment = (int)(entries >> 24);
+            Offset = entries & 0x00FFFFFF;
+            int stride = MeshType == 2 ? 16 : 8;
+            if ((long)Offset + (long)entryCount * stride > RAM[Segment].Data.Length) return DLOffsets;
+
             switch (MeshType)
             {
                 case 0x00:
                     {
-                        Offset += 12;
                         for (int i = 0; i < MeshTotal; i++)
                         {
                             DL1 = Read32(RAM[Segment].Data, Offset);
@@ -86,15 +96,14 @@ namespace SharpOcarina.SayakaGL
                     }
                 case 0x01:
                     {
-                        Offset += 4;
                         DL1 = Read32(RAM[Segment].Data, Offset);
-                        DL1 = Read32(RAM[Segment].Data, (DL1 & 0x00FFFFFF));
+                        DL2 = Read32(RAM[Segment].Data, Offset + 4);
                         if (DL1 != 0) DLOffsets.Add(DL1);
+                        if (DL2 != 0) DLOffsets.Add(DL2);
                         break;
                     }
                 case 0x02:
                     {
-                        Offset += 12;
                         List<UInt32> SecondaryDLs = new List<UInt32>();
                         for (int i = 0; i < MeshTotal; i++)
                         {

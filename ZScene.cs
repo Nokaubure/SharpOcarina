@@ -338,6 +338,8 @@ namespace SharpOcarina
         [XmlIgnore]
         private List<byte> SceneData;
 
+        private int PregeneratedSceneOffset;
+
         public List<byte> OriginalSceneData;
 
         [XmlIgnore]
@@ -2838,6 +2840,14 @@ namespace SharpOcarina
 
 
 
+            // segment 2 contains shared texture/palette data for every room and alternate header, so we preserve it in the main scene binary
+            if (PregeneratedMesh && cloneid == 0 && !MainForm.n64preview)
+            {
+                AddPadding(ref SceneData, 16);
+                PregeneratedSceneOffset = SceneData.Count;
+                if (OriginalSceneData != null) SceneData.AddRange(OriginalSceneData);
+            }
+
             /* Process rooms... */
             for (int i = 0; i < _Rooms.Count; i++)
             {
@@ -2866,7 +2876,7 @@ namespace SharpOcarina
                 /* Create room header */
                 WriteRoomHeader(Room, MainHeader);
 
-                if (cloneid == 0) // && !PartialRefresh
+                if (cloneid == 0 && !PregeneratedMesh) // && !PartialRefresh
                     GenerateTextures(Room, SceneData, Textures);
 
                
@@ -3288,7 +3298,7 @@ namespace SharpOcarina
                 /* Prepare dummy mesh header */
                 if (cloneid == 0)
                 {
-                    if (!Prerendered)
+                    if (!PregeneratedMesh && !Prerendered)
                     {
                         //Type 0 and 2
                         MeshHeaderOffset = Room.MeshHeaderOffset = Room.RoomData.Count;
@@ -3296,7 +3306,7 @@ namespace SharpOcarina
                         Helpers.Append32(ref Room.RoomData, 0);  /* Start address */
                         Helpers.Append32(ref Room.RoomData, 0);  /* End address */
                     }
-                    else 
+                    else if (!PregeneratedMesh)
                     {
                         //Type 1
                         MeshHeaderOffset = Room.MeshHeaderOffset = Room.RoomData.Count;
@@ -3509,179 +3519,15 @@ namespace SharpOcarina
 
                     }
 
-                    else //pregenerated mode
+                    else // Preserve original binary data and relocate its reachable pointers.
                     {
-
-                        List<uint> DLOffsets;
-
-                        _Rooms[i].N64DLists = new List<SayakaGL.UcodeSimulator.DisplayListStruct>();
-
-                        SayakaGL.GameHandler.LoadToRAM(_Rooms[i].OriginalRoomData.ToArray(), 0x03);
-                        DLOffsets = SayakaGL.GameHandler.GetDisplayLists((uint)(_Rooms[i].OriginalMeshHeaderOffset | (0x03 << 24)));
-
-                        foreach (UInt32 DL in DLOffsets)
-                        {
-                            SayakaGL.UcodeSimulator.ReadDL(0, DL, ref _Rooms[i].N64DLists);
-                            
-                        }
-
-                        //we make room for the display lists
-                        for (int j = 0; j < _Rooms[i].N64DLists.Count; j++)
-                        {
-                            Helpers.Append64(ref Room.RoomData, 0);
-                            Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 1 */
-                            Helpers.Append32(ref Room.RoomData, 0);  /* Display List offset 2 */
-                        }
-                        AddPadding(ref Room.RoomData, 8);
-
-                      //  uint oldoffset = _Rooms[i].N64DLists[0].Commands[0].Address & 0x00FFFFFF; //first command of first dlist to determine start
-
-                        Room.oldoffset = 0xFFFFFFFF;
-
-                        for (int ii = 0; ii < Room.N64DLists.Count; ii++)
-                            for (int y = 0; y < Room.N64DLists[ii].Commands.Count; y++)
-                            {
-                                if (new byte[] { 01, 04, 0xDA, 0xDC, 0xDE, 0xFE, 0xFF }.Contains(Room.N64DLists[ii].Commands[y].ID))
-                                {
-                                    uint tmp = Room.N64DLists[ii].Commands[y].w1 & 0x00FFFFFF;
-                                    if (tmp != 0 && tmp < Room.oldoffset)
-                                    {
-                                        Room.oldoffset = tmp;
-                                    }
-                                }
-                            }
-
-
-                        Room.newoffset = (uint) Room.RoomData.Count;
-
-                     //  uint lastoffset = _Rooms[i].N64DLists[0].Commands[0].Address+8 & 0x00FFFFFF; //first command of first dlist to determine start
-
-                        uint lastoffset = 0;
-
-                        for (int ii = 0; ii < Room.N64DLists.Count; ii++)
-                            for (int y = 0; y < Room.N64DLists[ii].Commands.Count; y++)
-                            {
-                         
-                                    uint tmp = Room.N64DLists[ii].Commands[y].Address & 0x00FFFFFF;
-                                    if (tmp > lastoffset)
-                                    {
-                                        lastoffset = tmp;
-                                    }
-                                
-                            }
-
-                        lastoffset += 8;
-
-                  //      DebugConsole.WriteLine("oldoffset " + Room.oldoffset.ToString("X8"));
-                   //     DebugConsole.WriteLine("lastoffset " + lastoffset.ToString("X8"));
-                   //     DebugConsole.WriteLine("newoffset " + Room.newoffset.ToString("X8"));
-
-
-                        Room.RoomData.AddRange(_Rooms[i].OriginalRoomData.GetRange((int)Room.oldoffset, (int)(lastoffset-Room.oldoffset)));
-
-
-                        foreach (UcodeSimulator.DisplayListStruct DL in _Rooms[i].N64DLists)
-                        {
-                            /*
-                             * 01: w1
-                             * 04: w1
-                             * DA: w1
-                 
-                             * DC: w1
-                             * DE: w1
-                             
-                             * FD: w1 (texture offset)
-                             * FE FF: w1 (is this event used?)
-                             *
-                             *
-                             */
-
-                            DListOffset.Add((int)(Room.newoffset+DListData.Count));
-                            DListSize.Add((int)(DL.Commands.Count*8)); //each command is worth 8 bytes?
-
-                            int currentcommand = 0;
-
-
-                            foreach (UcodeSimulator.DLCommandStruct command in DL.Commands)
-                            {
-                                if (new byte[]{01,04,0xDA,0xDC,0xDE,0xFE,0xFF}.Contains(command.ID))
-                                {
-                                    int VSegment = (int)(command.w1 >> 24);
-                                    uint VOffset = (command.w1 & 0x00FFFFFF);
-
-                                    VOffset = VOffset - Room.oldoffset + Room.newoffset;
-
-                                    int oldcommandoffset = (int)((DL.StartAddress + currentcommand * 8 - Room.oldoffset + Room.newoffset) & 0x00FFFFFF);
-
-
-                                    if (VSegment == 0x02 || VSegment == 0x03)
-                                    {
-
-                                      //  Helpers.Append32(ref DListData, command.w0);
-                                       // Helpers.Append32(ref DListData, (uint)(VOffset | (VSegment << 24)));
-
-                                        Helpers.Overwrite32(ref Room.RoomData, oldcommandoffset, command.w0);
-                                        Helpers.Overwrite32(ref Room.RoomData, oldcommandoffset + 4, (uint)(VOffset | (VSegment << 24)));
-
-                            //            DebugConsole.WriteLine("Overwritten command " + command.ID.ToString("X2") + " at " + (oldcommandoffset + 4).ToString("X8") + " DLstartaddress " + (DL.StartAddress + currentcommand * 8).ToString("X8") + " Voffset " + ((VOffset | (VSegment << 24)).ToString("X8")));
-                                    }
-                                    else
-                                    {
-                                        //  Helpers.Append32(ref DListData, command.w0);
-                                        //  Helpers.Append32(ref DListData, command.w1);
-                                    //    Helpers.Overwrite32(ref Room.RoomData, (int)(DL.StartAddress - Room.oldoffset + Room.newoffset), command.w0);
-                                      //  Helpers.Overwrite32(ref Room.RoomData, (int)(DL.StartAddress - Room.oldoffset + Room.newoffset) +4, command.w1);
-                                    }
-
-
-                                }
-                                else if (command.ID == 0xFD)
-                                {
-                                    int VSegment = (int)(command.w1 >> 24);
-                                    uint VOffset = (command.w1 & 0x00FFFFFF);
-
-
-                                    int oldcommandoffset = (int)((DL.StartAddress + currentcommand * 8 - Room.oldoffset + Room.newoffset) & 0x00FFFFFF);
-
-                                    if (VSegment == 0x02 || VSegment == 0x03) // non dynamic texture
-                                    {
-                                       // DebugConsole.WriteLine(UcodeSimulator.NGraphics.Textures.Length);
-                                        //TODO do something with textures
-
-                        
-                                        Helpers.Overwrite32(ref Room.RoomData, oldcommandoffset + 4, (uint)(0 | (VSegment << 24)));
-                                    }
-
-                               //    Helpers.Append32(ref DListData, command.w0);
-                            //       Helpers.Append32(ref DListData, command.w1);
-                                }
-                                else
-                                {
-                             //       Helpers.Append32(ref DListData, command.w0);
-                          //          Helpers.Append32(ref DListData, command.w1);
-                                }
-
-                                currentcommand++;
-                           
-                            }
-                        }
-
-                        // Room.DLists.Add();
-                        //Dlist.Data
-
-
-                        // we add the dlist data to the room
-                        //Room.RoomData.AddRange(DListData);
-                      
-
+                        CopyPregeneratedMesh(Room, MainHeader);
                     }
-
-
 
                 /* Fix room header and add missing data */
                 FixRoomHeader(Room);
 
-                if (Prerendered) //dlist jump table
+                if (Prerendered && !PregeneratedMesh) //dlist jump table
                 {
                  //   int fix = Helpers.Read24S(Room.RoomData, PrerenderedFixOffset + 1);
                     uint fix2 = (uint) Room.RoomData.Count;
@@ -3730,6 +3576,12 @@ namespace SharpOcarina
                 }
                 else
                 {
+                    if (PregeneratedMesh && !MainForm.n64preview)
+                    {
+                        if (Room.OriginalRoomData == null) Room.OriginalRoomData = MainHeader.Rooms[i].OriginalRoomData;
+                        CopyPregeneratedMesh(Room, MainHeader);
+                        Helpers.Overwrite32(ref Room.RoomData, CmdMeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset));
+                    }
                     FixRoomHeader(Room);
                 }
 
@@ -3782,6 +3634,136 @@ namespace SharpOcarina
 
             // AddPadding(ref SceneData, 8);
 
+        }
+
+        private void CopyPregeneratedMesh(ZRoom room, ZScene mainHeader)
+        {
+            List<byte> originalRoom = room.OriginalRoomData;
+            if (originalRoom == null)
+                throw new InvalidDataException("The original room binary is missing.");
+
+            int header = room.OriginalMeshHeaderOffset;
+            int type = originalRoom[header];
+            if (type > 2)
+                throw new InvalidDataException("Unsupported original room mesh type.");
+
+            AddPadding(ref room.RoomData, 16);
+            int roomBase = room.RoomData.Count;
+            room.RoomData.AddRange(originalRoom);
+
+            int sceneBase = mainHeader.PregeneratedSceneOffset;
+            int sceneSize = mainHeader.OriginalSceneData == null ? 0 : mainHeader.OriginalSceneData.Count;
+
+            room.oldoffset = 0;
+            room.newoffset = (uint)roomBase;
+            MeshHeaderOffset = room.MeshHeaderOffset = roomBase + header;
+            var roots = new List<uint>();
+
+            uint entriesAddress = Helpers.Read32(originalRoom, header + 4);
+            int entries = entriesAddress == 0 && type != 1 && originalRoom[header + 1] == 0
+                ? 0 : PregeneratedRoomOffset(entriesAddress);
+            PatchPregeneratedPointer(room, header + 4, entriesAddress, roomBase, sceneBase, sceneSize,
+                type != 1 && originalRoom[header + 1] == 0);
+            if (type == 0 || type == 2)
+            {
+                int count = originalRoom[header + 1];
+                int stride = type == 0 ? 8 : 16;
+                PatchPregeneratedPointer(room, header + 8, Helpers.Read32(originalRoom, header + 8), roomBase, sceneBase, sceneSize, true);
+                for (int i = 0; i < count; i++)
+                {
+                    int entry = entries + i * stride + (type == 2 ? 8 : 0);
+                    CopyPregeneratedEntry(room, entry, roots, roomBase, sceneBase, sceneSize);
+                }
+            }
+            else
+            {
+                CopyPregeneratedEntry(room, entries, roots, roomBase, sceneBase, sceneSize);
+                int format = originalRoom[header + 1];
+                if (format == 1)
+                {
+                    PatchPregeneratedPointer(room, header + 8, Helpers.Read32(originalRoom, header + 8), roomBase, sceneBase, sceneSize);
+                    PatchPregeneratedPointer(room, header + 16, Helpers.Read32(originalRoom, header + 16), roomBase, sceneBase, sceneSize);
+                }
+                else if (format == 2)
+                {
+                    int count = originalRoom[header + 8];
+                    uint backgroundsAddress = Helpers.Read32(originalRoom, header + 12);
+                    int backgrounds = PregeneratedRoomOffset(backgroundsAddress);
+                    PatchPregeneratedPointer(room, header + 12, backgroundsAddress, roomBase, sceneBase, sceneSize);
+                    for (int i = 0; i < count; i++)
+                    {
+                        int background = backgrounds + i * 28;
+                        PatchPregeneratedPointer(room, background + 4, Helpers.Read32(originalRoom, background + 4), roomBase, sceneBase, sceneSize);
+                        PatchPregeneratedPointer(room, background + 12, Helpers.Read32(originalRoom, background + 12), roomBase, sceneBase, sceneSize);
+                    }
+                }
+                else throw new InvalidDataException("Unsupported original background mesh format.");
+            }
+
+            var pending = new Stack<uint>(roots);
+            var visited = new HashSet<uint>();
+            while (pending.Count != 0)
+            {
+                uint address = pending.Pop();
+                while (address != 0 && visited.Add(address))
+                {
+                    if ((address >> 24) != 3) break;
+                    int offset = (int)(address & 0x00FFFFFF);
+                    uint w0 = Helpers.Read32(originalRoom, offset);
+                    uint w1 = Helpers.Read32(originalRoom, offset + 4);
+                    int opcode = (int)(w0 >> 24);
+                    // RDPHALF_1 also carries texture-rectangle parameters, BRANCH_Z form stores a display-list address in this word
+                    bool branchTarget = opcode == 0xE1 && offset <= originalRoom.Count - 16 && originalRoom[offset + 8] == 0x04;
+                    if (opcode == 0x01 || opcode == 0xDA || opcode == 0xDC ||
+                        opcode == 0xDE || branchTarget || opcode == 0xFD ||
+                        opcode == 0xFE || opcode == 0xFF)
+                    {
+                        uint relocated = RelocatePregeneratedPointer(w1, roomBase, originalRoom.Count, sceneBase, sceneSize);
+                        Helpers.Overwrite32(ref room.RoomData, roomBase + offset + 4, relocated);
+                        if ((opcode == 0xDE || branchTarget) && (w1 >> 24) == 3) pending.Push(w1);
+                    }
+                    if (opcode == 0xDF || (opcode == 0xDE && (w0 & 0x00FF0000) != 0)) break;
+                    address += 8;
+                }
+            }
+        }
+
+        private static int PregeneratedRoomOffset(uint address)
+        {
+            if ((address >> 24) != 3)
+                throw new InvalidDataException("The original mesh table is not in room segment 03.");
+            int offset = (int)(address & 0x00FFFFFF);
+            return offset;
+        }
+
+        private static uint RelocatePregeneratedPointer(uint address, int roomBase, int roomSize, int sceneBase, int sceneSize, bool allowEnd = false)
+        {
+            if (address == 0) return 0;
+            uint segment = address >> 24;
+            if (segment != 2 && segment != 3) return address;
+            int offset = (int)(address & 0x00FFFFFF);
+            int size = segment == 3 ? roomSize : sceneSize;
+            int newBase = segment == 3 ? roomBase : sceneBase;
+            // One-past-end addresses are valid for mesh entry-array end pointers
+            if (offset > size || (!allowEnd && offset == size) || (segment == 2 && sceneSize == 0) || (long)newBase + offset > 0x00FFFFFF)
+                throw new InvalidDataException("An original graphics pointer cannot be relocated.");
+            return (segment << 24) | (uint)(newBase + offset);
+        }
+
+        private void PatchPregeneratedPointer(ZRoom room, int offset, uint address, int roomBase, int sceneBase, int sceneSize, bool allowEnd = false)
+        {
+            uint relocated = RelocatePregeneratedPointer(address, roomBase, room.OriginalRoomData.Count, sceneBase, sceneSize, allowEnd);
+            Helpers.Overwrite32(ref room.RoomData, roomBase + offset, relocated);
+        }
+
+        private void CopyPregeneratedEntry(ZRoom room, int offset, List<uint> roots, int roomBase, int sceneBase, int sceneSize)
+        {
+            for (int i = 0; i < 8; i += 4)
+            {
+                uint address = Helpers.Read32(room.OriginalRoomData, offset + i);
+                PatchPregeneratedPointer(room, offset + i, address, roomBase, sceneBase, sceneSize);
+                if (address != 0) roots.Add(address);
+            }
         }
 
         public void GenerateTextures(ZRoom Room, List<Byte> Data, List<NTexture> Textures)
@@ -4978,7 +4960,7 @@ namespace SharpOcarina
 
             Helpers.Append64(ref Room.RoomData, (ulong)(0x1000000000000000 | ((ulong)(Room.StartTime != 0xFFFF ? Room.StartTime + 1 : Room.StartTime) << 16) | ((ulong)Room.TimeSpeed << 8)));  /* Time settings */
 
-            if (cloneid == 0)
+            if (cloneid == 0 || PregeneratedMesh)
             {
                 CmdMeshHeaderOffset = Room.RoomData.Count;
                 Helpers.Append64(ref Room.RoomData, 0x0A00000000000000);        /* Mesh header */
@@ -5262,86 +5244,7 @@ namespace SharpOcarina
                     }
 
                 }
-                else
-                {
-                    // TODO pregenerated mesh
 
-                  
-
-                    byte meshtype = Room.OriginalRoomData[Room.OriginalMeshHeaderOffset];
-
-                    if (meshtype != 1)
-                    {
-
-                        int numEntries = Helpers.Read16(Room.OriginalRoomData, Room.OriginalMeshHeaderOffset) & 0x00FF;
-                        uint originalmeshoffset = Helpers.Read32(Room.OriginalRoomData, Room.OriginalMeshHeaderOffset + 4) & 0x00FFFFFF;
-
-
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x00000000 | (numEntries << 16) | (meshtype << 24)));
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset + 12));
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 8, (uint)(0x03000000 | (MeshHeaderOffset + 12) + (numEntries * (new int[] { 8, 8, 16 }[meshtype]))));
-                        MeshHeaderOffset += 12;
-
-                        for (int i = 0; i < numEntries; i++)
-                        {
-                            // we copy the old mesh offset
-
-                            if (meshtype == 0)
-                            {
-                                uint dlistoffset1 = Helpers.Read32(Room.OriginalRoomData, (int)originalmeshoffset + (8 * i)) & 0x00FFFFFF;
-                                uint dlistoffset2 = Helpers.Read32(Room.OriginalRoomData, (int)originalmeshoffset + 4 + (8 * i)) & 0x00FFFFFF;
-                                dlistoffset1 = dlistoffset1 - Room.oldoffset + Room.newoffset;
-                                dlistoffset2 = dlistoffset2 - Room.oldoffset + Room.newoffset;
-
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x03000000 | dlistoffset1));
-                                MeshHeaderOffset += 4;
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x03000000 | dlistoffset2));
-                                MeshHeaderOffset += 4;
-                            }
-                            else if (meshtype == 2)
-                            {
-                                uint data1 = Helpers.Read32(Room.OriginalRoomData, (int)originalmeshoffset + 0 + (16 * i)); // X Y 
-                                uint data2 = Helpers.Read32(Room.OriginalRoomData, (int)originalmeshoffset + 4 + (16 * i)); // Z dist
-
-                                uint dlistoffset1 = Helpers.Read32(Room.OriginalRoomData, (int)originalmeshoffset + 8 + (16 * i));
-                                uint dlistoffset2 = Helpers.Read32(Room.OriginalRoomData, (int)originalmeshoffset + 12 + (16 * i));
-
-                                if ((dlistoffset1 & 0xFF000000) >> 24 != 0)
-                                    dlistoffset1 = (dlistoffset1 & 0x00FFFFFF) - Room.oldoffset + Room.newoffset;
-                                if ((dlistoffset2 & 0xFF000000) >> 24 != 0)
-                                    dlistoffset2 = (dlistoffset2 & 0x00FFFFFF) - Room.oldoffset + Room.newoffset;
-
-
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, data1);
-                                MeshHeaderOffset += 4;
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, data2);
-                                MeshHeaderOffset += 4;
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, dlistoffset1 == 0 ? 0 : (uint)(0x03000000 | dlistoffset1));
-                                MeshHeaderOffset += 4;
-                                Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, dlistoffset2 == 0 ? 0 : (uint)(0x03000000 | dlistoffset2));
-                                MeshHeaderOffset += 4;
-                            }
-                        }
-                    }
-                    else
-                    {
-
-
-                        uint originalmeshoffset = Helpers.Read32(Room.OriginalRoomData, Room.OriginalMeshHeaderOffset + 4) & 0x00FFFFFF;
-
-
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x00000000 | ((prerenderimages.Count == 1 ? 0x01 : 0x02) << 16) | (meshtype << 24)));
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset + 4, (uint)(0x03000000 | MeshHeaderOffset + 12));
-                        MeshHeaderOffset += 12;
-                        /*
-                        uint dlistoffset1 = Helpers.Read32(Room.OriginalRoomData, (int)originalmeshoffset + (8 * i)) & 0x00FFFFFF;
-                        dlistoffset1 = dlistoffset1 - Room.oldoffset + Room.newoffset;
-
-                        Helpers.Overwrite32(ref Room.RoomData, MeshHeaderOffset, (uint)(0x03000000 | dlistoffset1));
-                        MeshHeaderOffset += 4;*/
-                    }
-                        
-                    }
                 }
 
             
