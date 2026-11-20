@@ -8756,27 +8756,47 @@ namespace SharpOcarina
 
         private string FindRealPath(string path, string fullpath)
         {
-            string temppath = path;
-            string reltofullpath = Path.GetFullPath(path).Replace(fullpath, "");
-            bool found = false;
-            if (!File.Exists(temppath))
+            string temppath = "";
+
+            if (!Path.IsPathRooted(path))
             {
-                temppath = fullpath + Path.GetFileName(temppath);
-                if (!File.Exists(temppath))
-                {
-                    temppath = fullpath + temppath;
-                    if (!File.Exists(temppath))
-                    {
-                        temppath = fullpath + reltofullpath;
-                        if (!File.Exists(temppath))
-                        {
-                            MessageBox.Show("File " + path + " doesn't exists, fix XML paths before attempting to open it again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return "-1";
-                        }
-                    }
-                }
+                temppath = Path.GetFullPath(Path.Combine(fullpath, path)); //scene relative path
+                if (File.Exists(temppath)) 
+                    return temppath;
+
+                temppath = Path.GetFullPath(Path.Combine(Application.StartupPath, path)); //exe relative path
+                if (File.Exists(temppath)) 
+                    return temppath;
             }
-            return temppath;
+
+            temppath = path;
+            if (File.Exists(temppath))
+                return temppath;
+
+            temppath = Path.Combine(fullpath, Path.GetFileName(path)); //file on same path as xml
+            if (File.Exists(temppath))
+                return temppath;
+
+            //this resolves paths if SO.exe was moved
+            string[] parts = path.Split(
+            new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i] == "." || parts[i] == "..")
+                    continue;
+
+                string suffix = string.Join(
+                    Path.DirectorySeparatorChar.ToString(),
+                    parts, i, parts.Length - i);
+
+                temppath = Path.Combine(fullpath, suffix);
+                if (File.Exists(temppath))
+                    return temppath;
+            }
+
+            MessageBox.Show("File " + path + " doesn't exists, fix XML paths before attempting to open it again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return "-1";
         }
 
         private void SetTrueGroupsToGroupSettings(int i)

@@ -4,11 +4,18 @@
 ---1.69
 --------------
 
-[TODO] SO plugin update
+- Updated SharpOcarina plugin to 1.1.7 (update it via Help > Update Blender plugins, or manually by importing BlenderScripts\io_export_so_3.0.zip)
+	- Mass Initializing scenes imported with Fast64 is now much faster, and works with all types of scenes. It also adds #room tags automatically.
+	- [TODO] Issue with texture mirroring
+	- [TODO] Issue with duplicated class
 
-[TODO] Added ability to directly save .zscene files
+- Added ability to directly save .zscene files. It has some limitations for now:
+    - Unreferenced assets are discarded
+	- Can't edit ROMs directly, its made specifically for z64rom and other project tools such as zzrtl
 
 - Added "RotX" and "RotZ" properties on actor rendering, which do the same as RotY but for X and Z axis
+
+- Fixed an issue where files would fail to be located when loading xmls. The fix ensures retrocompatibility with old scenes too
 
 --------------
 ---1.68
